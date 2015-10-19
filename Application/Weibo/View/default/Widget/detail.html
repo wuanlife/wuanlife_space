@@ -1,0 +1,82 @@
+<div id="weibo_{$weibo.id}" <if condition="$can_hide">class="row top_can_hide"<else/>class="row"</if> <if condition="$top_hide">style="display:none"</if>>
+    <div class="col-xs-12">
+        <div class="col-xs-12 weibo_content" style="padding: 0;position:relative;">
+            <div class="weibo_icon">
+                <if condition="check_auth('Weibo/Index/setTop')">
+                    <eq name="weibo.is_top" value="0">
+                        <li data-weibo-id="{$weibo.id}" title="置顶{$MODULE_ALIAS}" data-role="weibo_set_top">
+                            <i class="icon icon-arrow-up"></i>
+                        </li>
+                        <else/>
+                        <li data-weibo-id="{$weibo.id}" title="取消置顶" data-role="weibo_set_top">
+                            <i class="icon icon-arrow-down"></i>
+                        </li>
+                    </eq>
+                </if>
+                <if condition="$weibo['can_delete']">
+                    <li data-weibo-id="{$weibo.id}" title="删除{$MODULE_ALIAS}" data-role="del_weibo">
+                        <i class="icon icon-trash"></i>
+                    </li>
+                </if>
+                <if condition="$can_hide">
+                    <li data-weibo-id="{$weibo.id}" title="隐藏置顶{$MODULE_ALIAS}" data-role="hide_top_weibo">
+                        <i class="icon icon-eye-close"></i>
+                    </li>
+                </if>
+            </div>
+            <div class="" style="padding: 10px 10px 5px 10px">
+                <div class="col-xs-2 text-center" style="position: relative;padding: 0px">
+                    <a class="s_avatar" href="{$weibo.user.space_url}" ucard="{$weibo.user.uid}">
+                        <img src="{$weibo.user.avatar64}" class="avatar-img" style="width: 64px;"/>
+                    </a>
+                </div>
+                <div class="col-xs-10" style="padding: 5px">
+                    <eq name="weibo.is_top" value="1">
+                        <div class="ribbion-green"></div>
+                    </eq>
+                    <p>
+                        <if condition="modC('SHOW_TITLE',1)">
+                            <small class="font_grey">【{$weibo.user.title}】</small>
+                        </if>
+                        <a ucard="{$weibo.user.uid}" href="{$weibo.user.space_url}" class="user_name">
+                            {$weibo.user.nickname|htmlspecialchars}
+                        </a>
+                        {:W('Common/UserRank/render',array($weibo['uid']))}
+
+                    </p>
+                    <div class="weibo_content_p">
+                        {$weibo.fetchContent}
+                    <span>
+                        <a href="{:U('Weibo/Index/weiboDetail',array('id'=>$weibo['id']))}">{$weibo.create_time|friendlyDate}</a>
+                    </span>
+                        &nbsp;&nbsp;<span>来自 <if condition="$weibo['from'] eq ''">网站端 <else/><strong>{$weibo.from}</strong></if></span>
+                        {:hook('report',array('type'=>$MODULE_ALIAS.'/'.$MODULE_ALIAS,'url'=>"Weibo/Index/weiboDetail?id=$weibo[id]",'data'=>array('weibo-id'=>$weibo['id'])))}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 weibo_content_bottom">
+                <div class="col-xs-12" style="padding: 0px;text-align: center" data-weibo-id="{$weibo.id}">
+                    <php>
+                        $weiboCommentTotalCount = $weibo['comment_count'];
+                    </php>
+                    <include file="./Application/Weibo/View/default/Index/_operation.html"/>
+                </div>
+            </div>
+        </div>
+        <div class="row weibo-comment-list"   <if condition="modC('SHOW_COMMENT',1)">style="display: block;" <else/> style="display: none;" </if> data-weibo-id="{$weibo.id}">
+            <if condition="modC('SHOW_COMMENT',1)">
+            <div class="col-xs-12">
+                <div class="light-jumbotron weibo-comment-block" style="padding: 1em 2em;">
+                    <div class="weibo-comment-container">
+                        {:W('Weibo/Comment/someComment',array('weibo_id'=>$weibo['id']))}
+                    </div>
+                </div>
+            </div>
+        </if>
+
+        </div>
+    </div>
+</div>
+<script>
+  // alert($('.weibo-comment-container').text());
+</script>

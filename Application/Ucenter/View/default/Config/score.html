@@ -1,0 +1,89 @@
+<extend name="Config/base"/>
+
+<block name="body">
+
+    <div id="center">
+        <div id="center_base">
+
+
+            <ul class="nav nav-secondary">
+                <li class="active"><a href="#base" data-toggle="tab">我的积分</a></li>
+                <li>
+                    <a href="#level" data-toggle="tab">等级经验</a>
+                </li>
+                <li>
+                    <a href="#rule" data-toggle="tab">积分获取规则</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="base">
+                    <div class="with-padding" style="padding: 20px">
+                        <div class="col-xs-8">
+                            <div class="panel">
+                                <div class="panel-heading">现有积分</div>
+                                <ul class="list-group">
+                                    <volist name="scores" id="vo">
+                                        <li class="list-group-item">{$vo.title}：{$vo.value} {$vo.unit}</li>
+                                    </volist>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane" id="level">
+                    <div class="with-padding" style="padding: 20px">
+                        <div class="col-xs-8">
+                            <div class="panel">
+                                <div class="panel-heading">升级所需经验</div>
+                                <ul class="list-group">
+                                    <li class="list-group-item">{$level}</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12">
+                            <div>
+                                当前经验：{$self.score}
+                            </div>
+                            <div>当前等级：{$self.title}</div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="tab-pane" id="rule">
+                    <div class="with-padding" style="padding: 20px">
+                        <volist name="action_module" id="m">
+                            <div class="panel">
+                                <div class="panel-heading">{$m.module.alias|default='系统'}</div>
+                                <div class="list-group">
+                                    <volist name="m.action" id="vo">
+                                        <if condition="$vo['rule_array'] neq false">
+                                            <a class="list-group-item"><h4 class="list-group-item-heading"><strong>{$vo.title}
+                                                ：</strong></h4>
+                                                <volist name="vo.rule_array" id="r">
+                                                    <p class="list-group-item-text">
+                                                        每次【{$r.score.title}】【{$r.rule}】{$r.score.unit}
+                                                        ，每【{$r.cycle}】小时最多【{$r.max}】次</p>
+                                                </volist>
+                                            </a>
+                                        </if>
+                                    </volist>
+                                </div>
+                            </div>
+                        </volist>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+
+        </div>
+    </div>
+
+</block>

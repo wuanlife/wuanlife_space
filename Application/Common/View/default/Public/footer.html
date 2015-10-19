@@ -1,0 +1,62 @@
+<div class="footer-bar ">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+
+                <h2>
+                    <i class="icon-location-arrow"></i> 关于我们
+                </h2>
+                <p>
+                    {:modC('ABOUT_US','暂未设置','Config')}
+                </p>
+            </div>
+            <div class="col-xs-4">
+                <h2>
+                    <i class="icon-star-empty"></i> 关注我们
+                </h2>
+                <p>
+                    {:modC('SUBSCRIB_US','暂未设置','Config')}
+                </p>
+            </div>
+            <div class="col-xs-4">
+                <h2>
+                    <i class="icon-link"></i> 友情链接
+                </h2>
+
+                <ul class="friend-link">
+                    {:Hook('friendLink')}
+                </ul>
+
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <hr>
+
+                <h4> {:modC('COPY_RIGHT','暂未设置','Config')}</h4>
+                <div class="col-xs-12">备案号：<a href="http://www.miitbeian.gov.cn/" target="_blank">
+                    {:modC('ICP','暂未设置','Config')} </a>
+                </div>
+
+            {$count_code}
+            <div>
+                Powered by <a href="http://www.opensns.cn">OpenSNS</a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div>
+    {:C('COUNT_CODE')}
+</div>
+<include file="Public/js"/>
+
+<block name="script"><!-- 用于加载js代码 --></block>
+
+<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+{:hook('pageFooter', 'widget')}
+<div class="hidden"><!-- 用于加载统计代码等隐藏元素 -->
+    <block name="hidden"></block>
+</div>

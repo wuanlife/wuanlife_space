@@ -1,0 +1,135 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <!-- 标题栏 -->
+    <div class="main-title">
+        <h2>用户列表</h2>
+    </div>
+    <div class="clearfix">
+        <div class="col-xs-10">
+            <button class="btn ajax-post" url="{:U('User/changeStatus',array('method'=>'resumeUser'))}"
+                    target-form="ids">启 用
+            </button>
+            <button class="btn ajax-post" url="{:U('User/changeStatus',array('method'=>'forbidUser'))}"
+                    target-form="ids">禁 用
+            </button>
+            <button class="btn ajax-post confirm" url="{:U('User/changeStatus',array('method'=>'deleteUser'))}"
+                    target-form="ids">删 除
+            </button>
+            <button class="btn " onclick="post_select_form()"
+                    target-form="ids">选择用户分组
+            </button>
+            <button class="btn ajax-post confirm" data-confirm="密码重置为“123456”" url="{:U('User/initPass')}" target-form="ids">重置密码
+            </button>
+            <span style="font-size: 14px;color: #999898;margin-left: 11px;">重置密码后新密码为“123456”</span>
+        </div>
+        <script>
+            function post_select_form(){
+                var ids=$('.ids').serialize();
+                $.post("{:U('user/changeGroup')}",ids,function(msg){
+                    (new ModalTrigger({custom: msg,title:'选择用户分组'})).show();
+                })
+            }
+        </script>
+
+        <!-- 高级搜索 -->
+        <div class="search-form  col-xs-2 text-right">
+            <div class="input-group">
+                <input type="text" name="nickname" class="search-input form-control" value="{:I('nickname')}"
+                       placeholder="请输入用户昵称或者ID">
+                                 <span class="input-group-btn">  <a class="btn btn-default" href="javascript:;" id="search" url="{:U('index')}"><i class="icon-search"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table with-padding">
+        <table class="table table-bordered table-striped ">
+            <thead>
+            <tr>
+                <th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+                <th class="">UID</th>
+                <th class="">昵称</th>
+                <th class="">操作</th>
+                <!--<th class="">账号</th>-->
+                <!--<th class="">手机号</th>-->
+                <!--<th class="">邮箱</th>-->
+                <th class="">登录次数</th>
+                <th class="">最后登录时间</th>
+                <th class="">最后登录IP</th>
+                <th class="">状态</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <notempty name="_list">
+                <volist name="_list" id="vo">
+                    <tr>
+                        <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}"/></td>
+                        <td>{$vo.uid}</td>
+                        <td><a href="{:U('Admin/User/expandinfo_details',array('uid'=>$vo['uid']))}" >{$vo.nickname|op_t}</a></td>
+                        <td>
+                            <eq name="vo.status" value="1">
+                                <a href="{:U('User/changeStatus?method=forbidUser&id='.$vo['uid'])}"
+                                   class="ajax-get">禁用</a>
+                                <else/>
+                                <a href="{:U('User/changeStatus?method=resumeUser&id='.$vo['uid'])}"
+                                   class="ajax-get">启用</a>
+                            </eq>
+                            <a href="{:U('AuthManager/group?uid='.$vo['uid'])}" class="authorize">授权</a>
+                            <a href="{:U('User/changeStatus?method=deleteUser&id='.$vo['uid'])}"
+                               class="confirm ajax-get">删除</a>
+                            <a href="{:U('User/initPass?id='.$vo['uid'])}"
+                               class="confirm ajax-get">重置密码</a>
+                        </td>
+
+
+
+                        <td>{$vo.login}</td>
+                        <td><span>{$vo.last_login_time|time_format}</span></td>
+                        <td><a href="http://ip138.com/ips138.asp?ip={$vo['last_login_ip']|long2ip}">{$vo['last_login_ip']|long2ip}</a>
+                        </td>
+                        <td>{$vo.status_text}</td>
+
+
+
+                    </tr>
+                </volist>
+                <else/>
+                <td colspan="9" class="text-center"> aOh! 暂时还没有内容!</td>
+            </notempty>
+            </tbody>
+        </table>
+    </div>
+    <div class="with-padding">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+    <script type="text/javascript">
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+        //导航高亮
+        highlight_subnav("{:U('User/index')}");
+    </script>
+</block>

@@ -1,0 +1,34 @@
+<form  class="frm_change_group" method="post">
+    <strong>当前选中用户：</strong>
+    <div style="word-wrap: break-word">
+        <if condition="count($users) eq 0">
+            -所有用户(请谨慎操作！！！)-
+            <input type="hidden" value="1" name="all"/>
+        </if>
+        <volist name="users" id="user">
+            √{$user.space_link}&nbsp;&nbsp;<input type="hidden" name="uid[]" value="{$user.uid}"/>
+        </volist>
+    </div>
+    <input type="hidden" value="1" name="do">
+    <div style="border-top:1px dashed #ccc;margin-top: 15px;margin-bottom: 15px "></div>
+    <strong>请选择这些用户的用户组</strong>（将丢失原先用户所属的用户组，全部使用新设置的用户组）：
+    <br/>
+    <volist name="groups" id="group">
+        <label><input type="checkbox" name="gid[]" value="{$group.id}">{$group.title}</label>&nbsp;&nbsp;
+    </volist>
+    <div style="border-top:1px dashed #ccc;margin-top: 15px;margin-bottom: 15px "></div>
+    <div><a class="btn submit" url="__SELF__" target-form="frm_change_group" >提交</a></div>
+</form>
+<script>
+    $(function(){
+            $('.frm_change_group .submit').click(function(){
+                var sure=confirm('确定设置这些用户的用户组？此操作不可还原。');
+                if(sure){
+                $.post($(this).attr('url'),$('.frm_change_group').serialize(),function(msg){
+                    handleAjax(msg);
+                });
+                }
+            })
+    })
+
+</script>

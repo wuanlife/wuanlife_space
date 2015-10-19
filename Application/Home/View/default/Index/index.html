@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <include file="Public/head"/>
+    <link href="__CSS__/home.css" type="text/css" rel="stylesheet">
+    <php> D('Member')->need_login();</php>
+</head>
+<body>
+<include file="Public/header"/>
+<!-- 头部 -->
+<style>
+    .container{
+        width:1140px;max-width: 1140px
+    }
+</style>
+<include file="Index/_nav"/>
+
+<div id="main-container" class="top-bar ">
+    <script>
+        adjust_navbar();
+    </script>
+    <volist name="showBlocks" id="v">
+        <php>if($v=='slider'){</php>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <div class="carousel-bar margin-bottom-15" style="position: relative">
+
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <if condition="modC('PIC2',0,'Home') neq 0">
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                </if>
+                                <if condition="modC('PIC2',0,'Home') neq 0">
+                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                </if>
+                                <if condition="modC('PIC3',0,'Home') neq 0">
+                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                </if>
+                            </ol>
+                            <div class="carousel-inner">
+
+                                <if condition="modC('PIC1',0,'Home') neq 0">
+                                    <div class="item active">
+                                        <if condition="modC('URL1','','Home') neq ''">
+                                            <a href="{:modC('URL1','','Home')}" target="{:modC('TARGET1','_self','Home')}">
+                                        </if>
+                                        <img alt="First slide" src="{:get_cover(modC('PIC1',0,'Home'),'path')}">
+
+                                        <div class="carousel-caption">
+                                            <h3>{:modC('TITLE1','','Home')}</h3>
+                                        </div>
+                                        <if condition="modC('URL1','','Home') neq ''">
+                                            </a> </if>
+                                    </div>
+                                </if>
+
+                                <if condition="modC('PIC2',0,'Home') neq 0">
+                                    <div class="item ">
+                                        <if condition="modC('URL2','','Home') neq ''">
+                                            <a href="{:modC('URL2','','Home')}" target="{:modC('TARGET2','_self','Home')}">
+                                        </if>
+                                        <img alt="First slide" src="{:get_cover(modC('PIC2',0,'Home'),'path')}">
+
+                                        <div class="carousel-caption">
+                                            <h3>{:modC('TITLE2','','Home')}</h3>
+                                        </div>
+                                        <if condition="modC('URL2','','Home') neq ''">
+                                            </a>
+                                        </if>
+                                    </div>
+                                </if>
+                                <if condition="modC('PIC3',0,'Home') neq 0">
+                                    <div class="item ">
+                                        <if condition="modC('URL3','','Home') neq ''">
+                                            <a href="{:modC('URL3','','Home')}" target="{:modC('TARGET3','_self','Home')}">
+                                        </if>
+                                        <img alt="First slide" src="{:get_cover(modC('PIC3',0,'Home'),'path')}">
+
+                                        <div class="carousel-caption">
+                                            <h3>{:modC('TITLE3','','Home')}</h3>
+                                        </div>
+                                        <if condition="modC('URL3','','Home') neq ''">
+                                            </a></if>
+                                    </div>
+                                </if>
+                            </div>
+                            <if condition="modC('PIC2',0,'Home') neq 0">
+                                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                    <span class="icon-chevron-left"></span>
+                                </a>
+                                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                    <span class="icon-chevron-right"></span>
+                                </a>
+                            </if>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <php>}else{</php>
+        {:W($v.'/HomeBlock/render')}
+        <php>}</php>
+
+    </volist>
+</div>
+
+
+
+<!-- /头部 -->
+
+<!-- 主体 -->
+
+<!-- /主体 -->
+
+<!-- 底部 -->
+<include file="Public/footer"/>
+<!-- /底部 -->
+</body>
+</html>

@@ -1,0 +1,66 @@
+<if condition="$show_post">
+    <div class="weibo_content weibo_post_box">
+
+        <p class="pull-left">
+            {:modC('WEIBO_INFO',' 有什么新鲜事想告诉大家?')}
+        </p>
+        <div class="pull-right show_num_quick">还可以输入{:modC('WEIBO_NUM',140,'WEIBO')}个字</div>
+        <div class="weibo_content_p">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p><textarea class="form-control weibo_content_quick" id="weibo_content" style="height: 6em;"
+                                 placeholder="写点什么吧～～" onfocus="startCheckNum_quick($(this))"
+                                 onblur="endCheckNum_quick()"></textarea></p>
+                    <a href="javascript:" onclick="insertFace($(this))">
+                        <img class="weibo_type_icon" src="__CORE_IMAGE__/bq.png"/>
+                    </a>
+                    <if condition="modC('CAN_IMAGE',1)">
+                    <a href="javascript:" id="insert_image" onclick="insert_image.insertImage(this)">
+                        <img class="weibo_type_icon" src="__IMG__/image.png"/>
+                    </a>
+                   </if>
+                    <if condition="modC('CAN_TOPIC',1)">
+                    <a href="javascript:" onclick="insert_topic.InsertTopic(this)">
+                        <img class="weibo_type_icon" src="__IMG__/topic.png"/>
+                    </a>
+                </if>
+                    {:hook('weiboType')}
+                    <p class="pull-right">
+                        {:use_topic()}
+                        &nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="发表"  data-role="send_weibo" class="btn btn-primary btn-lg" style="border:none;width: 100px" data-url="{:U('Weibo/Index/doSend')}"/>
+                    </p>
+                </div>
+            </div>
+            <div id="emot_content" class="emot_content"></div>
+            <div id="hook_show" class="emot_content"></div>
+        </div>
+    </div>
+    <script>
+        var ID_setInterval;
+        function checkNum_quick(obj) {
+            var value = obj.val();
+            var value_length = value.length;
+            var can_in_num = initNum - value_length;
+            if (can_in_num < 0) {
+                value = value.substr(0, initNum);
+                obj.val(value);
+                can_in_num = 0;
+            }
+            var html = "还可以输入" + can_in_num + "个字";
+            $('.show_num_quick').html(html);
+        }
+        function startCheckNum_quick(obj) {
+            ID_setInterval = setInterval(function () {
+                checkNum_quick(obj);
+            }, 250);
+        }
+        function endCheckNum_quick() {
+            clearInterval(ID_setInterval);
+        }
+    </script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="__PUBLIC__/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+</if>
+
+

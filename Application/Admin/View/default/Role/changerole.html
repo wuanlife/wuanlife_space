@@ -1,0 +1,55 @@
+<div>
+    <style>
+        .modal-dialog {
+            width: 430px;
+        }
+        .select_box_this {
+            margin: 10px 0 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+    <form id="migration" action="__SELF__" method="post" class="ajax-form">
+        <input type="hidden" name="ids" value="{$ids}">
+        <input type="hidden" name="role_id" value="{$role_id}">
+
+        <div class="select_box_this">
+            <notempty name="role_list">
+                <span>所选用户迁移到身份：</span>
+                <span>
+                    <select name="role" style="width: 200px;">
+                        <volist name="role_list" id="role">
+                            <option value="{$role.id}">{$role.value}</option>
+                        </volist>
+                    </select>
+                </span>
+                <else/>
+                没有可移动到的身份~
+            </notempty>
+
+        </div>
+        <div style="width: 100%;text-align: center;">
+            <a class="btn btn-primary" data-role="submit">移动</a>
+            <a onclick="$('.close').click();" class="btn btn-default">取消</a>
+        </div>
+    </form>
+</div>
+        <script>
+            $(function(){
+               $('[data-role="submit"]').click(function(){
+                   query=$('#migration').serialize();
+                   var url=$('#migration').attr('action');
+                   $.post(url,query,function(msg){
+                       if(msg.status){
+                           toast.success('迁移成功！');
+                           setTimeout(function(){
+                               window.location.reload();
+                           },1500);
+                       }else{
+                           handleAjax(msg);
+                       }
+                   },'json');
+               });
+            });
+        </script>

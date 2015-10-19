@@ -1,0 +1,115 @@
+<if condition="$list['type'] eq 2">
+    <if condition="count($list['res']) gt 0">
+        <switch name="list.style">
+
+            <case value="2">
+                <script src="__PUBLIC__/js/ext/kinmaxshow/js/kinmaxshow.min.js"></script>
+                <div style="width:{$list.ad.width}px;height:{$list.ad.height}px">
+                    <div id="slide_{$list.ad.pos}" >
+                        <volist name="list.res" id="vo">
+                            <div>
+                                <a href="{$vo.link}" target="_blank" title="{$vo.title}">
+                                    <img src="{$vo.advspic|getThumbImageById=$list['ad']['width'],$list['ad']['height']}" alt="{$vo.title}" class="img-responsive" style="max-width: 100%">
+                                </a>
+                            </div>
+                        </volist>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function(){
+                        var h_s={$list.ad.height};
+                    $("#slide_{$list.ad.pos}").kinMaxShow({height:h_s});
+                    });
+                </script>
+            </case>
+            <default />
+                <script src="__PUBLIC__/js/ext/touchslide/js/jquery.touchSlider.js"></script>
+                <link href="__PUBLIC__/js/ext/touchslide/css/touchslider.css" rel="stylesheet" type="text/css"/>
+                <div class="main_visual" style="height: {$list.ad.height}px;width:{$list.ad.width}px;">
+                    <div class="flicking_con">
+                        <volist name="list.res" id="vo">
+                            <a href="#">{$key}</a>
+                        </volist>
+                    </div>
+                    <div class="main_image">
+                        <ul>
+                            <volist name="list.res" id="vo">
+                                <li><a href="{$vo.link}" title="{$vo.title}" target="_blank"><img src="{$vo.advspic|getThumbImageById=$list['ad']['width'],$list['ad']['height']}" alt="{$vo.title}" class="img-responsive"></a></li>
+                            </volist>
+                        </ul>
+                    </div>
+                    <a href="javascript:;" id="btn_prev"><i class="icon-chevron-left"></i></a>
+                    <a href="javascript:;" id="btn_next"><i class="icon-chevron-right"></i></a>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        $(".main_visual").hover(function(){
+                            $("#btn_prev,#btn_next").fadeIn()
+                        },function(){
+                            $("#btn_prev,#btn_next").fadeOut()
+                        });
+
+                        $dragBln = false;
+
+                        $(".main_image").touchSlider({
+                            flexible : true,
+                            speed : 1000,
+                            btn_prev : $("#btn_prev"),
+                            btn_next : $("#btn_next"),
+                            paging : $(".flicking_con a"),
+                            counter : function (e){
+                                $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+                            }
+                        });
+
+                        $(".main_image").bind("mousedown", function() {
+                            $dragBln = false;
+                        });
+
+                        $(".main_image").bind("dragstart", function() {
+                            $dragBln = true;
+                        });
+
+                        $(".main_image a").click(function(){
+                            if($dragBln) {
+                                return false;
+                            }
+                        });
+
+                        timer = setInterval(function(){
+                            $("#btn_next").click();
+                        }, 5000);
+
+                        $(".main_visual").hover(function(){
+                            clearInterval(timer);
+                        },function(){
+                            timer = setInterval(function(){
+                                $("#btn_next").click();
+                            },5000);
+                        });
+
+                        $(".main_image").bind("touchstart",function(){
+                            clearInterval(timer);
+                        }).bind("touchend", function(){
+                                    timer = setInterval(function(){
+                                        $("#btn_next").click();
+                                    }, 5000);
+                                });
+
+                    });
+                </script>
+        </switch>
+    </if>
+    <elseif condition="$list['type'] eq 3"/>
+    <div style="width:{$list['width']};height:{$list['height']};background: #cecece;">
+        <div style="margin:0px auto;width:150px;line-height: 30px;">{$list.advstext}</div>
+    </div>
+    <elseif condition="$list['type'] eq 1"/>
+    <if condition="$list['advspic'] neq 0">
+        <a href="{$list.link}"><img src="{$list.advspic|get_cover='path'}"/></a>
+    </if>
+
+    <elseif condition="$list['type'] eq 4"/>
+    {$list.advshtml}
+</if>
+<!-- add more -->

@@ -1,0 +1,28 @@
+<div id="sub_nav">
+    <php>$logo = get_cover(modC('LOGO',0,'Config'),'path');
+        $logo = $logo?$logo:'__ROOT__/Public/images/logo.png';
+    </php>
+
+    <nav class="navbar navbar-default" >
+        <div class="container"  style="width:1180px;">
+            <a class="navbar-brand logo" href="{:U('index')}"><i class="icon-group"></i> 找人</a>
+            <ul class="nav navbar-nav navbar-left">
+                <li id="tab_index">
+                    <a href="{:U('index')}">身份标签找人</a>
+                </li>
+            </ul>
+            <script>
+                $('#tab_{$tab}').addClass('active');
+            </script>
+            <form class="navbar-form navbar-right" action="{:U('People/Index/index')}"  method="post" role="search">
+                <input  type="hidden" name="tag" value="{$tag_id}">
+                <input  type="hidden" name="role" value="{$role_id}">
+                <div class="search-input-group">
+                    <a href="javascript:void(0);" onclick="$(this).parents('form').submit();" class="input-btn"><i class="icon-search"></i></a>
+                    <input type="text" class="input" placeholder="昵称" name="keywords" value="{$nickname}">
+                </div>
+                </span>
+            </form>
+        </div>
+    </nav>
+</div>

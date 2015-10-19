@@ -1,0 +1,107 @@
+<extend name="Base/common"/>
+
+<block name="header">
+    <include file="Public/_nav"/>
+</block>
+<block name="body">
+    <div class="common-block usercenter margin-bottom-15">
+        <include file="_top"/>
+    </div>
+    <link href="__CSS__/weibo.css" type="text/css" rel="stylesheet"/>
+    <div class="row">
+        <div class="col-xs-7 ">
+            <div class="common-block ">
+                <header class="clearfix ">
+                    <div class="pull-left bottom-line">微博详情</div>
+                    <div class="pull-right">
+                        {:W('Common/Share/detailShare')}
+                    </div>
+                </header>
+                <section>
+                    <div id="weibo_list">
+                        <div class="row" id="weibo_{$weibo.id}">
+                            <div class="col-xs-12">
+                                <div style="padding-left: 16px;">
+                                    {$weibo.fetchContent}
+
+                                    <div>
+
+                                        <span class="text-primary">{$weibo.create_time|friendlyDate}</span>
+
+                                        <div class="pull-right operation" style="margin-bottom: .5em;width: 50%">
+                                            <php>
+                                                $weiboCommentTotalCount = $weibo['comment_count'];
+                                            </php>
+
+                                            <include file="_operation"/>
+                                        </div>
+                                    </div>
+                                    <hr/>
+
+                                    <div class="row weibo-comment-list"
+                                         data-weibo-id="{$weibo.id}">
+                                        <div class="col-xs-12">
+                                            <div class="light-jumbotron weibo-comment-block" style="padding: 1em 2em;">
+                                                <div class="weibo-comment-container">
+
+                                                    {:W('Comment/someComment',array('weibo_id'=>$weibo['id']))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+        <div class="col-xs-5">
+            <div class="common-block ">
+                <header class="clearfix md">
+                    <div class="pull-left bottom-line">这些人赞过</div>
+                    <div class="pull-right bottom-line " style="border-bottom: none">{$supported.count} <span
+                            class="text-muted">人</span></div>
+                </header>
+
+                <section>
+                    <empty name="supported.data">
+                        <div style="width: 210px;margin: auto" class="alert with-icon">
+                            <i class="icon-inbox"></i>
+
+                            <div class="content">暂时没有人赞过哦。</div>
+                        </div>
+                    </empty>
+                    <ul class="supported-users clearfix">
+                        <volist name="supported.data" id="vo">
+                            <li class="text-center text-ellipsis col-xs-3">
+                                <a href="{$vo.user.space_url}" target="_blank" ucard="{$vo.uid}"><img
+                                        style="width:64px;" class="avatar-img" src="{$vo.user.avatar128}"></a>
+                                <br/>
+                                {$vo.user.space_link}
+                            </li>
+                        </volist>
+                    </ul>
+                    <div class="text-center">
+                        {$supported.html}
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+    </div>
+</block>
+
+<block name="script">
+    <script src="__JS__/weibo.js"></script>
+    <script>
+        var SUPPORT_URL = "{:addons_url('Support://Support/doSupport')}";
+        var auto_open_detail = 1;
+        weibo_bind();
+
+    </script>
+</block>

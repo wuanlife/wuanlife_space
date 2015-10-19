@@ -1,0 +1,118 @@
+<!-- 管理员用户组新增和编辑页面 -->
+<extend name="Public/base"/>
+<block name="body">
+    <div class="main-title">
+        <h2>主题配置</h2>
+    </div>
+    <div class="with-padding">
+        <a href="{:U('Admin/Theme/add')}" class="btn">安装新主题</a>
+    </div>
+    <div class="with-padding">
+        <div class="cards plugin-list">
+            <div style="width: 270px;padding: 0 10px;float: left;">
+                <div class="card">
+                    <div class="media-wrapper">
+                         <img src="__ROOT__/Public/images/preview.jpg" style="height: 180px;">
+                    </div>
+                    <span class="caption">Default</span>
+                    <div class="card-heading">
+                        <span class="pull-right">
+                            <span class="label label-success" title="主题版本">2.0.0</span>
+                        </span>
+                        <a href="{:U('Admin/Theme/lookTheme',array('theme'=>'default'))}" target="_blank" title="查看该主题">
+                            <strong>OpenSNS V2 系统默认主题</strong>
+                        </a>
+                    </div>
+                    <div class="card-content text-muted" style="height: 64px;">
+                        内置于OpenSNS V2 系统中，是其它主题的基础主题
+                    </div>
+                    <div class="card-actions" style="margin-top: 30px;">
+                        <div class="text-mute">
+                            开发者：嘉兴想天信息科技有限公司
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="btn-group">
+                            <eq name="now_theme" value="default">
+                                <span style="padding: 4px 12px;display: inline-block;font-size: 16px;color: #A5A5A5;">基础主题</span>
+                                <else/>
+                                <a class="btn btn-primary" data-role="use_this" data-value="default">只使用基础主题</a>
+                            </eq>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <volist name="tplList" id="info">
+                <div style="width: 270px;padding: 0 10px;float: left;">
+                    <div class="card">
+                        <div class="media-wrapper">
+                            <a data-role="use_this" data-value="{$info.file_name}">
+                                <img src="{$info.path}/preview.jpg" style="height: 180px;">
+                            </a>
+                        </div>
+                        <span class="caption">{$info.name}</span>
+                        <div class="card-heading">
+                        <span class="pull-right">
+                            <span class="label label-success" title="主题版本">{$info.version}</span>
+                        </span>
+                            <a href="{:U('Admin/Theme/lookTheme',array('theme'=>$info['file_name']))}" target="_blank" title="查看该主题">
+                                <strong>{$info.title}</strong>
+                            </a>
+                        </div>
+                        <div class="card-content text-muted" style="height: 64px;">
+                            {$info.summary}
+                        </div>
+                        <div class="card-actions">
+                            <div class="text-mute">
+                                开发者：{$info.developer}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <div class="text-mute">
+                                模板文件名：{$info.file_name}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <div class="btn-group">
+                                <eq name="now_theme" value="$info.file_name">
+                                    <span class="pull-left" style="padding: 4px 12px;color: #3DC86E;display: inline-block;font-size: 16px;">正在使用</span>
+                                    <a class="btn btn-primary" href="{:U('Admin/Theme/packageDownload',array('theme'=>$info['file_name']))}" style="margin-left: 8px;">打包下载</a>
+                                    <else/>
+                                    <a class="btn btn-primary" data-role="use_this" data-value="{$info.file_name}">使用</a>
+                                    <a class="btn btn-primary" href="{:U('Admin/Theme/packageDownload',array('theme'=>$info['file_name']))}" style="margin-left: 8px;">打包下载</a>
+                                    <a class="btn btn-primary" href="{:U('Admin/Theme/delete',array('theme'=>$info['file_name']))}" style="margin-left: 8px;">卸载删除</a>
+                                </eq>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+
+        </div>
+        <!-- 数据列表 -->
+        <!-- 分页 -->
+        <div class="with-padding">
+            <div class="pager">
+            </div>
+        </div>
+    </div>
+</block>
+<block name="script">
+    <script>
+        $(function(){
+            $('[data-role="use_this"]').click(function(){
+                var theme=$(this).attr('data-value');
+                $.post(U('Admin/Theme/setTheme'),{theme:theme},function(msg){
+                    if(msg.status){
+                        toast.success(msg.info);
+                        setTimeout(function(){
+                            window.location.reload();
+                        },1500);
+                    }else{
+                        handleAjax(msg);
+                    }
+                },'json');
+            });
+        });
+    </script>
+</block>

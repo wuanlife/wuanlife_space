@@ -1,0 +1,54 @@
+<extend name="Public/usercenter"/>
+
+<block name="body">
+    <link href="__CSS__/invite.css" type="text/css" rel="stylesheet">
+    <div class="row">
+        <div class="col-xs-12">
+            <p>&nbsp;</p>
+            <h4>生成邀请码</h4>
+            <hr class="oneuser-title-hr"/>
+
+            <include file="_top"/>
+        </div>
+    </div>
+
+
+    <div class="invite_content" style="min-height: 400px;margin-top: 30px;">
+        <if condition="!$invite_type_list"><p class="text-muted" style="text-align: center; font-size: 3em;">
+            <br><br>
+            暂无可邀请类型～
+            <br><br><br>
+        </p>
+            <else/>
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <td>邀请码类型</td>
+                    <td>可注册角色</td>
+                    <td>消耗</td>
+                    <td>成功后获得</td>
+                    <td>可用名额</td>
+                    <td>已邀请</td>
+                    <td>已成功</td>
+                    <td>操作</td>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="invite_type_list" id="vl">
+                    <tr>
+                        <td>{$vl.title}</td>
+                        <td>{$vl.roles_show}</td>
+                        <td>{$vl.pay}</td>
+                        <td>{$vl.income}</td>
+                        <td>{$vl.can_num|default=0} 个</td>
+                        <td>{$vl.already_num|default=0} 个</td>
+                        <td>{$vl.success_num|default=0} 个</td>
+                        <td><a data-role="exchange" data-id="{$vl.id}" data-title="{$vl.title}">兑换名额</a><a data-role="create_invite" data-id="{$vl.id}" data-title="{$vl.title}" style="margin-left: 10px;">生成邀请码</a></td>
+                    </tr>
+                </volist>
+                </tbody>
+            </table>
+        </if>
+    </div>
+    <script type="text/javascript" src="__JS__/invite.js"></script>
+</block>

@@ -1,0 +1,85 @@
+<extend name="Public/usercenter"/>
+
+<block name="body">
+    <link href="__CSS__/invite.css" type="text/css" rel="stylesheet">
+    <div class="row">
+        <div class="col-xs-12">
+            <p>&nbsp;</p>
+            <h4>邀请码列表</h4>
+            <hr class="oneuser-title-hr"/>
+
+            <include file="_top"/>
+        </div>
+    </div>
+
+
+    <div class="invite_content" style="min-height: 400px;margin-top: 30px;">
+        <if condition="!$type_list"><p class="text-muted" style="text-align: center; font-size: 18px;">
+            暂无可用邀请码，先去 <a href="{:U('Ucenter/Invite/index')}" style="text-decoration: underline;">生成邀请码</a> ～
+        </p>
+            <else/>
+            <volist name="type_list" id="val">
+                <div style="font-size: 18px;">{$val.title}</div>
+                <div style="padding-left: 20px;margin-bottom: 30px;">
+                    <table>
+                        <thead>
+                        <tr>
+                            <td>邀请码</td>
+                            <td>邀请码链接</td>
+                            <td>剩余名额</td>
+                            <td>已成功</td>
+                            <td>有效期至</td>
+                            <td>操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="val['codes']" id="vl">
+                            <tr>
+                                <td>{$vl.code}</td>
+                                <td class="text-more" style="width: 100%">{$vl.code_url}</td>
+                                <td>{$vl.num|default=0}个</td>
+                                <td>{$vl.already_num|default=0} 个</td>
+                                <td>{$vl.end_time|time_format}</td>
+                                <td>
+                                    <div style="position: relative;">
+                                        <a data-role="copy_code" data-code="{$vl.code}">复制邀请码</a>
+                                        <a data-role="copy_code_url" data-code-url="{$vl.code_url}" style="margin-left: 10px;">复制邀请链接</a>
+                                        <a data-role="back_copy_code" data-id="{$vl.id}" style="margin-left: 10px;">退还</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                </div>
+
+            </volist>
+        </if>
+
+
+    </div>
+    <script type="text/javascript" src="__JS__/invite.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ext/zclip/jquery.zclip.min.js"></script>
+    <script>
+        $(function(){
+            $('[data-role="copy_code"]').zclip({
+                copy: function () {
+                    return $(this).attr('data-code');
+                },
+                afterCopy: function () {
+                    $(this).html('已复制');
+                    toast.success('复制成功');
+                }
+            });
+            $('[data-role="copy_code_url"]').zclip({
+                copy: function () {
+                    return $(this).attr('data-code-url');
+                },
+                afterCopy: function () {
+                    $(this).html('链接已复制');
+                    toast.success('复制链接成功');
+                }
+            });
+        });
+    </script>
+</block>

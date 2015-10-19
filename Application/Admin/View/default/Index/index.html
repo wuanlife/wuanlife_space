@@ -1,0 +1,236 @@
+<extend name="Public/base"/>
+
+<block name="script">
+    <script type="text/javascript" src="__ZUI__/lib/highchart/highcharts.js"></script>
+</block>
+<block name="body">
+    <!--   <div class="with-padding-lg">
+           <div class="col-xs-6">
+               <div class="alert alert-info with-icon">
+                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                   <div class="content"><strong>Hi!</strong> 主模块有新的更新。</div>
+               </div>
+           </div>
+          <div class="col-xs-6">
+              <div class="alert alert-info with-icon">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                  <div class="content"><strong>Hi!</strong> 微博模块有新的更新内容。</div>
+              </div>
+          </div>
+       </div>-->
+    <div class="with-padding clearfix text-center">
+        <ul id="myTab" class="  nav nav-justified nav-pills  " style="width: 250px;display: inline-block;font-size: 16px">
+            <li class="active">
+                <a href="#tab1" data-toggle="tab">网站统计</a>
+            </li>
+            <li>
+                <a href="#tab2" data-toggle="tab">系统信息</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content">
+    <div class="tab-pane in active" id="tab1">
+        <div class="with-padding-lg">
+            <div class="count clearfix">
+                <div class="col-xs-4 text-center">
+                    <a href="{:U('action/actionlog')}" class="with-padding-lg bg-special">
+                        <i class="icon-tasks"></i>
+                        {$count.today_action_log}
+                        <br/>
+                        今日用户行为
+                    </a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a class="with-padding-lg bg-info" href="{:U('user/index')}"><i class="icon-user"></i>
+                        {$count.today_user} <br/>
+                        今日新增用户数</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a class="with-padding-lg bg-danger" style="background: rgb(96, 210, 149)" href="{:U('user/index')}">
+                        <i class="icon-group">
+                        </i>
+                        {$count.total_user}
+                        <br/>
+                        总用户数
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="with-padding-lg" style="position: relative">
+            <button class="btn  pull-right" data-toggle="modal" data-target="#settingCount"
+                    style="position: absolute;right: 15px;z-index: 999">
+                <i class="icon-cog"></i>
+                设置
+            </button>
+            <div id="myChart" height="400"></div>
+        </div>
+
+    </div>
+    <div class="tab-pane" id="tab2">
+
+        <div class="with-padding-lg">
+            <div class="count clearfix">
+                <div class="col-xs-4 text-center">
+                    <a href="http://os.opensns.cn/question" class="with-padding-lg bg-special" target="_blank">
+                       <i class="icon-question"></i> 问答
+                    </a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a class="with-padding-lg bg-info" target="_blank" href="http://os.opensns.cn/book/index/index.html">
+                        <i class="icon-book"></i>  文档中心</a>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <a class="with-padding-lg bg-danger" target="_blank" style="background: rgb(96, 210, 149)" href="http://os.opensns.cn/">
+                        <i class="icon-chrome">
+                        </i>
+
+                        官方社群
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="with-padding-lg">
+            <div class="col-xs-12">
+                <div class="hd cf">
+                    <h5>{$addons_config.title}</h5>
+
+                    <div class="title-opt">
+                    </div>
+                </div>
+                <div class="bd">
+                    <div class="sys-info">
+                        <table>
+                            <tr>
+                                <th>服务器操作系统</th>
+                                <td>{$Think.const.PHP_OS}</td>
+                            </tr>
+                            <tr>
+                                <th>ThinkPHP版本</th>
+                                <td>{$Think.VERSION}</td>
+                            </tr>
+                            <tr>
+                                <th>运行环境</th>
+                                <td>{$_SERVER['SERVER_SOFTWARE']}</td>
+                            </tr>
+                            <tr>
+                                <th>MYSQL版本</th>
+                                <php>
+                                    $system_info_mysql = M()->query("select version() as v;");
+                                </php>
+                                <td>{$system_info_mysql.0.v}</td>
+                            </tr>
+                            <tr>
+                                <th>上传限制</th>
+                                <td>{:ini_get('upload_max_filesize')}
+
+                                    <a href="http://os.opensns.cn/book/index/read/section_id/93.html" target="_blank">如何修改</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="tab-pane" id="tab3">
+
+    </div>
+    <div class="tab-pane" id="tab4">
+
+    </div>
+</div>
+
+
+    <div class="clearfix">
+        <div class="col-xs-4">
+
+        </div>
+        <div class="col-xs-4">
+
+        </div>
+        <div class="col-xs-4">
+
+        </div>
+
+    </div>
+    <script>
+        $('#main-content').css('left', 0);
+        $(function () {
+            $('#myChart').highcharts({
+                chart: {
+                    type: "spline",
+                    style: {
+                        fontFamily: '"Microsoft Yahei", "宋体"'
+                    }
+                },
+                title: {
+                    text: '最近{$count.count_day}天用户增长数',
+                    x: -20 //center
+                },
+                xAxis: {
+                    categories: eval('{$count.last_day.days}'),
+                    title: {
+                        text: '当天新注册会员',
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    title: ''
+                },
+                legend: {
+                    layout: 'vertical',
+                    verticalAlign: 'middle',
+                    borderWidth: 0,
+                    enabled: false
+                },
+                series: [{
+                    name: '当天新注册会员',
+                    data: eval('{$count.last_day.data}'),
+                    enable: true
+                }], credits: {enabled: false}
+            });
+        });
+
+
+    </script>
+
+</block>
+<block name="modal">
+    <div class="modal fade" id="settingCount">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                            class="sr-only">关闭</span></button>
+                    <h4 class="modal-title">设置统计图</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="with-padding">
+                        <label>默认展示天数 </label><input class="form-control" name="count_day" value="{$count.count_day}">
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn " data-role="saveCountSetting">
+                        <i class="icon-ok"></i> 保存
+                    </button>
+                    <button class="btn " data-dismiss="modal">
+                        <i class="icon-remove"></i> 取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('[data-role=saveCountSetting]').click(function () {
+            $.post("__SELF__", {count_day: $('[name=count_day]').val()}, function (msg) {
+                handleAjax(msg);
+            });
+        })
+    </script>
+</block>

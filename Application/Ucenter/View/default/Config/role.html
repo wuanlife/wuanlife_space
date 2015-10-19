@@ -1,0 +1,156 @@
+<extend name="Config/base"/>
+<block name="style">
+    <style>
+        .jcrop-holder > div > div {
+            border-radius: 50%;
+        }
+    </style>
+</block>
+<block name="body">
+    <script>
+        function center_toggle(name) {
+            var show = $('#' + name + '_panel').css('display');
+            $('.center_panel').hide();
+            $('.center_arrow_right').show();
+            $('.center_arrow_bottom').hide()
+            if (show == 'none') {
+                $('#' + name + '_panel').show();
+                $('#' + name + '_toggle_right').hide();
+                $('#' + name + '_toggle_bottom').show()
+            } else {
+                $('#' + name + '_toggle_right').show();
+                $('#' + name + '_toggle_bottom').hide()
+            }
+        }
+    </script>
+    <div id="center">
+        <div id="center_base">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="nav nav-secondary">
+                        <li class="active"><a href="#base" data-toggle="tab">基本资料</a></li>
+                        <li><a href="#default" data-toggle="tab">个人主页资料默认展示设置</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="base">
+                    <div class="row">
+                        <div class="col-xs-12" style="padding-left: 40px;margin-top: 10px;">
+                            <div class="title" style="font-size: 18px;line-height: 50px;">已持有的身份</div>
+                            <table class="col-xs-12">
+                                <tbody>
+                                <volist name="already_roles" id="role">
+                                    <tr style="line-height: 40px;">
+                                        <td style="width: 20%">{$role.title}</td>
+                                        <td style="width: 50%">{$role.user_status}</td>
+                                        <td style="width: 30%"><neq name="role.user_role_status" value="0"><eq name="role.can_login" value="1"><a data-role="changeLoginRole" data-id="{$role.id}">切换登录</a><else/>当前登录</neq></eq></td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12" style="padding-left: 40px;margin-top: 20px;">
+                            <div class="title" style="font-size: 18px;line-height: 50px;">可持有的身份</div>
+                            <table class="col-xs-12">
+                                <tbody>
+                                <volist name="can_have_roles" id="role">
+                                    <tr style="line-height: 40px;">
+                                        <td style="width: 20%">{$role.title}</td>
+                                        <td style="width: 80%"><a data-role="hold_role" data-id="{$role.id}">持有该身份</a></td>
+                                    </tr>
+                                </volist>
+                                <volist name="can_up_roles" id="role">
+                                    <tr style="line-height: 40px;">
+                                        <td style="width: 20%">{$role.title}</td>
+                                        <td style="width: 80%"><a data-role="up_role" data-url="{:U('Ucenter/Member/upRole',array('role_id'=>$role['id']))}">升级该身份</a></td>
+                                    </tr>
+                                </volist>
+                                <if condition="!count($can_have_roles)&&!count($can_up_roles)">
+                                    <div style="width: 100%;margin-left: 60px;color: #cdcdcd;font-size: 18px;">已经没有可以持有的身份！</div>
+                                </if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="default" style="margin-top: 30px;">
+                    <form action="__SELF__" method="post" class="ajax-form form-horizontal">
+                        <div class="form-group">
+                            <label for="show_role" class="col-xs-3 control-label" style="text-align: right;">
+                                个人主页默认展示身份：
+                            </label>
+
+                            <div class="col-xs-4">
+
+                                <select class="form-control" id="show_role" name="show_role">
+                                    <volist name="already_roles" id="onerole">
+                                        <if condition="$onerole['id'] eq $show_role">
+                                            <option value="{$onerole.id}" selected>{$onerole.title|htmlspecialchars}</option>
+                                            <else/>
+                                            <option value="{$onerole.id}">{$onerole.title|htmlspecialchars}</option>
+                                        </if>
+
+                                    </volist>
+                                </select>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="col-xs-5"><span class="input-tips">他人进入您的个人主页时，默认已该身份展示</span></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-xs-10">
+                                <button type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+            $('[data-role="changeLoginRole"]').click(function(){
+                var role_id=$(this).attr('data-id');
+                $.post(U('Ucenter/Member/changeLoginRole'),{role_id:role_id},function(data){
+                    if(data.status){
+                        if(data.url!=undefined){
+                            toast.success('切换身份登录成功！页面即将跳转~');
+                            setTimeout(function(){
+                                window.location.href=data.url;
+                            },1500);
+                        }else{
+                            toast.success('切换身份登录成功！');
+                            setTimeout(function(){
+                                window.location.reload();
+                            },1500);
+                        }
+                    }else{
+                        handleAjax(data);
+                    }
+                });
+            });
+            $('[data-role="hold_role"]').click(function(){
+                var role_id=$(this).attr('data-id');
+                $.post(U('Ucenter/Member/registerRole'),{role_id:role_id},function(data){
+                    if(data.status){
+                        toast.success('身份持有成功！页面即将跳转~');
+                        setTimeout(function(){
+                            window.location.href=data.url;
+                        },1500);
+                    }else{
+                        handleAjax(data);
+                    }
+                });
+            });
+            $('[data-role="up_role"]').click(function(){
+                var url=$(this).attr('data-url');
+                var myModalTrigger = new ModalTrigger({
+                    'type':'ajax',
+                    'url':url,
+                    'title':'升级身份'
+                });
+                myModalTrigger.show();
+            });
+        });
+    </script>
+</block>

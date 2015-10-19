@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$meta_title}|OpenSNS管理后台</title>
+    <link href="__ROOT__/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
+
+
+    <!--zui-->
+    <link rel="stylesheet" type="text/css" href="__ZUI__/css/zui.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__CSS__/admin.css" media="all">
+    <link rel="stylesheet" type="text/css" href="__CSS__/ext.css" media="all">
+    <!--zui end-->
+
+    <!--
+        <link rel="stylesheet" type="text/css" href="__CSS__/base.css" media="all">
+        <link rel="stylesheet" type="text/css" href="__CSS__/common.css" media="all"-->
+    <link rel="stylesheet" type="text/css" href="__CSS__/module.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css" media="all">
+    <!--<link rel="stylesheet" type="text/css" href="__CSS__/{$Think.config.COLOR_STYLE}.css" media="all">-->
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/jquery-1.10.2.min.js"></script>
+    <![endif]--><!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+    <!--<![endif]-->
+    <block name="style"></block>
+    <script type="text/javascript">
+        var ThinkPHP = window.Think = {
+            "ROOT": "__ROOT__", //当前网站地址
+            "APP": "__APP__", //当前项目地址
+            "PUBLIC": "__PUBLIC__", //项目公共目录地址
+            "DEEP": "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL": ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR": ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"],
+            'URL_MODEL': "{:C('URL_MODEL')}"
+        }
+        var _ROOT_="__ROOT__";
+    </script>
+</head>
+<body>
+<style>
+
+</style>
+<div class="panel-header">
+    <nav class="navbar navbar-inverse admin-bar" role="navigation">
+        <div class="navbar-header">
+            <a href="{:U('Index/index')}" class="navbar-brand">
+                OpenSNS</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-example">
+            <ul id="nav_bar" class="nav navbar-nav">
+                <volist name="__MENU__.main" id="menu">
+                    <neq name="menu.hide" value="1">
+                        <li data-id="{$menu.id}" class="{$menu.class|default=''}"><a href="{$menu.url|U}">
+                            <neq name="menu.icon" value=""><i class="icon-{$menu.icon}"></i>&nbsp; </neq>
+                            {$menu.title}</a></li>
+                    </neq>
+
+                </volist>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="http://os.opensns.cn/index.php?s=question/index/index.html" target="_blank"><i class="icon-question"></i> 问答</a></li>
+                <li><a href="http://os.opensns.cn/index.php?s=book/index/index.html" target="_blank"><i class="icon-book"></i> 文档</a></li>
+                <li><a href="javascript:;"  onclick="clear_cache()"><i class="icon-trash"></i> 清空缓存</a></li>
+                <li><a target="_blank" href="{:U('Home/Index/index')}"><i class="icon-copy"></i> 打开前台</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i>
+                        {:session('user_auth.username')} <b
+                                class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{:U('User/updatePassword')}">修改密码</a></li>
+                        <li><a href="{:U('User/updateNickname')}">修改昵称</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{:U('Public/logout')}">退出</a></li>
+                    </ul>
+                </li>
+                <script>
+                    function clear_cache() {
+                        var msg = new $.Messager('清理缓存成功。', {placement: 'bottom'});
+                        $.get('/cc.php');
+                        msg.show()
+                    }
+                </script>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-title">
+
+    </div>
+
+</div>
+<div class="panel-menu">
+    <ul class="nav nav-primary nav-stacked">
+
+        <volist name="__MODULE_MENU__" id="v">
+            <if condition="$v['is_setup'] AND $v['admin_entry']">
+                <li>
+                    <a  href="{:U($v['admin_entry'])}" title="{$v.alias|text}" class="text-ellipsis text-center">
+                        <i class="icon-{$v['icon']}"></i><br/>{$v.alias}
+                    </a>
+                </li>
+            </if>
+
+
+        </volist>
+
+    </ul>
+
+</div>
+
+<div class="panel-main" style="float:left;">
+
+    <div class="">
+
+
+    <div class="clearfix " style="">
+        <notempty name="__MENU__.child">
+            <div class="sub_menu_wrapper" style="background: rgb(245, 246, 247); bottom: -10px;top: 0;position: absolute;width: 180px;overflow: auto">
+                <div>
+                    <nav id="sub_menu" class="menu" data-toggle="menu">
+                        <ul class="nav nav-primary">
+                            <block name="sidebar">
+                                <!--     <notempty name="_extra_menu">
+                                         {// 动态扩展菜单 //}
+                                         {:extra_menu($_extra_menu,$__MENU__)}
+                                     </notempty>-->
+                                <volist name="__MENU__.child" id="sub_menu">
+                                    <!-- 子导航 -->
+                                    <notempty name="sub_menu">
+                                        <li class="show">
+                                            <a href="#">
+                                                <notempty name="key">{$key}</notempty>
+                                            </a>
+                                            <ul class="nav">
+                                                <volist name="sub_menu" id="menu">
+                                                    <li>
+                                                        <a href="{$menu.url|U}">{$menu.title}</a>
+                                                    </li>
+                                                </volist>
+                                            </ul>
+                                        </li>
+                                    </notempty>
+                                    <!-- /子导航 -->
+                                </volist>
+
+                            </block>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </notempty>
+
+
+        <notempty name="__MENU__.child">
+            <php>$col=10;</php>
+            <else/>
+            <php>$col=12;</php>
+        </notempty>
+        <div id="main-content" class="" style="padding:10px;padding-left:0;padding-bottom:10px;left: 180px;position:absolute;right: 0;bottom: 0;top: 0;overflow: auto">
+           <eq name="update" value="1">
+               <div id="top-alert" class="alert alert-success alert-dismissable" style="position: absolute;left: 50%;margin-left: -150px;width: 300px;box-shadow: rgba(95, 95, 95, 0.4) 3px 3px 3px;z-index:999">
+                   <i class="icon-ok-sign" style="font-size: 28px"></i>  &nbsp;&nbsp; 有新版本可更新！<a class="alert-link" href="{:U('Cloud/update')}">去更新！</a>
+                   <button class="close fixed" style="margin-top: 4px;">&times;</button>
+               </div>
+           </eq>
+
+            <div id="main" style="overflow-y:auto;overflow-x:hidden;">
+                <block name="nav">
+                    <!-- nav -->
+                    <notempty name="_show_nav">
+                        <div class="breadcrumb">
+                            <span>您的位置:</span>
+                            <assign name="i" value="1"/>
+                            <foreach name="_nav" item="v" key="k">
+                                <if condition="$i eq count($_nav)">
+                                    <span>{$v}</span>
+                                    <else/>
+                                    <span><a href="{$k}">{$v}</a>&gt;</span>
+                                </if>
+                                <assign name="i" value="$i+1"/>
+                            </foreach>
+                        </div>
+                    </notempty>
+                    <!-- nav -->
+                </block>
+
+                <div class="admin-main-container">
+                    <block name="body"></block>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+<php>if($report){</php>
+<div  class="report_feedback" title="填写四格体验报告" data-toggle="modal" data-target="#myModal">
+    <div class="report_icon" ></div>
+    <span class="label label-badge label-danger report_point">1</span>
+</div>
+
+
+
+
+<div class="modal fade in" id="myModal" aria-hidden="false"  style="display: none">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <form class="report_form"  action="{:U('admin/admin/submitReport')}" method="post">
+
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">关闭</span></button>
+                <h4 class="modal-title">四格体验报告</h4>
+            </div>
+
+            <div class="modal-body">
+
+                    <div class="row">
+                        <!-- 帖子分类 -->
+                        <div class="col-sm-12">
+<div>感谢您使用我们的产品，希望您的认真反馈有助于我们改善产品。</div>
+
+                                <label class="item-label">我的更新心情</label>
+                            <div>
+                                <select name="q1" class="report-select" style="width:400px;">
+                                    <option value="0">请选择</option>
+                                    <option>开心</option>
+                                    <option>悲伤</option>
+                                    <option>超有爱</option>
+                                    <option>期待</option>
+                                </select>
+                        </div>
+
+                                <label class="item-label">我选择的最有爱更新</label>
+                            <div>
+                                <select name="q2" class="report-select" style="width:400px;">
+                                    <option value="0">请选择</option>
+                                    <volist name="this_update" id="option">
+                                        <option value="{$option|htmlspecialchars}">{$option|htmlspecialchars}</option>
+                                    </volist>
+                                </select>
+                            </div>
+
+                                <label class="item-label">我选择的最不给力更新
+                                </label>
+                            <div>
+                                <select name="q3" class="report-select" style="width:400px;">
+                                    <option value="0">请选择</option>
+                                    <volist name="this_update" id="option">
+                                        <option value="{$option|htmlspecialchars}">{$option|htmlspecialchars}</option>
+                                    </volist>
+                                </select>
+                            </div>
+
+
+                                <label class="item-label">我选择的期待功能
+                                </label>
+                            <div>
+                                <select name="q4" class="report-select" style="width:400px;">
+                                    <option value="0">请选择</option>
+                                    <volist name="future_update" id="option">
+                                        <option value="{$option|htmlspecialchars}">{$option|htmlspecialchars}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                    </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <php>if(strval($report['url'])!=''){</php>
+                <a class="pull-left" href="{$report['url']}" target="_blank" >查看更新详情</a>
+                <php>}</php>
+                <button type="submit" class="btn ajax-post" target-form="report_form">确定</button>
+            </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<php>}</php>
+
+
+<script>
+    $(function () {
+        var config = {
+            '.chosen-select'           : {search_contains: true, drop_width: 400,no_results_text:'找不到匹配的选项'},
+            '.report-select'           : {search_contains: true, width: '400px',no_results_text:'找不到匹配的选项'}
+        };
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+
+    });
+</script>
+
+
+<script src="__ZUI__/lib/chosen/chosen.js"></script>
+<link href="__ZUI__/lib/chosen/chosen.css" type="text/css" rel="stylesheet">
+
+
+
+
+<!-- 内容区 -->
+
+<!-- /内容区 -->
+<script type="text/javascript">
+    (function () {
+        var ThinkPHP = window.Think = {
+            "ROOT": "__ROOT__", //当前网站地址
+            "APP": "__APP__", //当前项目地址
+            "PUBLIC": "__PUBLIC__", //项目公共目录地址
+            "DEEP": "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL": ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR": ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"],
+            'URL_MODEL': "{:C('URL_MODEL')}"
+        }
+    })();
+</script>
+<script type="text/javascript" src="__STATIC__/think.js"></script>
+
+<!--zui-->
+<script type="text/javascript" src="__JS__/common.js"></script>
+<script type="text/javascript" src="__JS__/com/com.toast.class.js"></script>
+<script type="text/javascript" src="__ZUI__/js/zui.js"></script>
+<script type="text/javascript" src="__ZUI__/lib/autotrigger/autotrigger.min.js"></script>
+<!--zui end-->
+<link rel="stylesheet" type="text/css" href="__JS__/kanban/kanban.css" media="all">
+<script type="text/javascript" src="__JS__/kanban/kanban.js"></script>
+<script type="text/javascript">
+    +function () {
+        var $window = $(window), $subnav = $("#subnav"), url;
+        $window.resize(function () {
+            $("#main").css("min-height", $window.height() - 130);
+        }).resize();
+
+
+        // 导航栏超出窗口高度后的模拟滚动条
+        var sHeight = $(".sidebar").height();
+        var subHeight = $(".subnav").height();
+        var diff = subHeight - sHeight; //250
+        var sub = $(".subnav");
+        if (diff > 0) {
+            $(window).mousewheel(function (event, delta) {
+                if (delta > 0) {
+                    if (parseInt(sub.css('marginTop')) > -10) {
+                        sub.css('marginTop', '0px');
+                    } else {
+                        sub.css('marginTop', '+=' + 10);
+                    }
+                } else {
+                    if (parseInt(sub.css('marginTop')) < '-' + (diff - 10)) {
+                        sub.css('marginTop', '-' + (diff - 10));
+                    } else {
+                        sub.css('marginTop', '-=' + 10);
+                    }
+                }
+            });
+        }
+    }();
+    highlight_subnav("{:U('Admin'.'/'.CONTROLLER_NAME.'/'.ACTION_NAME,$_GET)}")
+</script>
+<block name="script"></block>
+<block name="modal">
+</block>
+</body>
+</html>

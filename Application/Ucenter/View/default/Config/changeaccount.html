@@ -1,0 +1,74 @@
+<php>if(check_reg_type($type)){</php>
+<div class="modal-body">
+
+            <form class="form-horizontal center_info ajax-form" role="form"
+                  action="{:U('ucenter/config/checkVerify')}" method="post">
+                <div class="form-group">
+                    <label for="account" class="col-xs-2 control-label">请输入{$cName}</label>
+
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control pull-left" id="account" name="account"
+                               placeholder="{$cName}">
+                        <a class="pull-left btn btn-default " data-role="getVerify" style="margin-left: 10px">获取验证码</a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="verify" class="col-xs-2 control-label">验证码</label>
+
+                    <div class="col-xs-10">
+                        <input type="text" class="form-control" id="verify" placeholder="验证码" name="verify">
+                    </div>
+                </div>
+
+                <input type="hidden" class="form-control" name="type" value="{$type}">
+                <input type="hidden" class="form-control" name="uid" value="{:is_login()}">
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-xs-10">
+                        <button type="submit" data-role="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </form>
+</div>
+<script>
+    $(function () {
+        $("[data-role='getVerify']").click(function () {
+            var $this = $(this);
+            toast.showLoading();
+            var account =$this.parents('.center_info').find('#account').val();
+            var type = $this.parents('.center_info').find('[name="type"]').val();
+            $.post("{:U('ucenter/verify/sendVerify')}", {account: account, type: type,action:'config'}, function (res) {
+                if(res.status){
+
+                    DecTime.obj = $this
+                    DecTime.time = "{: modC('SMS_RESEND','60','USERCONFIG')}";
+                    $this.attr('disabled',true)
+                    DecTime.dec_time();
+
+                    toast.success(res.info);
+                }
+                else{
+                    toast.error(res.info);
+                }
+                toast.hideLoading();
+            })
+        })
+    })
+
+    var DecTime = {
+        obj:0,
+        time:0,
+        dec_time : function(){
+            if(this.time > 0){
+                this.obj.text(this.time--+'S')
+                setTimeout("DecTime.dec_time()",1000)
+            }else{
+                this.obj.text('验证手机')
+                this.obj.attr('disabled',false)
+            }
+
+        }
+    }
+</script>
+<php>}</php>

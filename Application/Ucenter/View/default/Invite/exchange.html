@@ -1,0 +1,46 @@
+<style>
+    .modal-dialog {
+        width: 430px;
+    }
+</style>
+
+<div>
+    <form id="exchange_form" action="__SELF__" method="post" class="ajax-form">
+        <input type="hidden" name="invite_id" value="{$id}"/>
+        <div class="form-group clearfix">
+            <label class="col-xs-4 control-label" style="text-align: right;">
+                兑换个数：
+            </label>
+
+            <div class="col-xs-8">
+                <input type="text" name="exchange_num" class="form-control" value="1">
+                <div style="color: #C3C3C3;">您当前最多还可以兑换 {$can_buy_num} 个。每个用户每 {$long} 最多兑换 {$num_buy} 个</div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: center;">
+            <a class="btn btn-primary" data-role="submit" <if condition="$can_buy_num eq 0">disabled="disabled"</if>>兑换</a>
+            <a onclick="$('.close').click();" class="btn btn-default">取消</a>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $('[data-role="submit"]').click(function () {
+            if(confirm('确定兑换？')){
+                query = $('#exchange_form').serialize();
+                var url = $('#exchange_form').attr('action');
+                $.post(url, query, function (msg) {
+                    if (msg.status) {
+                        toast.success('兑换成功！');
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        handleAjax(msg);
+                    }
+                }, 'json');
+            }
+        });
+    });
+</script>

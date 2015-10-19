@@ -1,0 +1,51 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>
+            {$pack['id']?'编辑':'新增'}补丁
+        </h2>
+    </div>
+    <form action="{:U()}" method="post" class="form-horizontal">
+        <div class="form-item">
+            <label class="item-label">补丁名称<span class="check-tips">（英文补丁的名称，留空自动根据时间生成）</span></label>
+            <div class="controls">
+                <input type="hidden" class="text input-large" name="title_old" value="{$pack.title|default=''}">
+                <input type="text" class="text input-large form-control" name="title" value="{$pack.title|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">补丁内Sql内容<span class="check-tips">（直接填写Sql语句即可）</span></label>
+            <div class="controls">
+                <label class="textarea input-large">
+                    <textarea name="sql" class="form-control">{$pack.sql|default=''}</textarea>
+                </label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">补丁说明<span class="check-tips">（用于说明补丁作用的文字）</span></label>
+            <div class="controls">
+                <label class="textarea input-large ">
+                    <textarea name="des" class="form-control">{$pack.des|default=''}</textarea>
+                </label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label">作者<span class="check-tips">（填写补丁作者）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large form-control" name="auth" value="{$pack.auth|default=$db['auth']}">
+            </div>
+        </div>
+        <div class="form-item">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+<block name="script">
+    <script type="text/javascript" charset="utf-8">
+        //导航高亮
+        $('.side-sub-menu').find("a[href='{:U('index')}']").closest('li').addClass('current');
+    </script>
+</block>
+

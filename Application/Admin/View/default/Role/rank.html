@@ -1,0 +1,148 @@
+<!-- 管理员用户组新增和编辑页面 -->
+<extend name="Public/base" />
+<block name="body">
+    <div class="main-title">
+        <h2>默认头衔配置</h2>
+    </div>
+    <div class="tab-wrap with-padding">
+
+        <div class="clearfix">
+            <div class="col-xs-10">
+                <include file="_link"/>
+            </div>
+            <div class="col-xs-2 text-right">
+                <select name="role" class="form-control">
+                    <volist name="role_list" id="vo">
+                        <option value="{:U('Role/configRank',array('id'=>$vo['id']))}" <eq name="vo['id']" value="$this_role['id']">selected</eq> >{$vo.title}</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="node-list">
+            <!-- 访问授权 -->
+            <div class="tab-pane in">
+                <form action="__SELF__" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
+                    <notempty name="can_apply">
+                        <dl class="checkmod">
+                            <dt class="hd">
+                                <label class="checkbox"><input class="auth_rank rank_all" type="checkbox">用户可申请头衔</label>
+                            </dt>
+                            <dd class="bd">
+                                <volist name="can_apply" id="rank" >
+                                    <div class="rank_check">
+                                        <div>
+                                            <label class="checkbox" title="id：{$rank['id']}  创建人：{$rank['name']}  创建时间：{$rank['create_time']|time_format='Y-m-d'}">
+                                            <input class="auth_rank rank_row" type="checkbox" name="ranks[]" value="{$rank['id']}"/>{$rank['title']}<img src="{$rank['logo']|getThumbImageById}"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </volist>
+                                <div class="clearfix"></div>
+                            </dd>
+                        </dl>
+                    </notempty>
+
+                    <notempty name="un_apply">
+                        <dl class="checkmod">
+                            <dt class="hd">
+                                <label class="checkbox"><input class="auth_rank rank_all" type="checkbox">用户不可申请头衔</label>
+                            </dt>
+                            <dd class="bd">
+                                <volist name="un_apply" id="rank" >
+                                    <div class="rank_check">
+                                        <div>
+                                            <label class="checkbox" title="id：{$rank['id']}  创建人：{$rank['name']}  创建时间：{$rank['create_time']|time_format='Y-m-d'}">
+                                                <input class="auth_rank rank_row" type="checkbox" name="ranks[]" value="{$rank['id']}"/>{$rank['title']}<img src="{$rank['logo']|getThumbImageById}"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </volist>
+                                <div class="clearfix"></div>
+                            </dd>
+                        </dl>
+                    </notempty>
+                    <if condition="count($un_apply)||count($can_apply)">
+                        <label class="item-label">头衔颁发原因</label>
+                        <div class="controls">
+                            <textarea name="reason" style="width: 500px;min-height: 100px;">{$reason}</textarea>
+                        </div>
+                        <else/>
+                        <div style="color: #B5B4B4;font-size: 16px;margin: 10px;">
+                            请先到 用户》头衔管理》头衔列表 中<a href="{:U('admin/rank/editrank')}" target="_blank" title="立刻去添加头衔" style="color: #B5B4B4;text-decoration: underline;">添加头衔</a>~
+                        </div>
+                    </if>
+                    <div style="margin-top: 20px;"></div>
+                    <input type="hidden" name="id" value="{$this_role.id}" />
+                    <button type="submit" class="btn submit-btn ajax-post" target-form="auth-form">确 定</button>
+                    <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+                    <span style="color: #BABABA;margin: 11px;">请先保存以上配置后再切换到其它界面</span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <style>
+        .rank_check{
+            float: left;
+            margin: 20px 20px 20px 0;
+        }
+        .rank_check img{
+            margin-left: 5px;
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</block>
+<block name="script">
+    <script type="text/javascript" src="__STATIC__/qtip/jquery.qtip.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/qtip/jquery.qtip.min.css" media="all">
+    <script type="text/javascript" charset="utf-8">
+        +function($){
+            var ranks = [{$this_role.ranks}];
+        $('.auth_rank').each(function(){
+            if( $.inArray( parseInt(this.value,10),ranks )>-1 ){
+                $(this).prop('checked',true);
+            }
+            if(this.value==''){
+                $(this).closest('span').remove();
+            }
+        });
+
+        //全选节点
+        $('.rank_all').on('change',function(){
+            $(this).closest('dl').find('dd').find('input').prop('checked',this.checked);
+        });
+        $('.rank_row').on('change',function(){
+            $(this).closest('.rank_check').find('.child_row').find('input').prop('checked',this.checked);
+        });
+
+        $('.checkbox').each(function(){
+            $(this).qtip({
+                content: {
+                    text: $(this).attr('title'),
+                    title: $(this).text()
+                },
+                position: {
+                    my: 'bottom center',
+                    at: 'top center',
+                    target: $(this)
+                },
+                style: {
+                    classes: 'qtip-dark',
+                    tip: {
+                        corner: true,
+                        mimic: false,
+                        width: 10,
+                        height: 10
+                    }
+                }
+            });
+        });
+
+        $('select[name="role"]').change(function(){
+            location.href = this.value;
+        });
+        //导航高亮
+        highlight_subnav('{:U('Role/configrank')}');
+        }(jQuery);
+    </script>
+</block>

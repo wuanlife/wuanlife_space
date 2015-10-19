@@ -1,0 +1,44 @@
+<extend name="Config/base"/>
+
+<block name="body">
+
+    <div id="center">
+        <div id="center_base" class="with-padding" style="padding: 20px">
+
+            <h2>
+                其他设置
+            </h2>
+
+            <div class="row">
+
+
+                <div class="with-padding">
+                    <button data-role="cleanRemember" class="btn btn-large btn-block btn-primary" type="button">清除记住登录
+                    </button>
+                    {:hook('userConfig')}
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</block>
+
+<block name="script">
+    <script>
+        //检查两次输入的密码是否一致
+        $(function () {
+            $('[data-role=cleanRemember]').click(function () {
+                if (confirm('是否确认清除记住登录状态？')) {
+                    $.get(U('Ucenter/Config/cleanRemember'), '', function (res) {
+                        handleAjax(res);
+                    })
+                }
+            })
+
+
+        })
+    </script>
+</block>
