@@ -1,0 +1,32 @@
+<div class="common-block my_manage group_info ">
+    <header >
+        活跃群组
+    </header>
+    <div class="common_block_content_right">
+        <volist name="hot_group" id="my">
+            <div class="row agroup">
+                <div class="col-xs-3" >
+
+                    <php> if($my['logo']){</php>
+                    <img class="logo" src="{$my.logo|getThumbImageById=72,72}" alt="{$my.title|op_t}">
+                    <php>}else{</php>
+                    <img class=" logo" src="__IMG__/icon.jpg" alt="{$my.title|op_t}">
+                    <php>}</php>
+
+                </div>
+                <div class="col-xs-5"  style="margin-left: -25px;">
+                    <h3><a target="_blank" href="{:U('group/index/group',array('id'=>$my['id']))}" title="{$my.title}">{$my.title|getShortSp=6}</a></h3>
+
+                    <p>成员：{$my.member_count}人</p>
+                </div>
+
+                <div class="col-xs-4">
+                    <p>活跃度：{$my.activity}</p>
+                </div>
+
+            </div>
+        </volist>
+
+
+    </div>
+</div>

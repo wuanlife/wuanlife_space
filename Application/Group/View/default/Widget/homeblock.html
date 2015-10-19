@@ -1,0 +1,132 @@
+<div class="block-bar">
+    <div class="container">
+        <div class="block-body row">
+            <div class="common-block" style="margin:0 10px;">
+                <div style="margin:0 -10px;">
+                    <div class="col-xs-9">
+                        <div>
+                            <h2>
+                                {:modC('GROUP_POST_SHOW_TITLE', '热门群组话题', 'Group')}
+                            </h2>
+
+                            <div>
+                                <volist name="group_post_list" id="vo">
+                                    <php>
+                                        $user = query_user(array('avatar128','avatar64','nickname','uid','space_url'),$vo['uid']);
+                                    </php>
+                                    <div class="clearfix item">
+                                        <div class="col-xs-2 text-center">
+                                            <p style="margin: 4px 0;">
+                                                <a href="{$user.space_url}">
+                                                    <img src="{$user.avatar64}" ucard="{$user.uid}" class="avatar-img"/>
+                                                </a>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <div class="item-heading">
+                                                <h4 class="text-more" style="width: 100%;margin-top: 5px;margin-bottom: 5px;">
+                                                    <a target="_blank" href="{:U('index/group?id='.$vo['group_id'])}" class="label label-success" style="line-height: 18px;">{$vo.group.title}</a>
+                                                    &nbsp; <a target="_blank" href="{:U('group/index/detail',array('id'=>$vo['id']))}">{$vo.title}</a>
+                                                </h4>
+                                            </div>
+                                            <div class="item-content">
+                                                <neq name="vo.cover" value="">
+                                                    <div class="media pull-right">
+                                                        <a target="_blank" href="{:U('group/index/detail',array('id'=>$vo['id']))}">
+                                                            <div class="img-thumbnail-wrap"
+                                                                 style="width:80px;height:80px;line-height:80px">
+                                                                <img class="" src="{$vo.cover}">
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </neq>
+
+                                                <div class="text">
+                                                    <a target="_blank" href="{:U('group/index/detail',array('id'=>$vo['id']))}">{$vo.summary}...</a>
+                                                </div>
+                                            </div>
+                                            <div class="item-footer">
+                                                <a href="{$user.space_url}" ucard="{$user.uid}" class="text-muted">{$user.nickname|op_t}</a>
+                                                &nbsp;
+                                                <a target="_blank" href="{:U('group/index/detail',array('id'=>$vo['id']))}" class="text-muted">回复({$vo.reply_count})</a>&nbsp;
+                                                <span class="text-muted">发布：{$vo.create_time|friendlyDate}&nbsp;|&nbsp;最后回复时间：{$vo.last_reply_time|friendlyDate}</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <if condition="$i neq count($group_post_list)">
+                                        <hr class="group-list-hr"/>
+                                        <else/>
+                                        <div class="group-list-no-hr"></div>
+                                    </if>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div>
+                            <h2>{:modC('GROUP_SHOW_TITLE', '推荐群组', 'Group')}</h2>
+
+                            <div class="clearfix position-groups">
+                                <ul class="group-list" style="list-style: none;margin-bottom: 10px;margin-top: -12px;">
+                                    <volist name="group_show" id="vo">
+                                        <li class="clearfix" style="padding: 14px 0;">
+                                            <div class="col-xs-4">
+                                                <div class="img-thumbnail-wrap">
+                                                    <a href="{:U('group/index/group',array('id'=>$vo['id']))}" target="_blank">
+                                                        <img class="" src="{$vo.logo|getThumbImageById=68,68}"/>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4>
+                                                    <a href="{:U('group/index/group',array('id'=>$vo['id']))}" target="_blank">{$vo.title}</a>
+                                                </h4>
+                                                <p>
+                                                    {$vo.member_count} 个{$vo.member_alias|default='成员'}&nbsp;&nbsp;
+                                                    <if condition="!$vo['is_attend']">
+                                                        <a data-role="group_attend" data-group-id="{$vo.id}" class="">+加入群组</a>
+                                                    </if>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    .position-groups >div{
+        margin-bottom: 15px;
+    }
+    .group-list-hr{
+        margin-top: 11px;
+        margin-bottom: 10px;
+    }
+    .group-list-no-hr{
+        padding: 10px;
+    }
+</style>
+<script>
+    $(function () {
+        ucard();
+        $('[data-role="group_attend"]').unbind('click')
+        $('[data-role="group_attend"]').click(function () {
+            var obj = $(this)
+            var group_id = $(this).attr('data-group-id');
+            $.post(U('group/index/attend'), {group_id: group_id}, function (res) {
+                if(res.status){
+                    obj.hide();
+                }
+                handleAjax(res);
+            })
+        })
+    })
+</script>

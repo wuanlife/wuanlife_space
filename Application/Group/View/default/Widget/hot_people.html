@@ -1,0 +1,39 @@
+
+<div class="common_block_title_right">
+    活跃会员
+</div>
+<div class="common_block_content_right clearfix group_active_member">
+
+    <volist name="hot_people" id="people">
+        <div class="" style="margin-bottom: 10px;float: left;width: 100%;margin-left: -15px;">
+        <div class="col-xs-7 name">
+            <a ucard="{$people.uid}" href="{$people.user.space_url}" style="margin-right: 20px;"><img class="avatar-img avatar" src="{$people.user.avatar64}"/></a>
+            {$people.user.nickname}
+        </div>
+        <div class="col-xs-5 active" style="font-size: 12px;" >
+            活跃度： {$people.activity}
+        </div>
+        </div>
+    </volist>
+</div>
+
+
+<div class="common_block_title_right">
+    最新成员
+</div>
+<div class="">
+    <div class="joined">
+        <volist name="all" id="vo">
+
+            <div class="clearfix text-center" style="width: 50px; display: inline-block">
+                <a ucard="{$vo.uid}" href="{$vo.user.space_url}" style="margin-right:5px;"><img class="avatar-img avatar"  src="{$vo.user.avatar64}" style="width: 32px;height: 32px;margin-bottom: 5px"/></a>
+
+                <div  class="text-more" style="width: 50px"><a ucard="{$vo.uid}" href="{$vo.user.space_url}" style="margin-right:5px;">{$vo.user.nickname}</a></div>
+            </div>
+
+
+
+        </volist>
+
+    </div>
+</div>

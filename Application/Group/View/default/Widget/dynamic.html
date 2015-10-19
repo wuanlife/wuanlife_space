@@ -1,0 +1,85 @@
+<div class="feed dongtai clearfix">
+    <div class="col-xs-2 hidden-xs">
+        <a href="{$user.space_url}" ucard="{$user.uid}"> <img class="avatar-img"
+                                                              src="{$user.avatar64}"/></a>
+    </div>
+
+<switch name="dynamic.type">
+    <case value="attend">
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a> 加入了群组
+                <a target="_blank" href="{:U('group/index/group',array('id'=>$dynamic['group_id']))}" title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+                <span class="pull-right hidden-xs">  {$dynamic.create_time|friendlyDate}</span>
+            </h3>
+        </div>
+    </case>
+    <case value="quit">
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a> 退出了圈子
+                <a target="_blank"  href="{:U('group/index/group',array('id'=>$dynamic['group_id']))}" title="{$dynamic.group_id|get_group_name}" >{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+                <span class="pull-right  hidden-xs">  {$dynamic.create_time|friendlyDate}</span>
+            </h3>
+        </div>
+    </case>
+    <case value="remove">
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a> 被管理员移出了圈子
+                <a target="_blank"  href="{:U('group/index/group',array('id'=>$dynamic['group_id']))}" title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+                <span class="pull-right hidden-xs"> {$dynamic.create_time|friendlyDate}</span>
+            </h3>
+        </div>
+    </case>
+    <case value="reply">
+        <php>
+            $reply = D('GroupPostReply')->getReply($dynamic['row_id']);
+            $post = D('GroupPost')->getPost($reply['post_id']);
+        </php>
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a> 回复了 <a href="{$post.user.space_url}"
+                                                                        ucard="{$post.user.uid}">{$post['user']['nickname']}</a>
+                的帖子 <a target="_blank"
+                       href="{:U('group/index/detail',array('id'=>$post['id']))}" title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+                <span class="pull-right hidden-xs">{$dynamic.create_time|friendlyDate}</span>
+            </h3>
+            <div class="feed_content">
+                <if condition="$reply['status'] neq 1">
+                    该回复已被删除<else/>
+                    {$reply['content']|limit_picture_count=0|text|getShortSp=30}
+                </if>
+            </div>
+        </div>
+    </case>
+    <case value="post">
+        <php>
+            $post = D('GroupPost')->getPost($dynamic['row_id']);
+        </php>
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a>
+                发布了一个帖子
+                <a target="_blank" href="{:U('group/index/detail',array('id'=>$post['id']))}" title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+                <span class="pull-right hidden-xs">{$dynamic.create_time|friendlyDate}</span>
+            </h3>
+            <div class="feed_content">
+                <if condition="$post['status'] neq 1">
+                    该回复已被删除<else/>
+                    {$post['content']|limit_picture_count=0|text|getShortSp=30}
+                </if>
+            </div>
+        </div>
+    </case>
+    <case value="update_post">
+        <php>
+            $post = D('GroupPost')->getPost($dynamic['row_id']);
+        </php>
+        <div class="col-xs-10">
+            <h3><a href="{$user.space_url}">{$user.nickname}</a>
+                 更新了帖子
+                 <a target="_blank" href="{:U('group/index/detail',array('id'=>$post['id']))}" title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+                <span class="pull-right hidden-xs">{$dynamic.create_time|friendlyDate}</span>
+            </h3>
+        </div>
+    </case>
+    <default />
+</switch>
+    <span class="clearfix col-xs-10 visible-xs" style="font-size: 14px;color: #999;">{$dynamic.create_time|friendlyDate}</span>
+</div>

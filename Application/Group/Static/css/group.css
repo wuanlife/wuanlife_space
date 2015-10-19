@@ -1,0 +1,567 @@
+.group-list {
+  list-style: none;
+}
+.group-list li {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+.img-thumbnail-wrap {
+  text-align: center;
+  overflow: hidden;
+}
+.web_uploader_picture_list {
+  margin-top: 5px;
+}
+.web_uploader_picture_list img {
+  width: 200px;
+  height: 200px;
+}
+.post_lists {
+  padding-left: 0;
+  margin-bottom: 15px;
+}
+.post_lists li {
+  list-style: none;
+  line-height: 25px;
+}
+.group_tags a {
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  padding: 1px 10px;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+.group_types a {
+  border: none;
+  background: #efefef;
+}
+.group_types .active {
+  background: #666;
+  color: #fff !important;
+}
+.group_lists hr {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.group_lists p {
+  color: #999 !important;
+}
+.group_lists .logo {
+  margin-top: 0;
+}
+.group-list-title-link:hover {
+  text-decoration: none;
+}
+.group-list-no-hr {
+  padding: 10px;
+}
+/*通用类*/
+.group_bg {
+  background: url('../images/bg.png');
+}
+.group_block_border {
+  border: #ddd 1px solid;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.group_block_title {
+  background: #fff;
+  padding: 8px 5px;
+  color: #7A7A7A;
+  font-size: 1.2em;
+  margin: 0;
+  margin-bottom: 20px;
+}
+.group_order_select {
+  border-radius: 4px;
+  padding: 2px 2px;
+  font-size: 14px;
+}
+/*通用类end*/
+.group_header {
+  padding-bottom: 20px;
+  vertical-align: middle;
+  font-size: 16px;
+  position: relative;
+  overflow: visible;
+  min-height: 200px;
+  background-size: cover !important;
+  margin-bottom: 20px;
+}
+.group_header .group_left_tip {
+  position: absolute;
+  left: -18px;
+  background: #008CC9;
+  top: 50%;
+  width: 18px;
+  font-size: 12px;
+  margin-top: -18px;
+  padding: 4px;
+}
+.group_header .logo {
+  width: 140px;
+  height: 140px;
+}
+.group_header_block1 {
+  border-radius: 4px 4px 0 0;
+  width: 50%;
+  position: absolute;
+  padding: 10px;
+  height: 165px;
+}
+.group_header_block {
+  border-radius: 4px 4px 0 0;
+  width: 50%;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  padding: 10px;
+  height: 165px;
+}
+.group_header_block .title {
+  display: inline-block;
+  margin-bottom: 0px;
+  padding-top: 0;
+  margin-top: 0;
+  text-align: left;
+}
+.group_header_block .title a {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.group_header_block .group_tags {
+  margin-top: 5px;
+}
+.group_header_block .logo {
+  border-radius: 8px;
+}
+.group_logo_i {
+  margin-top: 35px;
+  background: url('../images/bg.png');
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+}
+.group_post_btn {
+  height: 38px;
+  width: 100%;
+  font-size: 18px;
+}
+.group_list_group {
+  text-align: center;
+}
+.group_list_group a {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 8px 10px;
+  width: 80%;
+  background: white;
+  margin-bottom: 10px;
+}
+.group_list_group a:hover {
+  background: #666;
+  color: white;
+}
+.group_list_group .active {
+  background: #666;
+  color: white;
+}
+.hot_post {
+  background: white;
+  margin-bottom: 20px;
+  padding-bottom: 0;
+}
+.hot_post dl {
+  margin-bottom: 0;
+}
+.hot_post dt:last-child {
+  border: none;
+}
+.hot_post dt {
+  margin: 10px;
+  font-weight: 1em;
+  line-height: 1.7em;
+  margin-bottom: .8em;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+.hot_post dt .hot_num {
+  padding: 0 0.5em;
+  font-style: normal;
+  border-radius: 0.3em;
+  font-size: 1em;
+  display: inline-block;
+  font-weight: normal;
+}
+.hot_post dt a {
+  color: #333;
+  font-weight: normal;
+}
+.hot_post dt a:hover {
+  color: #333 !important;
+}
+.group_group_name {
+  font-size: 1.2em;
+}
+.post_item {
+  font-size: 14px;
+}
+.post_item h3 {
+  font-size: 16px;
+}
+.post_item h3 .time {
+  font-size: 14px;
+  color: #999;
+}
+/*帖子详情页*/
+.post_content .group_block_border {
+  border-top-left-radius: 0;
+}
+.post_content h2 {
+  color: #333333;
+  font-size: 18px;
+  font-weight: bold;
+}
+.post_content .post_line {
+  margin: 15px -15px;
+}
+.post_content .ribbion-green1 {
+  position: absolute;
+  right: 0px;
+  background: #666;
+  width: 75px;
+  top: 0;
+  height: 25px;
+  text-align: center;
+  padding-left: 0;
+  vertical-align: middle;
+  color: white !important;
+  font-size: 12px;
+  line-height: 25px;
+}
+.post_content .ribbion-green {
+  position: absolute;
+  right: 0px;
+  background: #666;
+  width: 50px;
+  top: 0;
+  height: 25px;
+  text-align: center;
+  padding-left: 0;
+  vertical-align: middle;
+  color: white !important;
+  font-size: 12px;
+  line-height: 25px;
+}
+.post_content .post_title h2 {
+  margin-bottom: 0;
+}
+.post_content .sub_title {
+  color: #ccc;
+  font-size: 14px;
+}
+.post_content .group_left_operation {
+  position: absolute;
+  left: -25px;
+  width: 25px;
+  background: white;
+  border-radius: 3px;
+  border: 1px solid #dddddd;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+  top: -16px;
+}
+.post_content .group_left_operation .btn-group a {
+  line-height: 25px;
+  width: 25px;
+  height: 25px;
+  display: block;
+  text-align: center;
+}
+.post_content .group_left_operation .btn-group a:hover {
+  color: red;
+  background: #eee;
+}
+.post_content .main_content {
+  min-height: 250px;
+  word-break: break-all;
+  overflow: hidden;
+}
+/*帖子详情页*/
+/*帖子列表*/
+.group_order .dropdown-menu {
+  min-width: 94px !important;
+}
+.group_order .dropdown-menu > li > a {
+  padding: 3px 12px;
+  line-height: 18px;
+}
+.group_order .btn {
+  font-size: 12px;
+}
+/*帖子列表end*/
+.post_top,
+.post_top_group,
+.op_rectangle {
+  height: 2em;
+  margin-left: 1em;
+  display: inline-block;
+  text-decoration: none;
+  font-style: normal;
+  padding: 0.25em 0.5em;
+  border-radius: 0.3em;
+  vertical-align: middle;
+}
+.group-detail-content-text {
+  font-size: 1.5em;
+  line-height: 1.75em;
+}
+.uploadcover {
+  margin-left: 15px;
+  color: #ffffff;
+  /*  background-color: rgba(3, 3, 3, 0.50);*/
+  background-color: #008cc9;
+  border-color: #0079ae;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid rgba(0, 0, 0, 0);
+  white-space: nowrap;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  position: absolute;
+}
+.upload-pre-item img {
+  min-width: 250px;
+  max-width: 250px;
+  max-height: 300px;
+  border: 1px solid #ccc;
+  padding: 2px;
+}
+/*帖子页右侧*/
+.group_info .common_block_title_right {
+  font-weight: bold;
+}
+.group_info .common_block_title_right a {
+  font-size: 14px;
+  margin-right: 10px;
+}
+.group_info .joined {
+  margin: 10px;
+}
+.group_info .group_active_member .name .avatar {
+  width: 32px;
+  height: 32px;
+}
+.group_info .group_active_member .active {
+  text-align: right;
+  line-height: 32px;
+}
+.group_info .common_block_content_right {
+  padding: 8px 5px;
+  color: #333333;
+  margin: 5px 0 10px 15px;
+  margin-left: 5px;
+}
+/*帖子页右侧end*/
+/*帖子列表页*/
+.group_tab .nav-tabs > li.active > a,
+.group_tab .nav-tabs > li.active > a:hover,
+.group_tab .nav-tabs > li.active > a:focus {
+  background: none;
+  border: none;
+  border-bottom: 2px solid #666;
+}
+.group_tab .nav-tabs > li > a {
+  border-radius: 0;
+  margin-right: 0;
+}
+.group_tab .nav-tabs > li > a:hover {
+  background: none;
+  border: none;
+  border-bottom: 2px solid #666;
+}
+.group_tab .nav-tabs {
+  border-bottom: none;
+}
+.group_feed h3 {
+  font-size: 14px;
+  color: #999;
+  padding-right: 15px;
+}
+.group_feed h3 a {
+  color: #333333;
+}
+.group_feed .feed {
+  margin-bottom: 20px;
+}
+.group_feed .feed_content {
+  background: #efefef;
+  padding: 10px;
+  margin-right: 15px;
+  color: #444;
+}
+.group_feed .feed_content p {
+  margin: 0;
+}
+.group_post_search {
+  margin-top: 8px;
+  margin-right: 10px;
+}
+/*帖子列表页end*/
+/*我的群组页*/
+.my_manage .logo {
+  width: 45px;
+  height: 45px;
+}
+.my_manage h3 {
+  font-size: 14px;
+  padding-top: 0;
+  margin-top: 0;
+}
+.my_manage p {
+  font-size: 12px;
+}
+.my_manage .agroup {
+  margin-bottom: 10px;
+}
+/*我的群组页end*/
+.group_info .logo {
+  margin-top: 0;
+}
+.media-heading {
+  margin-bottom: 10px;
+}
+.media-heading a {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333 !important;
+}
+.group-detail .count {
+  font-size: 14px;
+  color: #9f9f9f;
+}
+.group-detail .detail {
+  font-size: 12px;
+  color: #4b4b4b !important;
+  line-height: 23px;
+}
+.group-detail .group_tags a {
+  font-size: 12px;
+  color: #999 !important;
+  line-height: 23px;
+}
+.group-detail .group_tags a:hover {
+  color: #333 !important;
+}
+.group_tags a {
+  border-radius: 4px;
+}
+.group_types a {
+  padding: 2px 10px;
+}
+.group_header_block .btn,
+.group_manage .btn,
+.group_header_block .group_tags a,
+.group_manage .group_tags a {
+  padding: 3px 8px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+.popup-gallery img {
+  max-width: 100%;
+}
+.sort_btn .btn,
+.sort_btn a {
+  font-size: 12px;
+}
+.media {
+  margin-top: 25px;
+}
+.media hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.dongtai .col-xs-2 {
+  width: 11.2%;
+  margin-right: -10px;
+}
+.dongtai .col-xs-10 {
+  width: 88.8%;
+}
+.dongtai span {
+  margin-right: -6px;
+}
+.media > .pull-left {
+  margin-right: 20px;
+}
+.group_tab .nav > li > a {
+  padding: 11px 15px;
+}
+.group_post_search .form-control {
+  height: 26px;
+}
+.group_post_search .btn {
+  padding: 2px 5px;
+}
+.xs_btn i {
+  background: url(../images/tiezi.png);
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+}
+a.xs_btn:hover .group_reply_icon {
+  background-position: 20px 0px !important;
+}
+a.xs_btn:hover .group_edit {
+  background-position: 18px 77px !important;
+}
+.bookmark_btn:hover i {
+  background-position: 20px 39px !important;
+}
+.group_uncollect {
+  background-position: 20px 39px !important;
+}
+.group_collect {
+  background-position: 0px 39px !important;
+}
+.group_reply_icon {
+  background-position: 0px 0px !important;
+}
+.group_edit {
+  background-position: -2px 77px !important;
+}
+@media (max-width: 380px) {
+  .group_header_block {
+    width: 100%;
+    left: 0;
+  }
+  .group_header_block img {
+    display: none;
+  }
+}
+.item_type {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  position: absolute;
+  padding: 3px 5px;
+}
+.item_inner {
+  margin-bottom: 20px;
+  width: 240px;
+  float: left;
+  margin-right: 30px;
+  background: #fff;
+  border: 1px solid #DDDDDD;
+}

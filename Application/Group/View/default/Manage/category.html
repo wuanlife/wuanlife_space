@@ -1,0 +1,113 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <div class="fourm-top common_block_border" style="padding: 15px 20px;margin-top: 0;margin-bottom: 15px">
+
+                <div>
+                    <h4>
+                        群组管理
+                    </h4>
+                </div>
+
+                <div>
+                    <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/index',array('group_id'=>$_GET['group_id']))}">基本信息</a></li>
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/member',array('group_id'=>$_GET['group_id']))}">成员管理</a></li>
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/notice',array('group_id'=>$_GET['group_id']))}">公告发布</a></li>
+                        <li role="presentation" class="active"><a
+                                href="{:U('Group/Manage/category',array('group_id'=>$_GET['group_id']))}">帖子分类管理</a>
+                        </li>
+
+                        <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}"
+                           class="btn btn-primary pull-right" style="margin-left: 10px;">返回群组</a>
+                        <button class="btn btn-primary pull-right" data-role="dismiss_group"
+                                data-group-id="{$group_id}">解散群组</button>
+                    </ul>
+
+
+                </div>
+
+                <hr style="border-top:0"/>
+                <div style="margin-bottom: 20px;">
+                    <input placeholder="添加分类" class="form-control pull-left" style="width: 200px">
+                    <a class="btn btn-primary" data-role="add_cate"  style="margin-left: 10px;">确定</a>
+
+                </div>
+
+                <volist name="cate" id="vo">
+                    <div class="category clearfix" data-id="{$vo.id}" style="height: 30px;line-height: 30px;">
+                        <span class="col-md-4 cate_title">
+                              {$vo.title}
+                        </span>
+                        <span class="cate_action">
+                             <a href="javascript:" data-role="edit_cate" data-title="{$vo.title}">编辑</a>&nbsp;|&nbsp;<a
+                                href="javascript:" data-role="del_cate">删除</a>
+                        </span>
+                    </div>
+
+                </volist>
+
+            </div>
+        </div>
+
+    </div>
+</block>
+
+<block name="script">
+    <script>
+        var group_id = "{$group['id']}";
+        $(function(){
+            bind_group_manager();
+            bind_group_cate();
+
+        })
+
+        var bind_group_cate = function(){
+            $('[data-role="add_cate"]').unbind('click');
+            $('[data-role="add_cate"]').click(function () {
+                var $this = $(this);
+                $.post(U('group/manage/editCate'), {group_id: group_id, title: $this.prev().val()}, function (res) {
+                    handleAjax(res);
+                })
+            })
+            $('[data-role="edit_cate"]').unbind('click');
+            $('[data-role="edit_cate"]').click(function () {
+                var obj = $(this);
+                var title = obj.attr('data-title');
+                var html = '<input data-role="save_cate" value="' + title + '">'
+                obj.closest('.category').find('.cate_title').html(html);
+                bind_group_cate();
+                obj.closest('.category').find('.cate_title').find('input').focus();
+            })
+
+            $('[data-role="save_cate"]').unbind('keypress');
+            $('[data-role="save_cate"]').keypress(function (e) {
+                if (e.which == 13 || e.which == 10) {
+                    $.post(U('group/manage/editCate'), {group_id: group_id, cate_id: $(this).closest('.category').attr('data-id'), title: $(this).val()}, function (res) {
+                        handleAjax(res);
+                    })
+                }
+            });
+            $('[data-role="save_cate"]').unbind('blur');
+            $('[data-role="save_cate"]').blur(function (e) {
+                var html = $(this).closest('.category').find('[data-role="edit_cate"]').attr('data-title');
+                $(this).closest('.cate_title').html(html);
+            });
+
+            $('[data-role="del_cate"]').unbind('click');
+            $('[data-role="del_cate"]').click(function () {
+                $.post(U('group/manage/delCate'), {group_id: group_id, cate_id: $(this).parents('.category').attr('data-id')}, function (res) {
+                    handleAjax(res);
+                })
+            })
+        }
+    </script>
+
+</block>

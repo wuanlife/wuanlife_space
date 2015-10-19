@@ -1,0 +1,16 @@
+<div class="common_block_border group_info">
+    <div class=" common_block_title_right">
+        全部帖子分类
+    </div>
+    <div>
+        <div class="group_tags group_types" style="padding: 15px;padding-top: 0">
+
+            <volist name="post_cate" id="type" offset="0"  length="10">
+                <a href="{:U('posts',array('post_cate'=>$type['id']))}" <if condition="$postCate eq $type['id']">class="active"</if>>
+                    <!--//TODO 添加标签的链接-->
+                    {$type.title}
+                </a>
+            </volist>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <div class="fourm-top common_block_border" style="padding: 15px 20px;margin-top: 0;margin-bottom: 15px">
+
+                <div>
+                <h4>
+                    群组管理
+                </h4>
+                  </div>
+
+                <div>
+                    <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                        <li role="presentation" class="active"><a href="{:U('Group/Manage/index',array('group_id'=>$_GET['group_id']))}">基本信息</a></li>
+                        <li role="presentation" ><a href="{:U('Group/Manage/member',array('group_id'=>$_GET['group_id']))}">成员管理</a></li>
+                        <li role="presentation" ><a href="{:U('Group/Manage/notice',array('group_id'=>$_GET['group_id']))}">公告发布</a></li>
+                        <li role="presentation" ><a href="{:U('Group/Manage/category',array('group_id'=>$_GET['group_id']))}">帖子分类管理</a></li>
+                        <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}" class="btn btn-primary pull-right" style="margin-left: 10px;">返回群组</a>
+                        <button class="btn btn-primary pull-right" data-role="dismiss_group" data-group-id="{$group_id}">解散群组</button>
+                    </ul>
+
+
+                </div>
+
+
+                <hr style="border-top:0"/>
+                <section id="contents">
+                    <form class="form-horizontal ajax-form" role="form" action="{:U('Group/Index/create')}" method="post" id="edit-article-form">
+                        <input type="hidden" name="group_id" value="{$group.id}"/>
+
+                        <div class="row">
+                            <!-- 帖子分类 -->
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputTitle" class="col-sm-2 control-label">*群组名称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="title" class="form-control" id="inputTitle" placeholder="群组名称，最多20个字" value="{$group.title}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputType" class="col-sm-2 control-label">*分类</label>
+                                    <div class="col-sm-10">
+                                        <select name="group_type" class="form-control" id="inputType">
+                                            <option value="-1">请选择</option>
+                                            <volist name="groupTypeAll" id="groupType">
+                                                <option <if condition="$group['type_id'] eq $groupType['id']">selected</if> value="{$groupType['id']}">{$groupType['title']}</option>
+                                            </volist>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDescription" class="col-sm-2 control-label">群组介绍</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="detail" class="form-control" id="inputDescription" placeholder="群组的介绍" >{$group.detail}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDescription" class="col-sm-2 control-label">群组类型</label>
+                                    <div class="col-sm-10">
+                                        <label for="id_type_0" style="font-weight: normal">
+                                        <input id="id_type_0" name="type" value="0" type="radio" <if condition="$group['type'] eq 0"> checked</if> >
+                                        公共群组
+                                        </label>
+                                        <label for="id_type_1" style="font-weight: normal">
+                                        <input id="id_type_1" name="type" value="1" type="radio" <if condition="$group['type'] eq 1"> checked</if>>
+                                        私有群组
+                                        </label>
+                                        <div style="color: #999">
+                                            （加入公共群组不需要管理员审核，加入私有群组需管理员审核）
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">群组形象</label>
+                                    <div  class="col-sm-10">
+
+                                        {:W('Common/UploadImage/render',array(array('id'=>'cover_id_cover','name'=>'logo','value'=>$group['logo'],'width'=>200,'height'=>200,'isLoadScript'=>1)))}
+
+                                    </div>
+                                </div>
+
+                                <!--<div class="form-group">
+                                    <label for="upload_picture_cover" class="col-sm-2 control-label">背景图片</label>
+
+                                    <div  class="col-sm-10">
+                                        {:W('Common/UploadImage/render',array(array('id'=>'background','name'=>'background','value'=>$group['background'],'width'=>200,'height'=>200,'isLoadScript'=>1)))}
+                                    </div>
+                                </div>-->
+                                <div class="form-group">
+                                    <label for="inputTitle" class="col-sm-2 control-label">*群成员的别称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="member_alias" class="form-control" id="inputMember" placeholder="群成员的别称，默认为“成员”" value="{$group.member_alias}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <p class="" style="margin-left: 127px">
+                            <button type="submit" class="btn btn-large btn-primary" id="submit-button">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            <span id="submit-content">
+                                保存
+                            </span>
+                            </button>
+
+                        </p>
+
+                    </form>
+                </section>
+            </div>
+        </div>
+
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="__PUBLIC__/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+<script>
+    $(function(){
+        bind_group_manager();
+    })
+
+</script>
+</block>

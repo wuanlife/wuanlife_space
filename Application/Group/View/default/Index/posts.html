@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <include file="Public/head"/>
+    <link type="text/css" rel="stylesheet" href="__CSS__/group.css"/>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<include file="Public/header"/>
+<!-- /头部 -->
+<include file="Public/nav"/>
+<!-- 主体 -->
+<div class="container clearfix">
+
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="clearfix fourm-posts common_block_border">
+
+                <div class="row group_block_title">
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                        帖子列表&nbsp;——&nbsp;{$name}
+                    </div>
+                    <div class="col-md-4 text-right col-sm-4 col-xs-4">
+
+
+                        <div class="btn-group group_order">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <eq name="order" value="0">回复时间
+                                    <else/>
+                                    发表时间
+                                </eq>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu text-left" role="menu">
+                                <li><a href="{:U('group',array('id'=>$group_id,'order'=>'ctime'))}">发表时间</a></li>
+                                <li><a href="{:U('group',array('id'=>$group_id,'order'=>'reply'))}">回复时间</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="myTabContent" class="tab-content">
+
+                    <div class="" >
+                        <div class="row common_block_title">
+                            <div class="col-xs-8">
+
+                                <volist name="post_cate" id="cate">
+                                    <a href="{:U('posts',array('post_cate'=>$cate['id']))}">[{$cate.title}]</a>
+                                </volist>
+
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12">
+                            <section id="contents">
+                                <if condition="!$list">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <p class="text-muted" style="text-align: center; font-size: 3em;">
+                                                <br/><br/>
+                                                暂时没有帖子～
+                                                <br/><br/><br/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </if>
+                                <volist name="list" id="document">
+                                    {:W('Group/Detail/post',array('post_id'=>$document))}
+                                    <if condition="$i neq count($list)">
+                                        <hr class="group-list-hr"/>
+                                        <else/>
+                                        <div class="group-list-no-hr"></div>
+                                    </if>
+                                </volist>
+                                <div class="pull-right">
+                                    {:getPagination($totalCount,20)}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            {:W('MyAttendance/lists')}
+
+            <include file="Public/post-type"/>
+
+            {:W('HotGroup/lists')}
+
+        </div>
+    </div>
+
+</div>
+<!-- /主体 -->
+
+<!-- 底部 -->
+<include file="Public/footer"/>
+<!-- /底部 -->
+</body>
+</html>
+
+
+
+

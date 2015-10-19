@@ -1,0 +1,195 @@
+<extend name="Public/base"/>
+<block name="body">
+
+<if condition="$list_top">
+    <div class="clearfix fourm-posts common_block_border">
+        <div class="row common_block_title">
+            置顶区
+        </div>
+        <div class="col-xs-12">
+            <section id="contents">
+                <div style="padding: 0 5px;">
+                <volist name="list_top" id="document">
+                    <a class="group-list-title-link" title="{$document.title|htmlspecialchars}" href="{:U('Index/detail',array('id'=>$document['id']))}">
+                        <i class="glyphicon glyphicon-fire" style="color: #bc0000;margin-right: 10px;"></i>
+                        {$document.title|htmlspecialchars|mb_substr=0,30,'utf-8'}
+                        <img src="__IMG__/is_top.png">
+                    </a>
+                    <if condition="$i neq count($list_top)">
+                        <hr class=""/>
+                        <else/>
+                        <div class="group-list-no-hr"></div>
+                    </if>
+                </volist>
+                </div>
+            </section>
+        </div>
+    </div>
+</if>
+
+
+<!--  板块幻灯片-->
+<!--    <div class="bankuaippt row  fourm-posts group_block_border">
+        <div class="col-md-12">tg</div>
+    </div>-->
+<div class="clearfix fourm-posts common_block_border">
+    <div class="clearfix group_block_title" style="font-size: 14px;padding: 2px 5px">
+        <div class="group_tab pull-left">
+            <ul id="" class="nav nav-tabs" role="tablist">
+                <li
+                <if condition="$type eq 'post'"> class="active"</if>
+                ><a href="{:U('group',array('type'=>'post','id'=>$group_id))}">帖子</a></li>
+                <li
+                <if condition="$type eq 'new'"> class="active"</if>
+                ><a href="{:U('group',array('type'=>'new','id'=>$group_id))}">最新动态</a></li>
+                <li
+                <if condition="$type eq 'member'"> class="active"</if>
+                ><a href="{:U('group',array('type'=>'member','id'=>$group_id))}">成员</a></li>
+            </ul>
+        </div>
+        <div class="pull-right" style="display: inline-block;width: 175px">
+            <form action="{:U('group',array('id'=>$group_id))}" method="post">
+                <div class="group_post_search input-group ">
+                    <input placeholder="搜索群组内帖子" type="text" name="title" class="form-control" value="{$search_key}">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit"><i class="icon icon-search"></i></button>
+      </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="myTabContent" class="tab-content">
+
+
+    <php> if($type == 'new'){</php>
+        <div class="">
+            <div class="common_block_content group_feed">
+                <volist name="list" id="dynamic">
+                    {:W('dynamic/lists',array('dynamic_id'=>$dynamic))}
+                </volist>
+           <if condition="!$list">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="text-muted" style="text-align: center; font-size: 3em;">
+                                <br/><br/>
+                                暂时没有动态～
+                                <br/><br/><br/>
+                            </p>
+                        </div>
+                    </div>
+                </if>
+                <div class="pull-right">
+                    {:getPagination($totalCount,$r)}
+                </div>
+
+            </div>
+        </div>
+    <php>}elseif($type == 'post'){</php>
+
+        <div class="">
+            <div class="clearfix common_block_title">
+                <div class="col-xs-8 group_tags group_types ">
+                    <a <if condition="empty($_GET['cate'])">class="active"</if> href="{:U('group',array('id'=>$group_id))}" style="font-size: 14px;">全部</a>
+                    <volist name="post_cate" id="cate">
+                        <a <if condition="$cate['id'] eq $_GET['cate']">class="active"</if> href="{:U('group',array('cate'=>$cate['id'],'id'=>$group_id))}" style="font-size: 14px;">{$cate.title}</a>
+                    </volist>
+
+                    &nbsp;
+                </div>
+                <div class="col-xs-4 text-right">
+                    <div class="btn-group group_order" >
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <eq name="order" value="1">回复时间
+                                <else/>
+                                发表时间
+                            </eq>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu text-left" role="menu">
+                            <li><a href="{:U('group',array('id'=>$group_id,'order'=>'ctime'))}">发表时间</a></li>
+                            <li><a href="{:U('group',array('id'=>$group_id,'order'=>'reply'))}">回复时间</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <section id="contents">
+                    <if condition="!$list">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="text-muted" style="text-align: center; font-size: 3em;">
+                                    <br/><br/>
+                                    暂时没有帖子～
+                                    <br/><br/><br/>
+                                </p>
+                            </div>
+                        </div>
+                    </if>
+                    <volist name="list" id="vo">
+                        {:W('Group/Detail/post',array('post_id'=>$vo))}
+                        <if condition="$i neq count($list)">
+                            <hr class="group-list-hr"/>
+                            <else/>
+                            <div class="group-list-no-hr"></div>
+                        </if>
+                    </volist>
+                    <div class="pull-right">
+                        {:getPagination($totalCount,$r)}
+                    </div>
+                </section>
+            </div>
+        </div>
+        <php>}elseif($type == 'member'){</php>
+        <div class="col-xs-12">
+            <if condition="is_joined($group_id) eq 1">
+                <php>if(check_auth('Group/Index/groupInvite',-1)){</php>
+            <a class="group_invite btn btn-primary" href="{:U('group/Index/groupInvite',array('group_id'=>$group_id))}">邀请好友加入</a>
+                <php>}</php>
+            </if>
+            <div style="margin: 20px 0 20px 20px;">
+                <h2 class="clearfix">成员</h2>
+                <if condition="count($list) eq 0"><p class="text-muted"
+                                                     style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无任何成员哦～
+                    <br><br><br>
+                </p></if>
+                <volist name="list" id="people">
+                    <div class="col-xs-2 text-center" style="padding-bottom: 20px;height: 140px;">
+                        <img ucard="{$people.user.uid}"  class="avatar-img"
+                             src="{$people.user.avatar128}"/>
+                        <a href="{$people.user.space_url}"
+                           ucard="{$people.user.uid}">{$people.user.nickname}</a>
+
+                        <div>
+                            <php>if($people['position'] == 3 ){</php>创建者<php>}</php>
+                            <php>if($people['position'] == 2 ){</php>管理员<php>}</php>
+                        </div>
+
+                    </div>
+                </volist>
+                <div class="pull-right">
+                    {:getPagination($totalCount,30)}
+                </div>
+            </div>
+        </div>
+
+<php>}</php>
+
+    </div>
+
+</div>
+<script>
+
+    $(function () {
+        bindGroupInvite();
+    });
+    function bindGroupInvite(){
+        $('.group_invite').magnificPopup({
+            type: 'ajax',
+            overflowY: 'scroll',
+            modal: true
+        });
+    }
+</script>
+</block>

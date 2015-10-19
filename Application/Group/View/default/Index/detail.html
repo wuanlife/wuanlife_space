@@ -1,0 +1,303 @@
+<extend name="Public/base"/>
+
+<block name="body">
+
+<div class="clearfix post_content">
+<div class=" clearfix col-xs-12 group_block_border " style="background: white">
+<div style="margin-top: 15px"></div>
+<php>
+    $user = query_user(array('avatar128','uid','nickname','space_url','rank_link','space_link'),
+    $post['uid']);
+</php>
+
+<div class="row" style="position: relative">
+    <div class="group_left_operation">
+        <div class="text-right btn-toolbar btn-group-vertical" role="toolbar">
+            <div class="btn-group">
+
+                <php>
+                    if(check_auth('Group/Index/edit',get_post_admin($post['id']))){
+                </php>
+                <a title="编辑" href="{:U('Index/edit',array('post_id'=>$post['id']))}">
+                    <i class="icon icon-edit"></i>
+                </a>
+                <php>}</php>
+
+                <a title="回复" href="#reply_form">
+                    <i class="icon icon-comment"></i>
+                </a>
+
+                <php>if(check_is_bookmark($post['id'])){
+                    $unDisplay = 'display:block';
+                    $Display = 'display:none';
+                    }else{
+                    $unDisplay = 'display:none';
+                    $Display = 'display:block';
+                    }
+                </php>
+
+                <a title="取消收藏" style="color: red;{$unDisplay}" data-role="doBookmark"
+                   data-url="{:U('Index/doBookmark',array('post_id'=>$post['id'],'flag'=>0))}">
+                    <i class="icon icon-star"></i>
+                </a>
+
+                <a title="收藏本帖" data-role="doBookmark" style="{$Display}"
+                   data-url="{:U('Index/doBookmark',array('post_id'=>$post['id'],'flag'=>1))}">
+                    <i class="icon icon-star"></i>
+                </a>
+
+
+                <php>
+                    if(check_auth('Group/Index/recommend',get_group_admin($post['group_id']))){
+                </php>
+                <php>
+                    if(!$post['is_top']){
+                    $unDisplayTop = 'display:none';
+                    $DisplayTop = 'display:block';
+                    }else{
+                    $unDisplayTop = 'display:block';
+                    $DisplayTop = 'display:none';
+                    }
+                </php>
+
+                <a title="置顶本帖" data-role="doSetTop" style="{$DisplayTop}"
+                   data-url="{:U('Index/recommend',array('post_id'=>$post['id'],'top'=>1))}">
+                    <i class="icon icon-arrow-up"></i>
+                </a>
+
+                <a title="取消置顶本帖" data-role="doSetTop" style="{$unDisplayTop}"
+                   data-url="{:U('Index/recommend',array('post_id'=>$post['id'],'top'=>0))}">
+                    <i class="icon icon-arrow-down"></i>
+                </a>
+
+                <php>}</php>
+
+                <if condition="check_auth('Group/Index/deletePost',get_admin_ids($post['id'],3,0))">
+                    <a title="删除贴子" href="javascript:" data-role="delPostBtn" data-id="{$post['id']}">
+                        <i class="icon-remove-sign" style="background: none;font-size: 19px;"></i>
+                    </a>
+                </if>
+                <!-- todo 设为精华 -->
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 text-center">
+        <p class="">
+            <a href="{$user.space_url}" ucard="{$user.uid}"><img width="55px" src="{$user.avatar128}"
+                                                                 class="avatar-img"/></a>
+                <span class="hidden-lg hidden-md">
+                <a href="{$user.space_url}" ucard="{$user.uid}" style="margin-left: 10px;">{$user.nickname|htmlspecialchars}</a>
+                </span>
+
+        </p>
+
+        <p class="hidden-xs">
+            <a href="{$user.space_url}" ucard="{$user.uid}">{$user.nickname|htmlspecialchars}</a>
+
+        </p>
+
+        <p class="text-center">
+            {:W('Common/UserRank/render',array($user['uid']))}
+        </p>
+    </div>
+    <div class="col-md-10 ">
+        <div class="row">
+            <div style="position: relative">
+                <a class="ribbion-green1"
+                   href="{:U('group/index/group',array('type'=>'post','id'=>$post['group_id']))}">返回群组</a>
+
+                <div style="padding: 15px"></div>
+                <div class="col-md-12 post_title">
+                    <h2>{$post.title}
+                        <if condition="$post['is_top'] eq 1"><img src="__IMG__/is_top.png"></if>
+                        <if condition="$post['digest'] eq 1"><img src="__IMG__/digest.png"></if>
+                    </h2>
+
+                    <div class="small sub_title pull-left"><br/>
+
+                        <a href="{$user.space_url}" ucard="{$user.uid}"
+                           class="text-primary">{$user.nickname}</a> {$post.create_time|time_format} 发表在<a
+                                href="{:U('Group/Index/group',array('id'=>$post['group_id']))}">【{$post.group.title}】</a>
+                        <a href="{:U('group',array('cate'=>$post['cate_id'],'id'=>$post['group_id']))}">{$post.cate_id|get_post_category}</a>
+                        {:Hook('support',array('app'=>'Group',table=>'post','row'=>$post['id'],'uid'=>$post['uid'],'jump'=>'group/index/detail'))}
+                        {:W('Weibo/Share/shareBtn',array('param'=>array('app'=>'Group','model'=>'GroupPost','method'=>'getPost','id'=>$post['id'],'img'=>get_pic($post['content']),'from'=>'群组','site_link'=>U('group/index/detail',array('id'=>$post['id']))),'text'=>'分享'))}
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div style="padding: 10px"></div>
+        <div class="col-md-12 main_content" style="margin-left: -15px">
+            {$post.content|render}
+
+
+            <php>if($post['attachment_count']>0){</php>
+            <div style="margin-top: 30px;">
+                <h2>附件下载</h2>
+                <volist name="post['attachment']" id="atta">
+                    <p>
+                        <a href="{:U('home/file/downloadFile',array('id'=>$atta['id']))}">{$atta.name}</a>
+                    </p>
+                </volist>
+
+            </div>
+            <php>}</php>
+
+
+        </div>
+        <div>
+
+
+            <br/>
+            <if condition="$post['create_time'] != $post['update_time']">
+                <p class="text-muted">
+                    [最后编辑于 {$post['update_time']|time_format} ]
+                </p>
+            </if>
+        </div>
+        <div>
+            {:W('Common/Share/detailShare')}
+        </div>
+
+    </div>
+</div>
+
+<hr class="post_line"/>
+
+<volist name="replyList" id="reply" key="k">
+    {:W('Group/Detail/reply',array('reply_id'=>$reply,'param'=>array('k'=>$k)))}
+</volist>
+
+
+<div class="row clearfix">
+    <div class="col-xs-12">
+        <div class="pull-right">
+            {:getPagination($replyTotalCount)}
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<!--发表回复-->
+<if condition="is_login()">
+
+    <php>if(is_joined($post['group_id']) != 1 ){</php>
+    <p class="text-center text-muted" style="font-size: 3em; padding-top: 2em; padding-bottom: 2em;">需 <a
+            data-role="group_attend" data-group-id="{$post['group_id']}" href="javascript:">加入群组</a> 再回复</p>
+    <php>}else{</php>
+    <php>
+        $user = query_user(array('avatar128'));
+    </php>
+    <div class="row">
+        <div class="col-xs-2">
+            <p class="text-center">
+                <a href="{$user.space_url}" ucard="{$user.uid}">
+                    <img src="{$user.avatar128}" width="48px" class="avatar-img"/></a>
+            </p>
+        </div>
+        <div class="col-xs-10">
+            <div id="reply_block">
+                <form id="reply_form" action="{:U('doReply',array('post_id'=>$post['id']))}" method="post"
+                      class="ajax-form">
+                    <h4>发表回复</h4>
+
+                    <p>
+                        {:W('Common/Ueditor/editor',array('content','content','','100%','250px'))}
+
+                    </p>
+
+                    <p class="pull-right">
+                        <input type="submit" id="reply_button" class="btn btn-primary" value="发表 Ctrl+Enter"/>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <php>}</php>
+    <else/>
+    <p class="text-center text-muted" style="font-size: 3em; padding-top: 2em; padding-bottom: 2em;">请<a
+            href="{:U('Ucenter/Member/login')}">登录</a>后发帖</p>
+</if>
+</div>
+</div>
+
+
+<script>
+    var SUPPORT_URL = "{:addons_url('Support://Support/doSupport')}";
+    $(function () {
+        $('.input_tips').keypress(function (e) {
+           var $this = $(this);
+            if (e.ctrlKey && e.which == 13 || e.which == 10) {
+              $this.closest('.weibo_post_box').find('[data-role="sendLzlReply"]').click();
+            }
+        });
+
+        $.post(U('Core/Public/atWhoJson'),{},function(res){
+            atwho_config = {
+                at: "@",
+                data: res,
+                tpl: "<li data-value='@${nickname}'><img class='avatar-img' style='width:2em;margin-right: 0.6em' src='${avatar32}'/>${nickname}</li>",
+                show_the_at: true,
+                search_key: 'search_key',
+                start_with_space: false
+            };
+        },'json')
+        ue_content.addListener( 'ready', function( editor ) {
+            $(this.document.body).atwho(atwho_config);
+            editor.setCursor();
+
+        } );
+
+        ue_content.addListener("beforeSubmit",function(){
+            ue_content.sync();
+            $("#reply_form").submit();
+            return false;
+        })
+    })
+
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.popup-gallery').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: '.popup',
+                type: 'image',
+                tLoading: 'Loading image #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function (item) {
+                        /*           return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';*/
+                        return '';
+                    }
+                }
+            });
+        });
+    });
+</script>
+<style>
+    .group-first-block {
+        background: white;
+        box-shadow: 0 0 5px rgb(204, 204, 204);
+        -moz-box-shadow: 0 0 5px #CCCCCC;
+        -khtml-box-shadow: 0 0 5px #CCCCCC;
+        margin-top: 15px;
+    }
+</style>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+<link rel="stylesheet" type="text/css" href="__STATIC__/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+<script type="text/javascript">
+    SyntaxHighlighter.all();
+</script>
+</block>

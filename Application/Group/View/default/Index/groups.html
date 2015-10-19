@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <include file="Public/head"/>
+    <link type="text/css" rel="stylesheet" href="__CSS__/group.css"/>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+<include file="Public/header"/>
+<!-- /头部 -->
+<include file="Public/nav"/>
+<!-- 主体 -->
+<div  id="main-container" class="container clearfix">
+
+
+
+    <div class="common_block_border group_info margin-bottom-15">
+            <div class="group_tags group_types" style="padding: 15px;">
+                <a href="{:U('groups')}" <if condition="!$group_cate">class="active"</if>>
+                <!--//TODO 添加标签的链接-->
+                全部
+                </a>
+                <volist name="parent" id="type">
+                    <a href="{:U('groups',array('cate'=>$type['id']))}" data-id="{$type['id']}" class="ptype <if condition="$group_cate eq $type['id']">active</if>">
+                    <!--//TODO 添加标签的链接-->
+                    {$type.title}
+                    </a>
+                </volist>
+            </div>
+
+    </div>
+    <volist name="child" id="vo">
+        <php> if(!empty($vo)){</php>
+        <div class="common_block_border group_info chile_type" id="type_{$key}" style="margin-top: -10px; ">
+            <div class="group_tags group_types" style="padding: 15px;">
+                <a href="{:U('groups',array('cate'=>$key))}" <if condition="!$group_cate">class="active"</if>>
+                <!--//TODO 添加标签的链接-->
+                全部
+                </a>
+                <volist name="vo" id="type">
+                    <a href="{:U('groups',array('cate'=>$type['id']))}" <if condition="$group_cate eq $type['id']">class="active"</if>>
+                    <!--//TODO 添加标签的链接-->
+                    {$type.title}
+                    </a>
+                </volist>
+            </div>
+        </div>
+        <php>}</php>
+    </volist>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div>
+                <div class="">
+                    <section class="group_lists">
+                        <if condition="!$group_list">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="text-muted" style="text-align: center; font-size: 3em;">
+                                        <br/><br/>
+                                        暂时没有群组～
+                                        <br/><br/><br/>
+                                    </p>
+                                </div>
+                            </div>
+                        </if>
+                        <volist name="group_list" id="vo">
+                         {:W('Group/Detail/group',array('group_id'=>$vo))}
+                        </volist>
+
+                        <div class=" clearfix pull-right">
+                            {:getPagination($totalCount,$r)}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /主体 -->
+
+<!-- 底部 -->
+<include file="Public/footer"/>
+<!-- /底部 -->
+</body>
+</html>
+
+
+

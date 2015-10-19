@@ -1,0 +1,57 @@
+<php>if(ACTION_NAME != 'create' && ACTION_NAME != 'search' ){</php>
+
+        <php>if(check_auth('Group/Index/addPost',-1)){</php>
+    <div style="margin-bottom: 20px">
+        <a type="button" class="btn btn-large btn-primary-tie group_post_btn"
+           href="{:U('index/edit',array('group_id'=>$group_id))}">
+            发帖
+        </a>
+    </div>
+
+<php>}</php>
+
+<php>if($group){</php>
+<div class="common-block group_info" style="padding-bottom: 10px;">
+
+
+    <header class="">
+        群组创始人
+    </header>
+    <div class="common_block_content_right">
+        <div class="pull-left">
+            <a href="{$group.user.space_url}" ucard="{$group.user.uid}"><img src="{$group.user.avatar128}" width="55px"
+                                                                               class="avatar-img"/></a>
+        </div>
+        <div class="pull-left" style="height: 55px;padding: 7px 0 0 20px;;">
+            <a href="{$group.user.space_url}" ucard="{$group.user.uid}">{$group.user.nickname|op_t}</a>
+
+            <div class="" style="color: #999">
+                拥有 {$group.user.group_count}个群组
+            </div>
+        </div>
+        <div class="clearfix" style="padding:10px 0px;"><span style="font-weight: 700">[群组简介]</span> {$group.detail}</div>
+    </div>
+    <if condition="$notice neq null">
+    <hr class="" style="margin-top:0;margin-bottom: 10px;">
+    <div class="common_block_content_right" >
+       <span style="font-weight: 700">[公告]</span> {$notice.content}
+    </div>
+    </if>
+</div>
+<php>}</php>
+
+{:W('HotPost/lists',array('group_id'=>$group_id))}
+
+<div class="common_block_border group_info">
+
+ {:W('HotPeople/lists',array('group_id'=>$group_id))}
+</div>
+
+
+<php>}else{</php>
+
+{:W('MyAttendance/lists')}
+{:W('HotGroup/lists')}
+
+
+<php>}</php>

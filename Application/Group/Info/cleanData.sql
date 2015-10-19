@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS `ocenter_group`;
+DROP TABLE IF EXISTS `ocenter_group_bookmark`;
+DROP TABLE IF EXISTS `ocenter_group_dynamic`;
+DROP TABLE IF EXISTS `ocenter_group_lzl_reply`;
+DROP TABLE IF EXISTS `ocenter_group_member`;
+DROP TABLE IF EXISTS `ocenter_group_notice`;
+DROP TABLE IF EXISTS `ocenter_group_post`;
+DROP TABLE IF EXISTS `ocenter_group_post_category`;
+DROP TABLE IF EXISTS `ocenter_group_post_reply`;
+DROP TABLE IF EXISTS `ocenter_group_type`;

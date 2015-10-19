@@ -1,0 +1,54 @@
+<if condition="!empty($group)">
+    <div class="group_header common-block">
+    <div class="group_header_block1"></div>
+    <div class="group_header_block ">
+        <div class="col-md-4 hidden-xs hidden-sm">
+            <php> if($group['logo']){</php>
+            <img class="logo"  src="{$group.logo|getThumbImageById=140,140}"
+                 alt="{$group.title|op_t}">
+            <php>}else{</php>
+            <img class="logo" src="__IMG__/default.png" alt="{$group.title|op_t}">
+            <php>}</php>
+        </div>
+        <div class="col-md-8 info">
+            <h2 class="title col-md-12 text-more" style="margin-left: -15px;">
+                <a href="{:U('group/index/group',array('id'=>$group['id']))}" title="{$group.title}">{$group.title}</a>
+            </h2>
+            <php>if(check_auth('Group/Manager/*',get_group_admin($group['id']))){</php>
+            <a class="pull-left btn btn-primary" href="{:U('Group/Manage/index',array('group_id'=>$group['id']))}"
+               style="margin-right: 5px"> 管理</a>
+            <php>}</php>
+            <if condition="is_login() neq $group['uid']">
+
+                <php>if(is_joined($group['id']) == 1){
+                </php>
+                <a class="pull-left btn btn-primary" data-role="group_quit" data-group-id="{$group.id}">退出群组</a>
+
+                <php> }elseif(is_joined($group['id']) == 2){</php>
+                <a class="pull-left btn btn-default">审核中</a>
+                <php>}else{</php>
+                <a class="pull-left btn btn-primary" data-role="group_attend" data-group-id="{$group.id}">+加入群组</a>
+                <php>
+                    }
+                </php>
+
+
+            </if>
+            <div class="clearfix" style="font-size: 13px;padding: 10px 0 10px 0;">
+                群组类型：{$group['type']?私有群组:公共群组}
+            </div>
+            <div class="clearfix group_count" style="font-size: 13px">
+                帖子：<a href="{:U('index/group',array('type'=>'post','id'=>$group_id))}">{$group.post_count}</a>
+                成员：<a href="{:U('index/group',array('type'=>'member','id'=>$group_id))}">{$group.member_count}</a>
+                分类：<a href="{:U('index/index',array('cate'=>$group['type_id']))}">{$group.type_id|get_type_name}</a>
+            </div>
+        </div>
+    </div>
+        <if condition="ACTION_NAME neq 'detail'">
+            <div class="pull-right">
+                {:W('Common/Share/detailShare',array(array('share_text'=>$group['title'].'-群组')))}
+            </div>
+        </if>
+    </div>
+</if>
+

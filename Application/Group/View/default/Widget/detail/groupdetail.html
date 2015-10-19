@@ -1,0 +1,53 @@
+<div class="item_inner">
+    <div class="item_type">{$group.type_id|get_type_name}</div>
+    <a class="pull-left" href="{:U('group/index/group',array('id'=>$group['id']))}">
+        <php> if($group['logo']){</php>
+        <img class="logo" width="238px" height="238px" src="{$group.logo|getThumbImageById=300,300}"
+             alt="{$group.title|op_t}">
+        <php>}else{</php>
+        <img class="logo img-responsive" width="238px" height="238px" src="__IMG__/icon.jpg" alt="{$group.title|op_t}">
+        <php>}</php>
+    </a>
+
+    <div class="group-detail pull-left col-xs-12" style="padding-bottom: 20px;">
+        <h4 class="text-center text-more" style="width: 100%"><a
+                href="{:U('group/index/group',array('id'=>$group['id']))}"
+                title="{$group.title}">{$group.title}</a>
+        </h4>
+
+        <p class="detail text-more" style="width: 100%;height: 23px" title="{$group.detail}">
+            {$group.detail}</p>
+        <hr>
+        <div class="count clearfix" style="margin-bottom: 10px;">
+            <div class="pull-left" style="width: 35%" title="帖子数">
+                <i class="glyphicon glyphicon-file"></i>&nbsp;&nbsp;{$group.post_count}
+            </div>
+            <div class="pull-left" style="width: 25%" title="成员数">
+                <i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;{$group.member_count}
+            </div>
+        </div>
+        <hr>
+        <div class="pull-left text-more" style="width: 50%">
+            <a class="author " href="{$group.user.space_url}" ucard="{$group.user.uid}"> {$group.user.nickname} </a>
+        </div>
+
+        <php>if(check_auth('Group/Manager/*',get_group_admin($group['id'])) AND is_login()){</php>
+        <a class="btn btn-primary btn-xs pull-right" style="margin-left: 5px;"
+           href="{:U('group/Manage/index',array('group_id'=>$group['id']))}"> 管理</a>
+        <php>}</php>
+
+        <if condition="is_login() neq $group['uid']">
+            <php>if(is_joined($group['id']) == 1){</php>
+            <a class="pull-right btn btn-primary btn-xs" data-role="group_quit" data-group-id="{$group.id}">退出</a>
+
+            <php>}elseif(is_joined($group['id']) == 2){</php>
+            <a class="pull-right btn btn-default btn-xs">审核中</a>
+            <php>}else{</php>
+            <a class="pull-right btn btn-primary btn-xs" data-role="group_attend" data-group-id="{$group.id}">+加入</a>
+            <php>}</php>
+        </if>
+
+
+    </div>
+</div>
+

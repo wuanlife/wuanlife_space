@@ -1,0 +1,112 @@
+<extend name="Public/base"/>
+
+<block name="body">
+        <div class="">
+            <div class="fourm-top common-block" style="padding: 15px 20px;margin-top: 0;margin-bottom: 15px">
+                <h4>
+                    <if condition="$isEdit">
+                        编辑群组
+                        <else/>
+                        创建群组：欢迎创建群组
+                    </if>
+                </h4>
+                <hr/>
+                <section id="contents">
+                    <form class="form-horizontal ajax-form" role="form" action="{:U('Group/Index/create')}" method="post" id="edit-article-form">
+                        <input type="hidden" name="group_id" value="{$group.id}"/>
+
+                        <div class="row">
+                            <!-- 帖子分类 -->
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="inputTitle" class="col-sm-2 control-label">*群组名称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="title" class="form-control" id="inputTitle" placeholder="群组名称，最多20个字">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputType" class="col-sm-2 control-label">*分类</label>
+                                    <div class="col-sm-10">
+                                        <select name="group_type" class="form-control" id="inputType">
+                                            <option value="-1">请选择</option>
+                                            <volist name="groupTypeAll" id="groupType">
+                                                <option value="{$groupType['id']}">{$groupType['title']}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDescription" class="col-sm-2 control-label">*群组介绍</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="detail" class="form-control" id="inputDescription" placeholder="群组的介绍"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputDescription" class="col-sm-2 control-label">*群组类型</label>
+                                    <div class="col-sm-10">
+                                        <label for="id_type_0" style="font-weight: normal">
+                                        <input id="id_type_0" name="type" value="0" type="radio" checked="">
+                                            公共群组</label>
+                                        <label for="id_type_1" style="font-weight: normal">
+                                        <input id="id_type_1" name="type" value="1" type="radio">
+                                           私有群组
+                                        </label>
+                                        <div style="color: #999">
+                                            （加入公共群组不需要管理员审核，加入私有群组需管理员审核）
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label  class="col-sm-2 control-label">群组形象</label>
+                                    <div  class="col-sm-10">
+                                        {:W('Common/UploadImage/render',array(array('id'=>'cover_id_cover','name'=>'logo','value'=>'','width'=>200,'height'=>200,'isLoadScript'=>1)))}
+                                    </div>
+                                </div>
+                               <!-- <div class="form-group">
+                                    <label  class="col-sm-2 control-label">背景图片</label>
+
+                                    <div  class="col-sm-10">
+                                        {:W('Common/UploadImage/render',array(array('id'=>'background','name'=>'background','value'=>'','width'=>200,'height'=>200,'isLoadScript'=>1)))}
+                                </div>-->
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputTitle" class="col-sm-2 control-label">*群成员的别称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="member_alias" class="form-control" id="inputMember" placeholder="群成员的别称，默认为“成员”" value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                        <p class="pull-right">
+                            <button type="submit" class="btn btn-large btn-primary" id="submit-button">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            <span id="submit-content">
+                                <if condition="$isEdit">
+                                    修改
+                                    <else/>
+                                    创建
+                                </if>
+                            </span>
+                            </button>
+                            <input type="hidden" id="isEdit" value="{$isEdit}">
+                        </p>
+                        <p>
+                            <a class="btn btn-large btn-primary" onclick="history.go(-1)">
+                                <span class="glyphicon glyphicon-home"></span>
+                                返回
+                            </a>
+                        </p>
+                    </form>
+                </section>
+            </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/js/ext/webuploader/js/webuploader.js"></script>
+    <link href="__PUBLIC__/js/ext/webuploader/css/webuploader.css" type="text/css" rel="stylesheet">
+</block>

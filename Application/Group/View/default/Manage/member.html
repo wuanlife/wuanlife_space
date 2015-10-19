@@ -1,0 +1,106 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <div class="fourm-top common_block_border" style="padding: 15px 20px;margin-top: 0;margin-bottom: 15px">
+
+
+                <div>
+                    <h4>
+                        群组管理
+
+                    </h4>
+                </div>
+
+                <div>
+                    <ul class="nav nav-tabs" role="tablist" style="font-size: 12px;">
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/index',array('group_id'=>$_GET['group_id']))}">基本信息</a></li>
+                        <li role="presentation" class="active"><a
+                                href="{:U('Group/Manage/member',array('group_id'=>$_GET['group_id']))}">成员管理</a></li>
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/notice',array('group_id'=>$_GET['group_id']))}">公告发布</a></li>
+                        <li role="presentation"><a
+                                href="{:U('Group/Manage/category',array('group_id'=>$_GET['group_id']))}">帖子分类管理</a>
+                        </li>
+                        <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}"
+                           class="btn btn-primary pull-right" style="margin-left: 10px;">返回群组</a>
+                        <button class="btn btn-primary pull-right" data-role="dismiss_group"
+                                data-group-id="{$group_id}">解散群组
+                        </button>
+                    </ul>
+                </div>
+
+
+                <hr style="border-top:0"/>
+
+
+                <div class="btn-group">
+                    <a href="{:U('member',array('group_id'=>$_GET['group_id'],'status'=>1))}"
+                       class="btn btn-default <if condition='$status eq 1'>active</if>">已审核<span class="badge"
+                                                                                                 style="margin-left: 1px">{$sh_count}</span></a>
+                    <a href="{:U('member',array('group_id'=>$_GET['group_id'],'status'=>0))}"
+                       class="btn btn-default  <if condition='$status eq 0'>active</if>">未审核<span class="badge"
+                                                                                                  style="margin-left: 1px">{$wsh_count}</span></a>
+
+                </div>
+
+
+                <volist name="member" id="people">
+                    <div class="row feed" style="margin-top: 30px;">
+                        <div class="col-xs-2">
+                            <a href="{$people.user.space_url}" ucard="{$people.user.uid}"> <img class="avatar-img"
+                                                                                                src="{$people.user.avatar64}"/></a>
+                        </div>
+                        <div class="col-xs-4">
+                            <a href="{$people.user.space_url}">{$people.user.nickname}</a>
+                            <php>if($status != 0){</php>
+                            <div style="color: #ccc">加入时间：{$people.update_time|friendlyDate}</div>
+                            <php>}</php>
+                        </div>
+                        <div class="col-xs-6">
+                            <if condition="$people['isCreator']">
+                                创建者
+                                <else/>
+
+
+                                <a href="javascript:" data-role="remove_group_member" data-group-id="{$people.group_id}"
+                                   data-uid="{$people.uid}">移出群组</a>
+                                <php>if($status == 0){</php>
+                                <div>
+                                    <a href="javascript:" data-role="receive_member" data-group-id="{$people.group_id}"
+                                       data-uid="{$people.uid}">审核通过</a>
+                                </div>
+                                <php>}</php>
+                            </if>
+
+
+                        </div>
+                    </div>
+
+                </volist>
+
+                <div class="clearfix pull-right">
+                    {:getPagination($totalCount,10)}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</block>
+
+<block name="script">
+
+    <script>
+        $(function () {
+            bind_group_manager();
+            bind_receive_group();
+            bind_remove_group_member();
+        })
+    </script>
+
+
+</block>

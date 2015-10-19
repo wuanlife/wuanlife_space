@@ -1,0 +1,74 @@
+<extend name="Public/base"/>
+
+<block name="body">
+
+        <div class="col-xs-12">
+            <div class="fourm-top common_block_border" style="padding: 15px 20px;margin: -15px;margin-top: 0;margin-bottom: 15px">
+                <h4>
+                    <if condition="$isEdit">
+                        编辑帖子
+                        <else/>
+                        发表新帖
+                    </if>
+                </h4>
+                <hr/>
+                <section id="contents">
+                    <form action="{:U('Group/Index/doEdit')}" method="post" class="ajax-form" id="edit-article-form" >
+                        <input type="hidden" name="post_id" value="{$post.id}"/>
+                        <input id="group_id" type="hidden" name="group_id" value="{$group.id}" />
+                        <div class="row">
+                            <!-- 帖子分类 -->
+                            <div class="col-sm-3 col-xs-12">
+                                <p>
+                                    <select class="form-control" name="category">
+                                        <option value="0">请选择分类</option>
+                                        <volist name="post_cate" id="category">
+                                            <php>
+                                                $selected = $category['id'] == $post['cate_id'] ? 'selected' : '';
+                                            </php>
+                                            <option value="{$category.id}"
+                                            {$selected}>{$category.title|htmlspecialchars}</option>
+                                        </volist>
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="col-sm-9 col-xs-12">
+                                <p>
+                                    <input id="title" type="text" name="title" placeholder="标题" value="{$post.title}"
+                                           class="form-control"/>
+
+                                </p>
+                            </div>
+
+                        </div>
+                        <p>
+                            <php>
+                                $config="toolbars:[['source','|','bold','italic','underline','fontsize','forecolor','fontfamily','backcolor','|','link','emotion','scrawl','attachment','insertvideo','insertimage','insertcode']]";</php>
+                            </php>
+                            {:W('Common/Ueditor/editor',array('contentEditor','content',$post['content'],'100%','250px',$config))}
+                        </p>
+                        <p>&nbsp;</p>
+                        <p class="pull-right">
+                            <button type="submit" class="btn btn-large btn-primary" id="submit-button">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            <span id="submit-content">
+
+                                   提交 Ctrl+Enter
+
+                            </span>
+                            </button>
+                            <input type="hidden" id="isEdit" value="{$isEdit}">
+                        </p>
+                        <p>
+                            <a class="btn btn-large btn-primary" onclick="history.go(-1)">
+                                <span class="glyphicon glyphicon-home"></span>
+                                返回帖子列表
+                            </a>
+                        </p>
+                    </form>
+                </section>
+            </div>
+        </div>
+
+</block>
+

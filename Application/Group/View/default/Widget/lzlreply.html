@@ -1,0 +1,66 @@
+<div class="triangle"></div>
+<div class="triangle_up"></div>
+<div class="lzl">
+    <div class="lzl_reply">
+        <php>if($lzl_list){</php>
+
+        <volist name="lzl_list" id="lzl">
+            {:W('Group/Detail/lzlReply',array('lzl_id'=>$lzl))}
+        </volist>
+
+        <php>if(!empty($html)){</php>
+        <div class="pager pull-right">
+            {$html}
+        </div>
+        <php>}</php>
+        <php>}</php>
+    </div>
+
+    <php>if(is_login()){</php>
+
+    <php>if(is_joined($post['group_id']) != 1){</php>
+    <p class="text-center text-muted" style="font-size: 16px;">需 <a data-role="group_attend" data-group-id="{$post['group_id']}" href="javascript:">加入群组</a> 再回复</p>
+    <php>}else{</php>
+
+
+    <div class="clearfix"></div>
+    <div class="group_reply_textarea weibo_post_box">
+
+
+        <div style="margin-left: 50px;">
+                <input placeholder="说点什么吧～" class="form-control single_line">
+        </div>
+
+    <div style="display: none">
+        <div class="XT_my_avatar">
+            <a href="{$myInfo.space_url}" ucard="{$myInfo.uid}">
+                <img src="{$myInfo.avatar128}" class="avatar-img" style="width:100%;"/></a>
+        </div>
+
+
+        <div style="margin-left: 50px;">
+            <textarea class="input_tips" style="overflow-y: hidden;"></textarea>
+            <a href="javascript:" onclick="insertFace($(this))">
+                <img class="weibo_type_icon" src="__CORE_IMAGE__/bq.png"/>
+            </a>
+        </div>
+        <div id="emot_content" class="emot_content"></div>
+        <div class="XT_submit">
+            <a data-role="sendLzlReply" href="javascript:" data-f-reply-id="{$reply.id}" data-reply-id="0"
+               class="pull-right btn btn-primary">提交 Ctrl+Enter</a>
+        </div>
+    </div>
+
+    </div>
+
+
+    <php>}</php>
+
+
+    <php>}else{</php>
+    <div class="text-center text-muted" style="font-size: 16px;">
+        请<a href="{:U('Ucenter/Member/login')}">登录</a>后回复
+    </div>
+    <php>}</php>
+</div>
+

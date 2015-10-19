@@ -1,0 +1,32 @@
+<if condition="is_login()">
+    <div class="common-block my_manage group_info " >
+        <header>
+            <if condition="$uid eq 0 || $uid eq is_login()">我的群组  <a class="pull-right" href="{:U('group/index/mygroup')}">更多></a><else/>TA的群组</if>
+
+        </header>
+
+
+        <div class="common_block_content_right">
+
+            <volist name="my_attendance" id="my">
+                <div class="row agroup">
+                    <div class="col-xs-3">
+
+                        <php> if($my['logo']){</php>
+                        <img class="logo" src="{$my.logo|getThumbImageById=48,48}" alt="{$my.title|op_t}">
+                        <php>}else{</php>
+                        <img class=" logo" src="__PUBLIC__/Group/images/icon.jpg" alt="{$my.title|op_t}">
+                        <php>}</php>
+
+                    </div>
+                    <div class="col-xs-9" style="margin-left: -25px;">
+                        <h3><a target="_blank" href="{:U('group/index/group',array('id'=>$my['id']))}" title="{$my.title}">{$my.title|getShortSp=10}</a></h3>
+
+                        <p>成员：{$my.member_count}人</p>
+                    </div>
+                </div>
+            </volist>
+
+        </div>
+    </div>
+</if>

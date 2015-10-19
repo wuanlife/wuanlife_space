@@ -1,0 +1,19 @@
+<div class="common_block_border group_info">
+    <div class=" common_block_title_right">
+        全部领域
+    </div>
+    <div>
+        <div class="group_tags group_types" style="padding: 15px;padding-top: 0">
+            <a href="{:U('index')}" <if condition="!$group_cate">class="active"</if>>
+                <!--//TODO 添加标签的链接-->
+                全部
+            </a>
+            <volist name="groupType" id="type">
+                <a href="{:U('index',array('cate'=>$type['id']))}" <if condition="$group_cate eq $type['id']">class="active"</if>>
+                    <!--//TODO 添加标签的链接-->
+                    {$type.title}
+                </a>
+            </volist>
+        </div>
+    </div>
+</div>
