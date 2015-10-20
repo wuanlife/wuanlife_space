@@ -1,0 +1,134 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <div class="group-container ulpost">
+        <script src="__JS__/group.js"></script>
+        <link rel="stylesheet" href="__CSS__/apps/group.css"/>
+        <if condition="($mark eq myGroup) or ($mark eq discover) or ($mark eq select)">
+            <notempty name="posts">
+                <volist name="posts" id="vo">
+                    <include file="_postlist"/>
+                </volist>
+                <else/>
+                没有内容
+            </notempty>
+
+        </if>
+
+        <if condition="($mark eq allGroup) or ($mark eq childType) or($mark eq  parentType)">
+            <ul class="am-g  group-list am-avg-sm-2 am-avg-md-4 am-avg-lg-5 ulgroup" style="margin:0 auto">
+                <volist name="group" id="vl">
+                    <include file="_grouplist"/>
+                </volist>
+            </ul>
+        </if>
+    </div>
+
+    <div class="am-list-news-ft look-more">
+        <if condition="$pid['count'] eq 1">
+            <php>if(($mark=='discover')||($mark=='select')||($mark=='myGroup')){</php>
+            <a id="getmorepostlist" data-url="{:U('Mob/Group/addMoreGroupList')} "
+               data-mark={$mark} >查看更多 &raquo;</a>
+            <php>}else{</php>
+            <a id="getmoregrouplist" data-url="{:U('Mob/Group/addMoreGroupList')} "
+               data-mark={$mark} data-type-id="{$typeId}">查看更多 &raquo;</a>
+            <php>}</php>
+        </if>
+
+    </div>
+
+
+    <div id="Q-list">
+        <ul>
+            <li>
+                <a href="{:U('Mob/Group/index',array('mark'=>allGroup))}">全部群组</a>
+            </li>
+            <volist name="parent" id="type">
+                <php>if(!empty($type['child'])){</php>
+                <li><span class="triangle-left">
+                        </span>
+                    {$type.title}
+                    <div class="Q-list-sec">
+                        <div class="sec">
+                            <ul>
+                                <li>
+                                    <a href="{:U('Mob/Group/index',array('mark'=>parentType,'typeId'=>$type['id']))}">
+                                        全部</a>
+                                </li>
+                                <volist name="type.child" id="child_cate">
+                                    <li>
+                                        <a href="{:U('Mob/Group/index',array('mark'=>childType,'typeId'=>$child_cate['id']))}">
+                                            {$child_cate.title}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <php>}else{</php>
+                <li><a href="{:U('Mob/Group/index',array('mark'=>parentType,'typeId'=>$type['id']))}">{$type.title}</a>
+                </li>
+                <php>}</php>
+            </volist>
+        </ul>
+    </div>
+    <script>
+        bind_page();
+        attend();
+        quit();
+        $(function () {
+            $('#Q-list').hide();
+            var $type = document.getElementById('Q-list');
+            var width = parseInt($('#Q-type').width());
+            $type.style.width = width + 'px';
+            $('.Q-list-sec').css("width", width + 'px');
+            $('.Q-list-sec').css("right", (width + 10) + 'px');
+            $('#Q-type').click(function () {
+                $('#Q-list').toggle();
+                if ($('.Q-list-sec').is(":visible")) {
+                    $('.Q-list-sec').hide();
+                }
+                if ($('.triangle-left').is(":visible")) {
+                    $('.triangle-left').hide();
+                }
+            });
+            $('#Q-list>ul>li').click(function () {
+                if ($(this).children('.triangle-left').is(":visible")) {
+                    $(this).children('.triangle-left').hide();
+                    $(this).children('.Q-list-sec').hide();
+                } else {
+                    $('.triangle-left').hide();
+                    $('.Q-list-sec').hide();
+                    $(this).children('.triangle-left').show();
+                    $(this).children('.Q-list-sec').show();
+                }
+            });
+        });
+    </script>
+</block>
+<block name="mob_bottom">
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+         id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-4" style="padding: 0px;font-size: 13px;">
+            <li>
+                <a href="{:U('Mob/Group/index',array('mark'=>myGroup))}">
+                    我的群组
+                </a>
+            </li>
+            <li>
+                <a href="{:U('Mob/Group/index',array('mark'=>discover))}">
+                    发现
+                </a>
+            </li>
+            <li>
+                <a href="{:U('Mob/Group/index',array('mark'=>select))}">
+                    精选
+                </a>
+            </li>
+            <li>
+                <a style="color: white " id="Q-type">
+                    分类
+                </a>
+            </li>
+        </ul>
+    </div>
+</block>

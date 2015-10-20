@@ -1,0 +1,22 @@
+<php>
+    $t=array();
+    $t=$_GET;
+    unset($t[$field['name']]);
+    $_tj= $t;
+</php>
+<!--<form id="frm_{$field.name}" data-url="{:U('cat/Index/li')}"
+      method="get"
+      style="line-height: 20px">-->
+
+   <!-- <span id="{$field.name}" class="hidden">{:json_encode($t)}</span>-->
+
+    <div class="col-xs-4">
+        <input id="i_{$field.name}" data='{$field.name}'
+               class="form-control" type="text"
+               value='{:op_t($_GET[$field['name']])}'
+        name="{$field.name}"
+        class="mr10 cat_search_text">
+    </div>
+
+<!--
+</form>-->

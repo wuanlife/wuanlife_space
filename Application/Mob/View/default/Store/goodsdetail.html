@@ -1,0 +1,228 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+<link rel="stylesheet" href="__CSS__/apps/store.css"/>
+<script src="__JS__/store.js"></script>
+<div class="goodsdetail-container ">
+    <div data-am-widget="slider" class="am-slider am-slider-default"
+         data-am-slider='{animation:slide,slideshow:false}'>
+        <ul class="am-slides">
+            <volist name="detail['img']" id="vo">
+                <li>
+                    <img src="{$vo['img']}">
+                    <!--          <div class="am-slider-desc">美女</div>-->
+                </li>
+            </volist>
+
+        </ul>
+    </div>
+    <div class="goodsdetail-box">
+        <div class="am-text-center">
+            <span class="">{$detail['title']}</span>
+        </div>
+        <form class="addcar">
+            <input type="hidden" name="good_id" value="{$detail.id}">
+
+            <div class="info">
+
+                <div class="am-g">
+                    <span class="am-u-sm-6 am-text-center"> 浏览次数：{$detail['read']}</span>
+                    <span class="am-u-sm-6 am-text-center"> 收藏：{$detail['fav']}</span>
+
+                </div>
+                <div class="am-g">
+                    <span class="am-u-sm-6 am-text-center">所在地：{$detail['shop']['position']}</span>
+                    <span class="am-u-sm-6 am-text-center">发布日期：{$detail['create_time']|friendlyDate}</span>
+                    <span class="am-u-sm-6 am-text-center"> 价格 ：{$detail['price']}</span>
+                                                           <span class="am-u-sm-6 am-text-center">
+                                                	 <input class="min" data-price="0"
+                                                            style=" width:20px; height:18px;border:1px solid #ccc;"
+                                                            type="button" value="-"/>
+				                                     <input class="text_box" name="count" type="text" value="1"
+                                                            style=" width:30px; text-align:center; border:1px solid #ccc;"/>
+				                                     <input class="add" data-price="{$vo.good.price}"
+                                                            style=" width:20px; height:18px;border:1px solid #ccc;"
+                                                            type="button" value="+"/>
+                                                </span>
+                </div>
+            </div>
+        </form>
+        <div class="shop-info-box ">
+
+            <div class="shop am-g">
+                <ul>
+                    <li class="shop-avatar ">
+                        <img style="" src="{$detail['shop']['logo']|getThumbImageById=222,222}">
+                    </li>
+                    <li class="shop-info ">
+                        <h2 class="shop-name">{$detail['shop']['title']}</h2>
+                        <span>{$detail['shop']['summary']}</span></br>
+
+                        <div class="am-g">
+                            <span class="am-u-sm-6">访问量：{$detail['shop']['visit_count']}人</span>
+                            <span class="am-u-sm-6">总销量：{$detail['shop']['sell']}单</span>
+
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <p class="a-btn-box">
+                <a href="{:U('store/goodscate')}" class="a-btn"><span style="">查看宝贝分类</span></a>
+                <a href="{:U('store/shopdetail',array('id'=>$detail['shop']['id']))}" class="a-btn"><span
+                        style="">进入店铺</span></a>
+                <if condition="$detail['uid'] eq is_login()">
+                    <a href="{:U('store/addgoods',array('goodsId'=>$detail['id']))}" class="a-btn"><span
+                            style="">编辑商品信息</span></a>
+                </if>
+            </p>
+        </div>
+    </div>
+
+
+    <div class="tabs-list">
+        <ul class="goods_type am-avg-sm-2">
+            <li class="selected">商品详情</li>
+            <li>累计评价</li>
+        </ul>
+        <div id="tab-content">
+            <!--详情-->
+            <div class="tab">
+                <div class="am-text-center ">
+                    {$detail['des']}
+                </div>
+            </div>
+            <!--评论-->
+            <div class="tab">
+                <div class="comment-list" style="margin-top: 20px">
+                    <notempty name="comment">
+                        <volist name="comment" id="vl">
+                            <notempty name="vl">
+                                <div class="comment-item"
+                                     style="background-color: #ffffff;padding: 10px;margin-bottom: 5px;border: 1px solid #F2F2F2;">
+                                    <div class="am-g avatar-img">
+                                        <div class=" am-u-sm-6 avatar">
+                                            <img class=" avatar-img" style="width: 32px"
+                                                 src="{$vl['user']['avatar32']}">
+                                            <span><a href="{$vl['user']['space_mob_url']}">{$vl['user']['nickname']}</a></span>
+                                        </div>
+                                        <div class=" am-u-sm-6 evaluate" style="font-size:13px; text-align: right">
+                                            {$vl['response']}
+                                        </div>
+
+                                    </div>
+                                    <div class="content" style="padding: 10px">
+                                        {$vl['content']}
+                                    </div>
+                                    <div class="am-g" style="font-size:13px;">
+                                        <div class="am-u-sm-6 am-text-center" style="padding: 0px">
+                                            <span>购买于：{$vl['pay_time']|friendlyDate}</span>
+                                        </div>
+                                        <div class="am-u-sm-6 am-text-center" style="padding: 0px">
+                                            <span>评价于：{$vl['response_time']|friendlyDate}</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="am-list-news-ft">
+                                        <a class=" am-btn am-btn-secondary am-btn-block" href="###">查看更多 &raquo;</a>
+                                    </div>
+                                </div>
+                            </notempty>
+                        </volist>
+                        <else/>
+                        <div>
+                            <span>暂无人购买评论</span>
+                        </div>
+                    </notempty>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
+    <ul class="am-navbar-nav am-cf am-avg-sm-2">
+        <if condition="$detail['uid'] neq is_login()">
+            <php>if($hasFav=D('StoreFav')->where(array('uid'=>is_login(),'info_id'=>$detail['id']))->find()){</php>
+            <li class="am-text-center">
+                <button  class="am-btn am-btn-primary cartadditem collect" data-am-modal="{target: '#my-actions'}" data-id="{$detail['id']}"
+                        data-url="{:U('mob/store/doFav')}">取消收藏
+                </button>
+            </li>
+            <php>}else{</php>
+            <li class="am-text-center">
+                <button  class="am-btn am-btn-primary cartadditem collect" data-am-modal="{target: '#my-actions'}" data-id="{$detail['id']}"
+                        data-url="{:U('mob/store/doFav')}">收藏
+                </button>
+            </li>
+            <php>}</php>
+            <li class="am-text-center">
+                <button class="am-btn am-btn-primary cartadditem" data-am-modal="{target: '#my-actions'}"
+                        data-url="{:U('mob/store/cart_add_item')}">加入购物车
+                </button>
+            </li>
+            <li>
+                <button class="am-btn  am-btn-primary buyadditem" data-am-modal="{target: '#my-actions'}"
+                        data-url="{:U('mob/store/buy_add_item')}" data-redirect-url="{:U('mob/store/mycar')}">立即购买
+                </button>
+            </li>
+        </if>
+    </ul>
+</div>
+
+
+<script>
+
+
+    $(function () {
+        cart_add_item();
+        buy_add_item();
+        collect();
+        $("#tab-content > .tab").eq(0).show();
+        var $div = $(".goods_type li");
+        $div.click(function () {
+            $(this).addClass("selected")       //当前<li>元素高亮
+                    .siblings().removeClass("selected");  //去掉其它同辈<li>元素的高亮
+            var index = $div.index(this);  // 获取当前点击的<li>元素 在 全部li元素中的索引。
+            $("#tab-content > .tab")      //选取子节点。不选取子节点的话，会引起错误。如果里面还有div
+                    .eq(index).show()   //显示 <li>元素对应的<div>元素
+                    .siblings().hide(); //隐藏其它几个同辈的<div>元素
+        })
+    });
+
+
+</script>
+<script>
+    $(function () {
+        $(".add").click(function () {
+            var t = $(this).parent().find('input[class*=text_box]');
+            t.val(parseInt(t.val()) + 1);
+            setTotal();
+        });
+        $(".min").click(function () {
+            var t = $(this).parent().find('input[class*=text_box]');
+            t.val(parseInt(t.val()) - 1);
+            if (parseInt(t.val()) < 1) {
+                t.val(1);
+            }
+            setTotal();
+        });
+        function setTotal() {
+            var s = 0;
+
+            $("#tab").each(function () {
+                s += parseInt($(this).find('input[class*=text_box]').val()) * parseFloat($(".one-price").find('span[class*=price]').text());
+            });
+            $("#total").html(s.toFixed(2));
+        }
+
+        setTotal();
+
+    })
+</script>
+</block>

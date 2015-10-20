@@ -1,0 +1,78 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+<div class="add-group" style="padding: 10px;">
+    <form  class="am-form " id="send_post" data-am-validator data-url="{:U('Mob/group/doEdit')}">
+        <input type="hidden" id="img_ids" name="attach_ids" value="">
+        <input type="hidden" id="group_id" name="group_id" value="{$group_id}"> <!--群组ID-->
+        <input type="hidden" id="post_id" name="post_id" value="{$post.id}">
+        <div class="am-form-group">
+            <select class="form-control" name="category" >
+                <option value="0">请选择分类</option>
+                <volist name="post_cate" id="category">
+                    <php>
+                        $selected = $category['id'] == $post['cate_id'] ? 'selected' : '';
+                    </php>
+                    <option value="{$category.id}"
+                    {$selected}>{$category.title|htmlspecialchars}</option>
+                </volist>
+            </select>
+            <span class="am-form-caret"></span>
+
+        </div>
+        <div class="am-form-group">
+            <input type="text" id="info" minlength="1" name="title"  placeholder="标题（至少 3 个字符）" value="{$post.title}" required/>
+        </div>
+        <div class="am-form-group weibo_post_box">
+            <textarea maxlength="200" class="content" type="text" name="content"  placeholder="帖子内容....."
+                      style="width: 100%;height:150px;padding: 5px;margin-bottom:5px">{$post.content}</textarea>
+            <!--插入图片表情-->
+            <!--表情-->
+            <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 3px">
+                <img src="__CORE_IMAGE__/bq.png">
+            </a>
+            <div id="emot_content" class="emot_content"></div>
+
+            <!--表情-->
+            <div class="fileupload-buttonbar">
+                <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                        src="__IMG__/image.png"></a>
+                <div class="fileinput-button"style="width: 100%"><input type="file" name="files" class="btn" id="fileupload" style="left: 35px;position:absolute;z-index: 1;width: 35px;height:40px;opacity: 0;cursor: pointer;" data-url="{:U('Core/File/uploadPicture')}" multiple/></div>
+
+            </div>
+
+            <!--插入图片表情结束-->
+        </div>
+    </form>
+    <p class="submitweibo">
+        <button style="float: right" id="confirm" type="button" class="am-btn am-btn-primary am-btn-block">发布</button>
+    </p>
+
+</div>
+<style>
+    input[type="button"]{
+        width: 40px;
+        height: 40px;
+    }
+</style>
+    <script>
+        add_img();
+        $(function () {
+            $('#confirm').click(function () {
+                var data = $("#send_post").serialize();
+                var url = $("#send_post").attr('data-url');
+                $.post(url, data, function (msg) {
+                    if (msg.status == 1) {
+                        toast.success(msg.info);
+                        setTimeout(function () {
+                            window.location.href = document.referrer
+                        }, 500);
+                    } else {
+                        alert(msg.info);
+                    }
+                }, 'json');
+            })
+        });
+    </script>
+
+</block>

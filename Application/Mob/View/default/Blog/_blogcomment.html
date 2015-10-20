@@ -1,0 +1,25 @@
+<div class="comment-item">
+    <div class="am-g avatar-img user-info">
+        <div class="am-u-sm-6 avatar">
+            <img class="avatar-img" style="width: 32px" src="{$vl.user.avatar32}">
+            <span><a href="{:U('Mob/User/index',array('uid'=>$vl['user']['uid']))}">{$vl.user.nickname}</a></span>
+        </div>
+        <div class="am-u-sm-6 time">
+            {$vl.create_time|friendlyDate}
+        </div>
+    </div>
+    <div class="am-g content">
+        {$vl.content}
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-2 am-text-center" style="float: right">
+            <a class="delete" comment_id="{$vl.id}" blog_id="{$vl.row_id}" url="{:U('Mob/Blog/delBlogComment')}">
+                <i class="am-icon-trash" id="doc-confirm-toggle"></i></a>
+        </div>
+        <div class="am-u-sm-2 t_center">
+            <a class="atcomment"  href="{:U('Mob/Blog/atComment',array('id'=>$vl['row_id'],'user'=>$vl['user']['nickname'],'uid'=>$vl['uid']))}">
+                <i class="am-icon-comment-o"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <include file="groupdetailhead"/>
+    <div class="am-tabs am-nav am-nav-tabs" data-am-tabs="{noSwipe: 1}">
+        <ul class="am-tabs-nav am-nav am-nav-tabs"style="font-size: 12px">
+            <li class="am-active"><a href="#tab1">最新动态</a></li>
+            <li><a href="#tab2">帖子</a></li>
+            <li><a href="#tab3">成员</a></li>
+        </ul>
+
+        <div class="am-tabs-bd">
+            <div class="am-tab-panel am-fade am-in am-active" id="tab1" style="padding: 0px">
+                <volist name="dynamicList" id="dynamic">
+                    {:W('dynamic/lists',array('dynamic_id'=>$dynamic))}
+                </volist>
+
+            </div>
+
+            <div class="am-tab-panel am-fade" id="tab2">
+                <volist name="post" id="vl">
+                    <div class="post-subject am-list am-cf" style="border: solid 1px #F2F2F2;padding: 10px;">
+                        <div class="post-info am-g ">
+                            <div class="title" style="padding: 0px">
+                                <a href="{:U('group/detail',array('id'=>$vl['id']))}">{$vl.title}</a></br>
+                            <span class="avatar-img ">
+                           <img class="avatar-img" style="width: 24px" src="{$vl.user.avatar64}">
+                           </span>
+                                <a href="##" style="font-size: 13px;"> {$vl.user.nickname}</a>
+                            </div>
+                        </div>
+                        <div class="icon-btn am-fl" style="text-align: left;font-size: 13px;">
+                            <span>{$vl.view_count}人浏览</span>
+                            <span>{$vl.reply_count}人回复</span>
+                        </div>
+                        <div class="am-fr  self-info " style="font-size: 13px;text-align: right;padding-left: 10px">
+                            <span>
+                                发表时间：{$vl.create_time|friendlyDate}
+                            </span>
+
+                            <span>
+                                最新回复：{$vl.update_time|friendlyDate}
+                            </span>
+                        </div>
+                    </div>
+                </volist>
+            </div>
+
+            <div class="am-tab-panel am-fade" id="tab3">
+
+                <div class="member-box">
+                    <div class="">
+                        <h3 style="margin-bottom: 5px">创始人</h3>
+                        <div class="master">
+                            <img class="avatar-img" style="width: 24px" src="{$people.admin.user.avatar64}">
+                            <a href="##" style="font-size: 13px;"> {$people.admin.user.nickname}</a>
+                        </div>
+                    </div>
+                    <div class="member">
+                        <h3 style="margin-bottom: 5px">成员</h3>
+                        <volist name="people['people']" id="v2">
+                            <ul class="am-avg-sm-4 ">
+                                <li>
+                                    <img class="avatar-img" style="width: 24px"
+                                         src="{$v2.user.avatar64}">
+                                    <a href="{$v2.user.space_mob_url}" style="font-size: 13px;"> {$v2.user.nickname}</a>
+                                </li>
+                            </ul>
+                        </volist>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="am-modal-actions" id="my-actions">
+        <div class="am-modal-actions-group">
+            <ul class="am-list">
+                <li class="am-modal-actions-header">成员管理</li>
+
+                <li>
+                    <a href="#">默认排序</a>
+                </li>
+                <li>
+                    <a href="#">按最后活跃时间排序</a>
+                </li>
+                <li>
+                    <a href="#">邀请好友加入</a>
+                </li>
+                <li class="am-modal-actions-danger">
+                    <a href="#">删除群组成员</a>
+                </li>
+            </ul>
+        </div>
+        <div class="am-modal-actions-group">
+            <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+        </div>
+    </div>
+<script>
+    attend();
+    quit();
+</script>
+
+</block>

@@ -1,0 +1,116 @@
+<link href="__JS__/toastr/toastr.min.css" rel="stylesheet"/>
+
+<div id="demo-view" class="" data-backend-compiled="" style="z-index: 1040">
+    <nav data-am-widget="menu" class="am-menu am-menu-offcanvas1 am-no-layout" data-am-menu-offcanvas=""><a
+            href="javascript: void(0)" class="am-menu-toggle"><i class="am-menu-toggle-icon am-icon-bars"></i></a>
+
+        <div class="am-offcanvas "
+             style="touch-action: pan-y; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+            <div class="am-offcanvas-bar am-offcanvas-bar-flip">
+                <div class="am-text-center" id="user" style="display: none">
+                    <php>$user=query_user(array('nickname','avatar64'));</php>
+                    <php>$map = array('status' => array('gt', -1), 'pid' => 0,'url'=>array('eq','mob/user/index'));
+                        $list=D('MobChannel')->where($map)->find();
+                    if($list){</php>
+                    <a style="text-indent: 0px;" href="{:U('mob/user/index')}">
+                        <img class="avatar-img" style="border-radius: 100%;width:64px;margin-top:20px "
+                             src="{$user.avatar64}">
+                    </a><php>}else{
+                </php>
+                    <a style="text-indent: 0px;" >
+                        <img class="avatar-img" style="border-radius: 100%;width:64px;margin-top:20px "
+                             src="{$user.avatar64}">
+                    </a>
+                    <php>}</php>
+
+                    <div class="am-text-center">
+                        <a class="am-text-truncate" style="color: #fff; width: 81px;
+  display: block;
+  margin: 0 auto;">{$user.nickname}</a>
+                    </div>
+                </div>
+                <div class="am-text-center" id="signin"
+                     style="display: block;font-size: 18px ; height: 44px;line-height: 44px;">
+                    <a href="{:U('mob/Member/index')}">
+                        <i class="am-icon-sign-in"></i>
+                        &nbsp;&nbsp;&nbsp;登录
+                    </a>
+                </div>
+                <ul class="am-menu-nav am-avg-sm-1 am-text-center">
+
+                    <php>
+                        $map = array('status' => array('gt', -1), 'pid' => 0,'url'=>array('neq','mob/user/index'));
+                        $list=D('MobChannel')->where($map)->select();
+                        foreach($list as &$v ){
+                            $v['url']=U($v['url']);
+                        }
+                    </php>
+                    <volist name="list" id="vo">
+                        <li>
+                            <a style="text-indent: 0px;" href="{$vo.url}">
+                                <i class="{$vo.icon}"></i>
+                                &nbsp;&nbsp;&nbsp;{$vo.title}
+                            </a>
+                        </li>
+                    </volist>
+
+
+
+                    <php>
+                        if (is_login()) {
+                    </php>
+
+                    <li>
+                        <a style="text-indent: 0px;" href="{:U('message/index')}" class="am-icon-bell-o">
+                            <i ></i>
+                            &nbsp;&nbsp;&nbsp;消息
+                        </a>
+                    </li>
+
+                    <php>
+                        }
+                    </php>
+                </ul>
+                <div class="am-text-center" id="signout" style="display: none;padding: 5px 0px">
+                    <a>
+                        <i class="am-icon-sign-out"></i>
+                        &nbsp;&nbsp;&nbsp;退出
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+<script src="__JS__/toastr/toastr.min.js"></script>
+<script src="__JS__/toast.js"></script>
+<script>
+    var uid = '{:is_login()}';
+    $(document).ready(function () {
+        signout();
+        if (uid > 0) {
+            $('#user').show()
+            $('#signin').hide()
+            $('#signout').show()
+        } else {
+            $('#user').hide()
+            $('#signin').show()
+            $('#signout').hide()
+        }
+
+    });
+
+    var signout = function () {
+        $('#signout').click(function () {
+            $.post("{:U('Mob/Member/logout')}", {}, function (msg) {
+                if (msg.status == 1) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000);
+                    toast.success('退出成功!');
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json')
+        });
+    }
+</script>

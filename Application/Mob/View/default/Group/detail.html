@@ -1,0 +1,94 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <include file="groupdetailhead"/>
+
+    <div class="post-container ">
+        <div class="post am-cf" id="article_list_ul">
+            <div class="post-box " >
+                <div class="am-g info">
+                    <div class="avatar am-u-sm-2">
+                        <img class="avatar-img" src="{$post.user.avatar64}"style="width: 48px;
+          height: 48px;">
+<br>
+                        <a href="{$post.user.space_mob_url}"> {$post.user.nickname}</a>
+                    </div>
+                    <div class="post-info am-u-sm-8">
+                        <span style="font-size: 13px">{$post.title}</span>
+                        <br>
+                        <div class="publish">
+                            <a href="{$post.user.space_mob_url}"> {$post.user.nickname}</a>
+                            <span class="time">{$post.create_time|friendlyDate}</span>发表
+                            <a class="support" post_id="{$post['id']}" user_id="{$post['uid']}" url="{:U('Mob/Group/support')}">
+                            <if condition="$post['isSupport'] eq 1">
+                                <i class="am-icon-heart"></i>
+                                <else/>
+                                <i class="am-icon-heart-o"></i>
+                            </if>
+                            <span>{$post.countSupport}</span>
+                        </a>
+                     </div>
+                    </div>
+
+                    <div class="part am-u-sm-2">
+                       楼主
+                    </div>
+                </div>
+
+            </div>
+            <div class="am-g content">
+                <p> {$post.content}</p>
+            </div>
+            <div class="am-fr small-btn">
+                <php>if($post['uid']==is_login()||is_administrator(is_login())){</php>
+                <a href="{:U('Mob/group/addpost',array('post_id'=>$post['id'],'group_id'=>$group['id'],'isEdit'=>1))}">编辑</a>
+                <a class="delpost" url="{:U('Mob/group/deletePost')}" post-id="{$post.id}">删除</a>
+                <php>}</php>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="comment-item ulreply">
+        <volist name="postComment" id="vl" key="k">
+            <include file="_postcomment"/>
+        </volist>
+
+    </div>
+    <if condition="$pid['count'] eq 1">
+        <div class="am-list-news-ft look-more">
+            <a class="" id="getmorereply" data-group-id="{$group_id}">查看更多...</a>
+        </div>
+    </if>
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+         id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-4" style="font-size: 13px">
+            <li>
+                <if condition="$post['collect'] eq 0">
+                    <a class="collect" post-id="{$post.id}" flag="1" url="{:U('Mob/group/doBookmark')}">
+                        收藏
+                    </a>
+                </if>
+                <if condition="$post['collect'] eq 1">
+                    <a class="unCollect" post-id="{$post.id}" url="{:U('Mob/group/doBookmark')}">
+                        取消收藏
+                    </a>
+                </if>
+            </li>
+            <li>
+                <a class="reply_post" href="{:U('Mob/group/addcomment',array('id'=>$post['id']))}">
+                    回复
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script>
+        attend();
+        quit();
+        delpost();
+        collect();
+        unCollect();
+        support();
+        dismiss();
+        bind_page();
+    </script>
+
+</block>

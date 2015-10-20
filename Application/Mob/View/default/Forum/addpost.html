@@ -1,0 +1,95 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/forum.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/forum.css"/>
+    <div class="addpost-container" style="padding: 10px;">
+        <form class="am-form" id="send_post" data-am-validator data-url="{:U('Mob/Forum/doAddPost')}">
+            <input type="hidden" id="is_deit" name="isEdit" value="{$forum_detail.is_edit}">
+            <input type="hidden" id="post_id" name="post_id" value="{$forum_detail.id}">
+            <input type="hidden" id="img_ids" name="attach_ids" value="">
+
+            <div class="am-form-group am-form-inline">
+                <select id="doc-select-1" name="forum_id">
+                    <volist name="forum_list" id="each_forum">
+                        <if condition="$each_forum['allow_publish']">
+                            <php>
+                                $selected = $each_forum['id'] == $forum_id ?
+                                'selected' : '';
+                            </php>
+                            <option value="{$each_forum.id}"
+                            {$selected}>{$each_forum.title|op_t}
+                            </option>
+                        </if>
+                    </volist>
+                </select>
+                <span class="am-form-caret"></span>
+            </div>
+
+            <div class="am-form-group">
+                <input type="text" id="title" name="title" minlength="1" placeholder="标题" class="am-form-field"
+                       value="{$forum_detail.title}"
+                       required/>
+            </div>
+            <div class="am-form-group weibo_post_box am-cf">
+                <textarea type="text" name="content" placeholder=""
+                          style="width: 100%;height:150px;padding: 5px">{$forum_detail.content}</textarea>
+                <!--插入图片表情-->
+
+                <!--表情-->
+                <a class="am-fl" href="javascript:" data-url=" {:U('Core/Expression/getSmile')}"
+                   onclick="insertFace($(this))" style="margin-top: 3px">
+                    <img src="__CORE_IMAGE__/bq.png">
+                </a>
+
+                <div id="emot_content" class="emot_content"></div>
+
+                <!--表情-->
+                <div class="fileupload-buttonbar">
+                    <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                            src="__IMG__/image.png"></a>
+
+                    <div class="fileinput-button" style="width: 100%"><input type="file" name="files" class="btn"
+                                                                             id="fileupload"
+                                                                             style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;"
+                                                                             data-url="{:U('Core/File/uploadPicture')}"
+                                                                             multiple/></div>
+
+                </div>
+                <!--插入图片表情结束-->
+
+
+                <div style="margin-top: -10px">
+                    <php>$hasWeibo=D('Module')->checkInstalled('Weibo');</php>
+                    <eq name="hasWeibo" value="1">
+                        <label class="am-fr">
+                            <input type="checkbox" name="sendWeibo" value="1" checked> 同步到微博
+                        </label>
+                    </eq>
+                </div>
+            </div>
+        </form>
+        <button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block" style="margin: 10px 0px">发表
+        </button>
+
+    </div>
+
+    <script>
+        add_img();
+        $(function () {
+            $('#confirm').click(function () {
+                var data = $("#send_post").serialize();
+                var url = $("#send_post").attr('data-url');
+                $.post(url, data, function (msg) {
+                    if (msg.status == 1) {
+                        toast.success('帖子发布成功!');
+                        setTimeout(function () {
+                            window.location.href = document.referrer
+                        }, 500);
+                    } else {
+                        alert(msg.info);
+                    }
+                }, 'json');
+            })
+        });
+    </script>
+</block>

@@ -1,0 +1,33 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/blog.css"/>
+<div class="blog-type-list" style="padding: 10px;">
+    <div>
+        <ul class="type">
+            <volist name="level" id="vo">
+                <li class="type-list"style="margin-bottom: 10px">
+                    <div class="level-one">
+                        <a href="{:U('Mob/Blog/index',array('mark'=>'3','title_id'=>$vo['id'],'title'=>$vo['title']))}">{$vo.title}</a>
+                    </div>
+                    <div>
+                        <ul class="am-avg-sm-3 level-two-list">
+                            <volist name="vo['two']" id="vl">
+                                <li class="level-two">
+                                    <div>
+                                        <a href="{:U('Mob/Blog/index',array('mark'=>'3','title_id'=>$vl['id'],'title'=>$vl['title']))}">{$vl.title}</a>
+                                    </div>
+                                </li>
+                        </volist>
+                        </ul>
+                    </div>
+
+
+                </li>
+            </volist>
+
+        </ul>
+
+
+    </div>
+</div>
+</block>

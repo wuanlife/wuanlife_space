@@ -1,0 +1,207 @@
+ul,
+li {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.avatar-img {
+  border-radius: 100%;
+}
+.body {
+  background: #000;
+}
+.spliter {
+  border-top: 1px solid #F2F2F2;
+  width: 100%;
+  margin-bottom: 5px;
+}
+/*群组列表*/
+.group-container {
+  padding-top: 1em;
+}
+.group-container .post_list {
+  padding: 2px;
+  font-size: 12px;
+}
+.group-container .post_list .item {
+  padding: 5px;
+  border: 1px solid #C5C5C5;
+}
+.group-container .post_list .item .am-u-sm-2 {
+  background-color: #c5c5c5;
+  padding: 10px;
+}
+.group-container .post_list .item .am-u-sm-10 {
+  padding: 0px 0px 0px 10px;
+}
+.group-container .post_list .item .am-u-sm-10 .item-heading .text-more {
+  width: 100%;
+  margin: 0px;
+}
+.group-container .post_list .item .am-u-sm-10 .item-heading .text-more .label-success {
+  background-color: #008000;
+  color: #ffffff;
+  padding: 2px 5px;
+}
+.group-container .group-list {
+  background: none !important;
+}
+.group-container .group-list .group-Box {
+  padding: 5px;
+}
+.group-container .group-list .group-Box .group {
+  border: 1px solid #F2F2F2;
+}
+.group-container .group-list .group-Box .group .group-info-box {
+  padding: 10px;
+  background: F2F2F2;
+}
+.group-container .group-list .group-Box .group .group-info-box .cover img {
+  display: inline-block;
+  padding: 1px;
+  background: white;
+}
+.group-container .group-list .group-Box .group .group-info-box .title .a {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  width: 180px;
+}
+.group-container .group-list .group-Box .group .group-info-box .record {
+  padding: 0px 10px;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .admin-info {
+  font-size: .8em;
+  text-align: left;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .admin-info .avatar {
+  padding: 0px;
+  text-align: center;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .admin-info .avatar .avatar-img {
+  width: 36px;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .admin-info .name {
+  padding: 0px;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .admin-info .name .a {
+  text-align: center;
+  padding: 0px;
+}
+.group-container .group-list .group-Box .group .group-info-box .foot-box .attend-btn .diy-btn {
+  color: #141414;
+  background-color: #a2a2a2;
+  border-color: #bdbdbd;
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+/*群组板块*/
+.group-type-list .type-list .group-type {
+  /*   .a:hover{
+           background-color: #a2a2a2;
+         }*/
+
+}
+.group-type-list .type-list .group-type .type {
+  padding: 10px 65px 10px 10px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #e5e5e5;
+}
+.post-container {
+  padding: 5px;
+  border-bottom: 1px solid #F3F3F3;
+}
+.post-container .post-box .info .avatar {
+  padding: 0px;
+  float: left;
+  text-align: center;
+}
+.post-container .post-box .info .avatar .avatar-img {
+  width: 54px;
+  height: 54px;
+}
+.post-container .post-box .info .post-info {
+  float: left;
+  padding: 0 5px;
+}
+.post-container .post-box .info .publish {
+  font-size: 10px;
+}
+.post-container .post-box .info .part {
+  float: right;
+  font-size: 10px;
+  padding: 0px 2px;
+  text-align: right;
+}
+.post-container .content p {
+  margin: 5px 0px;
+}
+.post-container .small-btn {
+  font-size: 10px;
+}
+.comment-item {
+  padding: 5px;
+}
+/*群组板块*/
+#Q-list {
+  position: fixed;
+  bottom: 35px;
+  background-color: #cccccc;
+  right: 0px;
+}
+#Q-list ul li {
+  text-align: center;
+  border-bottom: solid 1px #FFFFFF;
+  padding: 5px 5px;
+  position: relative;
+}
+#Q-list ul {
+  margin: 0px;
+}
+.Q-list-sec {
+  position: absolute;
+  bottom: 0px;
+  background-color: #cccccc;
+  display: none;
+}
+.sec ul {
+  margin: 0px;
+}
+.sec ul li {
+  text-align: center;
+  border-bottom: solid 1px #FFFFFF;
+  padding: 5px 5px;
+}
+#Q-type {
+  position: relative;
+}
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 10px solid #cccccc;
+  position: absolute;
+  top: 13px;
+  left: -8px;
+  display: none;
+}
+.group-admin .am-nav-tabs {
+  padding-bottom: 5px;
+  margin-top: 5px;
+}
+.group-admin .am-nav-tabs a {
+  font-size: 13px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  display: block;
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+.group-admin .am-nav-tabs a:active {
+  background: #000;
+}

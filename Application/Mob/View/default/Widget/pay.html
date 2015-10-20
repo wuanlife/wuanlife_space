@@ -1,0 +1,32 @@
+<div>
+    <h3 style="font-size: 16px;font-weight: bold">还可以选择在线支付</h3>
+    <hr/>
+
+    共需要人民币 ￥<span style="color: red"> {$amount}</span> 元
+    <div style="padding: 20px">
+        <label><input type="radio" name="type" value="alipay" checked>
+            <img src="__ROOT__/Application/Recharge/Static/images/alipay.gif"/>
+        </label>
+
+    </div>
+
+</div>
+
+<button class="btn btn-primary pull-left" data-role="pay_online">立即支付</button>
+
+<form id="alipay" action="__ROOT__/Application/Recharge/Lib/Alipay/alipayapi.php" method="post" target="_blank">
+    <input type="hidden" value="{$order_id}" name="out_trade_no">
+    <input type="hidden" name="subject" value="{:modC('WEB_SITE_NAME', 'OpenSNS开源社交系统', 'Config')}微店在线支付"/>
+    <input type="hidden" name="body" value="通过支付宝进行微店商品在线支付"/>
+    <input type="hidden" name="show_url" value=""/>
+</form>
+
+
+<script>
+    $(function () {
+        $('[data-role="pay_online"]').click(function () {
+            var val = $('input:checked').val();
+            $('#' + val).submit();
+        })
+    })
+</script>

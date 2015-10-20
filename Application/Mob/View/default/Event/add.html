@@ -1,0 +1,204 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/event.css"/>
+        <script src="__JS__/event.js"></script>
+        <script src="__JS__/amazeui.datetimepicker.min.js"></script>
+
+        <link rel="stylesheet" href="__CSS__/amazeui.datetimepicker.css"/>
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+        </div>
+        <h1 class="am-header-title">
+            发布活动
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+    <div class="addevent">
+
+        <input type="hidden" id="one_cover_id" value="">
+
+        <div class="am-form-group " style="margin-top: 10px;margin-left: 10px">
+            <h3>封面上传</h3>
+
+            <div class="am-cf">
+                <div class="img_btn am-fl">
+                    <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+                </div>
+
+                <input type="file" name="files" id="fileloadone" class=" am-btn"
+                       style="left:10px;top: 70px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                       data-url="{:U('Core/File/uploadPicture')}">
+
+                <div class="show_cover am-fl" style="<if condition="
+                !$event['cover_id']">display:none;</if>margin-left: 10px;">
+                <div id="cover_url">
+                    <img src="{$event.cover_id|get_cover='path'}" class="cover_img" style="width:74px;height: 74px"
+                         src="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <form action="{:U('doPost')}" method="post" class="am-form" data-am-validator>
+        <fieldset>
+            <div class="am-form-group">
+                <label for="title">标题：</label>
+                <input type="text" id="title" name="title" value="{$event.title}" minlength="3" maxlength="25"
+                       placeholder="" required/>
+                <input type="hidden" name="id" id="id" value="{$event.id}"/>
+                <input type="hidden" name="cover_id" id="one_img_id" value="{$event.cover_id}"/>
+            </div>
+
+            <div class="am-form-group am-form-inline">
+                <label>分类</label>
+                <select name="type_id">
+                    <volist name="type_tree" id="top">
+                        <option
+                        <if condition="$event['type_id'] eq $top['id']">selected</if>
+                        value="{$top.id}" >
+                        {$top.title}
+                        </option>
+                    </volist>
+                </select>
+
+                <span class="am-form-caret"></span>
+            </div>
+
+            <div class="am-form-group am-form-inline">
+                <label>时间</label>
+
+                <div class="am-g">
+                    <div class="am-u-sm-6">
+                        <p><input name="sTime" type="text" class="am-form-field" placeholder="" id="my-start-2"
+                                  value="{:date('Y-m-d',$event['sTime']?$event['sTime']:time())}" readonly
+                                  data-am-datepicker="{theme: 'success'}"/></p>
+                    </div>
+                    <div class="am-u-sm-6">
+                        <p><input name="eTime" type="text" class="am-form-field" id="my-end-2"
+                                  value="{:date('Y-m-d',$event['eTime']?$event['eTime']:time())}" readonly
+                                  data-am-datepicker="{theme: 'warning'}"/></p>
+                    </div>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="address">地址：</label>
+                <input type="text" name="address" id="address" value="{$event.address}" minlength="3" maxlength="100"
+                       placeholder="" required/>
+            </div>
+            <div class="am-form-group">
+                <label for="limitCount">人数：</label>
+                <input id="limitCount" name="limitCount" class="form-control" type="text"
+                       placeholder="人数" required="" value="{$event.limitCount}"
+                       onKeyUp="this.value=this.value.replace(/\D/g,'')"
+                       onafterpaste="this.value=this.value.replace(/\D/g,'')"/>
+            </div>
+
+            <div class="am-g">
+                <p>截止
+                    <input type="text" value="{:date('Y-m-d H:i',$event['deadline']?$event['deadline']:time()+604800)}"
+                           id="datetimepicker" readonly name="deadline" class="am-form-field">
+                </p>
+            </div>
+            <div class="am-form-group">
+                <label>介绍：</label>
+                <textarea data-role="content" type="text" name="explain" placeholder=""
+                          style="width: 100%;height:150px;padding: 5px"> {$event.explain}</textarea>
+            </div>
+
+
+            <div class="am-form-group"
+            <if condition="$event">style="display:none"</if>
+            >
+            <label>自己报名：</label>
+
+            <input name="isAttend" type="radio" value="0" style="margin-right: 5px;" checked>否
+            <input name="isAttend" type="radio" value="1" style="margin-right: 5px;margin-left: 10px;">是
+            </div>
+
+
+            <button type="button" data-role="submit_form" class="am-btn am-btn-primary am-btn-block">发表</button>
+        </fieldset>
+
+
+    </form>
+
+
+    </div>
+    <script type="text/javascript">
+
+        add_one_img();
+
+
+        $(function () {
+
+
+            $('#datetimepicker').click(function () {
+                $('#datetimepicker').datetimepicker('show');
+            })
+
+            $('#datetimepicker').on('changeDate', function (ev) {
+                $('#datetimepicker').datetimepicker('hide');
+            })
+
+
+            $('[data-role="submit_form"]').click(function (e) {
+                e.preventDefault()
+                var $this = $(this);
+                var $form = $this.closest('form');
+                var data = $form.serialize();
+                var url = $form.attr('action');
+                $.post(url, data, function (msg) {
+                    if (msg.status == 1) {
+                        toast.success(msg.info);
+                        setTimeout(function () {
+                            window.location.href = document.referrer
+                        }, 1000)
+                    } else {
+                        toast.error(msg.info);
+                    }
+                }, 'json');
+
+
+            })
+
+
+            var nowTemp = new Date();
+            var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+            var $myStart2 = $('#my-start-2');
+
+            var checkin = $myStart2.datepicker({
+                onRender: function (date) {
+                    return date.valueOf() < now.valueOf() ? 'am-disabled' : '';
+                }
+            }).on('changeDate.datepicker.amui',function (ev) {
+                        if (ev.date.valueOf() > checkout.date.valueOf()) {
+                            var newDate = new Date(ev.date);
+                            newDate.setDate(newDate.getDate() + 1);
+                            checkout.setValue(newDate);
+                        }
+                        checkin.close();
+                        $('#my-end-2')[0].focus();
+                    }).data('amui.datepicker');
+
+            var checkout = $('#my-end-2').datepicker({
+                onRender: function (date) {
+                    return date.valueOf() <= checkin.date.valueOf() ? 'am-disabled' : '';
+                }
+            }).on('changeDate.datepicker.amui',function (ev) {
+                        checkout.close();
+                    }).data('amui.datepicker');
+
+        })
+
+    </script>
+</block>
+
+

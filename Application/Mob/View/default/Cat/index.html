@@ -1,0 +1,140 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <div class="cat-container ">
+        <div class="search-btn">
+            <a href="{:U('Mob/cat/search',array('name'=>$mark))}" style="margin-top: 0px">
+                <input type="text" class="am-form-field am-input-sm "
+                       placeholder="搜索宝贝、店铺">
+            </a>
+        </div>
+
+        <div class="cat-content">
+            <div class="am-tabs am-text-center" id="doc-my-tabs">
+                <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify"
+                    style="font-size: 12px;background-color: #F1F1F1;padding:0px">
+                    <volist name="entity" id="vo">
+                        <a href="{$vo.url}" style="font-size: 11px"
+                        >{$vo.alias}</a>
+                    </volist>
+                </ul>
+                <div class="am-tabs-bd ullist" >
+                    <if condition="($mark eq 'House')">
+                        <ul>
+                        <volist name="catList" id="vl">
+                                <include file="_house"/>
+                        </volist>
+                            </ul>
+                    </if>
+                    <if condition="(($mark eq 'Job') or ($mark eq ''))">
+                        <ul>
+                        <volist name="catList" id="vl">
+                            <include file="_job"/>
+                        </volist>
+                        </ul>
+                    </if>
+                    <if condition="($mark eq 'PTJob')">
+                        <ul>
+                        <volist name="catList" id="vl">
+
+                            <include file="_ptjob"/>
+
+                        </volist>
+                        </ul>
+                    </if>
+                    <if condition="($mark eq 'jianli')">
+                        <ul>
+                        <volist name="catList" id="vl">
+
+                            <include file="_jianli"/>
+
+                        </volist>
+                        </ul>
+                    </if>
+
+                    <if condition="($mark neq 'jianli') and ($mark neq 'House') and ($mark neq '') and ($mark neq 'Job') and ($mark neq 'PTJob')">
+                        <ul>
+                            <volist name="catList" id="vl">
+
+                                <include file="_custom"/>
+
+                            </volist>
+                        </ul>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-list-news-ft look-more">
+        <if condition="$pid['count'] eq 1">
+            <a id="getmorelist" data-url="{:U('Mob/cat/addMoreList')} "
+               data-mark={$mark} >查看更多 &raquo;</a>
+        </if>
+
+    </div>
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-5" style="font-size: 12px">
+            <php>if(is_login()){</php>
+            <li>
+                <a style="color: white " id="Q-type">
+                    发布
+                </a>
+            </li>
+            <li>
+                <a href="{:U('Mob/cat/usercontent')}" class="am-icon-star">
+                    个人中心
+                </a>
+            </li>
+            <php>}else{</php>
+            <li>
+                <a href="javascript:void(0);" onclick="toast.error('请先登录后才能发布信息');">
+                    发布
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0);" onclick="toast.error('请先登录。');" class="am-icon-star">
+                    个人中心
+                </a>
+            </li>
+            <php>}</php>
+
+        </ul>
+    </div>
+    <div id="Q-list">
+        <ul>
+            <volist name="type" id="type">
+                <li><span class="triangle-left">
+                        </span>
+                    <a href="{$type.addurl}">
+                        {$type.alias}
+                    </a>
+
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <script src="__JS__/cat.js"></script>
+<script>
+    bind_page();
+    $(function () {
+        $('#Q-list').hide();
+        var $type = document.getElementById('Q-list');
+        var width = parseInt($('#Q-type').width());
+        $type.style.width = width + 'px';
+        $('.Q-list-sec').css("width", width + 'px');
+        $('.Q-list-sec').css("right", (width + 10) + 'px');
+        $('#Q-type').unbind('click');
+        $('#Q-type').click(function () {
+            $('#Q-list').toggle();
+            if ($('.triangle-left').is(":visible")) {
+                $('.triangle-left').hide();
+            }
+        });
+
+    });
+</script>
+
+</block>
+
+

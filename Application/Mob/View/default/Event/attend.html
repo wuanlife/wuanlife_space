@@ -1,0 +1,104 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/event.css"/>
+        <script src="__JS__/event.js"></script>
+
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+        </div>
+        <h1 class="am-header-title">
+            活动成员
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+    <div class="am-btn-group  am-g">
+        <a href="{:U('member',array('id'=>$event_content['id']))}" class="am-btn am-btn-default am-u-sm-4 <if condition="$tip eq 'all'">selected</if>">全部</a>
+        <a href="{:U('member',array('id'=>$event_content['id'],'tip'=>'attend'))}"
+           class="am-btn am-btn-default am-u-sm-4 <if condition="$tip eq 'attend'">selected</if>">已审</a>
+        <a href="{:U('member',array('id'=>$event_content['id'],'tip'=>'sign'))}"
+           class="am-btn am-btn-default am-u-sm-4 <if condition="$tip eq 'sign'">selected</if>">未审</a>
+    </div>
+    <!--全部列表-->
+    <div class="join-box">
+
+        <php>if(check_auth('Event/Index/shenhe',$event_content['uid'])){</php>
+        <ul class="people-list">
+
+            <volist name="event_member" id="vo">
+            <!--全部-->
+            <li class="am-cf " style="font-size: 12px;padding: 5px;position: relative">
+                <div class="people am-g">
+                    <div class="avatar  am-u-sm-3 am-text-center" style="padding: 0px">
+                        <img class="am-circle am-img-thumbnail" style="width: 64px;height: 64px"
+                             src="{$vo.user_info.avatar64}">
+
+                        <div class="name" style="margin-top: 5px">
+                            <a href="{:U('user/index',array('uid'=>$event['uid']))}"> <span>{$vo.user_info.nickname} </span></a>
+
+                        </div>
+
+                    </div>
+                    <div class="info  am-u-sm-9" style="padding-top: 12px">
+                        <div>
+                            <span>姓名:</span>
+                            <span>{$vo.name}</span>
+                        </div>
+                        <div>
+                            <span>手机号码:</span>
+                            <span>{$vo.phone}</span>
+                        </div>
+                        <div>
+                            <span>报名时间:</span>
+                            <span>{:date('Y-m-d h:i',$vo['create_time'])}</span>
+                        </div>
+                    </div>
+                    <!--审核标识-->
+
+                    <div class="is-pass">
+                        <php>if($vo['status']){</php>
+                        <a data-role="verify" data-id="{$vo['event_id']}" data-uid="{$vo['uid']}" data-tip="0">
+                            <span style="color: #0CC">{$vo.status_info}</span>
+                            <span class="am-icon-close"></span>
+                        </a>
+                        <php>}else{</php>
+                        <a data-role="verify" data-id="{$vo['event_id']}" data-uid="{$vo['uid']}" data-tip="1">
+                            <span style="color: red">{$vo.status_info}</span>
+                            <span class="am-icon-check"></span>
+                        </a>
+                        <php>}</php>
+                    </div>
+                </div>
+
+            </li>
+
+            </volist>
+        </ul>
+
+        <php>}else{</php>
+        <!--无权限查看列表-->
+        <ul class="people-list am-avg-sm-2 am-avg-md-4 am-avg-lg-6">
+            <volist name="event_member" id="vo">
+            <li class="am-cf am-g" style="font-size: 12px;padding: 5px">
+                <div class="people">
+                    <div class="avatar am-text-center" style="padding: 0px">
+                        <img class="am-circle am-img-thumbnail" style="width: 64px;height: 64px"
+                             src="{$vo.user_info.avatar64}">
+
+                        <div class="name" style="margin-top: 5px">
+                            <a href="{:U('user/index',array('uid'=>$event['uid']))}"> <span>{$vo.user_info.nickname} </span></a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            </volist>
+        </ul>
+        <php>}</php>
+    </div>
+</block>
+

@@ -1,0 +1,64 @@
+<li class="shop-list-box">
+    <div class="shop-list am-g" style="padding: 0px">
+
+        <div class="shop am-u-sm-3" style="padding: 0px">
+            <div class="shop-info">
+                <a class="shop-avatar" href="{:U('mob/store/shopdetail',array('id'=>$vo['id']))}">
+                    <img class="am-img-thumbnail am-radius" style="width:84px;height:84px"
+                         src="{$vo.logo|getThumbImageById=222,222}">
+                </a>
+
+                <div class="shop-content" style="font-size: 13px">
+                    <p><a class="shop-name" href="{:U('mob/store/shopdetail',array('id'=>$vo['id']))}">{$vo.title}</a></p>
+
+                    <p class="">掌柜：</br>
+                        <a href="{$vo.user.space_mob_url}"><img
+                                class="am-img-thumbnail avatar-img am-circle"
+                                style="width:32px;height:32px"
+                                src="{$vo.user.avatar32}"> {$vo.user.nickname}</a>
+                    </p>
+
+                    <p class="">所在地：{$vo.position}</p>
+
+                    <p class="">创店于：{$vo.create_time|friendlyDate}</p>
+
+                    <p>共{$vo.goodsCount}件商品</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="shop-goods am-u-sm-9" style="padding: 0px">
+            <div class="goods-list">
+                <ul class="am-avg-sm-2 am-avg-md-4">
+                    <notempty name="vo['goods']">
+                        <volist name="vo['goods']" id="vl">
+                            <li class="am-text-center">
+                                <div class="goods-box" style="padding: 5px">
+                                    <div style="border:  1px solid #F2F2F2;">
+                                        <div class="am-text-center cover">
+                                            <a href="{:U('mob/store/goodsdetail',array('goodsId'=>$vl['id']))}">
+                                                <img src="{$vl.cover_id|getThumbImageById=222,222}"
+                                                     style="width:100%;height:100%"></a>
+                                        </div>
+                                        <div class="am-text-center content">
+                                            <a href="{:U('mob/store/goodsdetail',array('goodsId'=>$vl['id']))}" class="title">商品名：{$vl.title}</a>
+                                        </div>
+                                        <div class="spliter "></div>
+                                        <div class="am-gallery-title">
+                                            <b>￥</b><span class="">{$vl.price}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </volist>
+                        <else/>
+                        <div>
+                            小店新开张，还没有上传任何商品。
+                        </div>
+                    </notempty>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="spliter "></div>
+</li>

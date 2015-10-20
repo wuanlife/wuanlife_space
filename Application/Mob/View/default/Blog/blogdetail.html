@@ -1,0 +1,126 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/blog.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/blog.css"/>
+<div class="blog-detail-container ">
+    <div class="blog-detail">
+
+        <div class="blog-box">
+
+            <div class="blog">
+                <div class="blog-content">
+                    <if condition="$blogdetail['cover_url'] neq no_img">
+                    <img id="cover_src" style="width: 100%;" src="{$blogdetail.cover_url}">
+                        </if>
+                    <div class="title">
+                        <h3>{$blogdetail.title}</h3>
+                        <div class="content">
+                            {$blogdetail.description}
+                        </div>
+
+                        <div class="am-cf info">
+                            <div class="name am-fl">
+                               <a href="{:U('Mob/User/index',array('uid'=>$blogdetail['user']['uid']))}"><span>{$blogdetail.user.nickname}</span></a>
+                                <span>{$blogdetail.create_time|friendlyDate}</span>
+                            </div>
+
+                            <div class="am-fr hot">
+                                <if condition="$blogdetail['can_edit'] eq 1">
+                                <a class="am-icon-wrench " style="font-size: 12px;padding: 0px 15px" href="{:U('Mob/blog/addblog',array('id'=>$blogdetail['id']))}"
+                                        >编辑</a>
+                                    </if>
+                                <i class="am-icon-fire"></i>{$blogdetail.view}
+                                <i class="am-icon-comment-o"style="margin-left: 10px"></i>{$blogdetail.count}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="spliter"></div>
+                    <div class="content-box">
+                        <div class="content">
+                            {$blogcontent.content}
+                        </div>
+
+                    </div>
+
+                    <div class="am-form-group am-cf weibo_post_box" id="comment"
+                         style="padding: 10px;margin-bottom: 35px">
+                        <h6>评论</h6>
+                        <php>
+                            if (!is_login()) {
+                        </php>
+                        <div style=" position: relative; ">
+                            <div class="am-g am-text-center" style="position: absolute;padding: 50px;">
+                                <span> 请先<a href="{:U('Mob/member/index')}">登录</a>后再评论</span>
+
+                            </div>
+                            <textarea rows="5" disabled style="height: 8em; width: 100%;">
+
+                            </textarea>
+                        </div>
+
+                        <php>
+                            }else{
+                        </php>
+
+                        <textarea class="content " rows="5" id="comment_content_text" style="height: 8em; width: 100%;"></textarea>
+                        <!--表情-->
+                        <a href="javascript:" class="am-fl" data-url=" {:U('Core/Expression/getSmile')}"
+                           onclick="insertFace($(this))">
+                            <img src="__CORE_IMAGE__/bq.png"style="margin: 10px 0px"></a>
+
+                        <div id="emot_content" class="emot_content"></div>
+                        <!--表情end-->
+
+                        <p class="submit" blog_id="{$blogdetail.id}" url="{:U('Mob/Blog/doAddComment')}" uid="{$blogdetail.uid}">
+                            <button  type="submit"
+                                    class="am-btn-warning am-btn am-btn-block am-round ">评论
+                            </button>
+                        </p>
+                        <php>}</php>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--资讯评论-->
+    <div class="comment-list addmore">
+        <volist name="blogcomment" id="vl">
+            <include file="_blogcomment"/>
+        </volist>
+    </div>
+
+    <!--资讯评论END-->
+    <if condition="$pid['count'] eq 1">
+    <div class="am-list-news-ft look-more">
+        <a class="" id="getmoreblogcomment"
+                >查看更多 ...;</a>
+    </div>
+        </if>
+</div>
+    <script>
+    comment();
+    nextpage();
+    //查看更多评论
+    var page = 1;
+    var blog_id = "{$blogdetail['id']}";
+    function nextpage() {
+        $("#getmoreblogcomment").html("查看更多&raquo");
+        $('#getmoreblogcomment').click(function () {
+            $.post("{:U('Mob/blog/addMoreBlogComment')}", {page: page + 1, id: blog_id}, function (msg) {
+                if (msg.status) {
+                    $(".addmore").append(msg.html);
+                    page++;
+                    del();
+                    comment();
+                } else {
+                    $("#getmoreblogcomment").html("全部加载完成！");
+                    $(".look-more").delay(2000).hide(0);
+                }
+            })
+        });
+    }
+</script>
+</block>

@@ -1,0 +1,107 @@
+<div class="feed dongtai clearfix am-g" style="font-size: 12px;border-bottom: #c4c4c4 1px solid;padding: 5px">
+    <div class="am-u-sm-2 am-u-md-1"style="padding-left: 0px">
+        <a href="{$user.space_url}" ucard="{$user.uid}"> <img class="avatar-img"
+                                                              src="{$user.avatar64}"/></a>
+    </div>
+<style>
+    h3{
+        margin: 0px;
+    }
+    .pa0{
+        padding: 0px;
+    }
+</style>
+    <switch name="dynamic.type">
+        <case value="attend">
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a> 加入了群组
+                    <a  href="{:U('mob/group/group',array('id'=>$dynamic['group_id']))}"
+                       title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+
+                </h3>
+
+            </div>
+        </case>
+        <case value="quit">
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a> 退出了圈子
+                    <a  href="{:U('mob/group/group',array('id'=>$dynamic['group_id']))}"
+                       title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+
+                </h3>
+            </div>
+        </case>
+        <case value="remove">
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a> 被管理员移出了圈子
+                    <a  href="{:U('mob/group/group',array('id'=>$dynamic['group_id']))}"
+                       title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
+
+                </h3>
+            </div>
+        </case>
+        <case value="reply">
+            <php>
+                $reply = D('Mob/GroupPostReply')->getReply($dynamic['row_id']);
+                $post = D('Mob/GroupPost')->getPost($reply['post_id']);
+            </php>
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a> 回复了 <a href="{$post.user.space_mob_url}"
+                                                                            ucard="{$post.user.uid}">{$post['user']['nickname']}</a>
+                    的帖子 <a
+                           href="{:U('mob/group/detail',array('id'=>$post['id']))}" title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+
+                </h3>
+                <div class="feed_content" style="  background: #efefef;
+  padding: 5px;
+  margin-right: 15px;
+  color: #444;">
+                    <if condition="$reply['status'] neq 1">
+                        该回复已被删除
+                        <else/>
+                        {$reply['content']|limit_picture_count=0|text|getShortSp=30}
+                    </if>
+                </div>
+            </div>
+        </case>
+        <case value="post">
+            <php>
+                $post = D('Mob/GroupPost')->getPost($dynamic['row_id']);
+            </php>
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a>
+                    发布了一个帖子
+                    <a  href="{:U('mob/group/detail',array('id'=>$post['id']))}"
+                       title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+
+                </h3>
+                <div class="feed_content"style="  background: #efefef;
+  padding: 5px;
+  margin-right: 15px;
+  color: #444;">
+                    <if condition="$post['status'] neq 1">
+                        该回复已被删除
+                        <else/>
+                        {$post['content']|limit_picture_count=0|text|getShortSp=30}
+                    </if>
+                </div>
+            </div>
+        </case>
+        <case value="update_post">
+            <php>
+                $post = D('Mob/GroupPost')->getPost($dynamic['row_id']);
+            </php>
+            <div class="am-u-sm-10 am-u-md-11 pa0">
+                <h3><a href="{$user.space_mob_url}">{$user.nickname}</a>
+                    更新了帖子
+                    <a  href="{:U('mob/group/detail',array('id'=>$post['id']))}"
+                       title="{$post['title']}">{$post['title']|getShortSp=15}</a>
+
+                </h3>
+            </div>
+        </case>
+        <default/>
+    </switch>
+    <span class="clearfix am-u-sm-10 am-u-md-11 pa0"
+          style="font-size: 14px;color: #999;">{$dynamic.create_time|friendlyDate}</span>
+</div>

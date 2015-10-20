@@ -1,0 +1,133 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <script src="__JS__/cat.js"></script>
+    <div class="search-container">
+        <div class="mymailbox-container ">
+            <div data-am-widget="tabs" class="am-tabs am-tabs-d2" style="margin: 0px">
+                <ul class="am-tabs-nav am-cf">
+                    <li class="am-active">
+                        <a href="[data-tab-panel-0]">全局搜索</a>
+                    </li>
+                    <if condition="$entity['alias'] neq '简历'">
+                        <li class="">
+                            <a href="[data-tab-panel-1]">精确搜索</a>
+                        </li>
+                    </if>
+                </ul>
+
+                <div class="am-tabs-bd">
+                    <!--全部查找-->
+                    <div data-tab-panel-0 class="am-tab-panel am-active">
+                        <form action="" class="allsearch" id="doc-vld-msg">
+                            <!--            <input type="hidden" id="entity_id" name="entity_id" value="{$entity.id}">-->
+                            <input type="hidden" name="name" value="{$entity.name}">
+                            <input type="hidden" name="class" value="cat_ul_info">
+                            <input type="hidden" name="type" value="list">
+                            <input type="hidden" name="mark" value="1">
+
+
+
+                                    <div class="">
+
+
+                                        <input type="text" class="form-control" id="title" name="title"
+                                               value="{:I('post.title','','op_t')}"
+                                               placeholder="输入关键字"style="width: 100%;padding: 5px">
+
+                                        <!--     <div class="col-xs-2">
+                                                 <input class="btn btn-primary doAllSearch" type="button"
+                                                        data-url="{:U('Mob/cat/doSearch')}" value="查找">
+                                             </div>-->
+                                        <button class="am-btn am-btn-secondary am-btn-block doAllSearch" type="button"
+                                                data-url="{:U('Mob/cat/doSearch')}"style="margin-top: 10px">查找
+                                        </button>
+                                    </div>
+                        </form>
+                    </div>
+
+                    <if condition="$entity['alias'] neq '简历'">
+                        <!--精确查找-->
+                        <div data-tab-panel-2 class="am-tab-panel ">
+                            <div class="pd10 cat_search_form">
+                                <form action="" class="condsearch">
+                                    <input type="hidden" name="name" value="{$entity.name}">
+                                    <input type="hidden" name="class" value="cat_ul_info">
+                                    <input type="hidden" name="type" value="list">
+                                    <input type="hidden" name="mark" value="2">
+                                    <volist name="search_fields" id="vo">
+                                        <li class="f14px cgrey" style="line-height: 35px">
+                                            <div class="col-xs-2  mr15">{$vo.alias}：</div>
+                                            <div class="col-xs-10" style="margin-top: 5px">
+                                                {:W('SearchInputRender/render',array($vo))}
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </li>
+                                    </volist>
+                                    <!--            <div class="col-xs-2">
+                                                    <input class="btn btn-primary doCondSearch" type="button"
+                                                           data-url="{:U('Mob/cat/doSearch')}" value="查找">
+                                                </div>-->
+                                    <button class="am-btn am-btn-secondary am-btn-block doCondSearch" type="button"
+                                            data-url="{:U('Mob/cat/doSearch')}">查找
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </if>
+                </div>
+                <div >
+<ul class="ullist">
+
+</ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script>
+        do_all_search();
+        do_cond_search();
+        $(document).ready(function () {
+            $('.cat_search_input').keydown(function (e) {
+                key = e.which;
+                if (key == 13) {
+                    //alert($(this).attr('data'));
+                    cat_search($(this).attr('data'));
+                    return false;
+
+                }
+            });
+
+        });
+
+        function cat_search(frm) {
+            var data = JSON.parse($('#' + frm).html());
+            data[frm] = $('input[name=' + frm + ']').val();
+            var parms = [];
+            for (var s in data) {
+                parms.push(encodeURIComponent(s));
+                parms.push(encodeURIComponent(data[s]));
+            }
+            location.href = U('Cat/index/li', parms);
+        }
+
+        $(function () {
+            $('#cat_top').change(function () {
+                var pid = $(this).val();
+                $.post("{:U('Mob/cat/selectDropdown')}", {pid: pid}, function (data) {
+                    $('#cat_second').html('');
+                    $.each(data, function (index, element) {
+                                $('#cat_second').append('<option value="' + element.id + '">' + element.title + '</option>')
+                            }
+                    )
+                }, 'json');
+            });
+            $('#cat_top').change();
+        })
+    </script>
+</block>

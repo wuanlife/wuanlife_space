@@ -1,0 +1,87 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/forum.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/forum.css"/>
+    <div class="forum-post-container ulclass" >
+        <notempty name="list_top">
+            <div class="am-u-sm-12" style="margin-top: 10px;line-height: 25px;margin-bottom: 10px;">
+                <span style="font-size: 20px">置顶帖子</span>
+            </div>
+            <volist name="list_top" id="vo">
+                <include file="_forumlist"/>
+            </volist>
+        </notempty>
+        <notempty name="forum">
+            <div class="am-u-sm-12" style="margin-top: 10px;line-height: 25px;margin-bottom: 10px;">
+                <span style="font-size: 20px">帖子列表</span>
+                <div class="am-fr am-text-right" style="margin-right: 10px">
+                    <div class="btn-group forum_order">
+                        <div class="am-dropdown" data-am-dropdown>
+                            <button class="am-btn am-btn-xs am-btn-primary am-dropdown-toggle" data-am-dropdown-toggle>
+                                <eq name="order" value="ctime">发表时间<else/>回复时间</eq> <span class="caret"></span>
+                            </button>
+                            <if condition="$forum_id">
+                                <ul class="am-dropdown-content">
+                                    <li><a href="{:U('forum/postSectionDetail',array('id'=>$forum_id,'order'=>'ctime'))}">发表时间</a></li>
+                                    <li><a href="{:U('forum/postSectionDetail',array('id'=>$forum_id,'order'=>'reply'))}">回复时间</a></li>
+                                </ul>
+                                <else/>
+                                <ul class="am-dropdown-content">
+                                    <li><a href="{:U('forum/index',array('order'=>'ctime'))}">发表时间</a></li>
+                                    <li><a href="{:U('forum/index',array('order'=>'reply'))}">回复时间</a></li>
+                                </ul>
+                            </if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <volist name="forum" id="vo">
+                <include file="_forumlist"/>
+            </volist>
+            <else/>
+            <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px">
+                <img src="__IMG__/tip.png" style="width: 100%;height: 100%">
+            </div>
+        </notempty>
+
+    </div>
+
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+         id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-4">
+            <li>
+                <a href="{:U('forum/forumtype')}" class="">
+                   <!-- <i class="am-menu-toggle-icon am-icon-th-large"></i>-->
+                    版块
+                </a>
+            </li>
+            <li>
+                <php>if(is_login()){</php>
+                <a href="{:U('forum/addpost')}" class="">
+                    <!--<i class="am-menu-toggle-icon am-icon-edit"></i>-->发帖
+                </a>
+                <php>}else{</php>
+                <a href="javascript:void(0);" onclick="toast.error('请登陆后再进行操作');"style="color: #999999">
+                    <!--<i class="am-menu-toggle-icon am-icon-edit"></i>-->发帖</a>
+                <php>}</php>
+            </li>
+        </ul>
+    </div>
+    <notempty name="forum">
+        <if condition="$pid['count'] eq 1">
+            <if condition="$title['pid'] neq 1">
+                <div class="am-list-news-ft"style="margin-top: 10px">
+                    <a class=" am-btn am-btn-secondary am-btn-block look-more" id="getmorepost" data-order="{$order}">查看更多 &raquo;</a>
+
+                </div>
+            </if>
+            <if condition="$title['pid'] eq 1">
+                <div class="am-list-news-ft"style="margin-top: 10px">
+                    <a class=" am-btn am-btn-secondary am-btn-block look-more" id="getmoreblockpost"
+                       data-role="{$title.id}" data-order="{$order}">查看更多 &raquo;</a>
+                </div>
+            </if>
+        </if>
+    </notempty>
+</block>

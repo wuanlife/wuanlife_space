@@ -1,0 +1,87 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <script src="__JS__/forum.js"></script>
+        <link rel="stylesheet" href="__CSS__/apps/forum.css"/>
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+
+        </div>
+        <h1 class="am-header-title" id="pid">
+           论坛
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+
+            <a href="#nav-link" class="">
+                <i class="am-menu-toggle-icon am-icon-bars"></i>
+            </a>
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+    <script src="__JS__/forum.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/forum.css"/>
+    <div class="am-modal-dialog">
+<form id="at_comment" data-url="{:U('Mob/Forum/AddForumComment')}">
+    <input type="hidden" name="forumId" value="{$forum}">
+    <input type="hidden" name="is_edit" value="{$is_edit}">
+    <input type="hidden" id="img_ids" name="attach_ids" value="">
+    <div class="" id="my-repost" style="width: 100%;margin:0px auto">
+
+
+            <div class="am-modal-bd weibo_post_box" style="border: none;padding-bottom: 35px">
+                <label>编辑回复</label>
+                <if condition="$editreply['is_edit'] eq 1">
+                    <textarea class="content" rows="5" id="comment_content_text" name="forumcontent"
+                              style="height: 8em; width: 100%;">{$editreply.content}</textarea>
+                </if>
+                <if condition="$editreply['is_edit'] neq 1">
+                <textarea class="content" rows="5" id="comment_content_text" name="forumcontent"
+                          style="height: 8em; width: 100%;"></textarea>
+                    </if>
+                <!--插入图片表情-->
+                <div style="position: relative">
+                <!--表情-->
+                <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 5px">
+                    <img src="__CORE_IMAGE__/bq.png">
+                </a>
+                <div id="emot_content" class="emot_content"></div>
+
+                <!--表情-->
+                    <div class="fileupload-buttonbar">
+                        <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                                src="__IMG__/image.png"></a>
+                        <div class="fileinput-button" style="width: 100%"><input type="file" name="files" class="btn" id="fileupload" style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;" data-url="{:U('Core/File/uploadPicture')}" multiple/></div>
+
+                    </div>
+                <!--插入图片表情结束-->
+
+            </div>
+        </div>
+</div>
+</form>
+    </div>
+<button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block" style="margin: 10px 0px">确定
+</button>
+<script>
+    add_img();
+    $('#confirm').click(function () {
+        var data = $("#at_comment").serialize();
+        var url = $("#at_comment").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+                toast.success('评论成功!');
+            /*    $('.mfp-close').click();*/
+                setTimeout(function () {
+                    window.location.href = document.referrer
+                }, 500);
+            } else {
+                alert(msg.info);
+            }
+        }, 'json');
+    });
+
+
+</script>
+</block>

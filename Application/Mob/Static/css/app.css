@@ -1,0 +1,76 @@
+/* Write your styles */
+.am-menu-offcanvas1 .am-menu-toggle{
+    z-index: 1030;
+    position: fixed;
+    top:4px;
+}
+.bar {
+    height: 18px;
+    background: #00bfff;
+}
+
+.text-more {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+}
+.truncate-2{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+}
+
+/*同步登录页*/
+.other_login_title {
+    line-height: 41px;
+    width: 115px;
+    float: left;
+    text-align: right;
+}
+.other_login_link .other_login {
+    background: url(../images/other_login.png) no-repeat;
+    height: 41px;
+    width: 41px;
+    display: inline-block;
+    margin-bottom: 2px;
+}
+.other_login_link .other_login_qq {
+    background-position: -4px -4px;
+}
+.other_login_link .other_login_sina {
+    background-position: -4px -59px;
+}
+.other_login_link .other_login_douban {
+    background-position: -4px -117px;
+}
+.other_login_link .other_login_renren {
+    background-position: -4px -175px;
+}
+.other_login_link a.other_login_qq:hover {
+    background-position: -66px -4px;
+}
+.other_login_link a.other_login_sina:hover {
+    background-position: -66px -60px;
+}
+.other_login_link a.other_login_douban:hover {
+    background-position: -66px -117px;
+}
+.other_login_link a.other_login_renren:hover {
+    background-position: -66px -175px;
+}
+.other_login_link a.other_login_qq:active {
+    background-position: -129px -4px;
+}
+.other_login_link a.other_login_sina:active {
+    background-position: -129px -60px;
+}
+.other_login_link a.other_login_douban:active {
+    background-position: -129px -117px;
+}
+.other_login_link a.other_login_renren:active {
+    background-position: -129px -175px;
+}
+/*同步登录页end*/

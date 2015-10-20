@@ -1,0 +1,59 @@
+<!--头部-->
+<div class="group-detail">
+    <script src="__JS__/group.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/group.css"/>
+    <php>if($group['notice']){</php>
+    <div class="" style="border: solid 1px #F2F2F2;padding: 5px;margin-bottom: 10px;font-size: 12px">
+        公告：{$group.notice.content}
+    </div>
+    <php>}</php>
+    <div class="" style="border: solid 1px #F2F2F2;padding: 5px;margin-bottom: 10px;font-size: 12px">
+        <div class="group-title am-g">
+            <div class="am-u-sm-8 title" style="padding:4px;font-size: 18px">
+                <img class="avatar-img" style="width: 64px" src="{$group.logo}">
+                {$group.title}
+            </div>
+
+            <div class="am-u-sm-4 am-text-right">
+
+
+                <php>if(is_joined($group['id']) == 1){</php>
+                <a class="am-btn-xs diy-btn  am-radius invitationFriend"
+                   href="{:U('Mob/Group/invitationFriend',array('group_id'=>$group['id']))}"
+                   style="padding: 0px;text-align: right">+邀请好友加入</a><br>
+                <php>}</php>
+
+                <php>if(is_joined($group['id']) == 1){</php>
+                <a class="am-btn-xs diy-btn  am-radius" data-group-id="{$group.id}" id="quit"
+                   url="{:U('Mob/group/quit')}"
+                   style="padding: 0px;text-align: right">-退出群组</a><br>
+                <php>}else{</php>
+                <a class="am-btn-xs diy-btn  am-radius" data-group-id="{$group.id}" id="attend"
+                   url="{:U('Mob/group/attend')}"
+                   style="padding: 0px;text-align: right">+加入群组</a><br>
+                <php>}</php>
+
+                <php>if(is_administrator(is_login())|| in_array(is_login(),$group['canAdmin'],true) ){</php>
+                <a href="{:U('mob/group/admin',array('id'=>$group['id']))}" class="am-btn-xs diy-btn  am-radius"
+                   data-group-id
+                   style="padding: 0px;text-align: right">管理</a><br>
+                    <a url="{:U('mob/group/disMiss')}" group-id="{$group.id}" class="am-btn-xs diy-btn  am-radius dismiss"
+                   data-group-id
+                   style="padding: 0px;text-align: right">解散群组</a><br>
+                <php>}</php>
+                <php>if(is_joined($group['id']) == 1){</php>
+                <a href="{:U('mob/group/addpost',array('group_id'=>$group['id']))}" class="am-btn-xs diy-btn  am-radius"
+                   data-group-id
+                   style="padding: 0px;text-align: right">发帖</a>
+                <php>}</php>
+            </div>
+        </div>
+        <div class="group-type">群组类型：{$group.type}</div>
+        <div><span>分类：{$group.GroupType.title}</span></div>
+        <div class="am-g">
+            <span class="am-u-sm-6" style="padding: 0px">帖子：{$group.post_count}</span>
+            <span class="am-u-sm-6" style="padding: 0px">成员：{$group.member_count}</span>
+        </div>
+    </div>
+</div>
+<!--头部-->

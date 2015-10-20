@@ -1,0 +1,56 @@
+
+    <li>
+        <div class="main am-cf">
+            <php>
+                $can_post = CheckCanRead(is_login(),$vl['id']);
+                if (!$can_post) {   </php>
+            <div class="img-box am-fl am-u-sm-4">
+                <if condition="$vl['detail']['zhaopian1']['data'] neq null">
+                    <a href="javascript:void(0);" onclick="toast.error('您无阅读权限');"> <img src="{$vl.detail.zhaopian1.data}"></a>
+                </if>
+            </div>
+            <div class="detail am-fl am-u-sm-8">
+                <a href="javascript:void(0);" onclick="toast.error('您无阅读权限');">
+                    <span>{$vl.title}</span></a>
+
+                <div class="info">
+                    <span class="release-time "style="color: #000000">{$vl.create_time|friendlyDate}</span>
+                </div>
+                <!--        <div class="">
+                                    形式：{$vl.detail.zhifu.data}
+                                </div>-
+                                <div class="ispace">
+                                    {$vl.detail.des.data}
+                                </div>->
+                        <!--  <div class="">
+                                    <span class="">{$vl.detail.zujin.alias}：{$vl.detail.zujin.data}</span>
+                                </div>-->
+            </div>
+            <php>}else{</php>
+
+            <div class="img-box am-fl am-u-sm-4">
+                <if condition="$vl['detail']['zhaopian1']['data'] neq null">
+                  <a href="{:U('cat/detail',array('info_id'=>$vl['id']))}"> <img src="{$vl.detail.zhaopian1.data}"></a>
+                </if>
+            </div>
+            <div class="detail am-fl am-u-sm-8">
+                <a href="{:U('cat/detail',array('info_id'=>$vl['id']))}" style="">
+                    <span>{$vl.title}</span></a>
+
+                <div class="info">
+                  <span class="release-time "style="color: #000000">{$vl.create_time|friendlyDate}</span>
+                </div>
+<!--        <div class="">
+                    形式：{$vl.detail.zhifu.data}
+                </div>-
+                <div class="ispace">
+                    {$vl.detail.des.data}
+                </div>->
+        <!--  <div class="">
+                    <span class="">{$vl.detail.zujin.alias}：{$vl.detail.zujin.data}</span>
+                </div>-->
+            </div>
+            <php>}</php>
+        </div>
+    </li>
+

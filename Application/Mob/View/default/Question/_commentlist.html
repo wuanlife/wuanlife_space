@@ -1,0 +1,71 @@
+<div class="answer am-cf">
+    <div class="answer-info am-fl ">
+        <div class="author-avatar">
+            <img src="{$vl['user']['avatar32']}">
+        </div>
+
+        <php>if(is_null($vl['has_support'])){</php>
+
+        <div class="support-count am-icon-thumbs-o-up support_up" data-url="{:U('Mob/Question/support')}" data-role="{$vl.id}">
+           <span class="up">{$vl.support}</span>
+        </div>
+        <br>
+
+        <div class="support-count am-icon-thumbs-o-down support_down" data-url="{:U('Mob/Question/support')}" data-role="{$vl.id}">
+           <span class="down"> {$vl.oppose}</span>
+        </div>
+        <php>}else{</php>
+
+        <if condition="$vl['has_support']['type'] eq 1">
+            <div class="support-count am-icon-thumbs-up">
+                 <span>{$vl.support}</span>
+            </div>
+            <br>
+
+            <div class="support-count am-icon-thumbs-o-down">
+                 <span>{$vl.oppose}</span>
+            </div>
+            <else/>
+            <div class="support-count am-icon-thumbs-o-up">
+                 <span>{$vl.support}</span>
+            </div>
+            <br>
+
+            <div class="support-count am-icon-thumbs-down">
+                 <span>{$vl.oppose}</span>
+            </div>
+        </if>
+        <php>}</php>
+    </div>
+    <div class="answer-author am-cf">
+
+        <a href="{$vl.user.space_mob_url}">{$vl.user.nickname}</a>
+        <notempty name="vl['support_user']">
+            其中：
+            <volist name="vl['support_user']" id="v2">
+                <span style="padding: 2px">
+                <a href="{$v2.user.space_mob_url}">{$v2.user.nickname}</a>
+                </span>
+            </volist>
+            表示赞同
+        </notempty>
+        <div>
+            回复时间：{$vl.create_time|friendlyDate}
+        </div>
+
+
+        <div class=" truncate-2" style="text-overflow:ellipsis">
+            {$vl.content}
+        </div>
+        <div class="am-fr">
+
+            <php>if(is_administrator(is_login())||$vl['uid']==is_login()){</php>
+            <a href="{:U('Mob/Question/reply',array('id'=>$question['id'],'answerId'=>$vl['id'],'isEdit'=>1))}">编辑</a>
+            <php>}</php>
+            <php>if(is_administrator(is_login())||$question['uid']==is_login()){</php>
+            <a class="set-best" data-url="{:U('Mob/Question/setBestAnswer')}" data-question-id="{$question['id']}"
+               data-answer-id="{$vl.id}">设为最佳答案</a>
+            <php>}</php>
+        </div>
+    </div>
+</div>

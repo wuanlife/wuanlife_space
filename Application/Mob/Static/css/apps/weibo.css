@@ -1,0 +1,179 @@
+ul,
+li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+p {
+  margin: 0px;
+}
+.avatar-img {
+  border-radius: 100%;
+}
+.label-badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 8px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 12px;
+}
+.label {
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #808080;
+}
+.user-at.hl {
+  background: #eee;
+  border-radius: 16px;
+  padding-right: 10px;
+}
+.user-at img {
+  border-radius: 100%;
+  width: 24px;
+}
+.user-at {
+  color: #666;
+  display: inline-block;
+  line-height: 22px;
+  height: 26px;
+  padding: 0 5px 0 0;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.look-more {
+  padding: 10px;
+  color: #000;
+  background-color: #FFFFFF;
+}
+body {
+  background: #f1f1f1;
+}
+.weibo-container {
+  padding-top: 5px;
+}
+.weibo-container .tip-img {
+  background-color: #FFFFFF;
+  margin-top: -15px;
+}
+.weibo-container .weibo-list {
+  background: none !important;
+  padding: 0px;
+}
+.weibo-container .weibo-list .item {
+  margin-bottom: 1em;
+  background: white;
+  padding: 2px
+    ;
+}
+.weibo-container .weibo-list .item .nickname {
+  padding: 3px;
+  color: #333333;
+}
+.weibo-container .weibo-list .item .from {
+  color: #666;
+  font-size: 0.6em;
+}
+.weibo-container .weibo-list .item .avatar {
+  padding: 3px;
+}
+.weibo-container .weibo-list .item .avatar .avatar-img {
+  width: 48px;
+}
+.weibo-container .weibo-list .item .images {
+  margin-bottom: .5em;
+}
+.weibo-container .weibo-list .item .images img {
+  display: inline-block;
+  float: left;
+  width: 50px;
+  height: 50px;
+  padding: 1px;
+  background: white;
+}
+.weibo-container .weibo-list .item .time {
+  padding: 3px;
+  font-size: 12px;
+  text-align: right;
+}
+.weibo-container .weibo-list .item .content {
+  padding: 5px;
+}
+/*微博详情页*/
+.weibodetail-container .weibo {
+  background: none !important;
+}
+.weibodetail-container .weibo .item {
+  margin-bottom: 1em;
+  background: white;
+  padding: 2px;
+}
+.weibodetail-container .weibo .item .nickname {
+  padding: 3px;
+  color: #333333;
+}
+.weibodetail-container .weibo .item .from {
+  color: #666;
+  font-size: 0.6em;
+}
+.weibodetail-container .weibo .item .avatar {
+  padding: .5em;
+}
+.weibodetail-container .weibo .item .avatar .avatar-img {
+  width: 48px;
+}
+.weibodetail-container .weibo .item .support {
+  color: #999;
+}
+.weibodetail-container .weibo .item .images {
+  margin-bottom: .5em;
+}
+.weibodetail-container .weibo .item .images img {
+  display: inline-block;
+  float: left;
+  width: 50px;
+  height: 50px;
+  padding: 1px;
+  background: white;
+}
+.weibodetail-container .weibo .item .time {
+  padding: .5em;
+  font-size: .8em;
+  text-align: right;
+}
+.weibodetail-container .weibo .item .content {
+  padding: 0.5em;
+}
+.weibodetail-container .ulclass {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.weibodetail-container .ulclass .nickname {
+  text-align: center;
+}
+.weibodetail-container .ulclass .time {
+  font-size: 13px;
+  text-align: right;
+}
+.weibodetail-container .ulclass .content {
+  padding: 10px;
+}
+.weibodetail-container .ulclass .content p .user-at {
+  color: #666;
+  display: inline-block;
+  line-height: 26px;
+  height: 26px;
+  padding: 0 5px 0 0;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.comment_content {
+  width: 100%;
+  height: 150px;
+  padding: 5px;
+}

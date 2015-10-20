@@ -1,0 +1,106 @@
+<extend name="Base/mob_common"/>
+
+
+<block name="mob_body">
+<div class="goodsdetail-container ">
+    <link rel="stylesheet" href="__CSS__/amazeui.min.css"/>
+    <link rel="stylesheet" href="__CSS__/apps/weibo.css"/>
+    <link rel="stylesheet" href="__CSS__/app.css"/>
+    <link rel="stylesheet" href="__CSS__/apps/shop.css"/>
+    <div class="am-tabs" id="doc-my-tabs">
+        <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify">
+            <li class="am-active"><a href="">基本信息</a></li>
+            <li><a href="">热门推荐</a></li>
+        </ul>
+        <div class="am-tabs-bd">
+            <div class="am-tab-panel am-active">
+                <div class="goods">
+                    <div class="">
+                        <div class="am-text-center cover">
+                            <img class="" src="{$detail.goods_ico|getThumbImageById=400,222}"style="width: 100%">
+                        </div>
+                        <div class="am-text-center goods-name">
+                            <h3>{$detail.good_name}</h3>
+                        </div>
+                        <div class="am-text-center info">
+                            <span>所需金币：{$detail.money_need}</span>
+                            </br>
+                            <span>库存：{$detail.goods_num}</span>
+                            </br>
+                            <span>发布时间：{$detail.createtime|friendlyDate}</span>
+                            </br>
+                            <span>更新时间：{$detail.changetime|friendlyDate}</span>
+                        </div>
+                        <div class="am-text-center info" >
+                            <span>
+                                商品详情：{$detail.goods_detail}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="spliter"></div>
+                    <div class="am-text-center am-g">
+                        <button type="button" class="am-btn am-btn-secondary am-round"><a href="{:U('shop/buy',array('id'=>$detail['id']))}" style="padding:0 20px">兑换</a>
+                        </button>
+                    </div>
+
+
+                    <!--评论列表-->
+                    <div class="comment-list" style="margin-top: 20px">
+
+                        {:local_comment_textarea(array('path'=>'Shop/goodsDetail/'.$detail[id],
+                        'uid'=>$info['uid'],'count_model'=>'goodsDetail','count_field'=>'reply_count','this_url'=>'Shop/goodsDetail/detail'))}
+                        {:get_local_comment_list('Shop/goodsDetail/'.$detail[id])}
+                    </div>
+                    </div>
+                </div>
+
+
+
+
+            <div class="am-tab-panel">
+                <ul class="am-g  shop-list am-avg-sm-2 am-avg-md-4 am-avg-lg-5" style="margin:0 auto">
+                    <volist name="recommendGoods" id="vo">
+                    <li class="shop-box ">
+                        <div class="shop">
+                            <div class="shop-info-box" style="border: solid 1px #cccccc">
+                                <div class="am-text-center cover">
+                                    <a href="{:U('shop/goodsdetail',array('id'=>$vo['id']))}">
+                                        <img class="" style="width: 100%;height:auto"
+                                             src="{$vo.goods_ico|getThumbImageById=111,111}"></a>
+                                </div>
+                                <div class="am-text-center goods-info am-g">
+                                    <div class="goods-name am-u-sm-6" style="padding: 0px">
+                                        <a href="{:U('shop/goodsdetail',array('id'=>$vo['id']))}" class="goods-name" style="font-size: 13px">{$vo.good_name}</a>
+                                    </div>
+                                </div>
+                                <div class="spliter "></div>
+                                <div class="am-text-center stock-box am-g" style="padding:0px 10px">
+                                    <div class="stock ">
+                                        <span >销量:{$vo.sell_num}</span>
+                                    </div>
+                                    <div class="money ">
+                                        <span><i class="am-icon-cny"></i>{$vo.money_need}</span>
+                                    </div>
+                                </div>
+                                <div class="spliter "></div>
+                                <div class="am-text-center btn" style="margin: 5px 0px">
+                                    <a href="{:U('shop/buy',array('id'=>$vo['id']))}" class="am-btn-md diy-btn am-btn-primary am-radius"
+                                       style="padding:3px 14px;font-size: 13px">+兑换</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    </volist>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+    $(function () {
+        $('#doc-my-tabs').tabs();
+    })
+</script>
+</block>

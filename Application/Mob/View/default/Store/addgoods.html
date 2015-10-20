@@ -1,0 +1,151 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+    <div class="postgoods-container">
+
+
+        <form action="" class="am-form goods" data-url="{:U('mob/store/doAddInfo')}" >
+            <input type="hidden" id="img_ids" name="attach_ids" value="">
+            <input type="hidden" id="one_img_id" name="cover_id" value="">
+            <input type="hidden" name="entity_id" value="8">
+            <input type="hidden" name="shop_id" value="{$shop['id']}">
+            <input type="hidden" name="info_id" value="{$info['id']}">
+            <fieldset>
+                <div class="am-form-group ">
+
+                    <label class=" am-form-label">*商品名</label>
+                    <input type="text" name="title" minlength="1" placeholder="" value="{$info.title}" class="am-form-field"
+                           required/>
+                    <span>必须输入</span>
+
+                </div>
+
+                <!--分类-还有个JS联动-->
+                <div class="am-form-group ">
+                    <div class="am-cf">
+                        <div><label for="cat_top">*一级类目</label></div>
+
+                        <select id="cat_top" name="cat1" class="form-control ">
+                            <option value="-1">请选择一级目录</option>
+                            <volist name="cats" id="top">
+                                <option value="{$top.id}">
+                                    {$top.title}
+                                </option>
+                            </volist>
+                        </select>
+                        <span class="help-block">顶级目录，必选&nbsp;</span>
+                    </div>
+                </div>
+                <div class="am-form-group ">
+                    <div><label for="cat_top">*二级类目</label></div>
+                    <select id="cat_second" name="cat2" class="form-control ">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}">
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+                    <span class="help-block">二级目录，必须&nbsp;</span>
+                </div>
+                <!--分类-还有个JS联动end-->
+
+                <div class="am-form-group ">
+
+                    <label class=" am-form-label">*价格</label>
+                    <input type="number" name="price" value="{$info.price}" class="am-form-field" required/>
+                    <span>仅可输入数字</span>
+
+                </div>
+                <div class="am-form-group">
+                    <label class=" am-form-label">*主图</label>
+
+                    <!--插入图片-->
+                    <div class="am-cf " style="padding: 10px;">
+                        <div class="am-fl">
+                            <div class="img_btn">
+                                <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+
+
+                                <input type="file" name="files" id="fileloadone" class=" am-btn"
+                                       style="left:0px;top: 0px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                                       data-url="{:U('Core/File/uploadPicture')}">
+                            </div>
+                        </div>
+                        <div class="show_cover am-fl" style="display:none;margin-left: 10px;">
+                            <div id="cover_url">
+                                <img class="cover_img" style="width:74px;height: 74px" src="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="am-form-group am-cf" >
+                    <label class=" am-form-label">*商品相册</label>
+                    <!--插入图片表情-->
+                    <div class="fileupload-buttonbar">
+                        <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;">
+                            <button type="button">最多选择八张图片</button>
+                        </a>
+
+                        <div class="fileinput-button" style="width: 100%"><input type="file" name="files" class="btn"
+                                                                                 id="fileupload"
+                                                                                 style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;"
+                                                                                 data-url="{:U('Core/File/uploadPicture')}"
+                                                                                 multiple/></div>
+
+                    </div>
+                    <!--插入图片表情结束-->
+                </div>
+
+                <div class="am-form-group am-form-group-sm weibo_post_box am-cf">
+                    <label class="am-form-label">*商品描述</label>
+                    <textarea data-role="comment_content" type="text" name="des" placeholder="">{$info.des}</textarea>
+                    <!--表情-->
+                    <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 3px">
+                        <img src="__CORE_IMAGE__/bq.png">
+                    </a>
+                    <div id="emot_content" class="emot_content"></div>
+
+                    <!--表情-->
+                    <span></span>
+
+                </div>
+
+                <div class="am-form-group am-g">
+                    <label class="am-form-label">*是否包邮</label></br>
+                    <div class="am-radio-inline">
+                        <input type="radio" value="0" name="trans_fee" checked> 买家承担
+                    </div>
+                    <div class="am-radio-inline">
+                        <input type="radio" value="1" name="trans_fee"> 卖家承担
+                    </div>
+
+                </div>
+
+            </fieldset>
+            <button type="button" class="am-btn am-btn-primary am-btn-block add-goods" data-detail-url="{:U('mob/store/goods')}" >发布</button>
+        </form>
+
+    </div>
+    <script type="text/javascript">
+        add_one_img();
+        add_img();
+        add_goods();
+        $(function () {
+            $('#cat_top').change(function () {
+                var pid = $(this).val();
+                $.post("{:U('Mob/store/selectDropdown')}", {pid: pid}, function (data) {
+                    $('#cat_second').html('');
+                    $.each(data, function (index, element) {
+                                $('#cat_second').append('<option value="' + element.id + '">' + element.title + '</option>')
+                            }
+                    )
+                }, 'json');
+            });
+            $('#cat_top').change();
+        })
+
+    </script>
+</block>

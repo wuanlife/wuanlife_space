@@ -1,0 +1,98 @@
+<div class="am-tabs" id="follow">
+    <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify" style="font-size: 12px">
+        <li class="am-active"><a href="">ta的粉丝</a></li>
+        <li><a href="">ta的关注</a></li>
+
+    </ul>
+    <div class="am-tabs-bd" style="border: none">
+        <div class="am-tab-panel am-active" style="padding: 5px"> <notempty name="following.fans">
+            <volist name="following.fans" id="fans">
+            <div class=" am-g am-cf" style="border-bottom: 1px solid #dedede;padding-bottom:10px ">
+
+                        <div class="am-fl am-u-sm-3 am-text-center" style="padding: 0px">
+                            <img style="width: 80px;height: 80px" class="am-circle"
+                                 src="{$fans.user.avatar128}">
+                        </div>
+                        <div class="am-fl am-u-sm-9"style="margin-top:10px ">
+                            <div>
+                                <a href="">{$fans.user.nickname}</a>
+                                <div>
+                                    {:W('Common/Follow/follow',array('follow_who'=>$fans['user']['uid'],'btn-before','btn-after'))}
+                                </div>
+                                等级：{$fans.user.title}
+                            </div>
+                            <div class="am-g">
+                                <div class="am-u-sm-4 am-text-left">
+                                    微博： {$fans.user.weibocount}
+                                </div>
+                                <div class="am-u-sm-4 am-text-left">
+                                    粉丝：{$fans.user.fans}
+                                </div>
+                                <div class="am-u-sm-4 am-text-left">
+                                    关注：{$fans.user.following}
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+            </volist>
+        <else/>
+        <p class="text-muted"
+           style="text-align: center; font-size: 3em;">
+            <br>
+            暂无关注任何人哦，赶紧去看看吧～
+            <br>
+        </p>
+        </notempty>
+
+        </div>
+
+
+        <div class="am-tab-panel" style="padding:10px 5px"> <notempty name="following.follow">
+            <volist name="following.follow" id="follow">
+            <div class=" am-g am-cf" style="border-bottom: 1px solid #dedede;padding-bottom:10px ">
+
+                        <div class="am-fl am-u-sm-3 am-text-center" style="padding: 0px">
+                            <img style="width: 80px;height: 80px" class="am-circle"
+                                 src="{$follow.user.avatar128}">
+                        </div>
+                        <div class="am-fl am-u-sm-9"style="margin-top:10px ">
+                            <div><a href="">{$follow.user.nickname}</a>
+                                <div>
+                                    {:W('Common/Follow/follow',array('follow_who'=>$follow['user']['uid'],'btn-before','btn-after'))}
+                                </div>
+                                等级：{$follow.user.title}
+                            </div>
+                            <div class="am-g">
+                                <div class="am-u-sm-4 am-text-left">
+                                    微博：{$follow.user.weibocount}
+                                </div>
+                                <div class="am-u-sm-4 am-text-left">
+                                    粉丝：{$follow.user.fans}
+                                </div>
+                                <div class="am-u-sm-4 am-text-left">
+                                    关注：{$follow.user.following}
+                                </div>
+                            </div>
+                        </div>
+
+            </div>   </volist>
+        <else/>
+        <p class="text-muted"
+           style="text-align: center; font-size: 3em;">
+            <br>
+            暂无关注任何人哦，赶紧去看看吧～
+            <br>
+        </p>
+        </notempty>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(function () {
+        $('#follow').tabs();
+    })
+</script>

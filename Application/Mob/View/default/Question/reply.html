@@ -1,0 +1,52 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body" >
+    <script src="__JS__/question.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/question.css"/>
+    <form data-url="{:U('Mob/Question/addAnswer')}"id="replyquestion">
+        <div class="am-form-group am-cf weibo_post_box" id="comment" style="padding: 10px">
+            <input type="hidden" name="question_id" value="{$question_id}">
+            <input type="hidden" name="answer_id" value="{$answer_id}">
+            <input type="hidden" id="img_ids" name="attach_ids" value="">
+            <textarea maxlength="200" class="content" type="text" name="content" placeholder="我的回答~~"
+                      style="width: 100%;height:150px;padding: 5px">{$answerContent.content}</textarea>
+
+            <!--插入图片表情-->
+            <!--表情-->
+            <a class="am-fl" href="javascript:" data-url=" {:U('Core/Expression/getSmile')}"
+               onclick="insertFace($(this))" style="margin-top:5px">
+                <img src="__CORE_IMAGE__/bq.png">
+            </a>
+
+            <div id="emot_content" class="emot_content"></div>
+
+            <!--表情-->
+            <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                    src="__IMG__/image.png"></a>
+            <input type="file" name="files" id="fileupload" class="am-fl"
+                   style="left: 35px;position:absolute;z-index: 1;width: 35px;height:40px;opacity: 0;cursor: pointer;"
+                   data-url="{:U('Core/File/uploadPicture')}">
+            <!--插入图片表情结束-->
+            <p class="submitanswer">
+                <button style="float: right" type="button" class="am-btn am-btn-primary am-btn-block">确认回答</button>
+            </p>
+
+        </div>
+    </form>
+    <script type="text/javascript">
+        $('.submitanswer').click(function () {
+            var data = $("#replyquestion").serialize();
+            var url = $("#replyquestion").attr('data-url');
+            $.post(url, data, function (msg) {
+                if (msg.status == 1) {
+                    toast.success(msg.info);
+                    setTimeout(function () {
+                        window.location.href = document.referrer
+                    }, 1000)
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json');
+        });
+    </script>
+</block>

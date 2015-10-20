@@ -1,0 +1,105 @@
+
+<div>
+    <div class="vertical item "style="padding: 10px;border: solid 1px #F1F1F1">
+        <div class="am-g avatar_">
+            <div class="avatar am-fl">
+                <img class="avatar-img am-circle" style="width: 32px;height:32px;margin-top: 5px"  src="{$vo.user.avatar64}">
+            </div>
+            <div class=" nickname am-fl" style="margin-left: 10px">
+                <a href="{$vo.user.space_mob_url}">{$vo.user.nickname}</a>
+                <volist name="vo['rand_title']" id="v2">
+                    <img   style="width: 18px;height: 18px;vertical-align:middle" src="{$v2.logo}">
+                </volist><br/>
+                <span class="from">来自{$vo.from}</span>
+            </div>
+            <div class="time am-fr">
+                {$vo.create_time|friendlyDate}
+            </div>
+        </div>
+
+        <if condition="$vo['is_img'] eq 0">
+            <div class="am-g content">
+                <p style="margin: 8px 0px">{$vo.content}</p>
+            </div>
+        </if>
+
+        <if condition="$vo['is_img'] eq 1">
+            <div class="am-g content">
+                <p>{$vo.content}</p>
+
+                <div class="img-content am-cf am-avg-sm-3 ">
+                    <!--源微博图片显示-->
+                    <php>foreach($vo['img_path'] as $key_img => $val_img){</php>
+                    <div href=" {$vo['sourceId_img_big'][$key_img]}" style="padding: 1px;float: left">
+                        <img class="img-big" style="height: 100px;width: 100px" src="{$vo['sourceId_img_path'][$key_img]}">
+                    </div>
+                    <php>}</php>
+                    <!--源微博图片显示END-->
+                </div>
+
+            </div>
+        </if>
+
+        <div>
+            <if condition="$vo['is_sourceId'] eq 1">
+                <a href="{:U('Mob/Weibo/weiboDetail',array('id'=>$vo['sourceId']))}">
+                    <div class="triangle"
+                         style="margin-left: 20px;border-bottom: 10px solid #f1f1f1;"></div>
+                    <div class="am-cf" style="border: 1px solid #e8e8e8;padding: 10px;margin-bottom: 20px; border-radius: 6px;background: #f1f1f1">
+
+                        <div>
+                            <a href="{:U('Mob/Weibo/weiboDetail',array('id'=>$vo['sourceId']))}"
+                               data-hasqtip="75">@{$vo.sourceId_user.nickname}</a></div>
+                        <p class="word-wrap">{$vo.sourceId_content}</p>
+
+
+                        <if condition="$vo['sourceId_is_img'] eq 1">
+                            <div class=" img-content am-cf am-avg-sm-3">
+                                <!--转发后图片显示-->
+                                <php>foreach($vo['sourceId_img_path'] as $key_img => $val_img){</php>
+                                <div style="padding: 1px;float: left" href=" {$vo['sourceId_img_big'][$key_img]}">
+                                    <img class="img-big" style="height: 100px;width: 100px" src=" {$vo['sourceId_img_big'][$key_img]}">
+                                </div>
+                                <php>}</php>
+                                <!--转发后图片显示END-->
+                            </div>
+                        </if>
+
+                                <span class="text-primary pull-right" style="font-size: 12px;"><a
+                                        href="{:U('Mob/Weibo/weiboDetail',array('id'=>$vo['sourceId']))}">
+                                    原微博转发（{$vo.sourceId_repost_count.repost_count}）</a>  </span>&nbsp;
+                    <span class="text-primary pull-left" style="font-size: 12px;">
+                        <a href="">来自：{$vo.from}</a>  </span>
+
+                    </div>
+                </a>
+            </if>
+        </div>
+
+        <!--转发后的内容-结束-->
+        <div class="am-g">
+            <div class="am-u-sm-4 am-text-center ">
+                <a class="support" weibo_id="{$vo['id']}" user_id="{$vo['uid']}" url="{:U('Mob/Weibo/support')}">
+                    <if condition="$vo['is_support'] eq 1">
+                        <i class="am-icon-thumbs-up"></i>
+                        <else/>
+                        <i class="am-icon-thumbs-o-up"></i>
+                    </if>
+
+                </a> <span>{$vo.support}</span>
+            </div>
+            <div class="am-u-sm-4 am-text-center ">
+                <a class="forward" href="{:U('Mob/Weibo/forward',array('id'=>$vo['id'],'uid'=>$vo['uid']))}"><i
+                        class="am-icon-share"></i> </a> <span>{$vo.repost_count}</span>
+            </div>
+
+            <div class="am-u-sm-4 am-text-center">
+                <a data-target="section" href="{:U('Mob/weibo/weibodetail',array('id'=>$vo['id']))}"
+                   data-icon="icon bubbles">
+                    <i class="am-icon-comment-o"></i>
+                    {$vo.comment_count}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

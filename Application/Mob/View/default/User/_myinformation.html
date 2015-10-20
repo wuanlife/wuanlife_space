@@ -1,0 +1,103 @@
+<div class="am-tabs" id="doc-my-tabs">
+    <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify"style="font-size: 12px">
+        <li class="am-active"style=""><a href="">基本资料</a></li>
+        <volist name="profile_group_list" id="so">
+            <li><a href="">{$so.profile_name}</a></li>
+        </volist>
+
+    </ul>
+    <div class="am-tabs-bd"style="border: none">
+        <div class="am-tab-panel am-active">
+            <div class="item-info-page">
+                <span>昵称：</span>
+
+                <p>{$userdata.user.nickname}</p>
+            </div>
+            <div class="item-info-page">
+                <label class="col-xs-2 control-label">性别</label>
+
+                    <label class="radio-inline">
+                        <eq name="userdata.sex" value="1">   男</eq>
+
+                    </label>
+                    <label class="radio-inline">
+                        <eq name="userdata.sex" value="2">   女</eq>
+
+                    </label>
+                    <label class="radio-inline">
+                        <eq name="userdata.sex" value="0"> 保密</eq>
+
+                    </label>
+            </div>
+            <div class="item-info-page">
+                <span>邮箱：</span>
+
+                <p>{$userdata.user.email|htmlspecialchars}</p>
+            </div>
+            <div class="item-info-page">
+                <span>所在地：</span>
+
+                <p>{$userdata.pos_province}&nbsp;&nbsp;{$userdata.pos_city}&nbsp;&nbsp;{$userdata.pos_district}&nbsp;&nbsp;{$userdata.pos_community}</p>
+            </div>
+            <div class="item-info-page">
+                <span>个性签名：</span>
+
+                <p><eq name="userdata.signature" value="">还没想好O(∩_∩)O<else/>{$userdata.signature|htmlspecialchars}</eq></p>
+            </div>
+
+        </div>
+
+        <volist name="profile_group_list" id="group_vl">
+            <div class="am-tab-panel">
+            <div class="tab-pane" id="expand_tab_{$group_vl.id}">
+                <div class="panel-body expand_info">
+                    <volist name="group_vl['info_list']" id="info_vl">
+                        <dl class="dl-horizontal">
+                            <dt>{$info_vl.field_name}：</dt>
+                            <dd>{$info_vl.field_data|default='还未设置'}</dd>
+                        </dl>
+                    </volist>
+                    <if condition="count($group_vl['info_list']) eq 0"><p class="text-muted"
+                                                                          style="text-align: center; font-size: 15px;margin: 15px;">
+
+                        该扩展信息分组没有信息！
+                    </p></if>
+
+                </div>
+            </div>
+                </div>
+        </volist>
+
+
+    </div>
+
+
+
+</div>
+
+
+<style>
+    .item-info-page {
+        border-color: #e3e3e3;
+        overflow: hidden;
+        border-bottom: #dadada solid 1px;
+        padding: 9px 5px 9px 0;
+        clear: both;
+    }
+
+    .item-info-page span {
+        float: left;
+    }
+
+    .item-info-page p {
+        margin: 0px;
+        padding: 0px;;
+        float: left;
+    }
+</style>
+
+<script>
+    $(function () {
+        $('#doc-my-tabs').tabs();
+    })
+</script>

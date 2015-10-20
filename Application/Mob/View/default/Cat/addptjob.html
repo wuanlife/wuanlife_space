@@ -1,0 +1,92 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <script src="__JS__/cat.js"></script>
+
+
+<div class="addparttime-container ">
+    <form action="" class="am-form" id="doc-vld-msg">
+        <input type="hidden" id="entity_id" name="entity_id" value="{$entityId}">
+        <input type="hidden" id="img_ids" name="zhaopian" value="">
+        <input type="hidden" id="info_id" name="info_id" value="{$info.id}">
+        <fieldset>
+            <div class="am-form-group">
+                <label>标题：</label>
+                <input type="text" minlength="3" placeholder="（至少 3 个字符）" name="title" value="{$info.title}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>截止日期：</label>
+
+                <div class="am-form-group am-form-icon">
+                    <i class="am-icon-calendar"></i>
+                    <input type="text" class="am-form-field" placeholder="截止日期" name="over_time" data-am-datepicker readonly/>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label>工作地点</label>
+                <input type="text" placeholder="" name="pos" value="{$detail.pos.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>联系方式</label>
+                <input type="text" placeholder="" name="contact" value="{$detail.contact.data}" required/>
+            </div>
+
+            <label>介绍</label>
+            <div class="am-form-group weibo_post_box">
+                <textarea type="text" name="jieshao" placeholder=""
+                          style="width: 100%;height:150px;padding: 5px">{$detail.jieshao.data}</textarea>
+                <!--插入图片表情-->
+                <!--表情-->
+                <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 5px">
+                    <img src="__CORE_IMAGE__/bq.png">
+                </a>
+                <div id="emot_content" class="emot_content"></div>
+
+                <!--表情-->
+                <div class="fileupload-buttonbar">
+                    <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                            src="__IMG__/image.png"></a>
+                    <div class="fileinput-button" style="width: 100%">
+                        <input type="file" name="files" class="btn" id="fileupload" style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;" data-url="{:U('Core/File/uploadPicture')}" multiple/></div>
+                </div>
+                <!--插入图片表情结束-->
+            </div>
+
+            <button class="am-btn am-btn-secondary am-btn-block addinfo" type="button" data-url="{:U('Mob/cat/doAddInfo')}" index-url="{:U('Mob/cat/index')}">发布兼职</button>
+
+        </fieldset>
+    </form>
+</div>
+
+
+
+<script>
+    add_img();
+    add_info();
+    $(function () {
+        $('#doc-vld-msg').validator({
+            onValid: function (validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+            },
+
+            onInValid: function (validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                            appendTo($group);
+                }
+                $alert.html(msg).show();
+            }
+        });
+    });
+
+</script>
+</block>

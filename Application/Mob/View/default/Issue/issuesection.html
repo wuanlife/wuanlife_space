@@ -1,0 +1,32 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <div class="issue-type-list" style="padding: 10px;">
+        <div class="am-panel-group" id="accordion">
+
+            <volist name="issue_top" id="vo">
+                <div class="am-panel am-panel-default type-list" style="border-bottom: none">
+                    <div class="am-panel-hd">
+                        <h4 class="am-panel-title" href="#do-not-say-{$vo.id}"
+                            data-am-collapse="{parent: '#accordion'}">
+                            {$vo.title}
+                        </h4>
+                        <span>专辑数：{$vo.count}</span>
+                    </div>
+
+                    <div id="do-not-say-{$vo.id}" class="am-panel-collapse am-collapse am-in">
+                        <volist name="vo['lever_two']" id="vl">
+                            <ul class="issue-type">
+                                <a href="{:U('Mob/Issue/issueLeverDetail',array('id'=>$vl['id']))}" class="">
+                                    <li class="type">{$vl.title}</br>
+                                        <span>专辑数：{$vl.count_content}</span>
+                                    </li>
+                                </a>
+                            </ul>
+                        </volist>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</block>

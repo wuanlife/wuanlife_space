@@ -1,0 +1,48 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+
+<div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+    <div class="am-header-left am-header-nav">
+        <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+    </div>
+    <h1 class="am-header-title">版块
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a href="#nav-link" class="">
+            <i class="am-menu-toggle-icon am-icon-bars"></i>
+        </a>
+    </div>
+</div>
+    </block>
+<block name="mob_body">
+<div class="forum-type-list" style="padding: 10px;">
+    <link rel="stylesheet" href="__CSS__/apps/forum.css"/>
+    <div class="am-panel-group" id="accordion">
+
+        <volist name="forum_top" id="vo">
+            <div class="am-panel am-panel-default type-list">
+                <div class="am-panel-hd">
+                    <h4 class="am-panel-title" href="#do-not-say-{$vo.id}" data-am-collapse="{parent: '#accordion'}">
+                        {$vo.title}
+                    </h4>
+                    <span>帖子数：{$vo.count}</span>
+                </div>
+
+                <div id="do-not-say-{$vo.id}" class="am-panel-collapse am-collapse am-in">
+                    <volist name="vo['lever_two']" id="vl">
+                        <ul class="forum-type"><a href="{:U('Mob/Forum/postSectionDetail',array('id'=>$vl['id']))}">
+                                <li class="type ">
+                                    <span class="">{$vl.title}</span><br>
+                                    <span>帖子数：{$vl.count_content}</span>
+
+                                </li>
+                            </a>
+                        </ul>
+                    </volist>
+                </div>
+            </div>
+        </volist>
+    </div>
+</div>
+</block>

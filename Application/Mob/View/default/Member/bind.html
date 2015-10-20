@@ -1,0 +1,155 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div class="header">
+        <div class="am-g">
+            <h1>{:modC('WEB_SITE_NAME','OpenSNS')}</h1>
+
+            <p>{:modC('SUMMARY','')}</p>
+        </div>
+        <hr/>
+    </div>
+</block>
+<block name="mob_body">
+    <div class="bind-list">
+        <ul class="bind-type am-avg-xs-2">
+            <li><a href="{:U('Mob/member/bind',array('tip'=>'new'))}">新账号</a></li>
+            <li><a href="{:U('Mob/member/bind',array('tip'=>'exist'))}">绑定已有账号</a></li>
+        </ul>
+    </div>
+    <div class="bind am-cf">
+
+
+        <php> if($tip =='new'){</php>
+        <div class="bind-content">
+            <form action="{:addons_url('SyncLogin://Base/newAccount')}" method="post" class="am-form">
+                <fieldset style="margin-top: 0px">
+                    <div class="am-tab-panel am-active am-in">
+                        <label>用户名：</label>
+                        <input type="text" name="username" minlength="4" placeholder="输入用户名（不能为空）" required/>
+                    </div>
+                    <div class="am-tab-panel">
+                        <label>昵称：</label>
+                        <input type="text" name="nickname" minlength="4" placeholder="输入昵称（不能为空)" required/>
+                    </div>
+                    <div class="am-tab-panel">
+                        <label>请输入邮箱：</label>
+                        <input type="text" name="email" minlength="4" placeholder="输入邮箱（不能为空）" required/>
+                    </div>
+
+                    <!--用户名密码-->
+                    <div class="form-group">
+
+                        <label>密码：</label>
+                        <input type="password" name="password" placeholder="6位密码"
+                               pattern="^/^[\@A-Za-z0-9\!\#\$\%\^\&\*\.\~]{6,22}$/" required/>
+                    </div>
+
+                </fieldset>
+                <div class="am-cf" style="padding: 10px;font-size:10px;">
+                    <div class="am-fl am-btn am-btn-secondary">
+                        <a href="javascript:" data-role="submit_form" title="" style="color: #FFFFFF;">提交</a>
+                    </div>
+
+                    <div class="am-fr am-btn am-btn-success ">
+                        <a href="{:addons_url('SyncLogin://Base/unbind')}" title="" style="color: #FFFFFF;">不想绑定直接跳过</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <php>}</php>
+
+        <php>if($tip == 'exist'){</php>
+        <div class="bind-content">
+            <form action="{:addons_url('SyncLogin://Base/existLogin')}" method="post" class="am-form">
+                <fieldset style="margin-top: 0px">
+
+
+                    <div class="am-tab-panel am-active am-in">
+                        <label>用户名：</label>
+                        <input type="text" name="username" />
+                    </div>
+
+                    <!--用户名密码-->
+                    <div class="form-group">
+                        <label>密码：</label>
+                        <input type="password" name="password"  />
+                    </div>
+
+                </fieldset>
+                <div class="am-checkbox" style="margin-top: 0px">
+
+                    <label>
+                        <input type="checkbox" name="remember" style="cursor:pointer;"> 记住登录
+                    </label>
+                </div>
+
+                <div class="am-cf">
+
+
+                    <button id="conf" type="submit" name="" value="{:L('login')}"
+                            class="am-btn am-radius am-btn-primary am-btn-sm am-fl am-btn-block">登录
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+        <php>}</php>
+
+
+    </div>
+    <style>
+        .bind-type {
+            list-style-type: none;
+        }
+
+        .bind-type li {
+            float: left;
+            padding: 10px;
+            background-color: cadetblue;
+            margin-left: 10px;
+        }
+
+        .bind-type li a {
+            color: #FFFFFF;
+        }
+
+    </style>
+
+
+    <script>
+        $(function () {
+            $('[data-role="submit_form"]').click(function () {
+                submit_form($(this).closest('form'))
+            })
+
+            $("form").submit(function () {
+                submit_form($(this))
+            });
+
+
+
+        })
+
+        var submit_form = function(self){
+            $.post(self.attr("action"), self.serialize(), success, "json");
+            return false;
+
+            function success(data) {
+                if (data.status) {
+                    toast.success(data.info, '温馨提示');
+                    setTimeout(function () {
+                        window.location.href = data.url
+                    }, 1000);
+                } else {
+                    toast.error(data.info, '温馨提示');
+                    //self.find(".Validform_checktip").text(data.info);
+                    //刷新验证码
+                    $(".reloadverify").click();
+                }
+            }
+        }
+    </script>
+</block>

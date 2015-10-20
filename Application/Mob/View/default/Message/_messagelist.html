@@ -1,0 +1,29 @@
+<notempty name="vo.content.content">
+    <div class=" am-g am-cf message" style="border-bottom: 1px solid #dedede;padding:10px">
+        <div class="am-fl am-u-sm-2 am-u-md-1 " style="padding: 0px;text-align: center">
+            <neq name="vo.from_user" value="">
+                <a href="{$vo.from_user.space_mob_url}">
+                <img style="width: 48px;height: 48px" class="am-circle"
+                     src="{$vo.from_user.avatar64}"><br>
+                {$vo.from_user.nickname}</a>
+            </neq>
+        </div>
+        <div class="am-fr am-u-sm-3 am-u-md-2 message-ctime" style="padding:0px;text-align: right">
+            {$vo.create_time|friendlyDate}
+        </div>
+        <div class="am-fl am-u-sm-7 am-u-md-9" style="padding:0px 5px">
+
+            <div class="">
+                <a href="{$vo.content.url} " data-url="{:U('Ucenter/Public/readMessage')}"
+                   onclick="Notify.readMessage(this,{$vo.id})">{$vo.content.title}</a>
+                <eq name="vo.is_read" value="0">
+                    <span class="label label-badge label-info">未读</span>
+                </eq>
+            </div>
+
+            <div class="truncate-2" style="line-height: 20px">{$vo.content.content}</div>
+        </div>
+
+    </div>
+
+</notempty>

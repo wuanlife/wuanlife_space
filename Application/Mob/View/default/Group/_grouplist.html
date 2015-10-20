@@ -1,0 +1,49 @@
+<li class="group-Box ">
+    <div class="group">
+        <div class="group-info-box">
+            <div class="am-text-center cover">
+                <a href="{:U('group/group',array('id'=>$vl['id']))}"><img class=""
+                                                         src="{$vl.logo}" style="width: 100%"></a>
+            </div>
+            <div class="am-text-center content">
+                <a href="{:U('group/group',array('id'=>$vl['id']))}" class="title">{$vl.title}</a>
+
+                <div class="substance">{$vl.detail}</div>
+            </div>
+            <div class="spliter "></div>
+            <div class="am-text-center record am-g">
+                        <span class="am-text-center post-count am-u-sm-6"><i class=" am-icon-file-text-o">
+                        </i>{$vl.post_count}</span>
+
+                        <span class="am-text-center sign-count am-u-sm-6">  <i class=" am-icon-group">
+                        </i>{$vl.member_count}</span>
+            </div>
+            <div class="spliter "></div>
+            <div class="foot-box am-g">
+                <div class="admin-info am-u-sm-6">
+                    <img class="avatar-img" style="width: 32px" src="{$vl.user.avatar64}">
+                    <span class="name"><a href="{$vl.user.space_mob_url}">{$vl.user.nickname}</a></span>
+
+                </div>
+                <if condition="$vl['is_login'] eq 1">
+                    <div class="attend-btn am-u-sm-6" style="text-align: right">
+                        <a class="am-btn-xs diy-btn am-btn-primary am-radius" data-group-id
+                           href="{:U('Mob/group/Admin',array('id'=>$vl['id']))}">管理</a>
+                    </div>
+                </if>
+<!--                <if condition="$vl.is_login eq 0">
+                    <php>if(is_joined($vl['id']) == 1){</php>
+                    <div class="attend-btn am-u-sm-6" style="text-align: right">
+                        <a class="am-btn-xs diy-btn am-btn-primary am-radius" data-group-id="{$vl.id}"  id="attend"  url="{:U('Mob/group/attend')}">+加入群组</a>
+                    </div>
+                    <php>}else{</php>
+                    <div class="attend-btn am-u-sm-6" style="text-align: right">
+                        <a class="am-btn-xs diy-btn am-btn-primary am-radius" data-group-id="{$vl.id}"  id="quit"  url="{:U('Mob/group/quit')}">_退出群组</a>
+                    </div>
+                    <php>}</php>
+                </if>-->
+            </div>
+
+        </div>
+    </div>
+</li>

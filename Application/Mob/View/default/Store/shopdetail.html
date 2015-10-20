@@ -1,0 +1,86 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+<div class="shopdetail-container ">
+    <div class="detail">
+        <div class="shop am-g">
+
+            <div class="shop-info am-g">
+                <div class="shop-avatar am-u-sm-3">
+                    <img class="am-img-thumbnail am-radius" src="{$shopdetail['logo']|getThumbImageById=222,222}">
+                </div>
+                <div class="shop-content am-u-sm-7">
+                    <p><a class="shop-name">{$shopdetail['title']}</a></p>
+
+                    <p class="manager">掌柜:
+                        <a href=""><img class="am-img-thumbnail avatar-img am-circle manager-avater"
+                                        src="{$shopdetail['user']['avatar32']}">{$shopdetail['user']['nickname']}</a>
+                    </p>
+
+                    <p>所在地：{$shopdetail['position']}</p>
+
+                    <p>创店于：{$shopdetail['create_time']|friendlyDate}</p>
+
+                </div>
+                <div class="c-btn-box am-u-sm-2">
+                    <php>if($shopdetail['user']['uid']==is_login()){</php>
+                <div class="c-btn">
+                    <a href="{:U('mob/store/createshop',array('id'=>$shopdetail['id']))}"> <i class=""></i>管理店铺</a>
+                </div>
+                    <php>}</php>
+            </div>
+
+            </div>
+            <div class="hot-goods">
+                <div class="title">
+                    <p>热销宝贝</p>
+                </div>
+                <div class="hot-goods-list">
+                    <ul class="goods-box am-avg-sm-2 am-avg-md-4 am-avg-lg-8">
+                       <volist name="hotGoods" id="vo">
+                        <li>
+                            <div class="goods">
+                                <div class="am-text-center cover">
+                                    <a href="{:U('mob/store/goodsdetail',array('goodsId'=>$vo['id']))}">
+                                        <img src="{$vo['cover_id']|getThumbImageById=222,222}"
+                                                ></a>
+                                </div>
+                                <div class="am-text-center content">
+                                    <a href="{:U('store/goodsdetail')}" class="title">商品名：{$vo.title}</a>
+                                </div>
+                                <div class="spliter "></div>
+                                <div class="am-gallery-title">
+                                    <b>￥</b><span class="">{$vo['price']}</span>
+                                </div>
+                            </div>
+
+                        </li>
+                    </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="new-goods">
+                <div class="title">
+                    <p>最新宝贝</p>
+                </div>
+                <div class="new-goods-list">
+                    <ul class="goods-box am-avg-sm-2 am-avg-md-4 am-avg-lg-8 goodslist">
+                       <volist name="goods" id="vl">
+                           <include file="_goodslist"/>
+                       </volist>
+                    </ul>
+                </div>
+            </div>
+            <div class="am-list-news-ft">
+                <a class=" am-btn am-btn-secondary am-btn-block add-more-goods" data-url="{:U('mob/store/addMoreGoods')}" shop-id="{$shopdetail['id']}">查看更多 &raquo;</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <script>
+        add_more_goods();
+    </script>
+</block>

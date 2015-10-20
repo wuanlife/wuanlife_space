@@ -1,0 +1,28 @@
+<php> $config = api('Config/lists');
+    C($config); //添加配置
+    $count_code=C('_MOB_STATISTICALCODE');
+    if(empty($count_code)){
+    $count_code=C('COUNT_CODE');
+    }
+</php>
+
+<script type="text/javascript">
+    //全局内容的定义
+    var _ROOT_ = "__ROOT__";
+    var MID = "{:is_login()}";
+    var MODULE_NAME="<php>echo MODULE_NAME;</php>";
+    var ACTION_NAME="<php>echo ACTION_NAME;</php>";
+    var CONTROLLER_NAME ="<php>echo CONTROLLER_NAME;</php>";
+    var ThinkPHP = window.Think = {
+        "ROOT": "__ROOT__", //当前网站地址
+        "APP": "__APP__", //当前项目地址
+        "PUBLIC": "__PUBLIC__", //项目公共目录地址
+        "DEEP": "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+        "MODEL": ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+        "VAR": ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"],
+        'URL_MODEL': "{:C('URL_MODEL')}",
+        'WEIBO_ID': "{:C('SHARE_WEIBO_ID')}"
+    }
+
+    var weibo_comment_order = "{:modC('COMMENT_ORDER',0,'WEIBO')}";
+</script>

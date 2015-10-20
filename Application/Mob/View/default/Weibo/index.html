@@ -1,0 +1,76 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/weibo.css"/>
+    <div class="weibo-container ">
+
+        <ul class="weibo-list list ulclass" id="article_list_ul">
+
+            <notempty name="weibo">
+                <volist name="weibo" id="vl">
+                    <include file="_weibolist"/>
+                </volist>
+                <else/>
+                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                </div>
+            </notempty>
+
+        </ul>
+        <notempty name="weibo">
+            <if condition="$pid['count'] eq 1">
+                <if condition="$pid['is_allweibo'] eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmore" data-url="{:U('Mob/Weibo/addMoreWeibo')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+
+                </if>
+                <if condition="$pid['is_myfocus'] eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmorefocus" data-url="{:U('Mob/Weibo/addMoreMyFocus')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+                </if>
+                <if condition="$pid['is_hotweibo'] eq 1">
+                    <div class="am-list-news-ft look-more">
+                        <a id="getmorehotweibo" data-url="{:U('Mob/Weibo/addMoreHotWeibo')}"
+                                >查看更多 &raquo;</a>
+                    </div>
+                </if>
+            </if>
+        </notempty>
+    </div>
+
+    <div data-am-widget="navbar" class="am-navbar am-navbar-default am-cf " id="">
+
+
+        <ul class="am-navbar-nav am-cf am-avg-sm-4" style="padding: 0px;font-size: 13px;background: #32b1f1">
+            <li
+            <if condition="ACTION_NAME eq 'index'"> style="background: #0f9ae0"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/index')}">
+                全站动态
+            </a>
+            </li>
+            <li
+            <if condition="ACTION_NAME eq 'hotweibo'"> style="background: #0f9ae0"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/hotWeibo')}">
+                热门微博
+            </a>
+            </li>
+            <li
+            <if condition="ACTION_NAME eq 'myfocus'"> style="background: #0f9ae0"</if>
+            >
+            <a style="color: white" href="{:U('Mob/Weibo/myFocus')}">
+                我的关注
+            </a>
+            </li>
+        </ul>
+
+    </div>
+<script>
+    show_video();
+</script>
+</block>

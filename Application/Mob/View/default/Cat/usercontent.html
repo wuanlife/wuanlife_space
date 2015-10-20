@@ -1,0 +1,45 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <script src="__JS__/raty/raty.js"></script>
+    <div class="usercontent-container ">
+        <div class="user-info am-cf">
+            <div class="avatar am-fl">
+                <img class="avatar-img" src="{$user.avatar64}">
+            </div>
+            <div class="info am-fl">
+            <span>
+                <a href="{$user.space_mob_url}">{$user.nickname}</a>
+            </span>
+                </br>
+            <span>
+                发布信息：{$sendMsg} 条
+            </span>
+                </br>
+             <span>
+                收藏信息：{$favMsg} 条
+            </span>
+            </div>
+        </div>
+        <div class="center-info">
+            <ul class="am-avg-sm-2">
+                <li class="my-job am-text-center"><a href="{:U('cat/release')}" class="am-icon-star">发布的信息</a>
+                </li>
+                <li class="my-recruit am-text-center"><a href="{:U('cat/mymailbox')}" class="am-icon-star">我的信箱</a>
+                </li>
+                <li class="my-history am-text-center"><a href="{:U('cat/Collection')}" class="am-icon-star">收藏的信息</a>
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+    </div>
+
+
+    <script src="__JS__/amazeui.min.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+</block>

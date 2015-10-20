@@ -1,0 +1,60 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+        <div class="am-header-left am-header-nav">
+            <div class="am-header-left am-header-nav">
+                <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+            </div>
+
+        </div>
+        <h1 class="am-header-title">
+            店铺详情
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="#phone-link" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+            <a href="#nav-link" class="">
+            </a>
+        </div>
+    </div>
+</block>
+
+<block name="mob_body">
+<div class="myorder-container ">
+    <div class="order-list-box am-text-center">
+            <table class="order-list">
+                <thead>
+                <tr>
+                    <th>订单编号</th>
+                    <th>买家</th>
+                    <th>卖家</th>
+                    <th>评价时间</th>
+                    <th>评价状况</th>
+                    <th>评语</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2584</td>
+                    <td>我</td>
+                    <td>他</td>
+                    <td>2015-5-6</td>
+                    <td>过期</td>
+                    <td>太棒了</td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+
+
+</div>
+
+<script>
+    $(function() {
+        $('#doc-my-tabs').tabs();
+    })
+</script>
+</block>

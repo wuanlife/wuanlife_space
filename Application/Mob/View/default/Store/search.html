@@ -1,0 +1,68 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+    <div class="search-container ">
+        <div class="am-tabs" data-am-tabs>
+            <ul class="am-tabs-nav am-nav am-nav-tabs">
+                <li class="am-active"><a href="#tab1">商品</a></li>
+                <li><a href="#tab2">店铺</a></li>
+            </ul>
+
+            <div class="am-tabs-bd">
+                <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                    <form class="searchGoods good-key">
+                        <div class="am-input-group">
+                            <input type="text" class="am-form-field key" name="key">
+                    <span class="am-input-group-label">
+                       <a class="am-icon-search do-search-goods" data-url="{:U('mob/store/search')}" aType="goods"></a>
+                    </span>
+                        </div>
+                    </form>
+                    <div class="seach-list" style="margin-top: 20px">
+                        <ul class="am-g  group-list am-avg-sm-2 am-avg-md-4 am-avg-lg-5 goodlist">
+
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div class="am-tab-panel am-fade" id="tab2">
+                    <form class="searchShop">
+                        <div class="am-input-group shop-key">
+                            <input type="text" class="am-form-field key"name="key">
+                            <span class="am-input-group-label">
+                                <a class="am-icon-search do-search-shop" data-url="{:U('mob/store/search')}" aType="shop"></a>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="seach-list " style="margin-top: 20px">
+                        <ul class="   shop-box   shoplist">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+do_search_shop();
+do_search_goods();
+        $(function () {
+            var words = document.getElementById('search-words');
+            words.style.width = $('.am-input-group').width() + 'px';
+
+
+            if (data == '0') {
+                $('#search_auto').html('').css('display', 'none');
+            }
+            else {
+                $('#search_auto').html(data).css('display', 'block');
+            }
+        });
+    </script>
+</block>

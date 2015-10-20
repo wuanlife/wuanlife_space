@@ -1,0 +1,26 @@
+
+    <li>
+        <div class="infor" style="font-size: 12px">
+            <div class="deliver-area">
+                <a class="infor" href="" style="color: #000">
+                    <div class="iName">
+                        <php>
+                            $can_post = CheckCanRead(is_login(),$vl['id']);
+                            if (!$can_post) {   </php>
+                        <a href="javascript:void(0);" onclick="toast.error('您无阅读权限');"> <span>{$vl.title} </span></a>
+                        <php>}else{</php>
+                        <a href="{:U('cat/detail',array('info_id'=>$vl['id']))}" style=""><span style="color:#ff5956">{$vl.title}  </span></a>
+                        <php>}</php>
+                    </div>
+                    <div class="i_one am-cf">
+                        <span class="iol" style="color: #a6ccc9">
+                            {$vl.create_time|friendlyDate}
+                            <i class="line_gray"></i>
+                            <img src="{$vl.user.avatar32}"style="border-radius:50%;width: 24px;height: 24px">{$vl.user.nickname}
+                            <i class="line_gray"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </li>

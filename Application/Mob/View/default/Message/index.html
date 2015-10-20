@@ -1,0 +1,72 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+<div data-am-widget="header" class="am-header am-header-default am-header-fixed am-cf">
+
+    <link rel="stylesheet" href="__CSS__/apps/message.css"/>
+    <div class="am-header-left am-header-nav">
+        <a href="{:U('weibo/index')}" class="am-fl">
+            <i class="am-header-icon am-icon-home"></i>
+        </a>
+    </div>
+    <h1 class="am-header-title">
+        消息中心
+    </h1>
+
+    <div class="am-header-right am-header-nav">
+        <a   href="javascript:void(0);" data-url="{:U('Ucenter/Public/setAllMessageReaded')}"  onclick="Notify.setAllReaded(this)" class="read-btn"><i
+                class="icon-check"></i> 全部已读
+        </a>
+        <a href="#nav-link" class="">
+            <i class="am-menu-toggle-icon am-icon-bars"></i>
+        </a>
+    </div>
+
+
+</div>
+    </block>
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/message.css"/>
+<div class="message-container">
+        <ul class="am-g am-text-center am-cf" id="messages" style="font-size: 12px;background-color: #F1F1F1;padding:0px">
+            <a href="{:U('Mob/Message/index',array('tab'=>'unread'))}" <if condition="($_GET['tab'] eq 'unread') or($_GET['tab'] eq '')"> class="current"</if> >未读消息</a>
+            <a href="{:U('Mob/Message/index',array('tab'=>'all'))}"  <if condition="$_GET['tab'] eq 'all'"> class="current"</if>>全部消息</a>
+            <a href="{:U('Mob/Message/index',array('tab'=>'system'))}" <if condition="$_GET['tab'] eq 'system'"> class="current"</if>>系统消息</a>
+            <a href="{:U('Mob/Message/index',array('tab'=>'user'))}" <if condition="$_GET['tab'] eq 'user'"> class="current"</if>>用户消息</a>
+            <a href="{:U('Mob/Message/index',array('tab'=>'app'))}" <if condition="$_GET['tab'] eq 'app'"> class="current"</if>>应用消息</a>
+        </ul>
+        <notempty name="messages">
+            <div>
+                <div class="message-show" style="border: none;font-size: 12px">
+                    <div class="am-tab-panel am-active ">
+                        <volist name="messages" id="vo">
+                            <include file="_messagelist"/>
+                        </volist>
+                    </div>
+                </div>
+                <else/>
+                <div class="message-show" style="border: none;font-size: 15px">
+                    <p class="text-muted" style="text-align: center; ">
+                        <br><br>
+                        该分类暂无消息～
+                        <br><br><br>
+                    </p>
+                </div>
+
+            </div>
+
+        </notempty>
+
+</div>
+    <style>
+    #messages a{
+        float: left;
+    }
+    body {
+        background-color: #FFFFFF;
+    }
+</style>
+</block>
+
+
+
+

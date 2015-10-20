@@ -1,0 +1,88 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+<div class="add-group" style="padding: 10px;">
+    <link rel="stylesheet" href="__CSS__/apps/group.css"/>
+    <div class="am-form-group" >
+
+    <form action="" class="am-form" id="add_group" data-url="{:U('Mob/Group/addGroup')}">
+        <input type="hidden" id="one_img_id" name="logo" value="{$issue.cover_id}">
+        <label >群组形象</label>
+        <p class="am-form-help"style="margin: 0px">请选择要上传的封面文件...</p>
+        <!--插入图片-->
+        <div class="am-cf">
+            <div class="am-fl">
+                <div class="img_btn">
+                    <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+                </div>
+
+                <input type="file" name="files" id="fileloadone" class=" am-btn"
+                       style="left:20px;top: 120px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                       data-url="{:U('Core/File/uploadPicture')}">
+            </div>
+            <div class="show_cover am-fl" style="display:none;margin-left: 10px;">
+                <div id="cover_url">
+                    <img class="cover_img" src="">
+                </div>
+            </div>
+
+        </div>
+        <!--插入图片结束-->
+        <div class="am-form-group"style="margin:0px">
+            <label>群组名称：</label>
+            <input type="text" name="title" minlength="1" placeholder="输入群组名" required/>
+        </div>
+        <div class="am-form-group"style="margin:0px">
+            <label>分类：</label>
+            <select name="group_type" class="form-control" id="inputType">
+                <option value="-1">请选择</option>
+                <volist name="groupTypeAll" id="groupType">
+                    <option <if condition="$group['type_id'] eq $groupType['id']">selected</if> value="{$groupType['id']}">{$groupType['title']}</option>
+                </volist>
+
+            </select>
+            <span class="am-form-caret"></span>
+        </div>
+        <div class="am-form-group" style="margin:0px">
+            <label>群组介绍：</label>
+            <input type="text" name="detail"  placeholder="群组介绍（至少 3 个字符）" required/>
+        </div>
+        <div class="am-form-group" style="margin:0px">
+            <label>群组成员的别称：</label>
+            <input type="text" name="member_alias"  placeholder="群成员的名称，默认为“成员”" required/>
+        </div>
+        <div class="am-form-group">
+            <label>群组类型： </label>
+            <label class="am-radio-inline">
+                <input type="radio" value="0" name="type" checked>公共群组
+            </label>
+            <label class="am-radio-inline">
+                <input type="radio" value="1" name="type">私有群组
+            </label>
+
+            <div>（加入公共群组不需要管理员审核，加入私有群组需管理员审核）</div>
+        </div>
+        <button type="button" class="am-btn am-btn-primary am-btn-block" id="confirm"><i
+                class="am-menu-toggle-icon am-icon-save"></i>创建
+        </button>
+
+    </form>
+</div>
+    <script>
+        add_one_img();
+        $('#confirm').click(function () {
+            var data = $("#add_group").serialize();
+            var url = $("#add_group").attr('data-url');
+            $.post(url, data, function (msg) {
+                if (msg.status == 1) {
+                    toast.success(msg.info);
+                    setTimeout(function () {
+                        window.location.href = document.referrer
+                    },1000)
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json');
+        });
+    </script>
+    </div>
+</block>

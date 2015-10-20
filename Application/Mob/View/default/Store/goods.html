@@ -1,0 +1,77 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+    <div class="goods-container ">
+        <div class="goods-list">
+            <div class="goods am-g">
+                <div class="hot-goods">
+                    <div class="title">
+                        <p>掌柜热卖</p>
+                    </div>
+                    <div class="hot-goods-list">
+                        <ul class="goods-box am-avg-sm-2 am-avg-md-4 am-avg-lg-8">
+                            <volist name="hotGoods" id="vo">
+                                <li>
+                                    <div class="goods">
+                                        <div class="am-text-center cover">
+                                            <a href="{:U('mob/store/goodsdetail',array('goodsId'=>$vo['id']))}">
+                                                <img src="{$vo.cover_id|getThumbImageById=222,222}"
+                                                        ></a>
+                                        </div>
+                                        <div class="am-text-center content">
+                                            <a href="{:U('mob/store/goodsdetail',array('goodsId'=>$vo['id']))}"
+                                               class="title">商品名：{$vo.title}</a>
+                                        </div>
+                                        <div class="spliter "></div>
+                                        <div class="am-gallery-title">
+                                            <b>￥</b><span class="">{$vo.price}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                <div class="goods-box">
+                    <div class="goods-box-list">
+                        <div class="title">
+                            <p>最新上架</p>
+                            <notempty name="$title">
+                                <p>宝贝</p>
+                                <else/>
+                                <p>{$title}</p>
+                            </notempty>
+                        </div>
+                        <div class="goods-list-all">
+                            <ul class="goods-box am-avg-sm-2 am-avg-md-4 am-avg-lg-8 goodslist">
+                                <notempty name="goods">
+                                    <volist name="goods" id="vl">
+                                        <include file="_goodslist"/>
+                                    </volist>
+                                    <else/>
+                                    <div>
+                                    <span>
+                                        该分类下还没有商品哦！
+                                    </span>
+                                    </div>
+                                </notempty>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <if condition="$pid['count'] eq 1">
+                    <div class="am-list-news-ft">
+                        <a class=" am-btn am-btn-secondary am-btn-block look-more add-more-goods" data-url="{:U('mob/store/addMoreGoods')}" data-type="{$goodsId}">查看更多 &raquo;</a>
+                    </div>
+                </if>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        add_more_goods();
+    </script>
+</block>

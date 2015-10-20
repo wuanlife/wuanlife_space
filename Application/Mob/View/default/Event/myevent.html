@@ -1,0 +1,121 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/event.css"/>
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.go(-1);">
+            <span class="am-icon-chevron-left">
+            </span>
+            </a>
+            <a href="#msg" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+             我的活动
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="{:U('event/add')}" class="">
+                <i class="am-header-icon am-icon-pencil"></i>
+            </a>
+            <a href="#nav-link" class="">
+                <i class="am-menu-toggle-icon am-icon-bars"></i>
+            </a>
+        </div>
+
+    </div>
+</block>
+<block name="mob_body">
+    <div class="event-container ">
+        <div style="text-align: center;;background-color: #FFFFFF">
+
+            <div class="am-btn-group doc-js-btn-1 am-g">
+                <a href="{:U('myevent',array('lora'=>'','type_id'=>$type_id))}"
+                   class="am-btn am-btn-default am-u-sm-6 <if condition="$lora eq ''">selected</if>">我发布的</a>
+                <a href="{:U('myevent',array('lora'=>'attend','type_id'=>$type_id))}"
+                   class="am-btn am-btn-default am-u-sm-6  <if condition="$lora eq 'attend'">selected</if>">我参加的</a>
+            </div>
+
+            <ul class="event-list">
+                <include file="_eventlist"/>
+            </ul>
+
+            <div class="am-list-news-ft">
+                <a class=" am-btn am-btn-secondary am-btn-block" href="javascript:" data-role="show_more"
+                   data-url="__SELF__">查看更多 &raquo;</a>
+            </div>
+        </div>
+
+        <div class="user-mod" style="position: fixed;bottom:35px;">
+            <div id="carousel" style="position: relative;height: 37px;">
+
+                <div id="user-list">
+                    <a class="<if condition="$type_id eq 0">selected</if>" href="{:U('myevent',array('lora'=>$lora))}">全部</a>
+                    <volist name="type_tree" id="tree">
+                        <a class="<if condition="$type_id eq $tree['id']">selected</if>"  href="{:U('myevent',array('type_id'=>$tree['id'],'lora'=>$lora))}">{$tree.title}</a>
+                    </volist>
+                </div>
+
+            </div>
+        </div>
+
+        <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default"
+             id="">
+
+            <ul class="am-navbar-nav am-cf am-avg-sm-3">
+                <li style="font-size: 12px">
+                    <a href="{:U('event/index')}">所有活动
+                    </a>
+                </li>
+                <li style="font-size: 12px">
+                    <a href="{:U('event/myevent')}" class="">
+                        我的活动
+                    </a>
+                </li>
+                <li style="font-size: 12px">
+                    <a id="event-type">
+                        活动分类
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+
+        var $carousel = document.getElementById('carousel'),
+                $box = document.getElementById('user-list'),
+                aArray = $box.querySelectorAll('a'),
+                aNum = aArray.length;
+        $box.style.width = (aNum * $("#user-list a:first-child").width() + 10 + 'px');
+
+        var myScroll = new iScroll('carousel', {
+            hideScrollbar: false,
+            hScroll: true,
+            bounce: true,
+            vScroll: false,
+            hScrollbar: false
+
+        });
+
+
+        $(function () {
+            $('.user-mod').hide();
+            $('#event-type').click(function () {
+                $('.user-mod').toggle();
+
+            });
+        });
+        $(function () {
+            $('.user-mod').sticky({
+                bottom: 38
+            })
+        });
+
+    </script>
+
+    <script src="__JS__/event.js"></script>
+</block>
+
+

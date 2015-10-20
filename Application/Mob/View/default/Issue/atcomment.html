@@ -1,0 +1,38 @@
+<button title="Close (Esc)" type="button" class="mfp-close" style="display: none;">×</button>
+
+<form id="at_comment" data-url="{:U('Mob/Issue/doAddComment')}" >
+    <input type="hidden" name="issueId" value="{$issue.id}">
+    <input type="hidden" name="uid" value="{$issue.user_uid}">
+    <div class="" id="my-repost" style="width: 95%;margin:0px auto">
+
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd weibo_post_box am-cf">
+                <label>评论</label>
+                <p>
+                    <textarea style="width: 100%" type="text" class="am-modal-prompt-input" name="content"
+                              placeholder="写点什么吧~~">回复@{$issue.at_user_id} :</textarea></p>
+
+                <!--表情-->
+                <div class="am-cf" style="margin: 5px 0px">
+                    <a href="javascript:"class="am-fl"  data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))">
+                        <img src="__IMG__/bq.png"></a>
+                </div>
+
+                <div id="emot_content" class="emot_content"></div>
+                <!--表情end-->
+            </div>
+            <div class="am-modal-footer am-g">
+                <button class=" am-u-sm-6" type="button" id="cancel"
+                        style="background-color: #F8F8F8;padding: 12px;border: 0px;color: #000">
+                    <span>取消</span></button>
+                <button class=" am-u-sm-6" type="button" id="confirm"
+                        style="background-color: #32b1f1;padding: 12px;border: 0px;color: #FFFFFF">
+                    <span >确认</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    addcomment();
+</script>
+

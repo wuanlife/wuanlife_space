@@ -1,0 +1,77 @@
+.user-mod {
+  height: 40px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+#user-list {
+  margin: 0px 0px 0px 0px;
+  height: 35px;
+}
+.user-at img {
+  width: 24px;
+}
+.user-at.hl {
+  background: #eee;
+  border-radius: 16px;
+  padding-right: 10px;
+}
+.user-at {
+  color: #666;
+  display: inline-block;
+  line-height: 22px;
+  height: 26px;
+  padding: 0 5px 0 0;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.signature span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+body {
+  background-color: #FFFFFF;
+}
+.user-container {
+  font-size: 12px;
+}
+#carousel {
+  background-color: #F3F3F3;
+}
+.selected span {
+  background-color: #FFFFFF;
+  color: #2bb1e1;
+}
+p {
+  margin: 0px;
+}
+#user-list .current {
+  border-bottom: 2px solid #0e90d2;
+}
+#user-list a {
+  width: 100px;
+  line-height: 35px;
+  padding: 0px;
+  float: left;
+  text-align: center;
+  color: #000;
+  display: inline-block;
+}
+.item-info-page {
+  border-color: #e3e3e3;
+  overflow: hidden;
+  border-bottom: #dadada solid 1px;
+  padding: 9px 5px 9px 0;
+  clear: both;
+}
+.item-info-page span {
+  float: left;
+}
+.item-info-page p {
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}

@@ -1,0 +1,88 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+<div class="group-admin">
+    <script src="__JS__/group.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/group.css"/>
+    <div class="am-tabs am-nav am-nav-tabs admin-type" data-am-tabs="{noSwipe: 1}">
+        <a href="{:U('Mob/Group/admin',array('tab'=>'edit','id'=>$id))}">基本信息</a>
+        <a href="{:U('Mob/Group/admin',array('tab'=>'posttype','id'=>$id))}">帖子分类管理</a>
+        <a href="{:U('Mob/Group/admin',array('tab'=>'notic','id'=>$id))}">公告发布</a>
+        <a href="{:U('Mob/Group/admin',array('tab'=>'member','id'=>$id))}">成员管理</a>
+    </div>
+    <div class="am-tabs-bd"style="border-bottom: none">
+    <!--基本信息-->
+    <div>
+        <if condition="($_GET['tab'] eq 'edit') or($_GET['tab'] eq '')">
+            <include file="_adminedit"/>
+        </if>
+    </div>
+    <!--帖子分类-->
+        <div >
+        <if condition="($_GET['tab'] eq 'posttype')">
+            <include file="_adminposttype"/>
+        </if>
+    </div>
+    <!--公告-->
+        <div>
+        <if condition="($_GET['tab'] eq 'notic')">
+            <include file="_adminnotic"/>
+        </if>
+    </div>
+    <!--成员-->
+        <div>
+        <if condition="($_GET['tab'] eq 'member')">
+            <include file="_adminmember"/>
+        </if>
+    </div>
+
+</div>
+</div>
+
+</div>
+<!--侧边弹出框-->
+<div class="am-modal-actions" id="my-actions">
+    <div class="am-modal-actions-group">
+        <ul class="am-list">
+            <li class="am-modal-actions-header">成员管理</li>
+
+            <li>
+                <a href="#">默认排序</a>
+            </li>
+            <li>
+                <a href="#">按最后活跃时间排序</a>
+            </li>
+            <li>
+                <a href="#">邀请好友加入</a>
+            </li>
+            <li class="am-modal-actions-danger">
+                <a href="#">删除群组成员</a>
+            </li>
+        </ul>
+    </div>
+    <div class="am-modal-actions-group">
+        <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+    </div>
+</div>
+
+
+
+
+<script>
+    $('#save').click(function () {
+        var data = $("#edit_group").serialize();
+        var url = $("#edit_group").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+
+                toast.success('编辑成功!');
+                setTimeout(function () {
+                    window.location.href = document.referrer;
+                }, 1000);
+
+            } else {
+                alert(msg.info);
+            }
+        }, 'json');
+    });
+</script>
+</block>

@@ -1,0 +1,120 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="addissue-container ">
+    <div class="addissue " id="article-post">
+        <form class="am-form " id="send_issue" data-am-validator data-url="{:U('Mob/Issue/doSendIssue')}">
+            <input type="hidden" id="one_img_id" name="one_attach_id" value="{$issue.cover_id}">
+            <input type="hidden" name="issueId" value="{$issue.id}">
+
+            <!--插入图片-->
+            <div class="am-cf " style="padding: 10px;">
+                <div class="am-fl">
+                    <div class="img_btn">
+                        <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+                    </div>
+
+                    <input type="file" name="files" id="fileloadone" class=" am-btn"
+                           style="left:10px;top: 60px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                           data-url="{:U('Core/File/uploadPicture')}">
+                </div>
+                <div class="show_cover am-fl" style="display:none;margin-left: 10px;">
+                    <div id="cover_url">
+                        <img class="cover_img" src="{$issue.cover_url}">
+                    </div>
+                </div>
+
+            </div>
+            <!--插入图片结束-->
+            <fieldset>
+                <div class="am-form-group">
+                    <label for="title">标题：</label>
+                    <input type="text" id="title" name="title" minlength="3" placeholder="" value="{$issue.title}"
+                           required/>
+                </div>
+
+                <!--专辑分类-还有个JS联动-->
+                <div class="am-cf">
+                    <div><label for="issue_top">分类</label></div>
+
+                    <select id="issue_top" name="issue" class="form-control " style="width: 50%;float: left">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}">
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+
+                    <select id="issue_second" name="issue_id" class="form-control " style="width: 50%">
+                        <volist name="tree" id="top">
+                            <option value="{$top.id}">
+                                {$top.title}
+                            </option>
+                        </volist>
+                    </select>
+                </div>
+                <!--专辑分类-还有个JS联动end-->
+
+                <div class="am-form-group">
+                    <label for="url">网址：</label>
+                    <if condition="$issue['is_edit'] eq 1">
+                        <input type="url" id="url" name="url" placeholder="输入以http://开头的网址" value="{$issue.url}"
+                               required/>
+                    </if>
+                    <if condition="$issue['is_edit']  eq 0">
+                        <input type="url" id="url" name="url" placeholder="输入以http://开头的网址" value="http://" required/>
+                    </if>
+                </div>
+                <div class="am-form-group">
+                    <label for="present">介绍：</label>
+                    <textarea id="present" minlength="10" name="content" maxlength="100">{$issue.content}</textarea>
+                </div>
+
+                <button type="button" id="confirm" class="am-btn am-btn-primary am-btn-block">发表</button>
+            </fieldset>
+        </form>
+
+    </div>
+</div>
+<script type="text/javascript">
+    add_one_img();
+    $('#confirm').click(function () {
+        var data = $("#send_issue").serialize();
+        var url = $("#send_issue").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+                toast.success('专辑发布成功!');
+                setTimeout(function () {
+                    window.location.href= "{:U('Mob/Issue/index')}";
+                }, 1000);
+            } else {
+                alert(msg.info);
+            }
+        }, 'json');
+    });
+</script>
+<script>
+    $(function () {
+        $('#issue_top').change(function () {
+            var pid = $(this).val();
+            $.post("{:U('Mob/Issue/selectDropdown')}", {pid: pid}, function (data) {
+                $('#issue_second').html('');
+                $.each(data, function (index, element) {
+                            $('#issue_second').append('<option value="' + element.id + '">' + element.title + '</option>')
+                        }
+                )
+            }, 'json');
+        });
+        $('#issue_top').change();
+    })
+
+    var ids = $('#one_img_id').val();
+    if (ids==0) {
+            $('.show_cover').hide();
+        } else {
+            $('.show_cover').show();
+        }
+
+</script>
+</block>

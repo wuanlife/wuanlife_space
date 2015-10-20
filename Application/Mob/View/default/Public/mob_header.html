@@ -1,0 +1,81 @@
+<php> D('Member')->need_login();</php>
+<style>
+    .header {
+        text-align: center;
+    }
+
+    .header h1 {
+        font-size: 200%;
+        color: #333;
+        margin-top: 30px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+</style>
+<div data-am-widget="header" class="am-header am-header-default am-header-fixed am-cf">
+    <notempty name="top_menu_list.left">
+        <div class="am-header-left am-header-nav">
+            <volist name="top_menu_list.left" id="menu">
+                <switch name="menu.type">
+                    <case value="home">
+                        <a href="{$menu.href}" class="am-fl {$menu.a_class}">
+                            <i class="am-header-icon am-icon-home {$menu.i_class}"></i>{$menu.html}
+                        </a>
+                    </case>
+                    <case value="back">
+                        <a id="goback" need-confirm="{$menu.need_confirm}" confirm-info="{$menu.confirm_info}"
+                           class="{$menu.a_class}">
+                            <span class="am-icon-chevron-left {$menu.span_class}"></span>
+                        </a>
+                    </case>
+                    <case value="message">
+                        <php>
+                            if (is_login()) {
+                        </php>
+                        {:W('Mob/Message/index')}
+                        <php>
+                            }
+                        </php>
+                    </case>
+                </switch>
+            </volist>
+        </div>
+    </notempty>
+
+    <h1 class="am-header-title {$top_menu_list.center.h1_class}">
+        <i class="{$top_menu_list.center.i_class}"></i>
+        {$top_menu_list.center.title|default="首页"}
+    </h1>
+    <notempty name="top_menu_list.right">
+        <div class="am-header-right am-header-nav">
+            <volist name="top_menu_list.right" id="right">
+                <switch name="right.type">
+                    <case value="edit">
+                        <if condition="isset($right['href'])">
+                            <a href="{$right['href']}" class="am-fl {$right.a_class}">
+                                <i class="am-header-icon am-icon-pencil {$right.i_class}"></i>
+                            </a>
+                            <else/>
+                            <script>
+                                var tip_info="{$right['info']}";
+                            </script>
+                            <a class="am-fl {$right['a_class']}" href="javascript:void(0);" onclick="toast.error(tip_info)">
+                                <i class="am-header-icon am-icon-pencil {$right.i_class}"></i>
+                            </a>
+                        </if>
+
+                    </case>
+                </switch>
+            </volist>
+            <a href="#" class="">
+            </a>
+        </div>
+    </notempty>
+</div>
+<if condition="CONTROLLER_NAME neq 'Index'">
+    <include file="Public/mob_usermenu"/>
+</if>
+
+

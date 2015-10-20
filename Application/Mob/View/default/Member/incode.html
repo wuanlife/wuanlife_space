@@ -1,0 +1,53 @@
+<button title="Close (Esc)" type="button" class="mfp-close" style="display: none;">×</button>
+<style>
+    .modal-dialog {
+        width: 430px;
+    }
+</style>
+
+<div>
+    <form id="set_code" action="__SELF__" method="post" class="ajax-form">
+        <div class="am-text-center" style="background-color: white;padding: 10px;" >
+        <span>
+              请输入您的邀请码：
+        </span>
+
+            <div class="">
+                <input type="text" name="code" class="form-control" value=""style="border: solid 1px #cccccc;width: 70%;box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);">
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div style="width: 100%;text-align: center;">
+            <div class="am-modal-footer am-g">
+                <button class=" am-u-sm-6" type="button" id="cancel"
+                        style="background-color: #F8F8F8;padding: 12px;border: 0px;color: #000000">
+                    <span>取消</span></button>
+                <button class=" am-u-sm-6" type="button" data-role="submit" id="confirm"
+                        style="background-color: #32b1f1;padding: 12px;border: 0px;color: #FFFFFF">
+                    <span >确认</span></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        $('[data-role="submit"]').click(function () {
+                query = $('#set_code').serialize();
+                var url = $('#set_code').attr('action');
+                $.post(url, query, function (msg) {
+                    if (msg.status) {
+                        toast.success('邀请码录入成功！');
+                        setTimeout(function () {
+                            window.location.href=msg.url;
+                        }, 1500);
+                    } else {
+                        handleAjax(msg);
+                    }
+                }, 'json');
+        });
+    });
+    $('#cancel').click(function () {
+        $('.mfp-close').click();
+    });
+</script>

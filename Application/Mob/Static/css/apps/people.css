@@ -1,0 +1,54 @@
+.people-container .search {
+  padding: 5px 3px;
+  background: #FFFFFF;
+}
+.people-container .people-list-box .people-list {
+  font-size: 13px;
+}
+.people-container .people-list-box .people-list li {
+  padding: 5px;
+}
+.people-container .people-list-box .people-list li .people-box {
+  padding: 5px;
+  border: 1px solid #a2a2a2;
+  text-align: center;
+}
+.people-container .people-list-box .people-list li .people-box .avatar {
+  padding: 0px;
+  text-align: center;
+}
+.people-container .people-list-box .people-list li .people-box .info {
+  font-size: 13px;
+  padding: 0px;
+}
+.people-container .people-list-box .people-list li .people-box .info .name {
+  font-size: 13px;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.people-container .people-list-box .people-list li .people-box .info .signature {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+.people-container .people-list-box .people-list li .people-box .follow-btn {
+  text-align: center;
+  font-size: 13px;
+}
+.people-container .people-list-box .people-list li .people-box .follow-btn button {
+  color: #fff;
+  background-color: #0e90d2;
+  font-size: 1.2rem;
+  border-radius: 2px;
+  padding: 3px 10px;
+  border: none;
+}
+.people-container .people-list-box .people-list li .people-box .follow-btn button:hover {
+  color: #fff;
+  background-color: #0a6999;
+  border-color: #0a6999;
+}

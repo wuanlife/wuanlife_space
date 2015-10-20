@@ -1,0 +1,75 @@
+<form class="am-form" id="edit_group"data-am-validator data-url="{:U('Mob/group/addGroup')}"style="padding: 5px">
+    <input type="hidden" id="bg_ids" name="background" value="{$editGroup.background}">
+    <input type="hidden" id="logo_ids" name="logo" value="{$editGroup.logo}">
+    <input type="hidden"  name="group_id" value="{$editGroup.id}">
+
+    <div class="am-form-group" >
+        <label>群组形象</label>
+
+        <p class="am-form-help"style="margin: 0px">请选择要上传的群组图片...</p>
+        <!--选择图片-->
+        <!--用来存放item-->
+        <div class="am-cf">
+            <div class="am-fl">
+                <div class="img_btn">
+                    <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+                </div>
+
+                <input type="file" name="files" id="fileloadone" class=" am-btn"
+                       style="left:5px;top: 55px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                       data-url="{:U('Core/File/uploadPicture')}">
+            </div>
+            <div class="show_cover" style="float: left;margin-left: 10px;">
+                <div id="logo_url">
+                    <img class="cover_img"  style="width:71px;height:71px" src="{$editGroup.logo_id}">
+                </div>
+            </div>
+
+        </div>
+        <!--插入图片结束-->
+    </div>
+
+
+    <div class="am-form-group">
+        <label for="title">群组名称：</label>
+        <input type="text" id="title" minlength="1" placeholder="输入群组名" name="title" value="{$editGroup.title}" required/>
+    </div>
+    <div class="am-form-group">
+        <label>分类：</label>
+        <select name="group_type" class="form-control" id="inputType">
+            <option value="-1">请选择</option>
+            <volist name="groupTypeAll" id="groupType">
+                <option <if condition="$group['type_id'] eq $groupType['id']">selected</if> value="{$groupType['id']}">{$groupType['title']}</option>
+            </volist>
+
+        </select>
+        <span class="am-form-caret"></span>
+    </div>
+    <div class="am-form-group">
+        <label for="info">群组介绍：</label>
+        <input type="text" name="detail" id="info" minlength="1" placeholder="群组介绍（至少 3 个字符）" value="{$editGroup.detail}"
+               required/>
+    </div>
+    <div class="am-form-group">
+        <label>群组类型： </label>
+        <label class="am-radio-inline">
+            <input type="radio" name="type" value="1" checked>公共群组
+        </label>
+        <label class="am-radio-inline">
+            <input type="radio" name="type" value="0">私有群组
+        </label>
+
+        <div>（加入公共群组不需要管理员审核，加入私有群组需管理员审核）</div>
+    </div>
+    <div class="am-form-group">
+        <label >*群成员的别称：</label>
+        <div >
+            <input type="text" name="member_alias" class="form-control" id="inputMember" placeholder="群成员的别称，默认为“成员”" value="{$editGroup.member_alias}">
+        </div>
+    </div>
+    <button type="button" id="save"  class="am-btn am-btn-primary am-btn-block"><i
+            class="am-menu-toggle-icon am-icon-save"></i>保存
+    </button>
+
+
+</form>

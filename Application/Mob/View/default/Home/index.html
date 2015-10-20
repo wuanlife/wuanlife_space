@@ -1,0 +1,246 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed am-cf">
+        <div class="am-header-left am-header-nav">
+            <a href="{:U('weibo/index')}" class="am-fl">
+                <i class="am-header-icon am-icon-home"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            首页
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="{:U('weibo/addweibo')}" class="am-fl">
+                <i class="am-header-icon am-icon-pencil"></i>
+            </a>
+            <a href="#nav-link" class="">
+                <i class="am-menu-toggle-icon am-icon-bars"></i>
+            </a>
+        </div>
+        {:W('Mob/UserMenu/index')}
+    </div>
+</block>
+<block name="mob_body">
+    <div class="home-container " style="padding: 0">
+        <div class="am-slider am-slider-default" data-am-flexslider>
+            <ul class="am-slides">
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+                <li><img src="Application/Mob/Static/test/55594670a78e2.png" /></li>
+            </ul>
+        </div>
+
+        <div style="background-color: #FFFFFF">
+            <ul class="am-avg-sm-2 am-avg-lg-3 am-avg-md-4">
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+                <li class="am-text-center" style="padding: 15px"><a href="" class="am-icon-btn am-icon-twitter"></a></li>
+            </ul>
+        </div>
+
+        <div style="background-color: #FFFFFF;margin-top: 10px">
+            <!--zixun-->
+            <div class="blog-item"data-am-scrollspy="{animation:'fade', repeat: ture}">
+                <div class="am-cf" style="padding: 5px 10px">
+                    <h3 class="am-fl" style="margin: 0px">
+                        资讯
+                    </h3>
+                    <small class="am-fr">
+                        更多》
+                    </small>
+                </div>
+                <ul>
+                    <li style="border-bottom: 1px solid #cccccc;position: relative">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li style="border-bottom: 1px solid #cccccc">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--zixun-->
+            <!--专辑-->
+            <div class="issue-item"data-am-scrollspy="{animation:'fade', repeat: ture}">
+                <div class="am-cf" style="padding: 5px 10px">
+                    <h3 class="am-fl" style="margin: 0px">
+                        专辑
+                    </h3>
+                    <small class="am-fr">
+                        更多》
+                    </small>
+                </div>
+                <ul>
+                    <li style="border-bottom: 1px solid #cccccc;position: relative">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li style="border-bottom: 1px solid #cccccc">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--专辑-->
+            <!--论坛-->
+            <div class="issue-item"data-am-scrollspy="{animation:'fade', repeat: ture}">
+                <div class="am-cf" style="padding: 5px 10px">
+                    <h3 class="am-fl" style="margin: 0px">
+                        专辑
+                    </h3>
+                    <small class="am-fr">
+                        更多》
+                    </small>
+                </div>
+                <ul>
+                    <li style="border-bottom: 1px solid #cccccc;position: relative">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li style="border-bottom: 1px solid #cccccc">
+                        <div class="am-cf" style="padding: 10px">
+                            <div class="am-fl">
+                                <img src="Application/Mob/Static/test/551931edeecf0.jpg" style="width: 140px;height: 100px">
+                            </div>
+                            <div class="am-fl" style="margin-left: 10px">
+                                <div>
+                                    <h3 class="title"
+                                        style="width: 100% ;font-size: 15px;margin-top: 10px;margin-bottom: 10px">
+                                        <a title="" href="" target="_blank">五月二十日 手机开发组 进度</a>
+                                    </h3>
+                                </div>
+                                <div style="font-size: 13px">
+                                        <span class="author">2015-05-21 20:43:02&nbsp;&nbsp;<span
+                                                style="color: green;">审核通过</span></span>
+
+                                    <p style="margin: 0px">修复了一部分bug</p>
+                                </div>
+                                <div class="" style="position: absolute;right: 15px;bottom:10px">
+                                    <i class="am-icon-eye"></i>13
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--论坛-->
+        </div>
+
+    </div>
+</block>

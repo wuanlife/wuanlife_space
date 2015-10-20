@@ -1,0 +1,27 @@
+<div class="col-xs-12">
+    <ul class="nav nav-pills" role="tablist">
+        <php>
+            $t=array();
+            $t=$_GET;
+            $t[$field['name']]='';
+            $_tj= $t;
+
+            $current_item=op_t($_GET[$field['name']]);
+        </php>
+        <li role="presentation" class=" <if condition="
+        $_GET[$field['name']] eq ''">active</if>
+        " >
+
+
+        <select  name="{$field['name']}" class="form-control">
+            <option value="">全部</option>
+            <volist name="field['values']" id="reward">
+                <option value="{$reward}">
+                    {$reward}
+                </option>
+            </volist>
+        </select>
+
+
+    </ul>
+</div>

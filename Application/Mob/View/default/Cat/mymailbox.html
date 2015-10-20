@@ -1,0 +1,155 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <script src="__JS__/cat.js"></script>
+    <div class="mymailbox-container ">
+        <div data-am-widget="tabs" class="am-tabs am-tabs-d2">
+            <ul class="am-tabs-nav am-cf">
+                <li class="am-active">
+                    <a href="[data-tab-panel-0]">收到的信息</a>
+                </li>
+                <li class="">
+                    <a href="[data-tab-panel-1]">发送的信息</a>
+                </li>
+                <li class="">
+                    <a href="[data-tab-panel-2]">发送信息</a>
+                </li>
+            </ul>
+            <!--收到的信息-->
+            <div class="am-tabs-bd">
+                <div data-tab-panel-0 class="am-tab-panel am-active">
+                    <ul>
+                        <volist name="rec" id="vo">
+                            <li style="border: #F2f2f2 1px solid;margin-bottom:5px ">
+                                <div class="am-cf">
+                                    <div class="avatar am-fl" style="margin: 5px">
+                                        <img class="avatar-img am-img-thumbnail" style="width: 50px"
+                                             src="{$vo.user.avatar64}">
+                                    </div>
+                                    <div class="am-fl" style="font-size: 13px">
+                                        <a  onclick="do_read(this,{$vo.id})"
+                                            data-url="{:U('cat/detail',array('info_id'=>$vo['info_id']))}" >
+                                            {$vo.info.title}
+                                            <if condition="$vo['readed'] eq 1">
+                                                <span class="cgrey">【已阅读】</span>
+                                            </if>
+                                            <if condition="$vo['readed'] eq 0">
+                                                <span class="cgrey">【未阅读】</span>
+                                            </if>
+                                        </a>
+                                        </br>
+                                        <span>附言：{$vo.content}</span>
+                                        </br>
+                                        <span class="time">{$vo.create_time|friendlyDate}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                <!--发送的信息-->
+                <div data-tab-panel-1 class="am-tab-panel ">
+                    <ul>
+                        <volist name="read" id="vl">
+                        <li style="border: #F2f2f2 1px solid;margin-bottom:5px ">
+                            <div class="am-cf">
+                                <div class="avatar am-fl" style="margin: 5px">
+                                    <img class="avatar-img am-img-thumbnail" style="width: 54px"
+                                         src="{$vl.user.avatar64}">
+                                </div>
+                                <div class="am-fl" style="font-size: 13px">
+                                    <a   onclick="do_read(this,{$vl.id})"
+                                         data-url="{:U('cat/detail',array('info_id'=>$vl['info_id']))}" >
+                                        {$vl.info.title}
+                                        <if condition="$vl['readed'] eq 1">
+                                            <span class="cgrey">【已阅读】</span>
+                                        </if>
+                                        <if condition="$vl['readed'] eq 0">
+                                            <span class="cgrey">【未阅读】</span>
+                                        </if>
+                                    </a>
+                                    </br>
+                                    <span>附言：{$vl.content}</span>
+                                    </br>
+                                    <span class="time">{$vl.create_time|friendlyDate}</span>
+                                </div>
+                                <div class="am-fr" style="font-size: 13px;margin:40px 20px ">
+                                    <a href="" class="am-icon-remove"
+                                       style="background:red;padding: 0px 5px;color: #FFFFFF">销毁</a>
+                                </div>
+                            </div>
+                        </li>
+                        </volist>
+
+                    </ul>
+                </div>
+                <!--发送信息-->
+                <div data-tab-panel-2 class="am-tab-panel ">
+                    <form action="" class="am-form" data-am-validator>
+                        <fieldset>
+                            <div class="am-form-group">
+                                <label>选择信息接收者</label>
+                                <volist name="users" id="v2">
+                                    <div class="am-cf">
+                                        <div class="am-fl">
+                                            <input type="checkbox" name="uids[]" value="{$v2.id}"> <span>{$v2.nickname}</span>
+                                        </div>
+                                    </div>
+                                </volist>
+                            </div>
+
+
+                            <!--专辑分类-还有个JS联动-->
+                            <div class="am-cf">
+                                <div><label for="cat_top">选择信息</label></div>
+
+                                <select id="cat_top" name="issue" class="form-control " style="width: 50%;float: left">
+                                    <volist name="tree" id="top">
+                                        <option value="{$top.id}">
+                                            {$top.alias}
+                                        </option>
+                                    </volist>
+                                </select>
+
+                                <select id="cat_second" name="infoId" class="form-control " style="width: 50%">
+                                    <volist name="tree" id="top">
+                                        <option value="{$top.id}">
+                                            {$top.title}
+                                        </option>
+                                    </volist>
+                                </select>
+                            </div>
+                            <!--专辑分类-还有个JS联动end-->
+
+
+                            <div class="am-form-group">
+                                <label>输入附言</label><textarea class="content" name="content" placeholder="顺便说几句吧"></textarea>
+                            </div>
+
+                        </fieldset>
+
+                    </form>
+                    <button class="am-btn am-btn-secondary am-btn-block addinfo" type="button" data-url="{:U('Mob/cat/doSendInfo')}" index-url="{:U('Mob/cat/mymailbox')}">发布岗位</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__JS__/cat.js"></script>
+    <script>
+        $(function () {
+            $('#cat_top').change(function () {
+                var pid = $(this).val();
+                $.post("{:U('Mob/cat/selectDropdown')}", {pid: pid}, function (data) {
+                    $('#cat_second').html('');
+                    $.each(data, function (index, element) {
+                                $('#cat_second').append('<option value="' + element.id + '">' + element.title + '</option>')
+                            }
+                    )
+                }, 'json');
+            });
+            $('#cat_top').change();
+        })
+    </script>
+
+</block>

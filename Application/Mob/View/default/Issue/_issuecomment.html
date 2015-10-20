@@ -1,0 +1,27 @@
+<div class="comment-item" style="background-color: #ffffff;padding: 10px;margin-bottom: 5px;border: 1px solid #F2F2F2;">
+    <div class="am-cf avatar-img">
+        <div class="am-fl avatar">
+            <img class="avatar-img" style="width: 32px" src="{$vo.user.avatar32}">
+            <a href="{:U('Mob/User/index',array('uid'=>$vo['user']['uid']))}"><span>{$vo.user.nickname}</span></a>
+        </div>
+
+
+        <div class="am-fr time" style="font-size: 13px;text-align: right">
+            {$vo.create_time|friendlyDate}
+        </div>
+    </div>
+    <div class="am-g content" style="padding: 10px">
+        {$vo.content}
+    </div>
+    <div class="am-g">
+        <div class="am-u-sm-2 am-text-center" style="float: right">
+            <a class="delete" comment_id="{$vo.id}" issue_id="{$vo.row_id}" url="{:U('Mob/Issue/delIssueComment')}">
+                <i class="am-icon-trash" id="doc-confirm-toggle"></i></a>
+        </div>
+        <div class="am-u-sm-2 t_center">
+            <a class="atcomment"  href="{:U('Mob/Issue/atComment',array('id'=>$vo['row_id'],'user'=>$vo['user']['nickname'],'uid'=>$vo['uid']))}">
+                <i class="am-icon-comment-o"></i>
+            </a>
+        </div>
+    </div>
+</div>

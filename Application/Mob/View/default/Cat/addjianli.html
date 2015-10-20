@@ -1,0 +1,51 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <script src="__JS__/cat.js"></script>
+
+<div class="addwork-container ">
+    <form action="" class="am-form" id="doc-vld-msg">
+        <input type="hidden" id="img_ids" name="zhaopian" value="">
+        <input type="hidden" id="entity_id" name="entity_id" value="{$entityId}">
+        <input type="hidden" id="info_id" name="info_id" value="{$info.id}">
+        <fieldset>
+
+            <div class="am-form-group">
+                <label>标题</label>
+                <input type="text" minlength="3" placeholder="（至少 3 个字符）" name="title" value="{$info.title}" required/>
+            </div>
+
+                <label>描述</label>
+                <div class="am-form-group weibo_post_box">
+                    <textarea type="text" name="des" placeholder=""
+                              style="width: 100%;height:150px;padding: 5px">{$detail.des.data}</textarea>
+                    <!--插入图片表情-->
+                    <!--表情-->
+                    <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 5px">
+                        <img src="__CORE_IMAGE__/bq.png">
+                    </a>
+                    <div id="emot_content" class="emot_content"></div>
+
+                    <!--表情-->
+                    <div class="fileupload-buttonbar">
+                        <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                                src="__IMG__/image.png"></a>
+                        <div class="fileinput-button" style="width: 100%">
+                            <input type="file" name="files" class="btn" id="fileupload" style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;" data-url="{:U('Core/File/uploadPicture')}" multiple/></div>
+                    </div>
+                    <!--插入图片表情结束-->
+                </div>
+
+            <button class="am-btn am-btn-secondary am-btn-block addinfo" type="button" data-url="{:U('Mob/cat/doAddInfo')}" index-url="{:U('Mob/cat/index')}">发布简历</button>
+
+        </fieldset>
+    </form>
+</div>
+
+<script>
+  add_img();
+    add_info();
+
+</script>
+</block>

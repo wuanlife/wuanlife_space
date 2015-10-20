@@ -1,0 +1,38 @@
+<div class="post_list">
+    <div class="clearfix item am-g am-cf">
+        <div class="am-u-sm-2">
+            <div class="am-text-center ">
+                <strong>{$vo.support_count}</strong><br/> 喜欢
+            </div>
+        </div>
+        <div class="am-u-sm-10">
+            <div class="item-heading">
+                <h4 class="text-more" style="width: 100%">
+                    <a  href="{:U('group?id='.$vo['group_id'])}" class="label label-success" style="background-color: #008000">{$vo.group.title}</a>&nbsp;
+                    <a  href="{:U('mob/group/detail',array('id'=>$vo['id']))}">{$vo.title}</a>
+                </h4>
+            </div>
+            <div class="item-content">
+                <neq name="vo.cover" value="">
+                    <div class="media pull-right">
+                        <a  href="{:U('mob/group/detail',array('id'=>$vo['id']))}"><div class="img-thumbnail-wrap"
+                                                                                                            style="width:80px;height:80px;line-height:80px">
+                            <img class="" src="{$vo.cover}">
+                        </div></a>
+                    </div>
+                </neq>
+
+                <div class="text">
+                    <a  href="{:U('mob/group/detail',array('id'=>$vo['id']))}">{$vo.summary}...</a>
+                </div>
+            </div>
+            <div class="item-footer">
+                <!-- <span class="label">tag1</span>-->
+                &nbsp;
+                <a  href="{:U('mob/group/detail',array('id'=>$vo['id']))}" class="text-muted"><i class="am-icon-comment-o"></i> {$vo.reply_count}</a>&nbsp;
+                <span class="text-muted am-fr">{$vo.create_time|friendlyDate}</span>
+            </div>
+        </div>
+
+    </div>
+</div>

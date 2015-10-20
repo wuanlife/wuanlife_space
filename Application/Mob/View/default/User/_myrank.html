@@ -1,0 +1,178 @@
+
+<div class="am-tabs" id="rank"style="font-size: 12px">
+    <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify"style="font-size: 12px">
+        <li class="am-active">
+            <a href="" style="padding: 0px">已拥有头衔</a></li>
+        <php>
+            if (is_login()==$uid) {
+        </php>
+        <li><a href="" style="padding: 0px">待审核头衔</a></li>
+        <li><a href="" style="padding: 0px">申请失败头衔</a></li>
+        <li><a href="" style="padding: 0px">申请头衔</a></li>
+<php>
+    }
+</php>
+    </ul>
+    <div class="am-tabs-bd" style="border: none">
+        <div class="am-tab-panel am-active">
+            <notempty name="userhead.have_title">
+                <volist name="userhead.have_title" id="vo">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$vo.logo}">
+                        </div>
+                        <div class="am-u-sm-9">
+                            <div>
+                                头衔名称：{$vo.title.title}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                理由：{$vo.reason}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                申请时间：{$vo.create_time|friendlyDate}
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+        </notempty>
+        </div>
+
+        <div class="am-tab-panel">
+            <notempty name="userhead.ready_title">
+                <volist name="userhead.ready_title" id="vl">
+                    <div class=" am-g " style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$vl.logo}">
+                        </div>
+                        <div class="am-u-sm-9">
+                            <div>
+                                头衔名称：{$vl.title.title}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                理由：{$vl.reason}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                申请时间：{$vl.create_time|friendlyDate}
+                            </div>
+                            <div>
+                                <a  class="cancelapply" data-url="{:U('Mob/User/rankVerifyCancel')}" rank_id={$vl.rank_id}>取消申请</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+
+                    </div>
+
+                </volist>
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+            </notempty>
+        </div>
+
+        <div class="am-tab-panel">
+            <notempty name="userhead.defeat_title">
+<form id="reapplytitle">
+
+                <volist name="userhead.defeat_title" id="v2">
+
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <input type="hidden" value="{$v2.id}" name="rank_user_id">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$v2.logo}">
+                        </div>
+                        <div class="am-u-sm-9" >
+                            <div>
+                                头衔名称：{$v2.title.title}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                理由：{$v2.reason}
+                            </div>
+                            <div style="margin-top: 10px;">
+                                申请时间：{$v2.create_time|friendlyDate}
+                            </div>
+                            <input  name="rank_id" value="{$v2.rank_id}" type="radio" >
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+                <div>
+                    <textarea placeholder="重新申请理由" name="reason" style="width: 100%;margin-bottom: 2px" ></textarea>
+                <a class="reapply am-btn-warning am-btn am-btn-block am-round" data-url="{:U('Mob/User/verify')}" ><span>重新申请</span></a>
+
+            </div>
+</form>
+
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+            </notempty>
+        </div>
+        <div class="am-tab-panel">
+            <notempty name="userhead.apply_title">
+                <form id="ranktitle" >
+                <volist name="userhead.apply_title" id="v3">
+                    <div class=" am-g" style="border-bottom: 1px solid #dedede;margin: 0;">
+                        <div class="am-u-sm-3 am-text-center">
+                            <img style="width: 18px;margin-top: 30px;margin-left: 25px"
+                                 src="{$v3.logo}">
+                        </div>
+                        <div class="am-u-sm-9">
+                            <div>
+                                头衔名称：{$v3.title}
+                            </div>
+                            <div>
+                            <input id="doinghandle" name="rank_id" value="{$v3.id}" type="radio" >
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                        </div>
+                    </div>
+                </volist>
+                <div>
+                <textarea  style="width: 100%;margin-bottom: 2px" placeholder="申请理由" name="reason"></textarea>
+                 </div>
+                    <button style="float: right" type="button" data-url="{:U('Mob/User/verify')}" class="am-btn-warning am-btn am-btn-block am-round applytitle">申请
+                    </button>
+                </form>
+                <else/>
+                <p class="text-muted"
+                   style="text-align: center; font-size: 3em;">
+                    <br><br>
+                    暂无该类型头衔哦～
+                    <br><br><br>
+                </p>
+            </notempty>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#rank').tabs();
+    })
+</script>
+
+
+

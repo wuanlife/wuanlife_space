@@ -1,0 +1,54 @@
+
+<button title="Close (Esc)" type="button" class="mfp-close" style="display: none;">×</button>
+<form id="forward" data-url="{:U('Mob/Weibo/doForward')}">
+    <input type="hidden" name="weiboId" value="{$weibo.id}">
+    <input type="hidden" name="sourceId" value="{$weibo.sourceId}">
+    <input type="hidden" name="weibocontent" value="{$weibo.content}">
+    <input type="hidden" name="type" value="repost">
+
+    <div class="" id="my-repost" style="width:95%;margin:0 auto;">
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd weibo_post_box">
+                <label>转发</label>
+
+                <div class="am-text-left">{$weibo.sourceId_user.nickname|htmlspecialchars}</div>
+                <div>{$weibo.sourceId_content.content}</div>
+                <if condition="$weibo['is_sourceId'] eq 1">
+                    <textarea style="width: 100%" type="text" class="am-modal-prompt-input" name="content"
+                              placeholder="写点什么吧~~">//@{$weibo.user.nickname} :{$weibo.content}</textarea>
+                </if>
+                <if condition="$weibo['is_sourceId'] eq 0">
+                    <textarea style="width: 100%" type="text" class="am-modal-prompt-input" name="content"
+                              placeholder="写点什么吧~~"></textarea>
+                </if>
+
+                <!--表情-->
+                <div class="am-cf">
+                <a href="javascript:" class="am-fl" data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))">
+                    <img src="__IMG__/bq.png"></a></div>
+                <div id="emot_content" class="emot_content"></div>
+                <!--表情end-->
+
+                <div class="am-checkbox" style="text-align: left">
+                    <input type="checkbox" name="release">同时作为评论发布
+                </div>
+
+            </div>
+            <div class="am-modal-footer am-g">
+                <button class=" am-u-sm-6" type="button" id="cancel"
+                        style="background-color: #F8F8F8;padding: 12px;border: 0px;color: #000">
+                    <span>取消</span></button>
+                <button class="am-u-sm-6" type="button" id="conf"
+                        style="background-color: #32b1f1;padding: 12px;border: 0px;color: #FFFFFF">
+                    <span>确认</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+doforward();
+</script>
+
+

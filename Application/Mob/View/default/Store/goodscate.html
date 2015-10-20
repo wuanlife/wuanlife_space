@@ -1,0 +1,245 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+<link rel="stylesheet" href="__CSS__/apps/store.css"/>
+<style type="text/css">
+    .cate-nav {
+        position: relative;
+        height: 500px;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: 0px;
+        overflow: hidden;
+        text-align: center;
+        background: #F2F2F2;
+    }
+
+    .cate-nav ul {
+        position: absolute;
+        width: 100%;
+    }
+
+    .selected {
+        background-color: #FFFFFF !important;
+        border-right: 1px solid #fff !important;
+
+    }
+
+    .cate-nav li {;
+
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        padding: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        font-size: 10px;
+    }
+
+    .cat-subcategory {
+        padding: 5px;
+    }
+
+    .shadow-left li {
+
+    }
+    h1,h2,h3,h4,h5,h6{
+        margin: 0px;;
+    }
+    .shadow-left li a {
+        padding: 5px;
+        text-align: center;
+        display: block;
+        font-size: 10px;
+        margin: 2px;
+        border-style: solid;
+        border-color: #e0e0e0;
+        border-width: 1px;;
+
+    }
+
+    .shadow {
+        display: none;
+    }
+
+    .cate-content .block {
+        padding: 0px 5px;
+        position: absolute;
+        height: 650px;
+    }
+</style>
+
+<div class="goodscate-container">
+    <div>
+        <a href="{:U('store/search')}" style="margin-top: 0px">
+            <input type="text" class="am-form-field am-input-sm" placeholder="搜索宝贝、店铺">
+        </a>
+    </div>
+    <div class="goodscate am-g">
+
+        <div class="cate-nav am-u-sm-3">
+            <ul id="leftmenu">
+                <volist name="cat" id="vo">
+                <li class="menu_item selected">{$vo['title']}</li>
+                </volist>
+            </ul>
+        </div>
+
+        <div class="cat-subcategory am-u-sm-9">
+<volist name="cat" id="vl">
+            <div class="shadow">
+                <div class="entity-main">
+                    <h3>{$vl['title']}</h3>
+                    <ul class="shadow-left am-avg-sm-3">
+                        <volist name="vl['cat2']" id="v2">
+                            <li>
+                                <a href="{:U('store/goods',array('id'=>$v2['id'],'title'=>$v2['title']))}">
+                                    {$v2['title']}
+                                </a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+
+            </div>
+</volist>
+        </div>
+<!--        <div class="cat-subcategory am-u-sm-9">
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left am-avg-sm-3">
+                        <li>
+                            <a href="{:U('store/goods')}">
+                                精钢狼
+                            </a>
+                        </li>
+                        <li>
+                            <a href="goods.html">
+                                精钢狼
+                            </a>
+                        </li>
+                        <li>
+                            <a href="goods.html">
+                                精钢狼
+                            </a>
+                        </li>
+                        <li>
+                            <a href="goods.html">
+                                精钢狼
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </volist>
+
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        3
+                    </ul>
+
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        4
+                    </ul>
+
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        5
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        6
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        7
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        8
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        9
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        10
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow">
+                <div class="entity-main">
+                    <ul class="shadow-left">
+                        11
+                    </ul>
+                </div>
+            </div>
+
+        </div>-->
+        <!--店铺街链接-->
+    </div>
+</div>
+
+<script>
+    var iScroll = $.AMUI.iScroll;
+
+    var myScroll = new iScroll('.cate-nav', {
+        hideScrollbar: false,
+        hScroll: false,
+        bounce: true,
+        vScroll: true,
+        hScrollbar: false
+    });
+
+    var $box = document.getElementById('leftmenu'),
+
+            liArray = $box.querySelectorAll('li'),
+
+            liNum = liArray.length;
+    console.log(liNum);
+    console.log($("#leftmenu li:first-child").height());
+    $box.style.height = (liNum * $("#leftmenu li:first-child").height() + 500 + 'px');
+    console.log($box.style.height);
+
+
+    $(function () {
+        $("div.cat-subcategory > .shadow").eq(0).show();
+        var $div = $("#leftmenu li");
+        $div.click(function () {
+            $(this).addClass("selected")       //当前<li>元素高亮
+                    .siblings().removeClass("selected");  //去掉其它同辈<li>元素的高亮
+            var index = $div.index(this);  // 获取当前点击的<li>元素 在 全部li元素中的索引。
+            $("div.cat-subcategory > .shadow")       //选取子节点。不选取子节点的话，会引起错误。如果里面还有div
+                    .eq(index).show()   //显示 <li>元素对应的<div>元素
+                    .siblings().hide(); //隐藏其它几个同辈的<div>元素
+        })
+    })
+
+</script>
+
+</block>

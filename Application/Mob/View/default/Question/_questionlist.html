@@ -1,0 +1,46 @@
+<ul class="question-list">
+    <li>
+
+        <div class="item">
+            <div class="question-title">
+                <a href="{:U('Mob/Question/questiondetail',array('id'=>$vo['id']))}">
+                    <h5>
+                        <img src="__IMG__/question_32.png" class="">
+                        {$vo.title}
+                    </h5>
+                </a>
+            </div>
+            <div class="question-info am-cf">
+              <span class=" question-author am-fl">
+              发布者：
+              <a href="{$vo.user.space_mob_url}">
+                  {$vo.user.nickname}
+              </a>
+          </span>
+              <span class="question-type am-fl">
+                  问题所属分类：
+                  <a class="question_type">{$vo.category.title}</a>
+              </span>
+            </div>
+<notempty name="vo['description']">
+    <div class="question-content">
+
+
+        <div>     补充说明：
+            <ins class="QA-content">
+                {$vo.description}
+            </ins>
+        </div>
+    </div>
+</notempty>
+
+
+            <div class="catime " >
+                创建时间：{$vo.create_time|friendlyDate}
+            </div>
+
+        </div>
+
+
+    </li>
+</ul>

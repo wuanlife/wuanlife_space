@@ -1,0 +1,80 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+<div class="placeorder-container ">
+    <form data-url="{:U('mob/store/pay_ok')}" class="am-form sure-item" >
+    <div class="">
+
+            <fieldset>
+                <div class="am-form-group">
+                    <label>收货人姓名</label>
+                    <input type="text" id="title" minlength="1" name="r_name" value="{$address.r_name}" placeholder="收货人姓名" class="am-form-field" required/>
+                </div>
+                <div class="am-form-group">
+                    <label>邮政编码</label>
+                    <input type="text" placeholder="收件人所在邮政编码" name="r_code" value="{$address.r_code}" pattern="/^\d{6}$/" required/>
+                </div>
+                <div class="am-form-group">
+                    <label>手机号码</label>
+                    <input type="text" placeholder="填写收货人的手机号码，用于快递签收。" name="r_phone" value="{$address.r_phone}" pattern="^/^1((3|5|8){1}\d{1}|70)\d{8}$/"
+                           required/>
+                </div>
+                <div class="am-form-group">
+                    <label>具体收货地址：</label>
+                    <textarea minlength="10" maxlength="100" name="r_pos">{$address.r_pos}</textarea>
+                </div>
+            </fieldset>
+
+    </div>
+    <div class="goods-list">
+        <h4>确认订单</h4>
+        <ul>
+      <volist name="goods" id="vo">
+          <input type="hidden" name="good_id[]" value="{$vo.good.id}">
+          <input type="hidden" name="count[]" value="{$_POST['count'][$key]}">
+            <li>
+                <div class="goods-box am-cf" style="border: 1px solid #F2f2f2;padding: 10px">
+                    <div class="goods-info am-fl"style="margin-right: 10px">
+                        <img style="width: 50px;height: 50px" src="{$vo.good.cover_id|getThumbImageById=222,222}">
+                    </div>
+                    <div class="title am-fl">
+                        <a style="font-size: 14px;max-width: 100%" class="text-more" href="{:U('mob/store/goodsdetail',array('goodsId'=>$vo['id']))}" target="_blank">{$vo.good.title}</a>
+                    </div>
+                    <br>
+                    <div >
+                        <div class="price am-fl">
+                            <span>￥<span>{$vo.good.price}</span>元</span>
+                            <b>X</b>
+                            <span>{$_POST['count'][$key]}</span>
+                        </div>
+                        <div class="am-fr">
+                            <span class="comput"> = ￥ <span class="total">{:$vo['good']['price']*$_POST['count'][$key]}</span>元 </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+      </volist>
+        </ul>
+            <div class="am-text-center">总价：<span class="totalAll">0</span></div>
+    </div>
+    </form>
+    <div>
+        <button type="button" class="am-btn am-btn-primary am-btn-block item-ok" data-redirect-url="{:U('mob/store/soldbuy')}">确认无误</button>
+    </div>
+</div>
+    <script>
+        Total();
+        item_ok();
+        function Total() {
+            var len = $(".total");
+            var num = 0;
+            for (var i = 0; i < len.length; i++) {
+                num = parseInt(num) + parseInt($(len[i]).text());
+            }
+
+            $(".totalAll").text(parseInt(num).toFixed(2));
+        }
+    </script>
+</block>

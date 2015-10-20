@@ -1,0 +1,211 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2>导航管理</h2>
+    </div>
+
+    <div class="with-padding">
+        <div>
+            <span>图标样式参考<a href="http://amazeui.org/css/icon">链接</a></span>
+        </div>
+        <form action="{:U()}" method="post" class="form-horizontal" >
+        <ul class="channel-ul">
+
+        <volist name="list" id="nav">
+            <li class="clearfix pLi" >
+                <input name="nav[1][sort][]" class="sort" style="display: none" >
+                <div class="pull-left nav_list">
+
+                    <select name="nav[1][type][]" class="form-control nav-type" style="width: 100px;">
+                        <option value="module" <if condition="$nav['module_name']">selected</if>>系统模块</option>
+                        <option value="custom" <if condition="!$nav['module_name']">selected</if>>自定义</option>
+                    </select>
+         <!--       <php>dump($nav);</php>-->
+                    <select name="nav[2][modul][]" class="form-control module" style="width: 100px;<php>if(!$nav['module_name']){</php>display:none<php>}</php>">
+
+                        <php>foreach($module as $k=>$v){</php>
+                        <option value="{$v.entry}" data-icon="{$v.icon}" <if condition="strtolower($nav['url']) eq strtolower($v['entry'])">selected</if>>{$v.alias}</option>
+                        <php>}unset($k,$v)</php>
+                    </select>
+
+                    <input name="nav[1][title][]" placeholder="请输入标题" class="form-control title" style="width: 100px;" value="{$nav.title}">
+
+                    <input name="nav[1][url][]" placeholder="请输入链接"   class="form-control url" style="width: 300px;<php>if($nav['module_name']){</php>display:none<php>}</php>" value=" {$nav.url}">
+
+                </div>
+                <div class='pull-left icon-chose' title="选择icon">
+                    <input name="nav[1][icon][]" title="选择icon" class="chosen-icons form-control title" data-value="{$icon}" value="{$nav.icon}" style="color: #000000">
+                </div>
+<!--                <div class='pull-left color-chose' title="选择图标背景色">
+                    <input name="nav[1][color][]" class='simple_color_callback' value="{$nav['color']|default='#000000'}"/>
+                </div>
+                <div class='pull-left new-blank ' >
+                <input name="nav[1][target][]" class="target_input" value="{$nav['target']}">
+                <label title="新窗口打开" ><input class="target" <if condition="$nav['target'] eq 1">checked</if>  type="checkbox" value="1">新窗口打开</label>
+            </div>-->
+
+
+                <div class='pull-left i-list'>
+
+                    <a href="javascript:" title="添加一级导航" class="add-one"><i class="icon icon-plus"></i></a>
+                    <a href="javascript:"  title="移除此导航" class="remove-li"><i class="icon icon-remove"></i></a>
+  <!--                  <a href="javascript:" title="添加子导航" class="add-child"><i class="icon icon-sitemap"></i></a>-->
+                    <a href="javascript:" title="移动导航排序"><i class="icon icon-move sort-handle-1"></i></a>
+                </div>
+
+
+<!--
+                <div class='pull-left band-text'>
+                    <input name="nav[1][band_text][]" class="form-control" placeholder="标志点文字"  style="width: 100px;" value="{$nav['band_text']}">
+                </div>
+
+                <div class='pull-left color-chose' title="选择标志点颜色">
+                    <input name="nav[1][band_color][]" class='simple_color_callback' value="{$nav['band_color']|default='#000000'}"/>
+                </div>
+-->
+
+<!--                <php>if($nav['child']){</php>
+                <div class="clearfix"></div>
+                <ul class="ul-2"  style="display: block;">
+                    <volist name="nav['child']" id="child">
+                        <include file="_child"/>
+                    </volist>
+                </ul>
+
+                <php>}</php>-->
+            </li>
+
+        </volist>
+    </ul>
+
+            <div class="form-item with-padding">
+                <button class="btn submit-btn ajax-post no-refresh" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+            </div>
+        </form>
+    </div>
+
+
+
+<div id="one-nav" class="hide">
+    <li class="clearfix pLi" >
+        <input name="nav[1][sort][]" class="sort" style="display: none" >
+        <div class="pull-left nav_list">
+            <select name="nav[1][type][]" class="form-control nav-type" style="width: 100px;">
+                <option value="module" >系统模块</option>
+                <option value="custom" >自定义</option>
+            </select>
+
+            <select name="nav[1][module][]" class="form-control module" style="width: 100px;">
+                <php>foreach($module as $k=>$v){</php>
+                <option value="{$v.entry}"  data-icon="{$v.icon}" >{$v.alias}</option>
+                <php>}unset($k,$v)</php>
+            </select>
+
+            <input name="nav[1][title][]" placeholder="请输入标题" class="form-control title" style="width: 100px;" value="{$module.0.alias}">
+
+            <input name="nav[1][url][]" placeholder="请输入链接"  class="form-control url" style="width: 300px;display:none" value="{$module.0.entry}">
+
+        </div>
+
+        <div class='pull-left icon-chose' title="选择icon">
+            <input name="nav[1][icon][]" title="选择icon" class="chosen-icons form-control title" data-value="{$icon}" value="am-icon-" style="color: #000000">
+        </div>
+
+        <!--         <div class='pull-left color-chose' title="选择图标背景色">
+                    <input  name="nav[1][color][]" class='simple_color_callback' value="#000000"/>
+           </div>
+               <div class='pull-left new-blank ' >
+                    <input name="nav[1][target][]" class="target_input" value="0">
+                    <label title="新窗口打开"> <input class="target" type="checkbox" value="1">新窗口打开</label>
+                </div>-->
+
+
+        <div class='pull-left i-list'>
+
+            <a href="javascript:" title="添加一级导航"  class="add-one"><i class="icon icon-plus"></i></a>
+            <a href="javascript:" title="移除此导航" class="remove-li"><i class="icon icon-remove"></i></a>
+<!--            <a href="javascript:" title="添加子导航" class="add-child"><i class="icon icon-sitemap"></i></a>-->
+            <a href="javascript:" title="移动导航排序"><i class="icon icon-move sort-handle-1"></i></a>
+        </div>
+
+<!--
+        <div class='pull-left band-text'>
+            <input name="nav[1][band_text][]" class="form-control" placeholder="标志点文字"  style="width: 100px;" value="">
+        </div>
+
+        <div class='pull-left color-chose' title="选择标志点颜色">
+            <input name="nav[1][band_color][]" class='simple_color_callback' value="#000000"/>
+        </div>-->
+
+    </li>
+
+</div>
+
+    <div id="two-nav" class="hide">
+
+        <li class="clearfix" >
+            <input name="nav[2][pid][]" class="pid" style="display: none">
+            <input name="nav[2][sort][]" class="sort" style="display: none" >
+            <div class="pull-left nav_list">
+
+                <select name="nav[2][type][]" class="form-control nav-type" style="width: 100px;">
+                    <option value="module" >系统模块</option>
+                    <option value="custom" >自定义</option>
+                </select>
+
+                <select name="nav[2][module][]" class="form-control module" style="width: 100px;">
+                    <php>foreach($module as $k=>$v){</php>
+                    <option value="{$v.entry}" data-icon="{$v.icon}" >{$v.alias}</option>
+                    <php>}unset($k,$v)</php>
+                </select>
+
+                <input name="nav[2][title][]" placeholder="请输入标题" class="form-control title" style="width: 100px;" value="{$module.0.alias}">
+
+                <input name="nav[2][url][]" placeholder="请输入链接"  class="form-control url" style="width: 300px;display:none" value="{$module.0.entry}">
+
+            </div>
+            <div class='pull-left icon-chose' title="选择icon">
+                <select name="nav[2][icon][]" title="选择icon" class="chosen-icons" data-value="icon-{$module.0.icon}"></select>
+            </div>
+            <div class='pull-left color-chose' title="选择图标背景色">
+                <input name="nav[2][color][]" class='simple_color_callback' value="#000000"/>
+            </div>
+<!--            <div class='pull-left new-blank ' >
+                <input name="nav[2][target][]" class="target_input" value="0">
+                <label title="新窗口打开"> <input class="target"  type="checkbox" value="1">新窗口打开</label>
+            </div>-->
+
+
+            <div class='pull-left i-list'>
+
+                <a href="javascript:" title="添加导航"  class="add-two"><i class="icon icon-plus"></i></a>
+                <a href="javascript:"  title="移除此导航" class="remove-li"><i class="icon icon-remove"></i></a>
+
+                <a href="javascript:" title="移动导航排序"><i class="icon icon-move sort-handle-2"></i></a>
+            </div>
+
+
+            <div class='pull-left band-text'>
+                <input name="nav[2][band_text][]" class="form-control" placeholder="标志点文字"  style="width: 100px;" value="">
+            </div>
+
+            <div class='pull-left color-chose' title="选择标志点颜色">
+                <input name="nav[2][band_color][]" class='simple_color_callback' value="#000000"/>
+            </div>
+
+        </li>
+
+    </div>
+
+
+
+</block>
+
+<block name="script">
+    <script src="__JS__/jquery.simple-color.js"></script>
+    <script src="__JS__/channel.js"></script>
+    <script src="__ZUI__/lib/chosen/chosen.icons.min.js"></script>
+    <link href="__ZUI__/lib/chosen/chosen.icons.css" rel="stylesheet">
+</block>

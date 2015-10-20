@@ -1,0 +1,38 @@
+<volist name="vl['lzllist']" id="v2">
+    <div class="comment-lzl" style="border-bottom: 1px solid #ddd;">
+        <div class="am-cf">
+            <div class="am-fl"><img class="avatar-img" style="width:42px" src="{$v2.userInfo.avatar128}">
+            </div>
+            <div class="am-fl" style="padding-left: 10px;font-size: 10px">
+                <span > {$v2.userInfo.nickname}</span><br/><span class="time">{$v2.create_time|friendlyDate}</span>
+            </div>
+
+
+            <br>
+        </div>
+        <p style="margin: 5px 0px">{$v2.content}</p>
+        <div class="am-fr">
+            <span class=" small-btn">
+                <php>if(is_login()){</php>
+            <a class="lzl_at_user"style="margin-right: 5px"
+               href="{:U('Mob/group/atcomment',array('uid'=>$v2['uid'],'username'=>$v2['userInfo']['nickname'],'id'=>$v2['id'],'post_id'=>$v2['post_id'],'to_f_reply_id'=>$v2['to_f_reply_id']))}">
+                <i class="am-icon-comment-o"></i>
+            </a>
+                <php>}else{</php>
+                <a href="javascript:void(0);" onclick="toast.error('请先登陆');" style="color: #999999">
+                    <i class="am-icon-comment-o"></i>
+                </a>
+                <php>}</php>
+            </span>
+
+            <if condition="($v2['uid'] eq is_login()) or (is_administrator(is_login()))">
+            <span class="small-btn">
+       <a class="dellzlreply" comment-id="{$v2['id']}"
+          url="{:U('Mob/group/dellzlreply')}"><i class="am-icon-trash"></i>
+       </a>
+                            </span>
+            </if>
+        </div>
+    </div>
+
+</volist>

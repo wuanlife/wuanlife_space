@@ -1,0 +1,204 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/user.js"></script>
+    <script src="__JS__/weibo.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/user.css"/>
+    <div class="user-container " style="padding: 0;">
+        <div class="">
+            <div style="width:100%">
+                <div class="bg_cover">
+                     <notempty name="user_info['cover_path']">
+                     <img src="{$user_info.cover_path}"style="  height: 50%;
+  width: 100%;min-height: 100px">
+                         <else/>
+                         <img src="__IMG__/user_top_default_bg.jpg"style="  height: 50%;
+  width: 100%;min-height: 100px">
+                         </notempty>
+
+                     </div>
+            </div>
+        </div>
+
+        <div class="" style="padding-left: 20px ;font-size: 12px;height: 80px ">
+            <div style="">
+                <div class="am-cf">
+                    <div class="am-fl" style="text-align: center">
+                        <div class="media-main">
+                            <img class="am-img-thumbnail am-circle" src="{$user_info.avatar64}"
+                                 style="width: 70px;height: 70px"></div>
+
+                        <!--<button  type="button" class="am-btn-small" style="color: #5d5d5d;font-size: 12px">
+                            <span>编辑</span>
+                        </button>-->
+
+                    </div>
+                    <div class="am-fl" style="margin-left: 10px">
+                        <div class="user_info"style="  text-shadow: 1px 1px 4px #c5c5c5;
+  color: #000;">
+                            <span>{$user_info.nickname}</span><br>
+                            积分： <span>{$user_info.score}</span></span><br>
+                            等级：<span>{$user_info.title}</span><br>
+                            <div class="am-fr" style="color: #000000">
+                                {:W('Common/Follow/follow',array('follow_who'=>$user_info['uid'],'btn-before','btn-after'))}
+                            </div>
+                            <notempty name="user_info['tags']">
+                                <div class="">
+                    <span>
+                        个人标签：
+                        <volist name="user_info['tags']" id="tag">
+                            &nbsp;<a href="{:U('people/index/index',array('tag'=>$tag['id']))}"
+                                     class="label label-badge label-default">{$tag.title}</a>&nbsp;
+                        </volist>
+                    </span>
+                                </div>
+                            </notempty>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="signature" style="width: 100%"><span>个性签名：
+                <if condition="$user_info['signature'] eq ''">
+                    还没想好O(∩_∩)O
+                    <else/>
+                    <attr title="{$user_info.signature}">{$user_info.signature}</attr>
+                </if>
+            </span>
+                </div>
+            </div>
+        </div>
+        <div class="tab">
+            <div class="user-mod ">
+                <div id="carousel" style="position: relative;height: 37px;top: 35px;">
+
+                    <div id="user-list">
+                        <a href="{:U('Mob/User/index',array('tab'=>'weibo','uid'=>$_GET['uid']))}"
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')"> class="current"</if>
+                        >微博</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'news','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'news'"> class="current"</if>
+                        >资讯</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'userhead','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userhead'"> class="current"</if>
+                        >头衔</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'userdata','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'userdata'"> class="current"</if>
+                        >资料</a>
+                        <a href="{:U('Mob/User/index',array('tab'=>'focus','uid'=>$_GET['uid']))}"
+                        <if condition="$_GET['tab'] eq 'focus'"> class="current"</if>
+                        >关注</a>
+                        <!--       <li><a>问答</a></li>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="part-tab-con"style="  margin-top: 30px;">
+                <div class="imgshow">
+                    <div class="ulclass">
+                        <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                            <notempty name="weibo">
+                                <volist name="weibo" id="vo">
+                                    <include file="_myweibo"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+                        </if>
+                    </div>
+                    <div class="ulclass">
+                        <if condition="$_GET['tab'] eq 'news'">
+                            <notempty name="blog">
+                                <volist name="blog" id="vl">
+                                    <include file="_myblog"/>
+                                </volist>
+                                <else/>
+                                <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img
+                                        src="__IMG__/tip.png" style="width: 100%;height: 100%">
+                                </div>
+                            </notempty>
+
+                        </if>
+
+                    </div>
+                    <div>
+                        <if condition="$_GET['tab'] eq 'userhead'">
+                            <include file="_myrank"/>
+                        </if>
+
+                    </div>
+                    <div>
+                        <if condition="$_GET['tab'] eq 'userdata'">
+                            <include file="_myinformation"/>
+                        </if>
+
+                    </div>
+                    <php>
+                        if (is_login()==$uid) {
+                    </php>
+                    <div>
+                        <if condition="$_GET['tab'] eq 'focus'">
+                            <include file="_myfollowing"/>
+                        </if>
+                    </div>
+                    <php>
+                        }else{
+                    </php>
+                    <if condition="$_GET['tab'] eq 'focus'">
+                        <include file="_otherfollowing"/>
+                    </if>
+                    <php>
+                        }
+                    </php>
+
+                </div>
+                <if condition="($_GET['tab'] eq 'weibo') or($_GET['tab'] eq '')">
+                    <if condition="$weibo[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmoreweibolist" data-url="{:U('Mob/User/addMoreWeibo')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+                <if condition="$_GET['tab'] eq 'news'">
+                    <if condition="$blog[0][pid_count] eq 1">
+                        <div class="am-list-news-ft look-more">
+                            <a id="getmorebloglist" data-url="{:U('Mob/User/addMoreBlog')}" data-role="{$uid}"
+                                    >查看更多 &raquo;</a>
+                        </div>
+                    </if>
+                </if>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+
+
+        var $carousel = document.getElementById('carousel'),
+                $box = document.getElementById('user-list'),
+
+                aArray = $box.querySelectorAll('a'),
+
+                aNum = aArray.length;
+        console.log(aNum);
+        console.log($("#user-list a:first-child").width());
+        $box.style.width = (aNum * $("#user-list a:first-child").width() + 10 + 'px');
+        console.log($box.style.width);
+
+        var myScroll = new iScroll('carousel', {
+            hideScrollbar: false,
+            hScroll: true,
+            bounce: true,
+            vScroll: false,
+            hScrollbar: false
+
+        });
+
+    </script>
+</block>

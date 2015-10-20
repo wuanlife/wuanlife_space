@@ -1,0 +1,34 @@
+<li class="shop-box ">
+    <div class="shop">
+        <div class="shop-info-box">
+            <div class="am-text-center cover" style="position: relative">
+                <if condition="$vo['is_hot'] eq 1"><span class="am-badge am-badge-danger am-round"  style="position: absolute">最热</span>
+                    <else/>
+                    <if condition="$vo['is_new'] eq 1"><span class="am-badge am-badge-success am-round"  style="position: absolute">最新</span></if>
+                </if>
+                <a href="{:U('shop/goodsdetail',array('id'=>$vo['id']))}">
+                    <img class="" style="width: 100% ;height:auto" src="{$vo.goods_ico|getThumbImageById=111,111}"></a>
+            </div>
+            <div class="am-text-center goods-info am-g">
+                <div class="goods-name " style="padding: 0px">
+                    <a href="{:U('shop/goodsdetail',array('id'=>$vo['id']))}" class="goods-name" style="font-size: 13px">{$vo.goods_name}</a>
+                </div>
+            </div>
+            <div class="spliter "></div>
+            <div class="am-text-center stock-box am-g" style="padding:0px 10px">
+                <div class="stock ">
+                    <span class="am-u-sm-6" style="padding:0px;font-size: 13px">库存:{$vo.goods_num}</span>
+                    <span class="am-u-sm-6" style="padding:0px;font-size: 13px">已售:{$vo.sell_num}</span>
+                </div>
+                <div class="money ">
+                    <span><i class="am-icon-cny"></i>{$vo.money_need}</span>
+                </div>
+            </div>
+            <div class="spliter "></div>
+            <div class="am-text-center btn" style="margin: 5px 0px">
+                <a href="{:U('shop/buy',array('id'=>$vo['id']))}" class="am-btn-md diy-btn am-btn-primary am-radius"
+                   style="padding:3px 14px;font-size: 13px">+兑换</a>
+            </div>
+        </div>
+    </div>
+</li>

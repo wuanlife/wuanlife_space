@@ -1,0 +1,188 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+
+<div class="addwork-container ">
+    <form action="" class="am-form" id="doc-vld-msg">
+        <input type="hidden" id="img_ids" name="zhaopian" value="">
+        <input type="hidden" id="entity_id" name="entity_id" value="{$entityId}">
+        <input type="hidden" id="info_id" name="info_id" value="{$info.id}">
+
+        <fieldset>
+
+            <div class="am-form-group">
+                <label>标题：</label>
+                <input type="text" minlength="3" name="title" placeholder="（至少 3 个字符）" value="{$info.title}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>截止日期：</label>
+
+                <div class="am-form-group am-form-icon">
+                    <i class="am-icon-calendar"></i>
+                    <input type="text" class="am-form-field" name="over_time" placeholder="截止日期" value="{$info.over_time|time_format}"  data-am-datepicker readonly/>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label>身份： </label>
+                <label class="am-radio-inline">
+                    <input type="radio" value="个人" name="shenfen" checked> 个人
+                </label>
+                <label class="am-radio-inline">
+                    <input type="radio" value="中介" name="shenfen" > 中介
+                </label>
+
+            </div>
+            <div class="am-form-group">
+                <label>出租方式</label>
+                <select  name="fangshi" class="form-control">
+                    <volist name="fangshi['option']" id="fangshi">
+                        <option value="{$fangshi}">
+                            {$fangshi}
+                        </option>
+                    </volist>
+                </select>
+                <span class="am-form-caret"></span>
+            </div>
+            <div class="am-form-group">
+                <label>小区名：</label>
+                <input type="text" placeholder="" name="xiaoqu" value="{$detail.xiaoqu.data}" required/>
+            </div>
+
+
+
+            <div class="am-form-group">
+                <label>室</label>
+                <input type="text" placeholder=""  name="shi" value="{$detail.shi.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>厅</label>
+                <input type="text" placeholder="" name="ting" value="{$detail.ting.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>卫</label>
+                <input type="text" placeholder="" name="wei" value="{$detail.wei.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>大小</label>
+                <input type="number" placeholder="" name="daxiao" value="{$detail.daxiao.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>楼层：</label>
+                <input type="text" placeholder="" name="louceng" <if condition="$detail['louceng'] eq null"> value="第 楼，第 层"<else/> value="{$detail.louceng.data}"</if>  required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>类型</label>
+                <select  name="leixing" class="form-control">
+                    <volist name="leixing['option']" id="leixing">
+                        <option value="{$leixing}">
+                            {$leixing}
+                        </option>
+                    </volist>
+                </select>
+                <span class="am-form-caret"></span>
+            </div>
+
+            <div class="am-form-group">
+                <label>装修情况</label>
+                <select  name="zhuangxiu" class="form-control">
+                    <volist name="zhuangxiu['option']" id="zhuangxiu">
+                        <option value="{$zhuangxiu}" >
+                            {$zhuangxiu}
+                        </option>
+                    </volist>
+                </select>
+                <span class="am-form-caret"></span>
+            </div>
+
+            <div class="am-form-group">
+                <label>朝向</label>
+                <input type="text" placeholder="" name="chaoxiang" value="{$detail.chaoxiang.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>租金</label>
+                <input type="text" placeholder="" name="zujin"  value="{$detail.zujin.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>支付方式</label>
+                <input type="text" placeholder="" name="zhifu" value="{$detail.zhifu.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>联系电话</label>
+                <input type="text" placeholder="" name="lianxidianhua" value="{$detail.lianxidianhua.data}"  required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>联系人</label>
+                <input type="text" placeholder="" name="lianxiren" value="{$detail.lianxiren.data}" required/>
+            </div>
+
+            <div class="am-form-group">
+                <label>一句话广告</label>
+                <input type="text" placeholder="" name="yijuhua" value="{$detail.yijuhua.data}" required/>
+            </div>
+            <label>介绍</label>
+            <div class="am-form-group weibo_post_box">
+                <textarea type="text" name="des" placeholder=""
+                          style="width: 100%;height:150px;padding: 5px">{$detail.des.data}</textarea>
+                <!--插入图片表情-->
+                <!--表情-->
+                <a class="am-fl"  href="javascript:"data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"style="margin-top: 5px">
+                    <img src="__CORE_IMAGE__/bq.png">
+                </a>
+                <div id="emot_content" class="emot_content"></div>
+
+                <!--表情-->
+                <div class="fileupload-buttonbar">
+                    <a type="button" class="am-btn am-btn-sm am-fl " style="  line-height: 0.2;"><img
+                            src="__IMG__/image.png">展示图片（只保留前5张）</a>
+                    <div class="fileinput-button" style="width: 100%">
+                        <input type="file" name="files" class="btn" id="fileupload" style="left: 35px;position:absolute;z-index: 1;width: 35px;height:35px;opacity: 0;cursor: pointer;" data-url="{:U('Core/File/uploadPicture')}" multiple/></div>
+                </div>
+                <!--插入图片表情结束-->
+            </div>
+
+            <button class="am-btn am-btn-secondary am-btn-block addinfo" type="button" data-url="{:U('Mob/cat/doAddInfo')} " index-url="{:U('Mob/cat/index')}">发布</button>
+
+        </fieldset>
+    </form>
+</div>
+    <script src="__JS__/raty/raty.js"></script>
+    <script src="__JS__/cat.js"></script>
+<script>
+    add_img();
+    add_info();
+    $(function () {
+        $('#doc-vld-msg').validator({
+            onValid: function (validity) {
+                $(validity.field).closest('.am-form-group').find('.am-alert').hide();
+            },
+
+            onInValid: function (validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-form-group');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                            appendTo($group);
+                }
+                $alert.html(msg).show();
+            }
+        });
+    });
+
+</script>
+</block>

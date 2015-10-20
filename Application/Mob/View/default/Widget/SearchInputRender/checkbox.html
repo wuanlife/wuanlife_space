@@ -1,0 +1,26 @@
+<div class="col-xs-12">
+    <ul class="nav nav-pills" role="tablist">
+        <php>
+            $t=array();
+            $t=$_GET;
+            $t[$field['name']]='';
+            $_tj= $t;
+        </php>
+        <li  role="presentation" class=" <if condition="
+        $_GET[$field['name']] eq ''">active br3</if>
+        " ><a href="{:U('Cat/Index/li',$_tj)}">全部</a>
+        </li>
+        <volist name="field['values']" id="tj">
+            <php>
+                $get=$_GET;
+                $get[$field['name']]=$tj;
+                $_tj= $get;
+            </php>
+            <li  role="presentation" class="<if condition="
+            ($_GET[$field['name']] eq $tj )AND($_GET[$field['name']] neq '')">active br3</if>
+
+            "><a
+                href="{:U('Cat/Index/li',$_tj)}">{$tj}</a></li>
+        </volist>
+    </ul>
+</div>

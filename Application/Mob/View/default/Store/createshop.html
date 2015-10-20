@@ -1,0 +1,73 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+    <script src="__JS__/store.js"></script>
+<div class="createshop-container">
+    <form action="" class="am-form shop">
+        <input type="hidden" id="one_img_id" name="logo" value="{$shop.logo}">
+        <input type="hidden"  name="id" value="{$shop['id']}">
+        <fieldset>
+            <div class="am-form-group ">
+
+                <label class=" am-form-label">*店名</label>
+                <input type="text" id="name" minlength="3" maxlength="40" placeholder="" class="am-form-field" value="{$shop.title}" name="title"
+                       required/>
+                <span>必须输入店铺名称，不超过40个字</span>
+
+            </div>
+            <div class="am-form-group">
+                <label class=" am-form-label">*图标</label>
+                <!--插入图片-->
+                <div class="am-cf " style="padding: 10px;">
+                    <div class="am-fl">
+                        <div class="img_btn">
+                            <i class="am-icon-plus" style="font-size: 25px;padding: 12px 20px;"></i>
+
+
+                            <input type="file" name="files" id="fileloadone" class=" am-btn"
+                                   style="left:0px;top: 0px;position:absolute;z-index: 1;width: 72px;height:72px;opacity: 0;cursor: pointer;"
+                                   data-url="{:U('Core/File/uploadPicture')}">
+                        </div>
+                    </div>
+                    <div class="show_cover am-fl" style="display:none;margin-left: 10px;">
+                        <div id="cover_url">
+                            <img class="cover_img" style="width:74px;height: 74px" src="{$shop.logo|getThumbImageById=222,222}">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="am-form-group am-form-group-sm">
+
+                <label class="am-form-label">*简介</label>
+
+
+                <textarea data-role="comment_content" type="text" name="summary"   placeholder="">{$shop.summary}</textarea>
+                <span></span>
+
+            </div>
+            <div class="am-form-group am-form-group-sm">
+
+                <label class="am-form-label">*店铺所在地</label>
+
+
+                <textarea data-role="comment_content" type="text" name="position" >{$shop.position}</textarea>
+                <span>如浙江嘉兴 </span>
+
+            </div>
+        </fieldset>
+    </form>
+    <button type="button" class="am-btn am-btn-primary am-btn-block createShop" data-url="{:U('mob/store/createShop')}" data-shop-url="{:U('mob/store/shop')}">发表</button>
+</div>
+<script>
+    add_one_img();
+    create_shop();
+    var ids = $('#one_img_id').val();
+    if (ids==0) {
+        $('.show_cover').hide();
+    } else {
+        $('.show_cover').show();
+    }
+</script>
+
+</block>

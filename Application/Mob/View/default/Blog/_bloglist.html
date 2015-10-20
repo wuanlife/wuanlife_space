@@ -1,0 +1,36 @@
+<ul class="blog-box">
+     <a href="{:U('Blog/blogdetail',array('id'=>$vl['id']))}">
+    <li>
+        <div class="am-cf am-g" style="padding: 5px">
+            <if condition="$vl['cover_url'] neq no_img">
+            <div class="am-fl am-u-sm-4 am-u-lg-2 am-u-md-3"style="padding: 0px">
+                <img class="am-img-thumbnail am-radius" src="{$vl.cover_url}" style="width: 100px;height: 80px">
+            </div>
+                </if>
+            <div class="info am-fl am-u-sm-8 am-u-lg-10 am-u-md-9">
+
+                    <h3 class="title am-text-truncate">
+                      {$vl.title}
+                    </h3>
+
+                <div class="name am-cf" style="font-size: 13px">
+                    <div class="am-text-truncate am-fl">
+                        <span class="author" > {$vl.user.nickname}</span>
+                    </div>
+
+                    <span class="am-fl">{$vl.create_time|friendlyDate}&nbsp;&nbsp;
+                        <span style="color: green;">{$vl.approval}</span>
+                    </span>
+                    <br>
+                    <div class="am-text-truncate omit-content">{$vl.description}</div>
+                </div>
+                <div class="hot">
+                    <i class="am-icon-fire"></i>{$vl.view}
+                    <i class="am-icon-comment-o" style="margin-left: 10px"></i>{$vl.count}
+                </div>
+            </div>
+
+        </div>
+    </li>
+    </a></a>
+</ul>

@@ -1,0 +1,64 @@
+<button title="Close (Esc)" type="button" class="mfp-close" style="display: none;">×</button>
+<form id="at_comment" data-url="{:U('Mob/Forum/doSendLZLReply')}">
+    <input type="hidden" name="uid" value="{$uid}">
+    <input type="hidden" name="to_reply_id" value="{$id}">
+    <input type="hidden" name="post_id" value="{$post_id}">
+    <input type="hidden" name="to_f_reply_id" value="{$to_f_reply_id}">
+
+    <div class="" id="my-repost" style="width: 95%;margin:0px auto">
+
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd weibo_post_box">
+
+
+                <notempty name="atusername">
+                    <textarea class="content" rows="5" id="comment_content_text" name="content"
+                              style="height: 8em; width: 100%;">回复@{$atusername} ：</textarea>
+                    <else/>
+                    <textarea class="content" rows="5" id="comment_content_text" name="content"
+                              style="height: 8em; width: 100%;"></textarea>
+                </notempty>
+                <!--表情-->
+                <div style="margin: 5px 0px">
+
+                    <a href="javascript:" data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))"
+                       style=>
+                        <img src="__IMG__/bq.png"></a>
+                </div>
+                <div id="emot_content" class="emot_content"></div>
+                <!--表情end-->
+
+            </div>
+            <div class="am-modal-footer am-g">
+                <button class=" am-u-sm-6" type="button" id="cancel"
+                        style="background-color: #F8F8F8;padding: 12px;border: 0px;color: #000000">
+                    <span>取消</span></button>
+                <button class=" am-u-sm-6" type="button" id="confirm"
+                        style="background-color: #32b1f1;padding: 12px;border: 0px;color: #FFFFFF">
+                    <span>确认</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $('#confirm').click(function () {
+        var data = $("#at_comment").serialize();
+        var url = $("#at_comment").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+                toast.success('评论成功!');
+                setTimeout(function () {
+                    window.location.reload();
+                }, 500);
+            } else {
+                alert(msg.info);
+            }
+        }, 'json');
+    });
+
+
+    $('#cancel').click(function () {
+        $('.mfp-close').click();
+    });
+</script>

@@ -1,0 +1,77 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/cat.css"/>
+    <div class="cat-container ">
+
+
+        <div class="cat-content">
+            <div class="am-tabs am-text-center" id="doc-my-tabs">
+                <ul class="am-tabs-nav am-nav am-nav-tabs am-nav-justify"
+                    style="font-size: 12px;background-color: #F1F1F1;padding:0px">
+                    <volist name="entity" id="vo">
+                        <a href="{$vo.url}" style="font-size: 11px"
+                                >{$vo.alias}</a>
+                    </volist>
+
+
+                </ul>
+                <div class="am-tabs-bd ullist" >
+                    <if condition="($mark eq 'House')">
+                        <volist name="catList" id="vl">
+                            <div class="">
+                                <include file="_house"/>
+                            </div>
+                        </volist>
+                    </if>
+                    <if condition="(($mark eq 'Job') or ($mark eq ''))">
+                        <volist name="catList" id="vl">
+                            <div class="">
+                                <include file="_job"/>
+                            </div>
+                        </volist>
+                    </if>
+                    <if condition="($mark eq 'PTJob')">
+                        <volist name="catList" id="vl">
+                            <div class="">
+                                <include file="_ptjob"/>
+                            </div>
+                        </volist>
+                    </if>
+                    <if condition="($mark eq 'jianli')">
+                        <volist name="catList" id="vl">
+                            <div class="">
+                                <include file="_jianli"/>
+                            </div>
+                        </volist>
+                    </if>
+
+                    <if condition="($mark neq 'jianli') and ($mark neq 'House') and ($mark neq '') and ($mark neq 'Job') and ($mark neq 'PTJob')">
+                        <volist name="catList" id="vl">
+                            <div class="">
+                                <include file="_custom"/>
+                            </div>
+                        </volist>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-list-news-ft look-more">
+        <if condition="$pid['count'] eq 1">
+            <a id="getmorelist" data-url="{:U('Mob/cat/addMoreList')} "
+               data-mark={$mark} data-type="myCollect">查看更多 &raquo;</a>
+        </if>
+
+    </div>
+
+
+    <script src="__JS__/cat.js"></script>
+    <script>
+        bind_page();
+
+    </script>
+
+</block>
+
+

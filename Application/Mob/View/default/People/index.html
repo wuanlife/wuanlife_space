@@ -1,0 +1,85 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/people.css"/>
+        <div class="am-header-left am-header-nav">
+            <div class="am-header-left am-header-nav">
+                <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+            </div>
+
+        </div>
+        <h1 class="am-header-title">
+            会员
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="#phone-link" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+            <a href="#nav-link" class="">
+            </a>
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+    <div class="people-container">
+        <form class="am-form" action="{:U('Mob/People/index')}" method="post" style="margin-top: 10px;">
+            <div class="am-input-group">
+                <input type="text" value="{$_GET['keywords']}" name="keywords" class="am-form-field" placeholder="昵称">
+                <span class="am-input-group-btn">
+                    <button class="am-btn am-btn-primary" type="submit">
+                        <span class="am-icon-search">查找</span>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <div class="people-list-box ">
+            <notempty name="page_data.data">
+                <ul class="people-list am-avg-sm-2 am-avg-md-3 am-avg-lg-5">
+                    <volist name="page_data.data" id="people">
+                        <li>
+                            <div class="people-box ">
+                                <div class="am-cf">
+                                    <div class="avatar">
+                                        <img class="am-img-thumbnail am-circle" style="width:48px;"
+                                             src="{$people.avatar32}">
+                                    </div>
+                                    <div class="info ">
+                                        <div class="name">
+                                            <a href="{$people.space_mob_url}"><span>{$people.nickname}</span></a>
+                                            <span>
+                                                <if condition="$people['rank_link'][0]['num']">
+                                                    <volist name="people['rank_link']" id="vl">
+                                                        <img src="{$vl.logo_url}" title="{$vl.title}" alt="{$vl.title}"
+                                                             style="width: 1.8rem;height: 1.8rem;vertical-align: middle;margin-left: 2px;"/>
+                                                    </volist>
+                                                </if>
+                                            </span>
+                                        </div>
+                                        <div class="signature">
+                                            <if condition="$people['signature'] eq ''">
+                                                还没想好O(∩_∩)O
+                                                <else/>
+                                                {$people.signature}
+                                            </if>
+                                        </div>
+                                        <div class="fans-count">
+                                            <span>粉丝数：{$people.fans}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="follow-btn">
+                                    {:W('Common/Follow/follow',array('follow_who'=>$people['uid'],'btn-before','btn-after'))}
+                                </div>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+                <else/>
+                <div style=""><p>没有满足条件的会员~</p></div>
+            </notempty>
+            <div style="width: 100%;text-align: center;">{$page_data.html}</div>
+        </div>
+    </div>
+</block>

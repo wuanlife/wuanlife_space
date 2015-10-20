@@ -1,0 +1,57 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+<div class="sold-container ">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+
+                <div class="sold-list-box">
+                    <ul class="sold-list">
+                        <notempty name="response">
+                        <volist name="response" id="vl">
+                        <li class="sold-box">
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <div class="am-g">
+                                        <div class="am-u-sm-12 am-text-left">
+                                                <span>订单号：{$vl.id}</span></div>
+                                        <div class=" am-u-sm-12 am-text-left"><span>买家：<a href="{$vl.b_user.space_mob_url}">{$vl.b_user.nickname}</a></span>
+                                        </div>
+                                        <div class="am-u-sm-12 am-text-left"><span>卖家：<a href="{$vl.s_user.space_mob_url}">{$vl.s_user.nickname}</a></span>
+                                        </div>
+                                        <div class="am-u-sm-12 am-text-left"><span>评论内容：{$vl.content}</span>
+                                        </div>
+                                        <div class="am-u-sm-12 am-text-left"><span>评论时间：{$vl.response_time|friendlyDate}</span>
+                                        </div>
+                                        <div class="am-u-sm-12 am-text-left">
+                                            <if condition="$vl['response'] eq 0">
+                                                <p>评论状况：【好评】+1</p>
+                                            </if>
+                                            <if condition="$vl['response'] eq 1">
+                                                <p>评论状况：【中评】+0</p>
+                                            </if>
+                                            <if condition="$vl['response'] eq 2">
+                                                <p>评论状况：【差评】-1</p>
+                                            </if>
+                                            <if condition="$vl['response'] eq 5">
+                                                <p>评论状况：超时取消</p>
+                                            </if>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        </volist>
+                            <else/>
+                            <div>
+                                <span>
+                                   暂无任评论信息！
+                                </span>
+                            </div>
+                        </notempty>
+                    </ul>
+                </div>
+            </div>
+
+
+
+</block>

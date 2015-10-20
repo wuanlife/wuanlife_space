@@ -1,0 +1,338 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div class="header">
+        <div class="am-g">
+            <h1>{:modC('WEBSITE_NAME','OpenSNS','Mob')}</h1>
+            <p>{:modC('SUMMARY','')}</p>
+        </div>
+        <hr/>
+    </div>
+</block>
+
+<block name="mob_body">
+<style>
+    ul{
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+    }
+#role-list{
+    padding-left: 0;margin: 0;list-style: none;
+}
+    #role-list li{
+        float: left;margin-right: 10px;padding: 3px 10px;
+    }
+    #role-list li a{
+       color: #c8c8c8;
+    }
+    .am-in{
+        padding-bottom: 0px;
+    }
+    #role-list .active{
+        background-color: #0084c7;
+    }
+    #type{
+        color:#000000;
+        font-size: 14px;
+    }
+
+</style>
+    <div class="am-g">
+        <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered"style="padding: 0px;font-size: 14px">
+            <form id="registered"  action="" class="am-form" data-am-validator data-url="{:U('Mob/Member/register')}">
+                <input type="hidden" name="registeredtype" id="registeredtype" value=""/>
+                <fieldset style="margin-top: 0px">
+                    <!--邀请注册-->
+                    <php>
+                        if(isset($invite_user)){
+                    </php>
+                    <div class="alert alert-info" style="padding: 5px;margin-bottom: 10px;letter-spacing: 2px;">用户 {$invite_user['nickname']} 邀请您注册{:C('WEB_SITE')}，请填写注册信息~</div>
+                    <input type="hidden" name="code" value="{$code}">
+                    <php>}else{</php>
+                    <if condition="$open_invite_register">
+                        <div class="alert alert-info" style="padding: 5px;margin-bottom: 10px;letter-spacing: 2px;">邀请注册用户请先<strong><a class="invitation_code" href="{:U('Mob/Member/inCode')}" data-title="输入邀请码" data-toggle="modal">输入邀请码</a></strong>，再填写注册信息~</div>
+                    </if>
+                    <php>}</php>
+                    <!--注册-->
+                    <div class="am-tabs" data-am-tabs>
+                        <ul id="type" class="am-tabs-nav am-nav am-nav-tabs ">
+
+                            <php>if(check_reg_type('username')){</php>
+                            <li class="am-active" data-type="username"><a href="javascript: void(0)">
+                                <if condition="$regSwitch[0] eq 'username'"></if>
+                                用户名注册
+                            </a></li>
+                            <php>}</php>
+
+                            <php>if(check_reg_type('email')){</php>
+                            <li data-type="email"><a href="javascript: void(0)">
+                                <if condition="$regSwitch[0] eq 'email'"></if>
+                                邮箱注册
+                            </a></li>
+                            <php>}</php>
+                            <php>if(check_reg_type('mobile')){</php>
+                            <li data-type="mobile"><a href="javascript: void(0)">
+                                <if condition="$regSwitch[0] eq 'mobile'"></if>
+                                手机注册
+                            </a></li>
+                            <php>}</php>
+                        </ul>
+
+                        <div class="am-tabs-bd">
+
+                            <php>if(check_reg_type('username')){</php>
+                            <div class="am-tab-panel am-active am-in">
+                                <label >用户名：</label>
+                                <input type="text" name="username" minlength="4" placeholder="输入用户名（不能为空）" required/>
+                            </div>
+                            <php>}</php>
+
+                            <php>if(check_reg_type('email')){</php>
+                            <div class="am-tab-panel">
+                                <label >请输入邮箱：</label>
+                                <input type="text" name="email" minlength="4" placeholder="输入邮箱（不能为空）" required/>
+                            </div>
+                            <php>}</php>
+
+                            <php>if(check_reg_type('mobile')){</php>
+                            <div class="am-tab-panel">
+                                <label >请输入手机号：</label>
+                                <input type="text" name="mobnumber" minlength="4" placeholder="输入输入手机号" required/>
+                            </div>
+                            <php>}</php>
+                            <!--用户名密码-->
+                            <div class="form-group" style="padding: 10px">
+                            <label >昵称：</label>
+                            <input type="text" name="nickname"  placeholder="输入昵称（不能为空)" required/>
+                            <label >密码：</label>
+                            <input type="password" name="password" placeholder="最少6位密码"
+                                  required/>
+                                </div>
+                            <!--身份-->
+                            <div class="form-group am-cf" style="padding: 10px">
+                            <if condition="count($role_list)==1">
+
+                                <input id="name" type="hidden" name="role" value="{$role_list[0]['id']}">
+                                <else/>
+                                <label >选择身份注册：</label>
+
+                                    <input id="name" type="hidden" name="role" value="{$role_list[0]['id']}">
+                                    <div class="clearfix"></div>
+                                    <ul id="role-list" class="nav nav-justified nav-pills">
+                                        <volist name="role_list" id="role">
+                                            <li>
+                                           <a onclick="$('#name').val({$role.id});$('#role-list li').removeClass('active');$(this).parent().addClass('active');"><i ></i> {$role.title} </a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                    <script>
+                                        $(function(){
+                                            $('#role-list li').first().addClass('active');
+                                        })
+                                    </script>
+                            </if>
+                                </div>
+                            <!--验证码-->
+                            <if condition="check_verify_open('reg')">
+                            <div class="form-group am-cf">
+                                <label for="verifyCode"
+                                       style="display: none"></label>
+
+                                <div style="padding: 10px;">
+                                    <label>输入验证码：</label>
+                                    <input type="text" id="verifyCode" class="form-control" placeholder="验证码"
+                                           errormsg="请填写正确的验证码" nullmsg="请填写验证码" datatype="*5-5" name="verify">
+
+                                </div>
+                                <div class=" am-fl">
+                                    <img  class="verifyimg reloadverify img-responsive" alt="点击切换"
+                                         src="{:U('verify')}"
+                                         style="cursor:pointer;padding-left:10px ">
+                                </div>
+                                <div class=" Validform_checktip text-warning lg_lf_fm_tip"></div>
+                                <div class="clearfix"></div>
+                            </div>
+                                </if>
+                            <!--登录-->
+                            <div class="am-cf" style="padding: 10px;font-size:10px;">
+                                <div class="am-fl am-btn am-btn-success">
+                                 <a  href="{:U('Mob/Member/index')}" title="" style="color: #FFFFFF;">返回登录</a>
+                                </div>
+                                <button class="am-btn am-btn-secondary am-fr" type="button" id="confirm">开始注册</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            invitation_code();
+            var data_type= $('.am-tabs .am-active').attr('data-type');
+            $('#registeredtype').val(data_type);
+        });
+
+        var step = "{$step}";
+        if (MID == 0 && step == 'start') {
+            $(document)
+                    .ajaxStart(function () {
+                        $("button:submit").addClass("log-in").attr("disabled", true);
+                    })
+                    .ajaxStop(function () {
+                        $("button:submit").removeClass("log-in").attr("disabled", false);
+                    });
+            $("form").submit(function () {
+                toast.showLoading();
+                var self = $(this);
+                $.post(self.attr("action"), self.serialize(), success, "json");
+                return false;
+
+                function success(data) {
+                    if (data.status) {
+                        //toast.success(data.info, '温馨提示');
+                        setTimeout(function () {
+                            window.location.href = data.url
+                        }, 10);
+                    } else {
+                        toast.error(data.info, '温馨提示');
+                        //self.find(".Validform_checktip").text(data.info);
+                        //刷新验证码
+                        $(".reloadverify").click();
+                    }
+                    toast.hideLoading();
+                }
+            });
+
+            function change_show(obj) {
+                if ($(obj).text().trim() == 'show') {
+                    $(obj).html('hide');
+                    $(obj).parents('.password_block').find('input').attr('type', 'text');
+                } else {
+                    $(obj).html('show');
+                    $(obj).parents('.password_block').find('input').attr('type', 'password');
+                }
+            }
+
+
+            function setNickname(obj) {
+                var text = jQuery.trim($(obj).val());
+                if (text != null && text != '') {
+                    $('#nickname').val(text);
+                }
+            }
+
+            $(function () {
+                var verifyimg = $(".verifyimg").attr("src");
+                $(".reloadverify").click(function () {
+                    if (verifyimg.indexOf('?') > 0) {
+                        $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+                    } else {
+                        $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+                    }
+                });
+            });
+
+
+            $(function () {
+                $("[data-role='getVerify']").click(function () {
+                    var account = $(this).parents('.tab-pane').find('[name="username"]').val();
+                    var type = $(this).parents('.tab-pane').find('[name="reg_type"]').val();
+                    $.post("{:U('ucenter/verify/sendVerify')}", {
+                        account: account,
+                        type: type,
+                        action: 'member'
+                    }, function (res) {
+                        if (res.status) {
+                            toast.success(res.info);
+                        }
+                        else {
+                            toast.error(res.info);
+                        }
+                    })
+                })
+                $('#reg_nav li a').click(function () {
+                    $('.tab-pane').find('input').attr('disabled', true);
+                    $('.tab-pane').eq($("#reg_nav li a").index(this)).find('input').attr('disabled', false);
+                })
+                $("[type='submit']").click(function () {
+                    $(this).parents('form').submit();
+                })
+
+                $('[href="#{$type}_reg"]').click()
+
+
+            })
+        }
+
+        $('#confirm').click(function () {
+            var data = $("#registered").serialize();
+            var url = $("#registered").attr('data-url');
+            $.post(url, data, function (msg) {
+                if (msg.status == 1) {
+                    toast.success('注册成功!');
+                    setTimeout(function () {
+                        window.location.href= "{:U('Mob/Weibo/index')}";
+                    }, 1000);
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json');
+        });
+
+        $('#type li').click(function () {
+           var data_type= $('.am-tabs .am-active').attr('data-type');
+            $('#registeredtype').val(data_type);
+        });
+    </script>
+<script>
+    // 验证密码长度
+    $(function(){
+        $('#inputPassword').after('<div class=" show_info" ></div>');
+        $('#inputPassword').blur(function(){
+
+            var obj =$('#inputPassword');
+            var str =  obj.val().replace(/\s+/g, "");
+            var html = '';
+            if (str.length == 0) {
+                html = '<div class="send red"><div class="arrow"></div>不能为空</div>';
+            } else {
+                if (typeof (obj.attr('check-length')) != 'undefined') {
+                    var strs = new Array(); //定义一数组
+                    strs = obj.attr('check-length').split(","); //字符分割
+                    if (strs[1]) {
+                        if (strs[1] < str.length || str.length < strs[0]) {
+                            html = '<div class="send red"><div class="arrow"></div>长度不符合要求</div>';
+                        }
+                    }
+                    else {
+                        if (strs[0] < str.length) {
+                            html = '<div class="send red"><div class="arrow"></div>长度不符合要求</div>';
+                        }
+                    }
+                }
+                obj.parent().find('.show_info').html(html);
+            }
+        })
+    })
+
+    //邀请码的弹窗
+    function invitation_code() {
+        $('.invitation_code').magnificPopup({
+            type: 'ajax',
+            overflowY: 'scroll',
+            modal: true,
+            callbacks: {
+                ajaxContentAdded: function () {
+                    console.log(this.content);
+                }
+            }
+        })
+    }
+</script>
+
+
+</block>

@@ -1,0 +1,42 @@
+
+<div style="padding: 5px">
+    <div class="post-type-box">
+        <label>添加分类： </label>
+
+        <form  class="am-form createType"  action="{:U('Mob/group/editCate')}">
+            <input type="hidden" name="group_id" value="{$group_id}">
+            <div class="am-form-group">
+                <input type="text" name="title" minlength="1" placeholder="添加分类" required/>
+            </div>
+            <button type="button" class="am-btn am-btn-primary am-radius am-btn-block saveType">
+                <i class="am-menu-toggle-icon am-icon-save "></i>保存
+            </button>
+        </form>
+
+
+    </div>
+
+    <div class="type-list" style="margin-top: 5px">
+        <span>已有分类： </span>
+        <ul class="am-list" style="">
+            <volist name="postType" id="v3">
+                <li>
+                    <div class="am-g category" data-id="{$v3.id}">
+                        <div class="type-title am-u-sm-6 ">
+                            <span class="cate_title">{$v3.title}</span>
+                        </div>
+                        <div class="shortcut-btn am-u-sm-6" style="text-align: right">
+                            <a href="javascript:" data-role="edit_cate" data-title="{$v3.title}">编辑</a>
+                            <a href="javascript:" data-role="del_cate">删除</a>
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+        <script>
+            var group_id = "{$group_id}";
+            saveType();
+            bind_group_cate();
+        </script>
+    </div>
+</div>

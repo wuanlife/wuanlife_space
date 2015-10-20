@@ -1,0 +1,194 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/event.css"/>
+        <script src="__JS__/event.js"></script>
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+            <a href="#phone-link" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            活动详情
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <!--    <a href="#nav-link" class="">
+                    <i class=" am-icon-star"></i>
+                </a>-->
+            <a href="#nav-link" class="">
+                <i class="am-menu-toggle-icon am-icon-bars"></i>
+            </a>
+        </div>
+    </div>
+</block>
+<block name="mob_body">
+
+
+    <div class="event-container ">
+
+
+        <div class="event-detail">
+            <div class="cover" style="text-align: center">
+
+                <img class="" style="width:100%;" src="{$content.cover_id|getThumbImageById=450,300}">
+
+                <div class="event_detail_type">{$content.type.title}</div>
+
+
+                <if condition="time() lt $content['eTime']">
+                    <div class="event_state" style="background: #d61f39;">
+                        正在进行
+                    </div>
+                    <else/>
+                    <div class="event_state" style="background: #000;">
+                        已结束
+                    </div>
+                </if>
+
+            </div>
+
+
+            <div class="am-g event-detail-box ">
+
+                <div class="content" style="text-align: left;background-color: #FFFFFF;padding: 10px">
+                    <div class="top-box">
+
+                        <if condition="($content['uid'] eq is_login()) OR is_administrator(is_login())">
+                            <div class="am-dropdown" data-am-dropdown style="float: right">
+                                <i class="am-icon-gear am-icon-spin am-dropdown-toggle"></i>
+
+                                <div class="am-dropdown-content"
+                                     style="padding:3px;width: 225px;text-align: center">
+
+                                    <a href="{:U('edit',array('id'=>$content['id']))}" type="button"
+                                       class="am-btn-default am-btn-xs"
+                                       style="  padding: 1px 6px;  border: 2px outset buttonface;vertical-align: middle;margin-right: 5px;">
+                                        编辑活动
+                                    </a>
+                                    <if condition="time() lt $content['eTime']">
+
+                                        <button type="button" class="am-btn-secondary am-btn-xs"
+                                                data-role="end_event"
+                                                data-id="{$content.id}">
+                                            结束活动
+                                        </button>
+                                    </if>
+
+
+                                    <button type="button" class="am-btn-warning am-btn-xs"
+                                            data-role="del_event"
+                                            data-id="{$content.id}">
+                                        删除活动
+                                    </button>
+
+
+                                </div>
+                            </div>
+                        </if>
+
+
+                        <div class="title">
+                            <span> {$content.title}</span><br>
+                        <span class="nickname fs12">by <a class=""
+                                                          href="{:U('user/index',array('uid'=>$content['uid']))}">
+                            <span class="event_count">{$content.user.nickname}</span></a></span>
+                          <span class="small-btn fs12">
+                            <i class="am-icon-eye"></i>{$content.view_count}
+                      </span>
+                        </div>
+                    </div>
+                    <div class="time fs12 tb6">
+                        <span>时间：  {:date('Y-m-d',$content['sTime'])}--{:date('Y-m-d',$content['eTime'])}</span>
+                    </div>
+                    <div class="address fs12 tb6">
+                        <span> 地址：  {$content.address}</span>
+                    </div>
+                    <div class="deadline fs12 tb6">
+                        <span> 报名截止时间：  {:date('Y-m-d H:i',$content['deadline'])}</span>
+                    </div>
+                    <!--                <div class="info fs12 tb6">
+                                        <span> 简介：   </span>
+                                    </div>-->
+                    <div class="num fs12 tb6 ">
+                        <a href="{:U('Event/member',array('id'=>$content['id']))}">
+                            <span class="limitCount">人数限制 {$content.limitCount}人</span>
+                            <span class="signCount"> 已报名{$content.signCount}人</span>
+                            <span class="attentionCount">已参加{$content.attentionCount}人</span>
+                        </a>
+                    </div>
+                    <div class=" am-text-center" style="padding: 10px;margin:0 auto">
+
+
+                        <if condition="($content['uid'] neq is_login())">
+                            <php>if(!$check_isSign){</php>
+
+                            <php>if($content['deadline'] < time()){</php>
+
+                            <a type="button" disabled="disabled"
+                               class="am-btn am-btn-default am-btn-sm am-radius">报名已截止 </a>
+
+                            <php>}else{</php>
+                            <if condition="is_login() eq 0">
+                                <a class="am-btn-secondary am-btn am-btn-sm am-radius" href="javascript:"
+                                   onclick="toast.error('请登陆后再报名')">报名参加 </a>
+                                <else/>
+                                <a href="{:U('event/sign',array('id'=>$content['id']))}"
+                                   class="am-btn-secondary am-btn am-btn-sm am-radius">我要报名</a>
+
+                            </if>
+                            <php>}</php>
+                            <php>}else{</php>
+                            <a class="am-btn-secondary am-btn am-btn-sm am-radius"
+                               data-eventID="{$content.id}" href="javascript:">取消报名 </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp; <span style="line-height: 34px;"> 已报名&nbsp;&nbsp;&nbsp;&nbsp;<if
+                                condition="$content['check_isSign'][0]['status'] eq 1">已审核
+                            <else/>
+                            未审核
+                        </if></span>
+                            <php>}</php>
+
+                        </if>
+
+
+                    </div>
+                </div>
+
+
+                <div class="detail" style="padding: 10px;background-color: #FFFFFF">
+                    <h6>活动详情</h6>
+                    <span style="font-size: 15px">{$content.explain|render}</span>
+
+                    <div class="time fs12 tb6" style="text-align: right;margin-top: 10px;">
+                        <span class="create">发布时间：{$content.create_time|friendlyDate}</span>
+                        <span class="updata">更新时间：{$content.update_time|friendlyDate}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="spliter "></div>
+
+            {:local_comment_textarea(array('path'=>'Event/event/'.$content[id],
+            'uid'=>$content['uid'],'count_model'=>'event','count_field'=>'reply_count','this_url'=>'event/index/detail'))}
+            {:get_local_comment_list('Event/event/'.$content[id])}
+
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+        $(function () {
+            $('#event-tabs').tabs();
+
+            $('#event-tabs').find('a').eq(1).on('open.tabs.amui', function (e) {
+                e.preventDefault()
+                location.href = $(this).attr('href');
+            })
+
+
+        })
+    </script>
+</block>

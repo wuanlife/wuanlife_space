@@ -1,0 +1,194 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+
+    <div class="sold-container ">
+
+        <div class="am-tabs" id="doc-my-tabs">
+            <div class="am-tabs-bd">
+
+                    <div class="sold-list-box">
+                        <ul class="sold-list">
+                            <notempty name="order">
+                                <volist name="order" id="vo">
+                                    <li class="sold-box">
+                                        <div class="am-panel am-panel-default">
+                                            <div class="am-panel-hd">
+                                                <div class="am-g"style="padding: 5px">
+                                                    <div class="am-u-sm-6 am-text-left"style="padding: 0px"><span>订单号：{$vo.id}</span></div>
+                                                    <div class="am-u-sm-6 am-text-right"style="padding: 0px"><span>卖家：<a
+                                                            href="{$vo.s_user.space_mob_url}">{$vo.s_user.nickname}</a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="am-panel-bd"style="padding: 5px">
+                                                <div class="sold am-g">
+                                                    <ul>
+                                                        <li class="goods-avatar">
+                                                           <a href="{:U('mob/store/goodsDetail',array('goodsId'=>$vo['goods']['id']))}"> <img class="am-img-thumbnail am-radius" src="{$vo.goods.cover_id|getThumbImageById=222,222}"></a>
+                                                        </li>
+                                                        <li class="goods-info">
+                                                            <h5 class="goods-name">   <a href="{:U('mob/store/goodsDetail',array('goodsId'=>$vo['goods']['id']))}">{$vo.goods.title}</a></h5>
+
+                                                            <p>
+                                                                总价：¥{$vo['total_cny']}
+                                                            </p>
+
+                                                            <p>
+                                                                调价：¥{$vo['adj_cny']}
+                                                            </p>
+
+                                                            <p>实付款：¥
+                                                                <php>$pay=$vo['total_cny']+$vo['adj_cny'];</php>
+                                                                {$pay}
+                                                            </p>
+
+                                                            <p>共{$vo.total_count}件</p>
+                                                            <if condition="$vo['condition'] eq -1">
+                                                                <p>已取消</p>
+                                                            </if>
+                                                            <if condition="$vo['condition'] eq 0">
+                                                                <a href="{:U('mob/store/pay',array('orderId'=>$vo['id']))}">付款</a>
+                                                                <a onclick="close_order({$vo.id})">取消</a>
+                                                            </if>
+                                                            <if condition="$vo['condition'] eq 1">
+                                                                <p>等待卖家发货</p>
+                                                            </if>
+                                                            <if condition="$vo['condition'] eq 2">
+                                                                <p>等待确认收货</p>
+                                                                <span>快递名称：{$vo.trans_name}</span><br>
+                                                                <span>单号：{$vo.trans_code}</span>
+                                                                <span>发货时间：{$vo.trans_time|friendlyDate}</span>
+                                                                <a class="btn btn-primary" onclick="postMkSure({$vo.id})" >确认收货</a>
+                                                            </if>
+                                                            <if condition="$vo['condition'] eq 3">
+                                                                <p>交易完成</p>
+                                                                <tr class="c_ddbox order_response">
+                                                                    <form action="{:U('mob/Store/doresponse')}" class="sureComment"
+                                                                          method="post">
+                                                                        <input type="hidden" name="order_id"
+                                                                               value="{$vo.id}">
+                                                                        <td colspan="2">
+                                                                            亲，请根据具体情况评分哦！
+                                                                        </td>
+                                                                        <td>
+                                                                            <input id="r_good{$vo.order_id}"
+                                                                                   name="response" value="good"
+                                                                                   type="radio"
+                                                                            <equal name="vo['response'] " value="1">
+                                                                                checked
+                                                                            </equal>
+                                                                            ><label
+                                                                                for="r_good{$vo.order_id}" class="mr5">好评</label>&nbsp;&nbsp;&nbsp;
+                                                                            <input id="r_normal{$vo.order_id}"
+                                                                                   name="response" value="normal"
+                                                                                   type="radio"
+                                                                            <equal name="vo['response'] " value="0">
+                                                                                checked
+                                                                            </equal>
+                                                                            ><label
+                                                                                for="r_normal{$vo.order_id}"
+                                                                                class="mr5">中评</label>&nbsp;&nbsp;&nbsp;
+                                                                            <input id="r_bad{$vo.order_id}"
+                                                                                   name="response" value="bad"
+                                                                                   type="radio"
+                                                                            <equal name="vo['response'] " value="-1">
+                                                                                checked
+                                                                            </equal>
+                                                                            ><label for="r_bad{$vo.order_id}"
+                                                                                    class="mr5">差评</label>
+                                                                        </td>
+                                                                        <td class="mb10">评语：</td>
+                                                                        <td>
+                                                                            <textarea name="content"
+                                                                                      class="form-control"
+                                                                                      style="width: 215px">{$vo.content}</textarea>
+                                                                        </td>
+                                                                        <td style="text-align: right">
+                                                                            <input class="btn btn-primary sure-comment"
+                                                                                   type="button" value="确认评价"/>
+                                                                        </td>
+                                                                    </form>
+                                                                </tr>
+                                                            </if>
+                                                            <if condition="$vo['condition'] eq 5">
+                                                                <p>超时取消</p>
+                                                            </if>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </volist>
+                                <else/>
+                                <div>
+                                <span>
+                                    你还没有购买任何商品，去<a href="{:U('mob/store/shop')}">商城</a>看看吧
+                                </span>
+                                </div>
+                            </notempty>
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        $(function () {
+            $('#doc-my-tabs').tabs(3);
+        })
+
+    </script>
+    <script>
+        sureComment();
+        function close_order(id) {
+            var ok = confirm('确定取消该订单？');
+            var url =  U('mob/store/closeOrder');
+            if (ok) {
+                $.post(url, {id: id}, function (msg) {
+                    if (msg.status) {
+                        toast.success('取消成功。', '温馨提示');
+                        setTimeout("location.reload()", 1000);
+                    } else {
+                        toast.error(msg.info, '温馨提示');
+                    }
+                });
+            }
+        }
+        /*确认收货*/
+        function postMkSure(order_id) {
+            //mag.show('<div style="padding: 20px;font-size: 16px;">正在确认中，请稍等。。。。。。</div>', '系统提示');
+            $.post(U('mob/store/buyer_mksure_order'), {order_id:order_id}, function (msg) {
+                if (msg.status) {
+                    toast.success(msg.info);
+                    setTimeout("location.reload()", 1000);
+                }
+                else {
+                    toast.error(msg.info);
+                }
+            }, 'json')
+        }
+        /*修改评价*/
+        function sureComment() {
+            $('.sure-comment').unbind('click');
+            $('.sure-comment').click(function () {
+                var data = $(".sureComment").serialize();
+                $.post(U('mob/store/doresponse'), data, function (msg) {
+                    if (msg.status) {
+                        toast.success(msg.info);
+                        setTimeout("location.reload()", 1000);
+                    }
+                    else {
+                        toast.error(msg.info);
+                    }
+                }, 'json')
+            });
+        }
+    </script>
+
+</block>

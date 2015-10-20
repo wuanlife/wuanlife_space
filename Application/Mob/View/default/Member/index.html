@@ -1,0 +1,123 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div class="header">
+        <div class="am-g">
+            <h1>{:modC('WEBSITE_NAME','OpenSNS','Mob')}</h1>
+
+            <p>{:modC('SUMMARY','')}</p>
+        </div>
+        <hr/>
+    </div>
+</block>
+
+<block name="mob_body">
+    <div class="am-g">
+        <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
+            <form method="post" class="am-form" data-url="{:U('Mob/Member/login')}"><!--{:U('Ucenter/Member/login')}-->
+                <input class="am-radius" placeholder="{$ph}" type="text" name="username" id="text" value="">
+                <br>
+                <input class="am-radius" placeholder="{:L('password')}" type="password" name="password" id="password"
+                       value="">
+                <br>
+                <!--验证码-->
+                <php>if (check_verify_open('login')) {</php>
+                <div class="form-group">
+                    <label for="verifyCode" class=".sr-only col-xs-12"
+                           style="display: none"></label>
+
+                    <div class="col-xs-5 col-sm-offset-1">
+                        <input type="text" id="verifyCode" class="form-control" placeholder="验证码"
+                               errormsg="请填写验证码" nullmsg="请填写验证码" datatype="*5-5" name="verify">
+                    </div>
+                    <div class="col-xs-6 lg_lf_fm_verify" style="margin-top: 10px;">
+                        <img class="verifyimg reloadverify  " alt="点击切换" src="{:U('verify')}"
+                             style="cursor:pointer;max-width: 100%">
+                    </div>
+                    <div class="col-xs-11 Validform_checktip text-warning lg_lf_fm_tip col-sm-offset-1"></div>
+                    <div class="clearfix"></div>
+                </div>
+                <php>}</php>
+                <!--验证码END-->
+                <div class="am-checkbox" style="margin-top: 0px">
+
+                    <input type="checkbox" value="1" name="remember" checked>记住登录
+
+                </div>
+
+                <div class="am-cf">
+                    <button id="conf" type="button" name="" value="{:L('login')}"
+                            class="am-btn am-radius am-btn-primary am-btn-sm am-fl am-btn-block">登录
+                    </button>
+                </div>
+                <br>
+
+
+                <div class="am-g" style="font-size: 12px">
+                    <div class="am-u-sm-6"><a href="{:U('mob/Member/foundpassword')}">{:L('forget_password')}</a></div>
+
+                    <div class="am-u-sm-6 am-text-right">
+                        <php>
+                            $register_type = modC('REGISTER_TYPE', 'normal', 'Invite');
+                            $register_type = explode(',', $register_type);
+                            if ((!modC('REG_SWITCH', '', 'USERCONFIG'))|| (!in_array('invite', $register_type) && !in_array('normal', $register_type))) {</php>
+                        <a href="javascript:void(0);" onclick="toast.error('注册已经关闭！');" style="color: #999999">{:L('quick_login')}</a>
+                        <php> }else if(!in_array('normal', $register_type)){</php>
+                        <a class="invitation_code" href="{:U('Mob/Member/inCode')}" data-title="输入邀请码" data-toggle="modal">{:L('quick_login')}</a>
+                        <php>}else{</php>
+                        <a href="{:U('mob/Member/register')}">{:L('quick_login')}</a>
+                        <php>}</php>
+
+                    </div>
+                </div>
+                <php>
+                    session('login_http_referer',$_SERVER['HTTP_REFERER']);
+                </php>
+                <div style="margin-top: 20px;">
+                    {:hook('syncLogin')}
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        invitation_code();
+        //邀请码的弹窗
+        function invitation_code() {
+            $('.invitation_code').magnificPopup({
+                type: 'ajax',
+                overflowY: 'scroll',
+                modal: true,
+                callbacks: {
+                    ajaxContentAdded: function () {
+                        console.log(this.content);
+                    }
+                }
+            })
+        }
+        var verifyimg = $(".verifyimg").attr("src");
+        $(".reloadverify").click(function () {
+            if (verifyimg.indexOf('?') > 0) {
+                $(".verifyimg").attr("src", verifyimg + '&random=' + Math.random());
+            } else {
+                $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+            }
+        });
+
+
+        $('#conf').click(function () {
+            var data = $(".am-form").serialize();
+            var url = $(".am-form").attr('data-url');
+            $.post(url, data, function (msg) {
+                if (msg.status == 1) {
+                    toast.success(msg.info);
+                    setTimeout(function () {
+                        location.href = "{:U('weibo/index')}";
+                    }, 200);
+                } else {
+                    toast.error(msg.info);
+                }
+            }, 'json');
+        })
+    </script>
+</block>

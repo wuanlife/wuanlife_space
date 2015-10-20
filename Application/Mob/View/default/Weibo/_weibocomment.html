@@ -1,0 +1,34 @@
+<div class="item" style="background-color: #ffffff;padding: 10px;margin-bottom: 5px;border: 1px solid #F2F2F2;">
+    <div class="am-cf avatar-img">
+        <div class="am-fl avatar">
+            <img class="avatar-img" style="width: 32px" src="{$vl.user.avatar32}">
+            <a href="{:U('Mob/User/index',array('uid'=>$vl['user']['uid']))}"><span>{$vl.user.nickname}</span></a>
+            <volist name="vl['rand_title']" id="v2">
+                <img  style="width: 18px;height: 18px" src="{$v2.logo}">
+            </volist><br/>
+        </div>
+
+
+        <div class="am-fr time" style="font-size: 13px;text-align: right">
+            {$vl.create_time|friendlyDate}
+        </div>
+    </div>
+    <div class="am-g content" style="padding: 10px">
+        {$vl.content}
+    </div>
+    <div class="am-g">
+
+        <div class="am-u-sm-2 am-text-center" style="float: right">
+            <a class="delete" comment-id="{$vl['id']}" weibo-id="{$vl['weibo_id']}"
+               url="{:U('Mob/Weibo/delComment')}">
+                <i class="am-icon-trash" id="doc-confirm-toggle"></i></a>
+        </div>
+
+        <div class="am-u-sm-2 t_center">
+            <a class="atcomment"
+               href="{:U('Mob/Weibo/addComment',array('id'=>$vl['weibo_id'],'user'=>$vl['user']['nickname']))}">
+                <i class="am-icon-comment-o"></i>
+            </a>
+        </div>
+    </div>
+</div>

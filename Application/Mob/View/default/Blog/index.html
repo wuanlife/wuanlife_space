@@ -1,0 +1,124 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/blog.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/blog.css"/>
+<div class="blog-container ">
+
+    <div class="blog-box-list ulclass">
+        <notempty name="hotblog">
+        <volist name="hotblog" id="vl">
+            <include file="_bloglist"/>
+        </volist>
+            <else/>
+            <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img src="__IMG__/tip.png" style="width: 100%;height: 100%">
+            </div>
+        </notempty>
+    </div>
+    <notempty name="hotblog">
+        <if condition="$pid['count'] eq 1">
+    <if condition="$blogmark['mark'] eq 0">
+        <div class="am-list-news-ft look-more">
+            <a id="getmorehotblog" data-url="{:U('Mob/Blog/addMoreBlog')}">查看更多 &raquo;</a>
+        </div>
+    </if>
+    <if condition="$blogmark['mark'] eq 1">
+        <div class="am-list-news-ft look-more">
+            <a id="getmorecallblog" data-url="{:U('Mob/Blog/addMoreBlog')}">查看更多 &raquo;</a>
+        </div>
+    </if>
+    <if condition="$blogmark['mark'] eq 2">
+        <div class="am-list-news-ft look-more">
+            <a  id="getmorecmyblog" data-url="{:U('Mob/Blog/addMoreBlog')}">查看更多 &raquo;</a>
+        </div>
+    </if>
+    <if condition="$blogmark['mark'] eq 3">
+        <div class="am-list-news-ft look-more">
+            <a  id="getmorecclassblog" data-url="{:U('Mob/Blog/addMoreBlog')}" data-role="{$blogtitle.title_id}">查看更多 &raquo;</a>
+        </div>
+    </if>
+     </if>
+    </notempty>
+</div>
+
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default"
+     id="">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4" style="font-size: 13px">
+        <if condition="$blogmark['mark'] eq 0">
+            <li>
+                <a href="{:U('blog/index',array('mark'=>1))}" class="am-icon-rss">
+                    热点资讯
+                </a>
+            </li>
+            <php>
+                if (is_login()) {
+            </php>
+            <li>
+                <a href="{:U('blog/index',array('mark'=>2))}" class="am-icon-reddit">
+                    我的投稿
+                </a>
+            </li>
+
+            <php>
+                }
+            </php>
+        </if>
+        <if condition="$blogmark['mark'] eq 1">
+            <li>
+                <a href="{:U('blog/index')}" class="am-icon-rss-square">
+                    全站资讯
+                </a>
+            </li>
+            <php>
+                if (is_login()) {
+            </php>
+            <li>
+                <a href="{:U('blog/index',array('mark'=>2))}" class="am-icon-reddit">
+                    我的投稿
+                </a>
+            </li>
+
+            <php>
+                }
+            </php>
+
+        </if>
+        <if condition="$blogmark['mark'] eq 2">
+            <li>
+                <a href="{:U('blog/index',array('mark'=>1))}" class="am-icon-qrcode">
+                    热点资讯
+                </a>
+            </li>
+            <li>
+                <a href="{:U('blog/index',array('mark'=>2))}" class="am-icon-reddit">
+                    我的投稿
+                </a>
+            </li>
+        </if>
+        <if condition="$blogmark['mark'] eq 3">
+            <li>
+                <a href="{:U('blog/index',array('mark'=>1))}" class="am-icon-qrcode">
+                    全站资讯
+                </a>
+            </li>
+            <php>
+                if (is_login()) {
+            </php>
+            <li>
+                <a href="{:U('blog/index',array('mark'=>2))}" class="am-icon-reddit">
+                    我的投稿
+                </a>
+            </li>
+
+            <php>
+                }
+            </php>
+        </if>
+
+        <li>
+            <a href="{:U('blog/blogtype')}" class="am-icon-th-large">
+                资讯分类
+            </a>
+        </li>
+    </ul>
+</div>
+    </block>

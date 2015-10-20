@@ -1,0 +1,50 @@
+<button title="Close (Esc)" type="button" class="mfp-close" style="display: none;">×</button>
+<form id="invitationFriend" data-url="{:U('Mob/group/invitationFriend')}">
+    <input type="hidden" name="group_id" value="{$group_id}">
+
+    <div class="" id="my-repost" style="width: 95%;margin:0px auto">
+        <div class="am-modal-dialog">
+            <div class="am-modal-bd weibo_post_box">
+                <php>if(empty($friends)){</php>
+                您还没有好友哦！可以去<a href="{:U('Mob/people/index')}">会员中心</a>看看
+                <php>}else{</php>
+                <volist name="friends" id="vo">
+                    <div class="am-cf">
+                        <div class="am-fl">
+                            <input type="checkbox" name="uids[]" value="{$vo.uid}"> <span>{$vo.nickname}</span>
+                        </div>
+                    </div>
+                </volist>
+                <php>}</php>
+            </div>
+            <div class="am-modal-footer am-g">
+                <button class=" am-u-sm-6" type="button" id="cancel"
+                        style="background-color: #F8F8F8;padding: 12px;border: 0px;color: #000000">
+                    <span>取消</span></button>
+                <button class=" am-u-sm-6" type="button" id="confirm"
+                        style="background-color: #32b1f1;padding: 12px;border: 0px;color: #FFFFFF">
+                    <span>确认</span></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $('#confirm').click(function () {
+        var data = $("#invitationFriend").serialize();
+        var url = $("#invitationFriend").attr('data-url');
+        $.post(url, data, function (msg) {
+            if (msg.status == 1) {
+                toast.success(msg.info);
+                    $('.mfp-close').click();
+            } else {
+                toast.error(msg.info)
+            }
+        }, 'json');
+    });
+
+
+    $('#cancel').click(function () {
+        $('.mfp-close').click();
+    });
+</script>

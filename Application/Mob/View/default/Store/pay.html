@@ -1,0 +1,194 @@
+<extend name="Base/mob_common"/>
+<block name="mob_header">
+    <div data-am-widget="header" class="am-header am-header-default am-header-fixed">
+        <link rel="stylesheet" href="__CSS__/apps/store.css"/>
+        <script src="__JS__/store.js"></script>
+        <div class="am-header-left am-header-nav">
+            <div class="am-header-left am-header-nav">
+                <a href="javascript:history.go(-1);"><span class="am-icon-chevron-left"></span></a>
+            </div>
+
+        </div>
+        <h1 class="am-header-title">
+            订单详情
+        </h1>
+
+        <div class="am-header-right am-header-nav">
+            <a href="#phone-link" class="">
+                <i class="am-header-icon am-icon-bell-o"></i>
+            </a>
+            <a href="#nav-link" class="">
+            </a>
+        </div>
+    </div>
+</block>
+
+<block name="mob_body">
+    <style>
+        .store-info {
+            padding: 10px;
+            font-size: 13px;
+        }
+
+        .order-price {
+            clear: both;
+        }
+
+        .order-price dl {
+            margin: 0px;
+            padding: 15px;
+            display: block;
+        }
+
+        .order-price dl dt {
+            width: 60%;
+            color: #999;
+            display: inline-block;
+            float: left;
+            font-size: 13px;
+        }
+
+        .order-price dl dd {
+            width: 40%;
+            text-align: right;
+            display: inline-block;
+            float: left;
+            margin: 0px;
+            font-size: 13px;
+        }
+
+        .h {
+            color: #ff5500;
+            font-size: 18px !important;
+        }
+
+        .order-footer {
+            position: fixed;
+        }
+    </style>
+    <div class="evaluation-container">
+        <div class="my-evaluation">
+            <div class="store-info am-cf" style="">
+                <a class="am-fl " href="">订单编号:{$order.id}</a>
+            <span class="am-fr">
+                订单状态:等待买家付款
+            </span>
+            </div>
+            <div class="store-info am-cf" style="">
+                <a class="am-fl " href="">下单时间:{$order.create_time|friendlyDate}</a>
+            <span class="am-fr">
+                <a href="{$order.buyUser.space_mob_url}"> 买家：{$order.buyUser.nickname}</a>
+                <a href="{$order.sellUser.space_mob_url}">卖家：{$order.sellUser.nickname}</a>
+            </span>
+            </div>
+            <div class="good-list-box">
+                <div>
+
+                </div>
+                <ul class="good-list" style="list-style: none">
+                    <volist name="order['item']" id="vo">
+                        <li class="goods-info am-cf"
+                            style="background-color: #f2f2f2;padding: 10px;border-bottom: 1px solid #FFFFFF">
+                            <div class="am-g">
+                                <img class=" am-u-sm-3" src="{$vo.goods.cover_id|getThumbImageById=222,222}"
+                                     style="width: 50px;height: 50px;padding: 0px">
+
+                                <div class="am-u-sm-7">
+                                    <div style="padding:2px">
+                                        <span>{$vo.h_name}</span>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-2 am-fr" style="padding: 0px">
+                                    <div>
+                                        ￥单价格：{$vo.h_price}
+                                    </div>
+                                    <div>
+                                        数量： ×{$vo.count}
+                                    </div>
+                                    <div>
+                                        总价：{:$vo['h_price']*$vo['count']}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </volist>
+
+
+                </ul>
+            </div>
+            <div style="border: solid 1px #f3f3f3;padding: 10px">
+                <ul class="am-avg-sm-2">
+                    <li class="am-text-left">
+                      <span>
+                      总数:{$order.total_count}
+                  </span>
+                    </li>
+                    <li class="am-text-right">
+                      <span>
+                         成交总价:{$order.total_cny}
+                          </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="am-cf">
+                <div class="order-price">
+                    <dl>
+                        <if condition="$order['attach'] eq NULL">
+                            <dt>买家备注：无</dt>
+                            <else/>
+                            <dt>买家备注：{$order.attach}</dt>
+                        </if>
+                    </dl>
+                    <dl>
+                        <dt>调价</dt>
+                        <dd>￥{$order.adj_cny}</dd>
+                    </dl>
+                    <dl>
+                        <dt>实际付款（含运费）</dt>
+                        <dd class="h">￥{:$order['total_cny']+$order['adj_cny']}</dd>
+                    </dl>
+                    <dl>
+                        <dt>账户余额</dt>
+                        <dd class="h">￥{$order['member']['score4']}</dd>
+                    </dl>
+                </div>
+            </div>
+<!--            {:W('Pay/pay',array('order_id'=>$order['id']))}-->
+        </div>
+
+        <div class="order-footer">
+            <div class="">
+
+            </div>
+        </div>
+    </div>
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default" id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-5">
+            <li>
+                <a href="javascript:history.go(-1)">
+                    返回
+                </a>
+            </li>
+
+            </li>
+
+            <if condition="$order['canPay'] eq 1">
+                <li>
+                    <a data-url="{:U('store/doPay')}" class="surePay" order-id="{$order.id}" data-index="{:U('store/soldBuy')}">
+                        确认付款
+                    </a>
+                </li>
+                <else/>
+                <li>
+                    <a href="javascript:void(0);" onclick="toast.error('余额不足。');">
+                        确认付款（您的余额不足）
+                    </a>
+                </li>
+            </if>
+        </ul>
+    </div>
+
+    <script>
+        surePay();
+    </script>
+</block>

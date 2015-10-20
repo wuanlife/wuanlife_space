@@ -1,0 +1,137 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class="issuedetail-container ">
+    <div class="issuedetail">
+        <div class="am-text-center title">
+            <h3>{$issuedetail.title}</h3>
+        </div>
+        <div class="spliter "></div>
+        <div class="">
+            <div class="am-text-center cover">
+                <img class="" style="width: 100%" src="{$issuedetail.cover_url}">
+            </div>
+            <div class="am-text-center info">
+                <h3>介绍</h3>
+            <span>
+                {$issuedetail.content}
+            </span>
+                <span>发布时间：{$issuedetail.create_time|friendlyDate}</span></br>
+                <span>更新时间：{$issuedetail.update_time|friendlyDate}</span>
+            </div>
+
+        </div>
+        <div class="spliter"></div>
+        <div class="am-text-center am-g">
+            <div class="eye am-u-sm-4">
+                <i class="am-icon-eye"></i>
+                {$issuedetail.view_count}
+            </div>
+<!--点赞-->
+            <div class="am-u-sm-4 am-text-center">
+                <a  class="support" weibo_id="{$issuedetail['id']}" user_id="{$issuedetail['uid']}" url="{:U('Mob/Issue/support')}">
+                    <if condition="$issuedetail['is_support'] eq 1">
+                        <i class="am-icon-heart"></i>
+                        <else/>
+                        <i class="am-icon-heart-o"></i>
+                    </if>
+                </a>
+            </div>
+
+<!--点赞结束-->
+            <div class="comment am-u-sm-4">
+                <i class="am-icon-comment-o"></i>
+                {$issuedetail.reply_count}
+            </div>
+        </div>
+
+        <div class="spliter"></div>
+            <if condition="$issuedetail['is_admin_or_mine'] eq 1">
+        <div class="am-text-center am-g">
+            <button type="button" class="am-btn am-btn-secondary am-round"><a class="am-icon-skyatlas" href="{$issuedetail.url}"
+                                                                     style="padding:0 20px">访问</a></button>
+            <button type="button" class="am-btn am-btn-secondary am-round"><a class="am-icon-wrench "
+                                                                     href="{:U('Mob/issue/addissue',array('id'=>$issuedetail['id']))}"
+                                                                     style="padding:0 20px">编辑</a></button>
+        </div>
+            </if>
+        <div class="am-form-group weibo_post_box" id="comment" style="padding: 10px;">
+            <h6>评论</h6>
+
+            <php>
+                if (!is_login()) {
+            </php>
+            <div  style=" position: relative; ">
+                <div class="am-g am-text-center" style="position: absolute;padding: 50px;">
+                    <span> 请先<a href="{:U('Mob/member/index')}">登录</a>后再评论</span>
+                </div>
+                <textarea  rows="5"   disabled style="height: 8em; width: 100%;">
+
+                </textarea>
+            </div>
+
+            <php>
+                }else{
+            </php>
+            <textarea class="content" rows="5" id="comment_content_text"   style="height: 8em; width: 100%;"></textarea>
+            <php>
+                }
+            </php>
+
+            <!--表情-->
+            <div class="am-cf" style="margin: 5px 0px">
+                <a href="javascript:" data-url=" {:U('Core/Expression/getSmile')}" onclick="insertFace($(this))">
+                    <img src="__IMG__/bq.png"></a>
+            </div>
+
+            <div id="emot_content" class="emot_content"></div>
+            <!--表情end-->
+
+
+            <p class="submit"style="margin-bottom:20px " issue_id="{$issuedetail.id}" url="{:U('Mob/Issue/doAddComment')} " uid="{$issuedetail.uid}">
+                <button style="float: right" type="button"  class="am-btn-warning am-btn am-btn-block am-round ">提交</button>
+            </p>
+        </div>
+
+
+    </div>
+
+    <div class="comment-list addmore" style="margin-top: 20px">
+        <volist name="issuecomment" id="vo">
+            <include file="_issuecomment"/>
+        </volist>
+    </div>
+    <if condition="$pid['count'] eq 1">
+    <div class="am-list-news-ft look-more">
+        <a class="" id="getmoreissuecomment"
+                >查看更多...</a>
+    </div>
+</if>
+
+</div>
+    <script>
+        nextpage();
+        //查看更多
+        var page = 1;
+        var issue_id = "{$issuedetail['id']}";
+        function nextpage() {
+            $('#getmoreissuecomment').unbind('click');
+            $('#getmoreissuecomment').click(function () {
+                $("#getmoreissuecomment").html("查看更多"+'&raquo;');
+                $.post("{:U('Mob/Issue/addMoreIssueComment')}", {page: page + 1, id: issue_id}, function (msg) {
+                    if (msg.status) {
+                        $(".addmore").append(msg.html);
+                        page++;
+                        del();
+                        comment();
+                    } else {
+                        $("#getmoreissuecomment").html("全部加载完成！");
+                        $(".look-more").delay(2000).hide(0);
+                    }
+                })
+            });
+        }
+    </script>
+</block>

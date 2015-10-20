@@ -1,0 +1,58 @@
+<extend name="Base/mob_common"/>
+<block name="mob_body">
+    <script src="__JS__/issue.js"></script>
+    <link rel="stylesheet" href="__CSS__/apps/issue.css"/>
+<div class=" issue-container">
+    <!--分类-->
+    <div>
+
+    </div>
+    <!-- 专辑列表-->
+    <ul class="am-g  issue-list am-avg-sm-2 am-avg-md-4 am-avg-lg-5 ulclass" style="margin:0 auto">
+        <notempty name="issue">
+            <volist name="issue" id="vo">
+                <include file="_issuelist"/>
+            </volist>
+            <else/>
+            <div class="am-text-center" style="background-color:#FFFFFF;margin-top: -15px"><img src="__IMG__/tip.png"
+            style="width: 100%;height: 100%">
+            </div>
+        </notempty>
+
+    </ul>
+</div>
+
+
+<div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default "
+     id="">
+    <ul class="am-navbar-nav am-cf am-avg-sm-4" style="font-size: 13px">
+        <li>
+            <a href="{:U('Mob/Issue/index')}">
+                全站专辑
+            </a>
+        </li>
+        <li>
+            <a href="{:U('issue/issuesection')}">
+                专辑分类
+            </a>
+        </li>
+    </ul>
+</div>
+
+<notempty name="issue">
+    <if condition="$pid['count'] eq 1">
+        <if condition="$title['pid'] eq 0">
+            <div class="am-list-news-ft look-more">
+                <a class="" id="getmore" data-url="{:U('Mob/Issue/addMoreIssue')}"
+                        >查看更多 &raquo;</a>
+            </div>
+        </if>
+        <if condition="$title['pid'] neq 0">
+            <div class="am-list-news-ft look-more">
+                <a class="" id="getmoreclass" data-url="{:U('Mob/Issue/addMoreIssueClass')}" data-role="{$title.id}"
+                        >查看更多 &raquo;</a>
+            </div>
+        </if>
+    </if>
+</notempty>
+</block>

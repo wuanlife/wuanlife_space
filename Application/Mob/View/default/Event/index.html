@@ -1,0 +1,98 @@
+<extend name="Base/mob_common"/>
+
+<block name="mob_body">
+    <link rel="stylesheet" href="__CSS__/apps/event.css"/>
+    <div class="event-container ">
+        <div style="text-align: center;;background-color: #FFFFFF">
+
+            <div class="am-btn-group doc-js-btn-1 am-g">
+                <a href="{:U('Event/index',array('norh'=>'new','type_id'=>$type_id))}"
+                   class="am-btn am-btn-default am-u-sm-6 <if condition="$norh eq 'new'">selected</if>">最新</a>
+                <a href="{:U('Event/index',array('norh'=>'hot','type_id'=>$type_id))}"
+                   class="am-btn am-btn-default am-u-sm-6 <if condition="$norh eq 'hot'">selected</if>">最热</a>
+            </div>
+
+            <ul class="event-list">
+                <include file="_eventlist"/>
+            </ul>
+
+            <div class="am-list-news-ft">
+                <a class=" am-btn am-btn-secondary am-btn-block" href="javascript:" data-role="show_more"
+                   data-url="__SELF__">查看更多 &raquo;</a>
+            </div>
+        </div>
+
+        <div class="user-mod" style="position: fixed;bottom:35px;">
+            <div id="carousel" style="position: relative;height: 37px;">
+
+                <div id="user-list">
+                    <a class="<if condition="$type_id eq 0">selected</if>" href="{:U('index',array('norh'=>$norh))}">全部</a>
+                    <volist name="type_tree" id="tree">
+                        <a class="<if condition="$type_id eq $tree['id']">selected</if>"  href="{:U('index',array('type_id'=>$tree['id'],'norh'=>$norh))}">{$tree.title}</a>
+                    </volist>
+                </div>
+
+            </div>
+        </div>
+
+        <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default"
+             id="">
+
+            <ul class="am-navbar-nav am-cf am-avg-sm-3">
+                <li style="font-size: 12px">
+                    <a href="{:U('event/index')}">所有活动
+                    </a>
+                </li>
+                <li style="font-size: 12px">
+                    <php>if(is_login()){</php>
+                    <a href="{:U('event/myevent')}" class="">
+                        我的活动
+                    </a>
+                    <php>}else{</php>
+                    <a href="javascript:" onclick="toast.error('请登录后再查看')" class="">
+                        我的活动
+                    </a>
+                    <php>}</php>
+                </li>
+                <li style="font-size: 12px">
+                    <a id="event-type">
+                        活动分类
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script src="__JS__/iscroll.js"></script>
+    <script>
+
+        var $carousel = document.getElementById('carousel'),
+                $box = document.getElementById('user-list'),
+                aArray = $box.querySelectorAll('a'),
+                aNum = aArray.length;
+        $box.style.width = (aNum * $("#user-list a:first-child").width() + 10 + 'px');
+
+        var myScroll = new iScroll('carousel', {
+            hideScrollbar: false,
+            hScroll: true,
+            bounce: true,
+            vScroll: false,
+            hScrollbar: false
+
+        });
+
+
+        $(function () {
+            $('.user-mod').hide();
+            $('#event-type').click(function () {
+                $('.user-mod').toggle();
+
+            });
+        });
+
+
+    </script>
+
+    <script src="__JS__/event.js"></script>
+</block>
+
+

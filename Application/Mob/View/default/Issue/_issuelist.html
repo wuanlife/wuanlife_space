@@ -1,0 +1,30 @@
+<li class="issue-Box ">
+    <div class="issue">
+        <div class="issue-info-box">
+            <div class="am-text-center cover">
+                <a href="{:U('Mob/Issue/issueDetail',array('id'=>$vo['id']))}">
+                    <img class="" style="width: 100%;height: 150px;"
+                         src="{$vo.cover_url}">
+                </a>
+            </div>
+            <div class="am-text-center title am-text-truncate">
+                <a href="{:U('Mob/Issue/issueDetail',array('id'=>$vo['id']))}" >{$vo.title}</a>
+ 
+            </div>
+            <div class="spliter "></div>
+            <div class="am-text-center info am-g" style="padding:0px 10px">
+                <div class="avatar am-u-sm-6">
+                    <img class="avatar-img" style="width: 32px"
+                         src="{$vo.user.avatar32}">
+                </div>
+                <div class="am-text-center name am-u-sm-6 am-text-truncate">
+                    <a href="{:U('Mob/User/index',array('uid'=>$vo['user']['uid']))}" class="">{$vo.user.nickname}</a>
+                </div>
+            </div>
+            <div class="spliter "></div>
+            <div class=" am-text-center time">
+                <span style="font-size: 13px">{$vo.create_time|friendlyDate}</span>
+            </div>
+        </div>
+    </div>
+</li>
