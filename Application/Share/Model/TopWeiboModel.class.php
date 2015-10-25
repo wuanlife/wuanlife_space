@@ -14,7 +14,7 @@ use Think\Model;
 class TopWeiboModel extends Model
 {
     protected $tableName='weibo_top';
-    /**获取置顶微博列表
+    /**获取置顶分享列表
      * @param int $limit
      * @return mixed
      */

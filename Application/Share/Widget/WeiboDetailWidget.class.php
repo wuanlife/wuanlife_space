@@ -23,7 +23,7 @@ class WeiboDetailWidget extends Controller
     {
         $weibo = D('Weibo/Weibo')->getWeiboDetail($weibo_id);
 
-        //置顶微博隐藏显示
+        //置顶分享隐藏显示
         $this->assign('can_hide',$can_hide);
         $top_hide=0;
         if($can_hide){

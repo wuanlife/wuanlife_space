@@ -39,7 +39,7 @@ var weibo = {
         if (this.page == undefined) {
             this.page = 1;
         }
-        //通过服务器载入微博列表
+        //通过服务器载入分享列表
         this.isLoadingWeibo = true;
         $('#load_more_text').text('正在载入...');
         toast.showLoading();
@@ -346,7 +346,7 @@ var weibo_page = function (weibo_id, page) {
 
 
 /**
- * 评论微博
+ * 评论分享
  * @param obj
  * @param comment_id 评论ID
  */
@@ -387,7 +387,7 @@ var del_weibo = function(){
             if (msg.status) {
                 weibo_bind();
                 $this.closest('#weibo_'+weibo_id).fadeOut();
-                toast.success('删除微博成功。', '温馨提示');
+                toast.success('删除分享成功。', '温馨提示');
             }
         }, 'json');
     })
@@ -456,7 +456,7 @@ var bind_lazy_load = function(){
     $("img.lazy").lazyload({effect: "fadeIn",threshold:200,failure_limit : 100});
 }
 
-//zzl显示隐藏置顶微博
+//zzl显示隐藏置顶分享
 var unshow_top_weibo_ids=function(unshow_ids, id) {
     var newArr = [];
     if(unshow_ids!=undefined){
@@ -498,7 +498,7 @@ var show_all_top_weibo=function(){
         $.cookie('Weibo_index_top_hide_ids',null);
     });
 }
-//zzl显示隐藏置顶微博 end
+//zzl显示隐藏置顶分享 end
 var weibo_bind = function(){
     ucard();
     weibo_reply();

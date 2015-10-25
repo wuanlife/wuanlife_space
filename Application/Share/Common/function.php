@@ -9,7 +9,7 @@
 
 
 /**
- * send_weibo  发布微博
+ * send_weibo  发布分享
  * @param $content
  * @param $type
  * @param string $feed_data
@@ -50,7 +50,7 @@ function send_comment($weibo_id, $content, $comment_id = 0){
     }
     //行为日志
     action_log('add_weibo_comment', 'weibo_comment', $result, $uid);
-    //通知微博作者
+    //通知分享作者
     $weibo = D('Weibo')->getWeiboDetail($weibo_id);
     send_comment_message($weibo['uid'], $weibo_id, "评论内容：$content");
     //通知回复的人

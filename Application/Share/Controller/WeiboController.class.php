@@ -29,7 +29,7 @@ class WeiboController extends AdminController
         $tab = array(
             array('data-id' => 'all', 'title' => '全站动态'),
             array('data-id' => 'concerned', 'title' => '我的关注'),
-            array('data-id' => 'hot', 'title' => '热门微博'),
+            array('data-id' => 'hot', 'title' => '热门分享'),
         );
         $default = array(array('data-id' => 'enable', 'title' => '启用', 'items' => $tab), array('data-id' => 'disable', 'title' => '禁用', 'items' => array()));
 
@@ -41,14 +41,14 @@ class WeiboController extends AdminController
         }
 
 
-        $data['WEIBO_SHOW_TITLE1'] = $data['WEIBO_SHOW_TITLE1'] ? $data['WEIBO_SHOW_TITLE1'] : '最新微博';
+        $data['WEIBO_SHOW_TITLE1'] = $data['WEIBO_SHOW_TITLE1'] ? $data['WEIBO_SHOW_TITLE1'] : '最新分享';
         $data['WEIBO_SHOW_COUNT1'] = $data['WEIBO_SHOW_COUNT1'] ? $data['WEIBO_SHOW_COUNT1'] : 5;
         $data['WEIBO_SHOW_ORDER_FIELD1'] = $data['WEIBO_SHOW_ORDER_FIELD1'] ? $data['WEIBO_SHOW_ORDER_FIELD1'] : 'create_time';
         $data['WEIBO_SHOW_ORDER_TYPE1'] = $data['WEIBO_SHOW_ORDER_TYPE1'] ? $data['WEIBO_SHOW_ORDER_TYPE1'] : 'desc';
         $data['WEIBO_SHOW_CACHE_TIME1'] = $data['WEIBO_SHOW_CACHE_TIME1'] ? $data['WEIBO_SHOW_CACHE_TIME1'] : '600';
 
 
-        $data['WEIBO_SHOW_TITLE2'] = $data['WEIBO_SHOW_TITLE2'] ? $data['WEIBO_SHOW_TITLE2'] : '热门微博';
+        $data['WEIBO_SHOW_TITLE2'] = $data['WEIBO_SHOW_TITLE2'] ? $data['WEIBO_SHOW_TITLE2'] : '热门分享';
         $data['WEIBO_SHOW_COUNT2'] = $data['WEIBO_SHOW_COUNT2'] ? $data['WEIBO_SHOW_COUNT2'] : 5;
         $data['WEIBO_SHOW_ORDER_FIELD2'] = $data['WEIBO_SHOW_ORDER_FIELD2'] ? $data['WEIBO_SHOW_ORDER_FIELD2'] : 'comment_count';
         $data['WEIBO_SHOW_ORDER_TYPE2'] = $data['WEIBO_SHOW_ORDER_TYPE2'] ? $data['WEIBO_SHOW_ORDER_TYPE2'] : 'desc';
@@ -56,42 +56,42 @@ class WeiboController extends AdminController
         $order = array('create_time' => '发布时间', 'comment_count' => '评论数');
 
         $builder->keyText('WEIBO_SHOW_TITLE1', '标题名称', '在首页展示块的标题');
-        $builder->keyText('WEIBO_SHOW_COUNT1', '显示微博数', '');
+        $builder->keyText('WEIBO_SHOW_COUNT1', '显示分享数', '');
         $builder->keyRadio('WEIBO_SHOW_ORDER_FIELD1', '排序值', '展示模块的数据排序方式', $order);
         $builder->keyRadio('WEIBO_SHOW_ORDER_TYPE1', '排序方式', '展示模块的数据排序方式', array('desc' => '倒序，从大到小', 'asc' => '正序，从小到大'));
         $builder->keyText('WEIBO_SHOW_CACHE_TIME1', '缓存时间', '默认600秒，以秒为单位');
 
         $builder->keyText('WEIBO_SHOW_TITLE2', '标题名称', '在首页展示块的标题');
-        $builder->keyText('WEIBO_SHOW_COUNT2', '显示微博数', '');
+        $builder->keyText('WEIBO_SHOW_COUNT2', '显示分享数', '');
         $builder->keyRadio('WEIBO_SHOW_ORDER_FIELD2', '排序值', '展示模块的数据排序方式', $order);
         $builder->keyRadio('WEIBO_SHOW_ORDER_TYPE2', '排序方式', '展示模块的数据排序方式', array('desc' => '倒序，从大到小', 'asc' => '正序，从小到大'));
         $builder->keyText('WEIBO_SHOW_CACHE_TIME2', '缓存时间', '默认600秒，以秒为单位');
 
 
-        $builder->title('微博基本设置')
+        $builder->title('分享基本设置')
             ->data($data)
-            ->keySwitch('SHOW_TITLE', '是否在微博左侧显示等级')
+            ->keySwitch('SHOW_TITLE', '是否在分享左侧显示等级')
             ->keySwitch('HIGH_LIGHT_AT', '高亮AT某人')
-            ->keySwitch('HIGH_LIGHT_TOPIC', '高亮微博话题')
-            ->keyText('WEIBO_INFO', '微博发布框左上内容')
-            ->keyText('WEIBO_NUM', '微博字数限制')
-            ->keyText('HOT_LEFT', '热门微博取多少天以内的，以那天零点之后为准')->keyDefault('HOT_LEFT',3)
+            ->keySwitch('HIGH_LIGHT_TOPIC', '高亮分享话题')
+            ->keyText('WEIBO_INFO', '分享发布框左上内容')
+            ->keyText('WEIBO_NUM', '分享字数限制')
+            ->keyText('HOT_LEFT', '热门分享取多少天以内的，以那天零点之后为准')->keyDefault('HOT_LEFT',3)
             ->keySwitch('CAN_IMAGE', '是否开启插入图片类型')
             ->keySwitch('CAN_TOPIC', '是否开启插入话题类型')
-            ->keyRadio('COMMENT_ORDER', '微博评论列表顺序', '', array(0 => '时间倒序', 1 => '时间正序'))
-            ->keyRadio('SHOW_COMMENT', '微博评论列表默认显示或隐藏', '', array(0 => '隐藏', 1 => '显示'))
-            //->keySelect('WEIBO_DEFAULT_TAB', '微博默认显示标签', '', array('all'=>'全站微博','concerned'=>'我的关注','hot'=>'热门微博'))
-            ->keyKanban('WEIBO_DEFAULT_TAB', '微博默认显示标签')
+            ->keyRadio('COMMENT_ORDER', '分享评论列表顺序', '', array(0 => '时间倒序', 1 => '时间正序'))
+            ->keyRadio('SHOW_COMMENT', '分享评论列表默认显示或隐藏', '', array(0 => '隐藏', 1 => '显示'))
+            //->keySelect('WEIBO_DEFAULT_TAB', '分享默认显示标签', '', array('all'=>'全站分享','concerned'=>'我的关注','hot'=>'热门分享'))
+            ->keyKanban('WEIBO_DEFAULT_TAB', '分享默认显示标签')
             ->keySwitch('ACTIVE_USER', '活跃用户开关')
             ->keySelect('ACTIVE_USER_ORDER', '活跃用户排序', '', $types)
             ->keyText('ACTIVE_USER_COUNT', '活跃用户显示数量', '')
-            ->keyText('USE_TOPIC', '常用话题', '显示在微博发布按钮左边，用‘,’分隔')
+            ->keyText('USE_TOPIC', '常用话题', '显示在分享发布按钮左边，用‘,’分隔')
             ->keySwitch('NEWEST_USER', '最新用户开关')
             ->keyText('NEWEST_USER_COUNT', '最新用户显示数量', '')
             ->group('基本设置', 'SHOW_TITLE,WEIBO_NUM,WEIBO_DEFAULT_TAB,HIGH_LIGHT_AT,HIGH_LIGHT_TOPIC,WEIBO_INFO,HOT_LEFT')
-            ->group('微博类型设置', 'CAN_IMAGE,CAN_TOPIC')
-            ->group('微博评论设置', 'COMMENT_ORDER,SHOW_COMMENT')
-            ->group('微博右侧设置', 'ACTIVE_USER,ACTIVE_USER_ORDER,ACTIVE_USER_COUNT,NEWEST_USER,NEWEST_USER_COUNT')
+            ->group('分享类型设置', 'CAN_IMAGE,CAN_TOPIC')
+            ->group('分享评论设置', 'COMMENT_ORDER,SHOW_COMMENT')
+            ->group('分享右侧设置', 'ACTIVE_USER,ACTIVE_USER_ORDER,ACTIVE_USER_COUNT,NEWEST_USER,NEWEST_USER_COUNT')
             ->group('话题设置', 'USE_TOPIC')
             ->group('首页展示左侧栏', 'WEIBO_SHOW_TITLE1,WEIBO_SHOW_COUNT1,WEIBO_SHOW_ORDER_FIELD1,WEIBO_SHOW_ORDER_TYPE1,WEIBO_SHOW_CACHE_TIME1')
             ->group('首页展示右侧栏', 'WEIBO_SHOW_TITLE2,WEIBO_SHOW_COUNT2,WEIBO_SHOW_ORDER_FIELD2,WEIBO_SHOW_ORDER_TYPE2,WEIBO_SHOW_CACHE_TIME2')
@@ -130,7 +130,7 @@ class WeiboController extends AdminController
         $attr0 = $attr;
         $attr0['url'] = $builder->addUrlParam(U('setWeiboTop'), array('top' => 0));
 
-        $builder->title('微博管理')
+        $builder->title('分享管理')
             ->setStatusUrl(U('setWeiboStatus'))->buttonEnable()->buttonDisable()->buttonDelete()->button('置顶', $attr1)->button('取消置顶', $attr0)
             ->keyId()->keyLink('content', '内容', 'comment?weibo_id=###')->keyUid()->keyCreateTime()->keyStatus()
             ->keyDoActionEdit('editWeibo?id=###')->keyMap('is_top', '置顶', array(0 => '不置顶', 1 => '置顶'))
@@ -157,7 +157,7 @@ class WeiboController extends AdminController
         $r = 20;
         $builder = new AdminListBuilder();
         $builder->clearTrash('Weibo');
-        //读取微博列表
+        //读取分享列表
         $map = array('status' => -1);
         $model = M('Weibo');
         $list = $model->where($map)->order('id desc')->page($aPage, $r)->select();
@@ -165,7 +165,7 @@ class WeiboController extends AdminController
 
         //显示页面
 
-        $builder->title('微博回收站')
+        $builder->title('分享回收站')
             ->setStatusUrl(U('setWeiboStatus'))->buttonRestore()->buttonClear('Weibo')
             ->keyId()->keyLink('content', '内容', 'comment?weibo_id=###')->keyUid()->keyCreateTime()
             ->data($list)
@@ -200,12 +200,12 @@ class WeiboController extends AdminController
             //返回成功信息
             $this->success('编辑成功', U('weibo'));
         } else {
-            //读取微博内容
+            //读取分享内容
             $weibo = $model->where(array('id' => $aId))->find();
 
             //显示页面
             $builder = new AdminConfigBuilder();
-            $builder->title('编辑微博')
+            $builder->title('编辑分享')
                 ->keyId()->keyTextArea('content', '内容')->keyCreateTime()->keyStatus()
                 ->buttonSubmit(U('editWeibo'))->buttonBack()
                 ->data($weibo)
