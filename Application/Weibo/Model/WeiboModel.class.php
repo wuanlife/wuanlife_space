@@ -26,7 +26,7 @@ class WeiboModel extends Model
         if (!$data) return false;
         $weibo_id = $this->add($data);
 
-        //返回微博编号
+        //返回分享编号
         return $weibo_id;
     }
 
@@ -104,7 +104,7 @@ class WeiboModel extends Model
         $weibo['can_delete'] = $this->canDeleteWeibo($weibo);
 
 
-        // 判断转发的原微博是否已经删除
+        // 判断转发的原分享是否已经删除
         if($weibo['type'] == 'repost'){
             $source_weibo = $this->getWeiboDetail( $weibo['weibo_data']['sourceId']);
             if(!$source_weibo['uid']){
@@ -121,12 +121,12 @@ class WeiboModel extends Model
 
     private function canDeleteWeibo($weibo)
     {
-        //如果是管理员，则可以删除微博
+        //如果是管理员，则可以删除分享
         if (check_auth('Weibo/Index/doDelWeibo', $weibo['uid'])) {
             return true;
         }
 
-        //返回，不能删除微博
+        //返回，不能删除分享
         return false;
     }
 
@@ -136,7 +136,7 @@ class WeiboModel extends Model
         $weibo = $this->getWeiboDetail($weibo_id);
 
 
-        //从数据库中删除微博、以及附属评论
+        //从数据库中删除分享、以及附属评论
         $result = $this->where(array('id' => $weibo_id))->save(array('status' => -1, 'comment_count' => 0));
         D('Weibo/WeiboComment')->where(array('weibo_id' => $weibo_id))->setField('status', -1);
 

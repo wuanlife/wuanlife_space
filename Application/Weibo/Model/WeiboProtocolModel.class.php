@@ -45,6 +45,6 @@ class WeiboProtocolModel extends Model
     }
     //返回中文名称
     public function getModelInfo(){
-        return array('title' => "微博", 'sort' => 100);
+        return array('title' => "分享", 'sort' => 100);
     }
 }

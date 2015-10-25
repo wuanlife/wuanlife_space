@@ -31,7 +31,7 @@ class UcenterBlockWidget extends Action
         $list = $weiboModel->getWeiboList($param);
         $this->assign('list', $list);
 
-        // 获取置顶微博
+        // 获取置顶分享
         $top_list = $weiboModel->getWeiboList(array('where' => array('status' => 1, 'is_top' => 1,'uid'=>$uid)));
         $this->assign('top_list', $top_list);
         $this->assign('total_count', $weiboModel->getWeiboCount($param['where']));

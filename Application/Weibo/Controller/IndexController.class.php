@@ -7,7 +7,7 @@ use Think\Hook;
 class IndexController extends BaseController
 {
     /**
-     * index   微博首页
+     * index   分享首页
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
      */
     public function index()
@@ -45,7 +45,7 @@ class IndexController extends BaseController
         $list = $weiboModel->getWeiboList($param);
         $this->assign('list', $list);
 
-        // 获取置顶微博
+        // 获取置顶分享
         $top_list = $weiboModel->getWeiboList(array('where' => array('status' => 1, 'is_top' => 1)));
         $this->assign('top_list', $top_list);
         $this->assign('total_count', $weiboModel->getWeiboCount($param['where']));
@@ -57,13 +57,13 @@ class IndexController extends BaseController
             $this->assign('title', '我关注的');
             $this->assign('filter_tab', 'concerned');
         } else if ($aType == 'hot') {
-            $this->assign('title', '热门微博');
+            $this->assign('title', '热门分享');
             $this->assign('filter_tab', 'hot');
         } else {
             $this->assign('title', '全站关注');
             $this->assign('filter_tab', 'all');
         }
-        $this->setTitle('{$title}——微博');
+        $this->setTitle('{$title}——分享');
         $this->assignSelf();
         if (is_login() && check_auth('Weibo/Index/doSend')) {
             $this->assign('show_post', true);
@@ -129,7 +129,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * doSend   发布微博
+     * doSend   发布分享
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
      */
     public function doSend()
@@ -144,7 +144,7 @@ class IndexController extends BaseController
             $class_str = 'Addons\\Insert' . ucfirst($aType) . '\\Insert' . ucfirst($aType) . 'Addon';
             $class_exists = class_exists($class_str);
             if (!$class_exists) {
-                $this->error('无法发表该类型的微博');
+                $this->error('无法发表该类型的分享');
             } else {
                 $class = new $class_str();
                 if (method_exists($class, 'parseExtra')) {
@@ -159,7 +159,7 @@ class IndexController extends BaseController
 
         //权限判断
         $this->checkIsLogin();
-        $this->checkAuth(null, -1, '您无微博发布权限。');
+        $this->checkAuth(null, -1, '您无分享发布权限。');
         $return = check_action_limit('add_weibo', 'weibo', 0, is_login(), true);
         if ($return && !$return['state']) {
             $this->error($return['info']);
@@ -233,7 +233,7 @@ class IndexController extends BaseController
         $aBeComment = I('post.becomment', 'false', 'op_t');
 
 
-        $this->checkAuth(null, -1, '您无微博转发权限。');
+        $this->checkAuth(null, -1, '您无分享转发权限。');
 
         $return = check_action_limit('add_weibo', 'weibo', 0, is_login(), true);
         if ($return && !$return['state']) {
@@ -251,7 +251,7 @@ class IndexController extends BaseController
         $sourceweibo = $source['weibo'];
         $feed_data['source'] = $sourceweibo;
         $feed_data['sourceId'] = $aSourceId;
-        //发布微博
+        //发布分享
         $new_id = send_weibo($aContent, $aType, $feed_data);
 
         if ($new_id) {
@@ -263,7 +263,7 @@ class IndexController extends BaseController
 // 发送消息
         $user = query_user(array('nickname'), is_login());
         $toUid = D('weibo')->where(array('id' => $aWeiboId))->getField('uid');
-        D('Common/Message')->sendMessage($toUid, '转发提醒', $user['nickname'] . '转发了您的微博！', 'Weibo/Index/weiboDetail', array('id' => $new_id), is_login(), 1);
+        D('Common/Message')->sendMessage($toUid, '转发提醒', $user['nickname'] . '转发了您的分享！', 'Weibo/Index/weiboDetail', array('id' => $new_id), is_login(), 1);
 
         // 发布评论
         //  dump($aBeComment);exit;
@@ -292,7 +292,7 @@ class IndexController extends BaseController
         $aContent = I('post.content', 0, 'op_t');
         $aCommentId = I('post.comment_id', 0, 'intval');
 
-        $this->checkAuth(null, -1, '您无微博发布评论权限。');
+        $this->checkAuth(null, -1, '您无分享发布评论权限。');
         $return = check_action_limit('add_weibo_comment', 'weibo_comment', 0, is_login(), true);
         if ($return && !$return['state']) {
             $this->error($return['info']);
@@ -355,7 +355,7 @@ class IndexController extends BaseController
         $aCommentId = I('post.comment_id', 0, 'intval');
         $this->checkIsLogin();
         $comment = D('Weibo/WeiboComment')->getComment($aCommentId);
-        $this->checkAuth(null, $comment['uid'], '您无删除微博评论权限。');
+        $this->checkAuth(null, $comment['uid'], '您无删除分享评论权限。');
 
 
         //删除评论
@@ -373,7 +373,7 @@ class IndexController extends BaseController
     }
 
     /**
-     * doDelWeibo  删除微博
+     * doDelWeibo  删除分享
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
      */
     public function doDelWeibo()
@@ -383,9 +383,9 @@ class IndexController extends BaseController
 
         $weibo = $weiboModel->getWeiboDetail($aWeiboId);
 
-        $this->checkAuth(null, $weibo['uid'], '您无删除微博评论权限。');
+        $this->checkAuth(null, $weibo['uid'], '您无删除分享评论权限。');
 
-        //删除微博
+        //删除分享
         $result = $weiboModel->deleteWeibo($aWeiboId);
         action_log('del_weibo', 'weibo', $aWeiboId, is_login());
         if (!$result) {
@@ -411,7 +411,7 @@ class IndexController extends BaseController
         $weiboModel = D('Weibo');
         $weibo = $weiboModel->find($aWeiboId);
         if (!$weibo) {
-            $this->error('置顶失败，微博不能存在。');
+            $this->error('置顶失败，分享不能存在。');
         }
         if ($weibo['is_top'] == 0) {
             if ($weiboModel->where(array('id' => $aWeiboId))->setField('is_top', 1)) {
@@ -451,13 +451,13 @@ class IndexController extends BaseController
     }
 
     /**
-     * weiboDetail  微博详情页
+     * weiboDetail  分享详情页
      * @param $id
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
      */
     public function weiboDetail($id)
     {
-        //读取微博详情
+        //读取分享详情
 
         $weibo = D('Weibo')->getWeiboDetail($id);
         if ($weibo === null) {
@@ -474,7 +474,7 @@ class IndexController extends BaseController
 
         $supported = D('Weibo')->getSupportedPeople($weibo['id'], array('nickname', 'space_url', 'avatar128', 'space_link'), 12);
         $this->assign('supported', $supported);
-        $this->setTitle('{$weibo.content|op_t}——微博详情');
+        $this->setTitle('{$weibo.content|op_t}——分享详情');
 
         $this->assign('tab', 'index');
         $this->display();

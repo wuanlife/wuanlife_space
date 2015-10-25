@@ -27,7 +27,7 @@ class TypeController extends Controller
     }
 
     /**
-     * fetchImage  渲染图片微博
+     * fetchImage  渲染图片分享
      * @param $weibo
      * @return string
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
@@ -49,7 +49,7 @@ class TypeController extends Controller
     }
 
     /**
-     * fetchRepost   渲染转发微博
+     * fetchRepost   渲染转发分享
      * @param $weibo
      * @return string
      * @author:xjw129xjt(肖骏涛) xjt@ourstu.com

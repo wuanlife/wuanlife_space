@@ -32,7 +32,7 @@ class WeiboCommentModel extends Model
         if (!$data) return false;
         $comment_id = $this->add($data);
 
-        //增加微博评论数量
+        //增加分享评论数量
         D('Weibo/Weibo')->where(array('id' => $weibo_id))->setInc('comment_count');
 
         S('weibo_' . $weibo_id, null);
@@ -42,7 +42,7 @@ class WeiboCommentModel extends Model
 
     public function deleteComment($comment_id)
     {
-        //获取微博编号
+        //获取分享编号
         $comment = D('Weibo/WeiboComment')->find($comment_id);
         if ($comment['status'] == -1) {
             return false;
@@ -52,7 +52,7 @@ class WeiboCommentModel extends Model
         //将评论标记为已经删除
         D('Weibo/WeiboComment')->where(array('id' => $comment_id))->setField('status', -1);
 
-        //减少微博的评论数量
+        //减少分享的评论数量
         D('Weibo/Weibo')->where(array('id' => $weibo_id))->setDec('comment_count');
         S('weibo_' . $weibo_id, null);
         //返回成功结果
