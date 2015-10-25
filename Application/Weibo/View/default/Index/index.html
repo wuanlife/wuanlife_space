@@ -1,0 +1,231 @@
+<extend name="Base/common"/>
+<block name="header">
+    <include file="Public/_nav"/>
+</block>
+
+<block name="body">
+    <style>
+        #main-container {
+            width: 960px;
+        }
+    </style>
+    <link href="__CSS__/weibo.css" type="text/css" rel="stylesheet"/>
+    <!--微博内容列表部分-->
+    <div class="weibo_middle pull-left" style="width: 660px">
+        <include file="_quickweibo"/>
+        <div>
+            {:hook('Advs', 'weibo_below_sendbox')}
+        </div>
+        <!--  筛选部分-->
+
+        <div>
+            <php>if(!is_login()) $style='margin-top:0'</php>
+            <div id="weibo_filter" style="margin-bottom: 10px;position: relative;{$style}">
+                <div class="weibo_icon">
+                    <php>
+                        $show_icon_eye_open=0;
+                        if(count($top_list)){
+                        $hide_ids=cookie('Weibo_index_top_hide_ids');
+                        if(mb_strlen($hide_ids,'utf-8')){
+                        $hide_ids=explode(',',$hide_ids);
+                        foreach($top_list as $val){
+                            if(in_array($val,$hide_ids)){
+                                $show_icon_eye_open=1;
+                                break;
+                            }
+                        }}}
+                        if(count($top_list)){
+                        if($show_icon_eye_open){
+                    </php>
+                    <li data-weibo-id="{$weibo.id}" title="显示全部置顶{$MODULE_ALIAS}" data-role="show_all_top_weibo">
+                        <i class="icon icon-eye-open"></i>
+                    </li>
+                    <php>}else{</php>
+                    <li data-weibo-id="{$weibo.id}" title="显示全部置顶{$MODULE_ALIAS}" data-role="show_all_top_weibo" style="display: none;">
+                        <i class="icon icon-eye-open"></i>
+                    </li>
+                    <php>}}</php>
+                </div>
+                <volist name="tab_config" id="tab">
+                    <a id="{$tab}" href="{:U('Weibo/Index/index',array('type'=>$tab))}">
+                        <php>if($tab == 'concerned'){</php>
+                        我的关注
+                        <php>}elseif($tab == 'hot'){</php>
+                        热门{$MODULE_ALIAS}
+                        <php>}else{</php>
+                        全站{$MODULE_ALIAS}
+                        <php>}</php>
+                    </a>
+                </volist>
+
+            </div>
+        </div>
+        <script>
+            $('#weibo_filter #{$filter_tab}').addClass('active');
+        </script>
+
+
+        <!--筛选部分结束-->
+        <div id="top_list">
+            <volist name="top_list" id="top">
+                {:W('WeiboDetail/detail',array('weibo_id'=>$top,'can_hide'=>1))}
+            </volist>
+        </div>
+        <div id="weibo_list">
+            <php>
+                if($page != 1){
+            </php>
+            <include file="loadweibo"/>
+            <php>
+                }
+            </php>
+
+        </div>
+        <div id="load_more" class="text-center text-muted"
+        <if condition="$page neq 1">style="display:none"</if>
+        >
+        <p id="load_more_text">载入更多</p>
+    </div>
+    <div id="index_weibo_page" style=" <if condition='$page eq 1'>display:none</if>">
+        <div class="text-right">
+            {:getPagination($total_count,30)}
+        </div>
+    </div>
+    </div>
+
+    <!--微博内容列表部分结束-->
+    <!--首页右侧部分-->
+    <div class="weibo_right" style="width: 280px">
+        <!--登录后显示个人区域-->
+        <if condition="is_login()">
+            <div class="user-card">
+                <div>
+                    <div class="top_self">
+                        <if condition="$self['cover_id']">
+                            <img class="cover uc_top_img_bg_weibo" src="{$self['cover_path']}">
+                            <else/>
+                            <img class="cover uc_top_img_bg_weibo" src="__CORE_IMAGE__/bg.jpg">
+                        </if>
+                        <if condition="is_login() && $self['uid'] eq is_login()">
+                            <div class="change_cover"><a data-type="ajax" data-url="{:U('Ucenter/Public/changeCover')}"
+                                                         data-toggle="modal" data-title="上传个人封面" style="color: white;"><img
+                                    class="img-responsive" src="__CORE_IMAGE__/fractional.png" style="width: 25px;"></a>
+                            </div>
+                        </if>
+                    </div>
+                </div>
+                <div class="user_info" style="padding: 0px;">
+                    <div class="avatar-bg">
+                        <div class="headpic ">
+                            <a href="{$self.space_url}" ucard="{$self.uid}">
+                                <img src="{$self.avatar128}" class="avatar-img" style="width:80px;"/>
+                            </a>
+                        </div>
+                        <div class="clearfix " style="padding: 0;margin-bottom:8px">
+                            <div class="clearfix">
+                                <div class="col-xs-12" style="text-align: center">
+                        <span class="nickname">
+                            {$self.title}
+                        <a ucard="{$self.user.uid}" href="{$self.space_url}" class="user_name">{$self.nickname|htmlspecialchars}</a>
+                            {:W('Common/UserRank/render',array($self['uid']))}
+
+                            </span>
+                                </div>
+                            </div>
+                            <php>
+                                $title=D('Ucenter/Title')->getCurrentTitleInfo(is_login());
+                            </php>
+                            <script>
+                                $(function () {
+                                    $('#upgrade').tooltip({
+                                                html: true,
+                                                title: '当前阶段：{$self.title} <br/>下一阶段：{$title.next}<br/>现有：{$self.score}<br/>需要：{$title.upgrade_require}<br/>剩余需要： {$title.left}<br/>升级进度：{$title.percent}% <br/> '
+                                            }
+                                    );
+                                })
+                            </script>
+
+                        </div>
+
+                        <div id="upgrade" data-toggle="tooltip" data-placement="bottom" title=""
+                             style="padding-bottom: 10px;padding-top: 10px">
+                            <div style="border-top:1px solid #eee;"></div>
+                            <div style="border-top: 1px solid rgb(3, 199, 3);margin-top: -1px;width: {$title.percent}%;z-index: 9999;">
+
+                            </div>
+                        </div>
+                        <div class="clearfix user-data">
+                            <div class="col-xs-4 text-center">
+                                <a href="{:U('Ucenter/index/applist',array('uid'=>$self['uid'],'type'=>'weibo'))}"
+                                   title="{$MODULE_ALIAS}数">{$self.weibocount}</a><br>{$MODULE_ALIAS}
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="{:U('Ucenter/index/fans',array('uid'=>$self['uid']))}" title="粉丝数">{$self.fans}</a><br>粉丝
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="{:U('Ucenter/index/following',array('uid'=>$self['uid']))}" title="关注数">{$self.following}</a><br>关注
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </if>
+        <!--登录后显示个人区域部分结束-->
+
+        <div>
+            <div class="checkin">
+                {:hook('checkIn')}
+                {:hook('Rank')}
+            </div>
+            {:hook('weiboSide')}
+            <!--广告位-->
+            {:hook('Advs', 'weibo_below_checkrank')}
+            <!--广告位end-->
+
+            <if condition="modC('ACTIVE_USER',1)">
+                {:W('TopUserList/lists',array(null,'score'.modC('ACTIVE_USER_ORDER',1).'
+                desc','活跃用户','top',modC('ACTIVE_USER_COUNT',6)))}
+            </if>
+            <if condition="modC('NEWEST_USER',1)">
+                {:W('UserList/lists',array(null,'id desc','最新加入','new',modC('NEWEST_USER_COUNT',6)))}
+            </if>
+        </div>
+    </div>
+    <!--首页右侧部分结束-->
+</block>
+<block name="script">
+    <script src="__JS__/weibo.js"></script>
+    <script>
+        var SUPPORT_URL = "{:addons_url('Support://Support/doSupport')}";
+        weibo.page = '{$page}';
+        weibo.loadCount = 0;
+        weibo.lastId = parseInt('{$list|reset}')+1;
+        weibo.url = "{$loadMoreUrl}";
+        weibo.type = "{$type}";
+        $(function () {
+
+
+
+
+            weibo_bind();
+            //当屏幕滚动到底部时
+            if (weibo.page == 1) {
+                $(window).on('scroll', function () {
+                    if (weibo.noMoreNextPage) {
+                        return;
+                    }
+                    if (weibo.isLoadingWeibo) {
+                        return;
+                    }
+                    if (weibo.isLoadMoreVisible()) {
+                        weibo.loadNextPage();
+                    }
+                });
+                $(window).trigger('scroll');
+            }
+        });
+
+    </script>
+</block>
