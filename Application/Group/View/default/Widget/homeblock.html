@@ -6,7 +6,7 @@
                     <div class="col-xs-9">
                         <div>
                             <h2>
-                                {:modC('GROUP_POST_SHOW_TITLE', '热门群组话题', 'Group')}
+                                {:modC('GROUP_POST_SHOW_TITLE', '热门小组话题', 'Group')}
                             </h2>
 
                             <div>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-xs-3">
                         <div>
-                            <h2>{:modC('GROUP_SHOW_TITLE', '推荐群组', 'Group')}</h2>
+                            <h2>{:modC('GROUP_SHOW_TITLE', '推荐小组', 'Group')}</h2>
 
                             <div class="clearfix position-groups">
                                 <ul class="group-list" style="list-style: none;margin-bottom: 10px;margin-top: -12px;">
@@ -85,7 +85,7 @@
                                                 <p>
                                                     {$vo.member_count} 个{$vo.member_alias|default='成员'}&nbsp;&nbsp;
                                                     <if condition="!$vo['is_attend']">
-                                                        <a data-role="group_attend" data-group-id="{$vo.id}" class="">+加入群组</a>
+                                                        <a data-role="group_attend" data-group-id="{$vo.id}" class="">+加入小组</a>
                                                     </if>
                                                 </p>
                                             </div>

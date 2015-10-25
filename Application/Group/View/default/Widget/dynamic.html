@@ -7,7 +7,7 @@
 <switch name="dynamic.type">
     <case value="attend">
         <div class="col-xs-10">
-            <h3><a href="{$user.space_url}">{$user.nickname}</a> 加入了群组
+            <h3><a href="{$user.space_url}">{$user.nickname}</a> 加入了小组
                 <a target="_blank" href="{:U('group/index/group',array('id'=>$dynamic['group_id']))}" title="{$dynamic.group_id|get_group_name}">{$dynamic.group_id|get_group_name|getShortSp=15}</a>
                 <span class="pull-right hidden-xs">  {$dynamic.create_time|friendlyDate}</span>
             </h3>

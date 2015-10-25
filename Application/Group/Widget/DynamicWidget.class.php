@@ -12,7 +12,7 @@ namespace Group\Widget;
 use Think\Controller;
 
 /**
- * Class DynamicWidget  群组动态
+ * Class DynamicWidget  小组动态
  * @package Group\Widget
  * @author:xjw129xjt xjt@ourstu.com
  */

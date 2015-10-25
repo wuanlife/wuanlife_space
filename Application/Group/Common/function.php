@@ -92,7 +92,7 @@ function limit_picture_count($content){
 }
 
 /**
- * 权限检测时获取要排除的uids(群创建者、群组管理员、自己)
+ * 权限检测时获取要排除的uids(群创建者、小组管理员、自己)
  * @param int $id
  * @param int $type
  * @param int $with_self 是否包含记录的uid
@@ -116,7 +116,7 @@ function get_admin_ids($id=0,$type=0,$with_self=1)
         case '3'://根据贴子id查询排除者id
             $post_id=$id;
             break;
-        case '4'://根据群组 id查询排除者id
+        case '4'://根据小组 id查询排除者id
             $group_id=$id;
             break;
         default:

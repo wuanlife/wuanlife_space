@@ -12,7 +12,7 @@ namespace Group\Widget;
 use Think\Controller;
 
 /**
- * 某人创建的群组widget
+ * 某人创建的小组widget
  * 用于动态调用分类信息
  */
 class SomebodyCreateWidget extends Controller

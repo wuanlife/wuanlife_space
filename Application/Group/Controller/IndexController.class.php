@@ -67,7 +67,7 @@ class IndexController extends BaseController
         }
         if ($aUid != 0) {
             $param['where']['uid'] = $aUid;
-            $this->assign('name', get_nickname($aUid) . '的群组');
+            $this->assign('name', get_nickname($aUid) . '的小组');
             $this->assign('keyword', array(0 => 'uid', 1 => $aUid));
         }
 
@@ -83,7 +83,7 @@ class IndexController extends BaseController
         $this->assign('r', $r);
         $this->assign('group_list', $group_list);
         $this->assignGroupTypes();
-        $this->setTitle('群组首页');
+        $this->setTitle('小组首页');
         $this->assign('current', 'groups');
         $this->display();
     }
@@ -164,8 +164,8 @@ class IndexController extends BaseController
             $this->setTitle('{$group.title}');
 
         } else {
-            $this->setTitle('群组');
-            $this->assign('group', array('title' => '群组 Group'));
+            $this->setTitle('小组');
+            $this->assign('group', array('title' => '小组 Group'));
         }
         $this->assign('list_top', $list_top);
         $this->assignPostCategory($aId);
@@ -236,16 +236,16 @@ class IndexController extends BaseController
             $aBackground = I('post.background', 0, 'intval');
             $aMemberAlias = I('post.member_alias', '成员', 'text');
             if (empty($aTitle)) {
-                $this->error('请填写群组名称');
+                $this->error('请填写小组名称');
             }
             if (utf8_strlen($aTitle) > 20) {
-                $this->error('群组名称最多20个字');
+                $this->error('小组名称最多20个字');
             }
             if ($aGroupType == -1) {
-                $this->error('请选择群组分类');
+                $this->error('请选择小组分类');
             }
             if (empty($aDetail)) {
-                $this->error('请填写群组介绍');
+                $this->error('请填写小组介绍');
             }
             $model = D('Group');
             $isEdit = $aGroupId ? true : false;
@@ -253,13 +253,13 @@ class IndexController extends BaseController
                 $this->requireLogin();
                 $this->requireGroupExists($aGroupId);
                 $this->checkActionLimit('edit_group', 'Group', $aGroupId, is_login(), true);
-                $this->checkAuth('Group/Index/editGroup', get_group_admin($aGroupId), '您无编辑群组权限');
+                $this->checkAuth('Group/Index/editGroup', get_group_admin($aGroupId), '您无编辑小组权限');
             } else {
 
                 $this->requireLimit();
 
                 $this->checkActionLimit('add_group', 'Group', 0, is_login(), true);
-                $this->checkAuth('Group/Index/addGroup', -1, '您无添加群组权限');
+                $this->checkAuth('Group/Index/addGroup', -1, '您无添加小组权限');
             }
             $need_verify = modC('GROUP_NEED_VERIFY', 0, 'GROUP');
 
@@ -273,7 +273,7 @@ class IndexController extends BaseController
                 $data['status'] = $need_verify ? 0 : 1;
                 $result = $model->createGroup($data);
                 if (!$result) {
-                    $this->error('创建群组失败：' . $model->getError());
+                    $this->error('创建小组失败：' . $model->getError());
                 }
                 $group_id = $result;
                 //向GroupMember表添加创建者成员
@@ -282,7 +282,7 @@ class IndexController extends BaseController
             if ($need_verify) {
                 $message = '创建成功，请耐心等候管理员审核。';
                 // 发送消息
-                D('Message')->sendMessage(1,'群组创建审核', get_nickname(is_login()) . "创建了群组【{$aTitle}】，快去审核吧。",  'admin/group/unverify');
+                D('Message')->sendMessage(1,'小组创建审核', get_nickname(is_login()) . "创建了小组【{$aTitle}】，快去审核吧。",  'admin/group/unverify');
                 $this->success($message, U('group/index/index'));
             }
 
@@ -290,10 +290,10 @@ class IndexController extends BaseController
             if (D('Module')->checkInstalled('Weibo')) {
                 $postUrl = "http://$_SERVER[HTTP_HOST]" . U('Group/Index/group', array('id' => $group_id));
                 if ($isEdit && check_is_in_config('edit_group', modC('GROUP_SEND_WEIBO', 'add_group,edit_group', 'GROUP'))) {
-                    D('Weibo/Weibo')->addWeibo(is_login(), "我修改了群组【" . $aTitle . "】：" . $postUrl);
+                    D('Weibo/Weibo')->addWeibo(is_login(), "我修改了小组【" . $aTitle . "】：" . $postUrl);
                 }
                 if (!$isEdit && check_is_in_config('add_group', modC('GROUP_SEND_WEIBO', 'add_group,edit_group', 'GROUP'))) {
-                    D('Weibo/Weibo')->addWeibo(is_login(), "我创建了一个新的群组【" . $aTitle . "】：" . $postUrl);
+                    D('Weibo/Weibo')->addWeibo(is_login(), "我创建了一个新的小组【" . $aTitle . "】：" . $postUrl);
                 }
 
             }
@@ -308,7 +308,7 @@ class IndexController extends BaseController
 
             $this->requireLogin();
             $this->assignGroupAllType();
-            $this->setTitle('创建群组');
+            $this->setTitle('创建小组');
             $this->display();
         }
     }
@@ -318,7 +318,7 @@ class IndexController extends BaseController
         $limit = modC('GROUP_LIMIT', 5, 'GROUP');
         $count = $model->getUserGroupCount(is_login());
         if($count >= $limit){
-            $this->error('您创建的群组数已达上限：'.$limit);
+            $this->error('您创建的小组数已达上限：'.$limit);
         }
     }
     public function my()
@@ -347,7 +347,7 @@ class IndexController extends BaseController
         $this->assign('r', $r);
         $this->assign('groups', $myattend);
         $this->assign('current', 'my');
-        $this->setTitle('我的群组');
+        $this->setTitle('我的小组');
         $this->display();
     }
 
@@ -365,7 +365,7 @@ class IndexController extends BaseController
         $this->assign('r', $r);
         $this->assign('mygroup', $myattend);
         $this->assign('current', 'my');
-        $this->setTitle('我的群组');
+        $this->setTitle('我的小组');
         $this->display();
     }
 
@@ -382,7 +382,7 @@ class IndexController extends BaseController
         $post['content'] = limit_picture_count($post['content']);
 
         $this->assignNotice($post['group_id']);
-        //检测群组、帖子是否存在
+        //检测小组、帖子是否存在
         if (!$post || !group_is_exist($post['group_id'])) {
             $this->error('找不到该帖子');
         }
@@ -422,12 +422,12 @@ class IndexController extends BaseController
             $post = D('GroupPost')->getPost($aPostId);
         } else {
             if (is_joined($aGroupId) != 1) {
-                $this->error('您还未加入群组无法发帖。');
+                $this->error('您还未加入小组无法发帖。');
             }
             $this->checkAuth('Group/Index/addPost', -1, '您无添加帖子权限');
             $post = array('group_id' => $aGroupId);
         }
-        //获取群组id
+        //获取小组id
         $aGroupId = $aGroupId ? intval($aGroupId) : $post['group_id'];
         $this->assignPostCategory($aGroupId);
         $this->assignGroup($aGroupId);
@@ -472,7 +472,7 @@ class IndexController extends BaseController
 
 
         if (empty($aGroupId)) {
-            $this->error('请选择帖子所在的群组');
+            $this->error('请选择帖子所在的小组');
         }
         if (empty($aTitle)) {
             $this->error('请填写帖子标题');
@@ -569,10 +569,10 @@ class IndexController extends BaseController
             $feed_data['attach_ids'] != false && $type = "image";
             if (D('Common/Module')->isInstalled('Weibo')) { //安装了微博模块
                 if ($isEdit && check_is_in_config('edit_group_post', modC('GROUP_POST_SEND_WEIBO', 'add_group_post,edit_group_post', 'GROUP'))) {
-                    D('Weibo/Weibo')->addWeibo(is_login(), "我在群组【{$group['title']}】里更新了帖子【" . $post['title'] . "】：" . $postUrl, $type, $feed_data);
+                    D('Weibo/Weibo')->addWeibo(is_login(), "我在小组【{$group['title']}】里更新了帖子【" . $post['title'] . "】：" . $postUrl, $type, $feed_data);
                 }
                 if (!$isEdit && check_is_in_config('add_group_post', modC('GROUP_POST_SEND_WEIBO', 'add_group_post,edit_group_post', 'GROUP'))) {
-                    D('Weibo/Weibo')->addWeibo(is_login(), "我在群组【{$group['title']}】里发表了一个新的帖子【" . $post['title'] . "】：" . $postUrl, $type, $feed_data);
+                    D('Weibo/Weibo')->addWeibo(is_login(), "我在小组【{$group['title']}】里发表了一个新的帖子【" . $post['title'] . "】：" . $postUrl, $type, $feed_data);
                 }
             }
         }
@@ -794,7 +794,7 @@ class IndexController extends BaseController
             } else {
                 $this->error('参数出错！');
             }
-            $this->setTitle('编辑回复 —— 群组');
+            $this->setTitle('编辑回复 —— 小组');
             //显示页面
             $this->assign('reply', $reply);
             $this->display();
@@ -808,7 +808,7 @@ class IndexController extends BaseController
         $aPostId = I('get.post_id', 0, 'intval');
         $aContent = I('post.content', '', 'filter_content');
 
-        // 获取群组ID
+        // 获取小组ID
         $group_id = $this->getGroupIdByPost($aPostId);
         $this->requireLogin();
         $this->checkActionLimit('add_group_reply', 'GroupPostReply', 0, is_login(), true);
@@ -850,7 +850,7 @@ class IndexController extends BaseController
 
         //判断是否已经加入
         if (is_joined($aGroupId) == 1) {
-            $this->error('已经加入了该群组');
+            $this->error('已经加入了该小组');
         }
         // 已经加入但还未审核
         if (is_joined($aGroupId) == 2) {
@@ -865,14 +865,14 @@ class IndexController extends BaseController
         $data['position'] = 1;
         $info = '';
         if ($group['type'] == 1) {
-            // 群组为私有的。
+            // 小组为私有的。
             $data['status'] = 0;
             $res = D('GroupMember')->addMember($data);
-            $info = '，等待群组管理员审核！';
+            $info = '，等待小组管理员审核！';
             // 发送消息
-            D('Message')->sendMessage($group['uid'], '加入群组审核',get_nickname($uid) . "请求加入群组【{$group['title']}】", 'group/Manage/member', array('group_id' => $aGroupId, 'status' => 0), $uid);
+            D('Message')->sendMessage($group['uid'], '加入小组审核',get_nickname($uid) . "请求加入小组【{$group['title']}】", 'group/Manage/member', array('group_id' => $aGroupId, 'status' => 0), $uid);
         } else {
-            // 群组为公共的
+            // 小组为公共的
             $data['status'] = 1;
             $res = D('GroupMember')->addMember($data);
             //添加到最新动态
@@ -904,11 +904,11 @@ class IndexController extends BaseController
         // 判断是否是创建者，创建者无法退出
         $group = D('Group')->getGroup($aGroupId);
         if ($group['uid'] == $uid) {
-            $this->error('创建者无法退出群组');
+            $this->error('创建者无法退出小组');
         }
-        // 判断是否在该群组内
+        // 判断是否在该小组内
         if (is_joined($aGroupId) == 0) {
-            $this->error('你不在该群组中');
+            $this->error('你不在该小组中');
         }
 
         $res = D('GroupMember')->delMember(array('group_id' => $aGroupId, 'uid' => $uid));
@@ -938,7 +938,7 @@ class IndexController extends BaseController
             $uids = I('post.uids');
             $group = D('Group')->getGroup($aGroupId);
             foreach ($uids as $uid) {
-                D('Message')->sendMessage($uid, '邀请加入群组', get_nickname(is_login()) . "邀请您加入群组【{$group['title']}】  <a class='ajax-post' href='" . U('group/index/attend', array('group_id' => $aGroupId)) . "'>接受邀请</a>",  'group/index/group', array('id' => $aGroupId), is_login());
+                D('Message')->sendMessage($uid, '邀请加入小组', get_nickname(is_login()) . "邀请您加入小组【{$group['title']}】  <a class='ajax-post' href='" . U('group/index/attend', array('group_id' => $aGroupId)) . "'>接受邀请</a>",  'group/index/group', array('id' => $aGroupId), is_login());
             }
 
             $result = array('status' => 1, 'info' => '邀请成功');

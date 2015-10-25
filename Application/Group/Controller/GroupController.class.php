@@ -31,13 +31,13 @@ class GroupController extends AdminController
             S('GROUP_POST_SHOW_DATA', null);
         }
         $data = $admin_config->handleConfig();
-        $admin_config->title('群组基本设置')
-            ->keyBool('GROUP_NEED_VERIFY', '创建群组是否需要审核', '默认无需审核')
+        $admin_config->title('小组基本设置')
+            ->keyBool('GROUP_NEED_VERIFY', '创建小组是否需要审核', '默认无需审核')
             ->keyText('GROUP_POST_IMG_COUNT', '帖子显示图片的数量限制', '默认为10')
 
-            ->keyCheckBox('GROUP_SEND_WEIBO', '创建/修改群组发送微博开关', '', array('add_group' => '创建群组', 'edit_group' => '编辑群组'))
-            ->keyBool('GROUP_AUDIT_SEND_WEIBO', '审核群组是否发送微博', '')
-            ->keyText('GROUP_LIMIT', '每个人允许创建的群组个数', '默认为5')
+            ->keyCheckBox('GROUP_SEND_WEIBO', '创建/修改小组发送微博开关', '', array('add_group' => '创建小组', 'edit_group' => '编辑小组'))
+            ->keyBool('GROUP_AUDIT_SEND_WEIBO', '审核小组是否发送微博', '')
+            ->keyText('GROUP_LIMIT', '每个人允许创建的小组个数', '默认为5')
             ->keyCheckBox('GROUP_POST_SEND_WEIBO', '创建/修改帖子发送微博开关', '', array('add_group_post' => '新增帖子', 'edit_group_post' => '编辑帖子'))
             ->keyRadio('GROUP_LZL_REPLY_ORDER', '楼中楼排序', '', array(0 => '时间降序', 1 => '时间升序'))
             ->keyText('GROUP_LZL_SHOW_COUNT', '楼中楼显示数量')
@@ -51,16 +51,16 @@ class GroupController extends AdminController
             ->keyDefault('GROUP_POST_SEND_WEIBO', 'add_group_post,edit_group_post')
             ->keyDefault('GROUP_LZL_REPLY_ORDER', 1)
             ->keyDefault('GROUP_LZL_SHOW_COUNT', 5)
-            ->group('群组设置', 'GROUP_NEED_VERIFY,GROUP_SEND_WEIBO,GROUP_AUDIT_SEND_WEIBO,GROUP_LIMIT')
+            ->group('小组设置', 'GROUP_NEED_VERIFY,GROUP_SEND_WEIBO,GROUP_AUDIT_SEND_WEIBO,GROUP_LIMIT')
             ->group('帖子设置', 'GROUP_POST_IMG_COUNT,GROUP_POST_SEND_WEIBO')
             // ->group('回复设置','')
             ->group('楼中楼设置', 'GROUP_LZL_REPLY_ORDER,GROUP_LZL_SHOW_COUNT')
 
-            ->keyText('GROUP_SHOW_TITLE', '标题名称', '在首页展示块的标题')->keyDefault('GROUP_SHOW_TITLE', '推荐群组')
+            ->keyText('GROUP_SHOW_TITLE', '标题名称', '在首页展示块的标题')->keyDefault('GROUP_SHOW_TITLE', '推荐小组')
             ->keyText('GROUP_SHOW', '显示板块', '竖线|分割，填板块ID，如1|2|3|4|5')
             ->keyText('GROUP_SHOW_CACHE_TIME', '缓存时间', '默认600秒，以秒为单位')->keyDefault('GROUP_SHOW_CACHE_TIME', '600')
 
-            ->keyText('GROUP_POST_SHOW_TITLE', '标题名称', '在首页展示块的标题')->keyDefault('GROUP_POST_SHOW_TITLE', '热门群组话题')
+            ->keyText('GROUP_POST_SHOW_TITLE', '标题名称', '在首页展示块的标题')->keyDefault('GROUP_POST_SHOW_TITLE', '热门小组话题')
             ->keyText('GROUP_POST_SHOW_NUM', '贴子显示数量')->keyDefault('GROUP_POST_SHOW_NUM', 5)
             ->keyRadio('GROUP_POST_ORDER', '贴子排序字段', '', array('create_time' => '创建时间', 'update_time' => '更新时间', 'last_reply_time' => '最后回复时间', 'view_count' => '阅读量', 'reply_count' => '回复数'))->keyDefault('GROUP_POST_ORDER', 'last_reply_time')
             ->keyRadio('GROUP_POST_TYPE', '贴子排序方式', '', array('asc' => '升序', 'desc' => '降序'))->keyDefault('GROUP_POST_TYPE', 'desc')
@@ -94,7 +94,7 @@ class GroupController extends AdminController
         //显示页面
         $builder = new AdminListBuilder();
         $builder
-            ->title('群组管理')
+            ->title('小组管理')
             ->buttonNew(U('Group/editGroup'))
             ->setStatusUrl(U('Group/setGroupStatus'))->buttonDisable('', '审核不通过')->buttonDelete()
             ->buttonSort(U('Group/sortGroup'))
@@ -122,7 +122,7 @@ class GroupController extends AdminController
         //显示页面
         $builder = new AdminListBuilder();
         $builder
-            ->title('群组管理')
+            ->title('小组管理')
             ->setStatusUrl(U('Group/setGroupStatus'))->buttonEnable(U('Group/setGroupStatus', array('tip' => 'verify')), '审核通过')->buttonDelete()
             ->buttonSort(U('Group/sortGroup'))
             ->keyId()->keyLink('title', '标题', 'Group/post?group_id=###')
@@ -163,7 +163,7 @@ class GroupController extends AdminController
             ->setStatusUrl(U('Group/setGroupTypeStatus'))->buttonEnable()->buttonDisable()->buttonDelete()
             ->buttonSort(U('Group/sortGroupType'))
             ->keyId()->keyLink('title', '标题', 'Group/group?type_id=###')
-            ->keyCreateTime()->keyText('group_count', '群组数量')->keyStatus()->keyDoActionEdit('editGroupType?id=###')
+            ->keyCreateTime()->keyText('group_count', '小组数量')->keyStatus()->keyDoActionEdit('editGroupType?id=###')
             ->data($list)
             ->display();
     }
@@ -249,7 +249,7 @@ class GroupController extends AdminController
         //显示页面
         $builder = new AdminListBuilder();
         $builder
-            ->title('群组回收站')->buttonDeleteTrue(U('groupClear'))
+            ->title('小组回收站')->buttonDeleteTrue(U('groupClear'))
             ->setStatusUrl(U('Group/setGroupStatus'))->buttonRestore()
             ->keyId()->keyLink('title', '标题', 'Group/post?group_id=###')
             ->keyCreateTime()->keyText('post_count', '文章数量')
@@ -266,7 +266,7 @@ class GroupController extends AdminController
     }
 
     /**
-     * sortGroup 群组排序页面
+     * sortGroup 小组排序页面
      * @author:xjw129xjt xjt@ourstu.com
      */
     public function sortGroup($ids)
@@ -275,12 +275,12 @@ class GroupController extends AdminController
             $builder = new AdminSortBuilder();
             $builder->doSort('Group', $ids);
         } else {
-            //读取群组列表
+            //读取小组列表
             $list = M('Group')->where(array('status' => array('EGT', 0)))->order('sort asc')->select();
 
             //显示页面
             $builder = new AdminSortBuilder();
-            $builder->title('群组排序')
+            $builder->title('小组排序')
                 ->data($list)
                 ->buttonSubmit(U('sortGroup'))->buttonBack()
                 ->display();
@@ -290,7 +290,7 @@ class GroupController extends AdminController
 
 
     /**
-     * setGroupStatus  设置群组状态
+     * setGroupStatus  设置小组状态
      * @param $ids
      * @param $status
      * @author:xjw129xjt xjt@ourstu.com
@@ -305,14 +305,14 @@ class GroupController extends AdminController
                 if (modC('GROUP_AUDIT_SEND_WEIBO', 1, 'Group')) {
                     $postUrl = "http://$_SERVER[HTTP_HOST]" . U('Group/Index/group', array('id' => $v));
                     if (D('Common/Module')->isInstalled('Weibo')) { //安装了微博模块
-                        D('Weibo/weibo')->addWeibo(is_login(), "管理员通过了群组【" . $title['title'] . "】的审核：" . $postUrl);
+                        D('Weibo/weibo')->addWeibo(is_login(), "管理员通过了小组【" . $title['title'] . "】的审核：" . $postUrl);
                     }
                     // 发送消息
                 }
-                D('Message')->sendMessageWithoutCheckSelf($title['uid'], '群组审核通知', "管理员通过了您创建的群组【" . $title['title'] . "】的审核", 'Group/Index/group', array('id' => $v));
+                D('Message')->sendMessageWithoutCheckSelf($title['uid'], '小组审核通知', "管理员通过了您创建的小组【" . $title['title'] . "】的审核", 'Group/Index/group', array('id' => $v));
             }
             if($status == 0){
-                D('Message')->sendMessageWithoutCheckSelf($title['uid'], '群组审核通知', "管理员取消了您创建的群组【" . $title['title'] . "】的审核，您的群组现在为未审核状态，有问题请及时联系管理员。");
+                D('Message')->sendMessageWithoutCheckSelf($title['uid'], '小组审核通知', "管理员取消了您创建的小组【" . $title['title'] . "】的审核，您的小组现在为未审核状态，有问题请及时联系管理员。");
             }
 
         }
@@ -367,7 +367,7 @@ class GroupController extends AdminController
             $aId = I('get.id', 0, 'intval');
             //判断是否为编辑模式
             $isEdit = $aId ? true : false;
-            //如果是编辑模式，读取群组的属性
+            //如果是编辑模式，读取小组的属性
             if ($isEdit) {
                 $group = M('Group')->where(array('id' => $aId))->find();
             } else {
@@ -390,13 +390,13 @@ class GroupController extends AdminController
             //显示页面
             $builder = new AdminConfigBuilder();
             $builder
-                ->title($isEdit ? '编辑群组' : '新增群组')
-                ->keyId()->keyTitle()->keyTextArea('detail', '群组介绍')
-                ->keyRadio('type', '群组类型', '群组的类型', array(0 => '公共群组', 1 => '私有群组'))
+                ->title($isEdit ? '编辑小组' : '新增小组')
+                ->keyId()->keyTitle()->keyTextArea('detail', '小组介绍')
+                ->keyRadio('type', '小组类型', '小组的类型', array(0 => '公共小组', 1 => '私有小组'))
                 ->keySelect('type_id', '分类', '选择分类', $opt)
                 /* ->keyMultiUserGroup('allow_user_group', '允许发帖的用户组')*/
                 ->keyStatus()
-                ->keySingleImage('logo', '群组logo', '群组logo，300px*300px')->keyText('member_alias', '群成员昵称')->keyCreateTime()
+                ->keySingleImage('logo', '小组logo', '小组logo，300px*300px')->keyText('member_alias', '群成员昵称')->keyCreateTime()
                 ->data($group)
                 ->buttonSubmit(U('editGroup'))->buttonBack()
                 ->display();
@@ -437,7 +437,7 @@ class GroupController extends AdminController
                 $v['top'] = '不置顶';
             }
         }
-        //读取群组基本信息
+        //读取小组基本信息
         if ($aGroupId) {
             $group = D('Group/Group')->getGroup($aGroupId);
             $groupTitle = ' - ' . $group['title'];
@@ -609,8 +609,8 @@ class GroupController extends AdminController
             ->buttonNew(U('Group/editPostCate'))
             ->setStatusUrl(U('Group/setGroupPostCateStatus'))->buttonEnable()->buttonDisable()->buttonDelete()
             /*  ->buttonSort(U('Group/sortPostCate'))*/
-            ->keyId()->keyText('group_name', '所属群组')->keyText('title', '标题')
-            ->keyCreateTime()->keyText('post_count', '群组数量')->keyStatus()->keyDoActionEdit('editPostCate?id=###')
+            ->keyId()->keyText('group_name', '所属小组')->keyText('title', '标题')
+            ->keyCreateTime()->keyText('post_count', '小组数量')->keyStatus()->keyDoActionEdit('editPostCate?id=###')
             ->data($list)
             ->pagination($totalCount, $r)
             ->display();
@@ -653,7 +653,7 @@ class GroupController extends AdminController
             } else {
                 $wordCate1 = array('status' => 1, 'sort' => 0);
             }
-            $builder->title('新增分类')->keyId()->keySelect('group_id', '所属群组', '', $opt)->keyText('title', '标题')
+            $builder->title('新增分类')->keyId()->keySelect('group_id', '所属小组', '', $opt)->keyText('title', '标题')
                 ->keyStatus()->keyCreateTime()
                 ->data($wordCate1)
                 ->buttonSubmit(U('Group/editPostCate'))->buttonBack()->display();

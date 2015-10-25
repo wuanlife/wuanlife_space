@@ -265,7 +265,7 @@ var bind_attend_group = function () {
 var bind_quit_group = function () {
     $('[data-role="group_quit"]').unbind('click')
     $('[data-role="group_quit"]').click(function () {
-        if (confirm('确定要退出该群组么？')) {
+        if (confirm('确定要退出该小组么？')) {
             var obj = $(this)
             var group_id = $(this).attr('data-group-id');
             $.post(U('group/index/quit'), {group_id: group_id}, function (res) {
@@ -285,7 +285,7 @@ var bind_group_manager = function(){
 var bind_dismiss_group = function () {
     $('[data-role="dismiss_group"]').unbind('click')
     $('[data-role="dismiss_group"]').click(function () {
-        if(confirm('确定要解散该群组么？')){
+        if(confirm('确定要解散该小组么？')){
             var obj = $(this)
             var group_id = obj.attr('data-group-id');
             $.post(U('group/manage/dismiss'),{group_id:group_id},function(res){

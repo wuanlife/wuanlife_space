@@ -22,12 +22,12 @@
 
                 <php>if(is_joined($group['id']) == 1){
                 </php>
-                <a class="pull-left btn btn-primary" data-role="group_quit" data-group-id="{$group.id}">退出群组</a>
+                <a class="pull-left btn btn-primary" data-role="group_quit" data-group-id="{$group.id}">退出小组</a>
 
                 <php> }elseif(is_joined($group['id']) == 2){</php>
                 <a class="pull-left btn btn-default">审核中</a>
                 <php>}else{</php>
-                <a class="pull-left btn btn-primary" data-role="group_attend" data-group-id="{$group.id}">+加入群组</a>
+                <a class="pull-left btn btn-primary" data-role="group_attend" data-group-id="{$group.id}">+加入小组</a>
                 <php>
                     }
                 </php>
@@ -35,7 +35,7 @@
 
             </if>
             <div class="clearfix" style="font-size: 13px;padding: 10px 0 10px 0;">
-                群组类型：{$group['type']?私有群组:公共群组}
+                小组类型：{$group['type']?私有小组:公共小组}
             </div>
             <div class="clearfix group_count" style="font-size: 13px">
                 帖子：<a href="{:U('index/group',array('type'=>'post','id'=>$group_id))}">{$group.post_count}</a>
@@ -46,7 +46,7 @@
     </div>
         <if condition="ACTION_NAME neq 'detail'">
             <div class="pull-right">
-                {:W('Common/Share/detailShare',array(array('share_text'=>$group['title'].'-群组')))}
+                {:W('Common/Share/detailShare',array(array('share_text'=>$group['title'].'-小组')))}
             </div>
         </if>
     </div>

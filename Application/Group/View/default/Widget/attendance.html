@@ -1,7 +1,7 @@
 <if condition="is_login()">
     <div class="common-block my_manage group_info " >
         <header>
-            <if condition="$uid eq 0 || $uid eq is_login()">我的群组  <a class="pull-right" href="{:U('group/index/mygroup')}">更多></a><else/>TA的群组</if>
+            <if condition="$uid eq 0 || $uid eq is_login()">我的小组  <a class="pull-right" href="{:U('group/index/mygroup')}">更多></a><else/>TA的小组</if>
 
         </header>
 

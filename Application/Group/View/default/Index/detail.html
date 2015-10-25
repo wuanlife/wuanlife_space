@@ -105,7 +105,7 @@
         <div class="row">
             <div style="position: relative">
                 <a class="ribbion-green1"
-                   href="{:U('group/index/group',array('type'=>'post','id'=>$post['group_id']))}">返回群组</a>
+                   href="{:U('group/index/group',array('type'=>'post','id'=>$post['group_id']))}">返回小组</a>
 
                 <div style="padding: 15px"></div>
                 <div class="col-md-12 post_title">
@@ -121,7 +121,7 @@
                                 href="{:U('Group/Index/group',array('id'=>$post['group_id']))}">【{$post.group.title}】</a>
                         <a href="{:U('group',array('cate'=>$post['cate_id'],'id'=>$post['group_id']))}">{$post.cate_id|get_post_category}</a>
                         {:Hook('support',array('app'=>'Group',table=>'post','row'=>$post['id'],'uid'=>$post['uid'],'jump'=>'group/index/detail'))}
-                        {:W('Weibo/Share/shareBtn',array('param'=>array('app'=>'Group','model'=>'GroupPost','method'=>'getPost','id'=>$post['id'],'img'=>get_pic($post['content']),'from'=>'群组','site_link'=>U('group/index/detail',array('id'=>$post['id']))),'text'=>'分享'))}
+                        {:W('Weibo/Share/shareBtn',array('param'=>array('app'=>'Group','model'=>'GroupPost','method'=>'getPost','id'=>$post['id'],'img'=>get_pic($post['content']),'from'=>'小组','site_link'=>U('group/index/detail',array('id'=>$post['id']))),'text'=>'分享'))}
 
                     </div>
                 </div>
@@ -186,7 +186,7 @@
 
     <php>if(is_joined($post['group_id']) != 1 ){</php>
     <p class="text-center text-muted" style="font-size: 3em; padding-top: 2em; padding-bottom: 2em;">需 <a
-            data-role="group_attend" data-group-id="{$post['group_id']}" href="javascript:">加入群组</a> 再回复</p>
+            data-role="group_attend" data-group-id="{$post['group_id']}" href="javascript:">加入小组</a> 再回复</p>
     <php>}else{</php>
     <php>
         $user = query_user(array('avatar128'));

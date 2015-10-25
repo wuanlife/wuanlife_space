@@ -31,7 +31,7 @@ class BaseController extends Controller
             ));
         $sub_menu['right'] =
             array(
-                array('tab' => 'create', 'title' => '创建' . $this->MODULE_ALIAS, 'href' => check_auth('Group/Index/addGroup',-1) ? U('group/index/create') : "javascript:toast.error('您无添加群组权限')"),
+                array('tab' => 'create', 'title' => '创建' . $this->MODULE_ALIAS, 'href' => check_auth('Group/Index/addGroup',-1) ? U('group/index/create') : "javascript:toast.error('您无添加小组权限')"),
             );
 
         $this->assign('sub_menu', $sub_menu);
@@ -135,7 +135,7 @@ class BaseController extends Controller
     protected function requireGroupExists($group_id)
     {
         if (!group_is_exist($group_id)) {
-            $this->error('群组不存在');
+            $this->error('小组不存在');
         }
     }
 

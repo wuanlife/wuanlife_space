@@ -12,7 +12,7 @@ namespace Group\Widget;
 use Think\Controller;
 
 /**
- * 活跃的群组widget
+ * 活跃的小组widget
  * 用于动态调用分类信息
  */
 class HotGroupWidget extends Controller

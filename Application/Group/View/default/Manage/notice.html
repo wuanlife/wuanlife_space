@@ -8,7 +8,7 @@
             <div class="fourm-top common_block_border" style="padding: 15px 20px;margin-top: 0;margin-bottom: 15px">
                 <div>
                 <h4>
-                    群组管理
+                    小组管理
                 </h4>
                   </div>
                 <div>
@@ -17,9 +17,9 @@
                         <li role="presentation" ><a href="{:U('Group/Manage/member',array('group_id'=>$_GET['group_id']))}">成员管理</a></li>
                         <li role="presentation"class="active"><a href="{:U('Group/Manage/notice',array('group_id'=>$_GET['group_id']))}">公告发布</a></li>
                         <li role="presentation" ><a href="{:U('Group/Manage/category',array('group_id'=>$_GET['group_id']))}">帖子分类管理</a></li>
-                        <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}" class="btn btn-primary pull-right" style="margin-left: 10px;">返回群组</a>
+                        <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}" class="btn btn-primary pull-right" style="margin-left: 10px;">返回小组</a>
                         <button class="btn btn-primary pull-right"  data-role="dismiss_group"
-                                data-group-id="{$group_id}">解散群组</button>
+                                data-group-id="{$group_id}">解散小组</button>
                     </ul>
                 </div>
                 <hr style="border-top:0"/>

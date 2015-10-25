@@ -2,7 +2,7 @@
 namespace Group\Widget;
 use Think\Controller;
 /**
- * Class DetailWidget  群组详情widget
+ * Class DetailWidget  小组详情widget
  * @package Group\Widget
  * @author:xjw129xjt(肖骏涛) xjt@ourstu.com
  */

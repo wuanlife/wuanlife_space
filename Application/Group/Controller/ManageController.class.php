@@ -17,7 +17,7 @@ class ManageController extends BaseController
         if(!is_login()){
             $this->error('请先登陆。');
         }
-        $this->checkAuth('Group/Manager/*',get_group_admin($this->groupId),'您没有管理群组的权限。');
+        $this->checkAuth('Group/Manager/*',get_group_admin($this->groupId),'您没有管理小组的权限。');
         $this->assignNotice($this->groupId);
         $this->assign('group_id', $this->groupId);
         unset($e);
@@ -34,7 +34,7 @@ class ManageController extends BaseController
     {
         $this->assignGroup($this->groupId);
         $this->assignGroupAllType();
-        $this->setTitle('群组管理--编辑群组');
+        $this->setTitle('小组管理--编辑小组');
         $this->display();
     }
 
@@ -53,7 +53,7 @@ class ManageController extends BaseController
         $this->assign('totalCount', $totalCount);
         $this->assign('sh_count', D('GroupMember')->where(array('group_id' => $this->groupId, 'status' => 1))->count());
         $this->assign('wsh_count', D('GroupMember')->where(array('group_id' => $this->groupId, 'status' => 0))->count());
-        $this->setTitle('群组管理--群组成员');
+        $this->setTitle('小组管理--小组成员');
         $this->display();
     }
 
@@ -76,7 +76,7 @@ class ManageController extends BaseController
         } else {
 
             $this->assign('group_id', $this->groupId);
-            $this->setTitle('群组管理--公告');
+            $this->setTitle('小组管理--公告');
             $this->display();
         }
     }
@@ -85,7 +85,7 @@ class ManageController extends BaseController
     {
         $this->assignGroup($this->groupId);
         $this->assignGroupTypes();
-        $this->setTitle('群组管理--帖子分类管理');
+        $this->setTitle('小组管理--帖子分类管理');
         $cate = D('GroupPostCategory')->where(array('group_id' => $this->groupId, 'status' => 1))->select();
         $this->assign('cate', $cate);
         $this->display();
@@ -94,7 +94,7 @@ class ManageController extends BaseController
 
     public function dismiss()
     {
-        $this->checkAuth('Group/Manager/dismiss',get_group_creator($this->groupId),'您没有解散群组的权限。');
+        $this->checkAuth('Group/Manager/dismiss',get_group_creator($this->groupId),'您没有解散小组的权限。');
         $res = D('Group')->delGroup($this->groupId);
         if ($res) {
             $this->success('解散成功', U('group/index/index'));
@@ -116,7 +116,7 @@ class ManageController extends BaseController
         D('GroupDynamic')->add($dynamic);
         if ($res) {
             $group = D('Group')->getGroup($this->groupId);
-            D('Message')->sendMessage($aUid,'群组审核通过', get_nickname(is_login()) . "通过了您加入群组【{$group['title']}】的请求",  'group/index/group', array('id' => $this->groupId), is_login());
+            D('Message')->sendMessage($aUid,'小组审核通过', get_nickname(is_login()) . "通过了您加入小组【{$group['title']}】的请求",  'group/index/group', array('id' => $this->groupId), is_login());
             S('group_member_count_' . $group['id'],null);
             S('group_is_join_' . $group['id'] . '_' . $aUid, null);
             $this->success('审核成功', 'refresh');
@@ -137,7 +137,7 @@ class ManageController extends BaseController
         D('GroupDynamic')->add($dynamic);
         if ($res) {
             $group = D('Group')->getGroup($this->groupId);
-            D('Message')->sendMessage($aUid, '移出群组', get_nickname(is_login()) . "将您移出了群组【{$group['title']}】", 'group/index/group', array('id' => $this->groupId), is_login());
+            D('Message')->sendMessage($aUid, '移出小组', get_nickname(is_login()) . "将您移出了小组【{$group['title']}】", 'group/index/group', array('id' => $this->groupId), is_login());
             S('group_member_count_' . $group['id'],null);
             S('group_is_join_' . $group['id'] . '_' . $aUid, null);
             $this->success('删除成功', 'refresh');

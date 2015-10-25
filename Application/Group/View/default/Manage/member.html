@@ -10,7 +10,7 @@
 
                 <div>
                     <h4>
-                        群组管理
+                        小组管理
 
                     </h4>
                 </div>
@@ -27,9 +27,9 @@
                                 href="{:U('Group/Manage/category',array('group_id'=>$_GET['group_id']))}">帖子分类管理</a>
                         </li>
                         <a href="{:U('group/index/group',array('id'=>$_GET['group_id']))}"
-                           class="btn btn-primary pull-right" style="margin-left: 10px;">返回群组</a>
+                           class="btn btn-primary pull-right" style="margin-left: 10px;">返回小组</a>
                         <button class="btn btn-primary pull-right" data-role="dismiss_group"
-                                data-group-id="{$group_id}">解散群组
+                                data-group-id="{$group_id}">解散小组
                         </button>
                     </ul>
                 </div>
@@ -68,7 +68,7 @@
 
 
                                 <a href="javascript:" data-role="remove_group_member" data-group-id="{$people.group_id}"
-                                   data-uid="{$people.uid}">移出群组</a>
+                                   data-uid="{$people.uid}">移出小组</a>
                                 <php>if($status == 0){</php>
                                 <div>
                                     <a href="javascript:" data-role="receive_member" data-group-id="{$people.group_id}"

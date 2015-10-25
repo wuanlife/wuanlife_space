@@ -44,11 +44,11 @@ class GroupMemberModel extends Model
         if (is_bool($status)) {
             $check = $this->where(array('group_id' => $group_id, 'uid' => $uid))->find();
             if (!$check) {
-                //未加入群组
+                //未加入小组
                 $status = 0;
             } else {
                 if ($check['status'] == 1) {
-                    // 已加入群组并已审核
+                    // 已加入小组并已审核
                     $status = 1;
                 } else {
                     //未审核
