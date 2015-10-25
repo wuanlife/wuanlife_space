@@ -1,7 +1,7 @@
 <?php
 return array(
     //模块名
-    'name' => 'Weibo',
+    'name' => 'Share',
     //别名
     'alias' => '微博',
     //版本号
@@ -17,9 +17,9 @@ return array(
     //开发者网站
     'website' => 'http://www.ourstu.com',
     //前台入口，可用U函数
-    'entry' => 'Weibo/index/index',
+    'entry' => 'Share/index/index',
 
-    'admin_entry' => 'Admin/Weibo/weibo',
+    'admin_entry' => 'Admin/Share/weibo',
 
     'icon' => 'quote-left',
 
