@@ -33,7 +33,7 @@ a:hover,a:active,a:focus{
     text-decoration: none;
     transition: .5s;
 }
-form>*{
+form>*{ 
     resize: none;
     margin: 1.5rem 0;
 }
