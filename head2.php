@@ -8,53 +8,48 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="format-detection" content="adress=no">
-    <title>创建星球 - -午安网 - 过你想过的生活</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>head</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/wuan.css">
 </head>
 <body>
-<!-- file="head.html"-->
 <!-- head start-->
 <div class="nav navbar navbar-fixed-top navbar-head-color navbar-head">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="navbar-brand navbar-header">
-                    <a class="" href="index.html">午安网</a>
+                    <a class="" href="index.php">午安网</a>
                 </div>
                 <div class="pull-left hidden-sm hidden-xs">
                     <ul class="list-inline">
-                        <li><a href="index.html">发现</a></li>
-                        <li><a href="myGroup.html">我的星球</a></li>
-                        <li><a href="groups.html">全部星球</a></li>
+                        <li><a href="index.php">发现</a></li>
+                        <li><a href="myGroup.php">我的星球</a></li>
+                        <li><a href="groups.php">全部星球</a></li>
                     </ul>
                 </div>
                 <div class=" pull-right">
                     <ul class="list-inline">
-                        <li><a href="login.html">登录</a></li>
-                        <li><a href="reg.html">注册</a></li>
+                        <li><?php
+                            if(isset($_COOKIE['userNickname'])){
+                                echo '<a href="user.html">';
+                                echo $_COOKIE['userNickname'].'</a></li>';
+                            }else{
+                                echo '<a href="login.php">登录</a></li>';
+                            }
+                            ?>
+                        <li><?php
+                            if(isset($_COOKIE['userNickname'])){
+                                echo '<a href="exit.php">退出</a></li>';
+                            }else{
+                                echo '<a href="reg.php">注册</a></li>';
+                            }
+                            ?>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- head end-->
-
-<!-- framework-->
-<!-- content-->
-<div class="framework-content">
-    <div class="container  text-center">
-        <h2 >创建星球</h2>
-        <form class="form-signin">
-           <label for="groupName" class="sr-only">groupName</label>
-           <input type="text" id="groupName" class="form-control" placeholder="星球名字：" required="" autofocus="">
-            <button class="btn pull-right btn-primary" type="submit">创 建</button>
-        </form>
-    </div>
-</div>
-
-
-<script src="js/jquery-1.11.3.min.js"></script>
 </body>
 </html>
