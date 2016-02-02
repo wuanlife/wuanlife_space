@@ -1,3 +1,18 @@
+<?php
+include_once "conn.php";
+
+$groupID=empty($_GET['groupID'])?1:$_GET['groupID'];
+$userID=$_COOKIE['userID'];
+//输出小组名
+$sql="SELECT name FROM group_base WHERE ID='$groupID'";
+$query=mysql_query($sql,$conn);
+$arr=mysql_fetch_array($query);
+if(empty($arr)){
+    echo "<script>alert('该小组还未创建，快去创建吧！');</script>";
+    echo "<script>window.location.href='createGroup.php'</script>";
+}
+$groupName = $arr['name'];
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -8,7 +23,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="format-detection" content="adress=no">
-    <title>鬼扯天地 - 午安网 - 过你想过的生活</title>
+    <title><?php echo $groupName;?> - 午安网 - 过你想过的生活</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/wuan.css">
 </head>
@@ -85,19 +100,7 @@
                 <section>
                     <div class="delete-float">
                         <?php
-                        include_once "conn.php";
 
-                        $groupID=empty($_GET['groupID'])?1:$_GET['groupID'];
-                        $userID=$_COOKIE['userID'];
-                        //输出小组名
-                        $sql="SELECT name FROM group_base WHERE ID='$groupID'";
-                        $query=mysql_query($sql,$conn);
-                        $arr=mysql_fetch_array($query);
-                        if(empty($arr)){
-                            echo "<script>alert('该小组还未创建，快去创建吧！');</script>";
-                            echo "<script>window.location.href='createGroup.php'</script>";
-                        }else{
-                        $groupName = $arr['name'];
                         echo '<h2 class="pull-left">' . $groupName . '</h2>';
                         //判断用户以是否加入小组
 
@@ -214,7 +217,7 @@
                     echo "<li><a href=\"enterLists.php?groupID=" . $groupID . "&page=" . $x . "\">" . $x . "</a></li>";
                 }
             }
-            }
+
             ?>
             <li>
                 <a href="enterLists.php?groupID=<?php echo $groupID?>&page=<?php echo $px?>" aria-label="Next">
