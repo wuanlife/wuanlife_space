@@ -53,7 +53,7 @@
             <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="" name="password">
             <button class="btn  btn-primary btn-block" type="submit">登录</button>
             <div class="footer ">
-                <a class="pull-right text-16" href="rePassword.php">找回密码</a>
+                <a class="pull-right text-16" href="#">找回密码</a>
             </div>
         </form>
 
