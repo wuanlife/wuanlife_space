@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version phpStudy 2014
 -- http://www.phpmyadmin.net
 --
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- 数据库: `wuan`
 --
-CREATE DATABASE `wuan` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `wuan`;
 
 -- --------------------------------------------------------
