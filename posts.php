@@ -175,7 +175,7 @@ if(!empty($_POST)){
     //取得楼层
         $sql1 = "SELECT count(*) as floor \n"
         . "FROM `post_detail` \n"
-        . "where ID=$page";
+        . "where ID=$postID";
         $result1 = mysql_query($sql1);
         $row1 = mysql_fetch_array($result1);
         $p_floor = $row1['floor']+1;
