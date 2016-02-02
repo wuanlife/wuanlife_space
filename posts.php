@@ -1,3 +1,28 @@
+<?php
+$postID=empty($_GET['P_ID'])?1:$_GET['P_ID'];
+include "conn.php";
+//小组分页
+$sql="select ID from post_detail pb where pb.ID = $postID";
+$query=mysql_query($sql);
+$all_num=mysql_num_rows($query);//总条数
+$page_num=30;//每页条数
+$page_all_num=ceil($all_num/$page_num);//总页数
+$page=empty($_GET['page'])?1:$_GET['page'];//当前页数
+$page=(int)$page;//安全强制转换
+$limit_st=($page-1)*$page_num;//起始数
+//显示帖子列表
+
+$sql="SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name\n"
+    . " FROM post_base pb,post_detail pd,group_base gb,user_base ub\n"
+    . " WHERE ub.ID = pd.postID\n"
+    . " AND pb.groupID = gb.ID\n"
+    . " AND pb.ID = pd.ID\n"
+    . " AND pd.ID = $postID\n"
+    . " ORDER BY pd.floor\n"
+    . "LIMIT $limit_st,$page_num";
+$result = mysql_query($sql);
+$row = mysql_fetch_array($result);
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -8,7 +33,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="format-detection" content="adress=no">
-    <title>主页 - 午安网 - 过你想过的生活</title>
+    <title><?php echo $row['title']?> - 午安网 - 过你想过的生活</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/wuan.css">
 </head>
@@ -75,32 +100,6 @@
         <div class="container">
             <div class="row">
                 <!-- main framework-->
-                <?php
-                $postID=empty($_GET['P_ID'])?1:$_GET['P_ID'];
-                include "conn.php";
-                //小组分页
-                $sql="select ID from post_detail pb where pb.ID = $postID";
-                $query=mysql_query($sql);
-                $all_num=mysql_num_rows($query);//总条数
-                $page_num=30;//每页条数
-                $page_all_num=ceil($all_num/$page_num);//总页数
-                $page=empty($_GET['page'])?1:$_GET['page'];//当前页数
-                $page=(int)$page;//安全强制转换
-                $limit_st=($page-1)*$page_num;//起始数
-                //显示帖子列表
-
-                $sql="SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name\n"
-                    . " FROM post_base pb,post_detail pd,group_base gb,user_base ub\n"
-                    . " WHERE ub.ID = pd.postID\n"
-                    . " AND pb.groupID = gb.ID\n"
-                    . " AND pb.ID = pd.ID\n"
-                    . " AND pd.ID = $postID\n"
-                    . " ORDER BY pd.floor\n"
-                    . "LIMIT $limit_st,$page_num";
-                $result = mysql_query($sql);
-                $row = mysql_fetch_array($result);
-                ?>
-
                 <div class="col-md-12">
                     <section>
                         <article>
