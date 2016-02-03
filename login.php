@@ -47,8 +47,8 @@
         <div class="text-center form-logo">
         </div>
         <form class="form-signin" method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
-            <label for="userName" class="sr-only">userName</label>
-            <input type="text" id="userName" class="form-control" placeholder="用户名" required="" autofocus="" name="name">
+            <label for="userEmail" class="sr-only">Email</label>
+            <input type="email" id="userEmail" class="form-control" placeholder="邮&#12288;箱" required="" name="Email">
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="" name="password">
             <button class="btn  btn-primary btn-block" type="submit">登录</button>
@@ -64,21 +64,21 @@ if(!empty($_POST)) {
     include_once "conn.php";
 
     if (!get_magic_quotes_gpc()) {
-        $name = addslashes($_POST['name']);
+        $Email = addslashes($_POST['Email']);
         $password = addslashes($_POST['password']);
     }else {
-        $name = $_POST['name'];
+        $Email = $_POST['Email'];
         $password = $_POST['password'];
     }
 
-    $sql="SELECT password,nickName,ID FROM user_base WHERE name='$name'";
+    $sql="SELECT password,nickName,ID FROM user_base WHERE Email='$Email'";
     $query=mysql_query($sql,$conn);
     $arr=mysql_fetch_array($query);
     $password=md5($password);
 
     if($arr=="")
     {
-        echo '<script>alert ("用户名不存在!");</script>';
+        echo '<script>alert ("该邮箱尚未注册!");</script>';
     }elseif($arr['password']==$password)
     {
         $nickName=base64_encode($arr['nickName']);
@@ -96,7 +96,7 @@ if(!empty($_POST)) {
     }else
     {
 
-        echo '<script>alert ("账号或密码错误!");</script>';
+        echo '<script>alert ("邮箱或密码错误!");</script>';
     }
 
 

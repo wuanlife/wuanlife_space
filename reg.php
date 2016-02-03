@@ -47,14 +47,13 @@
         <div class="text-center form-logo">
         </div>
         <form class="form-signin" method="post" action="<?php echo $_SERVER["PHP_SELF"];?>">
-            <label for="userName" class="sr-only">userName</label>
-            <input type="text" id="userName" class="form-control" placeholder="用户名" required="" autofocus="" name="name">
             <label for="petName" class="sr-only">petName</label>
             <input type="text" id="petName" class="form-control" placeholder="昵&#12288;称" required="" autofocus="" name="nickName">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="密&#12288;码" required="" name="password">
             <label for="userEmail" class="sr-only">Email</label>
             <input type="email" id="userEmail" class="form-control" placeholder="邮&#12288;箱" required="" name="Email">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="密&#12288;码" required="" name="password">
+
             <button class="btn btn-primary btn-block" type="submit" >注册</button>
         </form>
 
@@ -63,35 +62,28 @@
 
 <?php
 if(!empty($_POST)) {
-    $name = $_POST['name'];
     $password = $_POST['password'];
     $nickName = $_POST['nickName'];
     $Email = $_POST['Email'];
-    if (!preg_match("/^[a-zA-Z0-9]{1,16}$/", $name)) {
-        echo "<script>alert('用户名只能为数字和字母，不得超过16位！');</script>";
-    } elseif (!preg_match('/^[0-9a-zA-Z\x{4e00}-\x{9fa5}]{1,16}+$/u', $nickName)) {
+   if (!preg_match('/^[0-9a-zA-Z\x{4e00}-\x{9fa5}]{1,16}+$/u', $nickName)) {
         echo "<script>alert('昵称只能为中文、英文、数字，不得超过16位！');</script>";
     } elseif (!preg_match('/^[\s|\S]{6,18}$/u', $password)) {
         echo "<script>alert('密码长度为6-18位！');</script>";
     } else {
         include_once "conn.php";
-        $check1 = "select password from user_base WHERE name='$name'";
         $check2 = "select password from user_base WHERE nickName='$nickName'";
         $check3 = "select password from user_base WHERE Email='$Email'";
-        $ch1 = mysql_fetch_array(mysql_query($check1));
         $ch2 = mysql_fetch_array(mysql_query($check2));
         $ch3 = mysql_fetch_array(mysql_query($check3));
-        if (!empty($ch1)) {
-            echo "<script>alert('该用户名已占用！');</script>";
-        } elseif (!empty($ch2)) {
+        if (!empty($ch2)) {
             echo "<script>alert('该昵称已占用！');</script>";
         } elseif (!empty($ch3)) {
             echo "<script>alert('该邮箱已注册！');</script>";
         } else {
             $password = md5($password);
-            $sql = "INSERT INTO user_base (name,password,nickName,Email) VALUE ('$name','$password','$nickName','$Email')";
+            $sql = "INSERT INTO user_base (password,nickName,Email) VALUE ('$password','$nickName','$Email')";
             $retval = mysql_query($sql, $conn);
-            $sql2 = "SELECT ID FROM user_base WHERE name='$name'";
+            $sql2 = "SELECT ID FROM user_base WHERE Email='$Email'";
             $retval2 = mysql_query($sql2, $conn);
             $arr = mysql_fetch_array($retval2);
             if ($retval2) {

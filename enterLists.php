@@ -1,7 +1,7 @@
 <?php
 include_once "conn.php";
 
-$groupID=empty($_GET['groupID'])?1:$_GET['groupID'];
+$groupID=$_GET['groupID'];
 $userID=$_COOKIE['userID'];
 //输出小组名
 $sql="SELECT name FROM group_base WHERE ID='$groupID'";
