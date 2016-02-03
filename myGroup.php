@@ -16,7 +16,7 @@ if(!isset($_COOKIE['nickName'])){
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="format-detection" content="adress=no">
-    <title>我的星球 - -午安网 - 过你想过的生活</title>
+    <title>我的星球 - 午安网 - 过你想过的生活</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/wuan.css">
 </head>
