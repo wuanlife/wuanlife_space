@@ -126,7 +126,7 @@ if(!isset($_COOKIE['nickName'])){
                             <footer class="footer">
                                 <?php
                                 echo "<span class=\"pull-left\"><a href=\"\">". $row['nickName'] ."</a> 发表于 <a href=\"enterLists.php?groupID=". $row['Gid'] ."\">". $row['name'] ."</a></span>";
-                                echo "<span class=\"pull-right\">". $row['createTime'] . "</span>";
+                                echo "<span class=\"pull-right\">". substr($row['createTime'],0,16) . "</span>";
                                 ?>
                             </footer>
                         </article>

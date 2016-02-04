@@ -70,7 +70,7 @@ if(!isset($_COOKIE['nickName'])){
 <?php
 if(!empty($_POST)) {
     $name = $_POST['name'];
-    if (!preg_match('/^[0-9a-zA-Z_\x{4e00}-\x{9fa5}]{1,20}+$/u', $name)){
+    if (!preg_match('/^[0-9a-zA-Z_\x{4e00}-\x{9fa5}]{1,10}+$/u', $name)){
         echo "<script>alert('小组名只能为中文、英文、数字或者下划线，且不得超过10个字！');</script>";
     }else {
         include_once "conn.php";

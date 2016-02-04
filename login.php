@@ -50,7 +50,7 @@
             <label for="userEmail" class="sr-only">Email</label>
             <input type="email" id="userEmail" class="form-control" placeholder="邮&#12288;箱" required="" name="Email">
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required="" name="password">
+            <input type="password" id="inputPassword" class="form-control" placeholder="密&#12288;码" required="" name="password">
             <button class="btn  btn-primary btn-block" type="submit">登录</button>
             
         </form>

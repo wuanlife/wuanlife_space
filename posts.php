@@ -109,7 +109,7 @@ $row = mysql_fetch_array($result);
                             <footer class="footer">
                                 <?php
                                 echo "<span class=\"pull-left\"><a href=\"\">". $row['nickName'] ."</a> 发表于 <a href=\"\">". $row['name'] ."</a></span>";
-                                echo "<span class=\"pull-right\">". $row['createTime'] ."</span>";
+                                echo "<span class=\"pull-right\">". substr($row['createTime'],0,16) ."</span>";
                                 ?>
                             </footer>
                             <div>
@@ -133,7 +133,7 @@ $row = mysql_fetch_array($result);
                                     <footer class="footer">
                                         <?php
                                         echo "<span class=\"pull-left\"><a href=\"\">". $row['nickName'] ."</a></span>";
-                                        echo "<span class=\"pull-right\">". $row['createTime'] ."</span>";
+                                        echo "<span class=\"pull-right\">". substr($row['createTime'],0,16) ."</span>";
                                         ?>
                                     </footer>
                                     <div>
@@ -168,11 +168,11 @@ if(!empty($_POST)){
         $u_id = $_COOKIE["userID"];
         $p_id = $postID;
         $p_text = $_POST['replyTest'];
-        $p_time = date('Y-m-d H:i',time());
+        $p_time = date('Y-m-d H:i:s',time());
 
         include "conn.php";
     //取得楼层
-        $sql1 = "SELECT count(*) as floor \n"
+        $sql1 = "SELECT MAX(floor) as floor \n"
         . "FROM `post_detail` \n"
         . "where ID=$postID";
         $result1 = mysql_query($sql1);

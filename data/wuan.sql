@@ -29,7 +29,7 @@ USE `wuan`;
 
 CREATE TABLE IF NOT EXISTS `group_base` (
   `ID` int(4) unsigned NOT NULL AUTO_INCREMENT COMMENT '组ID',
-  `name` varchar(9) CHARACTER SET gbk NOT NULL UNIQUE COMMENT '组名',
+  `name` varchar(11) CHARACTER SET gbk NOT NULL UNIQUE COMMENT '组名',
   `delete` int(1) NOT NULL DEFAULT '0' COMMENT '删除',
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='组表' AUTO_INCREMENT=4 ;
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `post_detail` (
   `replyID` int(5) unsigned DEFAULT NULL COMMENT '回复的ID',
   `text` varchar(140) COLLATE utf8_bin NOT NULL COMMENT '内容',
   `floor` int(4) NOT NULL COMMENT '楼层',
-  `createTime` varchar(16) COLLATE utf8_bin NOT NULL COMMENT '发布时间',
+  `createTime` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '发布时间',
   `delete` int(1) NOT NULL DEFAULT '0' COMMENT '删除',
   PRIMARY KEY (`ID`,`floor`),
   KEY `postID` (`postID`,`replyID`)
@@ -97,7 +97,6 @@ CREATE TABLE IF NOT EXISTS `post_detail` (
 
 CREATE TABLE IF NOT EXISTS `user_base` (
   `ID` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `name` varchar(20) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '用户名',
   `password` varchar(35) COLLATE utf8_bin NOT NULL COMMENT '密码',
   `nickName` varchar(20) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '昵称',
   `Email` varchar(30) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '邮箱',

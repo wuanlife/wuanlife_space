@@ -74,7 +74,7 @@ if(!empty($_POST)){
         $u_id = $_COOKIE["userID"];
         $p_title = $_POST['title'];
         $p_text = $_POST['postText'];
-        $p_time = date('Y-m-d H:i',time());
+        $p_time = date('Y-m-d H:i:s',time());
 
         include "conn.php";
         //取得postID
