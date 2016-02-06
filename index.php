@@ -8,7 +8,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="format-detection" content="adress=no">
-    <title>主页 - 午安网 - 过你想过的生活</title>
+    <title>午安网 - 过你想过的生活</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/wuan.css">
 </head>
