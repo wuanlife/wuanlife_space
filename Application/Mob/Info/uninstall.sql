@@ -1,1 +1,0 @@
-delete from `ocenter_menu` where  `url` like 'Mob/%';
