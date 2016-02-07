@@ -2,7 +2,7 @@
 $db_host = "localhost";
 $db_user = "root";
 $db_pass = "root";
-$db_data = "wuan";
+$db_data = "wuanlife";
 $conn=mysql_connect($db_host, $db_user, $db_pass);
 if ($conn) {
     //echo "连接成功";
