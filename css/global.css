@@ -1,0 +1,167 @@
+@font-face {
+    font-family: 'PingFang-SC-Bold';
+    src: url(../fonts/PingFang-SC-Bold.ttf)format('truetype');
+}
+@font-face {
+    font-family: 'PingFang-SC-Medium';
+    src: url(../fonts/PingFang-SC-Medium.ttf)format('truetype');
+}
+@font-face {
+    font-family: 'PingFang-SC-Regular';
+    src: url(../fonts/PingFang-SC-Regular.ttf)format('truetype');
+}
+body{
+    font-family: 'PingFang-SC-Regular';
+}
+button{
+    outline: none;
+    border:none;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+h1,h2,h3,h4,h5,p,ul,li{
+    margin:0;
+    padding:0;
+}
+*{
+    box-sizing: border-box;
+}
+:before,:after{
+    box-sizing: border-box;
+}
+.clearfix:before,.clearfix:after,.container:before,.container:after,.row:before,.row:after{
+    display:table;
+    content: "";
+}
+.clearfix:after,.row:after{
+    clear:both;
+}
+/*导航条*/
+nav{
+    font-family:'PingFang-SC-Medium' ;
+}
+.navbar-blue{
+    background-color: #5ab8fe;
+    color:#fff;
+}
+.navbar-blue a{
+    color:#fff;
+}
+.navbar-header{
+    position: relative;
+}
+/*导航brand*/
+.navbar-brand{
+    font-size: 0.555556rem;
+    line-height: 0.537037rem;
+    padding:0.351852rem 0;
+    text-align: center;
+    display:block;
+}
+/*导航折叠按钮*/
+.navbar-toggle{
+    position: absolute;
+    background-color: inherit;
+    left:0.462963rem;
+    top:0.416667rem;
+}
+.icon-bar{
+    display:block;
+    width:0.611111rem;
+    height:0.074074rem;
+    background-color: #fff;
+}
+.icon-bar+.icon-bar{
+    margin-top: 0.083333rem;
+}
+/*折叠菜单*/
+.navbar-collapse{
+    position: fixed;
+    width:5.555556rem;
+    top:0;
+    left:0;
+    bottom:0;
+    background-color: #53aaeb;
+    text-align: center;
+}
+/*折叠标题*/
+.navbar-title{
+    padding:1.462963rem 0 1.555556rem;
+    font-size: 0.648148rem;
+    line-height: 0.611111rem;
+    border-bottom: 1px solid;
+}
+/*折叠选项*/
+.navbar-option{
+    padding:0.296296rem 0 0 0.407407rem;
+    text-align: left;
+    margin-bottom: 5.027778rem;
+    font-family: 'PingFang-SC-Regular';
+}
+.navbar-option-item>a{
+    display:block;
+    padding:0.37037rem 0 0.37037rem 0.666667rem;
+    border-bottom:1px solid;
+    font-size: 0.462963rem;
+    line-height: 0.425926rem;
+    position: relative;
+}
+.navbar-icons{
+    width:0.509259rem;
+    height:0.509259rem;
+    display:inline-block;
+    background-size: 100% 100%;
+    vertical-align: bottom;
+    margin-right: 0.157407rem;
+    position: absolute;
+    left:0;
+    top:0.324074rem;
+}
+.navbar-option-item:nth-child(1) .navbar-icons{
+    background-image: url(../images/navbar-icons_03.png);
+}
+.navbar-option-item:nth-child(2) .navbar-icons{
+    background-image: url(../images/navbar-icons_06.png);
+}
+.navbar-option-item:nth-child(3) .navbar-icons{
+    background-image: url(../images/navbar-icons_09.png);
+}
+/*折叠账户*/
+.navbar-account{
+
+}
+.navbar-account-item{
+    margin-bottom: 0.37037rem;
+}
+.navbar-account-item>a{
+    display:inline-block;
+    line-height: 0.509259rem;
+    font-size: 0.462963rem;
+    color:#53aaeb;
+    background-color: #fff;
+    width:3.703704rem;
+    padding:0.185185rem 0 ;
+    border-radius: 9px 9px;
+}
+.navbar-account-item>a:before{
+    display:inline-block;
+    content:'';
+    vertical-align: bottom;
+    height:0.5rem;
+    width:0.518519rem;
+    margin-right: 0.166667rem;
+    background-size: 100% 100%;
+}
+.login:before{
+    background-image: url(../images/navbar-icons_02.png);
+}
+.register:before{
+    background-image: url(../images/navbar-icons_04.png);
+}
+@media (min-width:768px){
+
+}
