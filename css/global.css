@@ -10,12 +10,18 @@
     font-family: 'PingFang-SC-Regular';
     src: url(../fonts/PingFang-SC-Regular.ttf)format('truetype');
 }
+html,body{
+    height:100%;
+}
 body{
     font-family: 'PingFang-SC-Regular';
 }
 button{
     outline: none;
     border:none;
+}
+img{
+    vertical-align: middle;
 }
 a{
     text-decoration: none;
@@ -33,16 +39,29 @@ h1,h2,h3,h4,h5,p,ul,li{
 :before,:after{
     box-sizing: border-box;
 }
-.clearfix:before,.clearfix:after,.container:before,.container:after,.row:before,.row:after{
+.clearfix:before,.clearfix:after,.container:before,.container:after,.row:before,.row:after,.navbar-header:before,.navbar-header:after,.navbar-collapse:before,.navbar-collapse:after{
     display:table;
     content: "";
 }
-.clearfix:after,.row:after{
+.clearfix:after,.row:after,.container:after,.navbar-header:after,.navbar-collapse:after{
     clear:both;
+}
+.all-wrapper{  
+    position: relative;
+    left:0; 
+    transition: left .25s linear;
+    background-color: #f6fafb;
+    min-height: 100%;
+}
+@media (min-width:768px){
+    .all-wrapper{
+        background-color: #fff;
+    }
 }
 /*导航条*/
 nav{
     font-family:'PingFang-SC-Medium' ;
+    position: relative;
 }
 .navbar-blue{
     background-color: #5ab8fe;
@@ -53,14 +72,14 @@ nav{
 }
 .navbar-header{
     position: relative;
+    text-align: center;
 }
 /*导航brand*/
 .navbar-brand{
     font-size: 0.555556rem;
     line-height: 0.537037rem;
-    padding:0.351852rem 0;
-    text-align: center;
-    display:block;
+    padding:0.351852rem 0;   
+    display:inline-block;
 }
 /*导航折叠按钮*/
 .navbar-toggle{
@@ -68,6 +87,7 @@ nav{
     background-color: inherit;
     left:0.462963rem;
     top:0.416667rem;
+    cursor: pointer;
 }
 .icon-bar{
     display:block;
@@ -83,10 +103,11 @@ nav{
     position: fixed;
     width:5.555556rem;
     top:0;
-    left:0;
     bottom:0;
+    left:-5.555556rem;
     background-color: #53aaeb;
     text-align: center;
+    transition:left .25s linear;
 }
 /*折叠标题*/
 .navbar-title{
@@ -94,6 +115,12 @@ nav{
     font-size: 0.648148rem;
     line-height: 0.611111rem;
     border-bottom: 1px solid;
+}
+[data-dpr="2"] .navbar-title{
+    border-bottom-width: 2px;
+}
+[data-dpr="3"] .navbar-title{
+    border-bottom-width: 3px;
 }
 /*折叠选项*/
 .navbar-option{
@@ -121,13 +148,13 @@ nav{
     left:0;
     top:0.324074rem;
 }
-.navbar-option-item:nth-child(1) .navbar-icons{
+.navbar-icons.nav-find{
     background-image: url(../images/navbar-icons_03.png);
 }
-.navbar-option-item:nth-child(2) .navbar-icons{
+.navbar-icons.nav-myp{
     background-image: url(../images/navbar-icons_06.png);
 }
-.navbar-option-item:nth-child(3) .navbar-icons{
+.navbar-icons.nav-allp{
     background-image: url(../images/navbar-icons_09.png);
 }
 /*折叠账户*/
@@ -140,12 +167,18 @@ nav{
 .navbar-account-item>a{
     display:inline-block;
     line-height: 0.509259rem;
-    font-size: 0.462963rem;
-    color:#53aaeb;
+    font-size: 0.462963rem; 
     background-color: #fff;
     width:3.703704rem;
     padding:0.185185rem 0 ;
-    border-radius: 9px 9px;
+    border-radius: 9px 9px; 
+    color:#53aaeb;
+}
+[data-dpr="2"] .navbar-account-item>a{
+    border-radius: 18px 18px;
+}
+[data-dpr="3"] .navbar-account-item>a{
+    border-radius: 27px 27px;
 }
 .navbar-account-item>a:before{
     display:inline-block;
@@ -156,12 +189,132 @@ nav{
     margin-right: 0.166667rem;
     background-size: 100% 100%;
 }
-.login:before{
+.navbar-account-item .login:before{
     background-image: url(../images/navbar-icons_02.png);
 }
-.register:before{
+.navbar-account-item .register:before{
     background-image: url(../images/navbar-icons_04.png);
 }
+/*折叠状态*/
+.sidebar-extend.all-wrapper{
+    left:5.555556rem;
+}
+.sidebar-extend .navbar-collapse{
+    left:0;
+}
 @media (min-width:768px){
-
+    /*导航条头部*/
+    .navbar-header{
+        position: absolute;
+        top:0;
+        left:0;
+    }
+    /*折叠按钮*/
+    .navbar-toggle{
+        display:none;
+    }
+    /*导航条brand*/
+    .navbar-brand{
+        font-size: 30px;
+        line-height: 28px;
+        padding:24px 0 22px 50px;
+    }
+    /*折叠菜单*/
+    .navbar-collapse{
+        position: relative;
+        background-color: transparent;
+        width:100%;
+        left:0;
+    }
+    /*折叠标题*/
+    .navbar-title{
+        display:none;
+    }
+    /*折叠选项*/
+    .navbar-option{
+        padding:20px 0 16px;
+        margin:0;
+        text-align: center;
+    }
+    .navbar-option-item{
+        display:inline-block;
+        margin:0 26px;
+    }
+    .navbar-option-item>a{
+        padding:5px 10px;
+        font-size: 24px;
+        line-height: 28px;
+        border-bottom: none;
+        border-radius: 5px 5px ;
+    }
+    /*选中状态*/
+    .navbar-active{
+        background-color: #8acdff;
+    }
+    .navbar-icons{
+        display:none;
+    }
+    /*折叠账户*/
+    .navbar-account{
+        position: absolute;
+        right:35px;
+        top:0;
+    }
+    .navbar-account-item{
+        float:left;
+        margin-bottom: 0;
+    }
+    .navbar-account-item>a{
+        font-size: 18px;
+        line-height: 20px;
+        padding:31px 15px 23px;
+        width:auto;
+        color:inherit;
+        background-color: inherit;
+    }
+    .navbar-account-item>a:before{
+        display:none;
+    }
+    /*移动端折叠展开状态切换到PC端之后*/
+    .sidebar-extend.all-wrapper{
+        left:0;
+    }
+/*    .sidebar-extend .navbar-collapse{
+        width:100%;
+        left:0;
+    }*/
+}
+.main{
+    padding:0 0.462963rem;
+}
+@media (min-width:768px){
+    .main{
+        width:750px;
+        margin:0 auto;
+        padding:35px 0 15px;
+    }
+}
+/*翻页模块*/
+.page-turn{
+    font-family: 'PingFang-SC-Medium';
+    font-size: 0.462963rem;
+    line-height: 1.87963rem;
+    color:#949494;
+    text-align: center;
+}
+.page-turn>span{
+    margin:0 0.324074rem;
+}
+.page-turn a{
+    color:#5ab8fe;
+}
+@media (min-width:768px){
+    .page-turn{
+        font-size: 22.22px;
+        line-height: 27px;
+        padding:77px 0;
+    }
+    .page-turn>span{
+        margin:0 20px;
+    }
 }
