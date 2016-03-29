@@ -1,0 +1,125 @@
+/*当前位置*/
+.location{
+    font-family:'PingFang-SC-Medium';
+    padding:0.62963rem 0 0.351852rem;
+}
+.location>h1{
+    font-size: 0.648148rem;
+    line-height: 0.740741rem;
+    float: left;
+    color:#5ab8fe;
+}
+.location>a{
+    display:inline-block;
+    color:#f6fafb;
+    font-size: 0.333333rem;
+    line-height: 0.37963rem;
+    padding:0.138889rem 0.185185rem;
+    background-color: #5ab8fe;
+    float:right;
+    border-radius: 5px 5px;
+}
+[data-dpr="2"] .location>a{
+    border-radius: 10px 10px;
+}
+[data-dpr="3"] .location>a{
+    border-radius: 15px 15px;
+}
+@media (min-width:768px){
+    .location{
+        display:none;
+    }
+}
+/*文章*/
+.chapter{
+    padding:0.37037rem 0 0.398148rem;
+    border-bottom: 1px solid #e8e8e8;
+}
+[data-dpr="2"] .chapter{
+    border-bottom-width: 2px;
+}
+[data-dpr="3"] .chapter{
+    border-bottom-width: 3px;
+}
+.chapter>h2{
+    font-family: 'PingFang-SC-Bold';
+    font-size: 0.462963rem;
+    line-height: 0.555556rem;
+    color:#363636;
+    margin-bottom: 0.259259rem;
+}
+.chapter>p{
+    font-family: 'PingFang-SC-Medium';
+    font-size: 0.37037rem;
+    line-height: 0.555556rem;
+    margin-bottom: 0.203704rem;
+    color:#5c5c5c;
+}
+.chapter-img{
+    position: relative;
+    margin-bottom: 0.388889rem;
+}
+.chapter-img>img{
+    width:2.12963rem;
+    height:2.12963rem;
+}
+.chapter-img>img:first-child{
+    float:left;
+}
+.chapter-img>img:nth-child(2){
+    position: absolute;
+    left:50%;
+    transform: translateX(-50%);
+    top:0;
+}
+.chapter-img>img:nth-child(3){
+    float:right;
+}
+.chapter-info{
+    font-size: 0.333333rem;
+    line-height: 0.37037rem;
+    color:#a7a7a7;
+}
+.chapter-info a{
+    color:#a7a7a7;
+}
+.cha-time{
+    float:right;
+    margin-right: 0.092593rem;
+}
+@media (min-width:768px){
+    .chapter{
+        padding:29px 0 18px;
+    }
+    .chapter>h2{
+        font-size: 22px;
+        line-height: 26px;
+        color:#5ab8fe;
+        margin-bottom: 16px;
+    }
+    .chapter>p{
+        font-family: 'PingFang-SC-Regular';
+        font-size: 16px;
+        line-height: 26px;
+        color:#5c5c5c;
+        margin-bottom: 18px;
+    }
+    .chapter-img{
+        margin-bottom: 30px;
+    }
+    .chapter-img>img{
+        width:140px;
+        height:140px;
+    }
+    .chapter-info{
+        font-size: 16px;
+        line-height: 19px;
+        color:#999999;
+    }
+    .chapter-info a{
+        color:#999999;
+    }
+    .cha-time{
+        margin-right: 0;
+    }
+}
