@@ -38,7 +38,8 @@ h1,h2,h3,h4,h5,p,ul,li{
 .all-wrapper{  
     position: relative;
     left:0; 
-    transition: left .25s linear;
+    -webkit-transition: left .25s linear; 
+            transition: left .25s linear;
     background-color: #f6fafb;
     min-height: 100%;
 }
@@ -98,7 +99,8 @@ nav{
     z-index: -1;
     background-color: #53aaeb;
     text-align: center;
-    transition:z-index .3s linear;
+    -webkit-transition:z-index .3s linear;
+            transition:z-index .3s linear;
 }
 /*折叠标题*/
 .navbar-title{
