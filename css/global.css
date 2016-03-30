@@ -1,20 +1,9 @@
-@font-face {
-    font-family: 'PingFang-SC-Bold';
-    src: url(../fonts/PingFang-SC-Bold.ttf)format('truetype');
-}
-@font-face {
-    font-family: 'PingFang-SC-Medium';
-    src: url(../fonts/PingFang-SC-Medium.ttf)format('truetype');
-}
-@font-face {
-    font-family: 'PingFang-SC-Regular';
-    src: url(../fonts/PingFang-SC-Regular.ttf)format('truetype');
-}
+
 html,body{
     height:100%;
 }
 body{
-    font-family: 'PingFang-SC-Regular';
+    font-family: 'Microsoft YaHei',sans-serif;
 }
 button{
     outline: none;
@@ -60,7 +49,6 @@ h1,h2,h3,h4,h5,p,ul,li{
 }
 /*导航条*/
 nav{
-    font-family:'PingFang-SC-Medium' ;
     position: relative;
 }
 .navbar-blue{
@@ -104,7 +92,8 @@ nav{
     width:5.555556rem;
     top:0;
     bottom:0;
-    left:-5.555556rem;
+    left:calc(-5.555556rem - 200px);
+    /*left:-5.555556rem;*/
     background-color: #53aaeb;
     text-align: center;
     transition:left .25s linear;
@@ -127,7 +116,6 @@ nav{
     padding:0.296296rem 0 0 0.407407rem;
     text-align: left;
     margin-bottom: 5.027778rem;
-    font-family: 'PingFang-SC-Regular';
 }
 .navbar-option-item>a{
     display:block;
@@ -296,7 +284,6 @@ nav{
 }
 /*翻页模块*/
 .page-turn{
-    font-family: 'PingFang-SC-Medium';
     font-size: 0.462963rem;
     line-height: 1.87963rem;
     color:#949494;
