@@ -28,7 +28,8 @@ DI()->logger = new PhalApi_Logger_File(API_ROOT . '/Runtime', PhalApi_Logger::LO
 
 //数据操作 - 基于NotORM，$_GET['__sql__']可自行改名
 DI()->notorm = new PhalApi_DB_NotORM(DI()->config->get('dbs'), !empty($_GET['__sql__']));
-
+//COOKIE
+DI()->cookie = 'PhalApi_Cookie';
 //翻译语言包设定
 SL('zh_cn');
 
