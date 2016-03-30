@@ -92,11 +92,13 @@ nav{
     width:5.555556rem;
     top:0;
     bottom:0;
-    left:calc(-5.555556rem - 200px);
+    left:0;
+    /*left:calc(-5.555556rem - 200px);*/
     /*left:-5.555556rem;*/
+    z-index: -1;
     background-color: #53aaeb;
     text-align: center;
-    transition:left .25s linear;
+    transition:z-index .3s linear;
 }
 /*折叠标题*/
 .navbar-title{
@@ -183,7 +185,8 @@ nav{
     left:5.555556rem;
 }
 .sidebar-extend .navbar-collapse{
-    left:0;
+    /*left:0;*/
+    z-index: 0;
 }
 @media (min-width:768px){
     /*导航条头部*/
@@ -207,7 +210,7 @@ nav{
         position: relative;
         background-color: transparent;
         width:100%;
-        left:0;
+        z-index: 0;
     }
     /*折叠标题*/
     .navbar-title{
