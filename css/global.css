@@ -119,36 +119,35 @@ nav{
 }
 .navbar-option-item>a{
     display:block;
-    padding:0.37037rem 0 0.37037rem 0.666667rem;
+    padding:0.37037rem 0 ;
     border-bottom:1px solid;
     font-size: 0.462963rem;
-    line-height: 0.425926rem;
+    line-height: 0.509259rem;
     position: relative;
 }
-.navbar-icons{
+/*文字前方小图标*/
+.navbar-icon:before{
+    display:inline-block;
+    content:'';
+    vertical-align: bottom;
+    background-size: 100% 100%;
+}
+.navbar-option-item>a:before{
     width:0.509259rem;
     height:0.509259rem;
-    display:inline-block;
-    background-size: 100% 100%;
-    vertical-align: bottom;
-    margin-right: 0.157407rem;
-    position: absolute;
-    left:0;
-    top:0.324074rem;
+    margin-right: 0.138889rem;
 }
-.navbar-icons.nav-find{
+.navbar-option-item:nth-child(1)>a:before{
     background-image: url(../images/navbar-icons_03.png);
 }
-.navbar-icons.nav-myp{
+.navbar-option-item:nth-child(2)>a:before{
     background-image: url(../images/navbar-icons_06.png);
 }
-.navbar-icons.nav-allp{
+.navbar-option-item:nth-child(3)>a:before{
     background-image: url(../images/navbar-icons_09.png);
 }
 /*折叠账户*/
-.navbar-account{
 
-}
 .navbar-account-item{
     margin-bottom: 0.37037rem;
 }
@@ -159,28 +158,24 @@ nav{
     background-color: #fff;
     width:3.703704rem;
     padding:0.185185rem 0 ;
-    border-radius: 9px 9px; 
+    border-radius: 9px; 
     color:#53aaeb;
 }
 [data-dpr="2"] .navbar-account-item>a{
-    border-radius: 18px 18px;
+    border-radius: 18px;
 }
 [data-dpr="3"] .navbar-account-item>a{
-    border-radius: 27px 27px;
+    border-radius: 27px;
 }
 .navbar-account-item>a:before{
-    display:inline-block;
-    content:'';
-    vertical-align: bottom;
     height:0.5rem;
     width:0.518519rem;
     margin-right: 0.166667rem;
-    background-size: 100% 100%;
 }
-.navbar-account-item .login:before{
+.navbar-account-item:nth-child(1)>a:before{
     background-image: url(../images/navbar-icons_02.png);
 }
-.navbar-account-item .register:before{
+.navbar-account-item:nth-child(2)>a:before{
     background-image: url(../images/navbar-icons_04.png);
 }
 /*折叠状态*/
@@ -235,13 +230,13 @@ nav{
         border-bottom: none;
         border-radius: 5px 5px ;
     }
+    .navbar-option-item>a:before{
+        display:none;
+    }
     /*选中状态*/
     .navbar-active{
         background-color: #8acdff;
-    }
-    .navbar-icons{
-        display:none;
-    }
+    }    
     /*折叠账户*/
     .navbar-account{
         position: absolute;
