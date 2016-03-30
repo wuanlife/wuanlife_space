@@ -39,7 +39,6 @@ class Api_Group extends PhalApi_Api
 	 * @return string msg 提示信息
 	 */
 	public function create(){
-				// DI()->cookie->set('userID','12', $_SERVER['REQUEST_TIME'] + 60);
 		$rs = array(
 			'code' => 0, 
 			'msg'  => '', 
@@ -79,7 +78,6 @@ class Api_Group extends PhalApi_Api
 		$rs = array(
 			'code' => 0, 
 			'msg'  => '', 
-			'info' => array(),
 		);
 
 		$domain = new Domain_Group();
@@ -96,6 +94,38 @@ class Api_Group extends PhalApi_Api
 			$rs['msg']  = '星球创建成功';
 		}
 
+		return $rs;
+	}
+
+	/**
+	 * 判断登陆状态
+	 * @desc 判断是否登录
+	 * @return int code 操作码，1表示已登录，0表示未登录
+	 * @return object info 状态信息对象
+	 * @return int info.id 用户ID
+	 * @return string info.nickname 用户昵称
+	 */
+	public function status(){
+		$rs = array(
+			'code' => 0, 
+			'msg'  => '', 
+			'info' => array(),
+		);
+		$domain = new Domain_Group();
+		$rs['msg'] = $domain->checkStatus();
+
+		if (empty($rs['msg'])) {
+			$rs['info']['userID'] = DI()->cookie->get('userID');
+			$rs['info']['nickname'] = DI()->cookie->get('nickname');
+			$rs['code'] = 1;
+			$rs['msg']  = '用户已登录！';
+		}
+
+		return $rs;
+	}
+
+	public function setc(){
+		DI()->cookie->set('userID','12', $_SERVER['REQUEST_TIME'] + 60);
 	}
 	
 }

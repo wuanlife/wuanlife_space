@@ -1,7 +1,7 @@
 <?php 
 
 class Domain_Group {
-
+	public $data  = array();
 	public $msg   = '';
 	public $name  = '';
 	public $model = '';
