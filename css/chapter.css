@@ -1,6 +1,5 @@
 /*当前位置*/
 .location{
-    font-family:'PingFang-SC-Medium';
     padding:0.62963rem 0 0.351852rem;
 }
 .location>h1{
@@ -42,14 +41,12 @@
     border-bottom-width: 3px;
 }
 .chapter>h2{
-    font-family: 'PingFang-SC-Bold';
     font-size: 0.462963rem;
     line-height: 0.555556rem;
     color:#363636;
     margin-bottom: 0.259259rem;
 }
 .chapter>p{
-    font-family: 'PingFang-SC-Medium';
     font-size: 0.37037rem;
     line-height: 0.555556rem;
     margin-bottom: 0.203704rem;
@@ -98,7 +95,6 @@
         margin-bottom: 16px;
     }
     .chapter>p{
-        font-family: 'PingFang-SC-Regular';
         font-size: 16px;
         line-height: 26px;
         color:#5c5c5c;
