@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `post_detail` (
   `createTime` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '发布时间',
   `delete` int(1) NOT NULL DEFAULT '0' COMMENT '删除',
   PRIMARY KEY (`group_base_id`,`floor`),
-  KEY `postid` (`postid`,`replyid`)
+  KEY `user_base_id` (`user_base_id`,`replyid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='回复帖';
 
 
