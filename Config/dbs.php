@@ -49,6 +49,23 @@ return array(
             ),
         ),
 
+        'group_base' => array(
+            'prefix' => '',
+            'key'    => 'id',
+            'map'    => array(
+                array('db' => 'db_demo'),
+            ),
+        ),
+        
+        'group_detail' => array(
+            'prefix' => '',
+            'key'    => 'id',
+            'map'    => array(
+                array('db' => 'db_demo'),
+            ),
+        ),
+        
+
         'user' => array(
             'prefix' => 'tbl_',
             'key'    => 'id',
