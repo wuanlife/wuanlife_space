@@ -41,8 +41,8 @@ return array(
         ),
 
 
-        'base' => array(
-            'prefix' => 'user_',
+        'user_base' => array(
+            'prefix' => '',
             'key'    => 'id',
             'map'    => array(
                 array('db' => 'db_demo'),
@@ -59,12 +59,11 @@ return array(
         
         'group_detail' => array(
             'prefix' => '',
-            'key'    => 'id',
+            'key'    => 'group_base_id',
             'map'    => array(
                 array('db' => 'db_demo'),
             ),
         ),
-        
 
         'user' => array(
             'prefix' => 'tbl_',
