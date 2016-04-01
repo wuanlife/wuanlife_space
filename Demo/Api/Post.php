@@ -2,7 +2,7 @@
 /**
  * 数据库接口服务类
  */
-class Api_DB extends PhalApi_Api{
+class Api_Post extends PhalApi_Api{
     public function getRules(){
         return array(
             'test' => array(
@@ -52,7 +52,7 @@ class Api_DB extends PhalApi_Api{
     public function getIndexPost(){
         $data   = array();
 
-        $domain = new Domain_db();
+        $domain = new Domain_Post();
         $data = $domain->getIndexPost();
 
         return $data;

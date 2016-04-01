@@ -1,6 +1,6 @@
 <?php
 
-class Model_db extends PhalApi_Model_NotORM {
+class Model_Post extends PhalApi_Model_NotORM {
 
     public function getIndexPost() {
         $sql = 'SELECT pb.title,pd.text,MAX(pd.createTime) AS createTime,ub.nickName,gb.name '

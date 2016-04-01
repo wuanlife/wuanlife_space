@@ -1,6 +1,6 @@
 <?php
 
-class Domain_db {
+class Domain_Post {
 
     public function getIndexPost() {
         $rs = array();
@@ -9,7 +9,7 @@ class Domain_db {
         // if ($userId <= 0) {
         //     return $rs;
         // }
-        $model = new Model_db();
+        $model = new Model_Post();
         $rs = $model->getIndexPost();
         return $rs;
     }
