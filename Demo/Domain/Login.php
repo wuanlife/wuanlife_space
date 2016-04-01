@@ -19,9 +19,9 @@ class Domain_Login {
 
     public function checkE($Email){
        
-        if (!preg_match('/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/', $Email)) {
+       /* if (!preg_match('/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/', $Email)) {
             $this->msg = '邮箱地址格式错误';
-        } 
+        } */
 
         if (empty($this->model->checkEmail($Email))) {
             $this->msg = '该邮箱尚未注册！';
@@ -30,9 +30,9 @@ class Domain_Login {
 
     public function checkPwd($password){
 
-        if (!preg_match('/^[\s|\S]{6,50}$/u', $password)) {
+       /* if (!preg_match('/^[\s|\S]{6,50}$/u', $password)) {
             $this->msg = '密码长度为6-18位！';
-        } 
+        } */
 		if (empty($this->model->checkPassword($password))) {
             $this->msg = '密码不正确，请重新输入！';
         }
