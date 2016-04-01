@@ -49,7 +49,8 @@ return array(
             ),
         ),
 		
-		'user_detail' => array(
+		
+        'user_detail' => array(
             'prefix' => '',
             'key'    => 'id',
             'map'    => array(
