@@ -54,7 +54,7 @@ class Api_Login extends PhalApi_Api{
  */
 	public function login(){
 
-		$rs = array('code' => 0, 'msg' => '', 'info' => array());
+		$rs = array('code' => 0, 'msg' => '','info' => array());
 		$data = array(
 			//'nickname' => $this->nickname,
 			'Email'    => $this->Email,
@@ -73,6 +73,12 @@ class Api_Login extends PhalApi_Api{
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
 				$rs['code'] = 1;
 				$rs['msg'] = '登录成功！';
+				$nickname = DI()->cookie->get('nickname');
+				DI()->cookie->set('nickname', $result['nickname'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
+				$userID = DI()->cookie->get('userID');
+				DI()->cookie->set('userID', $result['id'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
+				$Email = DI()->cookie->get('Email');
+				DI()->cookie->set('Email', $result['Email'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
 			}
 
 		}
