@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `post_base` (
 --
 
 CREATE TABLE IF NOT EXISTS `post_detail` (
-  `group_base_id` int(5) unsigned NOT NULL COMMENT '帖子id',
+  `post_base_id` int(5) unsigned NOT NULL COMMENT '帖子id',
   `user_base_id` int(5) unsigned NOT NULL COMMENT '回帖人id',
   `replyid` int(5) unsigned DEFAULT NULL COMMENT '回复的id',
   `text` varchar(140) COLLATE utf8_bin NOT NULL COMMENT '内容',
