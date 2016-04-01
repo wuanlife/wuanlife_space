@@ -221,9 +221,9 @@ class Api_Group extends PhalApi_Api
 		return $rs;
 	}
 
-	public function setc(){
-		DI()->cookie->set('userID','1212', $_SERVER['REQUEST_TIME'] + 600);
-	}
+	// public function setc(){
+	// 	DI()->cookie->set('userID','1212', $_SERVER['REQUEST_TIME'] + 600);
+	// }
 	
 }
 
