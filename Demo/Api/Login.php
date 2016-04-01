@@ -1,29 +1,29 @@
 <?php 
 /**
- * 注册服务类
+ * 登录服务类
  */
 
-class Api_Reg extends PhalApi_Api{
+class Api_Login extends PhalApi_Api{
 
 	public function getRules(){
 		return array(
 
-			'register' => array(
-				'nickname' => array(
+			'login' => array(
+				/*'nickname' => array(
 					'name'    => 'nickname', 
 					'type'    => 'string', 
 					'require' => true, 
 					'min'     => '1', 
 					'max'     => '16', 
 					'desc'    => '用户昵称'
-				),
+				),*/
 
 				'Email'    => array(
 					'name'    => 'Email', 
 					'type'    => 'string', 
 					'require' => true, 
 					'min'     => '1', 
-					'max'     => '32', 
+					'max'     => '100', 
 					'desc'    => '用户邮箱'     
 				),
 
@@ -31,51 +31,61 @@ class Api_Reg extends PhalApi_Api{
 					'name'    => 'password', 
 					'type'    => 'string', 
 					'require' => true, 
-					'min'     => '6', 
-					'max'     => '18', 
+					'min'     => '1', 
+					'max'     => '100', 
 					'desc'    => '用户密码'
 				),
 			),
+			'select' => array(
+                'id' => array('name' => 'id', 'desc' => '用户Id'),
+            ),
 		);
 	}
 
 /**
- * 注册接口
- * @desc 用于验证并注册用户
- * @return int code 操作码，1表示注册成功，0表示注册失败
+ * 登录接口
+ * @desc 用于验证并登录用户
+ * @return int code 操作码，1表示登录成功，0表示登录失败
  * @return object info 用户信息对象
  * @return int info.id 用户ID
  * @return string info.nickname 用户昵称
  * @return string msg 提示信息
  * 
  */
-	public function register(){
+	public function login(){
 
 		$rs = array('code' => 0, 'msg' => '', 'info' => array());
 		$data = array(
-			'nickname' => $this->nickname,
+			//'nickname' => $this->nickname,
 			'Email'    => $this->Email,
 			'password' => $this->password,
+		
 		);
-
-		$domain = new Domain_Reg();
-		$rs['msg'] = $domain->reg($data);
+        
+		$data['password'] = md5($data['password']);
+		$domain = new Domain_Login();
+		$rs['msg'] = $domain->login($data);
 
 		if (empty($rs['msg'])) {
-			$data['password'] = md5($data['password']);
-			$result = DI()->notorm->base->insert($data);
-
-			if (!empty($result['id'])) {
+            
+			$result = DI()->notorm->user_base->select('Email,nickname,id')->where('Email',$data['Email'])->fetch();
+			if (!empty($result['Email'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
 				$rs['code'] = 1;
-				$rs['msg'] = '注册成功！';
+				$rs['msg'] = '登录成功！';
 			}
 
 		}
+		
 
 		return $rs;
 
 	}
+     public function select(){
+    $data   = array();
+    $data[] = DI()->notorm->user_base->select('id,email,password')->fetchRows();
+    return $data;
+}
 
 
 

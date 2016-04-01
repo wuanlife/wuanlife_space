@@ -3,7 +3,7 @@
 class Domain_Login {
 
     public $msg      = '';
-    //public $nickname = '';
+    //public $nickname = '';保留对昵称的检查，方便以后调用
     public $Email    = '';
     public $password = '';
     public $model    = '';
@@ -30,7 +30,7 @@ class Domain_Login {
 
     public function checkPwd($password){
 
-        if (!preg_match('/^[\s|\S]{6,18}$/u', $password)) {
+        if (!preg_match('/^[\s|\S]{6,50}$/u', $password)) {
             $this->msg = '密码长度为6-18位！';
         } 
 		if (empty($this->model->checkPassword($password))) {

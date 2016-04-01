@@ -14,7 +14,7 @@ class Api_Reg extends PhalApi_Api{
 					'type'    => 'string', 
 					'require' => true, 
 					'min'     => '1', 
-					'max'     => '16', 
+					'max'     => '100', 
 					'desc'    => '用户昵称'
 				),
 
@@ -23,7 +23,7 @@ class Api_Reg extends PhalApi_Api{
 					'type'    => 'string', 
 					'require' => true, 
 					'min'     => '1', 
-					'max'     => '32', 
+					'max'     => '100', 
 					'desc'    => '用户邮箱'     
 				),
 
@@ -31,8 +31,8 @@ class Api_Reg extends PhalApi_Api{
 					'name'    => 'password', 
 					'type'    => 'string', 
 					'require' => true, 
-					'min'     => '6', 
-					'max'     => '18', 
+					'min'     => '1', 
+					'max'     => '100', 
 					'desc'    => '用户密码'
 				),
 			),
@@ -58,15 +58,15 @@ class Api_Reg extends PhalApi_Api{
 			'password' => $this->password,
 		);
 
-		$domain = new Domain_Check();
+		$domain = new Domain_Reg();
 		$rs['msg'] = $domain->reg($data);
 
 		if (empty($rs['msg'])) {
 			$data['password'] = md5($data['password']);
-			$result = DI()->notorm->base->insert($data);
+			$result = DI()->notorm->user_base->insert($data);
 
 			if (!empty($result['id'])) {
-				$rs['info'] = array('userId' => $result['id'], 'nickname' => $result['nickname']);
+				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
 				$rs['code'] = 1;
 				$rs['msg'] = '注册成功！';
 			}
