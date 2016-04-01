@@ -1,6 +1,6 @@
 <?php 
 
-class Domain_Check {
+class Domain_Reg {
 
     public $msg      = '';
     public $nickname = '';
@@ -38,7 +38,7 @@ class Domain_Check {
     }
 
     public function request($data){
-        $this->model    = new Model_Check();
+        $this->model    = new Model_Reg();
         $this->nickname = $data['nickname'];
         $this->Email    = $data['Email'];
         $this->password = $data['password'];
