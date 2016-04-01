@@ -5,9 +5,6 @@
 class Api_Post extends PhalApi_Api{
     public function getRules(){
         return array(
-            'test' => array(
-                'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户Id'),
-            ),
             'getIndexPost' => array(
                 'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户Id'),
             ),
@@ -22,27 +19,6 @@ class Api_Post extends PhalApi_Api{
             ),
         );
     }
-
-
-    /**
-     * test
-     * @desc test显示
-     * @return array data 结果集
-     */
-    public function test(){
-        $data[]= DI()->notorm->post_base
-        ->SELECT('group_base.name')
-        ->fetchAll();
-
-        $data[]= DI()->notorm->post_detail
-        ->SELECT('post_base.title,post_detail.text,user_base.nickName,post_detail.createTime')
-        ->WHERE('floor','1')
-        ->order('createTime DESC')
-        ->fetchAll();
-
-        return $data;
-    }
-
 
     /**
      * 主页
