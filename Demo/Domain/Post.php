@@ -4,37 +4,30 @@ class Domain_Post {
 
     public function getIndexPost() {
         $rs = array();
-
-        // $userId = intval($userId);
-        // if ($userId <= 0) {
-        //     return $rs;
-        // }
         $model = new Model_Post();
         $rs = $model->getIndexPost();
         return $rs;
     }
 
-    public function getGroupPost() {
+    public function getGroupPost($groupID) {
         $rs = array();
-
-        // $userId = intval($userId);
-        // if ($userId <= 0) {
-        //     return $rs;
-        // }
-        $model = new Model_db();
-        $rs = $model->getIndexPost();
+        $model = new Model_Post();
+        $rs = $model->getGroupPost($groupID);
         return $rs;
     }
     
-    public function getMyGroupPost() {
+    public function getMyGroupPost($userID) {
         $rs = array();
-
-        // $userId = intval($userId);
-        // if ($userId <= 0) {
-        //     return $rs;
-        // }
-        $model = new Model_db();
-        $rs = $model->getIndexPost();
+        $model = new Model_Post();
+        $rs = $model->getMyGroupPost($userID);
         return $rs;
     }
+
+    public function getPostDetail($postID) {
+        $rs = array();
+        $model = new Model_Post();
+        $rs = $model->getPostDetail($postID);
+        return $rs;
+    }
+
 }

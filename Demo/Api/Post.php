@@ -12,13 +12,13 @@ class Api_Post extends PhalApi_Api{
                 'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户Id'),
             ),
             'getGroupPost' => array(
-                'id' => array('name' => 'groupID', 'type' => 'int', 'require' => true, 'desc' => '小组Id'),
+                'groupID' => array('name' => 'group_id', 'type' => 'int', 'require' => true, 'desc' => '小组Id'),
             ),
             'getMyGroupPost' => array(
-                'id' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '用户Id'),
+                'userID' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '用户Id'),
             ),
             'getPostDetail' => array(
-                'id' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '帖子Id'),
+                'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子Id'),
             ),
         );
     }
@@ -66,13 +66,8 @@ class Api_Post extends PhalApi_Api{
     public function getGroupPost(){
         $data   = array();
 
-        $sql = 'SELECT pb.title,pd.ID,pd.text,MAX(pd.createTime) AS createTime,ub.nickName,gb.name,gb.ID as Gid '
-             . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
-             . 'WHERE pb.ID=pd.ID AND pb.userID=ub.ID AND pb.groupID=$groupID AND pb.groupID=gb.ID '
-             . 'GROUP BY ID '
-             . 'ORDER BY MAX(pd.createTime) DESC ';
-            // . 'LIMIT $limit_st,$page_num' ;
-        $data= DI()->notorm->user_base->queryAll($sql, array());
+        $domain = new Domain_Post();
+        $data = $domain->getGroupPost($this->groupID);
 
         return $data;
     }
@@ -85,13 +80,8 @@ class Api_Post extends PhalApi_Api{
     public function getMyGroupPost(){
         $data   = array();
 
-        $sql = 'SELECT pb.title,pd.ID,pd.text,MAX(pd.createTime) AS createTime,ub.nickName,gb.name,gb.ID as Gid '
-             . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
-             . 'WHERE pb.ID=pd.ID AND pb.userID=ub.ID AND pb.groupID=gb.ID AND gb.ID IN (SELECT ID FROM group_detail gd WHERE gd.userID = $userID)'
-             . 'GROUP BY ID '
-             . 'ORDER BY MAX(pd.createTime) DESC';
-            // . 'LIMIT $limit_st,$page_num';
-        $data= DI()->notorm->user_base->queryAll($sql, array());
+        $domain = new Domain_Post();
+        $data = $domain->getMyGroupPost($this->userID);
 
         return $data;
     }
@@ -102,16 +92,10 @@ class Api_Post extends PhalApi_Api{
      */
     public function getPostDetail(){
 
-         $data[]= DI()->notorm->post_base
-        ->SELECT('post_base.title,user_base.nickName,group_base.name')
-        ->WHERE('post_base.id = ?','1')
-        ->fetchRow();
-         $data[]= DI()->notorm->post_detail
-        ->SELECT('post_detail.text,user_base.nickName,post_detail.createTime')
-        ->WHERE('post_base.id = ?','1')
-        ->order('floor ASC')
-        ->fetchAll();
+        $data   = array();
 
+        $domain = new Domain_Post();
+        $data = $domain->getPostDetail($this->postID);
 
         return $data;
     }
