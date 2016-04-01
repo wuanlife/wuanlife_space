@@ -68,7 +68,7 @@ class Api_Login extends PhalApi_Api{
 
 		if (empty($rs['msg'])) {
             
-			$result = DI()->notorm->base->select('Email,nickname,id')->where('Email',$data['Email'])->fetch();
+			$result = DI()->notorm->user_base->select('Email,nickname,id')->where('Email',$data['Email'])->fetch();
 			if (!empty($result['Email'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
 				$rs['code'] = 1;
@@ -83,7 +83,7 @@ class Api_Login extends PhalApi_Api{
 	}
      public function select(){
     $data   = array();
-    $data[] = DI()->notorm->base->select('id,email,password')->fetchRows();
+    $data[] = DI()->notorm->user_base->select('id,email,password')->fetchRows();
     return $data;
 }
 

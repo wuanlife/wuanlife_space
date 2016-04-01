@@ -63,7 +63,7 @@ class Api_Reg extends PhalApi_Api{
 
 		if (empty($rs['msg'])) {
 			$data['password'] = md5($data['password']);
-			$result = DI()->notorm->base->insert($data);
+			$result = DI()->notorm->user_base->insert($data);
 
 			if (!empty($result['id'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);

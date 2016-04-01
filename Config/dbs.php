@@ -41,8 +41,16 @@ return array(
         ),
 
 
-        'base' => array(
-            'prefix' => 'user_',
+        'user_base' => array(
+            'prefix' => '',
+            'key'    => 'id',
+            'map'    => array(
+                array('db' => 'db_demo'),
+            ),
+        ),
+		
+		'user_detail' => array(
+            'prefix' => '',
             'key'    => 'id',
             'map'    => array(
                 array('db' => 'db_demo'),
