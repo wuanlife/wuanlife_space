@@ -42,13 +42,8 @@ class Api_Group extends PhalApi_Api
 					'name' => 'page',
 					'type' => 'int',
 					'require' => false,
+					'default' => 1,
 					'desc' => '当前页面，空则为第一页',
-				),
-				'pages' => array(
-					'name' => 'pages',
-					'type' => 'int',
-					'require' => false,
-					'desc' => '每页数量，空则每页20条',
 				),
 			),
 		);
@@ -206,6 +201,7 @@ class Api_Group extends PhalApi_Api
 
 	/**
 	 * 星球列表
+	 * @desc 按成员数降序显示星球列表
 	 * @return int lists 星球列表对象
 	 * @return int lists.name 星球名称
 	 * @return int lists.id 星球ID
@@ -215,9 +211,9 @@ class Api_Group extends PhalApi_Api
 		$rs = array(
 			'lists'  => array(),
 		);
-
+		$pages = 20;				//每页数量
 		$domain = new Domain_Group();
-		$rs['lists'] =  $domain->lists($this->page, $this->pages);
+		$rs['lists'] =  $domain->lists($this->page, $pages);
 		return $rs;
 	}
 
