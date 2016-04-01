@@ -40,48 +40,6 @@ return array(
             ),
         ),
 
-
-        'user_base' => array(
-            'prefix' => '',
-            'key'    => 'id',
-            'map'    => array(
-                array('db' => 'db_demo'),
-            ),
-        ),
-		
-		
-        'user_detail' => array(
-            'prefix' => '',
-            'key'    => 'id',
-            'map'    => array(
-                array('db' => 'db_demo'),
-            ),
-        ),
-
-        'group_base' => array(
-            'prefix' => '',
-            'key'    => 'id',
-            'map'    => array(
-                array('db' => 'db_demo'),
-            ),
-        ),
-        
-        'group_detail' => array(
-            'prefix' => '',
-            'key'    => 'id',
-            'map'    => array(
-                array('db' => 'db_demo'),
-            ),
-        ),
-        
-
-        'user' => array(
-            'prefix' => 'tbl_',
-            'key'    => 'id',
-            'map'    => array(
-                array('db' => 'db_test'),
-            ),
-        ),
         /**
         'demo' => array(                                                //表名
             'prefix' => 'pa_',                                         //表名前缀
