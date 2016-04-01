@@ -68,7 +68,13 @@ class Api_Reg extends PhalApi_Api{
 			if (!empty($result['id'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
 				$rs['code'] = 1;
-				$rs['msg'] = '注册成功！';
+				$rs['msg'] = '注册成功，并自动登录！';
+				$nickname = DI()->cookie->get('nickname');
+				DI()->cookie->set('nickname', $result['nickname'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
+				$userID = DI()->cookie->get('userID');
+				DI()->cookie->set('userID', $result['id'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
+				$Email = DI()->cookie->get('Email');
+				DI()->cookie->set('Email', $result['Email'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
 			}
 
 		}
