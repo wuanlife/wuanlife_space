@@ -43,7 +43,31 @@ class Api_Group extends PhalApi_Api
 					'type' => 'int',
 					'require' => false,
 					'default' => 1,
-					'desc' => '当前页面，空则为第一页',
+					'desc' => '当前页面',
+				),
+			),
+
+			'posts' => array(
+				'g_id' => array(
+					'name' => 'group_base_id',
+					'type' => 'int',
+					'min' => '1',
+					'require' => true,
+					'desc' => '发帖星球',
+				),
+				'title' => array(
+					'name' => 'title',
+					'type' => 'string',
+					'min' => '1',
+					'require' => true,
+					'desc' => '帖子标题',
+				),
+				'text' => array(
+					'name' => 'text',
+					'type' => 'string',
+					'min' => '1',
+					'require' => true,
+					'desc' => '帖子正文',
 				),
 			),
 		);
@@ -73,7 +97,7 @@ class Api_Group extends PhalApi_Api
 		$domain = new Domain_Group();
 		$domain->create($this->g_name);
 
-		if ($domain->msg == '') {
+		if ($domain->u_status == '1' && $domain->g_status =='1') {
 			$result = DI()->notorm->group_base->insert($data);
 			$data2 = array(
 				'group_base_id' => $result['id'],
@@ -109,7 +133,7 @@ class Api_Group extends PhalApi_Api
 		$domain = new Domain_Group();
 		$domain->join($this->g_id);
 
-		if ($domain->msg == '') {
+		if ($domain->u_status == '1' && $domain->g_status == '0') {
 			$data = array(
 				'group_base_id' => $this->g_id,
 				'user_base_id'  => $domain->cookie['userID'],
@@ -143,7 +167,7 @@ class Api_Group extends PhalApi_Api
 		$domain = new Domain_Group();
 		$domain->checkStatus();
 
-		if ($domain->status == '1') {
+		if ($domain->u_status == '1') {
 			$rs['info'] = $domain->cookie;
 			$rs['code'] = 1;
 		}else{
@@ -168,7 +192,7 @@ class Api_Group extends PhalApi_Api
 		$domain = new Domain_Group();
 		$domain->join($this->g_id);
 
-		if ($domain->msg == '') {			
+		if ($domain->g_status == '0') {			
 			$rs['code'] = 0;
 		}else{
 			$rs['code'] = 1;
@@ -210,10 +234,58 @@ class Api_Group extends PhalApi_Api
 	public function lists(){
 		$rs = array(
 			'lists'  => array(),
-		);
+			);
 		$pages = 20;				//每页数量
 		$domain = new Domain_Group();
 		$rs['lists'] =  $domain->lists($this->page, $pages);
+		return $rs;
+	}
+
+	/**
+	 * 帖子发布
+	 * @desc 星球帖子发布
+	 * @return int code 操作码，1表示发布成功，0表示发布失败
+ 	 * @return object info 帖子信息对象
+	 * @return int info.group_base_id 帖子所属星球ID
+	 * @return int info.post_base_id 帖子ID
+	 * @return string info.text 帖子正文
+	 * @return int info.floor 帖子楼层
+	 * @return string info.createTime 帖子发布时间
+	 * @return string info.title 帖子标题
+ 	 * @return string msg 提示信息
+	 */
+	public function posts(){
+		$rs = array(
+			'code' => 0, 
+			'msg'  => '', 
+			'info' => array(),
+		);
+		$domain = new Domain_Group();
+		$domain->join($this->g_id);
+
+		if ($domain->u_status == '1' && $domain->g_status == '1') {
+			$data = array(
+				'user_base_id'  => $domain->cookie['userID'],
+				'group_base_id' => $this->g_id,
+				'title'         => $this->title,
+			);
+			$pb = DI()->notorm->post_base->insert($data);
+			$time = date('Y-m-d H:i:s',time());
+			$data2 = array(
+				'post_base_id' => $pb['id'],
+				'user_base_id' => $domain->cookie['userID'],
+				'text' => $this->text,
+				'floor'=> '1',
+				'createTime' => $time,
+			);
+			$pd = DI()->notorm->post_detail->insert($data2);
+			$rs['code'] = 1;
+			$rs['info'] = $pd;
+			$rs['info']['title']=$pb['title'];
+		}else{
+			$rs['msg'] = $domain->msg;
+		}
+
 		return $rs;
 	}
 

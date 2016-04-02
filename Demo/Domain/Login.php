@@ -49,7 +49,10 @@ class Domain_Login {
         $this->request($data);
         //$this->checkNi($this->nickname);
         $this->checkE($this->Email);
+        
+        if (empty($this->msg)) {
         $this->checkPwd($this->password);
+    }
 
         return $this->msg;
 
