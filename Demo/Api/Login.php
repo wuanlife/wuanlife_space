@@ -74,6 +74,8 @@ class Api_Login extends PhalApi_Api{
 				$rs['code'] = 1;
 				$rs['msg'] = '登录成功！';
 				$nickname = DI()->cookie->get('nickname');
+				$config = array('crypt' => new Api_Cookie(), 'key' => 'a secrect');
+                DI()->cookie = new PhalApi_Cookie_Multi($config);
 				DI()->cookie->set('nickname', $result['nickname'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
 				$userID = DI()->cookie->get('userID');
 				DI()->cookie->set('userID', $result['id'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
@@ -87,11 +89,7 @@ class Api_Login extends PhalApi_Api{
 		return $rs;
 
 	}
-     public function select(){
-    $data   = array();
-    $data[] = DI()->notorm->user_base->select('id,email,password')->fetchRows();
-    return $data;
-}
+     
 
 
 
