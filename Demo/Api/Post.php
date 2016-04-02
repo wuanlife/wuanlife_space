@@ -6,16 +6,20 @@ class Api_Post extends PhalApi_Api{
     public function getRules(){
         return array(
             'getIndexPost' => array(
-                'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户Id'),
+                'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户ID'),
+                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
             'getGroupPost' => array(
-                'groupID' => array('name' => 'group_id', 'type' => 'int', 'require' => true, 'desc' => '小组Id'),
+                'groupID' => array('name' => 'group_id', 'type' => 'int', 'require' => true, 'desc' => '小组ID'),
+                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
             'getMyGroupPost' => array(
-                'userID' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '用户Id'),
+                'userID' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
+                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
             'getPostDetail' => array(
-                'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子Id'),
+                'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
+                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
         );
     }
@@ -29,7 +33,7 @@ class Api_Post extends PhalApi_Api{
         $data   = array();
 
         $domain = new Domain_Post();
-        $data = $domain->getIndexPost();
+        $data = $domain->getIndexPost($this->page);
 
         return $data;
     }
@@ -43,7 +47,7 @@ class Api_Post extends PhalApi_Api{
         $data   = array();
 
         $domain = new Domain_Post();
-        $data = $domain->getGroupPost($this->groupID);
+        $data = $domain->getGroupPost($this->groupID,$this->page);
 
         return $data;
     }
@@ -57,7 +61,7 @@ class Api_Post extends PhalApi_Api{
         $data   = array();
 
         $domain = new Domain_Post();
-        $data = $domain->getMyGroupPost($this->userID);
+        $data = $domain->getMyGroupPost($this->userID,$this->page);
 
         return $data;
     }
@@ -71,7 +75,7 @@ class Api_Post extends PhalApi_Api{
         $data   = array();
 
         $domain = new Domain_Post();
-        $data = $domain->getPostDetail($this->postID);
+        $data = $domain->getPostDetail($this->postID,$this->page);
 
         return $data;
     }
