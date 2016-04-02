@@ -155,7 +155,7 @@ class Api_Group extends PhalApi_Api
 
 	/**
 	 * 判断用户是否加入该星球
-	 * @desc 判断是否登录
+	 * @desc 判断用户是否加入该星球
 	 * @return int code 操作码，1表示已加入，0表示未加入
 	 * @return string msg 提示信息
 	 */
