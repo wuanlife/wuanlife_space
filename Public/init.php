@@ -32,6 +32,7 @@ DI()->notorm = new PhalApi_DB_NotORM(DI()->config->get('dbs'), !empty($_GET['__s
 DI()->cookie = 'PhalApi_Cookie';
 //翻译语言包设定
 SL('zh_cn');
+DI()->request = new PhalApi_Request($_POST);
 
 /** ---------------- 定制注册 可选服务组件 ---------------- **/
 
