@@ -89,7 +89,7 @@ class Api_Group extends PhalApi_Api
 			'msg'  => '', 
 			'info' => array(),
 		);
-		$result2 = '';
+
 		$data = array(
 			'name' => $this->g_name,
 		);
