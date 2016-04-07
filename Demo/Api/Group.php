@@ -89,7 +89,7 @@ class Api_Group extends PhalApi_Api
 			'msg'  => '', 
 			'info' => array(),
 		);
-
+		$result2 = '';
 		$data = array(
 			'name' => $this->g_name,
 		);
@@ -109,8 +109,9 @@ class Api_Group extends PhalApi_Api
 			$rs['code'] = 1;
 		}else{
 			$rs['msg'] = $domain->msg;
+			$rs['code'] = $domain->g_status;
 		}
-
+		// return $result2;
 		return $rs;
 	}
 
@@ -185,17 +186,18 @@ class Api_Group extends PhalApi_Api
 	 */
 	public function gStatus(){
 		$rs = array(
-			'code' => 1, 
+			'code' => 0, 
 			'msg'  => '',
 		);
 
 		$domain = new Domain_Group();
 		$domain->join($this->g_id);
 
-		if ($domain->g_status == '0') {			
-			$rs['code'] = 0;
-		}else{
+		if ($domain->g_status == '1') {			
 			$rs['code'] = 1;
+			$rs['msg']  = $domain->msg;
+		}else{
+			$rs['code'] = 0;
 			$rs['msg']  = $domain->msg;
 		}
 
@@ -289,9 +291,9 @@ class Api_Group extends PhalApi_Api
 		return $rs;
 	}
 
-	// public function setc(){
-	// 	DI()->cookie->set('userID','1212', $_SERVER['REQUEST_TIME'] + 600);
-	// }
+	public function setc(){
+		DI()->cookie->set('userID','1212', $_SERVER['REQUEST_TIME'] + 600);
+	}
 	
 }
 
