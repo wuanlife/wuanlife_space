@@ -1,7 +1,11 @@
 <?php 
 
 class Domain_Group {
-
+	public $rs = array(
+			'code' => 0, 
+			'msg'  => '', 
+			'info' => array(),
+			);
 	public $msg   = '';
 	public $model = '';
 	public $cookie = array();
@@ -48,16 +52,79 @@ class Domain_Group {
 		
 	}
 
-	public function create($g_name){
+	public function create($data){
+		$g_name = $data['name'];
 		$this->model = new Model_Group();
 		$this->checkStatus();
 		$this->checkN($g_name);
+
+		if ($this->u_status == '1' && $this->g_status =='1') {
+			$result = DI()->notorm->group_base->insert($data);
+			// $result = $this->model->add(group_base,$data);
+			$data2 = array(
+				'group_base_id' => $result['id'],
+				'user_base_id'  => $this->cookie['userID'], 
+			);
+			$result2 = DI()->notorm->group_detail->insert($data2);
+			// $result2 = $this->model->add(group_detail,$data2);
+			$this->rs['info'] = $result2;
+			$this->rs['info']['name'] = $result['name'];
+			$this->rs['code'] = 1;
+		}else{
+			$this->rs['msg'] = $this->msg;
+		}
+
+		return $this->rs;
 	}
 
 	public function join($g_id){
 		$this->model = new Model_Group();
 		$this->checkStatus();
 		$this->checkG($g_id);
+
+		if ($this->u_status == '1' && $this->g_status == '0') {
+			$data = array(
+				'group_base_id' => $g_id,
+				'user_base_id'  => $this->cookie['userID'],
+			);
+
+			$result = DI()->notorm->group_detail->insert($data);
+			$this->rs['info'] = $result;
+			$this->rs['code'] = 1;
+		}else{
+			$this->rs['msg'] = $this->msg;
+		}
+
+		return $this->rs;
+	}
+
+	public function uStatus(){
+		$this->checkStatus();
+
+		if ($this->u_status == '1') {
+			$this->rs['info'] = $this->cookie;
+			$this->rs['code'] = 1;
+		}else{
+			$this->rs['msg'] = $this->msg;
+		}
+
+		return $this->rs;
+	}
+
+	public function gStatus($g_id){
+		$this->model = new Model_Group();
+		$this->checkStatus();
+		$this->checkG($g_id);
+
+		if ($this->g_status == '1') {			
+			$this->rs['code'] = 1;
+			$this->rs['msg']  = $this->msg;
+		}else{
+			$this->rs['code'] = 0;
+			$this->rs['msg']  = $this->msg;
+		}
+
+		return $this->rs;
 	}
 
 	public function out(){
@@ -74,6 +141,37 @@ class Domain_Group {
 		$page         =(int)$page;								//安全强制转换
 		$limit_st     =($page-1)*$page_num;						//起始数
 		return $this->model->lists($limit_st, $page_num);
+	}
+
+	public function posts($data){
+		$this->model = new Model_Group();
+		$this->checkStatus();
+		$this->checkG($data['group_base_id']);
+
+		if ($this->u_status == '1' && $this->g_status == '1') {
+			$b_data = array(
+				'user_base_id'  => $this->cookie['userID'],
+				'group_base_id' => $data['group_base_id'],
+				'title'         => $data['title'],
+			);
+			$pb = DI()->notorm->post_base->insert($b_data);
+			$time = date('Y-m-d H:i:s',time());
+			$d_data = array(
+				'post_base_id' => $pb['id'],
+				'user_base_id' => $this->cookie['userID'],
+				'text' => $data['text'],
+				'floor'=> '1',
+				'createTime' => $time,
+			);
+			$pd = DI()->notorm->post_detail->insert($d_data);
+			$this->rs['code'] = 1;
+			$this->rs['info'] = $pd;
+			$this->rs['info']['title']=$pb['title'];
+		}else{
+			$this->rs['msg'] = $this->msg;
+		}
+
+		return $this->rs;
 	}
 
 
