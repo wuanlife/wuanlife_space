@@ -11,7 +11,7 @@ class Domain_Group {
 	public function checkN($g_name){
 		if (!preg_match('/^[0-9a-zA-Z_\x{4e00}-\x{9fa5}]{1,20}+$/u', $g_name)) {
 			$this->msg = '小组名只能为中文、英文、数字或者下划线，但不得超过20字节！';
-		}elseif (!empty($this->model->checkName($g_name))) {
+		}elseif ($this->model->checkName($g_name) !== '') {
             $this->msg = '该星球已创建！';
         }else{
         	$this->g_status = '1';
@@ -19,7 +19,7 @@ class Domain_Group {
 	}
 
 	public function checkG($g_id){
-		if (!empty($this->model->checkGroup($this->cookie['userID'], $g_id))) {
+		if ($this->model->checkGroup($this->cookie['userID'], $g_id) !== '') {
             $this->msg = '已加入该星球！';
             $this->g_status = '1';
             // return $this->msg;
