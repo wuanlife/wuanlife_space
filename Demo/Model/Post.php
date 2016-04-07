@@ -4,7 +4,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getIndexPost($page) {
 
-        $num=4;
+        $num=6;
         $sql = 'SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id '
@@ -17,7 +17,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getGroupPost($groupID,$page) {
 
-        $num=4;
+        $num=6;
         $sql = 'SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.group_base_id=:group_id '
@@ -30,7 +30,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getMyGroupPost($userID,$page) {
 
-        $num=4;
+        $num=6;
         $sql = 'SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id '
@@ -44,7 +44,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getPostDetail($postID,$page) {
 
-        $num=4;
+        $num=6;
         $rs   = array();
         $sql = 'SELECT pb.title,pd.text,pd.createTime,ub.nickName,gb.name '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
@@ -54,7 +54,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $rs[]= DI()->notorm->post_detail
         ->SELECT('post_detail.text,user_base.nickName,post_detail.createTime')
-        ->WHERE('post_base.id = ?','1')
+        ->WHERE('post_base.id = ?',$postID)
         ->AND('post_detail.floor > ?','1')
         ->order('floor ASC')
         ->limit(($page-1)*$num,$num)
