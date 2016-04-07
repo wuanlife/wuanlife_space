@@ -89,7 +89,7 @@ class Api_User extends PhalApi_Api{
 		);
         
 		$data['password'] = md5($data['password']);
-		$domain = new Domain_Login();
+		$domain = new Domain_User();
 		$rs['msg'] = $domain->login($data);
 
 		if (empty($rs['msg'])) {
@@ -129,18 +129,18 @@ class Api_User extends PhalApi_Api{
 	public function register(){
 
 		$rs = array('code' => 0, 'msg' => '', 'info' => array());
-		$data = array(
+		$data1 = array(
 			'nickname' => $this->nickname,
 			'Email'    => $this->Email,
 			'password' => $this->password,
 		);
 
-		$domain = new Domain_Reg();
-		$rs['msg'] = $domain->reg($data);
+		$domain = new Domain_User();
+		$rs['msg'] = $domain->reg($data1);
 
 		if (empty($rs['msg'])) {
-			$data['password'] = md5($data['password']);
-			$result = DI()->notorm->user_base->insert($data);
+			$data1['password'] = md5($data1['password']);
+			$result = DI()->notorm->user_base->insert($data1);
 
 			if (!empty($result['id'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
