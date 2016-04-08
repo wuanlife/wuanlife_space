@@ -23,10 +23,17 @@ class Domain_Post {
         return $rs;
     }
 
-    public function getPostDetail($postID,$page) {
+    public function getPostBase($postID) {
         $rs = array();
         $model = new Model_Post();
-        $rs = $model->getPostDetail($postID,$page);
+        $rs = $model->getPostBase($postID);
+        return $rs;
+    }
+
+    public function getPostReply($postID,$page) {
+        $rs = array();
+        $model = new Model_Post();
+        $rs = $model->getPostReply($postID,$page);
         return $rs;
     }
 

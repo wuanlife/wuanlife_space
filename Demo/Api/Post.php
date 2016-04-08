@@ -17,9 +17,12 @@ class Api_Post extends PhalApi_Api{
                 'userID' => array('name' => 'id', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
                 'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
-            'getPostDetail' => array(
+            'getPostBase' => array(
                 'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
-                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
+            ),
+            'getPostReply' => array(
+                'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
+                'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '当前回帖的页码', 'default' => '1'),
             ),
         );
     }
@@ -87,23 +90,41 @@ class Api_Post extends PhalApi_Api{
         return $data;
     }
     /**
-     * 帖子详情
-     * @desc 帖子内容显示
+     * 帖子的内容
+     * @desc 单个帖子的内容显示
      * @return int post.id 帖子ID
      * @return string post.groupName 星球名称
      * @return string post.title 标题
-     * @return string reply.text 内容
-     * @return string reply.nickName 发帖人
-     * @return date reply.createTime 发帖时间
-     * @return int pageCount 总页数
-     * @return int currentPage 当前页
+     * @return string post.text 内容
+     * @return string post.nickName 发帖人
+     * @return date post.createTime 发帖时间
      */
-    public function getPostDetail(){
+    public function getPostBase(){
 
         $data   = array();
 
         $domain = new Domain_Post();
-        $data = $domain->getPostDetail($this->postID,$this->page);
+        $data = $domain->getPostBase($this->postID);
+
+        return $data;
+    }
+
+    /**
+     * 帖子的回复
+     * @desc 单个帖子的回复内容显示
+     * @return int post.id 帖子ID
+     * @return string reply.text 内容
+     * @return string reply.nickName 回帖人
+     * @return date reply.createTime 回帖时间
+     * @return int pageCount 总页数
+     * @return int currentPage 当前页
+     */
+    public function getPostReply(){
+
+        $data   = array();
+
+        $domain = new Domain_Post();
+        $data = $domain->getPostReply($this->postID,$this->page);
 
         return $data;
     }
