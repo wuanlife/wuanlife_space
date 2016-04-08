@@ -36,7 +36,7 @@ class Api_User extends PhalApi_Api{
 					'desc'    => '用户密码'
 				),
 			),
-			'register' => array(
+			'reg' => array(
 				'nickname' => array(
 					'name'    => 'nickname', 
 					'type'    => 'string', 
@@ -126,21 +126,21 @@ class Api_User extends PhalApi_Api{
  * @return string msg 提示信息
  * 
  */
-	public function register(){
+	public function reg(){
 
 		$rs = array('code' => 0, 'msg' => '', 'info' => array());
-		$data1 = array(
+		$data = array(
 			'nickname' => $this->nickname,
 			'Email'    => $this->Email,
 			'password' => $this->password,
 		);
 
 		$domain = new Domain_User();
-		$rs['msg'] = $domain->reg($data1);
+		$rs['msg'] = $domain->reg($data);
 
 		if (empty($rs['msg'])) {
-			$data1['password'] = md5($data1['password']);
-			$result = DI()->notorm->user_base->insert($data1);
+			$data['password'] = md5($data['password']);
+			$result = DI()->notorm->user_base->insert($data);
 
 			if (!empty($result['id'])) {
 				$rs['info'] = array('userID' => $result['id'], 'nickname' => $result['nickname'], 'Email' => $result['Email']);
