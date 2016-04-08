@@ -74,23 +74,31 @@ class Model_Post extends PhalApi_Model_NotORM {
         return $rs;
     }
 
-    public function getPostDetail($postID,$page) {
+    public function getPostBase($postID) {
 
-        $num=9;
         $rs   = array();
-        $sql = 'SELECT pb.id AS postID,pb.title,gb.name '
+        $sql = 'SELECT pb.id AS postID,gb.name AS groupName,pb.title,pd.text,ub.nickName,pd.createTime '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.id=:post_id AND pd.floor=1' ;
         $params = array(':post_id' =>$postID );
         $rs['post'] = DI()->notorm->post_base->queryAll($sql, $params);
 
+        return $rs;
+    }
+
+    public function getPostReply($postID,$page) {
+
+        $num=9;
+        $rs   = array();
         $rs['reply']= DI()->notorm->post_detail
         ->SELECT('post_detail.text,user_base.nickName,post_detail.createTime')
         ->WHERE('post_base.id = ?',$postID)
+        ->AND('post_detail.floor > ?','1')
         ->order('floor ASC')
         ->limit(($page-1)*$num,$num)
         ->fetchAll();
 
+        $rs['postID']=$postID;
         $sql = 'SELECT ceil(count(*)/:num) AS pageCount '
          . 'FROM post_detail '
          . 'WHERE post_base_id=:post_id ';
@@ -101,7 +109,6 @@ class Model_Post extends PhalApi_Model_NotORM {
         $rs['currentPage'] = $page;
         return $rs;
     }
-
 
 
     protected function getTableName($id) {
