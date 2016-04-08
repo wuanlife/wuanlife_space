@@ -84,32 +84,15 @@ class Api_Group extends PhalApi_Api
 	 * @return string msg 提示信息
 	 */
 	public function create(){
-		$rs = array(
-			'code' => 0, 
-			'msg'  => '', 
-			'info' => array(),
-		);
+		$rs = array();
 
 		$data = array(
 			'name' => $this->g_name,
 		);
 
 		$domain = new Domain_Group();
-		$domain->create($this->g_name);
+		$rs = $domain->create($data);
 
-		if ($domain->u_status == '1' && $domain->g_status =='1') {
-			$result = DI()->notorm->group_base->insert($data);
-			$data2 = array(
-				'group_base_id' => $result['id'],
-				'user_base_id'  => $domain->cookie['userID'], 
-			);
-			$result2 = DI()->notorm->group_detail->insert($data2);
-			$rs['info'] = $result2;
-			$rs['info']['name'] = $result['name'];
-			$rs['code'] = 1;
-		}else{
-			$rs['msg'] = $domain->msg;
-		}
 
 		return $rs;
 	}
@@ -124,27 +107,10 @@ class Api_Group extends PhalApi_Api
  	 * @return string msg 提示信息
 	 */
 	public function join(){
-		$rs = array(
-			'code' => 0, 
-			'info' => array(),
-			'msg'  => '', 
-		);
+		$rs = array();
 
 		$domain = new Domain_Group();
-		$domain->join($this->g_id);
-
-		if ($domain->u_status == '1' && $domain->g_status == '0') {
-			$data = array(
-				'group_base_id' => $this->g_id,
-				'user_base_id'  => $domain->cookie['userID'],
-			);
-
-			$result = DI()->notorm->group_detail->insert($data);
-			$rs['info'] = $result;
-			$rs['code'] = 1;
-		}else{
-			$rs['msg'] = $domain->msg;
-		}
+		$rs = $domain->join($this->g_id);
 
 		return $rs;
 	}
@@ -159,20 +125,10 @@ class Api_Group extends PhalApi_Api
 	 * @return string msg 提示信息
 	 */
 	public function uStatus(){
-		$rs = array(
-			'code' => 0, 
-			'msg'  => '', 
-			'info' => array(),
-		);
-		$domain = new Domain_Group();
-		$domain->checkStatus();
+		$rs = array();
 
-		if ($domain->u_status == '1') {
-			$rs['info'] = $domain->cookie;
-			$rs['code'] = 1;
-		}else{
-			$rs['msg'] = $domain->msg;
-		}
+		$domain = new Domain_Group();
+		$rs = $domain->uStatus();
 
 		return $rs;
 	}
@@ -184,20 +140,10 @@ class Api_Group extends PhalApi_Api
 	 * @return string msg 提示信息
 	 */
 	public function gStatus(){
-		$rs = array(
-			'code' => 1, 
-			'msg'  => '',
-		);
+		$rs = array();
 
 		$domain = new Domain_Group();
-		$domain->join($this->g_id);
-
-		if ($domain->g_status == '0') {			
-			$rs['code'] = 0;
-		}else{
-			$rs['code'] = 1;
-			$rs['msg']  = $domain->msg;
-		}
+		$rs = $domain->gStatus($this->g_id);
 
 		return $rs;
 	}
@@ -208,19 +154,9 @@ class Api_Group extends PhalApi_Api
 	 * @return_ int code 操作码，1表示注销成功，0表示注销失败
 	 */
 	public function loginOut(){
-		// $rs = array(
-		// 	'code' => 1, 
-		// 	'msg'  => '', 
-		// );
 
 		$domain = new Domain_Group();
 		$domain->out();
-
-		// if ($domain->status == '1') {
-		// 	$rs['code'] = 0;
-		// }
-
-		// return $rs;
 	}
 
 	/**
@@ -255,43 +191,18 @@ class Api_Group extends PhalApi_Api
  	 * @return string msg 提示信息
 	 */
 	public function posts(){
-		$rs = array(
-			'code' => 0, 
-			'msg'  => '', 
-			'info' => array(),
-		);
-		$domain = new Domain_Group();
-		$domain->join($this->g_id);
-
-		if ($domain->u_status == '1' && $domain->g_status == '1') {
-			$data = array(
-				'user_base_id'  => $domain->cookie['userID'],
+		$rs = array();
+		$data = array(
 				'group_base_id' => $this->g_id,
 				'title'         => $this->title,
+				'text'          => $this->text,
 			);
-			$pb = DI()->notorm->post_base->insert($data);
-			$time = date('Y-m-d H:i:s',time());
-			$data2 = array(
-				'post_base_id' => $pb['id'],
-				'user_base_id' => $domain->cookie['userID'],
-				'text' => $this->text,
-				'floor'=> '1',
-				'createTime' => $time,
-			);
-			$pd = DI()->notorm->post_detail->insert($data2);
-			$rs['code'] = 1;
-			$rs['info'] = $pd;
-			$rs['info']['title']=$pb['title'];
-		}else{
-			$rs['msg'] = $domain->msg;
-		}
+
+		$domain = new Domain_Group();
+		$rs = $domain->posts($data);
 
 		return $rs;
 	}
-
-	// public function setc(){
-	// 	DI()->cookie->set('userID','1212', $_SERVER['REQUEST_TIME'] + 600);
-	// }
 	
 }
 

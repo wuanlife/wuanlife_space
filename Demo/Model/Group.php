@@ -26,8 +26,8 @@ class Model_Group extends PhalApi_Model_NotORM{
         return $this->getORM()->queryAll($sql, $params);
 	}
 
-	public function getGroup(){
-		return DI()->notorm->post_base->insert($data);
+	public function add($table,$data){
+		return DI()->notorm->$table->insert($data);
 	}
 
 
