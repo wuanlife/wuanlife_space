@@ -27,7 +27,14 @@ class Api_Post extends PhalApi_Api{
     /**
      * 主页
      * @desc 主页面帖子显示
-     * @return array data 结果集
+     * @return int post.id 帖子ID
+     * @return string post.title 标题
+     * @return string post.text 内容
+     * @return date post.createTime 发帖时间
+     * @return string post.nickName 发帖人
+     * @return string post.groupName 星球名称
+     * @return int pageCount 总页数
+     * @return int currentPage 当前页
      */
     public function getIndexPost(){
         $data   = array();
@@ -41,7 +48,14 @@ class Api_Post extends PhalApi_Api{
     /**
      * 小组页面
      * @desc 小组页面帖子显示
-     * @return array data 结果集
+     * @return int post.id 帖子ID
+     * @return string post.title 标题
+     * @return string post.text 内容
+     * @return date post.createTime 发帖时间
+     * @return string post.nickName 发帖人
+     * @return string post.groupName 星球名称
+     * @return int pageCount 总页数
+     * @return int currentPage 当前页
      */
     public function getGroupPost(){
         $data   = array();
@@ -55,7 +69,14 @@ class Api_Post extends PhalApi_Api{
     /**
      * 我的星球
      * @desc 我的星球页面帖子显示
-     * @return array data 结果集
+     * @return int post.id 帖子ID
+     * @return string post.title 标题
+     * @return string post.text 内容
+     * @return date post.createTime 发帖时间
+     * @return string post.nickName 发帖人
+     * @return string post.groupName 星球名称
+     * @return int pageCount 总页数
+     * @return int currentPage 当前页
      */
     public function getMyGroupPost(){
         $data   = array();
@@ -68,7 +89,14 @@ class Api_Post extends PhalApi_Api{
     /**
      * 帖子详情
      * @desc 帖子内容显示
-     * @return array data 结果集
+     * @return int post.id 帖子ID
+     * @return string post.groupName 星球名称
+     * @return string post.title 标题
+     * @return string reply.text 内容
+     * @return string reply.nickName 发帖人
+     * @return date reply.createTime 发帖时间
+     * @return int pageCount 总页数
+     * @return int currentPage 当前页
      */
     public function getPostDetail(){
 
