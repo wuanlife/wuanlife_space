@@ -1,0 +1,42 @@
+1.API名称、描述
+Post.GetPostBase
+帖子详情-发帖内容
+
+2.接口URL：
+http://104.194.79.57/demo/?service=Post.GetPostBase
+
+3.请求方式：
+GET
+
+4.参数说明：
+	必选	类型	默认值	说明
+post_id	true	int	-	帖子ID
+
+5.返回值说明：
+post.id		int	帖子ID
+post.groupName	string	星球名称
+post.title	string	标题
+post.text	string	内容
+post.nickName	string	发帖人
+post.createTime	date	发帖时间
+
+6.示例：
+显示帖子ID为1的帖子内容
+http://104.194.79.57/demo/?service=Post.GetPostBase&post_id=1
+JSON:
+{
+    "ret": 200,
+    "data": {
+        "post": [
+            {
+                "postID": "1",
+                "groupName": "鬼扯1",
+                "title": "title1",
+                "text": "1texttexttexttexttexttexttexttexttexttext",
+                "nickname": "陶陶1",
+                "createTime": "2016-04-06 00:00:00"
+            }
+        ]
+    },
+    "msg": ""
+}
