@@ -1,0 +1,56 @@
+1.API名称、描述
+Group.Lists
+星球列表
+按成员数降序显示星球列表
+
+2.接口URL：
+http://104.194.79.57/demo/?service=Group.Lists
+
+3.请求方式：
+GET
+
+4.参数说明：
+参数名字    类型  是否必须    默认值    范围                   说明
+page         整型  可选         1                           当前页面
+
+
+5.返回值说明：
+lists       整型  星球列表对象
+lists.name  整型  星球名称
+lists.id    整型  星球ID
+lists.num   整型  星球成员数
+
+6.示例：
+显示帖子ID为1的帖子内容
+http://104.194.79.57/demo/?service=Group.Lists
+JSON:
+{
+    "ret": 200,
+    "data": {
+        "lists": [
+            {
+                "name": "asdasf",
+                "id": "4",
+                "num": "3"
+            },
+            
+            {
+                "name": "123",
+                "id": "31",
+                "num": "1"
+            },
+
+            {
+                "name": "weref",
+                "id": "32",
+                "num": "1"
+            },
+            {
+                "name": "qwefdsf112",
+                "id": "25",
+                "num": "1"
+            }
+        ]
+    },
+    "msg": ""
+}
