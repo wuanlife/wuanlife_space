@@ -6,7 +6,6 @@ class Api_Post extends PhalApi_Api{
     public function getRules(){
         return array(
             'getIndexPost' => array(
-                'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户ID'),
                 'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
             'getGroupPost' => array(
@@ -34,7 +33,7 @@ class Api_Post extends PhalApi_Api{
      * @return string post.title 标题
      * @return string post.text 内容
      * @return date post.createTime 发帖时间
-     * @return string post.nickName 发帖人
+     * @return string post.nickname 发帖人
      * @return string post.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
@@ -55,7 +54,7 @@ class Api_Post extends PhalApi_Api{
      * @return string post.title 标题
      * @return string post.text 内容
      * @return date post.createTime 发帖时间
-     * @return string post.nickName 发帖人
+     * @return string post.nickname 发帖人
      * @return string post.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
@@ -76,7 +75,7 @@ class Api_Post extends PhalApi_Api{
      * @return string post.title 标题
      * @return string post.text 内容
      * @return date post.createTime 发帖时间
-     * @return string post.nickName 发帖人
+     * @return string post.nickname 发帖人
      * @return string post.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
@@ -96,7 +95,7 @@ class Api_Post extends PhalApi_Api{
      * @return string post.groupName 星球名称
      * @return string post.title 标题
      * @return string post.text 内容
-     * @return string post.nickName 发帖人
+     * @return string post.nickname 发帖人
      * @return date post.createTime 发帖时间
      */
     public function getPostBase(){
@@ -114,7 +113,7 @@ class Api_Post extends PhalApi_Api{
      * @desc 单个帖子的回复内容显示
      * @return int post.id 帖子ID
      * @return string reply.text 内容
-     * @return string reply.nickName 回帖人
+     * @return string reply.nickname 回帖人
      * @return date reply.createTime 回帖时间
      * @return int pageCount 总页数
      * @return int currentPage 当前页
