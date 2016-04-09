@@ -1,29 +1,29 @@
-1.APIÃû³Æ¡¢ÃèÊö
+ï»¿1.APIåç§°ã€æè¿°
 Post.GetPostReply
-Ìû×ÓÏêÇé-»ØÌûÄÚÈİ
+å¸–å­è¯¦æƒ…-å›å¸–å†…å®¹
 
-2.½Ó¿ÚURL£º
+2.æ¥å£URLï¼š
 http://104.194.79.57/demo/?service=Post.GetPostReply
 
-3.ÇëÇó·½Ê½£º
+3.è¯·æ±‚æ–¹å¼ï¼š
 GET
 
-4.²ÎÊıËµÃ÷£º
-	±ØÑ¡	ÀàĞÍ	Ä¬ÈÏÖµ	ËµÃ÷
-post_id	true	int	-	Ìû×ÓID
-pn	false	int	1	µÚ¼¸Ò³
+4.å‚æ•°è¯´æ˜ï¼š
+	å¿…é€‰	ç±»å‹	é»˜è®¤å€¼	è¯´æ˜
+post_id	true	int	-	å¸–å­ID
+pn	false	int	1	ç¬¬å‡ é¡µ
 
-5.·µ»ØÖµËµÃ÷£º
-post.id		int	Ìû×ÓID
-reply.text	string	ÄÚÈİ
-reply.nickname	string	·¢ÌûÈË
-reply.createTime	date	·¢ÌûÊ±¼ä
-replyCount	int	»ØÌûÊı
-pageCount	int	×ÜÒ³Êı
-currentPage	int	µ±Ç°Ò³
+5.è¿”å›å€¼è¯´æ˜ï¼š
+post.id		int	å¸–å­ID
+reply.text	string	å†…å®¹
+reply.nickname	string	å‘å¸–äºº
+reply.createTime	date	å‘å¸–æ—¶é—´
+replyCount	int	å›å¸–æ•°
+pageCount	int	æ€»é¡µæ•°
+currentPage	int	å½“å‰é¡µ
 
-6.Ê¾Àı£º
-ÏÔÊ¾Ìû×ÓIDÎª1µÄµÚ1Ò³»Ø¸´
+6.ç¤ºä¾‹ï¼š
+æ˜¾ç¤ºå¸–å­IDä¸º1çš„ç¬¬1é¡µå›å¤
 http://104.194.79.57/demo/?service=Post.GetPostReply&post_id=1&pn=1
 JSON:
 {
@@ -31,48 +31,48 @@ JSON:
     "data": {
         "reply": [
             {
-                "text": "2»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "2å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:21:00"
             },
             {
-                "text": "3»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "3å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:22:00"
             },
             {
-                "text": "4»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "4å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:23:00"
             },
             {
-                "text": "5»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "5å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:24:00"
             },
             {
-                "text": "6»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "6å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:25:00"
             },
             {
-                "text": "7»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "7å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:26:00"
             },
             {
-                "text": "8»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "8å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:27:00"
             },
             {
-                "text": "9»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "9å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:28:00"
             },
             {
-                "text": "10»Ø¸´»Ø¸´»Ø¸´",
-                "nickname": "ÌÕÌÕ1",
+                "text": "10å›å¤å›å¤å›å¤",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:29:00"
             }
         ],

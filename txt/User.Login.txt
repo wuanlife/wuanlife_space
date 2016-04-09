@@ -1,35 +1,35 @@
-1.API¡¢Ãû³Æ¡¢ÃèÊö
-User.Login¡¢µÇÂ¼½Ó¿Ú¡¢ÓÃÓÚÑéÖ¤²¢µÇÂ¼ÓÃ»§
+ï»¿1.APIã€åç§°ã€æè¿°
+User.Loginã€ç™»å½•æŽ¥å£ã€ç”¨äºŽéªŒè¯å¹¶ç™»å½•ç”¨æˆ·
 
-2.½Ó¿ÚURL£º
+2.æŽ¥å£URLï¼š
 http://104.194.79.57/demo/?service=User.Login
 
-3.ÇëÇó·½Ê½£º
-POST&GET
+3.è¯·æ±‚æ–¹å¼ï¼š
+POST
 
-4.²ÎÊýËµÃ÷£º
-²ÎÊýÃû×Ö    ÀàÐÍ  ÊÇ·ñ±ØÐë    Ä¬ÈÏÖµ    ·¶Î§   ËµÃ÷
-Email       ×Ö·û´® ±ØÐë                      ÓÃ»§ÓÊÏä
-password    ×Ö·û´® ±ØÐë                      ÓÃ»§ÃÜÂë
+4.å‚æ•°è¯´æ˜Žï¼š
+å‚æ•°åå­—    ç±»åž‹  æ˜¯å¦å¿…é¡»    é»˜è®¤å€¼    èŒƒå›´   è¯´æ˜Ž
+Email       å­—ç¬¦ä¸² å¿…é¡»                      ç”¨æˆ·é‚®ç®±
+password    å­—ç¬¦ä¸² å¿…é¡»                      ç”¨æˆ·å¯†ç 
 
-5.·µ»ØÖµËµÃ÷£º
-·µ»Ø×Ö¶Î        ÀàÐÍ   ËµÃ÷
-msg             ×Ö·û´® ÌáÊ¾ÐÅÏ¢
-code            ÕûÐÍ   ²Ù×÷Âë£¬1±íÊ¾µÇÂ¼³É¹¦£¬0±íÊ¾µÇÂ¼Ê§°Ü
-info            ¶ÔÏó   ÓÃ»§ÐÅÏ¢¶ÔÏó
-info.userID     ÕûÐÍ   ÓÃ»§ID
-info.nickname   ×Ö·û´® ÓÃ»§êÇ³Æ
-info.Email      ×Ö·û´® ÓÃ»§ÓÊÏä
+5.è¿”å›žå€¼è¯´æ˜Žï¼š
+è¿”å›žå­—æ®µ        ç±»åž‹   è¯´æ˜Ž
+msg             å­—ç¬¦ä¸² æç¤ºä¿¡æ¯
+code            æ•´åž‹   æ“ä½œç ï¼Œ1è¡¨ç¤ºç™»å½•æˆåŠŸï¼Œ0è¡¨ç¤ºç™»å½•å¤±è´¥
+info            å¯¹è±¡   ç”¨æˆ·ä¿¡æ¯å¯¹è±¡
+info.userID     æ•´åž‹   ç”¨æˆ·ID
+info.nickname   å­—ç¬¦ä¸² ç”¨æˆ·æ˜µç§°
+info.Email      å­—ç¬¦ä¸² ç”¨æˆ·é‚®ç®±
 
 
-6.Ê¾Àý£º
-×¢²áÕËºÅ
+6.ç¤ºä¾‹ï¼š
+æ³¨å†Œè´¦å·
 http://104.194.79.57/demo/?service=User.Login&Email=taotao@taotao.com&password=111111
 JSON:
 {
 "ret": 200,
 "data": {
-    "msg": "µÇÂ¼³É¹¦£¡",
+    "msg": "ç™»å½•æˆåŠŸï¼",
     "code": "1",
     "info": {
         "userID": "26",

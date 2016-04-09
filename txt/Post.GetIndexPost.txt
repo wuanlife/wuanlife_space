@@ -1,29 +1,29 @@
-1.APIÃû³Æ¡¢ÃèÊö
+ï»¿1.APIåç§°ã€æè¿°
 Post.GetIndexPost
-Ö÷Ò³ÃæÌû×ÓÏÔÊ¾
+ä¸»é¡µé¢å¸–å­æ˜¾ç¤º
 
-2.½Ó¿ÚURL£º
+2.æ¥å£URLï¼š
 http://104.194.79.57/demo/?service=Post.GetIndexPost
 
-3.ÇëÇó·½Ê½£º
+3.è¯·æ±‚æ–¹å¼ï¼š
 GET
 
-4.²ÎÊıËµÃ÷£º
-	±ØÑ¡	ÀàĞÍ	Ä¬ÈÏÖµ	ËµÃ÷
-pn	false	int	1	µÚ¼¸Ò³
+4.å‚æ•°è¯´æ˜ï¼š
+	å¿…é€‰	ç±»å‹	é»˜è®¤å€¼	è¯´æ˜
+pn	false	int	1	ç¬¬å‡ é¡µ
 
-5.·µ»ØÖµËµÃ÷£º
-post.id		int	Ìû×ÓID
-post.title	string	±êÌâ
-post.text	string	ÄÚÈİ
-post.createTime	date	·¢ÌûÊ±¼ä
-post.nickname	string	·¢ÌûÈË
-post.groupName	string	ĞÇÇòÃû³Æ
-pageCount	int	×ÜÒ³Êı
-currentPage	int	µ±Ç°Ò³
+5.è¿”å›å€¼è¯´æ˜ï¼š
+post.id		int	å¸–å­ID
+post.title	string	æ ‡é¢˜
+post.text	string	å†…å®¹
+post.createTime	date	å‘å¸–æ—¶é—´
+post.nickname	string	å‘å¸–äºº
+post.groupName	string	æ˜Ÿçƒåç§°
+pageCount	int	æ€»é¡µæ•°
+currentPage	int	å½“å‰é¡µ
 
-6.Ê¾Àı£º
-ÏÔÊ¾µÚ¶şÒ³Ìû×Ó
+6.ç¤ºä¾‹ï¼š
+æ˜¾ç¤ºç¬¬äºŒé¡µå¸–å­
 http://104.194.79.57/demo/?service=Post.GetIndexPost&pn=2
 JSON:
 {
@@ -35,48 +35,48 @@ JSON:
                 "title": "title34",
                 "text": "34texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:13:00",
-                "nickname": "ÌÕÌÕ14",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶14",
+                "groupName": "é¬¼æ‰¯1"
             },
             {
                 "postID": "33",
                 "title": "title33",
                 "text": "33texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:12:00",
-                "nickname": "ÌÕÌÕ13",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶13",
+                "groupName": "é¬¼æ‰¯1"
             },
             {
                 "postID": "32",
                 "title": "title32",
                 "text": "32texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:11:00",
-                "nickname": "ÌÕÌÕ12",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶12",
+                "groupName": "é¬¼æ‰¯1"
             },
             {
                 "postID": "31",
                 "title": "title31",
                 "text": "31texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:10:00",
-                "nickname": "ÌÕÌÕ11",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶11",
+                "groupName": "é¬¼æ‰¯1"
             },
             {
                 "postID": "30",
                 "title": "title30",
                 "text": "30texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:09:00",
-                "nickname": "ÌÕÌÕ10",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶10",
+                "groupName": "é¬¼æ‰¯1"
             },
             {
                 "postID": "29",
                 "title": "title29",
                 "text": "29texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:08:00",
-                "nickname": "ÌÕÌÕ9",
-                "groupName": "¹í³¶1"
+                "nickname": "é™¶é™¶9",
+                "groupName": "é¬¼æ‰¯1"
             }
         ],
         "pageCount": 7,

@@ -1,27 +1,27 @@
-1.APIÃû³Æ¡¢ÃèÊö
+ï»¿1.APIåç§°ã€æè¿°
 Post.GetPostBase
-Ìû×ÓÏêÇé-·¢ÌûÄÚÈİ
+å¸–å­è¯¦æƒ…-å‘å¸–å†…å®¹
 
-2.½Ó¿ÚURL£º
+2.æ¥å£URLï¼š
 http://104.194.79.57/demo/?service=Post.GetPostBase
 
-3.ÇëÇó·½Ê½£º
+3.è¯·æ±‚æ–¹å¼ï¼š
 GET
 
-4.²ÎÊıËµÃ÷£º
-	±ØÑ¡	ÀàĞÍ	Ä¬ÈÏÖµ	ËµÃ÷
-post_id	true	int	-	Ìû×ÓID
+4.å‚æ•°è¯´æ˜ï¼š
+	å¿…é€‰	ç±»å‹	é»˜è®¤å€¼	è¯´æ˜
+post_id	true	int	-	å¸–å­ID
 
-5.·µ»ØÖµËµÃ÷£º
-post.id		int	Ìû×ÓID
-post.groupName	string	ĞÇÇòÃû³Æ
-post.title	string	±êÌâ
-post.text	string	ÄÚÈİ
-post.nickName	string	·¢ÌûÈË
-post.createTime	date	·¢ÌûÊ±¼ä
+5.è¿”å›å€¼è¯´æ˜ï¼š
+post.id		int	å¸–å­ID
+post.groupName	string	æ˜Ÿçƒåç§°
+post.title	string	æ ‡é¢˜
+post.text	string	å†…å®¹
+post.nickName	string	å‘å¸–äºº
+post.createTime	date	å‘å¸–æ—¶é—´
 
-6.Ê¾Àı£º
-ÏÔÊ¾Ìû×ÓIDÎª1µÄÌû×ÓÄÚÈİ
+6.ç¤ºä¾‹ï¼š
+æ˜¾ç¤ºå¸–å­IDä¸º1çš„å¸–å­å†…å®¹
 http://104.194.79.57/demo/?service=Post.GetPostBase&post_id=1
 JSON:
 {
@@ -30,10 +30,10 @@ JSON:
         "post": [
             {
                 "postID": "1",
-                "groupName": "¹í³¶1",
+                "groupName": "é¬¼æ‰¯1",
                 "title": "title1",
                 "text": "1texttexttexttexttexttexttexttexttexttext",
-                "nickname": "ÌÕÌÕ1",
+                "nickname": "é™¶é™¶1",
                 "createTime": "2016-04-06 00:00:00"
             }
         ]
