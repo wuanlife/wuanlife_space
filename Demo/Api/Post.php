@@ -6,7 +6,6 @@ class Api_Post extends PhalApi_Api{
     public function getRules(){
         return array(
             'getIndexPost' => array(
-                'id' => array('name' => 'id', 'type' => 'int',  'desc' => '用户ID'),
                 'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '第几页', 'default' => '1'),
             ),
             'getGroupPost' => array(
