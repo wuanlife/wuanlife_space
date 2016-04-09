@@ -115,6 +115,7 @@ class Api_Post extends PhalApi_Api{
      * @return string reply.text 内容
      * @return string reply.nickname 回帖人
      * @return date reply.createTime 回帖时间
+     * @return int replyCount 回帖数    
      * @return int pageCount 总页数
      * @return int currentPage 当前页
      */
