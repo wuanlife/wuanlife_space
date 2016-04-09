@@ -1,0 +1,31 @@
+1.API名称、描述
+Group.GStatus
+判断用户是否加入该星球
+
+2.接口URL：
+http://104.194.79.57/demo/?service=Group.GStatus
+
+3.请求方式：
+GET
+
+4.参数说明：
+参数名字    	类型  是否必须    默认值    范围                   说明
+group_base_id	整型	必须				最小：1					星球ID
+
+5.返回值说明：
+code	整型	操作码，1表示已加入，0表示未加入
+msg		字符串	提示信息
+
+6.示例：
+显示帖子ID为1的帖子内容
+http://104.194.79.57/demo/?service=Group.GStatus&group_base_id=2
+JSON:
+{
+    "ret": 200,
+    "data": {
+        "code": 1,
+        "msg": "已加入该星球！",
+        "info": []
+    },
+    "msg": ""
+}

@@ -36,7 +36,7 @@ class Domain_Group {
 	}
 
 	public function checkStatus(){
-		$config = array('crypt' => new Api_Cookie(), 'key' => 'a secrect');
+		$config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
 		DI()->cookie = new PhalApi_Cookie_Multi($config);
 		$this->cookie['userID']   = DI()->cookie->get('userID');
 		$this->cookie['nickname'] = DI()->cookie->get('nickname');

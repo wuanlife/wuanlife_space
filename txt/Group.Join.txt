@@ -1,0 +1,37 @@
+1.API名称、描述
+Group.Join
+加入星球接口
+用户加入星球
+
+2.接口URL：
+http://104.194.79.57/demo/?service=Group.Join
+
+3.请求方式：
+GET
+
+4.参数说明：
+参数名字        类型  是否必须    默认值    范围        说明
+group_base_id   整型  必须                  最小：1    星球ID
+5.返回值说明：
+code                整型  操作码，1表示加入成功，0表示加入失败
+info                对象  星球信息对象
+info.group_base_id  整型  加入星球ID
+info.user_base_id   字符串 加入者ID
+msg                 字符串 提示信息
+
+6.示例：
+显示帖子ID为1的帖子内容
+http://104.194.79.57/demo/?service=Group.Join&group_base_id=11
+JSON:
+{
+    "ret": 200,
+    "data": {
+        "code": 1,
+        "msg": "",
+        "info": {
+            "group_base_id": 11,
+            "user_base_id": "15"
+        }
+    },
+    "msg": ""
+}
