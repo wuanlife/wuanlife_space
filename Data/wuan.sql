@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `post_detail` (
 CREATE TABLE IF NOT EXISTS `user_base` (
   `id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `password` varchar(35) COLLATE utf8_bin NOT NULL COMMENT '密码',
-  `nickName` varchar(20) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '昵称',
+  `nickname` varchar(20) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '昵称',
   `Email` varchar(30) COLLATE utf8_bin NOT NULL UNIQUE COMMENT '邮箱',
   PRIMARY KEY (`id`)
 
