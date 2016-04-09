@@ -23,7 +23,7 @@ class Model_User extends PhalApi_Model_NotORM {
 				$this->info = array('userID' => $rs['id'], 'nickname' => $rs['nickname'], 'Email' => $rs['Email']);
 				$this->code ='1';
 				$this->msg = '登录成功！';
-				$config = array('crypt' => new Api_Cookie(), 'key' => 'a secrect');
+				$config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
                 DI()->cookie = new PhalApi_Cookie_Multi($config);
 				$nickname = DI()->cookie->get('nickname');
 				DI()->cookie->set('nickname', $rs['nickname'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
@@ -58,7 +58,7 @@ class Model_User extends PhalApi_Model_NotORM {
 			    $this->info = array('userID' => $rs['id'], 'nickname' => $rs['nickname'], 'Email' => $rs['Email']);
 				$this->code ='1';
 				$this->msg = '注册成功，并自动登录！';
-				$config = array('crypt' => new Api_Cookie(), 'key' => 'a secrect');
+				$config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
                 DI()->cookie = new PhalApi_Cookie_Multi($config);
 				$nickname = DI()->cookie->get('nickname');
 				DI()->cookie->set('nickname', $rs['nickname'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
