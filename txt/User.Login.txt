@@ -1,5 +1,6 @@
-﻿1.API、名称、描述
-User.Login、登录接口、用于验证并登录用户
+﻿1.API名称、描述
+User.Login
+登录接口-用于验证并登录用户
 
 2.接口URL：
 http://104.194.79.57/demo/?service=User.Login
