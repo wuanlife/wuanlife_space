@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <script src="lib-flexible-master/build/flexible_css.debug.js"></script>
+        <script src="lib-flexible-master/build/flexible.debug.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/global.css">
+        <link rel="stylesheet" type="text/css" href="css/chapter.css">
+        <title>My_Planet</title>
+    </head>
+    <body>
+    <div class="container all-wrapper">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a href="" title="" class="navbar-brand">午安网</a>
+        </div>
+        <div class="navbar-collapse">
+            <div class="navbar-collapse-content">
+                <h1 class="navbar-title"><a href="" title="">午安网</a></h1>
+                <ul class="navbar-option">
+                    <li><a href="" title="" class="navbar-active navbar-icon navbar-option-item">发现</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-option-item">我的星球</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-option-item">全部星球</a></li>
+                </ul>
+                <ul class="navbar-account">
+                    <li><a href="" title="" class="navbar-icon navbar-account-item">登录</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-account-item">注册</a></li>
+                    <li class="nav-anone"><span href="" title="" class="navbar-icon navbar-account-item">账号</span></li>
+                    <li class="nav-anone"><a href="" title="" class="navbar-icon navbar-account-item">退出</a></li>
+                </ul>
+            </div>   
+        </div>
+        <div class="main">
+           <div class="location clearfix">
+                <h1><a href="" title="">我的星球</a></h1>
+            </div>
+            <div class="chapter-col">
+                <div class="chapter">
+                   <h2><a href="" title="">作为muji的店员，有什么都来问我</a></h2>  
+                   <p>作为一名muji的店员，每天回答最多的问题就是这个东西多少钱。其实我并不想简单的回答这个问题，而是想把自己也放在消费者的角度同你一起共享这...</p>
+                   <div class="chapter-info">
+                       <span><a href="" title="">陶陶</a></span>
+                       <span>发表于</span>
+                       <span><a href="" title="">鬼扯天地</a></span>
+                       <span class="cha-time">2015-04-28 13:31</span>
+                   </div>
+                </div>
+                <div class="chapter">
+                   <h2><a href="" title="">作为muji的店员，有什么都来问我</a></h2>  
+                   <p>作为一名muji的店员，每天回答最多的问题就是这个东西多少钱。其实我并不想简单的回答这个问题，而是想把自己也放在消费者的角度同你一起共享这...</p>
+                   <div class="chapter-img clearfix">
+                       <a href="" title=""><img src="images/chapter_03.png" alt=""></a>
+                       <a href="" title=""><img src="images/chapter_03.png" alt=""></a>
+                       <a href="" title=""><img src="images/chapter_03.png" alt=""></a>
+                   </div>
+                   <div class="chapter-info">
+                       <span><a href="" title="">陶陶</a></span>
+                       <span>发表于</span>
+                       <span><a href="" title="">鬼扯天地</a></span>
+                       <span class="cha-time">2015-04-28 13:31</span>
+                   </div>
+                </div>  
+                <div class="chapter">
+                   <h2><a href="" title="">作为muji的店员，有什么都来问我</a></h2>  
+                   <p>作为一名muji的店员，每天回答最多的问题就是这个东西多少钱。其实我并不想简单的回答这个问题，而是想把自己也放在消费者的角度同你一起共享这...</p>
+                   <div class="chapter-img clearfix">
+                       <a href="" title=""><img src="images/chapter_03.png" alt=""></a>
+                   </div>
+                   <div class="chapter-info">
+                       <span><a href="" title="">陶陶</a></span>
+                       <span>发表于</span>
+                       <span><a href="" title="">鬼扯天地</a></span>
+                       <span class="cha-time">2015-04-28 13:31</span>
+                   </div>
+                </div>
+            </div> 
+            <div class="page-turn">
+                <span><a href="" title="">上一页</a></span>
+                <span>1/235</span>
+                <span><a href="" title="">下一页</a></span>
+            </div>
+        </div>
+    </div>
+        
+
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript">
+            var setMinHeight = function(){
+                var mainMinHeight;
+                    if ($(window).width()<768) {
+                        mainMinHeight = $(window).height() - $(".navbar-header").height();
+                    }else{
+                         mainMinHeight = $(window).height() - $(".navbar-collapse").height();
+                     }
+                    $(".main").css("min-height",mainMinHeight);
+            }
+            $(document).ready(function() {
+                setMinHeight();
+                $(".navbar-toggle").click(function(event) {
+                    /* Act on the event */
+                    $(".all-wrapper").toggleClass('sidebar-extend');  
+                });
+                $(window).resize(function(event){
+                    setMinHeight();
+                });
+            });
+        </script>
+    </body>
+</html>
