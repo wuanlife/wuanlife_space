@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <script src="lib-flexible-master/build/flexible_css.debug.js"></script>
+        <script src="lib-flexible-master/build/flexible.debug.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/global.css">
+        <link rel="stylesheet" type="text/css" href="css/posts.css">
+        <link rel="stylesheet" type="text/css" href="css/post_detail.css">
+        <title>Post_Detail</title>
+    </head>
+    <body>
+    <div class="container all-wrapper">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <a href="" title="" class="navbar-brand">午安网</a>
+        </div>
+        <div class="navbar-collapse">
+            <div class="navbar-collapse-content">
+                <h1 class="navbar-title"><a href="" title="">午安网</a></h1>
+                <ul class="navbar-option">
+                    <li><a href="" title="" class="navbar-active navbar-icon navbar-option-item">发现</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-option-item">我的星球</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-option-item">全部星球</a></li>
+                </ul>
+                <ul class="navbar-account">
+                    <li><a href="" title="" class="navbar-icon navbar-account-item">登录</a></li>
+                    <li><a href="" title="" class="navbar-icon navbar-account-item">注册</a></li>
+                    <li class="nav-anone"><span href="" title="" class="navbar-icon navbar-account-item">账号</span></li>
+                    <li class="nav-anone"><a href="" title="" class="navbar-icon navbar-account-item">退出</a></li>
+                </ul>
+            </div>   
+        </div>
+        <div class="main">
+            <div class="post-detail">
+               <div class="post-md">
+                    <h1 class="post-title">你看过最击中心灵的一句话或一首诗是什么?</h1>
+                    <div class="post-info clearfix">
+                        <span><a href="" title="">陶陶</a></span>
+                        <span>发表于</span>
+                        <span><a href="" title="">鬼扯天地</a></span>
+                        <span class="post-time">2015-04-28 13:31</span>
+                    </div>
+                    <div class="post-content">总有一些句子或者诗词甚至电影台词，会在一瞬间打动我们的心。希望把这些美好记录下来。<br><br>那时我们有梦，<br>关于文学，<br>关于爱情，<br>关于穿越世界的旅行。<br>如今我们深夜饮酒，<br>杯子碰到一起，<br>都是梦破碎的声音。<br>---北岛《波兰来客》</div>
+                    <div class="post-opt">
+                        <a href="" title="" class="post-opt-item">编辑</a>
+                        <a href="" title="" class="post-opt-item">删除</a>
+                    </div>
+                </div> 
+                <div class="post-comment">
+                    <h2>3个回复</h2>
+                    <div class="post-cm-group">
+                        <div class="post-cm-item">
+                            <div class="post-cm-info clearfix">
+                                <span><a href="" title="">紫苏</a></span>
+                                <span class="post-cm-time">2015-11-18 08:36:06</span>
+                            </div>
+                            <div class="post-cm-content">我追过清风，喝过烈酒，唱过悲歌，爱过你。</div>
+                        </div>
+                        <div class="post-cm-item">
+                            <div class="post-cm-info clearfix">
+                                <span><a href="" title="">紫苏</a></span>
+                                <span class="post-cm-time">2015-11-18 08:36:06</span>
+                            </div>
+                            <div class="post-cm-content">我追过清风，喝过烈酒，唱过悲歌，爱过你。</div>
+                        </div>
+                        <div class="post-cm-item">
+                            <div class="post-cm-info clearfix">
+                                <span><a href="" title="">紫苏</a></span>
+                                <span class="post-cm-time">2015-11-18 08:36:06</span>
+                            </div>
+                            <div class="post-cm-content">我追过清风，喝过烈酒，唱过悲歌，爱过你。</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-comment">
+                    <h2>我的回复</h2>
+                    <form class="post-detail-form">
+                        <textarea name="" class="form-control">内容</textarea>
+                        <button type="submit" class="post-sub">发表回复</button>
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript">
+            var setMinHeight = function(){
+                var mainMinHeight;
+                    if ($(window).width()<768) {
+                        mainMinHeight = $(window).height() - $(".navbar-header").height();
+                    }else{
+                         mainMinHeight = $(window).height() - $(".navbar-collapse").height();
+                     }
+                    $(".main").css("min-height",mainMinHeight);
+            }
+            $(document).ready(function() {
+                setMinHeight();
+                $(".navbar-toggle").click(function(event) {
+                    /* Act on the event */
+                    $(".all-wrapper").toggleClass('sidebar-extend');  
+                });
+                $(window).resize(function(event){
+                    setMinHeight();
+                });
+            });
+        </script>
+    </body>
+</html>
