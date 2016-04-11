@@ -92,10 +92,15 @@ class Api_User extends PhalApi_Api{
 		$rs = $domain->reg($data);
 		return $rs;
 
-	
-
-
-
-
-}
+	}
+/**
+ * 注销接口
+ * @desc 用于清除用户登录状态
+ */
+	public function logout() {
+		$rs = array('code' => '', 'msg' => '');
+        $domain = new Domain_User();
+        $rs = $domain->logout();
+        return $rs;
+	}
 }

@@ -30,6 +30,16 @@ class Domain_User {
         $rs = $model->reg($data);
         return $rs;
     }
+	/*×¢Ïú¼ì²é
+	
+	*/
+	public function logout(){
+		$this->model    = new Model_User();
+		$model = new Model_User();
+        $rs = $model->logout();
+        return $rs;
+		
+	}
 
 }
 

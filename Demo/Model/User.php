@@ -70,4 +70,24 @@ class Model_User extends PhalApi_Model_NotORM {
 		    }
         return $this;
 	}
+	public function logout()
+	{
+		$config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
+		DI()->cookie = new PhalApi_Cookie_Multi($config);
+		$nickname = DI()->cookie->get('nickname');
+		$userID = DI()->cookie->get('userID');
+		$Email = DI()->cookie->get('Email');
+		if(empty($nickname&&$userID&&$Email)){
+			$this->code ='0';
+			$this->msg = '未登录，无需注销！';
+		}
+		else{
+			DI()->cookie->delete('nickname');
+			DI()->cookie->delete('userID');
+			DI()->cookie->delete('Email');
+			$this->code ='1';
+			$this->msg = '注销成功！';
+		}
+		return $this;
+	}
 }	
