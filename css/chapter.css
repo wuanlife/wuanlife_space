@@ -1,37 +1,7 @@
-/*当前位置*/
-.location{
-    padding:0.62963rem 0 0.351852rem;
-}
-.location>h1{
-    font-size: 0.648148rem;
-    line-height: 0.740741rem;
-    float: left;
-    color:#5ab8fe;
-}
-.location>a{
-    display:inline-block;
-    color:#f6fafb;
-    font-size: 0.333333rem;
-    line-height: 0.37963rem;
-    padding:0.138889rem 0.185185rem;
-    background-color: #5ab8fe;
-    float:right;
-    border-radius: 5px 5px;
-}
-[data-dpr="2"] .location>a{
-    border-radius: 10px 10px;
-}
-[data-dpr="3"] .location>a{
-    border-radius: 15px 15px;
-}
-@media (min-width:768px){
-    .location{
-        display:none;
-    }
-}
+
 /*文章*/
 .chapter{
-    padding:0.37037rem 0 0.398148rem;
+    padding:0.305556rem 0 0.240741rem;
     border-bottom: 1px solid #e8e8e8;
 }
 [data-dpr="2"] .chapter{
@@ -42,40 +12,42 @@
 }
 .chapter>h2{
     font-size: 0.462963rem;
-    line-height: 0.555556rem;
+    margin-bottom: 0.185185rem;
+    font-weight: bold;
+}
+.chapter>h2>a{
     color:#363636;
-    margin-bottom: 0.259259rem;
 }
 .chapter>p{
     font-size: 0.37037rem;
-    line-height: 0.555556rem;
-    margin-bottom: 0.203704rem;
+    margin-bottom: 0.231481rem;
     color:#5c5c5c;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 .chapter-img{
     position: relative;
-    margin-bottom: 0.388889rem;
+    margin-bottom: 0.37037rem;
 }
-.chapter-img>img{
+.chapter-img img{
     width:2.12963rem;
     height:2.12963rem;
 }
-.chapter-img>img:first-child{
+.chapter-img>a:first-child{
     float:left;
 }
-.chapter-img>img:nth-child(2){
+.chapter-img>a:nth-child(2){
     position: absolute;
     left:50%;
     -webkit-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);        
     top:0;
 }
-.chapter-img>img:nth-child(3){
+.chapter-img>a:nth-child(3){
     float:right;
 }
 .chapter-info{
     font-size: 0.333333rem;
-    line-height: 0.37037rem;
     color:#a7a7a7;
 }
 .chapter-info a{
@@ -87,30 +59,35 @@
 }
 @media (min-width:768px){
     .chapter{
-        padding:29px 0 18px;
+        padding:17px 0 7px;
     }
     .chapter>h2{
-        font-size: 22px;
-        line-height: 26px;
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+    .chapter>h2>a{
         color:#5ab8fe;
-        margin-bottom: 16px;
     }
     .chapter>p{
-        font-size: 16px;
-        line-height: 26px;
+        font-size: 14px;
         color:#5c5c5c;
-        margin-bottom: 18px;
+        margin-bottom: 9px;
     }
     .chapter-img{
-        margin-bottom: 30px;
+        margin-bottom: 10px;
     }
-    .chapter-img>img{
-        width:140px;
-        height:140px;
+    .chapter-img img{
+        width:100px;
+        height:100px;
+    }
+    .chapter-img>a{
+        float:left !important;
+        position: static !important;
+        margin-right: 35px;
+        transform:none !important;
     }
     .chapter-info{
-        font-size: 16px;
-        line-height: 19px;
+        font-size: 12px;
         color:#999999;
     }
     .chapter-info a{
