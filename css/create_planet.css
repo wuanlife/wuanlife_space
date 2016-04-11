@@ -1,0 +1,61 @@
+.create-p{
+    padding:1.712963rem 0 6.666667rem;
+}
+.create-p>h2{
+    font-size:0.555556rem;
+    margin-bottom: 2.685185rem;
+    color:#5ab8fe;
+}
+.cp-form{
+    width:7.037037rem;
+    margin:0 auto;
+}
+.cp-group{
+    padding-bottom: 0.12963rem;
+    margin-bottom: 2.5rem;
+}
+.cp-label{
+    width:0.611111rem;
+    height:0.611111rem;
+    background:url(../images/cp_03.png); 
+}
+.cp-input{
+    font-size: 0.37037rem;
+    line-height: 0.611111rem;
+    padding-left: 0.814815rem;
+}
+.cp-sub{
+    font-size: 0.462963rem;
+    line-height: 1.5;
+    padding:0.12037rem 0;
+}
+@media (min-width:768px){
+    .create-p{
+        padding:20px 0 330px;
+    }
+    .cp-form{
+        width:290px;
+    }
+    .create-p>h2{
+        font-size: 30px;
+        margin-bottom: 200px;
+    }
+    .cp-group{
+        padding-bottom: 4px;
+        margin-bottom: 57px;
+    }
+    .cp-label{
+        width:36px;
+        height:36px;
+    }
+    .cp-input{
+        font-size: 17px;
+        line-height: 36px;
+        padding-left: 50px;
+    }
+    .cp-sub{
+        font-size: 21px;
+        padding:5px 0;
+        border-radius: 8px 7px;
+    }
+}
