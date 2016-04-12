@@ -2,24 +2,21 @@
 
 class Model_User extends PhalApi_Model_NotORM {
     protected function getTableName($id){
-    return 'user_base';}
-    public function login($data)
-    {
+        return 'user_base';
+    }
+    public function login($data){
         $sql =DI()->notorm->user_base->select('id')->where('Email = ?',$data['Email'])->fetch();
-        if(empty($sql))
-        {
-        $this->code = '0';
-        $this->msg = '该邮箱尚未注册！';
+        if(empty($sql)){
+            $this->code = '0';
+            $this->msg = '该邮箱尚未注册！';
         }
         else{
-               $rs =DI()->notorm->user_base->select('*')->where('Email = ?',$data['Email'])->fetch();
-               if($rs['password']!=md5($data['password']))
-               {
-               $this->code = '0';
-               $this->msg = '密码错误，请重试！';
-               }
-               else
-               {
+            $rs =DI()->notorm->user_base->select('*')->where('Email = ?',$data['Email'])->fetch();
+            if($rs['password']!=md5($data['password'])){
+                $this->code = '0';
+                $this->msg = '密码错误，请重试！';
+            }
+            else{
                 $this->info = array('userID' => $rs['id'], 'nickname' => $rs['nickname'], 'Email' => $rs['Email']);
                 $this->code ='1';
                 $this->msg = '登录成功！';
@@ -31,28 +28,25 @@ class Model_User extends PhalApi_Model_NotORM {
                 DI()->cookie->set('userID', $rs['id'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
                 $Email = DI()->cookie->get('Email');
                 DI()->cookie->set('Email', $rs['Email'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
-                }
-
-
             }
+
+
+        }
         return $this;
     }
-    public function reg($data)
-    {
+    public function reg($data){
         $sql =DI()->notorm->user_base->select('id')->where('Email = ?',$data['Email'])->fetch();
         if(!empty($sql)){
-        $this->code = '0';
-        $this->msg = '该邮箱已注册！';
+            $this->code = '0';
+            $this->msg = '该邮箱已注册！';
         }
         else{
-               $sql =DI()->notorm->user_base->select('id')->where('nickname = ?',$data['nickname'])->fetch();
-               if(!empty($sql))
-               {
-               $this->code = '0';
-               $this->msg = '该昵称已注册！';
-               }
-                else
-                {
+            $sql =DI()->notorm->user_base->select('id')->where('nickname = ?',$data['nickname'])->fetch();
+            if(!empty($sql)){
+                $this->code = '0';
+                $this->msg = '该昵称已注册！';
+            }
+            else{
                 $data['password'] = md5($data['password']);
                 $rs=DI()->notorm->user_base->insert($data);
                 $this->info = array('userID' => $rs['id'], 'nickname' => $rs['nickname'], 'Email' => $rs['Email']);
@@ -66,12 +60,11 @@ class Model_User extends PhalApi_Model_NotORM {
                 DI()->cookie->set('userID', $rs['id'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
                 $Email = DI()->cookie->get('Email');
                 DI()->cookie->set('Email', $rs['Email'], $_SERVER['REQUEST_TIME'] + 3600 * 24 * 7 * 2);
-                }
             }
+        }
         return $this;
     }
-    public function logout()
-    {
+    public function logout(){
         $nickname = DI()->cookie->get('nickname');
         $userID = DI()->cookie->get('userID');
         $Email = DI()->cookie->get('Email');
