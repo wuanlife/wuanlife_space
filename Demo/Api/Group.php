@@ -174,6 +174,8 @@ class Api_Group extends PhalApi_Api
 		$pages = 20;				//每页数量
 		$domain = new Domain_Group();
 		$rs['lists'] =  $domain->lists($this->page, $pages);
+		$rs['pageCount'] = $domain->pages['pageCount'];
+		$rs['currentPage'] = $domain->pages['currentPage'];
 		return $rs;
 	}
 
