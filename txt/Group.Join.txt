@@ -20,7 +20,7 @@ info.user_base_id   字符串 加入者ID
 msg                 字符串 提示信息
 
 6.示例：
-显示帖子ID为1的帖子内容
+加入星球id为11的星球
 http://104.194.79.57/demo/?service=Group.Join&group_base_id=11
 JSON:
 {

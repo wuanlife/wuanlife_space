@@ -20,7 +20,7 @@ info.nickname   字符串 用户昵称
 msg             字符串 提示信息
     
 6.示例：
-显示帖子ID为1的帖子内容
+判断用户登陆状态，1表示已登录，0表示未登录
 http://104.194.79.57/demo/?service=Group.UStatus
 JSON:
 {

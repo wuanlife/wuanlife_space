@@ -19,10 +19,12 @@ lists       整型  星球列表对象
 lists.name  整型  星球名称
 lists.id    整型  星球ID
 lists.num   整型  星球成员数
-
+pageCount   整型  总页数
+currentPage 整型  当前页
+ 
 6.示例：
-显示帖子ID为1的帖子内容
-http://104.194.79.57/demo/?service=Group.Lists
+显示第1页星球列表
+http://104.194.79.57/demo/?service=Group.Lists&page=1
 JSON:
 {
     "ret": 200,

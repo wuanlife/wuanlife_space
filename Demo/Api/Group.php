@@ -166,6 +166,8 @@ class Api_Group extends PhalApi_Api
 	 * @return int lists.name 星球名称
 	 * @return int lists.id 星球ID
 	 * @return int lists.num 星球成员数
+	 * @return int pageCount 总页数
+     * @return int currentPage 当前页
 	 */
 	public function lists(){
 		$rs = array(
