@@ -40,7 +40,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $sql = 'SELECT ceil(count(*)/:num) AS pageCount '
              . 'FROM post_base pb,group_base gb '
-             . 'WHERE pb.id=gb.id AND gb.id=:group_id ';
+             . 'WHERE pb.group_base_id=gb.id AND gb.id=:group_id ';
 
         $params = array(':group_id' =>$groupID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
@@ -65,7 +65,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $sql = 'SELECT ceil(count(*)/:num) AS pageCount '
              . 'FROM post_base pb,group_base gb,group_detail gd '
-             . 'WHERE pb.id=gb.id AND gb.id=gd.group_base_id AND gd.user_base_id=:user_id ';
+             . 'WHERE pb.group_base_id=gb.id AND gb.id=gd.group_base_id AND gd.user_base_id=:user_id ';
 
         $params = array(':user_id' =>$userID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
