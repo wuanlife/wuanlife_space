@@ -1,6 +1,6 @@
 ﻿1.API名称、描述
 Post.GetGroupPost
-小组页面帖子显示
+星球页面帖子显示
 
 2.接口URL：
 http://104.194.79.57/demo/?service=Post.GetGroupPost

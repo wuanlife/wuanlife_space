@@ -6,7 +6,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=6;
         $rs   = array();
-        $sql = 'SELECT pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.name AS groupName '
+        $sql = 'SELECT pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id '
              . 'GROUP BY pb.id '
@@ -29,7 +29,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=6;
         $rs   = array();
-        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.name AS groupName '
+        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.group_base_id=:group_id '
              . 'GROUP BY pb.id '
@@ -53,7 +53,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=6;
         $rs   = array();
-        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.name AS groupName '
+        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id '
              . 'AND gb.id in (SELECT group_base_id FROM group_detail gd WHERE gd.user_base_id =:user_id )'
@@ -77,11 +77,11 @@ class Model_Post extends PhalApi_Model_NotORM {
     public function getPostBase($postID) {
 
         $rs   = array();
-        $sql = 'SELECT pb.id AS postID,gb.name AS groupName,pb.title,pd.text,ub.nickname,pd.createTime '
+        $sql = 'SELECT pb.id AS postID,gb.id AS groupID,gb.name AS groupName,pb.title,pd.text,ub.nickname,pd.createTime '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.id=:post_id AND pd.floor=1' ;
         $params = array(':post_id' =>$postID );
-        $rs['post'] = DI()->notorm->post_base->queryAll($sql, $params);
+        $rs = DI()->notorm->post_base->queryAll($sql, $params);
 
         return $rs;
     }
