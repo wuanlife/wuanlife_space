@@ -12,6 +12,10 @@ class Model_Group extends PhalApi_Model_NotORM{
 		return DI()->notorm->group_detail->select('group_base_id')->where('user_base_id = ?', $userID)->where('group_base_id = ?', $groupID)->fetchOne();
 	}
 
+	public function getUser($user_id){
+		return DI()->notorm->user_base->select('nickname')->where('id = ?', $user_id)->fetchOne();
+	}
+
 	public function getAllNum(){
 		return $this->getORM()->count('id');
 	}

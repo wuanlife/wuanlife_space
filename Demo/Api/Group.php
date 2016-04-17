@@ -7,6 +7,14 @@ class Api_Group extends PhalApi_Api
 	public function getRules(){
 		return array(
 			'create' => array(
+				'user_id'    => array(
+					'name'    => 'user_id',
+					'type'    => 'int',
+					'require' => true,
+					'min'     => '1',
+					'max'     => '20',
+					'desc'    => '用户id',
+				),
 				'g_name'    => array(
 					'name'    => 'name',
 					'type'    => 'string',
@@ -18,6 +26,14 @@ class Api_Group extends PhalApi_Api
 			),
 
 			'join' => array(
+				'user_id'    => array(
+					'name'    => 'user_id',
+					'type'    => 'int',
+					'require' => true,
+					'min'     => '1',
+					'max'     => '20',
+					'desc'    => '用户id',
+				),
 				'g_id' => array(
 					'name' => 'group_base_id',
 					'type' => 'int',
@@ -28,12 +44,31 @@ class Api_Group extends PhalApi_Api
 			),
 
 			'gStatus' => array(
-				'g_id' => array(
-					'name' => 'group_base_id',
-					'type' => 'int',
+				'user_id'    => array(
+					'name'    => 'user_id',
+					'type'    => 'int',
 					'require' => true,
-					'min' => '1',
-					'desc' => '星球ID',
+					'min'     => '1',
+					'max'     => '20',
+					'desc'    => '用户id',
+				),
+				'g_id' => array(
+					'name'    => 'group_base_id',
+					'type'    => 'int',
+					'require' => true,
+					'min'     => '1',
+					'desc'    => '星球ID',
+				),
+			),
+
+			'uStatus' => array(
+				'user_id'    => array(
+					'name'    => 'user_id',
+					'type'    => 'int',
+					'require' => true,
+					'min'     => '1',
+					'max'     => '20',
+					'desc'    => '用户id',
 				),
 			),
 
@@ -48,6 +83,14 @@ class Api_Group extends PhalApi_Api
 			),
 
 			'posts' => array(
+				'user_id'    => array(
+					'name'    => 'user_id',
+					'type'    => 'int',
+					'require' => true,
+					'min'     => '1',
+					'max'     => '20',
+					'desc'    => '用户id',
+				),
 				'g_id' => array(
 					'name' => 'group_base_id',
 					'type' => 'int',
@@ -87,7 +130,8 @@ class Api_Group extends PhalApi_Api
 		$rs = array();
 
 		$data = array(
-			'name' => $this->g_name,
+			'user_id' => $this->user_id,
+			'name'    => $this->g_name,
 		);
 
 		$domain = new Domain_Group();
@@ -108,9 +152,12 @@ class Api_Group extends PhalApi_Api
 	 */
 	public function join(){
 		$rs = array();
-
+		$data = array(
+			'user_id' => $this->user_id,
+			'g_id'    => $this->g_id,
+		);
 		$domain = new Domain_Group();
-		$rs = $domain->join($this->g_id);
+		$rs = $domain->join($data);
 
 		return $rs;
 	}
@@ -126,9 +173,11 @@ class Api_Group extends PhalApi_Api
 	 */
 	public function uStatus(){
 		$rs = array();
-
+		$data = array(
+			'user_id' => $this->user_id,
+		);
 		$domain = new Domain_Group();
-		$rs = $domain->uStatus();
+		$rs = $domain->uStatus($data);
 
 		return $rs;
 	}
@@ -141,23 +190,26 @@ class Api_Group extends PhalApi_Api
 	 */
 	public function gStatus(){
 		$rs = array();
-
+		$data = array(
+			'user_id' => $this->user_id,
+			'g_id'    => $this->g_id,
+		);
 		$domain = new Domain_Group();
-		$rs = $domain->gStatus($this->g_id);
+		$rs = $domain->gStatus($data);
 
 		return $rs;
 	}
 
-	/**
-	 * 登出接口
-	 * @desc 注销
-	 * @return_ int code 操作码，1表示注销成功，0表示注销失败
-	 */
-	public function loginOut(){
+	// /**
+	//  * 登出接口
+	//  * @desc 注销
+	//  * @return_ int code 操作码，1表示注销成功，0表示注销失败
+	//  */
+	// public function loginOut(){
 
-		$domain = new Domain_Group();
-		$domain->out();
-	}
+	// 	$domain = new Domain_Group();
+	// 	$domain->out();
+	// }
 
 	/**
 	 * 星球列表
@@ -197,6 +249,7 @@ class Api_Group extends PhalApi_Api
 	public function posts(){
 		$rs = array();
 		$data = array(
+				'user_id'       => $this->user_id,
 				'group_base_id' => $this->g_id,
 				'title'         => $this->title,
 				'text'          => $this->text,

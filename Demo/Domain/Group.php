@@ -36,13 +36,17 @@ class Domain_Group {
         }
 	}
 
-	public function checkStatus(){
-		$config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
-		DI()->cookie = new PhalApi_Cookie_Multi($config);
-		$this->cookie['userID']   = DI()->cookie->get('userID');
-		$this->cookie['nickname'] = DI()->cookie->get('nickname');
+	public function checkStatus($user_id){
+		// $config = array('crypt' => new Domain_Crypt(), 'key' => 'a secrect');
+		// DI()->cookie = new PhalApi_Cookie_Multi($config);
+		// $this->cookie['userID']   = DI()->cookie->get('userID');
+		// $this->cookie['nickname'] = DI()->cookie->get('nickname');
+		
+		$rs = $this->model->getUser($user_id);
+		$this->cookie['userID'] = $user_id;
+		$this->cookie['nickname'] = $rs['nickname'];
 
-		if (empty($this->cookie['userID'])) {
+		if (empty($this->cookie['nickname'])) {
 			$this->msg = '用户尚未登录！';
 			$this->u_status = '0';
 			// return $this->msg;
@@ -51,13 +55,16 @@ class Domain_Group {
 			$this->msg = '用户已登录！';
 		}
 		
+		$rs = $this->model->getUser($user_id);
+		$this->cookie['userID'] = $user_id;
+		$this->cookie['nickname'] = $rs['nickname'];
 	}
 
 	public function create($data){
-		$g_name = $data['name'];
 		$this->model = new Model_Group();
-		$this->checkStatus();
-		$this->checkN($g_name);
+		$this->checkStatus($data['user_id']);
+		$this->checkN($data['name']);
+		$data = array('name' => $data['name']);
 
 		if ($this->u_status == '1' && $this->g_status =='1') {
 			$result = DI()->notorm->group_base->insert($data);
@@ -78,14 +85,14 @@ class Domain_Group {
 		return $this->rs;
 	}
 
-	public function join($g_id){
+	public function join($data){
 		$this->model = new Model_Group();
-		$this->checkStatus();
-		$this->checkG($g_id);
+		$this->checkStatus($data['user_id']);
+		$this->checkG($data['g_id']);
 
 		if ($this->u_status == '1' && $this->g_status == '0') {
 			$data = array(
-				'group_base_id' => $g_id,
+				'group_base_id' => $data['g_id'],
 				'user_base_id'  => $this->cookie['userID'],
 			);
 
@@ -99,8 +106,9 @@ class Domain_Group {
 		return $this->rs;
 	}
 
-	public function uStatus(){
-		$this->checkStatus();
+	public function uStatus($data){
+		$this->model = new Model_Group();
+		$this->checkStatus($data['user_id']);
 
 		if ($this->u_status == '1') {
 			$this->rs['info'] = $this->cookie;
@@ -112,10 +120,10 @@ class Domain_Group {
 		return $this->rs;
 	}
 
-	public function gStatus($g_id){
+	public function gStatus($data){
 		$this->model = new Model_Group();
-		$this->checkStatus();
-		$this->checkG($g_id);
+		$this->checkStatus($data['user_id']);
+		$this->checkG($data['g_id']);
 
 		if ($this->g_status == '1') {			
 			$this->rs['code'] = 1;
@@ -126,11 +134,6 @@ class Domain_Group {
 		}
 
 		return $this->rs;
-	}
-
-	public function out(){
-		DI()->cookie->delete('userID');
-		DI()->cookie->delete('nickname');
 	}
 
 	public function lists($page,$pages){
@@ -149,7 +152,7 @@ class Domain_Group {
 
 	public function posts($data){
 		$this->model = new Model_Group();
-		$this->checkStatus();
+		$this->checkStatus($data['user_id']);
 		$this->checkG($data['group_base_id']);
 
 		if ($this->u_status == '1' && $this->g_status == '1') {

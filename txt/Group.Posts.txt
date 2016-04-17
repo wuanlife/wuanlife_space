@@ -9,10 +9,11 @@ http://104.194.79.57/demo/?service=Group.Posts
  POST  GET
 
 4.参数说明：
-参数名字        类型  是否必须    默认值    范围         说明
-group_base_id   整型   必须                  最小：1    发帖星球
-title           字符串 必须                  最小：1    帖子标题
-text            字符串 必须                  最小：1    帖子正文
+参数名字        类型  是否必须    默认值    范围                     说明
+user_id         整型   必须               最小：1 最大：20          用户id
+group_base_id   整型   必须                  最小：1                发帖星球
+title           字符串 必须                  最小：1                帖子标题
+text            字符串 必须                  最小：1                帖子正文
         
 5.返回值说明：
 code                整型  操作码，1表示发布成功，0表示发布失败
@@ -28,7 +29,7 @@ msg                 字符串 提示信息
 
 6.示例：
 在id为3的星球创建标题为123，内容为qweasf的帖子
-http://104.194.79.57/demo/?service=Group.Posts&group_base_id=3&title=123&text=qweasf
+http://104.194.79.57/demo/?service=Group.Posts&group_base_id=3&title=123&text=qweasf&user_id=15
 JSON:
 {
     "ret": 200,
