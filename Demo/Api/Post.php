@@ -29,12 +29,13 @@ class Api_Post extends PhalApi_Api{
     /**
      * 主页
      * @desc 主页面帖子显示
-     * @return int post.id 帖子ID
-     * @return string post.title 标题
-     * @return string post.text 内容
-     * @return date post.createTime 发帖时间
-     * @return string post.nickname 发帖人
-     * @return string post.groupName 星球名称
+     * @return int posts.postID 帖子ID
+     * @return string posts.title 标题
+     * @return string posts.text 内容
+     * @return date posts.createTime 发帖时间
+     * @return string posts.nickname 发帖人
+     * @return int posts.groupID 星球ID
+     * @return string posts.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
      */
@@ -48,14 +49,15 @@ class Api_Post extends PhalApi_Api{
     }
 
     /**
-     * 小组页面
-     * @desc 小组页面帖子显示
-     * @return int post.id 帖子ID
-     * @return string post.title 标题
-     * @return string post.text 内容
-     * @return date post.createTime 发帖时间
-     * @return string post.nickname 发帖人
-     * @return string post.groupName 星球名称
+     * 每个星球页面帖子显示
+     * @desc 星球页面帖子显示
+     * @return int posts.postID 帖子ID
+     * @return string posts.title 标题
+     * @return string posts.text 内容
+     * @return date posts.createTime 发帖时间
+     * @return string posts.nickname 发帖人
+     * @return int posts.groupID 星球ID
+     * @return string posts.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
      */
@@ -71,12 +73,13 @@ class Api_Post extends PhalApi_Api{
     /**
      * 我的星球
      * @desc 我的星球页面帖子显示
-     * @return int post.id 帖子ID
-     * @return string post.title 标题
-     * @return string post.text 内容
-     * @return date post.createTime 发帖时间
-     * @return string post.nickname 发帖人
-     * @return string post.groupName 星球名称
+     * @return int posts.postID 帖子ID
+     * @return string posts.title 标题
+     * @return string posts.text 内容
+     * @return date posts.createTime 发帖时间
+     * @return string posts.nickname 发帖人
+     * @return int posts.groupID 星球ID
+     * @return string posts.groupName 星球名称
      * @return int pageCount 总页数
      * @return int currentPage 当前页
      */
@@ -91,30 +94,31 @@ class Api_Post extends PhalApi_Api{
     /**
      * 帖子的内容
      * @desc 单个帖子的内容显示
-     * @return int post.id 帖子ID
-     * @return string post.groupName 星球名称
-     * @return string post.title 标题
-     * @return string post.text 内容
-     * @return string post.nickname 发帖人
-     * @return date post.createTime 发帖时间
+     * @return int postID 帖子ID
+     * @return int groupID 星球ID
+     * @return string groupName 星球名称
+     * @return string title 标题
+     * @return string text 内容
+     * @return string nickname 发帖人
+     * @return date createTime 发帖时间
      */
     public function getPostBase(){
 
-        $data   = array();
+        // $data   = array();
 
         $domain = new Domain_Post();
         $data = $domain->getPostBase($this->postID);
 
-        return $data;
+        return $data[0];
     }
 
     /**
      * 帖子的回复
      * @desc 单个帖子的回复内容显示
-     * @return int post.id 帖子ID
      * @return string reply.text 内容
      * @return string reply.nickname 回帖人
      * @return date reply.createTime 回帖时间
+     * @return int postID 帖子ID
      * @return int replyCount 回帖数    
      * @return int pageCount 总页数
      * @return int currentPage 当前页

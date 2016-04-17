@@ -11,6 +11,7 @@ class Domain_Group {
 	public $cookie = array();
 	public $u_status = '0';
 	public $g_status = '0';
+	public $pages = array();
 
 	public function checkN($g_name){
 		$rs = $this->model->checkName($g_name);
@@ -140,6 +141,9 @@ class Domain_Group {
 		$page         =empty($page)?1:$page;					//当前页数
 		$page         =(int)$page;								//安全强制转换
 		$limit_st     =($page-1)*$page_num;						//起始数
+
+		$this->pages['pageCount'] = $page_all_num;
+		$this->pages['currentPage'] = $page;
 		return $this->model->lists($limit_st, $page_num);
 	}
 

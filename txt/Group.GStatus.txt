@@ -17,7 +17,7 @@ code	整型	操作码，1表示已加入，0表示未加入
 msg		字符串	提示信息
 
 6.示例：
-显示帖子ID为1的帖子内容
+判断用户是否加入该星球，1表示已加入，0表示未加入
 http://104.194.79.57/demo/?service=Group.GStatus&group_base_id=2
 JSON:
 {

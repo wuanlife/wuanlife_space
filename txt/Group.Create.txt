@@ -22,7 +22,7 @@ info.name            字符串 星球名称
 msg                  字符串 提示信息
 
 6.示例：
-显示帖子ID为1的帖子内容
+创建名为鬼扯1的星球
 http://104.194.79.57/demo/?service=Group.Create&name=鬼扯1
 JSON:
 {

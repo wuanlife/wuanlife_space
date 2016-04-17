@@ -14,12 +14,13 @@ id	true	int	-	用户ID
 pn	false	int	1	第几页
 
 5.返回值说明：
-post.id		int	帖子ID
-post.title	string	标题
-post.text	string	内容
-post.createTime	date	发帖时间
-post.nickname	string	发帖人
-post.groupName	string	星球名称
+posts.postID	int	帖子ID
+posts.title	string	标题
+posts.text	string	内容
+posts.createTime	date	发帖时间
+posts.nickname	string	发帖人
+posts.groupID	int	星球ID
+posts.groupName	string	星球名称
 pageCount	int	总页数
 currentPage	int	当前页
 
@@ -37,6 +38,7 @@ JSON:
                 "text": "40texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:19:00",
                 "nickname": "陶陶20",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -45,6 +47,7 @@ JSON:
                 "text": "39texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:18:00",
                 "nickname": "陶陶19",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -53,6 +56,7 @@ JSON:
                 "text": "38texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:17:00",
                 "nickname": "陶陶18",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -61,6 +65,7 @@ JSON:
                 "text": "37texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:16:00",
                 "nickname": "陶陶17",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -69,6 +74,7 @@ JSON:
                 "text": "36texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:15:00",
                 "nickname": "陶陶16",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -77,10 +83,11 @@ JSON:
                 "text": "35texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:14:00",
                 "nickname": "陶陶15",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             }
         ],
-        "pageCount": 1,
+        "pageCount": 4,
         "currentPage": 1
     },
     "msg": ""

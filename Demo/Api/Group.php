@@ -166,6 +166,8 @@ class Api_Group extends PhalApi_Api
 	 * @return int lists.name 星球名称
 	 * @return int lists.id 星球ID
 	 * @return int lists.num 星球成员数
+	 * @return int pageCount 总页数
+     * @return int currentPage 当前页
 	 */
 	public function lists(){
 		$rs = array(
@@ -174,6 +176,8 @@ class Api_Group extends PhalApi_Api
 		$pages = 20;				//每页数量
 		$domain = new Domain_Group();
 		$rs['lists'] =  $domain->lists($this->page, $pages);
+		$rs['pageCount'] = $domain->pages['pageCount'];
+		$rs['currentPage'] = $domain->pages['currentPage'];
 		return $rs;
 	}
 

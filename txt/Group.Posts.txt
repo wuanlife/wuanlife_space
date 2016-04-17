@@ -27,7 +27,7 @@ msg                 字符串 提示信息
 
 
 6.示例：
-显示帖子ID为1的帖子内容
+在id为3的星球创建标题为123，内容为qweasf的帖子
 http://104.194.79.57/demo/?service=Group.Posts&group_base_id=3&title=123&text=qweasf
 JSON:
 {

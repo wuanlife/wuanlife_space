@@ -13,12 +13,13 @@ GET
 pn	false	int	1	第几页
 
 5.返回值说明：
-post.id		int	帖子ID
-post.title	string	标题
-post.text	string	内容
-post.createTime	date	发帖时间
-post.nickname	string	发帖人
-post.groupName	string	星球名称
+posts.postID	int	帖子ID
+posts.title	string	标题
+posts.text	string	内容
+posts.createTime	date	发帖时间
+posts.nickname	string	发帖人
+posts.groupID	int	星球ID
+posts.groupName	string	星球名称
 pageCount	int	总页数
 currentPage	int	当前页
 
@@ -31,11 +32,30 @@ JSON:
     "data": {
         "posts": [
             {
+                "postID": "36",
+                "title": "title36",
+                "text": "36texttexttexttexttexttexttexttexttexttext ",
+                "createTime": "2016-04-06 01:15:00",
+                "nickname": "陶陶16",
+                "groupID": "1",
+                "groupName": "鬼扯1"
+            },
+            {
+                "postID": "35",
+                "title": "title35",
+                "text": "35texttexttexttexttexttexttexttexttexttext ",
+                "createTime": "2016-04-06 01:14:00",
+                "nickname": "陶陶15",
+                "groupID": "1",
+                "groupName": "鬼扯1"
+            },
+            {
                 "postID": "34",
                 "title": "title34",
                 "text": "34texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:13:00",
                 "nickname": "陶陶14",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -44,6 +64,7 @@ JSON:
                 "text": "33texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:12:00",
                 "nickname": "陶陶13",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -52,6 +73,7 @@ JSON:
                 "text": "32texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:11:00",
                 "nickname": "陶陶12",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             },
             {
@@ -60,22 +82,7 @@ JSON:
                 "text": "31texttexttexttexttexttexttexttexttexttext ",
                 "createTime": "2016-04-06 01:10:00",
                 "nickname": "陶陶11",
-                "groupName": "鬼扯1"
-            },
-            {
-                "postID": "30",
-                "title": "title30",
-                "text": "30texttexttexttexttexttexttexttexttexttext ",
-                "createTime": "2016-04-06 01:09:00",
-                "nickname": "陶陶10",
-                "groupName": "鬼扯1"
-            },
-            {
-                "postID": "29",
-                "title": "title29",
-                "text": "29texttexttexttexttexttexttexttexttexttext ",
-                "createTime": "2016-04-06 01:08:00",
-                "nickname": "陶陶9",
+                "groupID": "1",
                 "groupName": "鬼扯1"
             }
         ],
