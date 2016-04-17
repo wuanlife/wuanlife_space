@@ -100,6 +100,7 @@ class Api_Post extends PhalApi_Api{
      * @return string groupName 星球名称
      * @return string title 标题
      * @return string text 内容
+     * @return int id 用户ID
      * @return string nickname 发帖人
      * @return date createTime 发帖时间
      * @return boolean editRight 编辑权限(0为无权限，1有)
@@ -141,4 +142,5 @@ class Api_Post extends PhalApi_Api{
 
         return $data;
     }
+
 }
