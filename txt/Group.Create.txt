@@ -11,7 +11,8 @@ POST
 
 4.参数说明：
 参数名字    类型  是否必须    默认值    范围                   说明
-name       字符串 必须                  最小：1 最大：20    星球名称
+user_id     整型   必须               最小：1 最大：20        用户id
+name       字符串  必须               最小：1 最大：20       星球名称
 
 5.返回值说明：
 code                 整型   操作码，1表示创建成功，0表示创建失败
@@ -23,7 +24,7 @@ msg                  字符串 提示信息
 
 6.示例：
 创建名为鬼扯1的星球
-http://104.194.79.57/demo/?service=Group.Create&name=鬼扯1
+http://104.194.79.57/demo/?service=Group.Create&name=鬼扯1&user_id=15
 JSON:
 {
     "ret": 200,
