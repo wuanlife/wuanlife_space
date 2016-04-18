@@ -11,8 +11,6 @@ class Api_Group extends PhalApi_Api
 					'name'    => 'user_id',
 					'type'    => 'int',
 					'require' => true,
-					'min'     => '1',
-					'max'     => '20',
 					'desc'    => '用户id',
 				),
 				'g_name'    => array(
