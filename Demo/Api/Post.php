@@ -18,6 +18,7 @@ class Api_Post extends PhalApi_Api{
             ),
             'getPostBase' => array(
                 'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
+                'userID' => array('name' => 'id', 'type' => 'int', 'desc' => '用户ID'),
             ),
             'getPostReply' => array(
                 'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
@@ -99,8 +100,10 @@ class Api_Post extends PhalApi_Api{
      * @return string groupName 星球名称
      * @return string title 标题
      * @return string text 内容
+     * @return int id 用户ID
      * @return string nickname 发帖人
      * @return date createTime 发帖时间
+     * @return boolean editRight 编辑权限(0为无权限，1有)
      */
     public function getPostBase(){
 
@@ -109,6 +112,13 @@ class Api_Post extends PhalApi_Api{
         $domain = new Domain_Post();
         $data = $domain->getPostBase($this->postID);
 
+        $userID=$this->userID;
+        if($data[0]['id']==$userID)
+        {
+            $data[0]['editRight']=1;
+        }else{
+            $data[0]['editRight']=0;
+        }
         return $data[0];
     }
 
@@ -132,4 +142,5 @@ class Api_Post extends PhalApi_Api{
 
         return $data;
     }
+
 }
