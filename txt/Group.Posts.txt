@@ -10,7 +10,7 @@ http://104.194.79.57/demo/?service=Group.Posts
 
 4.参数说明：
 参数名字        类型  是否必须    默认值    范围                     说明
-user_id         整型   必须               最小：1 最大：20          用户id
+user_id         整型   必须                                          用户id
 group_base_id   整型   必须                  最小：1                发帖星球
 title           字符串 必须                  最小：1                帖子标题
 text            字符串 必须                  最小：1                帖子正文
