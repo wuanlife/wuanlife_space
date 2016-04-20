@@ -4,7 +4,7 @@ Group.Join
 用户加入星球
 
 2.接口URL：
-http://104.194.79.57/demo/?service=Group.Join
+http://dev.wuanlife.com/?service=Group.Join
 
 3.请求方式：
 GET
@@ -22,7 +22,7 @@ msg                 字符串 提示信息
 
 6.示例：
 加入星球id为11的星球
-http://104.194.79.57/demo/?service=Group.Join&group_base_id=11&user_id=15
+http://dev.wuanlife.com/?service=Group.Join&group_base_id=11&user_id=15
 JSON:
 {
     "ret": 200,

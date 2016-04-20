@@ -3,7 +3,7 @@ Post.GetMyGroupPost
 我的星球页面帖子显示
 
 2.接口URL：
-http://104.194.79.57/demo/?service=Post.GetMyGroupPost
+http://dev.wuanlife.com/?service=Post.GetMyGroupPost
 
 3.请求方式：
 GET
@@ -26,7 +26,7 @@ currentPage	int	当前页
 
 6.示例：
 显示用户ID为1的第1页帖子
-http://104.194.79.57/demo/?service=Post.GetMyGroupPost&id=1&pn=1
+http://dev.wuanlife.com/?service=Post.GetMyGroupPost&id=1&pn=1
 JSON:
 {
     "ret": 200,
