@@ -3,11 +3,7 @@ User.Reg
 注册接口-用于验证并注册用户
 
 2.接口URL：
-<<<<<<< HEAD
-http://dev.wuanlife.com/demo/?service=User.Reg
-=======
 http://dev.wuanlife.com/?service=User.Reg
->>>>>>> 5de3c41b321763113839d3b23ce4913f7a9f16a8
 
 3.请求方式：
 POST
@@ -29,11 +25,7 @@ info.Email    字符串 用户邮箱
 
 6.示例：
 注册账号(以下链接将提示该邮箱已注册！)
-<<<<<<< HEAD
-http://dev.wuanlife.com/demo/?service=User.Reg&Email=taotao@taotao.com&nickname=taotao&password=111111
-=======
 http://dev.wuanlife.com/?service=User.Reg&Email=taotao@taotao.com&nickname=taotao&password=111111
->>>>>>> 5de3c41b321763113839d3b23ce4913f7a9f16a8
 JSON:
 {
     "ret": 200,

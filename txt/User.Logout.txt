@@ -3,11 +3,7 @@ User.Logout
 注销接口-用于清除用户登录信息
 
 2.接口URL：
-<<<<<<< HEAD
-http://dev.wuanlife.com/demo/?service=User.Logout
-=======
 http://dev.wuanlife.com/?service=User.Logout
->>>>>>> 5de3c41b321763113839d3b23ce4913f7a9f16a8
 
 3.请求方式：
 
@@ -23,11 +19,7 @@ code            整型   操作码，1表示注销成功，0表示注销失败
 
 6.示例：
 注册账号(均返回注销成功！)
-<<<<<<< HEAD
-http://dev.wuanlife.com/demo/?service=User.Logout
-=======
 http://dev.wuanlife.com/?service=User.Logout
->>>>>>> 5de3c41b321763113839d3b23ce4913f7a9f16a8
 JSON:
 {
     "ret": 200,
