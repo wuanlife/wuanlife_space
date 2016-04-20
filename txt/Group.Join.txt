@@ -4,14 +4,14 @@ Group.Join
 用户加入星球
 
 2.接口URL：
-http://104.194.79.57/demo/?service=Group.Join
+http://dev.wuanlife.com/?service=Group.Join
 
 3.请求方式：
 GET
 
 4.参数说明：
 参数名字        类型  是否必须    默认值    范围                   说明
-user_id         整型   必须               最小：1 最大：20        用户id
+user_id         整型   必须                                        用户id
 group_base_id   整型  必须                  最小：1                星球ID
 5.返回值说明：
 code                整型  操作码，1表示加入成功，0表示加入失败
@@ -22,7 +22,7 @@ msg                 字符串 提示信息
 
 6.示例：
 加入星球id为11的星球
-http://104.194.79.57/demo/?service=Group.Join&group_base_id=11&user_id=15
+http://dev.wuanlife.com/?service=Group.Join&group_base_id=11&user_id=15
 JSON:
 {
     "ret": 200,

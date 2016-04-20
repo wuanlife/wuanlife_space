@@ -3,7 +3,7 @@ Post.GetIndexPost
 主页面帖子显示
 
 2.接口URL：
-http://104.194.79.57/demo/?service=Post.GetIndexPost
+http://dev.wuanlife.com/?service=Post.GetIndexPost
 
 3.请求方式：
 GET
@@ -25,7 +25,7 @@ currentPage	int	当前页
 
 6.示例：
 显示第二页帖子
-http://104.194.79.57/demo/?service=Post.GetIndexPost&pn=2
+http://dev.wuanlife.com/?service=Post.GetIndexPost&pn=2
 JSON:
 {
     "ret": 200,
