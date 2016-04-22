@@ -110,8 +110,54 @@ class Model_Post extends PhalApi_Model_NotORM {
         $rs['currentPage'] = $page;
         return $rs;
     }
-
-
+    public function PostReply($data) {
+        $rs = array();
+        $time = date('Y-m-d H:i:s',time());
+        $sql=DI()->notorm->post_detail
+        ->select('post_base_id,user_base_id,max(floor)')
+        ->where('post_base_id =?',$data['post_base_id'])
+        ->fetchone();
+        $data['createTime'] = $time;
+        $data['floor'] = ($sql['max(floor)'])+1;
+        $data['user_base_id'] = $sql['user_base_id'];
+        $rs = DI()->notorm->post_detail->insert($data);
+        return $rs;
+    }
+    public function editPost($data) {
+        $rs = array();
+        $time = date('Y-m-d H:i:s',time());
+        $b_data = array(
+                'title' => $data['title'],
+        );
+        $d_data = array(
+                'text' => $data['text'],
+                'createTime' => $time,
+        );
+        $sql=DI()->notorm->post_detail
+        ->select('user_base_id')
+        ->where('post_base_id =?',$data['post_base_id'])
+        ->fetchone();
+        if($data['user_id']==$sql['user_base_id']) {
+            $pb = DI()->notorm->post_base
+            ->where('id =?', $data['post_base_id'])
+            ->update($b_data);
+            $pd = DI()->notorm->post_detail
+            ->where('post_base_id =?', $data['post_base_id'])
+            ->AND('post_detail.floor = ?','1')
+            ->update($d_data);
+            $rs['code']=1;
+            $rs['info']['post_base_id']=$data['post_base_id'];
+            $rs['info']['user_base_id']=$data['user_id'];
+            $rs['info']['title']=$data['title'];
+            $rs['info']['text']=$data['text'];
+            $rs['info']['floor']=1;
+            $rs['info']['createTime']=$time;
+        }else{
+            $rs['code']=0;
+            $rs['msg']="您没有权限!";
+        }
+        return $rs;
+    }
     protected function getTableName($id) {
         return 'user';
     }

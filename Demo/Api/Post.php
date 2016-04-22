@@ -24,6 +24,17 @@ class Api_Post extends PhalApi_Api{
                 'postID' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
                 'page' =>array('name' => 'pn', 'type' => 'int',  'desc' => '当前回帖的页码', 'default' => '1'),
             ),
+            'PostReply' => array(
+                'post_base_id' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
+                'text'   => array('name' => 'text', 'type' => 'string', 'require' => true, 'desc' => '回复内容'),
+                'user_id' => array('name' => 'user_id', 'type' => 'string', 'require' => true, 'desc' => '回复人ID')
+            ),
+            'editPost'  => array(
+                'user_id' => array('name' => 'user_id', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
+                'post_base_id' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
+                'title' => array('name' => 'title', 'type' => 'string', 'require' => true, 'desc' => '帖子标题'),
+                'text' => array('name' => 'text', 'type' => 'string', 'require' => true, 'desc' => '帖子内容'),
+            )
         );
     }
 
@@ -142,5 +153,51 @@ class Api_Post extends PhalApi_Api{
 
         return $data;
     }
-
+    /**
+     * 帖子的回复
+     * @desc 单个帖子的回复操作
+     * @return int info.post_base_id 帖子ID
+     * @return int info.user_base_id 发帖人ID
+     * @return int info.replyid 回复人ID
+     * @return string info.text 回复内容
+     * @return int info.floor 回复楼层
+     * @return date info.createTime 回帖时间
+     */
+    public function PostReply(){
+        $rs = array();
+        $data = array(
+            'post_base_id'  => $this->post_base_id,
+            'user_base_id'  => '',
+            'replyid'       => $this->user_id,
+            'text'          => $this->text,
+            'floor'         => '',
+            'createTime'    => '',
+        );
+        $domain = new Domain_Post();
+        $rs = $domain->PostReply($data);
+        return $rs;
+    }
+    /**
+     * 帖子的编辑
+     * @desc 单个帖子的编辑操作
+     * @return int code 操作码，1表示编辑成功，0表示编辑失败
+     * @return int info.post_base_id 帖子ID
+     * @return int info.user_base_id 编辑人ID
+     * @return string info.title 编辑帖子标题
+     * @return string info.text 编辑帖子内容
+     * @return int info.floor 楼主楼层1
+     * @return date info.createTime 编辑时间
+     */
+    public function editPost(){
+        $rs = array();
+        $data = array(
+            'user_id'       => $this->user_id,
+            'post_base_id'  => $this->post_base_id,
+            'title'         => $this->title,
+            'text'          => $this->text,
+        );
+        $domain = new Domain_Post();
+        $rs = $domain->editPost($data);
+        return $rs;
+    }
 }

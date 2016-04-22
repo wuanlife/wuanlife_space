@@ -36,5 +36,16 @@ class Domain_Post {
         $rs = $model->getPostReply($postID,$page);
         return $rs;
     }
-
+    public function PostReply($data) {
+        $rs = array();
+        $model = new Model_Post();
+        $rs = $model->PostReply($data);
+        return $rs;
+    }
+    public function editPost($data) {
+        $rs = array();
+        $model = new Model_Post();
+        $rs = $model->editPost($data);
+        return $rs;
+    }
 }
