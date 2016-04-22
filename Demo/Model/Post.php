@@ -21,6 +21,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -45,6 +48,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':group_id' =>$groupID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -70,6 +76,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':user_id' =>$userID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -107,6 +116,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $count = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['replyCount'] = (int)$count[0]['replyCount'];
         $rs['pageCount'] = (int)$count[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
