@@ -63,10 +63,13 @@ class Api_Post extends PhalApi_Api{
     /**
      * 每个星球页面帖子显示
      * @desc 星球页面帖子显示
+     * @return int groupID 星球ID
+     * @return string groupName 星球名称
      * @return int posts.postID 帖子ID
      * @return string posts.title 标题
      * @return string posts.text 内容
      * @return date posts.createTime 发帖时间
+     * @return int post.id 用户ID     
      * @return string posts.nickname 发帖人
      * @return int posts.groupID 星球ID
      * @return string posts.groupName 星球名称

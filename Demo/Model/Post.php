@@ -40,7 +40,7 @@ class Model_Post extends PhalApi_Model_NotORM {
         $rs['groupID'] = $groupData['0']['groupID'];
         $rs['groupName'] = $groupData['0']['groupName'];
 
-        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname '
+        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.id,ub.nickname '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.group_base_id=:group_id '
              . 'GROUP BY pb.id '
