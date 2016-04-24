@@ -141,6 +141,9 @@ class Domain_Group {
 		$all_num      = $this->model->getAllNum();				//总条
 		$page_num     =empty($pages)?20:$pages;					//每页条数
 		$page_all_num =ceil($all_num/$page_num);				//总页数
+		if ($page_all_num == 0){
+			$page_all_num =1;
+		}
 		$page         =empty($page)?1:$page;					//当前页数
 		$page         =(int)$page;								//安全强制转换
 		$limit_st     =($page-1)*$page_num;						//起始数

@@ -21,6 +21,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -29,7 +32,15 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=6;
         $rs   = array();
-        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
+        $groupData=DI()->notorm->group_base
+        ->select('id as groupID,name as groupName')
+        ->where('id =?',$groupID)
+        ->fetchAll();
+
+        $rs['groupID'] = $groupData['0']['groupID'];
+        $rs['groupName'] = $groupData['0']['groupName'];
+
+        $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.id,ub.nickname '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
              . 'WHERE pb.id=pd.post_base_id AND pb.user_base_id=ub.id AND pb.group_base_id=gb.id AND pb.group_base_id=:group_id '
              . 'GROUP BY pb.id '
@@ -45,6 +56,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':group_id' =>$groupID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -70,6 +84,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $params = array(':user_id' =>$userID,':num' =>$num);
         $pageCount = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['pageCount'] = (int)$pageCount[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
@@ -107,6 +124,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $count = DI()->notorm->user_base->queryAll($sql, $params);
         $rs['replyCount'] = (int)$count[0]['replyCount'];
         $rs['pageCount'] = (int)$count[0]['pageCount'];
+        if ($rs['pageCount'] == 0 ){
+            $rs['pageCount']=1;
+        }
         $rs['currentPage'] = $page;
         return $rs;
     }
