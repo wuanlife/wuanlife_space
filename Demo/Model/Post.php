@@ -107,7 +107,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=9;
         $rs   = array();
-        $rs['reply']= DI()->notorm->post_detail
+        $rs['reply']= DI()->notorm->user_base
         ->SELECT('post_detail.text,user_base.nickname,post_detail.createTime')
         ->WHERE('post_base.post_base_id = ?',$postID)
         ->AND('post_detail.floor > ?','1')
