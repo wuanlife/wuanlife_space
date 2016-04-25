@@ -109,9 +109,9 @@ class Model_Post extends PhalApi_Model_NotORM {
         $rs   = array();
         $rs['reply']= DI()->notorm->post_detail
         ->SELECT('post_detail.text,user_base.nickname,post_detail.createTime')
-        ->WHERE('post_base.id = ?',$postID)
+        ->WHERE('post_base.post_base_id = ?',$postID)
         ->AND('post_detail.floor > ?','1')
-        ->order('floor ASC')
+        ->order('post_detail.floor ASC')
         ->limit(($page-1)*$num,$num)
         ->fetchAll();
 
