@@ -12,6 +12,7 @@ class Api_User extends PhalApi_Api{
                 'Email'    => array(
                     'name'    => 'Email',
                     'type'    => 'string',
+                    'min'     => '1',
                     'require' => true,
                     'desc'    => '用户邮箱'
                 ),
@@ -19,6 +20,7 @@ class Api_User extends PhalApi_Api{
                 'password' => array(
                     'name'    => 'password',
                     'type'    => 'string',
+                    'min'     => '1',
                     'require' => true,
                     'desc'    => '用户密码'
                 ),
@@ -27,6 +29,7 @@ class Api_User extends PhalApi_Api{
                 'nickname' => array(
                     'name'    => 'nickname',
                     'type'    => 'string',
+                    'min'     => '1',
                     'require' => true,
                     'desc'    => '用户昵称'
                 ),
@@ -35,12 +38,14 @@ class Api_User extends PhalApi_Api{
                     'name'    => 'Email',
                     'type'    => 'string',
                     'require' => true,
+                    'min'     => '1',
                     'desc'    => '用户邮箱'
                 ),
 
                 'password' => array(
                     'name'    => 'password',
                     'type'    => 'string',
+                    'min'     => '1',
                     'require' => true,
                     'desc'    => '用户密码'
                 ),

@@ -26,14 +26,14 @@ class Api_Post extends PhalApi_Api{
             ),
             'PostReply' => array(
                 'post_base_id' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
-                'text'   => array('name' => 'text', 'type' => 'string', 'require' => true, 'desc' => '回复内容'),
+                'text'   => array('name' => 'text', 'type' => 'string', 'min' => '1','require' => true, 'desc' => '回复内容'),
                 'user_id' => array('name' => 'user_id', 'type' => 'string', 'require' => true, 'desc' => '回复人ID')
             ),
             'editPost'  => array(
                 'user_id' => array('name' => 'user_id', 'type' => 'int', 'require' => true, 'desc' => '用户ID'),
                 'post_base_id' => array('name' => 'post_id', 'type' => 'int', 'require' => true, 'desc' => '帖子ID'),
-                'title' => array('name' => 'title', 'type' => 'string', 'require' => true, 'desc' => '帖子标题'),
-                'text' => array('name' => 'text', 'type' => 'string', 'require' => true, 'desc' => '帖子内容'),
+                'title' => array('name' => 'title', 'type' => 'string', 'min' => '1','require' => true, 'desc' => '帖子标题'),
+                'text' => array('name' => 'text', 'type' => 'string', 'min' => '1','require' => true, 'desc' => '帖子内容'),
             )
         );
     }
@@ -63,13 +63,10 @@ class Api_Post extends PhalApi_Api{
     /**
      * 每个星球页面帖子显示
      * @desc 星球页面帖子显示
-     * @return int groupID 星球ID
-     * @return string groupName 星球名称
      * @return int posts.postID 帖子ID
      * @return string posts.title 标题
      * @return string posts.text 内容
      * @return date posts.createTime 发帖时间
-     * @return int posts.id 用户ID     
      * @return string posts.nickname 发帖人
      * @return int posts.groupID 星球ID
      * @return string posts.groupName 星球名称
@@ -170,8 +167,8 @@ class Api_Post extends PhalApi_Api{
         $rs = array();
         $data = array(
             'post_base_id'  => $this->post_base_id,
-            'user_base_id'  => '',
-            'replyid'       => $this->user_id,
+            'user_base_id'  => $this->user_id,
+            'replyid'       => NULL,
             'text'          => $this->text,
             'floor'         => '',
             'createTime'    => '',

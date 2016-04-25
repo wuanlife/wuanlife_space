@@ -107,13 +107,13 @@ class Model_Post extends PhalApi_Model_NotORM {
 
         $num=9;
         $rs   = array();
-        $rs['reply']= DI()->notorm->user_base
+        $rs['reply']= DI()->notorm->post_detail
         ->SELECT('post_detail.text,user_base.nickname,post_detail.createTime')
-        ->WHERE('post_base.post_base_id = ?',$postID)
+        ->WHERE('post_detail.post_base_id = ?',$postID)
         ->AND('post_detail.floor > ?','1')
         ->order('post_detail.floor ASC')
         ->limit(($page-1)*$num,$num)
-        ->fetchAll();
+        ->fetchALL();
 
         $rs['postID']=$postID;
         $sql = 'SELECT ceil(count(*)/:num) AS pageCount,count(*) AS replyCount '
@@ -133,13 +133,13 @@ class Model_Post extends PhalApi_Model_NotORM {
     public function PostReply($data) {
         $rs = array();
         $time = date('Y-m-d H:i:s',time());
+        //查询最大楼层
         $sql=DI()->notorm->post_detail
         ->select('post_base_id,user_base_id,max(floor)')
         ->where('post_base_id =?',$data['post_base_id'])
         ->fetchone();
         $data['createTime'] = $time;
         $data['floor'] = ($sql['max(floor)'])+1;
-        $data['user_base_id'] = $sql['user_base_id'];
         $rs = DI()->notorm->post_detail->insert($data);
         return $rs;
     }

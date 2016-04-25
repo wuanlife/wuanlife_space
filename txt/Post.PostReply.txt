@@ -12,13 +12,13 @@ POST
 参数名字    类型  是否必须    默认值    范围      说明
 post_id     整型    必须                          帖子ID
 text        字符串  必须                        回复内容
-user_id     字符串  必须                        回复人ID
+user_id     字符串  必须                        回帖人ID
 
 5.返回值说明：
 返回字段            类型        说明
 post_base_id        整型       帖子ID
-user_base_id        整型       发帖人ID
-replyid             整型       回复人ID
+user_base_id        整型       回帖人ID
+replyid             整型       NULL
 text                字符串     回复内容
 floor               整型       回复楼层
 createTime          日期       回帖时间
@@ -32,7 +32,7 @@ JSON:
     "data": {
         "post_base_id": 25,
         "user_base_id": "5",
-        "replyid": "5",
+        "replyid": null,
         "text": "666666",
         "floor": 4,
         "createTime": "2016-04-22 20:31:06"
