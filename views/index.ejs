@@ -71,7 +71,7 @@
 				},
 				bindEvent: function() {
 					var self = this;
-					self.pre.on('click', function() {
+					self.pre.on(WuanClickEvent, function() {
 						if (self.currentpage == 1) {
 							sweetAlert('错误', '当前页是第一页', 'error');
 						} else {
@@ -89,7 +89,7 @@
 							});
 						}
 					});
-					self.next.on('click', function() {
+					self.next.on(WuanClickEvent, function() {
 						if (self.currentpage == self.pageCount) {
 							sweetAlert('错误', '当前页是最后一页', 'error');
 						} else {

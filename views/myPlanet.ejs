@@ -73,7 +73,7 @@
 				},
 				bindEvent: function() {
 					var self = this;
-					self.nav_logout.on("click", function() {
+					self.nav_logout.on(WuanClickEvent, function() {
 						window.location.href = '/';
 					});
 					self.pre.on('click', function() {
@@ -95,7 +95,7 @@
 							});
 						}
 					});
-					self.next.on('click', function() {
+					self.next.on(WuanClickEvent, function() {
 						if (self.currentpage == self.pageCount) {
 							sweetAlert('错误', '当前页是最后一页', 'error');
 						} else {
