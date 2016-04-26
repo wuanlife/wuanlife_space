@@ -66,7 +66,7 @@
 						logout: $("#nav-logout"),
 						bindEvent: function() {
 							var self = this;
-							self.logout.on("click", function(event) {
+							self.logout.on(WuanClickEvent, function(event) {
 								event.preventDefault();
 								$.ajax({
 									type: "post",
@@ -109,10 +109,10 @@
 							setLogoutStatus();
 						}
 					}
-					$(".navbar-toggle").on('click', function() {
+					$(".navbar-toggle").on(WuanClickEvent, function() {
 						$(".all-wrapper").toggleClass('sidebar-extend');
 						if ($(".all-wrapper").hasClass('sidebar-extend')) {
-							$(".main-mask").on('click', function() {
+							$(".main-mask").on(WuanClickEvent, function() {
 								$(".all-wrapper").removeClass('sidebar-extend');
 							});
 						}
