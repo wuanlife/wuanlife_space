@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	<style>
+		h1,h2{text-align: center;}
+		pre{
+			text-align: start;
+			border: 1px solid #777;
+			padding: 13px 0 13px 13px;
+		}
+	</style>
+</head>
+<body>
+	<div style="margin: auto 0">
+		<h1><%=message%></h1>
+		<h2><%=error.status%></h2>
+		<pre><%=error.stack%></pre>
+	</div>
+</body>
+</html>

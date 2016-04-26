@@ -1,0 +1,62 @@
+/*星球单条选项*/
+.text-ellipsis{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.planet{
+    margin-bottom: 0.953704rem;
+}
+.planet-item{
+    padding:0.231481rem 0 0.231481rem 0.555556rem;
+}
+.planet-pic{
+    margin-right: 0.62037rem;
+    float:left;
+}
+.planet-pic img{
+    width:1.481481rem;
+    height:1.481481rem;
+}
+.planet-info{
+    color:#bbbbbb;
+    font-size: 0.37037rem;
+}
+.planet-info:before{
+    content:"";
+    display:table;
+}
+.planet-info h2{
+    font-size: 0.462963rem;
+    margin-top: 0.074074rem;
+}
+.planet-info a{
+    color:#5ab8fe;    
+}
+@media (min-width:768px){
+    
+    .planet>ul{
+        margin-right: -20px;
+        margin-left: -20px;
+    }
+    .planet-item{
+        padding:10px 20px;
+    }
+    .planet-pic{
+        margin-right: 18px;
+    }
+    .planet-pic img{
+        width:60px;
+        height:60px;
+    }
+    .planet-info{
+        font-size: 16px;
+    }
+    .planet-info h2{
+        font-size: 20px;
+        margin-top: 3.5px;
+    }
+    .planet{
+        margin:48px 0 86px;
+    }
+}

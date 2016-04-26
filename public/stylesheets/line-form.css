@@ -1,0 +1,39 @@
+.line-form .line-fgroup{
+    position: relative;
+    border-bottom: 1px solid #5ab8fe;
+}
+[data-dpr="2"] .line-form .line-fgroup{
+    border-bottom-width: 2px;
+}
+[data-dpr="3"] .line-form .line-fgroup{
+    border-bottom-width: 3px;
+}
+.line-form label{
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    cursor:pointer;
+}
+.line-form input{
+    border:none;
+    width:100%;
+    background-color: transparent;
+    color:#b4b4b4;
+}
+.line-form button[type="submit"]{
+    width:100%;
+    background-color: #5ab8fe;
+    color:#f6fafb;
+    border-radius: 5px;
+    cursor:pointer;
+}
+[data-dpr="2"] .line-form button[type="submit"]{
+    border-radius: 10px;
+}
+[data-dpr="3"] .line-form button[type="submit"]{
+    border-radius: 15px;
+}

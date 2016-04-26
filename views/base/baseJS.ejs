@@ -1,0 +1,134 @@
+<div class="loading">
+	<div class='uil-default-css' style='display: none;'>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(0deg) translate(0,-60px);transform:rotate(0deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(30deg) translate(0,-60px);transform:rotate(30deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(60deg) translate(0,-60px);transform:rotate(60deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(90deg) translate(0,-60px);transform:rotate(90deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(120deg) translate(0,-60px);transform:rotate(120deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(150deg) translate(0,-60px);transform:rotate(150deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(180deg) translate(0,-60px);transform:rotate(180deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(210deg) translate(0,-60px);transform:rotate(210deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(240deg) translate(0,-60px);transform:rotate(240deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(270deg) translate(0,-60px);transform:rotate(270deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(300deg) translate(0,-60px);transform:rotate(300deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+		<div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(330deg) translate(0,-60px);transform:rotate(330deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+	</div>
+</div>
+<%if(ag&&ag.Mobile==true){%>
+	<script type="text/javascript" src="<%-path%>javascripts/zepto.min.js"></script>
+	<script type="text/javascript" src="<%-path%>javascripts/zepto.touch.js"></script>
+	<%}else{%>
+		<script type="text/javascript" src="<%-path%>javascripts/jquery-1.11.3.min.js"></script>
+		<%}%>
+			<script src="<%-path%>javascripts/sweetAlert.js" type="text/javascript" charset="utf-8"></script>
+			<script src="<%-path%>javascripts/template.js" type="text/javascript" charset="utf-8"></script>
+
+			<script type="text/javascript">
+				var WuanClickEvent = "<%=ag.Mobile%>" == "true" ? "touchend" : "click",
+					mobile = "<%=ag.Mobile%>" == "true" ? true : false;
+				var global = (function() {
+					//本地存储用户昵称
+					var userName = localStorage.getItem("userName");
+					//本地存储用户ID
+					var userID = localStorage.getItem("userID");
+					var setCenterLoadingDiv = function() {
+						var loadingClientheight = $(".uil-default-css").height();
+						var loadingClientwidth = $(".uil-default-css").width();
+						var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
+						var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
+						$(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+					};
+					//设置main最小高度为屏幕高度
+					var setMinHeight = function() {
+						var mainMinHeight;
+						if ($(window).width() < 768) {
+							mainMinHeight = $(window).height() - $(".navbar-header").height();
+						} else {
+							mainMinHeight = $(window).height() - $(".navbar-collapse").height();
+						}
+						$(".main").css("min-height", mainMinHeight);
+					};
+					//设置登录时页面状态
+					var setLoginStatus = function() {
+						$("#nav-login,#nav-register").addClass('nav-anone');
+						$("#nav-userId,#nav-logout").removeClass('nav-anone');
+						$("#nav-userId").children("span").text(userName);
+						$("#nav-myP").children("a").attr("href", "/myPlanet/" + localStorage.getItem("userID"));
+					};
+					//设置注销时页面状态
+					var setLogoutStatus = function() {
+						$("#nav-login,#nav-register").removeClass('nav-anone');
+						$("#nav-userId,#nav-logout").addClass('nav-anone');
+						$("#nav-userId").children("span").text("");
+						$("#nav-myP").children("a").attr("href", "/login");
+					}
+					var logout = {
+						logout: $("#nav-logout"),
+						bindEvent: function() {
+							var self = this;
+							self.logout.on("click", function(event) {
+								event.preventDefault();
+								$.ajax({
+									type: "post",
+									async: true,
+									url: "/isLogin",
+									error: function(x, h, r) {
+										console && console.log(x, h, r);
+									}
+								});
+								$.ajax({
+									type: "get",
+									async: true,
+									url: "/logout",
+									success: function(data) {
+										console && console.log(data);
+										if (data.data.code == 0 && data.data.msg) {
+											sweetAlert('提示', data.data.msg, 'warning');
+										} else {
+											localStorage.removeItem("userName");
+											localStorage.removeItem("userID");
+											setLogoutStatus();
+										}
+									},
+									error: function(x, h, r) {
+										console && console.log(x, h, r);
+									}
+								});
+							});
+						},
+						init: function() {
+							this.bindEvent();
+						}
+					}
+					logout.init();
+					//页面初始化
+					if (window.localStorage) {
+						if (userName != null) {
+							setLoginStatus();
+						} else {
+							setLogoutStatus();
+						}
+					}
+					$(".navbar-toggle").on('click', function() {
+						$(".all-wrapper").toggleClass('sidebar-extend');
+						if ($(".all-wrapper").hasClass('sidebar-extend')) {
+							$(".main-mask").on('click', function() {
+								$(".all-wrapper").removeClass('sidebar-extend');
+							});
+						}
+					});
+					return {
+						setCenterLoadingDiv: setCenterLoadingDiv,
+						setMinHeight: setMinHeight
+					}
+				}());
+				//注销登陆
+				$(document).ready(function() {
+					global.setMinHeight();
+					global.setCenterLoadingDiv();
+					$(window).resize(function(event) {
+						global.setMinHeight();
+						global.setCenterLoadingDiv();
+					});
+				});
+			</script>

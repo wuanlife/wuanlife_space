@@ -1,0 +1,107 @@
+<%- include base/header.ejs %>
+        <div class="main">
+            <div class="main-mask"></div>
+            <div class="post">
+                <h2>发表帖子</h2>
+                <form class="post-form clearfix" action="/post/<%=result%>" method="post">
+                    <input type="text" name="" value="" placeholder="标题" class="form-control" id="post-title">
+                    <%if(ag&&ag.Mobile==true){%>
+                    <div class="wangEditor-mobile-container" tabindex="0">
+                        <textarea id="textarea-mobile" style="width:100%;height:6.712963rem;">
+                        <p>内容mobile</p>
+                        </textarea>
+                    </div>
+                    
+                    <%}else{%>
+                    <div class="wangEditor-pc-container">
+                        <textarea name="" class="form-control" id="textareaPC">
+                            <p>内容</p>
+                        </textarea>
+                    </div>
+                    <%}%>
+                    <button type="submit" class="post-sub" id="post-issue">发表</button>
+                </form>  
+            </div>
+        </div>
+        <%- include base/baseJS.ejs %>
+        <%if(ag.Mobile){%>
+		<script src="<%-path%>javascripts/wangEditor-mobile.min.js"></script>
+		<%}else{%>
+		<script src="<%-path%>javascripts/wangEditor.min.js"></script>
+		<%}%>
+        <script>
+        	var editor;
+			if (mobile) {
+				editor = new ___E("textarea-mobile");
+				editor.init();
+				$(".wangEditor-mobile-container").find('*').focus(function(event) {
+					/* Act on the event */
+					$(".wangEditor-mobile-container").addClass('textarea-focus');
+				});
+				$(".wangEditor-mobile-container").find('*').blur(function(event) {
+					/* Act on the event */
+					$(".wangEditor-mobile-container").removeClass('textarea-focus');
+				});
+			} else {
+				editor = new wangEditor("textareaPC");
+				editor.create();
+				$(".wangEditor-container").find('*').focus(function(event) {
+					/* Act on the event */
+					$(".wangEditor-container").addClass('textarea-focus');
+				});
+				$(".wangEditor-container").find('*').blur(function(event) {
+					/* Act on the event */
+					$(".wangEditor-container").removeClass('textarea-focus');
+				});
+			};
+            var post = {
+                title: $("#post-title"),
+                postForm: $(".post-form"),
+                verificate: function(){
+                    if (this.title.val().length == 0) {
+                        sweetAlert('格式错误', '请填写标题！', 'warning');
+                        return false;
+                    }
+                    if(editor.$txt.html().length == 0){
+                        sweetAlert('格式错误', '请填写内容！', 'warning');
+                        return false;
+                    }
+                    return true;
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.postForm.submit(function(){
+                        event.preventDefault();
+                        if (self.verificate()){
+                            $.ajax({
+                                type: "post",
+                                url: "/post/<%=result%>",
+                                async: true,
+                                data: {
+                                    user_id: localStorage.getItem("userID"),
+                                    title: self.title.val(),
+                                    text: editor.$txt.html()
+                                },
+                                success: function(data) {
+                                    console && console.log(data);
+                                    if (data.data.code == 0 && data.data.msg) {
+                                        sweetAlert('提示', data.data.msg, 'warning');
+                                    } else {
+                                        window.location.href = '/postDetail/' + data.data.info.post_base_id ;
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                        }
+                        
+                    });
+                },
+                init: function() {
+                    this.bindEvent();
+                }
+            }
+            post.init();
+        </script>
+        <%- include base/footer.ejs %>
