@@ -105,7 +105,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getPostReply($postID,$page) {
 
-        $num=9;
+        $num=20;
         $rs   = array();
         $rs['reply']= DI()->notorm->post_detail
         ->SELECT('post_detail.text,user_base.nickname,post_detail.createTime')
