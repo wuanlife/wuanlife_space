@@ -10,7 +10,8 @@ router.get('/:groupid', function(req, res, next) {
 	res.render('post', {
 		'path':'../',
 		'result': req.param("groupid"),
-		'ag': agent
+		'ag': agent,
+		'title':'发表帖子'
 	});
 });
 
