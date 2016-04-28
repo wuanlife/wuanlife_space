@@ -9,9 +9,9 @@ http://dev.wuanlife.com/?service=User.Login
 POST
 
 4.参数说明：
-参数名字    类型  是否必须    默认值    范围   说明
-Email       字符串 必须                      用户邮箱
-password    字符串 必须                      用户密码
+参数名字    类型  是否必须    默认值    范围        说明
+Email       字符串 必须                最小：1    用户邮箱
+password    字符串 必须                最小：1    用户密码
 
 5.返回值说明：
 返回字段        类型   说明

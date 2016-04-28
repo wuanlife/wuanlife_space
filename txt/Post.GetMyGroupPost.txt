@@ -9,20 +9,21 @@ http://dev.wuanlife.com/?service=Post.GetMyGroupPost
 GET
 
 4.参数说明：
-	必选	类型	默认值	说明
-id	true	int	-	用户ID
-pn	false	int	1	第几页
+参数名字    类型  是否必须    默认值    范围      说明
+id          int     true        -                用户ID
+pn          int     false       1                第几页
 
 5.返回值说明：
-posts.postID	int	帖子ID
-posts.title	string	标题
-posts.text	string	内容
-posts.createTime	date	发帖时间
-posts.nickname	string	发帖人
-posts.groupID	int	星球ID
-posts.groupName	string	星球名称
-pageCount	int	总页数
-currentPage	int	当前页
+返回字段            类型        说明
+posts.postID        int        帖子ID
+posts.title         string      标题
+posts.text          string      内容
+posts.createTime    date      发帖时间
+posts.nickname      string     发帖人
+posts.groupID       int       星球ID
+posts.groupName     string    星球名称
+pageCount           int        总页数
+currentPage         int        当前页
 
 6.示例：
 显示用户ID为1的第1页帖子
