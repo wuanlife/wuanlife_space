@@ -4,7 +4,7 @@ Group.Create
 用于创建星球
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Group.Create
+http://dev.wuanlife.com:800/?service=Group.Create
 
 3.请求方式：
 POST
@@ -24,7 +24,7 @@ msg                  字符串 提示信息
 
 6.示例：
 创建名为鬼扯1的星球
-http://dev.wuanlife.com/?service=Group.Create&name=鬼扯1&user_id=15
+http://dev.wuanlife.com:800/?service=Group.Create&name=鬼扯1&user_id=15
 JSON:
 {
     "ret": 200,

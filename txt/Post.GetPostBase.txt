@@ -3,7 +3,7 @@ Post.GetPostBase
 帖子详情-发帖内容
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Post.GetPostBase
+http://dev.wuanlife.com:800/?service=Post.GetPostBase
 
 3.请求方式：
 GET
@@ -27,7 +27,7 @@ editRight         boolean   编辑权限(0为无权限，1有)
 
 6.示例：
 显示帖子ID为1的帖子内容
-http://dev.wuanlife.com/?service=Post.GetPostBase&post_id=1&id=1
+http://dev.wuanlife.com:800/?service=Post.GetPostBase&post_id=1&id=1
 JSON:
 {
     "ret": 200,

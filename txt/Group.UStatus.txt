@@ -4,7 +4,7 @@ Group.UStatus
 判断是否登录
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Group.UStatus
+http://dev.wuanlife.com:800/?service=Group.UStatus
 3.请求方式：
 POST
 
@@ -22,7 +22,7 @@ msg             字符串 提示信息
     
 6.示例：
 判断用户登陆状态，1表示已登录，0表示未登录
-http://dev.wuanlife.com/?service=Group.UStatus&user_id=15
+http://dev.wuanlife.com:800/?service=Group.UStatus&user_id=15
 JSON:
 {
     "ret": 200,

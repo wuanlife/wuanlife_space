@@ -3,7 +3,7 @@ Group.GStatus
 判断用户是否加入该星球
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Group.GStatus
+http://dev.wuanlife.com:800/?service=Group.GStatus
 
 3.请求方式：
 GET
@@ -19,7 +19,7 @@ msg		字符串	提示信息
 
 6.示例：
 判断用户是否加入该星球，1表示已加入，0表示未加入
-http://dev.wuanlife.com/?service=Group.GStatus&group_base_id=2&user_id=13
+http://dev.wuanlife.com:800/?service=Group.GStatus&group_base_id=2&user_id=13
 JSON:
 {
     "ret": 200,

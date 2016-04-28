@@ -3,7 +3,7 @@ Post.GetPostReply
 帖子详情-回帖内容
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Post.GetPostReply
+http://dev.wuanlife.com:800/?service=Post.GetPostReply
 
 3.请求方式：
 GET
@@ -25,7 +25,7 @@ currentPage         int        当前页
 
 6.示例：
 显示帖子ID为1的第1页回复
-http://dev.wuanlife.com/?service=Post.GetPostReply&post_id=1&pn=1
+http://dev.wuanlife.com:800/?service=Post.GetPostReply&post_id=1&pn=1
 JSON:
 {
     "ret": 200,

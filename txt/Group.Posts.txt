@@ -3,7 +3,7 @@ Group.Posts
 帖子发布
 星球帖子发布
 2.接口URL：
-http://dev.wuanlife.com/?service=Group.Posts
+http://dev.wuanlife.com:800/?service=Group.Posts
 
 3.请求方式：
  POST  GET
@@ -30,7 +30,7 @@ info.title          字符串 帖子标题
 
 6.示例：
 在id为3的星球创建标题为123，内容为qweasf的帖子
-http://dev.wuanlife.com/?service=Group.Posts&user_id=3&group_base_id=3&title=123&text=qweasf
+http://dev.wuanlife.com:800/?service=Group.Posts&user_id=3&group_base_id=3&title=123&text=qweasf
 JSON:
 {
     "ret": 200,

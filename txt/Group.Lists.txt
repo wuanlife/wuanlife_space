@@ -4,7 +4,7 @@ Group.Lists
 按成员数降序显示星球列表
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Group.Lists
+http://dev.wuanlife.com:800/?service=Group.Lists
 
 3.请求方式：
 GET
@@ -24,7 +24,7 @@ currentPage 整型  当前页
  
 6.示例：
 显示第1页星球列表
-http://dev.wuanlife.com/?service=Group.Lists&page=1
+http://dev.wuanlife.com:800/?service=Group.Lists&page=1
 JSON:
 {
     "ret": 200,

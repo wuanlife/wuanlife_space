@@ -3,7 +3,7 @@ Post.editPost
 帖子的编辑-单个帖子的编辑操作
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Post.editPost
+http://dev.wuanlife.com:800/?service=Post.editPost
 
 3.请求方式：
 POST
@@ -27,7 +27,7 @@ info.createTime     日期        编辑时间
 
 6.示例：
 回复帖子
-http://dev.wuanlife.com/?service=post.editPost&post_id=1&text=666999&user_id=1&title=666666
+http://dev.wuanlife.com:800/?service=post.editPost&post_id=1&text=666999&user_id=1&title=666666
 JSON:
 {
     "ret": 200,

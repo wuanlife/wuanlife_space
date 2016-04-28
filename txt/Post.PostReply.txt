@@ -3,7 +3,7 @@ Post.PostReply
 帖子的回复-单个帖子的回复操作
 
 2.接口URL：
-http://dev.wuanlife.com/?service=Post.PostReply
+http://dev.wuanlife.com:800/?service=Post.PostReply
 
 3.请求方式：
 POST
@@ -25,7 +25,7 @@ createTime          日期       回帖时间
 
 6.示例：
 回复帖子
-http://dev.wuanlife.com/?service=post.Postreply&post_id=25&text=666666&user_id=5
+http://dev.wuanlife.com:800/?service=post.Postreply&post_id=25&text=666666&user_id=5
 JSON:
 {
     "ret": 200,

@@ -3,7 +3,7 @@ User.Login
 登录接口-用于验证并登录用户
 
 2.接口URL：
-http://dev.wuanlife.com/?service=User.Login
+http://dev.wuanlife.com:800/?service=User.Login
 
 3.请求方式：
 POST
@@ -25,7 +25,7 @@ info.Email      字符串 用户邮箱
 
 6.示例：
 登录账号
-http://dev.wuanlife.com/?service=User.Login&Email=taotao@taotao.com&password=111111
+http://dev.wuanlife.com:800/?service=User.Login&Email=taotao@taotao.com&password=111111
 JSON:
 {
 "ret": 200,
