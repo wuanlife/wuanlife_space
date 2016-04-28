@@ -18,7 +18,9 @@ router.get('/:userid', function(req, res, next) {
 						res.render('myPlanet', {
 							'path':'../',
 							result: result.data,
-							ag: agent
+							ag: agent,
+							'title':'我的星球',
+							'userid':req.param("userid")
 						});
 					}
 				}

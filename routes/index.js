@@ -16,7 +16,8 @@ router.get('/', function(req, res, next) {
 				res.render('index', {
 					'path':'',
 					'result': data.data,
-					'ag': agent
+					'ag': agent,
+					'title':'首页'
 				});
 			} else {
 				res.render('error', {

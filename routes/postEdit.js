@@ -7,7 +7,7 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/:postid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	res.render('postEdit', {'path':'../','result':req.param("postid"),'ag': agent});
+	res.render('postEdit', {'path':'../','result':req.param("postid"),'ag': agent,'title':"编辑帖子"});
 });
 
 router.post('/:postid', function(req, res, next) {

@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
 	res.render('register', {
 		'path':'',
-		ag: agent
+		ag: agent,
+		'title':'注册'
 	});
 });
 router.post('/', function(req, res, next) {
