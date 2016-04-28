@@ -8,14 +8,14 @@
                     <%if(ag&&ag.Mobile==true){%>
                     <div class="wangEditor-mobile-container" tabindex="0">
                         <textarea id="textarea-mobile" style="width:100%;height:6.712963rem;">
-                        <p>内容mobile</p>
+                       
                         </textarea>
                     </div>
                     
                     <%}else{%>
                     <div class="wangEditor-pc-container">
                         <textarea name="" class="form-control" id="textareaPC">
-                            <p>内容</p>
+                            
                         </textarea>
                     </div>
                     <%}%>
@@ -45,10 +45,12 @@
 				$(".wangEditor-mobile-container").find('*').focus(function(event) {
 					/* Act on the event */
 					$(".wangEditor-mobile-container").addClass('textarea-focus');
+                    $(".navbar-header").css("position","absolute");
 				});
 				$(".wangEditor-mobile-container").find('*').blur(function(event) {
 					/* Act on the event */
 					$(".wangEditor-mobile-container").removeClass('textarea-focus');
+                    $(".navbar-header").css("position","fixed");
 				});
 			} else {
                 wangEditor.config.printLog = false;
@@ -130,7 +132,7 @@
                                     if (data.data.code == 0 && data.data.msg) {
                                         sweetAlert('提示', data.data.msg, 'warning');
                                     } else {
-                                        window.location.href = '/postDetail/' + data.data.info.post_base_id ;
+                                        window.location.href = '/topic/' + data.data.info.post_base_id ;
                                     }
                                 },
                                 error: function(x, h, r) {
