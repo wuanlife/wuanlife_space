@@ -1,0 +1,196 @@
+<%- include base/header.ejs %>
+	<div class="main main-page">
+		<div class="main-mask"></div>
+		<div class="location clearfix">
+			<h1><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></h1>
+			<a href="#?" title="" id="joinBtn">+加入</a>
+		</div>
+		<%if(result.posts.length > 0){%>
+			<div class="chapter-col">
+				<% result.posts.forEach(function(item) { %>
+					<div class="chapter">
+						<h2><a href="/topic/<%=item.postID%>" title=""><%=item.title%></a></h2>
+						<div class="chapter-text">
+							<%-item.text%>
+						</div>
+						<div class="chapter-info">
+							<span><a href="#?" title=""><%=item.nickname%></a></span>
+							<span>发表于</span>
+							<span><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></span>
+							<span class="cha-time"><%=item.createTime%></span>
+						</div>
+					</div>
+					<% }); %>
+			</div>
+			<%}else{%>
+				<div class="emptyPage">
+					星球空空，可以注水~~
+				</div>
+				<%}%>
+					<div class="page-turn">
+						<span><a href="#?" title="">上一页</a></span>
+						<span><%=result.currentPage%>/<%=result.pageCount%></span>
+						<span><a href="#?" title="">下一页</a></span>
+					</div>
+	</div>
+	<%- include base/baseJS.ejs %>
+		<script type="text/html" id="listtemplate">
+			{{each posts as item i}}
+			<div class="chapter">
+				<h2><a href="/topic/{{item.postID}}" title="">{{item.title}}</a></h2>
+				<div class="chapter-text">{{#item.text}}</div>
+				<div class="chapter-info">
+					<span><a href="#?" title="">{{item.nickname}}</a></span>
+					<span>发表于</span>
+					<span><a href="/group/{{groupID}}" title="">{{groupName}}</a></span>
+					<span class="cha-time">{{item.createTime}}</span>
+				</div>
+			</div>
+			{{/each}}
+		</script>
+		<script type="text/javascript">
+			var planetDetail = {
+				pre: $(".page-turn").find('a').first(),
+				next: $(".page-turn").find('a').last(),
+				page: $(".page-turn").find('span').eq(1),
+				main: $(".chapter-col"),
+				chapter_text: $(".chapter-text"),
+				joinBtn: $("#joinBtn"),
+				nav_logout: $("#nav-logout"),
+				loading: $(".loading"),
+				isjoin: 0,
+				currentpage: 1,
+				pageCount: 0,
+				ClientData: function() {
+					this.currentpage = parseInt('<%=result.currentPage%>');
+					this.pageCount = parseInt('<%=result.pageCount%>');
+				},
+				getServerData: function(param, cb) {
+					$.getJSON("/api/getGroupPlanetShow", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				getJoinPData: function(param, cb) {
+					$.getJSON("/api/joinPlant", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				getJoinBtnVal: function(param, cb) {
+					$.getJSON("/api/isJoinP", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				setChapterText:function(){
+					this.chapter_text.each(function() {
+						var text = $(this).text();
+						$(this).html(text);
+					});
+				},
+				setJoinBtnVal: function() {
+					var self = this;
+					if (localStorage.getItem("userID") != null) {
+						self.getJoinBtnVal({
+							groupid: parseInt("<%=result.groupID%>"),
+							userid: localStorage.getItem("userID")
+						}, function(data) {
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									self.joinBtn.text('+发帖');
+									self.isjoin = 1; //已加入
+								} else {
+									self.joinBtn.text('+加入');
+									self.isjoin = 0; //未加入
+								}
+							}
+						});
+					}
+				},
+				bindEvent: function() {
+					var self = this;
+					self.nav_logout.on(WuanClickEvent, function() {
+						self.joinBtn.text('+加入');
+					});
+					self.pre.on(WuanClickEvent, function(event) {
+						event.preventDefault();
+						if (self.currentpage == 1) {
+							sweetAlert('错误', '当前页是第一页', 'error');
+						} else {
+							self.loading.show();
+							self.getServerData({
+								currentpage: self.currentpage - 1,
+								groupid: parseInt("<%=result.groupID%>")
+							}, function(data) {
+								if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+									self.currentpage -= 1;
+									var compiled = template("listtemplate", data.data);
+									self.main.html(compiled);
+									$(".chapter-text").each(function() {
+										var text = $(this).text();
+										$(this).html(text);
+									});
+									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+									self.loading.hide();
+								}
+							});
+						}
+					});
+					self.next.on(WuanClickEvent, function(event) {
+						event.preventDefault();
+						if (self.currentpage == self.pageCount) {
+							sweetAlert('错误', '当前页是最后一页', 'error');
+						} else {
+							self.loading.show();
+							self.getServerData({
+								currentpage: self.currentpage + 1,
+								groupid: parseInt("<%=result.groupID%>")
+							}, function(data) {
+								if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+									self.currentpage += 1;
+									var compiled = template("listtemplate", data.data);
+									self.main.html(compiled);
+									$(".chapter-text").each(function() {
+										var text = $(this).text();
+										$(this).html(text);
+									});
+									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+									self.loading.hide();
+								}
+							});
+						}
+					});
+					self.joinBtn.on(WuanClickEvent, function(event) {
+						event.preventDefault();
+						if (localStorage.getItem("userID") != null) {
+							if (self.isjoin == 0) {
+								self.getJoinPData({
+									groupid: parseInt("<%=result.groupID%>"),
+									userid: localStorage.getItem("userID")
+								}, function(data) {
+									console.log(data);
+									if (data.ret == 200 && data.data && data.data.code == 1) {
+										self.joinBtn.text('+发帖'); //加入成功
+										self.isjoin = 1;
+									}
+								});
+							}
+							if (self.isjoin == 1) {
+								window.location.href = '/post/<%=result.groupID%>';
+							}
+						} else {
+							window.location.href = '/login';
+						}
+					})
+				},
+				init: function() {
+					this.ClientData();
+					this.setChapterText();
+					this.setJoinBtnVal();
+					this.bindEvent();
+				}
+			}
+			planetDetail.init();
+		</script>
+		<%- include base/footer.ejs %>
