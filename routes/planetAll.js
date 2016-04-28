@@ -16,7 +16,8 @@ router.get('/', function(req, res, next) {
 				res.render('planetAll', {
 					'path':'',
 					result: result.data,
-					ag: agent
+					ag: agent,
+					'title':'全部星球'
 				});
 			}
 		} else {
