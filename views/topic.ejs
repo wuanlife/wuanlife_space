@@ -1,0 +1,211 @@
+<%- include base/header.ejs %>
+	<div class="main main-page">
+		<div class="main-mask"></div>
+		<div class="post-detail">
+			<div class="post-md">
+				<h1 class="post-title"><%=result.title%></h1>
+				<div class="post-info clearfix">
+					<span><a href="" title=""><%=result.nickname%></a></span>
+					<span>发表于</span>
+					<span><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></span>
+					<span class="post-time"><%=result.createTime%></span>
+				</div>
+				<div class="post-content">
+					<%-result.text%>
+				</div>
+
+				<div class="post-opt">
+					<a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item"></a>
+				</div>
+
+			</div>
+			<div class="post-comment">
+				<h2></h2>
+				<div class="post-cm-group">
+					<div class="post-cm-item">
+						<div class="post-cm-info clearfix">
+							<span><a href="" title=""></a></span>
+							<span class="post-cm-time"></span>
+						</div>
+						<div class="post-cm-content"></div>
+					</div>
+				</div>
+				<div class="page-turn">
+					<span><a href="#?" title=""></a></span>
+					<span></span>
+					<span><a href="#?" title=""></a></span>
+				</div>
+			</div>
+			<div class="my-comment">
+				<h2>我的回复</h2>
+				<form class="post-detail-form" action="/postReply" method="post">
+					<textarea name="" class="form-control" id="last" placeholder="内容"></textarea>
+					<button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<%- include base/baseJS.ejs %>
+		<script type="text/html" id="listtemplate">
+			{{each reply as item i}}
+			<div class="post-cm-item">
+				<div class="post-cm-info clearfix">
+					<span><a href="" title="">{{item.nickname}}</a></span>
+					<span class="post-cm-time">{{item.createTime}}</span>
+				</div>
+				<div class="post-cm-content">{{item.text}}</div>
+			</div>
+			{{/each}}
+		</script>
+		<script type="text/javascript">
+			var postid = '<%=result.postID%>';
+			var postReply = {
+				pre: $(".page-turn").find('a').first(),
+				next: $(".page-turn").find('a').last(),
+				page: $(".page-turn").find('span').eq(1),
+				currentpage: 1,
+				pageCount: 0,
+				loading: $(".loading"),
+				reply_md: $(".post-comment"),
+				reply_main: $(".post-cm-group"),
+				reply_title: $(".post-comment").children('h2'),
+				post_opt: $(".post-opt"),
+				post_edit: $(".post-opt-item").eq(0),
+				post_delete: $(".post-opt-item").eq(1),
+				myReplyForm: $(".post-detail-form"),
+				myReplyContent: $(".post-detail-form").children('textarea'),
+				myReplyBtn: $('#myReplyBtn'),
+				verificate: function() {
+					if (this.myReplyContent.val().length < 8) {
+						sweetAlert('格式错误', '回复内容不能少于8字符', 'warning');
+						return false;
+					}
+					return true;
+				},
+				getReplyData: function(param, cb) {
+					$.getJSON("/api/getPostReplys", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				getEditRightData: function(param, cb) {
+					$.getJSON("/api/getPostEditRight", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				setReplyData: function() {
+					var self = this;
+					self.getReplyData({
+						currentpage: 1,
+						post_id: postid
+					}, function(data) {
+						if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+							var compiled = template("listtemplate", data.data);
+							self.reply_title.text(data.data.replyCount + "个回复");
+							self.reply_main.html(compiled);
+							self.pre.text('上一页');
+							self.next.text('下一页');
+							self.page.text('1' + '/' + data.data.pageCount);
+							self.pageCount = data.data.pageCount;
+						} else {
+							self.reply_md.html("");
+						}
+					});
+				},
+				setEditRightData: function() {
+					var self = this;
+					self.getEditRightData({
+						user_id: localStorage.getItem("userID"),
+						post_id: postid
+					}, function(data) {
+						if (data.ret == 200 && data.data && data.data.editRight == 1) {
+							self.post_edit.text('编辑');
+							self.post_delete.text('删除');
+						} else {
+							self.post_opt.html("");
+						}
+					});
+				},
+				bindEvent: function() {
+					var self = this;
+					self.pre.on(WuanClickEvent, function() {
+						if (self.currentpage == 1) {
+							sweetAlert('错误', '当前页是第一页', 'error');
+						} else {
+							self.loading.show();
+							self.getReplyData({
+								currentpage: self.currentpage - 1,
+								post_id: postid
+							}, function(data) {
+								if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+									self.currentpage -= 1;
+									var compiled = template("listtemplate", data.data);
+									self.reply_main.html(compiled);
+									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+									self.loading.hide();
+								}
+							});
+						}
+					});
+					self.next.on(WuanClickEvent, function() {
+						if (self.currentpage == self.pageCount) {
+							sweetAlert('错误', '当前页是最后一页', 'error');
+						} else {
+							self.loading.show();
+							self.getReplyData({
+								currentpage: self.currentpage + 1,
+								post_id: postid
+							}, function(data) {
+								if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+									self.currentpage += 1;
+									var compiled = template("listtemplate", data.data);
+									self.reply_main.html(compiled);
+									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+									self.loading.hide();
+								}
+							});
+						}
+					});
+					self.myReplyForm.submit(function(event) {
+						event.preventDefault();
+						if (localStorage.getItem("userID") != null) {
+							if (self.verificate()) {
+								$.ajax({
+									type: "post",
+									url: "/postReply",
+									async: true,
+									data: {
+										user_id: localStorage.getItem("userID"),
+										post_id: postid,
+										text: self.myReplyContent.val()
+									},
+									success: function(data) {
+										console && console.log(data);
+										if (data.data.code == 0 && data.data.msg) {
+											sweetAlert('提示', data.data.msg, 'warning');
+										} else {
+											//console.log(data.data);
+											self.myReplyContent.val("");
+											window.location.href = '/topic/' + postid;
+										}
+									},
+									error: function(x, h, r) {
+										console && console.log(x, h, r);
+									}
+								});
+							}
+						} else {
+							window.location.href = '/login';
+						}
+					});
+				},
+				init: function() {
+					this.setReplyData();
+					this.setEditRightData();
+					this.bindEvent();
+				}
+			}
+			postReply.init();
+		</script>
+		<%- include base/footer.ejs %>
