@@ -47,7 +47,7 @@
                                     if (data.data.code == 0 && data.data.msg){
                                         sweetAlert('提示', data.data.msg, 'warning');
                                     } else {
-                                        window.location.href = '/planetDetail/' + data.data.info.group_base_id;
+                                        window.location.href = '/group/' + data.data.info.group_base_id;
                                         console.log(data.data.group_base_id);
                                         //window.location.href = '/planetDetail/1';
                                     }
