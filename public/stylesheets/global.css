@@ -70,15 +70,14 @@ ul{
     transition: left .15s linear;
     z-index: 1;
 }
-.navbar-header a{
-    color:#fff;
-}
+
 /*导航brand*/
 .navbar-brand{
     font-size: 0.555556rem;
     line-height: 0.967;
     padding:0.351852rem 0;   
-    display:inline-block;
+    display:inline-block; 
+    color:#fff;
 }
 /*导航折叠按钮*/
 .navbar-toggle{
@@ -197,6 +196,9 @@ a.navbar-account-item{
 span.navbar-account-item{
     background-color: #5ab8fe;
     color:#fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
 }
 [data-dpr="2"] .navbar-account-item{
     border-radius: 18px;
@@ -306,6 +308,9 @@ span.navbar-account-item{
         width:auto;
         color:inherit !important;
         background-color: inherit !important;
+    }
+    span.navbar-account-item{
+        overflow:visible;
     }
     .navbar-account-item:before{
         display:none;
@@ -756,12 +761,7 @@ span.navbar-account-item{
 .login{
     width:7.066667rem;
     margin: 0 auto ;
-    position: absolute;
-    top:50%;
-    -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
-    left:0;
-    right:0;
+    padding:3.055556rem 0;
 }
 .login-group{
     padding-bottom: 0.2rem;
@@ -798,6 +798,7 @@ span.navbar-account-item{
 @media (min-width:768px){
     .login{
         width:325px;
+        padding:200px 0;
     }
     .login-group{
         margin-bottom: 20px;
