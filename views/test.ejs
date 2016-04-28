@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.2/??flexible_css.js,flexible.js"></script>
+        <link rel="stylesheet" type="text/css" href="<%-path%>stylesheets/globalTest.css">
+        <link rel="stylesheet" type="text/css" href="<%-path%>editorMobile/wangEditor-mobile.min.css"/>
+        <title><%=title%>-午安网-过你想过的生活</title>
+    </head>
+    <body>
+    <div class="container all-wrapper">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+          </button>
+          <span class="navbar-brand">午安网</span>
+        </div>
+        <div class="navbar-collapse">
+            <div class="navbar-collapse-content">
+                <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
+                <ul class="navbar-option">
+                    <li><a href="/" title="" class="navbar-icon navbar-option-item">首页</a></li>
+                    <li id="nav-myP"><a href="/myPlanet" title="" class="navbar-icon navbar-option-item">我的星球</a></li>
+                    <li id="nav-allP"><a href="/planetAll" title="" class="navbar-icon navbar-option-item">全部星球</a></li>
+                </ul>
+                <ul class="navbar-account">
+                    <li id="nav-login"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>
+                    <li id="nav-register"><a href="/register" title="" class="navbar-icon navbar-account-item">注册</a></li>
+                    <li class="nav-anone" id="nav-userId"><span href="" title="" class="navbar-icon navbar-account-item"></span></li>
+                    <li class="nav-anone" id="nav-logout"><a href="" title="" class="navbar-icon navbar-account-item">退出</a></li>
+                </ul>
+            </div>   
+        </div>
+        <div class="main main-page">
+        <div class="main-mask"></div>
+        <div class="location clearfix">
+            <h1><a href="/" title="">首页</a></h1>
+        </div>
+        <%if(result.posts.length > 0){%>
+        <div class="chapter-col">
+            <% result.posts.forEach(function(item) { %>
+                <div class="chapter">
+                    <h2><a href="/postDetail/<%=item.postID%>" title=""><%=item.title%></a></h2>
+                    <div class="chapter-text"><%-item.text%></div>
+                    <div class="chapter-info">
+                        <span><a href="#?" title=""><%=item.nickname%></a></span>
+                        <span>发表于</span>
+                        <span><a href="/planetDetail/<%=item.groupID%>" title=""><%=item.groupName%></a></span>
+                        <span class="cha-time"><%=item.createTime%></span>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+        <div class="page-turn">
+            <span><a href="#?" title="">上一页</a></span>
+            <span><%=result.currentPage%>/<%=result.pageCount%></span>
+            <span><a href="#?" title="">下一页</a></span>
+        </div>
+        <%}else{%>
+        <div class="emptyPage">
+            目前还没有帖子哦~~
+         </div>
+         <%}%>
+        
+    </div>
+
+
+    <script type="text/javascript" src="<%-path%>javascripts/zepto.min.js"></script>
+    <script type="text/javascript" src="<%-path%>javascripts/zepto.touch.js"></script>
+
+    <script src="<%-path%>javascripts/template.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+                var WuanClickEvent = "<%=ag.Mobile%>" == "true" ? "touchend" : "click",
+                    mobile = "<%=ag.Mobile%>" == "true" ? true : false;
+                var global = (function() {
+                    //本地存储用户昵称
+                    var userName = localStorage.getItem("userName");
+                    //本地存储用户ID
+                    var userID = localStorage.getItem("userID");
+                    var setCenterLoadingDiv = function() {
+                        var loadingClientheight = parseInt($(".uil-default-css").css("height"));
+                        var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
+                        var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
+                        var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
+                        $(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+                    };
+                    //设置main最小高度为屏幕高度
+                    var setMinHeight = function() {
+                        var mainMinHeight;
+                        // if ($(window).width() < 768) {
+                        //     mainMinHeight = $(window).height() - $(".navbar-header").height();
+                        // } else {
+                        //     mainMinHeight = $(window).height() - $(".navbar-collapse").height();
+                        // }
+                        mainMinHeight = $(window).height() - $(".navbar-header").height();
+                        $(".main").css("min-height", mainMinHeight);
+                    };
+                    //设置登录时页面状态
+                    var setLoginStatus = function() {
+                        $("#nav-login,#nav-register").addClass('nav-anone');
+                        $("#nav-userId,#nav-logout").removeClass('nav-anone');
+                        $("#nav-userId").children("span").text(userName);
+                        $("#nav-myP").children("a").attr("href", "/myPlanet/" + localStorage.getItem("userID"));
+                    };
+                    //设置注销时页面状态
+                    var setLogoutStatus = function() {
+                        $("#nav-login,#nav-register").removeClass('nav-anone');
+                        $("#nav-userId,#nav-logout").addClass('nav-anone');
+                        $("#nav-userId").children("span").text("");
+                        $("#nav-myP").children("a").attr("href", "/login");
+                    }
+                    var logout = {
+                        logout: $("#nav-logout"),
+                        bindEvent: function() {
+                            var self = this;
+                            self.logout.on(WuanClickEvent, function(event) {
+                                event.preventDefault();
+                                $.ajax({
+                                    type: "get",
+                                    async: true,
+                                    url: "/logout",
+                                    success: function(data) {
+                                        console && console.log(data);
+                                        if (data.data.code == 0 && data.data.msg) {
+                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        } else {
+                                            localStorage.removeItem("userName");
+                                            localStorage.removeItem("userID");
+                                            setLogoutStatus();
+                                        }
+                                    },
+                                    error: function(x, h, r) {
+                                        console && console.log(x, h, r);
+                                    }
+                                });
+                            });
+                        },
+                        init: function() {
+                            this.bindEvent();
+                        }
+                    }
+                    logout.init();
+                    //页面初始化
+                    if (window.localStorage) {
+                        if (userName != null) {
+                            setLoginStatus();
+                        } else {
+                            setLogoutStatus();
+                        }
+                    }
+                    $(".navbar-toggle").on(WuanClickEvent, function() {
+                        $(".all-wrapper").toggleClass('sidebar-extend');
+                        if ($(".all-wrapper").hasClass('sidebar-extend')) {
+                            $(".main-mask").on(WuanClickEvent, function() {
+                                $(".all-wrapper").removeClass('sidebar-extend');
+                            });
+                        }
+                    });
+                    return {
+                        setCenterLoadingDiv: setCenterLoadingDiv,
+                        setMinHeight: setMinHeight
+                    }
+                }());
+                //注销登陆
+                $(document).ready(function() {
+                    global.setMinHeight();
+                    global.setCenterLoadingDiv();
+                    $(window).resize(function(event) {
+                        global.setMinHeight();
+                        global.setCenterLoadingDiv();
+                    });
+                    $("input,textarea").focus(function(event){
+                        $(".navbar-header").css("position","absolute");
+                    });
+                    $("input,textarea").blur(function(event){
+                        $(".navbar-header").css("position","fixed");
+                    });
+                });
+            </script>
+<script type="text/html" id="listtemplate">
+             {{each posts as item i}}
+                    <div class="chapter">
+                    <h2><a href="/topic/{{item.postID}}" title="">{{item.title}}</a></h2>
+                    <div class="chapter-text">{{#item.text}}</div>
+                    <div class="chapter-info">
+                        <span><a href="#?" title="">{{item.nickname}}</a></span>
+                        <span>发表于</span>
+                        <span><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
+                        <span class="cha-time">{{item.createTime}}</span>
+                    </div>
+                </div>
+                {{/each}}
+        </script>
+        <script>
+            var index = {
+                pre: $(".page-turn").find('a').first(),
+                next: $(".page-turn").find('a').last(),
+                page: $(".page-turn").find('span').eq(1),
+                main: $(".chapter-col"),
+                chapter_text: $(".chapter-text"),
+                nav_home: $(".navbar-option").find('.navbar-option-item').eq(0),
+                loading: $(".loading"),
+                currentpage: 1,
+                pageCount: 0,
+                ClientData: function() {
+                    this.currentpage = parseInt("<%=result.currentPage%>");
+                    this.pageCount = parseInt("<%=result.pageCount%>");
+                },
+                navActive:function(){
+                    this.nav_home.addClass("navbar-active");
+                },
+                getServerData: function(param, cb) {
+                    $.getJSON("api/getindex", param,
+                        function(data) {
+                            cb(data);
+                        });
+                },
+                setChapterText:function(){
+                    this.chapter_text.each(function() {
+                        var text = $(this).text();
+                        $(this).html(text);
+                    });
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.pre.on(WuanClickEvent, function(event) {
+                        event.preventDefault();
+                        if (self.currentpage == 1) {
+                            sweetAlert('错误', '当前页是第一页', 'error');
+                        } else {
+                            self.loading.show();
+                            self.getServerData({
+                                currentpage: self.currentpage - 1
+                            }, function(data) {
+                                if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+                                    self.currentpage -= 1;
+                                    var compiled = template("listtemplate", data.data);
+                                    self.main.html(compiled);
+                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                                    $(".chapter-text").each(function() {
+                                        var text = $(this).text();
+                                        $(this).html(text);
+                                    });
+                                    self.loading.hide();
+                                }
+                            });
+                        }
+                    });
+                    self.next.on(WuanClickEvent, function(event) {
+                        event.preventDefault();
+                        if (self.currentpage == self.pageCount) {
+                            sweetAlert('错误', '当前页是最后一页', 'error');
+                        } else {
+                            self.loading.show();
+                            self.getServerData({
+                                currentpage: self.currentpage + 1
+                            }, function(data) {
+                                if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+                                    self.currentpage += 1;
+                                    var compiled = template("listtemplate", data.data);
+                                    self.main.html(compiled);
+                                    $(".chapter-text").each(function() {
+                                        var text = $(this).text();
+                                        $(this).html(text);
+                                    });
+                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                                    
+                                    self.loading.hide();
+                                }
+                            });
+                        }
+                    })
+                },
+                init: function() {
+                    this.ClientData();
+                    this.setChapterText();
+                    this.bindEvent();
+                    this.navActive();
+                }
+            }
+            index.init();
+        </script>
+
+</div>
+        
+    </body>
+</html>
