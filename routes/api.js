@@ -80,6 +80,19 @@ router.get('/:method', function(req, res, next) {
 				}
 			})
 			break;
+		case 'getPostForEdit':
+			var postid = req.param('postid');
+			var user_id = req.param('userid');
+			request(config.server + '?service=Post.GetPostBase&post_id=' + postid+ '&id=' + user_id,
+				function(error, response, body) {
+					if (!error && response.statusCode == 200) {
+						console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+						res.header('Content-type', 'application/json');
+						res.header('Charset', 'utf8');
+						res.send(body);
+					}
+			})
+			break;
 		case 'joinPlant':
 			var groupid = req.param('groupid');
 			var userid = req.param('userid');
