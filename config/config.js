@@ -10,7 +10,7 @@ var config = {
         },
         port: process.env.PORT || 3000,
         db: 'mongodb://localhost:27017/test-app',
-        server: 'http://dev.wuanlife.com/'
+        server: 'http://dev.wuanlife.com:800/'
     },
 
     test: {
@@ -20,7 +20,7 @@ var config = {
         },
         port: process.env.PORT || 3000,
         db: 'mongodb://localhost:27017/test-app',
-        server: 'http://dev.wuanlife.com/'
+        server: 'http://dev.wuanlife.com:800/'
     },
 
     production: {
@@ -30,7 +30,7 @@ var config = {
         },
         port: process.env.PORT || 3000,
         db: 'mongodb://localhost/yoexpress-production',
-        server: 'http://dev.wuanlife.com/'
+        server: 'http://dev.wuanlife.com:800/'
     }
 };
 
