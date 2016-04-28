@@ -9,7 +9,7 @@
         <meta content="telephone=no,email=no" name="format-detection">
         <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.2/??flexible_css.js,flexible.js"></script>
         <link rel="stylesheet" type="text/css" href="<%-path%>stylesheets/globalTest.css">
-        <link rel="stylesheet" type="text/css" href="<%-path%>editorMobile/wangEditor-mobile.min.css"/>
+      <!--   <link rel="stylesheet" type="text/css" href="<%-path%>editorMobile/wangEditor-mobile.min.css"/> -->
         <title><%=title%>-午安网-过你想过的生活</title>
     </head>
     <body>
@@ -85,13 +85,13 @@
                     var userName = localStorage.getItem("userName");
                     //本地存储用户ID
                     var userID = localStorage.getItem("userID");
-                    var setCenterLoadingDiv = function() {
-                        var loadingClientheight = parseInt($(".uil-default-css").css("height"));
-                        var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
-                        var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
-                        var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
-                        $(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
-                    };
+                    // var setCenterLoadingDiv = function() {
+                    //     var loadingClientheight = parseInt($(".uil-default-css").css("height"));
+                    //     var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
+                    //     var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
+                    //     var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
+                    //     $(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+                    // };
                     //设置main最小高度为屏幕高度
                     var setMinHeight = function() {
                         var mainMinHeight;
@@ -121,7 +121,7 @@
                         logout: $("#nav-logout"),
                         bindEvent: function() {
                             var self = this;
-                            self.logout.on(WuanClickEvent, function(event) {
+                            self.logout.on("touchend", function(event) {
                                 event.preventDefault();
                                 $.ajax({
                                     type: "get",
@@ -130,7 +130,7 @@
                                     success: function(data) {
                                         console && console.log(data);
                                         if (data.data.code == 0 && data.data.msg) {
-                                            sweetAlert('提示', data.data.msg, 'warning');
+                                           // sweetAlert('提示', data.data.msg, 'warning');
                                         } else {
                                             localStorage.removeItem("userName");
                                             localStorage.removeItem("userID");
@@ -156,7 +156,7 @@
                             setLogoutStatus();
                         }
                     }
-                    $(".navbar-toggle").on(WuanClickEvent, function() {
+                    $(".navbar-toggle").on("touchend", function() {
                         $(".all-wrapper").toggleClass('sidebar-extend');
                         if ($(".all-wrapper").hasClass('sidebar-extend')) {
                             $(".main-mask").on(WuanClickEvent, function() {
@@ -165,7 +165,7 @@
                         }
                     });
                     return {
-                        setCenterLoadingDiv: setCenterLoadingDiv,
+                        //setCenterLoadingDiv: setCenterLoadingDiv,
                         setMinHeight: setMinHeight
                     }
                 }());
@@ -175,7 +175,6 @@
                     global.setCenterLoadingDiv();
                     $(window).resize(function(event) {
                         global.setMinHeight();
-                        global.setCenterLoadingDiv();
                     });
                     $("input,textarea").focus(function(event){
                         $(".navbar-header").css("position","absolute");
@@ -207,7 +206,7 @@
                 main: $(".chapter-col"),
                 chapter_text: $(".chapter-text"),
                 nav_home: $(".navbar-option").find('.navbar-option-item').eq(0),
-                loading: $(".loading"),
+                //loading: $(".loading"),
                 currentpage: 1,
                 pageCount: 0,
                 ClientData: function() {
@@ -231,12 +230,12 @@
                 },
                 bindEvent: function() {
                     var self = this;
-                    self.pre.on(WuanClickEvent, function(event) {
+                    self.pre.on("touchend", function(event) {
                         event.preventDefault();
                         if (self.currentpage == 1) {
-                            sweetAlert('错误', '当前页是第一页', 'error');
+                           // sweetAlert('错误', '当前页是第一页', 'error');
                         } else {
-                            self.loading.show();
+                            //self.loading.show();
                             self.getServerData({
                                 currentpage: self.currentpage - 1
                             }, function(data) {
@@ -249,17 +248,17 @@
                                         var text = $(this).text();
                                         $(this).html(text);
                                     });
-                                    self.loading.hide();
+                                   // self.loading.hide();
                                 }
                             });
                         }
                     });
-                    self.next.on(WuanClickEvent, function(event) {
+                    self.next.on("touchend", function(event) {
                         event.preventDefault();
                         if (self.currentpage == self.pageCount) {
-                            sweetAlert('错误', '当前页是最后一页', 'error');
+                            //sweetAlert('错误', '当前页是最后一页', 'error');
                         } else {
-                            self.loading.show();
+                            //self.loading.show();
                             self.getServerData({
                                 currentpage: self.currentpage + 1
                             }, function(data) {
@@ -273,7 +272,7 @@
                                     });
                                     self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                                     
-                                    self.loading.hide();
+                                    //self.loading.hide();
                                 }
                             });
                         }
