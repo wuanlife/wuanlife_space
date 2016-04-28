@@ -6,12 +6,10 @@
                 <form class="post-form clearfix" action="/post/<%=result%>" method="post">
                     <input type="text" name="" value="" placeholder="标题" class="form-control" id="post-title">
                     <%if(ag&&ag.Mobile==true){%>
-                    <div class="wangEditor-mobile-container" tabindex="0">
-                        <textarea id="textarea-mobile" style="width:100%;height:6.712963rem;">
-                       
+                        <textarea id="textarea-mobile" class="form-control">
+                            
                         </textarea>
-                    </div>
-                    
+                        <div id= "getPostVal"></div>
                     <%}else{%>
                     <div class="wangEditor-pc-container">
                         <textarea name="" class="form-control" id="textareaPC">
@@ -24,34 +22,13 @@
             </div>
         </div>
         <%- include base/baseJS.ejs %>
-        <%if(ag.Mobile){%>
-		<script src="<%-path%>javascripts/wangEditor-mobile.min.js"></script>
-		<%}else{%>
-		<script src="<%-path%>javascripts/wangEditor.min.js"></script>
-		<%}%>
+        <%if(!ag.Mobile){%>
+        <script src="<%-path%>javascripts/wangEditor.min.js"></script>      
+        <%}%>
         <script>
         	var editor;
 			if (mobile) {
-				editor = new ___E("textarea-mobile");
-                editor.config.menus = [
-                    'head',
-                    'bold',
-                    'color',
-                    'quote',
-                    'list',
-                    'check'
-                ];
-				editor.init();
-				$(".wangEditor-mobile-container").find('*').focus(function(event) {
-					/* Act on the event */
-					$(".wangEditor-mobile-container").addClass('textarea-focus');
-                    $(".navbar-header").css("position","absolute");
-				});
-				$(".wangEditor-mobile-container").find('*').blur(function(event) {
-					/* Act on the event */
-					$(".wangEditor-mobile-container").removeClass('textarea-focus');
-                    $(".navbar-header").css("position","fixed");
-				});
+				editor = $("#textarea-mobile");
 			} else {
                 wangEditor.config.printLog = false;
 				editor = new wangEditor("textareaPC");
@@ -107,9 +84,20 @@
                         sweetAlert('格式错误', '请填写标题！', 'warning');
                         return false;
                     }
-                    if(editor.$txt.html().length == 0){
-                        sweetAlert('格式错误', '请填写内容！', 'warning');
+                    if (this.title.val().length > 20) {
+                        sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
                         return false;
+                    }
+                    if(mobile){
+                        if (editor.val().length == 0) {
+                            sweetAlert('格式错误', '请填写内容！', 'warning');
+                            return false;
+                        }
+                    } else{
+                        if (editor.$txt.html().length == 0) {
+                            sweetAlert('格式错误', '请填写内容！', 'warning');
+                            return false;
+                        }
                     }
                     return true;
                 },
@@ -125,7 +113,7 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text: editor.$txt.html()
+                                    text: mobile == true ? editor.val() : editor.$txt.html()
                                 },
                                 success: function(data) {
                                     console && console.log(data);

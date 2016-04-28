@@ -11,9 +11,7 @@
         <link rel="stylesheet" type="text/css" href="<%-path%>stylesheets/sweetAlert.css"/>
         <link rel="stylesheet" type="text/css" href="<%-path%>stylesheets/global.css">
         <link rel="stylesheet" type="text/css" href="<%-path%>stylesheets/loading.css"/>
-        <%if(ag.Mobile){%>
-        <link rel="stylesheet" type="text/css" href="<%-path%>editorMobile/wangEditor-mobile.min.css"/>
-        <%}else{%>
+        <%if(!ag.Mobile){%>
         <link rel="stylesheet" type="text/css" href="<%-path%>editor/wangEditor.min.css"/>
         <%}%>
         
