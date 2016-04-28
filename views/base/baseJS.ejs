@@ -32,8 +32,8 @@
 					//本地存储用户ID
 					var userID = localStorage.getItem("userID");
 					var setCenterLoadingDiv = function() {
-						var loadingClientheight = $(".uil-default-css").height();
-						var loadingClientwidth = $(".uil-default-css").width();
+						var loadingClientheight = parseInt($(".uil-default-css").css("height"));
+						var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
 						var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
 						var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
 						$(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
@@ -130,5 +130,11 @@
 						global.setMinHeight();
 						global.setCenterLoadingDiv();
 					});
+					$("input,textarea").focus(function(event){
+                    	$(".navbar-header").css("position","absolute");
+                	});
+                	$("input,textarea").blur(function(event){
+                    	$(".navbar-header").css("position","fixed");
+                	});
 				});
 			</script>
