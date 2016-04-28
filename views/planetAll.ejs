@@ -3,7 +3,7 @@
             <div class="main-mask"></div>
             <div class="location clearfix">
                 <h1><a href="/planetAll" title="">全部星球</a></h1>
-                <a href="" title="">创建星球</a>
+                <a href="#?" title="" id="cpBtn">创建星球</a>
             </div>
             <%if(result.lists.length > 0){%>
             <div class="planet"> 
@@ -14,7 +14,7 @@
                                 <a href="#?" title=""><img src="images/planet-pic_03.jpg" alt=""></a>
                             </div>
                             <div class="planet-info">
-                                <h2 class="text-ellipsis"><a href="/planetDetail/<%=item.id%>" title=""><%=item.name%></a></h2>
+                                <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title=""><%=item.name%></a></h2>
                                 <p class="text-ellipsis"><%=item.num%></p>
                           </div>
                         </li>
@@ -40,7 +40,7 @@
                             <a href="#?" title=""><img src="images/planet-pic_03.jpg" alt=""></a>
                         </div>
                         <div class="planet-info">
-                            <h2 class="text-ellipsis"><a href="/planetDetail/{{item.id}}" title="">{{item.name}}</a></h2>
+                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="">{{item.name}}</a></h2>
                             <p class="text-ellipsis">{{item.num}}</p>
                         </div>
                     </li>
@@ -52,6 +52,7 @@
                 next: $(".page-turn").find('a').last(),
                 page: $(".page-turn").find('span').eq(1),
                 main: $(".planet").find('ul'),
+                cpBtn: $("#cpBtn"),
                 nav_planetA: $("#nav-allP").children("a"),
                 loading: $(".loading"),
                 createPBtn: $(".location").children("a"),
@@ -70,9 +71,17 @@
                             cb(data);
                         });
                 },
+                setCreatePBtnVal:function(){
+                    if (localStorage.getItem("userName")!=null){
+                        this.cpBtn.attr("href","/createPlanet");
+                    } else {
+                        this.cpBtn.attr("href","/login");
+                    }
+                },
                 bindEvent: function() {
                     var self = this;
-                    self.pre.on(WuanClickEvent, function() {
+                    self.pre.on(WuanClickEvent, function(event) {
+                        event.preventDefault();
                         if (self.currentpage == 1) {
                             sweetAlert('错误', '当前页是第一页', 'error');
                         } else {
@@ -90,7 +99,8 @@
                             });
                         }
                     });
-                    self.next.on(WuanClickEvent, function() {
+                    self.next.on(WuanClickEvent, function(event) {
+                        event.preventDefault();
                         if (self.currentpage == self.pageCount) {
                             sweetAlert('错误', '当前页是最后一页', 'error');
                         } else {
@@ -108,7 +118,7 @@
                             });
                         }
                     });
-                    self.createPBtn.on(WuanClickEvent,function(){
+                    self.createPBtn.on(WuanClickEvent,function(event){
                         event.preventDefault();
                         if (localStorage.getItem("userName")!=null){
                             window.location.href = '/createPlanet';
@@ -119,6 +129,7 @@
                 },
                 init: function() {
                     this.ClientData();
+                    //this.setCreatePBtnVal();
                     this.bindEvent();
                     this.navActive();
                 }

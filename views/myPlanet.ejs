@@ -2,20 +2,20 @@
 	<div class="main main-page">
 		<div class="main-mask"></div>
 		<div class="location clearfix">
-			<h1><a href="" title="">我的星球</a></h1>
+			<h1><a href="/myPlanet/<%=userid%>" title="">我的星球</a></h1>
 		</div>
 		<%if(result.posts.length > 0){%>
 			<div class="chapter-col">
 				<% result.posts.forEach(function(item) { %>
 					<div class="chapter">
-						<h2><a href="/postDetail/<%=item.postID%>" title=""><%=item.title%></a></h2>
+						<h2><a href="/topic/<%=item.postID%>" title=""><%=item.title%></a></h2>
 						<div class="chapter-text">
 							<%-item.text%>
 						</div>
 						<div class="chapter-info">
 							<span><a href="" title=""><%=item.nickname%></a></span>
 							<span>发表于</span>
-							<span><a href="" title=""><%=item.groupName%></a></span>
+							<span><a href="/group/<%=item.groupID%>" title=""><%=item.groupName%></a></span>
 							<span class="cha-time"><%=item.createTime%></span>
 						</div>
 					</div>
@@ -36,12 +36,12 @@
 		<script type="text/html" id="listtemplate">
 			{{each posts as item i}}
 			<div class="chapter">
-				<h2><a href="/postDetail/{{item.postID}}" title="">{{item.title}}</a></h2>
+				<h2><a href="/topic/{{item.postID}}" title="">{{item.title}}</a></h2>
 				<div class="chapter-text">{{#item.text}}</div>
 				<div class="chapter-info">
 					<span><a href="#?" title="">{{item.nickname}}</a></span>
 					<span>发表于</span>
-					<span><a href="" title="">{{item.groupName}}</a></span>
+					<span><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
 					<span class="cha-time">{{item.createTime}}</span>
 				</div>
 			</div>
@@ -53,6 +53,7 @@
 				next: $(".page-turn").find('a').last(),
 				page: $(".page-turn").find('span').eq(1),
 				main: $(".chapter-col"),
+				chapter_text: $(".chapter-text"),
 				nav_myP: $("#nav-myP").children("a"),
 				nav_logout: $("#nav-logout"),
 				loading: $(".loading"),
@@ -68,6 +69,12 @@
 							cb(data);
 						});
 				},
+				setChapterText:function(){
+					this.chapter_text.each(function() {
+						var text = $(this).text();
+						$(this).html(text);
+					});
+				},
 				navActive: function() {
 					this.nav_myP.addClass("navbar-active");
 				},
@@ -76,7 +83,8 @@
 					self.nav_logout.on(WuanClickEvent, function() {
 						window.location.href = '/';
 					});
-					self.pre.on('click', function() {
+					self.pre.on(WuanClickEvent, function(event) {
+						event.preventDefault();
 						if (self.currentpage == 1) {
 							sweetAlert('错误', '当前页是第一页', 'error');
 						} else {
@@ -89,13 +97,18 @@
 									self.currentpage -= 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
+									$(".chapter-text").each(function() {
+										var text = $(this).text();
+										$(this).html(text);
+									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
 								}
 							});
 						}
 					});
-					self.next.on(WuanClickEvent, function() {
+					self.next.on(WuanClickEvent, function(event) {
+						event.preventDefault();
 						if (self.currentpage == self.pageCount) {
 							sweetAlert('错误', '当前页是最后一页', 'error');
 						} else {
@@ -108,6 +121,10 @@
 									self.currentpage += 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
+									$(".chapter-text").each(function() {
+										var text = $(this).text();
+										$(this).html(text);
+									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
 								}
@@ -117,6 +134,7 @@
 				},
 				init: function() {
 					this.ClientData();
+					this.setChapterText();
 					this.navActive();
 					this.bindEvent();
 				}
