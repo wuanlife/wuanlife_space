@@ -23,6 +23,7 @@ var myPlanet = require('./routes/myPlanet');
 var logout = require('./routes/logout');
 var isLogin = require('./routes/isLogin');
 var postReply = require('./routes/postReply');
+var test = require('./routes/test');
 
 
 var app = express();
@@ -86,6 +87,7 @@ app.use('/planetAll', planetAll);
 app.use('/logout',logout);
 app.use('/isLogin',isLogin);
 app.use('/postReply',postReply);
+app.use('/test',test);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
