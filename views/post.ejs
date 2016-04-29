@@ -6,9 +6,7 @@
                 <form class="post-form clearfix" action="/post/<%=result%>" method="post">
                     <input type="text" name="" value="" placeholder="标题" class="form-control" id="post-title">
                     <%if(ag&&ag.Mobile==true){%>
-                        <textarea id="textarea-mobile" class="form-control">
-                            
-                        </textarea>
+                        <textarea id="textarea-mobile" class="form-control"></textarea>
                         <div id= "getPostVal"></div>
                     <%}else{%>
                     <div class="wangEditor-pc-container">
