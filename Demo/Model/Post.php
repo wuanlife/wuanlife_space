@@ -4,7 +4,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getIndexPost($page) {
 
-        $num=6;
+        $num=30;
         $rs   = array();
         $sql = 'SELECT pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
@@ -30,7 +30,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getGroupPost($groupID,$page) {
 
-        $num=6;
+        $num=30;
         $rs   = array();
         $groupData=DI()->notorm->group_base
         ->select('id as groupID,name as groupName')
@@ -65,7 +65,7 @@ class Model_Post extends PhalApi_Model_NotORM {
 
     public function getMyGroupPost($userID,$page) {
 
-        $num=6;
+        $num=30;
         $rs   = array();
         $sql = 'SELECT  pb.id AS postID,pb.title,pd.text,pd.createTime,ub.nickname,gb.id AS groupID,gb.name AS groupName '
              . 'FROM post_detail pd,post_base pb ,group_base gb,user_base ub '
