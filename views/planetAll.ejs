@@ -95,6 +95,7 @@
                                     self.main.html(compiled);
                                     self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                                     self.loading.hide();
+                                    $(window).scrollTop(0);
                                 }
                             });
                         }
@@ -114,6 +115,7 @@
                                     self.main.html(compiled);
                                     self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                                     self.loading.hide();
+                                    $(window).scrollTop(0);
                                 }
                             });
                         }

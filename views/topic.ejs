@@ -144,6 +144,9 @@
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									var postComY = $(".post-comment").offset().top;
+									var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
+									$(window).scrollTop(scroollY);
 								}
 							});
 						}
@@ -163,6 +166,10 @@
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									var postComY = $(".post-comment").offset().top;
+									var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
+									$(window).scrollTop(scroollY);
+
 								}
 							});
 						}

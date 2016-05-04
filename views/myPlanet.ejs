@@ -103,6 +103,7 @@
 									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									$(window).scrollTop(0);
 								}
 							});
 						}
@@ -127,6 +128,7 @@
 									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									$(window).scrollTop(0);
 								}
 							});
 						}
