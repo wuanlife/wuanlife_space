@@ -189,6 +189,10 @@ ul{
     padding:0.185185rem 0 ;
     border-radius: 9px; 
 }
+.navbar-account-item>span{
+    display:inline-block;
+    height:0.509259rem;
+}
 a.navbar-account-item{
     background-color: #fff;
     color:#53aaeb;
@@ -314,6 +318,9 @@ span.navbar-account-item{
     }
     .navbar-account-item:before{
         display:none;
+    }
+    .navbar-account-item>span{
+        height:auto;
     }
 }
 /*************************
@@ -785,6 +792,7 @@ span.navbar-account-item{
 .login-input{
     font-size: 0.373333rem;
     line-height: 0.64rem;
+    height:0.64rem;
     padding-left: 1.12rem;   
 }
 
@@ -811,6 +819,7 @@ span.navbar-account-item{
     .login-input{
         font-size: 17px;
         line-height: 36px;
+        height:36px;
         padding-left: 51px;
     }
     .login-sub{
