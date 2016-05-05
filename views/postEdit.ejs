@@ -120,7 +120,6 @@
 				title: $("#post-title"),
 				postForm: $(".post-form"),
 				verificate: function() {
-                    var myReg = /^[<p><br><\/p>]*$/;
 					if (this.title.val().length == 0) {
 						sweetAlert('格式错误', '请填写标题！', 'warning');
 						return false;
@@ -130,12 +129,13 @@
                         return false;
                     }
                     if(mobile){
+                        editor.val($.trim(editor.val()));
                         if (editor.val().length == 0) {
                             sweetAlert('格式错误', '请填写内容！', 'warning');
                             return false;
                         }
                     } else {
-                        if (editor.$txt.html().length == 0 || myReg.test(editor.$txt.html())) {
+                        if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0) {
                             sweetAlert('格式错误', '请填写内容！', 'warning');
                             return false;
                         }
