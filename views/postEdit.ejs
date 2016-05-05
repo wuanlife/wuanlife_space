@@ -135,7 +135,9 @@
                             return false;
                         }
                     } else {
-                        if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0) {
+                        var imgs = editor.$txt.find('img').length;
+                        var iframes = editor.$txt.find('iframe').length;
+                        if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0 && imgs == 0 && iframes == 0) {
                             sweetAlert('格式错误', '请填写内容！', 'warning');
                             return false;
                         }
