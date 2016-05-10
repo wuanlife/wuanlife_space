@@ -14,6 +14,10 @@ router.get('/:userid', function(req, res, next) {
 			} else {
 				if (response.statusCode == 200) {
 					var result = JSON.parse(body);
+					var reg = /<.+?>/g;
+					for (var i = 0; i < result.data.posts.length; i++) {
+						result.data.posts[i].text = result.data.posts[i].text.replace(reg,""); 
+					}
 					if (result.ret == 200 && result.msg == "") {
 						res.render('myPlanet', {
 							'path':'../',

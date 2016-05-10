@@ -11,7 +11,11 @@ router.get('/', function(req, res, next) {
 		if (!error && response.statusCode == 200) {
 			console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 			var data = JSON.parse(body);
-			console.log(data.data.posts[0])
+			var reg = /<.+?>/g;
+			for (var i = 0; i < data.data.posts.length; i++) {
+				data.data.posts[i].text = data.data.posts[i].text.replace(reg,""); 
+			}
+			//console.log(data.data.posts[0]);
 			if (data.ret == 200) {
 				res.render('index', {
 					'path':'',
