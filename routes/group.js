@@ -13,10 +13,11 @@ router.get('/:groupid', function(req, res, next) {
 				console.log('Planet Detail List Success:OK');
 				var result = JSON.parse(body);
 				console.log(result);
-				var reg = /<.+?>/g;
-				for (var i = 0; i < result.data.posts.length; i++) {
-					result.data.posts[i].text = result.data.posts[i].text.replace(reg,""); 
+				var getText = function(post){
+					post.text = post.text.replace(/<.+?>/g,"");
+					return post;
 				}
+				result.data.posts.map(getText);
 				console.log(result.data.posts[0]);
 				if (result.ret == 200 && result.msg == "") {
 					//res.render('planetDetail', result.data);

@@ -14,10 +14,11 @@ router.get('/:userid', function(req, res, next) {
 			} else {
 				if (response.statusCode == 200) {
 					var result = JSON.parse(body);
-					var reg = /<.+?>/g;
-					for (var i = 0; i < result.data.posts.length; i++) {
-						result.data.posts[i].text = result.data.posts[i].text.replace(reg,""); 
+					var getText = function(post){
+						post.text = post.text.replace(/<.+?>/g,"");
+						return post;
 					}
+					result.data.posts.map(getText);
 					if (result.ret == 200 && result.msg == "") {
 						res.render('myPlanet', {
 							'path':'../',
