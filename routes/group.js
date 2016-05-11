@@ -18,7 +18,10 @@ router.get('/:groupid', function(req, res, next) {
 					return post;
 				}
 				result.data.posts.map(getText);
-				console.log(result.data.posts[0]);
+				for (var i = 0; i < result.data.posts.length; i++) {
+					console.log(result.data.posts[i]);
+				}
+				
 				if (result.ret == 200 && result.msg == "") {
 					//res.render('planetDetail', result.data);
 					res.render('group', {
