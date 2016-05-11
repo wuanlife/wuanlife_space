@@ -31,8 +31,8 @@
                 wangEditor.config.printLog = false;
 				editor = new wangEditor("textareaPC");
                 editor.config.menus = [
-                'source',
-                '|',
+                'fontfamily',
+                'fontsize',
                 'bold',
                 'underline',
                 'italic',
@@ -41,28 +41,15 @@
                 'forecolor',
                 'bgcolor',
                 '|',
-                'quote',
-                'fontfamily',
-                'fontsize',
-                'head',
-                'unorderlist',
                 'orderlist',
                 'alignleft',
                 'aligncenter',
                 'alignright',
                 '|',
                 'link',
-                'unlink',
-                'table',
                 'emotion',
-                '|',
-                'video',
-                'location',
-                'insertcode',
-                '|',
                 'undo',
                 'redo',
-                'fullscreen'
                 ];
 				editor.create();
 				$(".wangEditor-container").find('*').focus(function(event) {
