@@ -10,9 +10,7 @@
 				<% result.posts.forEach(function(item) { %>
 					<div class="chapter">
 						<h2><a href="/topic/<%=item.postID%>" title=""><%=item.title%></a></h2>
-						<div class="chapter-text">
-							<%-item.text%>
-						</div>
+						<div class="chapter-text"><%-item.text%></div>
 						<div class="chapter-info">
 							<span><a href="#?" title=""><%=item.nickname%></a></span>
 							<span>发表于</span>
