@@ -1,109 +1,119 @@
-ï»¿-- phpMyAdmin SQL Dump
--- version phpStudy 2014
--- http://www.phpmyadmin.net
 --
--- ä¸»æœº: localhost
--- ç”Ÿæˆæ—¥æœŸ: 2016 å¹´ 01 æœˆ 22 æ—¥ 15:46
--- æœåŠ¡å™¨ç‰ˆæœ¬: 5.5.38
--- PHP ç‰ˆæœ¬: 5.3.29
+-- Êı¾İ¿â: `wuan`
+--
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `group_base`
+-- ±íµÄ½á¹¹ `authorization`
+--
+
+CREATE TABLE IF NOT EXISTS `authorization` (
+  `area_dif` varchar(2) COLLATE utf8_bin NOT NULL COMMENT 'È¨ÏŞÎ»ÖÃÇø·Ö',
+  `aser_dif` varchar(2) COLLATE utf8_bin NOT NULL COMMENT 'È¨ÏŞÇø·Ö',
+  `note` varchar(8) COLLATE utf8_bin NOT NULL COMMENT 'ËµÃ÷'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='È¨ÏŞ±í';
+
+--
+-- ×ª´æ±íÖĞµÄÊı¾İ `authorization`
+--
+
+INSERT INTO `authorization` (`area_dif`, `aser_dif`, `note`) VALUES
+('01', '01', 'ÓÃ»§-»áÔ±'),
+('01', '02', 'ÓÃ»§-¹ÜÀíÔ±'),
+('01', '03', 'ÓÃ»§-×Ü¹ÜÀí'),
+('02', '01', 'ĞÇÇò-´´½¨Õß'),
+('02', '02', 'ĞÇÇò-¹ÜÀí'),
+('02', '03', 'ĞÇÇò-³ÉÔ±');
+
+-- --------------------------------------------------------
+
+--
+-- ±íµÄ½á¹¹ `group_base`
 --
 
 CREATE TABLE IF NOT EXISTS `group_base` (
-  `id` int(4) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ç»„id',
-  `name` varchar(11) CHARACTER SET gbk NOT NULL UNIQUE COMMENT 'ç»„å',
-  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'åˆ é™¤',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ç»„è¡¨' AUTO_INCREMENT=4 ;
-
-
+  `id` int(4) unsigned NOT NULL AUTO_INCREMENT COMMENT '×éid',
+  `name` varchar(11) CHARACTER SET gbk NOT NULL COMMENT '×éÃû',
+  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'É¾³ı',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='×é±í' AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `group_detail`
+-- ±íµÄ½á¹¹ `group_detail`
 --
 
 CREATE TABLE IF NOT EXISTS `group_detail` (
-  `group_base_id` int(4) unsigned NOT NULL COMMENT 'ç»„id',
-  `user_base_id` int(5) unsigned NOT NULL COMMENT 'æˆå‘˜id',
-  `authorization` varchar(9) CHARACTER SET utf8 NOT NULL COMMENT 'èº«ä»½'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ç»„æˆå‘˜è¡¨';
-
+  `group_base_id` int(4) unsigned NOT NULL COMMENT '×éid',
+  `user_base_id` int(5) unsigned NOT NULL COMMENT '³ÉÔ±id',
+  `authorization` varchar(2) COLLATE utf8_bin NOT NULL COMMENT 'È¨ÏŞ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='×é³ÉÔ±±í';
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `post_base`
+-- ±íµÄ½á¹¹ `post_base`
 --
 
 CREATE TABLE IF NOT EXISTS `post_base` (
-  `id` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'å¸–å­id',
-  `user_base_id` int(5) unsigned NOT NULL COMMENT 'å‘å¸–äººid',
-  `group_base_id` int(4) unsigned NOT NULL COMMENT 'ç»„id',
-  `title` varchar(30) CHARACTER SET gbk NOT NULL COMMENT 'æ ‡é¢˜',
-  `digest` int(1) NOT NULL DEFAULT '0' COMMENT 'ç²¾å',
-  `sticky` int(1) NOT NULL DEFAULT '0' COMMENT 'ç½®é¡¶',
-  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'åˆ é™¤',
+  `id` int(9) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Ìû×Óid',
+  `user_base_id` int(5) unsigned NOT NULL COMMENT '·¢ÌûÈËid',
+  `group_base_id` int(4) unsigned NOT NULL COMMENT '×éid',
+  `title` varchar(30) CHARACTER SET gbk NOT NULL COMMENT '±êÌâ',
+  `digest` int(1) NOT NULL DEFAULT '0' COMMENT '¾«»ª',
+  `sticky` int(1) NOT NULL DEFAULT '0' COMMENT 'ÖÃ¶¥',
+  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'É¾³ı',
   PRIMARY KEY (`id`),
   KEY `user_base_id` (`user_base_id`,`group_base_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ä¸»å¸–' AUTO_INCREMENT=13 ;
-
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Ö÷Ìû' AUTO_INCREMENT=13 ;
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `post_detail`
+-- ±íµÄ½á¹¹ `post_detail`
 --
 
 CREATE TABLE IF NOT EXISTS `post_detail` (
-  `post_base_id` int(5) unsigned NOT NULL COMMENT 'å¸–å­id',
-  `user_base_id` int(5) unsigned NOT NULL COMMENT 'å›å¸–äººid',
-  `replyid` int(5) unsigned DEFAULT NULL COMMENT 'å›å¤çš„id',
-  `text` varchar(140) COLLATE utf8_bin NOT NULL COMMENT 'å†…å®¹',
-  `floor` int(4) NOT NULL COMMENT 'æ¥¼å±‚',
-  `createTime` varchar(20) COLLATE utf8_bin NOT NULL COMMENT 'å‘å¸ƒæ—¶é—´',
-  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'åˆ é™¤',
+  `post_base_id` int(5) unsigned NOT NULL COMMENT 'Ìû×Óid',
+  `user_base_id` int(5) unsigned NOT NULL COMMENT '»ØÌûÈËid',
+  `replyid` int(5) unsigned DEFAULT NULL COMMENT '»Ø¸´µÄid',
+  `text` varchar(140) COLLATE utf8_bin NOT NULL COMMENT 'ÄÚÈİ',
+  `floor` int(4) NOT NULL COMMENT 'Â¥²ã',
+  `createTime` varchar(20) COLLATE utf8_bin NOT NULL COMMENT '·¢²¼Ê±¼ä',
+  `delete` int(1) NOT NULL DEFAULT '0' COMMENT 'É¾³ı',
   PRIMARY KEY (`post_base_id`,`floor`),
   KEY `user_base_id` (`user_base_id`,`replyid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='å›å¤å¸–';
-
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='»Ø¸´Ìû';
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `user_base`
+-- ±íµÄ½á¹¹ `user_base`
 --
 
 CREATE TABLE IF NOT EXISTS `user_base` (
-  `id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ç”¨æˆ·id',
-  `password` varchar(35) COLLATE utf8_bin NOT NULL COMMENT 'å¯†ç ',
-  `nickname` varchar(20) COLLATE utf8_bin NOT NULL UNIQUE COMMENT 'æ˜µç§°',
-  `Email` varchar(30) COLLATE utf8_bin NOT NULL UNIQUE COMMENT 'é‚®ç®±',
-  PRIMARY KEY (`id`)
-
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ç”¨æˆ·è¡¨åŸºæœ¬' AUTO_INCREMENT=13 ;
-
-
+  `id` int(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ÓÃ»§id',
+  `password` varchar(35) COLLATE utf8_bin NOT NULL COMMENT 'ÃÜÂë',
+  `nickname` varchar(20) COLLATE utf8_bin NOT NULL COMMENT 'êÇ³Æ',
+  `Email` varchar(30) COLLATE utf8_bin NOT NULL COMMENT 'ÓÊÏä',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nickname` (`nickname`),
+  UNIQUE KEY `Email` (`Email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ÓÃ»§±í»ù±¾' AUTO_INCREMENT=13 ;
 
 -- --------------------------------------------------------
 
 --
--- è¡¨çš„ç»“æ„ `user_detail`
+-- ±íµÄ½á¹¹ `user_detail`
 --
 
 CREATE TABLE IF NOT EXISTS `user_detail` (
-  `user_base_id` int(5) unsigned NOT NULL COMMENT 'ç”¨æˆ·id',
-  `authorization` varchar(9) CHARACTER SET utf8 NOT NULL COMMENT 'èº«ä»½',
-  `status` int(1) NOT NULL COMMENT 'çŠ¶æ€',
-  `lastLogTime` datetime NOT NULL COMMENT 'ä¸Šæ¬¡ç™»å½•',
+  `user_base_id` int(5) unsigned NOT NULL COMMENT 'ÓÃ»§id',
+  `authorization` varchar(2) COLLATE utf8_bin NOT NULL COMMENT 'È¨ÏŞ',
+  `status` int(1) NOT NULL COMMENT '×´Ì¬',
+  `lastLogTime` datetime NOT NULL COMMENT 'ÉÏ´ÎµÇÂ¼',
   PRIMARY KEY (`user_base_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ç”¨æˆ·è¯¦æƒ…';
-
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='ÓÃ»§ÏêÇé';
