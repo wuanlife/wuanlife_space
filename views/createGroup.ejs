@@ -1,0 +1,68 @@
+<%- include base/header.ejs %>
+        <div class="main">
+            <div class="main-mask"></div>
+            <div class="create-p">
+                <h2>创建星球</h2>
+                <form class="cp-form line-form" action="/createPlanet" title="" method="post">
+                    <div class="cp-group line-fgroup">
+                       <label class="cp-label" for="planet-name"></label>
+                        <input type="text" name="" value="" placeholder="请输入星球名称" class="cp-input" id="planet-name"> 
+                    </div>
+                    <button type="submit" class="cp-sub">创建</button>
+                </form>
+            </div>
+        </div> 
+        <%- include base/baseJS.ejs %>
+        <script type="text/javascript">
+            var create_p ={
+                pName: $("#planet-name"),
+                cpForm: $(".cp-form"),
+                verificate: function(){
+                    var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+                    if (this.pName.val().length<1 || this.pName.val().length>20) {
+                        sweetAlert("格式错误","请输入1-20位字符做为星球名称","warning");
+                        return false;
+                    }
+                    if (!myreg.test(this.pName.val())) {
+                        sweetAlert("格式错误","只允许中文、数字、字母和下划线","warning");
+                        return false;
+                    }
+                    return true;
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.cpForm.submit(function(event){
+                        event.preventDefault();
+                        if (self.verificate()) {
+                            $.ajax({
+                                type: "post",
+                                url: "/createPlanet",
+                                async: true,
+                                data:{
+                                    name: self.pName.val(),
+                                    user_id: localStorage.getItem("userID")
+                                },
+                                success:function(data){
+                                    console && console.log(data);
+                                    if (data.data.code == 0 && data.data.msg){
+                                        sweetAlert('提示', data.data.msg, 'warning');
+                                    } else {
+                                        window.location.href = '/group/' + data.data.info.group_base_id;
+                                        console.log(data.data.group_base_id);
+                                        //window.location.href = '/planetDetail/1';
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                        }
+                    });
+                },
+                init: function(){
+                    this.bindEvent();
+                }
+            }
+            create_p.init();
+        </script>
+        <%- include base/footer.ejs %>

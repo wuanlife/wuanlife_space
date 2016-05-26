@@ -1,0 +1,146 @@
+<%- include base/header.ejs %>
+        <div class="main main-page">
+            <div class="location clearfix">
+                <h1><a href="/allGroup" title="">全部星球</a></h1>
+                <button type="button" id="cpBtn">创建星球</button>
+            </div>  
+            <%if(result.lists.length > 0){%>
+            <div class="planet"> 
+                <ul class="planetList clearfix">
+                <% result.lists.forEach(function(item) { %>
+                    <li class="planet-item clearfix col-sm-4"> 
+                        <div class="planet-pic">
+                            <a href="#?" title="<%=item.name%>"><img src="images/planet-pic_03.jpg" alt=""></a>
+                        </div>
+                        <div class="planet-info">
+                            <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%=item.name%>"><%=item.name%></a></h2>
+                            <p><%=item.num%></p>
+                        </div>
+                    </li>
+                <% }); %>
+                </ul>
+            </div>
+            <div class="page-turn">
+                <button type="button" class="unCBtn">上一页</button>
+                <span><%=result.currentPage%>/<%=result.pageCount%></span>
+                <%if(result.pageCount == 1){%>
+                <button type="button" class="unCBtn">下一页</button>
+                <%}else{%>
+                <button type="button">下一页</button>
+                <%}%>
+            </div>
+            <%}else{%>
+            <div class="emptyPage">
+                目前还没有星球哦~~
+            </div>
+            <%}%>
+        </div>
+<%- include base/baseJS.ejs %>
+        <script type="text/html" id="planet-list">
+             {{each lists as item i}}
+                    <li class="planet-item clearfix col-sm-4"> 
+                        <div class="planet-pic">
+                            <a href="#?" title="{{item.name}}"><img src="images/planet-pic_03.jpg" alt=""></a>
+                        </div>
+                        <div class="planet-info">
+                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{item.name}}">{{item.name}}</a></h2>
+                            <p>{{item.num}}</p>
+                        </div>
+                    </li>
+            {{/each}}
+        </script>
+        <script>
+            var all_planet = {
+                pre: $(".page-turn").find('button').first(),
+                next: $(".page-turn").find('button').last(),
+                page: $(".page-turn").find('span').eq(0),
+                main: $(".planetList"),
+                cpBtn: $("#cpBtn"),
+                nav_planetA: $("#nav-allP").children("a"),
+                loading: $(".loading"),
+                createPBtn: $(".location").children("button"),
+                currentpage: 1,
+                pageCount: 0,
+                ClientData: function() {
+                   	this.currentpage = parseInt("<%=result.currentPage%>");
+					this.pageCount = parseInt("<%=result.pageCount%>");
+                },
+                navActive:function(){
+                    this.nav_planetA.addClass("navbar-active");
+                },
+                getServerData: function(param, cb) {
+                    $.getJSON("api/getPlanetAll", param,
+                        function(data) {
+                            cb(data);
+                        });
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.pre.on("click", function(event) {
+                        event.preventDefault();
+                        if (self.currentpage == 1) {
+                           // sweetAlert('错误', '当前页是第一页', 'error');
+                           return;
+                        } else {
+                            self.loading.show();
+                            self.getServerData({
+                                currentpage: self.currentpage - 1
+                            }, function(data) {
+                                if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+                                    self.currentpage -= 1;
+                                    var compiled = template("planet-list", data.data);
+                                    self.main.html(compiled);
+                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                                    self.loading.hide();
+                                    self.next.removeClass('unCBtn');
+                                    if (data.data.currentPage == 1) {
+                                        self.pre.addClass('unCBtn');
+                                    } 
+                                    $(window).scrollTop(0);
+                                }
+                            });
+                        }
+                    });
+                    self.next.on("click", function(event) {
+                        event.preventDefault();
+                        if (self.currentpage == self.pageCount) {
+                            //sweetAlert('错误', '当前页是最后一页', 'error');
+                            return;
+                        } else {
+                            self.loading.show();
+                            self.getServerData({
+                                currentpage: self.currentpage + 1
+                            }, function(data) {
+                                if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+                                    self.currentpage += 1;
+                                    var compiled = template("planet-list", data.data);
+                                    self.main.html(compiled);
+                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                                    self.loading.hide();
+                                    self.pre.removeClass('unCBtn');
+                                    if (data.data.currentPage == data.data.pageCount) {
+                                        self.next.addClass('unCBtn');
+                                    }
+                                    $(window).scrollTop(0);
+                                }
+                            });
+                        }
+                    });
+                    self.createPBtn.on("click",function(event){
+                        event.preventDefault();
+                        if (localStorage.getItem("userName")!=null){
+                            window.location.href = '/createGroup';
+                        } else {
+                            window.location.href = '/login';
+                        }
+                    });
+                },
+                init: function() {
+                    this.ClientData();
+                    this.bindEvent();
+                    this.navActive();
+                }
+            }
+            all_planet.init();
+        </script>
+        <%- include base/footer.ejs %>
