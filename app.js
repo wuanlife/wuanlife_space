@@ -13,16 +13,17 @@ var page = require('./routes/page');
 var api = require('./routes/api');
 var login = require('./routes/login');
 var register = require('./routes/register');
-var createPlanet = require('./routes/createPlanet');
+var createGroup = require('./routes/createGroup');
 var post = require('./routes/post');
 var topic = require('./routes/topic');
 var postEdit = require('./routes/postEdit');
 var group = require('./routes/group');
-var planetAll = require('./routes/planetAll');
-var myPlanet = require('./routes/myPlanet');
+var allGroup = require('./routes/allGroup');
+var myGroup = require('./routes/myGroup');
 var logout = require('./routes/logout');
 var isLogin = require('./routes/isLogin');
 var postReply = require('./routes/postReply');
+// var moreGroups = require('./routes/moreGroups');
 var test = require('./routes/test');
 
 
@@ -77,16 +78,17 @@ app.use('/users', users);
 app.use('/pages', page);
 app.use('/login', login);
 app.use('/register',register);
-app.use('/createPlanet', createPlanet);
-app.use('/myPlanet', myPlanet);
+app.use('/createGroup', createGroup);
+app.use('/myGroup', myGroup);
 app.use('/post', post);
 app.use('/topic', topic);
 app.use('/postEdit', postEdit);
 app.use('/group', group);
-app.use('/planetAll', planetAll);
+app.use('/allGroup', allGroup);
 app.use('/logout',logout);
 app.use('/isLogin',isLogin);
 app.use('/postReply',postReply);
+// app.use('/moreGroups',moreGroups);
 app.use('/test',test);
 
 // catch 404 and forward to error handler
