@@ -11,17 +11,12 @@ router.get('/', function(req, res, next) {
 		if (!error && response.statusCode == 200) {
 			console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 			var data = JSON.parse(body);
-			var getText = function(post){
-				post.text = post.text.replace(/<.+?>/g,"");
-				return post;
-			}
-			data.data.posts.map(getText);
-			//console.log(data.data.posts[0]);
 			if (data.ret == 200) {
-				res.render('index', {
+				var page = agent.Mobile ? 'indexMobile' : 'index';
+				// console.log(page);
+				res.render(page, {
 					'path':'',
 					'result': data.data,
-					'ag': agent,
 					'title':'首页'
 				});
 			} else {

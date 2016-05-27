@@ -7,7 +7,8 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	res.render('login', {"ag":agent,'path':'','title':'登录'});
+	var page = agent.Mobile ? 'loginMobile' : 'login';
+	res.render(page, {'path':'','title':'登录'});
 });
 router.post('/', function(req, res, next) {
 	request.post({

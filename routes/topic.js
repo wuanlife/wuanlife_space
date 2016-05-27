@@ -14,7 +14,8 @@ router.get('/:id', function(req, res, next) {
 				console.log(result);
 				//console.log(result.data.posts[0]);
 				if (result.ret == 200 && result.msg == "") {
-					res.render('topic', {
+					var page = agent.Mobile ? 'topicMobile' : 'topic';
+					res.render(page, {
 						'path':'../',
 						result: result.data,
 						ag: agent,

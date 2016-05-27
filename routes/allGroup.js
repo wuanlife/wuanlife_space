@@ -13,10 +13,10 @@ router.get('/', function(req, res, next) {
 			var result = JSON.parse(body);
 			console.log(result);
 			if (result.ret == 200 && result.msg == "") {
-				res.render('allGroup', {
+				var page = agent.Mobile ? 'allGroupMobile' : 'allGroup';
+				res.render(page, {
 					'path':'',
 					result: result.data,
-					ag: agent,
 					'title':'全部星球'
 				});
 			}

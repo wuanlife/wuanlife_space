@@ -12,22 +12,16 @@ router.get('/:groupid', function(req, res, next) {
 			if (!error) {
 				console.log('Planet Detail List Success:OK');
 				var result = JSON.parse(body);
-				console.log(result);
-				var getText = function(post){
-					post.text = post.text.replace(/<.+?>/g,"");
-					return post;
-				}
-				result.data.posts.map(getText);
 				for (var i = 0; i < result.data.posts.length; i++) {
 					console.log(result.data.posts[i]);
 				}
 				
 				if (result.ret == 200 && result.msg == "") {
 					//res.render('planetDetail', result.data);
-					res.render('group', {
+					var page = agent.Mobile ? 'groupMobile' : 'group';
+					res.render(page, {
 						'path':'../',
 						result: result.data,
-						ag: agent,
 						'title':result.data.groupName
 					});
 				}
