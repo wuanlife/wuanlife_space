@@ -1,46 +1,54 @@
 <%- include base/header.ejs %>
-	<div class="main main-page">
-		<div class="main-mask"></div>
-		<div class="location clearfix">
-			<h1><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></h1>
-			<a href="#?" title="" id="joinBtn">+加入</a>
-		</div>
-		<%if(result.posts.length > 0){%>
+		<div class="main main-page">
+			<div class="location clearfix">
+				<h1><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></h1>
+				<button type="button" id="joinBtn">+加入</button>
+			</div>
+			<%if(result.posts.length > 0){%>
 			<div class="chapter-col">
 				<% result.posts.forEach(function(item) { %>
-					<div class="chapter">
-						<h2><a href="/topic/<%=item.postID%>" title=""><%=item.title%></a></h2>
-						<div class="chapter-text"><%-item.text%></div>
-						<div class="chapter-info">
-							<span><a href="#?" title=""><%=item.nickname%></a></span>
-							<span>发表于</span>
-							<span><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></span>
-							<span class="cha-time"><%=item.createTime%></span>
-						</div>
-					</div>
-					<% }); %>
+				 <div class="chapter">
+                    <h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
+                    <div class="chapter-text"><%-item.text%></div>
+                    <div class="chapter-img clearfix">
+                        <img src="images/chapter_03.png" alt="">
+                        <img src="images/chapter_03.png" alt="">
+                        <img src="images/chapter_03.png" alt="">
+                   	</div>
+                    <div class="chapter-info">
+                        <span><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
+                        <span>发表于</span>
+                        <span><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
+                        <span class="cha-time"><%=item.createTime%></span>
+                    </div>
+                </div>
+				<% }); %>
 			</div>
+			<div class="page-turn">
+                <button class="unCBtn">上一页</button>
+                <span><%=result.currentPage%>/<%=result.pageCount%></span>
+                <%if(result.pageCount == 1){%>
+                <button type="button" class="unCBtn">下一页</button>
+                <%}else{%>
+                <button type="button">下一页</button>
+                <%}%>
+            </div> 
 			<%}else{%>
 				<div class="emptyPage">
 					星球空空，可以注水~~
 				</div>
-				<%}%>
-					<div class="page-turn">
-						<span><a href="#?" title="">上一页</a></span>
-						<span><%=result.currentPage%>/<%=result.pageCount%></span>
-						<span><a href="#?" title="">下一页</a></span>
-					</div>
-	</div>
-	<%- include base/baseJS.ejs %>
+			<%}%>
+		</div>
+<%- include base/baseJS.ejs %>
 		<script type="text/html" id="listtemplate">
 			{{each posts as item i}}
 			<div class="chapter">
-				<h2><a href="/topic/{{item.postID}}" title="">{{item.title}}</a></h2>
+				<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 				<div class="chapter-text">{{#item.text}}</div>
 				<div class="chapter-info">
-					<span><a href="#?" title="">{{item.nickname}}</a></span>
+					<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 					<span>发表于</span>
-					<span><a href="/group/{{groupID}}" title="">{{groupName}}</a></span>
+					<span><a href="/group/{{groupID}}" title="{{groupName}}">{{groupName}}</a></span>
 					<span class="cha-time">{{item.createTime}}</span>
 				</div>
 			</div>
@@ -48,9 +56,9 @@
 		</script>
 		<script type="text/javascript">
 			var planetDetail = {
-				pre: $(".page-turn").find('a').first(),
-				next: $(".page-turn").find('a').last(),
-				page: $(".page-turn").find('span').eq(1),
+				pre: $(".page-turn").find('button').first(),
+				next: $(".page-turn").find('button').last(),
+				page: $(".page-turn").find('span').eq(0),
 				main: $(".chapter-col"),
 				chapter_text: $(".chapter-text"),
 				joinBtn: $("#joinBtn"),
@@ -108,13 +116,14 @@
 				},
 				bindEvent: function() {
 					var self = this;
-					self.nav_logout.on(WuanClickEvent, function() {
+					self.nav_logout.on("click", function() {
 						self.joinBtn.text('+加入');
 					});
-					self.pre.on(WuanClickEvent, function(event) {
+					self.pre.on("click", function(event) {
 						event.preventDefault();
 						if (self.currentpage == 1) {
-							sweetAlert('错误', '当前页是第一页', 'error');
+							//sweetAlert('错误', '当前页是第一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getServerData({
@@ -125,21 +134,22 @@
 									self.currentpage -= 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
-									$(".chapter-text").each(function() {
-										var text = $(this).text();
-										$(this).html(text);
-									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.next.removeClass('unCBtn');
+                                    if (data.data.currentPage == 1) {
+                                        self.pre.addClass('unCBtn');
+                                    } 
 									$(window).scrollTop(0);
 								}
 							});
 						}
 					});
-					self.next.on(WuanClickEvent, function(event) {
+					self.next.on("click", function(event) {
 						event.preventDefault();
 						if (self.currentpage == self.pageCount) {
-							sweetAlert('错误', '当前页是最后一页', 'error');
+							//sweetAlert('错误', '当前页是最后一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getServerData({
@@ -150,18 +160,18 @@
 									self.currentpage += 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
-									$(".chapter-text").each(function() {
-										var text = $(this).text();
-										$(this).html(text);
-									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.pre.removeClass('unCBtn');
+                                    if (data.data.currentPage == data.data.pageCount) {
+                                        self.next.addClass('unCBtn');
+                                    }
 									$(window).scrollTop(0);
 								}
 							});
 						}
 					});
-					self.joinBtn.on(WuanClickEvent, function(event) {
+					self.joinBtn.on("click", function(event) {
 						event.preventDefault();
 						if (localStorage.getItem("userID") != null) {
 							if (self.isjoin == 0) {
@@ -182,7 +192,7 @@
 						} else {
 							window.location.href = '/login';
 						}
-					})
+					});
 				},
 				init: function() {
 					this.ClientData();
@@ -193,4 +203,4 @@
 			}
 			planetDetail.init();
 		</script>
-		<%- include base/footer.ejs %>
+<%- include base/footer.ejs %>

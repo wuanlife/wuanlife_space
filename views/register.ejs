@@ -1,25 +1,24 @@
 <%- include base/header.ejs %>
-    <div class="main">
-        <div class="main-mask"></div>
-        <div class="login">
-            <form class="login-form line-form" action="/register" title="" method="post">
-                <div class="login-group line-fgroup">
-                    <label for="nickname" class="login-label lable-name"></label>
-                    <input type="text" name="nickname" value="" placeholder="昵称" class="login-input" id="nickname">
-                </div>
-                <div class="login-group line-fgroup">
-                    <label for="email" class="login-label lable-e"></label>
-                    <input type="email" name="email" value="" placeholder="邮箱" class="login-input" id="email">
-                </div>
-                <div class="login-group line-fgroup">
-                    <label for="pw" class="login-label label-paw"></label>
-                    <input type="password" name="password" value="" placeholder="密码" class="login-input" id="pw">
-                </div>
-                <button id='login' type="submit" class="login-sub">注册</button>
-            </form>
+        <div class="main">
+            <div class="login">
+                <form class="login-form line-form" action="/register" title="" method="post">
+                    <div class="login-group line-fgroup">
+                        <label for="nickname" class="lable-name"></label>
+                        <input type="text" name="nickname" value="" placeholder="昵称" id="nickname">
+                    </div>
+                    <div class="login-group line-fgroup">
+                        <label for="email" class="lable-e"></label>
+                        <input type="email" name="email" value="" placeholder="邮箱" id="email">
+                    </div>
+                    <div class="login-group line-fgroup">
+                        <label for="pw" class="label-paw"></label>
+                        <input type="password" name="password" value="" placeholder="密码" id="pw">
+                    </div>
+                    <button id='login' type="submit">注册</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <%- include base/baseJS.ejs %>
+<%- include base/baseJS.ejs %>
         <script type="text/javascript">
             var register = {
                 nickname: $("#nickname"),

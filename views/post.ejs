@@ -1,35 +1,26 @@
 <%- include base/header.ejs %>
         <div class="main">
-            <div class="main-mask"></div>
+            <div class="location clearfix">
+                <h1>发表帖子</h1>
+            </div> 
             <div class="post">
-                <h2>发表帖子</h2>
                 <form class="post-form clearfix" action="/post/<%=result%>" method="post">
                     <input type="text" name="" value="" placeholder="标题" class="form-control" id="post-title">
-                    <%if(ag&&ag.Mobile==true){%>
-                        <textarea id="textarea-mobile" class="form-control"></textarea>
-                        <div id= "getPostVal"></div>
-                    <%}else{%>
                     <div class="wangEditor-pc-container">
                         <textarea name="" class="form-control" id="textareaPC">
                             
                         </textarea>
                     </div>
-                    <%}%>
                     <button type="submit" class="post-sub" id="post-issue">发表</button>
                 </form>  
             </div>
         </div>
-        <%- include base/baseJS.ejs %>
-        <%if(!ag.Mobile){%>
-        <script src="<%-path%>javascripts/wangEditor.min.js"></script>      
-        <%}%>
+<%- include base/baseJS.ejs %>
         <script>
-        	var editor;
-			if (mobile) {
-				editor = $("#textarea-mobile");
-			} else {
+			var editor;
+                //禁止输出log调试
                 wangEditor.config.printLog = false;
-				editor = new wangEditor("textareaPC");
+                editor = new wangEditor("textareaPC");
                 editor.config.menus = [
                 'fontfamily',
                 'fontsize',
@@ -51,21 +42,19 @@
                 'undo',
                 'redo',
                 ];
-				editor.create();
-				$(".wangEditor-container").find('*').focus(function(event) {
-					/* Act on the event */
-					$(".wangEditor-container").addClass('textarea-focus');
-				});
-				$(".wangEditor-container").find('*').blur(function(event) {
-					/* Act on the event */
-					$(".wangEditor-container").removeClass('textarea-focus');
-				});
-			};
+                editor.create();
+                $(".wangEditor-container").find('*').focus(function(event) {
+                    /* Act on the event */
+                    $(".wangEditor-container").addClass('textarea-focus');
+                });
+                $(".wangEditor-container").find('*').blur(function(event) {
+                    /* Act on the event */
+                    $(".wangEditor-container").removeClass('textarea-focus');
+                });
             var post = {
                 title: $("#post-title"),
                 postForm: $(".post-form"),
                 verificate: function(){
-                    //var myReg = /^[(<p><br><\/p>)(<p><\/p>)]*$/;
                     if (this.title.val().length == 0) {
                         sweetAlert('格式错误', '请填写标题！', 'warning');
                         return false;
@@ -74,21 +63,12 @@
                         sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
                         return false;
                     }
-                    if(mobile){
-                        editor.val($.trim(editor.val()));
-                        if (editor.val().length == 0) {
-                            sweetAlert('格式错误', '请填写内容！', 'warning');
-                            return false;
-                        }
-                    } else {
-                        
-                        //editor.$txt.html($.trim(editor.$txt.html()));
-                        var imgs = editor.$txt.find('img').length;
-                        var iframes = editor.$txt.find('iframe').length;
-                        if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0&& imgs == 0 && iframes == 0) {
-                            sweetAlert('格式错误', '请填写内容！', 'warning');
-                            return false;
-                        }
+                    //editor.$txt.html($.trim(editor.$txt.html()));
+                    var imgs = editor.$txt.find('img').length;
+                    var iframes = editor.$txt.find('iframe').length;
+                    if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0&& imgs == 0 && iframes == 0) {
+                        sweetAlert('格式错误', '请填写内容！', 'warning');
+                        return false;
                     }
                     return true;
                 },
@@ -104,7 +84,7 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text: mobile == true ? editor.val() : editor.$txt.html()
+                                    text: editor.$txt.html()
                                 },
                                 success: function(data) {
                                     console && console.log(data);
@@ -128,4 +108,4 @@
             }
             post.init();
         </script>
-        <%- include base/footer.ejs %>
+<%- include base/footer.ejs %>

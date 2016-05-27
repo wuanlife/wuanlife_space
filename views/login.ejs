@@ -1,21 +1,21 @@
 <%- include base/header.ejs %>
-	<div class="main">
-		<div class="main-mask"></div>
-		<div class="login">
-			<form class="login-form line-form" action="/login" title="" method="post">
-				<div class="login-group line-fgroup">
-					<label for="ce" class="login-label lable-e"></label>
-					<input type="email" name="email" value="" placeholder="邮箱" class="login-input" id="email">
-				</div>
-				<div class="login-group line-fgroup">
-					<label for="" class="login-label label-paw"></label>
-					<input type="password" name="password" value="" placeholder="密码" class="login-input" id="pw">
-				</div>
-				<button id='login' type="submit" class="login-sub">登录</button>
-			</form>
+		<div class="main">
+	        <div class="login">
+                <form class="login-form line-form" action="/login" title="" method="post">
+                    <div class="login-group line-fgroup">
+                        <label for="email" class="lable-e"></label>
+                        <input type="email" name="email" value="" placeholder="邮箱" id="email">
+                    </div>
+                    <div class="login-group line-fgroup">
+                        <label for="pw" class="label-paw"></label>
+                        <input type="password" name="password" value="" placeholder="密码" id="pw">
+                    </div>
+                    <a href="/register" title="注册账号">注册账号</a>
+                    <button id='login' type="submit">登录</button>
+                </form>
+            </div>
 		</div>
-	</div>
-	<%- include base/baseJS.ejs %>
+<%- include base/baseJS.ejs %>
 		<script type="text/javascript">
 			var login = {
 				email: $("#email"),

@@ -1,56 +1,53 @@
 <%- include base/header.ejs %>
-	<div class="main main-page">
-		<div class="main-mask"></div>
-		<div class="post-detail">
-			<div class="post-md">
-				<h1 class="post-title"><%=result.title%></h1>
-				<div class="post-info clearfix">
-					<span><a href="" title=""><%=result.nickname%></a></span>
-					<span>发表于</span>
-					<span><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></span>
-					<span class="post-time"><%=result.createTime%></span>
-				</div>
-				<div class="post-content">
-					<%-result.text%>
-				</div>
-
-				<div class="post-opt">
-					<a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item"></a>
-				</div>
-
+			<div class="main main-page">
+				<div class="post-detail">
+                    <div class="post-md">
+                        <h1 class="post-title"><%-result.title%></h1>
+                        <div class="post-info clearfix">
+                            <span><a href="" title="<%=result.nickname%>"><%=result.nickname%></a></span>
+                            <span>发表于</span>
+                            <span><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
+                            <span class="post-time"><%=result.createTime%></span>
+                        </div>
+                        <div class="post-content"><%-result.text%></div>
+                        <div class="post-opt" style="display:none;">
+                            <button class="post-opt-item">置顶</button>
+                            <a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item">编辑</a>
+                            <button class="post-opt-item">删除</button>
+                        </div>
+                    </div>
+                    <div class="post-comment" style="display:none;">
+                        <h2></h2>
+                        <div class="post-cm-group">
+                            <div class="post-cm-item">
+                                <div class="post-cm-info clearfix">
+                                    <span><a href="" title=""></a></span>
+                                    <span class="post-cm-time"></span>
+                                </div>
+                                <div class="post-cm-content"></div>
+                            </div>
+                        </div>
+                        <div class="page-turn">
+                            <button class="unCBtn">上一页</button>
+                            <span></span>
+                            <button>下一页</button>
+                        </div>
+                    </div>
+                    <div class="my-comment">
+                        <h2>我的回复</h2>
+                        <form class="post-detail-form clearfix" action="/postReply" method="post">
+                            <textarea name="" class="form-control" placeholder="内容"></textarea>
+                            <button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
+                        </form>
+                    </div>
+                </div>
 			</div>
-			<div class="post-comment">
-				<h2></h2>
-				<div class="post-cm-group">
-					<div class="post-cm-item">
-						<div class="post-cm-info clearfix">
-							<span><a href="" title=""></a></span>
-							<span class="post-cm-time"></span>
-						</div>
-						<div class="post-cm-content"></div>
-					</div>
-				</div>
-				<div class="page-turn">
-					<span><a href="#?" title=""></a></span>
-					<span></span>
-					<span><a href="#?" title=""></a></span>
-				</div>
-			</div>
-			<div class="my-comment">
-				<h2>我的回复</h2>
-				<form class="post-detail-form" action="/postReply" method="post">
-					<textarea name="" class="form-control" id="last" placeholder="内容"></textarea>
-					<button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	<%- include base/baseJS.ejs %>
+<%- include base/baseJS.ejs %>
 		<script type="text/html" id="listtemplate">
 			{{each reply as item i}}
 			<div class="post-cm-item">
 				<div class="post-cm-info clearfix">
-					<span><a href="" title="">{{item.nickname}}</a></span>
+					<span><a href="" title="{{item.nickname}}">{{item.nickname}}</a></span>
 					<span class="post-cm-time">{{item.createTime}}</span>
 				</div>
 				<div class="post-cm-content">{{item.text}}</div>
@@ -60,9 +57,9 @@
 		<script type="text/javascript">
 			var postid = '<%=result.postID%>';
 			var postReply = {
-				pre: $(".page-turn").find('a').first(),
-				next: $(".page-turn").find('a').last(),
-				page: $(".page-turn").find('span').eq(1),
+				pre: $(".page-turn").find('button').first(),
+				next: $(".page-turn").find('button').last(),
+				page: $(".page-turn").find('span').eq(0),
 				currentpage: 1,
 				pageCount: 0,
 				loading: $(".loading"),
@@ -70,14 +67,15 @@
 				reply_main: $(".post-cm-group"),
 				reply_title: $(".post-comment").children('h2'),
 				post_opt: $(".post-opt"),
-				post_edit: $(".post-opt-item").eq(0),
-				post_delete: $(".post-opt-item").eq(1),
+				// post_up:$(".post-opt-item").eq(0),
+				// post_edit: $(".post-opt-item").eq(1),
+				// post_delete: $(".post-opt-item").eq(2),
 				myReplyForm: $(".post-detail-form"),
 				myReplyContent: $(".post-detail-form").children('textarea'),
 				myReplyBtn: $('#myReplyBtn'),
 				verificate: function() {
-					if (this.myReplyContent.val().length < 8) {
-						sweetAlert('格式错误', '回复内容不能少于8字符', 'warning');
+					if (this.myReplyContent.val().length < 1) {
+						sweetAlert('格式错误', '回复内容不能为空', 'warning');
 						return false;
 					}
 					return true;
@@ -102,11 +100,15 @@
 					}, function(data) {
 						if (data.ret == 200 && data.data && data.data.reply.length > 0) {
 							var compiled = template("listtemplate", data.data);
+							self.reply_md.css('display', 'block');
 							self.reply_title.text(data.data.replyCount + "个回复");
 							self.reply_main.html(compiled);
-							self.pre.text('上一页');
-							self.next.text('下一页');
+							// self.pre.text('上一页');
+							// self.next.text('下一页');
 							self.page.text('1' + '/' + data.data.pageCount);
+							if (data.data.pageCount == 1) {
+								self.next.addClass('unCBtn');
+							}
 							self.pageCount = data.data.pageCount;
 						} else {
 							self.reply_md.html("");
@@ -120,8 +122,10 @@
 						post_id: postid
 					}, function(data) {
 						if (data.ret == 200 && data.data && data.data.editRight == 1) {
-							self.post_edit.text('编辑');
-							self.post_delete.text('删除');
+							// self.post_up.text('置顶');
+							// self.post_edit.text('编辑');
+							// self.post_delete.text('删除');
+							self.post_opt.css('display', 'block');
 						} else {
 							self.post_opt.html("");
 						}
@@ -129,9 +133,10 @@
 				},
 				bindEvent: function() {
 					var self = this;
-					self.pre.on(WuanClickEvent, function() {
+					self.pre.on("click", function() {
 						if (self.currentpage == 1) {
-							sweetAlert('错误', '当前页是第一页', 'error');
+							//sweetAlert('错误', '当前页是第一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getReplyData({
@@ -144,16 +149,21 @@
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.next.removeClass('unCBtn');
+                                    if (data.data.currentPage == 1) {
+                                        self.pre.addClass('unCBtn');
+                                    } 
 									var postComY = $(".post-comment").offset().top;
-									var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
-									$(window).scrollTop(scroollY);
+									//var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
+									$(window).scrollTop(postComY);
 								}
 							});
 						}
 					});
-					self.next.on(WuanClickEvent, function() {
+					self.next.on("click", function() {
 						if (self.currentpage == self.pageCount) {
-							sweetAlert('错误', '当前页是最后一页', 'error');
+							//sweetAlert('错误', '当前页是最后一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getReplyData({
@@ -166,10 +176,13 @@
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.pre.removeClass('unCBtn');
+                                    if (data.data.currentPage == data.data.pageCount) {
+                                        self.next.addClass('unCBtn');
+                                    }
 									var postComY = $(".post-comment").offset().top;
-									var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
-									$(window).scrollTop(scroollY);
-
+									//var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
+									$(window).scrollTop(postComY);
 								}
 							});
 						}

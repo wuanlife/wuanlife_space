@@ -1,109 +1,26 @@
 <%- include base/header.ejs %>
-	<div class="main">
-		<div class="main-mask"></div>
-		<div class="post">
-			<h2>编辑帖子</h2>
-			<form class="post-form clearfix" action="/postEdit/<%=result%>" method="post">
-				<input type="text" name="" value="" class="form-control" id="post-title">
-				<%if(ag&&ag.Mobile==true){%>
-					
-						<textarea id="textarea-mobile" class="form-control"></textarea>
-                        <div id= "getPostVal"></div>
-				<%}else{%>
-					<div class="wangEditor-pc-container">
-						<textarea name="" class="form-control" id="textareaPC">
+        <div class="main">
+            <div class="location clearfix">
+                <h1>编辑帖子</h1>
+            </div> 
+            <div class="post">
+                <form class="post-form clearfix" action="/postEdit/<%=result%>" method="post">
+                    <input type="text" name="" value="" class="form-control" id="post-title">
+                    <div class="wangEditor-pc-container">
+                        <textarea name="" class="form-control" id="textareaPC">
                             
                         </textarea>
-					</div>
-				<%}%>
-				<button type="submit" class="post-sub" id="post-issue">发表</button>
-			</form>
-		</div>
-	</div>
-	<%- include base/baseJS.ejs %>
-	<%if(!ag.Mobile){%>
-		<script src="<%-path%>javascripts/wangEditor.min.js"></script>		
-	<%}%>
-        <script>
-            var setPost = {
-                PCtext: $("#textareaPC"),
-                MobileText:$("#textarea-mobile"),
-                postTitle:$("#post-title"),
-                getPostForEdit:function(param, cb){
-                    var self = this;
-                    $.ajax({
-                            type: "get",
-                            url: "/api/getPostForEdit",
-                            async: false,
-                            data: {
-                                postid:<%=result%>,
-                                userid:localStorage.getItem("userID")    
-                            },
-                            success: function(data) {
-                                console && console.log(data);
-                              if (data.ret == 200 && data.data && data.data.editRight == 1){
-                                    if (mobile) {
-                                        $("#getPostVal").html(data.data.text);
-                                        self.MobileText.val($("#getPostVal").text());
-                                        $("#getPostVal").html("");
-                                    } else{
-                                        self.PCtext.html(data.data.text);
-                                    }
-                                    self.postTitle.val(data.data.title);
-                                }
-                            },
-                            error: function(x, h, r) {
-                                console && console.log(x, h, r);
-                            }
-                    });
-                },
-                init:function(){
-                    this.getPostForEdit();
-                }
-            }
-          setPost.init();
-        </script>
+                    </div>
+                    <button type="submit" class="post-sub" id="post-issue">发表</button>
+                </form>  
+            </div>
+        </div>
+<%- include base/baseJS.ejs %>
 		<script>
-			var editor;
-			if (mobile) {
-                // console.log($("#textarea-mobile").html());
-				editor = $("#textarea-mobile");
-			} else {
-                //console.log($("#textareaPC").html());
-				wangEditor.config.printLog = false;
-				editor = new wangEditor("textareaPC");
-				editor.config.menus = [
-        		'fontfamily',
-                'fontsize',
-                'bold',
-                'underline',
-                'italic',
-                'strikethrough',
-                'eraser',
-                'forecolor',
-                'bgcolor',
-                '|',
-                'orderlist',
-                'alignleft',
-                'aligncenter',
-                'alignright',
-                '|',
-                'link',
-                'emotion',
-                'undo',
-                'redo',
-                ];
-				editor.create();
-				$(".wangEditor-container").find('*').focus(function(event) {
-					/* Act on the event */
-					$(".wangEditor-container").addClass('textarea-focus');
-				});
-				$(".wangEditor-container").find('*').blur(function(event) {
-					/* Act on the event */
-					$(".wangEditor-container").removeClass('textarea-focus');
-				});
-			};
+            var editor;
 			var postEdit = {
+                PCtext: $("#textareaPC"),
+                postTitle:$("#post-title"),
 				title: $("#post-title"),
 				postForm: $(".post-form"),
 				verificate: function() {
@@ -115,22 +32,73 @@
                         sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
                         return false;
                     }
-                    if(mobile){
-                        editor.val($.trim(editor.val()));
-                        if (editor.val().length == 0) {
-                            sweetAlert('格式错误', '请填写内容！', 'warning');
-                            return false;
-                        }
-                    } else {
-                        var imgs = editor.$txt.find('img').length;
-                        var iframes = editor.$txt.find('iframe').length;
-                        if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0 && imgs == 0 && iframes == 0) {
-                            sweetAlert('格式错误', '请填写内容！', 'warning');
-                            return false;
-                        }
+                    var imgs = editor.$txt.find('img').length;
+                    var iframes = editor.$txt.find('iframe').length;
+                    if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0&& imgs == 0 && iframes == 0) {
+                        sweetAlert('格式错误', '请填写内容！', 'warning');
+                        return false;
                     }
 					return true;
 				},
+                editorEvent:function(){
+                    $(".wangEditor-container").find('*').focus(function(event) {
+                        /* Act on the event */
+                        $(".wangEditor-container").addClass('textarea-focus');
+                        // console.log(event.target);
+                    });
+                    $(".wangEditor-container").find('*').blur(function(event) {
+                        /* Act on the event */
+                        $(".wangEditor-container").removeClass('textarea-focus');
+                    });
+                },
+                getPostForEdit:function(param, cb){
+                    var self = this;
+                    $.ajax({
+                            type: "get",
+                            url: "/api/getPostForEdit",
+                            async: true,
+                            data: {
+                                postid:<%=result%>,
+                                userid:localStorage.getItem("userID")    
+                            },
+                            success: function(data) {
+                                console && console.log(data);
+                              if (data.ret == 200 && data.data && data.data.editRight == 1){
+                                    self.PCtext.html(data.data.text);
+                                    //禁止输出log调试
+                                    wangEditor.config.printLog = false;
+                                    editor = new wangEditor("textareaPC");
+                                    editor.config.menus = [
+                                    'fontfamily',
+                                    'fontsize',
+                                    'bold',
+                                    'underline',
+                                    'italic',
+                                    'strikethrough',
+                                    'eraser',
+                                    'forecolor',
+                                    'bgcolor',
+                                    '|',
+                                    'orderlist',
+                                    'alignleft',
+                                    'aligncenter',
+                                    'alignright',
+                                    '|',
+                                    'link',
+                                    'emotion',
+                                    'undo',
+                                    'redo',
+                                    ];
+                                    editor.create();
+                                    self.editorEvent();
+                                    self.postTitle.val(data.data.title);
+                                }
+                            },
+                            error: function(x, h, r) {
+                                console && console.log(x, h, r);
+                            }
+                    });
+                },
 				bindEvent: function() {
 					var self = this;
 					self.postForm.submit(function() {
@@ -143,7 +111,7 @@
 								data: {
 									user_id: localStorage.getItem("userID"),
 									title: self.title.val(),
-									text: mobile == true ? editor.val() : editor.$txt.html()
+									text: editor.$txt.html()
 								},
 								success: function(data) {
 									console && console.log(data);
@@ -161,9 +129,10 @@
 					});
 				},
 				init: function() {
+                    this.getPostForEdit();
 					this.bindEvent();
 				}
 			}
 			postEdit.init();
 		</script>
-		<%- include base/footer.ejs %>
+<%- include base/footer.ejs %>
