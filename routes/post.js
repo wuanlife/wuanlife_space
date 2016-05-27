@@ -3,14 +3,15 @@ var router = express.Router();
 var request = require('request');
 var config = require('../config/config');
 var ua = require('mobile-agent');
+var xss = require('xss');
 
 /* GET users listing. */
 router.get('/:groupid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	res.render('post', {
+	var page = agent.Mobile ? 'postMobile' : 'post';
+	res.render(page, {
 		'path':'../',
 		'result': req.param("groupid"),
-		'ag': agent,
 		'title':'发表帖子'
 	});
 });
@@ -21,8 +22,8 @@ router.post('/:groupid', function(req, res, next) {
 		formData: {
 			user_id: req.param('user_id'),
 			group_base_id: req.param('groupid'),
-			title: req.param('title'),
-			text: req.param('text')
+			title: xss(req.param('title')),
+			text: xss(req.param('text'))
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {

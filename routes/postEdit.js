@@ -3,11 +3,13 @@ var router = express.Router();
 var request = require('request');
 var config = require('../config/config');
 var ua = require('mobile-agent');
+var xss = require('xss');
 
 /* GET users listing. */
 router.get('/:postid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	res.render('postEdit', {'path':'../','result':req.param("postid"),'ag': agent,'title':"编辑帖子"});
+	var page = agent.Mobile ? 'postEditMobile' : 'postEdit';
+	res.render(page, {'path':'../','result':req.param("postid"),'title':"编辑帖子"});
 });
 
 router.post('/:postid', function(req, res, next) {
@@ -16,8 +18,8 @@ router.post('/:postid', function(req, res, next) {
 		formData: {
 			user_id: req.param('user_id'),
 			post_id: req.param('postid'),
-			title: req.param('title'),
-			text: req.param('text')
+			title: xss(req.param('title')),
+			text: xss(req.param('text'))
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
@@ -30,7 +32,6 @@ router.post('/:postid', function(req, res, next) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
 		res.send(JSON.parse(body));
-
 	});
 
 });

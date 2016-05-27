@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var config = require('../config/config');
+var xss = require('xss');
 
 router.post('/', function(req, res, next) {
     request.post({
@@ -9,7 +10,7 @@ router.post('/', function(req, res, next) {
         formData: {
             user_id: req.param('user_id'),
             post_id: req.param('post_id'),
-            text: req.param('text')
+            text: xss(req.param('text'))
         }    
     }, function optionalCallback(err, httpResponse, body) {
         if (err) {
