@@ -15,6 +15,7 @@
     "serve-favicon": "~2.3.0",
     "mobile-agent": "~0.0.8",
     "chance": "~0.8.0",
-    "request": "~2.72.0"
+    "request": "~2.72.0",
+    "xss":"~0.2.13"
   }
 }
