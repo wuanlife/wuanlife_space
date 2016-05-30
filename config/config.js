@@ -10,6 +10,7 @@ var config = {
         },
         port: process.env.PORT || 3000,
         db: 'mongodb://localhost:27017/test-app',
+        //server: 'http://www.wuanla.com:800/'
         server: 'http://dev.wuanlife.com:800/'
     },
 
