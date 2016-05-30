@@ -84,7 +84,7 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text: editor.$txt.html()
+                                    text: editor.$txt.html().trim()
                                 },
                                 success: function(data) {
                                     console && console.log(data);
