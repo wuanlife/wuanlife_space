@@ -124,6 +124,8 @@ ul{
 span.navbar-account-item{
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow:hidden;
+    max-width: 150px;
 }
 .nav-anone{
     display:none;
