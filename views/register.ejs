@@ -28,8 +28,8 @@
                 verificate: function() {
                     var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
                     var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-                    if (this.nickname.val().length == 0 || this.nickname.val().length>20) {
-                        sweetAlert('格式错误', '请输入1-20位字符做为昵称！', 'warning');
+                    if (this.nickname.val().length == 0 || this.nickname.val().length>18) {
+                        sweetAlert('格式错误', '请输入1-18位字符做为昵称！', 'warning');
                         return false;
                     }
                     if (!myregName.test(this.nickname.val())){
