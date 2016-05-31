@@ -13,8 +13,8 @@
                             <a href="#?" title="<%=item.name%>"><img src="images/planet-pic_03.jpg" alt=""></a>
                         </div>
                         <div class="planet-info">
-                            <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%=item.name%>"><%=item.name%></a></h2>
-                            <p><%=item.num%></p>
+                            <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%-item.name%>"><%-item.name%></a></h2>
+                            <p><%-item.num%></p>
                         </div>
                     </li>
                 <% }); %>
@@ -43,8 +43,8 @@
                             <a href="#?" title="{{item.name}}"><img src="images/planet-pic_03.jpg" alt=""></a>
                         </div>
                         <div class="planet-info">
-                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{item.name}}">{{item.name}}</a></h2>
-                            <p>{{item.num}}</p>
+                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{#item.name}}">{{#item.name}}</a></h2>
+                            <p>{{#item.num}}</p>
                         </div>
                     </li>
             {{/each}}

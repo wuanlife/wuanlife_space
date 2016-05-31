@@ -7,7 +7,7 @@
             <div class="chapter-col">
             <% result.posts.forEach(function(item) { %>
                 <div class="chapter">
-                    <h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
+                    <h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
                     <div class="chapter-text"><%-item.text%></div>
                     <div class="chapter-img clearfix">
                         <img src="images/chapter_03.png" alt="">
@@ -24,12 +24,12 @@
              <% }); %>
             </div>
             <div class="page-turn">
-                <button type="button" class="unCBtn">上一页</button>
+                <button type="button" class="unCBtn" id="pre">上一页</button>
                 <span><%=result.currentPage%>/<%=result.pageCount%></span>
                 <%if(result.pageCount == 1){%>
-                <button type="button" class="unCBtn">下一页</button>
+                <button type="button" class="unCBtn" id="next">下一页</button>
                 <%}else{%>
-                <button type="button">下一页</button>
+                <button type="button" id="next">下一页</button>
                 <%}%>
             </div> 
             <%}else{%>
@@ -42,7 +42,7 @@
 	    <script type="text/html" id="listtemplate">
 	    	{{each posts as item i}}
         		<div class="chapter">
-					<h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
+					<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 					<div class="chapter-text">{{#item.text}}</div>
 					<div class="chapter-img clearfix">
                         <img src="images/chapter_03.png" alt="">
@@ -60,8 +60,8 @@
 	    </script>
 		<script>
 			var index = {
-				pre: $(".page-turn").find('button').first(),
-				next: $(".page-turn").find('button').last(),
+				pre: $("#pre"),
+				next: $("#next"),
 				page: $(".page-turn").find('span').eq(0),
 				main: $(".chapter-col"),
 				chapter_text: $(".chapter-text"),
