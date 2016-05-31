@@ -7,14 +7,19 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	res.render('createPlanet', {"ag":agent,'path':'','title':'创建星球'});
+	var page = agent.Mobile ? 'createGroupMobile' : 'createGroup';
+	res.render(page, {'path':'','title':'创建星球'});
 });
 router.post('/', function(req, res, next) {
+	console.log("111111");
+	console.log(req.param('g_introduction'));
 	request.post({
-		url: config.server + '/demo/?service=Group.Create',
+		url: config.server + '?service=Group.Create',
 		formData: {
 			name: req.param('name'),
-			user_id: req.param('user_id')
+			user_id: req.param('user_id'),
+			g_image: req.param('g_image'),
+			g_introduction:req.param('g_introduction')
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
