@@ -120,6 +120,31 @@ router.get('/:method', function(req, res, next) {
 				}
 			})
 			break;
+		case 'getJoindGroup':
+			var user_id = req.param('user_id');
+			request(config.server + '?service=Group.GetJoined&user_id=' + user_id, 
+				function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					res.header('Content-type', 'application/json');
+					res.header('Charset', 'utf8');
+					res.send(body);
+				}
+			})
+			break;
+		case 'getCreateGroup':
+			var user_id = req.param('user_id');
+			request(config.server + '?service=Group.GetCreate&user_id=' + user_id, 
+				function(error, response, body) {
+				if (!error && response.statusCode == 200) {
+					console.log(JSON.parse(body));
+					console.log("lalala"); // Show the HTML for the Google homepage. 
+					res.header('Content-type', 'application/json');
+					res.header('Charset', 'utf8');
+					res.send(body);
+				}
+			})
+			break;
 		case 'isLogin':
 			if (req.session.user != null) {
 				console.log('Session Login successful!  Server responded with:', req.session.user);
