@@ -1,43 +1,65 @@
 <%- include base/header.ejs %>
 	<div class="main main-page">
-		<div class="main-mask"></div>
 		<div class="location clearfix">
-			<h1><a href="/myPlanet/<%=userid%>" title="">我的星球</a></h1>
+			<h1><a href="/myGroup/<%=userid%>" title="">我的星球</a></h1>
 		</div>
-		<%if(result.posts.length > 0){%>
+		<div class="myPGroup" id="myJoind" style="display:none;">
+                <h2>已加入 <a href="" title=""></a></h2>
+                <ul class="planetTags clearfix">
+                    <!-- <li class="planetTag col-sm-3"><a href="" title=""  class="text-ellipsis">陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地</a></li> -->
+                </ul>
+         </div>
+            <div class="myPGroup" id="myCreate" style="display:none;">
+                <h2>已创建 <a href="" title=""></a></h2>
+                <ul class="planetTags clearfix">
+                    <!-- <li class="planetTag col-sm-3"><a href="" title=""  class="text-ellipsis">陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地陶陶天地</a></li> -->
+                </ul>
+            </div>
+			<%if(result.posts.length > 0){%>
 			<div class="chapter-col">
 				<% result.posts.forEach(function(item) { %>
-					<div class="chapter">
-						<h2><a href="/topic/<%=item.postID%>" title=""><%=item.title%></a></h2>
-						<div class="chapter-text">
-							<%-item.text%>
-						</div>
-						<div class="chapter-info">
-							<span><a href="" title=""><%=item.nickname%></a></span>
-							<span>发表于</span>
-							<span><a href="/group/<%=item.groupID%>" title=""><%=item.groupName%></a></span>
-							<span class="cha-time"><%=item.createTime%></span>
-						</div>
+				<div class="chapter">
+					<h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
+					<div class="chapter-text"><%-item.text%></div>
+					<div class="chapter-img clearfix">
+                        <img src="images/chapter_03.png" alt="">
+                        <img src="images/chapter_03.png" alt="">
+                        <img src="images/chapter_03.png" alt="">
+                   	</div>
+					<div class="chapter-info">
+						<span><a href="" title=""><%=item.nickname%></a></span>
+						<span>发表于</span>
+						<span><a href="/group/<%=item.groupID%>" title=""><%=item.groupName%></a></span>
+						<span class="cha-time"><%=item.createTime%></span>
 					</div>
-					<% }); %>
-			</div>
-			<%}else{%>
-				<div class="emptyPage">
-					星球空空，可以注水~~
 				</div>
-				<%}%>
-					<div class="page-turn">
-						<span><a href="#?" title="">上一页</a></span>
-						<span><%=result.currentPage%>/<%=result.pageCount%></span>
-						<span><a href="#?" title="">下一页</a></span>
-					</div>
+				<% }); %>
+			</div>
+			<div class="page-turn">
+                <button type="button" class="unCBtn" id="pre">上一页</button>
+                <span><%=result.currentPage%>/<%=result.pageCount%></span>
+                <%if(result.pageCount == 1){%>
+                <button type="button" class="unCBtn" id="next">下一页</button>
+                <%}else{%>
+                <button type="button" id="next">下一页</button>
+                <%}%>
+            </div> 
+			<%}%>
+			<div class="emptyPage" style="display:none;">
+					星球空空，可以注水~~
+			</div>				
 	</div>
-	<%- include base/baseJS.ejs %>
+<%- include base/baseJS.ejs %>
 		<script type="text/html" id="listtemplate">
 			{{each posts as item i}}
 			<div class="chapter">
-				<h2><a href="/topic/{{item.postID}}" title="">{{item.title}}</a></h2>
+				<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 				<div class="chapter-text">{{#item.text}}</div>
+				<div class="chapter-img clearfix">
+                    <img src="images/chapter_03.png" alt="">
+                    <img src="images/chapter_03.png" alt="">
+                    <img src="images/chapter_03.png" alt="">
+                 </div>
 				<div class="chapter-info">
 					<span><a href="#?" title="">{{item.nickname}}</a></span>
 					<span>发表于</span>
@@ -47,12 +69,22 @@
 			</div>
 			{{/each}}
 		</script>
+		<script type="text/html" id="Groupstemplate">
+			{{each groups as item i}}
+				<li class="planetTag col-sm-3"><a href="" title="" class="text-ellipsis">{{item.name}}</a></li>
+			{{/each}}
+		</script>
 		<script type="text/javascript">
 			var my_planet = {
-				pre: $(".page-turn").find('a').first(),
-				next: $(".page-turn").find('a').last(),
-				page: $(".page-turn").find('span').eq(1),
+				pre: $("#pre"),
+				next: $("#next"),
+				page: $(".page-turn").find('span').eq(0),
 				main: $(".chapter-col"),
+				myCreateMD:$("#myCreate"),
+				myJoindMD:$("#myJoind"),
+				myJoind:$("#myJoind").find('.planetTags'),
+				myCreate:$("#myCreate").find('.planetTags'),
+				emptyPage:$(".emptyPage"),
 				chapter_text: $(".chapter-text"),
 				nav_myP: $("#nav-myP").children("a"),
 				nav_logout: $("#nav-logout"),
@@ -69,24 +101,74 @@
 							cb(data);
 						});
 				},
-				setChapterText:function(){
-					this.chapter_text.each(function() {
-						var text = $(this).text();
-						$(this).html(text);
-					});
+				getCreateData:function(param,cb){
+					$.getJSON("/api/getCreateGroup", param,
+						function(data) {
+							cb(data);
+						});
+				},
+				getJoindData:function(param,cb){
+					$.getJSON("/api/getJoindGroup", param,
+						function(data) {
+							cb(data);
+						});
 				},
 				navActive: function() {
 					this.nav_myP.addClass("navbar-active");
 				},
+				setPageData:function(){
+					var self = this;
+					var flagJ = 0;
+					var flagC = 0;
+					self.getCreateData({
+						user_id:localStorage.getItem("userID")
+					},function(data){
+						if (data.ret == 200 && data.data) {
+							//console.log(data.data.groups.length);
+							if (data.data.groups.length>0) {
+								var arr = (data.data.groups.length > 4)? data.data.groups.slice(0, 4) : data.data.groups;
+								var data = {groups:arr};
+								var compiled = template("Groupstemplate", data);
+								self.myCreateMD.css('display', 'block');
+								self.myCreate.html(compiled);
+							} else {
+								flagC = 1;
+								if (flagC == 1 && flagJ == 1) {
+									self.emptyPage.css('display', 'block');
+								}
+							}
+						}
+					});
+					self.getJoindData({
+						user_id:localStorage.getItem("userID")
+					},function(data){
+						if (data.ret == 200 && data.data) {
+							//console.log(data.data.groups.length);
+							if (data.data.groups.length>0) {
+								var arr = (data.data.groups.length > 8)? data.data.groups.slice(0, 8) : data.data.groups;
+								var data = {groups:arr};
+								var compiled = template("Groupstemplate", data);
+								self.myJoindMD.css('display', 'block');
+								self.myJoind.html(compiled);
+							} else {
+								flagJ = 1;
+								if (flagC == 1 && flagJ == 1) {
+									self.emptyPage.css('display', 'block');
+								}
+							}
+						}
+					});
+				},
 				bindEvent: function() {
 					var self = this;
-					self.nav_logout.on(WuanClickEvent, function() {
+					self.nav_logout.on("click", function() {
 						window.location.href = '/';
 					});
-					self.pre.on(WuanClickEvent, function(event) {
+					self.pre.on("click", function(event) {
 						event.preventDefault();
 						if (self.currentpage == 1) {
-							sweetAlert('错误', '当前页是第一页', 'error');
+							//sweetAlert('错误', '当前页是第一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getServerData({
@@ -97,21 +179,22 @@
 									self.currentpage -= 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
-									$(".chapter-text").each(function() {
-										var text = $(this).text();
-										$(this).html(text);
-									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.next.removeClass('unCBtn');
+                                    if (data.data.currentPage == 1) {
+                                        self.pre.addClass('unCBtn');
+                                    } 
 									$(window).scrollTop(0);
 								}
 							});
 						}
 					});
-					self.next.on(WuanClickEvent, function(event) {
+					self.next.on("click", function(event) {
 						event.preventDefault();
 						if (self.currentpage == self.pageCount) {
-							sweetAlert('错误', '当前页是最后一页', 'error');
+							//sweetAlert('错误', '当前页是最后一页', 'error');
+							return;
 						} else {
 							self.loading.show();
 							self.getServerData({
@@ -122,12 +205,12 @@
 									self.currentpage += 1;
 									var compiled = template("listtemplate", data.data);
 									self.main.html(compiled);
-									$(".chapter-text").each(function() {
-										var text = $(this).text();
-										$(this).html(text);
-									});
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
+									self.pre.removeClass('unCBtn');
+                                    if (data.data.currentPage == data.data.pageCount) {
+                                        self.next.addClass('unCBtn');
+                                    }
 									$(window).scrollTop(0);
 								}
 							});
@@ -135,8 +218,9 @@
 					})
 				},
 				init: function() {
+
 					this.ClientData();
-					//this.setChapterText();
+					this.setPageData();
 					this.navActive();
 					this.bindEvent();
 				}
