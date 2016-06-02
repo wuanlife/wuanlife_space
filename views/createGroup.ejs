@@ -7,16 +7,16 @@
                 <form class="cp-form line-form" action="/createGroup" title="" method="post">
                     <div class="cp-group line-fgroup">
                         <label for="planet-name"></label>
-                        <input type="text" name="" value="" placeholder="请输入星球名称" id="planet-name"> 
+                        <input type="text" name="name" value="" placeholder="请输入星球名称" id="planet-name"> 
                     </div>
                     <div class="upPIcon">
                         <h4>星球头像（选填）：</h4>
-                        <input type="file" name="" value="" placeholder="" id="upImg">
+                        <input type="file" name="g_image" value="" placeholder="" id="upImg">
                         <button type="button" id="upImgBtn">+</button>
                     </div>
                     <div class="cp-des">
                         <h4>星球说明（选填）：</h4>
-                        <textarea class="form-control"></textarea>
+                        <textarea class="form-control" name="g_introduction"></textarea>
                     </div>
                     <button type="submit">创建</button>
                 </form>
@@ -30,6 +30,7 @@
                 upImgBtn: $("#upImgBtn"),
                 upImg: $("#upImg"),
                 cpDes: $(".cp-des").children('textarea'),
+                nav_logout: $("#nav-logout"),
                 imgData: null,
                 verificate: function(){
                     var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
@@ -99,7 +100,11 @@
                 },
                 bindEvent: function() {
                     var self = this;
+                    self.nav_logout.on("click", function() {
+                        window.location.href = '/';
+                    });
                     self.cpForm.submit(function(event){
+                        console.log(self.imgData);
                         event.preventDefault();
                         if (self.verificate()) {
                             $.ajax({
@@ -111,14 +116,17 @@
                                     user_id: localStorage.getItem("userID"),
                                     g_introduction: self.cpDes.val().trim(),
                                     g_image: self.imgData
+                                    //g_image:self.upImg[0].value
                                 },
                                 success:function(data){
                                     console && console.log(data);
-                                    if (data.data.code == 0 && data.data.msg){
-                                        sweetAlert('提示', data.data.msg, 'warning');
-                                    } else {
-                                        window.location.href = '/group/' + data.data.info.group_base_id;
-                                        console.log(data.data.group_base_id);
+                                    if (data.ret == 200 && data.data){
+                                        if (data.data.code == 0 && data.data.msg){
+                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        } else {
+                                            window.location.href = '/group/' + data.data.info.group_base_id;
+                                            //console.log(data.data.group_base_id);
+                                        }
                                     }
                                 },
                                 error: function(x, h, r) {
@@ -131,11 +139,12 @@
                         self.upImg.trigger('click');
                     });
                     self.upImg.on('change', function(event) {
-                        self.previewImage();
+                       self.previewImage();
                     });
                 },
                 init: function(){
                     this.bindEvent();
+                    console.log(window.location.href);
                 }
             }
             create_p.init();

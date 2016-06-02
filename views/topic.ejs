@@ -10,10 +10,10 @@
                             <span class="post-time"><%=result.createTime%></span>
                         </div>
                         <div class="post-content"><%-result.text%></div>
-                        <div class="post-opt" style="display:none;">
-                            <button class="post-opt-item">置顶</button>
-                            <a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item">编辑</a>
-                            <button class="post-opt-item">删除</button>
+                        <div class="post-opt">
+                            <button class="post-opt-item" style="display:none;" id="stickBtn">置顶</button>
+                            <a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item" style="display:none;" id="editBtn">编辑</a>
+                            <button class="post-opt-item" style="display:none;" id="delBtn">删除</button>
                         </div>
                     </div>
                     <div class="post-comment" style="display:none;">
@@ -67,9 +67,9 @@
 				reply_main: $(".post-cm-group"),
 				reply_title: $(".post-comment").children('h2'),
 				post_opt: $(".post-opt"),
-				// post_up:$(".post-opt-item").eq(0),
-				// post_edit: $(".post-opt-item").eq(1),
-				// post_delete: $(".post-opt-item").eq(2),
+				post_up:$("#stickBtn"),
+				post_edit: $("#editBtn"),
+				post_delete: $("#delBtn"),
 				myReplyForm: $(".post-detail-form"),
 				myReplyContent: $(".post-detail-form").children('textarea'),
 				myReplyBtn: $('#myReplyBtn'),
@@ -86,8 +86,8 @@
 							cb(data);
 						});
 				},
-				getEditRightData: function(param, cb) {
-					$.getJSON("/api/getPostEditRight", param,
+				getOptRightData: function(param, cb) {
+					$.getJSON("/api/getPostOptRight", param,
 						function(data) {
 							cb(data);
 						});
@@ -103,8 +103,6 @@
 							self.reply_md.css('display', 'block');
 							self.reply_title.text(data.data.replyCount + "个回复");
 							self.reply_main.html(compiled);
-							// self.pre.text('上一页');
-							// self.next.text('下一页');
 							self.page.text('1' + '/' + data.data.pageCount);
 							if (data.data.pageCount == 1) {
 								self.next.addClass('unCBtn');
@@ -115,20 +113,29 @@
 						}
 					});
 				},
-				setEditRightData: function() {
+				setOptRightData: function() {
 					var self = this;
-					self.getEditRightData({
+					self.getOptRightData({
 						user_id: localStorage.getItem("userID"),
 						post_id: postid
 					}, function(data) {
-						if (data.ret == 200 && data.data && data.data.editRight == 1) {
-							// self.post_up.text('置顶');
-							// self.post_edit.text('编辑');
-							// self.post_delete.text('删除');
-							self.post_opt.css('display', 'block');
-						} else {
-							self.post_opt.html("");
-						}
+						if (data.ret == 200 && data.data) {
+                            if (data.data.stickyRight == 1) {
+                                self.post_up.css('display', 'inline-block');
+                            } else{
+                                self.post_up.remove();
+                            }
+                            if (data.data.editRight == 1) {
+                                self.post_edit.css('display', 'inline-block');
+                            } else{
+                                self.post_edit.remove();
+                            }
+                            if (data.data.deleteRight == 1) {
+                                self.post_delete.css('display', 'inline-block');
+                            } else{
+                                self.post_delete.remove();
+                            }
+						} 
 					});
 				},
 				bindEvent: function() {
@@ -187,6 +194,28 @@
 							});
 						}
 					});
+                    self.post_up.on("click",function(){
+                        $.ajax({
+                            type:"post",
+                            url:"/api/stickyPost",
+                            async:true,
+                            data:{
+                                user_id:localStorage.getItem("userID"),
+                                post_id: postid
+                            },
+                            success:function(data){
+                                console && console.log(data);
+                                if (data.data.code == 0 && data.data.msg) {
+                                    sweetAlert('提示', data.data.msg, 'warning');
+                                } else if(data.data.code == 1){
+                                    self.post_up.text("取消置顶");
+                                }
+                            },
+                            error: function(x, h, r) {
+                                console && console.log(x, h, r);
+                            }
+                        });
+                    });
 					self.myReplyForm.submit(function(event) {
 						event.preventDefault();
 						if (localStorage.getItem("userID") != null) {
@@ -202,13 +231,15 @@
 									},
 									success: function(data) {
 										console && console.log(data);
-										if (data.data.code == 0 && data.data.msg) {
-											sweetAlert('提示', data.data.msg, 'warning');
-										} else {
-											//console.log(data.data);
-											self.myReplyContent.val("");
-											window.location.href = '/topic/' + postid;
-										}
+                                        // console.log(data.data.code);
+                                        if (data.ret == 200 && data.data){
+                                            if (data.data.msg) {
+                                                sweetAlert('提示', data.data.msg, 'warning');
+                                            } else {
+                                                self.myReplyContent.val("");
+                                                window.location.href = '/topic/' + postid;
+                                            }
+                                        }
 									},
 									error: function(x, h, r) {
 										console && console.log(x, h, r);
@@ -222,7 +253,7 @@
 				},
 				init: function() {
 					this.setReplyData();
-					this.setEditRightData();
+					this.setOptRightData();
 					this.bindEvent();
 				}
 			}

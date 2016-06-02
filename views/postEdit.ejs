@@ -115,11 +115,13 @@
 								},
 								success: function(data) {
 									console && console.log(data);
-									if (data.data.code == 0 && data.data.msg) {
-										sweetAlert('提示', data.data.msg, 'warning');
-									} else {
-										window.location.href = '/topic/' + data.data.info.post_base_id;
-									}
+                                    if (data.ret == 200 && data.data){
+                                        if (data.data.code == 0 && data.data.msg) {
+                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        } else {
+                                            window.location.href = '/topic/' + data.data.info.post_base_id;
+                                        }
+                                    }
 								},
 								error: function(x, h, r) {
 									console && console.log(x, h, r);

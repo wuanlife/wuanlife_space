@@ -48,13 +48,15 @@
 								},
 								success: function(data) {
 									console && console.log(data);
-									if (data.data.code == 0 && data.data.msg) {
-										sweetAlert('提示', data.data.msg, 'warning');
-									} else {
-										window.location.href = '/';
-										localStorage.setItem("userName",data.data.info.nickname);
-										localStorage.setItem("userID",data.data.info.userID);
-									}
+									if(data.ret == 200 && data.data){
+										if (data.data.code == 0 && data.data.msg) {
+											sweetAlert('提示', data.data.msg, 'warning');
+										} else {
+											window.location.href = '/';
+											localStorage.setItem("userName",data.data.info.nickname);
+											localStorage.setItem("userID",data.data.info.userID);
+										}
+									}	
 								},
 								error: function(x, h, r) {
 									console && console.log(x, h, r);
