@@ -3,6 +3,8 @@ var router = express.Router();
 var request = require('request');
 var config = require('../config/config');
 var ua = require('mobile-agent');
+var xss = require('xss');
+var formidable = require("formidable");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,15 +13,17 @@ router.get('/', function(req, res, next) {
 	res.render(page, {'path':'','title':'创建星球'});
 });
 router.post('/', function(req, res, next) {
-	console.log("111111");
-	console.log(req.param('g_introduction'));
+	// var body = req.param('g_image'),
+ //  		base64Data = body.replace(/^data:image\/png;base64,/,"") + ".png",
+ //  		binaryData = new Buffer(base64Data, 'base64');
+ //  		console.log(binaryData);
 	request.post({
 		url: config.server + '?service=Group.Create',
 		formData: {
 			name: req.param('name'),
 			user_id: req.param('user_id'),
-			g_image: req.param('g_image'),
-			g_introduction:req.param('g_introduction')
+			g_image:req.param('g_image'),
+			g_introduction:xss(req.param('g_introduction'))
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
