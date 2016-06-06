@@ -23,7 +23,7 @@ var myGroup = require('./routes/myGroup');
 var logout = require('./routes/logout');
 var isLogin = require('./routes/isLogin');
 var postReply = require('./routes/postReply');
-// var moreGroups = require('./routes/moreGroups');
+var moreGroups = require('./routes/moreGroups');
 var test = require('./routes/test');
 
 
@@ -88,7 +88,7 @@ app.use('/allGroup', allGroup);
 app.use('/logout',logout);
 app.use('/isLogin',isLogin);
 app.use('/postReply',postReply);
-// app.use('/moreGroups',moreGroups);
+app.use('/moreGroups',moreGroups);
 app.use('/test',test);
 
 // catch 404 and forward to error handler
