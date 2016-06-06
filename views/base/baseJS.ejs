@@ -25,6 +25,12 @@
 			var userName = localStorage.getItem("userName");
 			//本地存储用户ID
 			var userID = localStorage.getItem("userID");
+			//设置是否注销后跳转首页
+			var GotoIndexVal = 0;
+			var GotoIndex = function(){
+				GotoIndexVal = 1;
+			}
+			// 设置loading位置
 			var setCenterLoadingDiv = function() {
 				var loadingClientheight = parseInt($(".uil-default-css").css("height"));
 				var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
@@ -65,6 +71,9 @@
 									localStorage.removeItem("userName");
 									localStorage.removeItem("userID");
 									setLogoutStatus();
+									if(GotoIndexVal){
+										window.location.href = '/';
+									}
 								}
 							},
 							error: function(x, h, r) {
@@ -87,7 +96,8 @@
 				}
 			}
 			return {
-				setCenterLoadingDiv: setCenterLoadingDiv
+				setCenterLoadingDiv: setCenterLoadingDiv,
+				GotoIndex: GotoIndex
 			}
 		}());
 		$(document).ready(function() {

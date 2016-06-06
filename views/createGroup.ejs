@@ -30,7 +30,6 @@
                 upImgBtn: $("#upImgBtn"),
                 upImg: $("#upImg"),
                 cpDes: $(".cp-des").children('textarea'),
-                nav_logout: $("#nav-logout"),
                 imgData: null,
                 verificate: function(){
                     var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
@@ -100,9 +99,6 @@
                 },
                 bindEvent: function() {
                     var self = this;
-                    self.nav_logout.on("click", function() {
-                        window.location.href = '/';
-                    });
                     self.cpForm.submit(function(event){
                         console.log(self.imgData);
                         event.preventDefault();
@@ -143,8 +139,8 @@
                     });
                 },
                 init: function(){
+                    global.GotoIndex();
                     this.bindEvent();
-                    console.log(window.location.href);
                 }
             }
             create_p.init();
