@@ -125,6 +125,12 @@
                         if (self.currentpage == 1) {
                             self.pre.addClass('unCBtn');
                         } 
+                        if (self.currentpage == self.createPageCount) {
+                            self.main.prepend(self.myCreateMD);
+                        }
+                        if (self.currentpage == self.joinPageCount) {
+                            self.main.append(self.myJoindMD);
+                        }
                         $(window).scrollTop(0);
                 },
                 pageDown:function(){
@@ -138,6 +144,12 @@
                     if (self.currentpage ==  self.pageCount) {
                         self.next.addClass('unCBtn');
                     } 
+                    if (self.currentpage == (self.createPageCount + 1)) {
+                            self.myCreateMD.remove();
+                    }
+                    if (self.currentpage == (self.joinPageCount + 1)) {
+                            self.myJoindMD.remove();
+                    }
                     $(window).scrollTop(0);
                 },
                 bindEvent:function(){
@@ -165,9 +177,6 @@
                                         self.myCreate.html(compiled);
                                         if (flagC == 1 && flagJ == 1) {
                                             self.pageUp();
-                                            if (self.currentPage == self.createPageCount) {
-                                                self.main.prepend(self.myCreateMD);
-                                            }
                                         }
                                     }
                                 });
@@ -188,9 +197,6 @@
                                         self.myJoind.html(compiled);
                                         if (flagC == 1 && flagJ == 1) {
                                             self.pageUp();
-                                            if (self.currentPage == self.joinPageCount) {
-                                                self.main.append(self.myJoindMD);
-                                            }
                                         }
                                     }
                                 });
@@ -208,9 +214,6 @@
                                 flagC = 1;
                                 if (flagC == 1 && flagJ == 1){
                                     self.pageDown();
-                                    if (self.currentPage == (self.createPageCount + 1)) {
-                                        self.myCreateMD.remove();
-                                    }
                                 } 
                             } else{
                                 self.getCreateData({
@@ -231,9 +234,6 @@
                                 flagJ = 1;
                                 if (flagC == 1 && flagJ == 1){
                                     self.pageDown();
-                                    if (self.currentPage == (self.joinPageCount + 1)) {
-                                        self.myJoindMD.remove();
-                                    }
                                 } 
                             } else{
                                 self.getJoindData({
