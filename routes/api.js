@@ -45,7 +45,7 @@ router.get('/:method', function(req, res, next) {
 		case 'getPostReplys':
 			var pn = req.param('currentpage');
 			var post_id = req.param('post_id');
-			request(config.server + 'demo/?service=Post.GetPostReply&post_id=' + post_id + '&pn=' + pn,
+			request(config.server + '?service=Post.GetPostReply&post_id=' + post_id + '&pn=' + pn,
 				function(error, response, body) {
 					if (!error && response.statusCode == 200) {
 						console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
@@ -55,7 +55,7 @@ router.get('/:method', function(req, res, next) {
 					}
 				})
 			break;
-		case 'getPostEditRight':
+		case 'getPostOptRight':
 			var post_id = req.param('post_id');
 			var user_id = req.param('user_id');
 			request(config.server + '?service=Post.GetPostBase&post_id=' + post_id + '&id=' + user_id,
@@ -71,7 +71,7 @@ router.get('/:method', function(req, res, next) {
 		case 'getGroupPlanetShow':
 			var pn = req.param('currentpage');
 			var groupid = req.param('groupid');
-			request(config.server + 'demo/?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn, function(error, response, body) {
+			request(config.server + '?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
@@ -96,7 +96,7 @@ router.get('/:method', function(req, res, next) {
 		case 'joinPlant':
 			var groupid = req.param('groupid');
 			var userid = req.param('userid');
-			request(config.server + 'demo/?service=Group.Join&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
+			request(config.server + '?service=Group.Join&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
 				if (error) {
 					console.log(error);
 				}
@@ -111,7 +111,7 @@ router.get('/:method', function(req, res, next) {
 		case 'isJoinP':
 			var groupid = req.param('groupid');
 			var userid = req.param('userid');
-			request(config.server + 'demo/?service=Group.GStatus&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
+			request(config.server + '?service=Group.GStatus&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
@@ -122,7 +122,8 @@ router.get('/:method', function(req, res, next) {
 			break;
 		case 'getJoindGroup':
 			var user_id = req.param('user_id');
-			request(config.server + '?service=Group.GetJoined&user_id=' + user_id, 
+			var pn = req.param('pn');
+			request(config.server + '?service=Group.GetJoined&user_id=' + user_id + '&page=' + pn, 
 				function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
@@ -134,11 +135,12 @@ router.get('/:method', function(req, res, next) {
 			break;
 		case 'getCreateGroup':
 			var user_id = req.param('user_id');
-			request(config.server + '?service=Group.GetCreate&user_id=' + user_id, 
+			var pn = req.param('pn');
+			request(config.server + '?service=Group.GetCreate&user_id=' + user_id + '&page=' + pn, 
 				function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body));
-					console.log("lalala"); // Show the HTML for the Google homepage. 
+					console.log(JSON.parse(body));// Show the HTML for the Google homepage. 
+					//console.log("lalala"); 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -192,5 +194,36 @@ router.get('/:method', function(req, res, next) {
 	}
 
 });
+router.post('/:method', function(req, res, next) {
+	var data = {};
+	switch (req.params.method) {
 
+		case 'stickyPost':
+			request.post({
+        			url: config.server + '?service=Post.StickyPost',
+        			formData: {
+            			user_id: req.param('user_id'),
+            			post_id: req.param('post_id'),
+        			}    
+    		}, function optionalCallback(err, httpResponse, body) {
+        			if (err) {
+            			console.error('Sticky failed:', err);
+            			res.header('Content-type', 'application/json');
+            			res.header('Charset', 'utf8');
+            			res.send({
+                		err: err
+            			});
+        			}
+        			console.log('Sticky success:', JSON.parse(body));
+       		 		res.header('Content-type', 'application/json');
+        			res.header('Charset', 'utf8');
+        			res.send(JSON.parse(body));
+    		});
+			break;
+		default:
+			res.send('respond with a resource');
+			break;
+	}
+
+});
 module.exports = router;

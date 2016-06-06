@@ -1,0 +1,100 @@
+<%- include base/headerMobile.ejs %>
+        <div class="main">
+            <div class="mask"></div>
+            <div class="location clearfix">
+                <h1>编辑帖子</h1>
+            </div> 
+            <div class="post">
+                <form class="post-form clearfix" action="/postEdit/<%=result%>" method="post">
+                    <input type="text" name="" value="" placeholder="标题" class="form-control" id="post-title">
+                    <textarea placeholder="内容" class="form-control" id="textareaMobile"></textarea>
+                    <div id= "getPostVal" style="display:none;"></div>
+                    <button type="submit" class="post-sub" id="post-issue">发表</button>
+                </form>  
+            </div>
+        </div>
+<%- include base/baseJSMobile.ejs %>
+        <script>
+            var postEdit = {
+                editor:$("#textareaMobile"),
+                title: $("#post-title"),
+                postForm: $(".post-form"),
+                getPostVal:$("#getPostVal"),
+                verificate: function(){
+                    if (this.title.val().length == 0) {
+                        sweetAlert('格式错误', '请填写标题！', 'warning');
+                        return false;
+                    }
+                    if (this.title.val().length > 20) {
+                        sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
+                        return false;
+                    }
+                    if (this.editor.val().length == 0) {
+                        sweetAlert('格式错误', '请填写内容！', 'warning');
+                        return false;
+                    }
+                    return true;
+                },
+                getPostForEdit:function(param, cb){
+                    var self = this;
+                    $.ajax({
+                            type: "get",
+                            url: "/api/getPostForEdit",
+                            async: true,
+                            data: {
+                                postid:<%=result%>,
+                                userid:localStorage.getItem("userID")    
+                            },
+                            success: function(data) {
+                                console && console.log(data);
+                              if (data.ret == 200 && data.data && data.data.editRight == 1){
+                                    self.title.val(data.data.title);
+                                    self.getPostVal.html(data.data.text);
+                                    self.editor.val(self.getPostVal.text());
+                                    self.getPostVal.remove();
+                                }
+                            },
+                            error: function(x, h, r) {
+                                console && console.log(x, h, r);
+                            }
+                    });
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.postForm.submit(function(){
+                        event.preventDefault();
+                        if (self.verificate()){
+                            $.ajax({
+                                type: "post",
+                                url: "/postEdit/<%=result%>",
+                                async: true,
+                                data: {
+                                    user_id: localStorage.getItem("userID"),
+                                    title: self.title.val(),
+                                    text:  self.editor.val().trim()
+                                },
+                                success: function(data) {
+                                    console && console.log(data);
+                                    if (data.data.code == 0 && data.data.msg) {
+                                        sweetAlert('提示', data.data.msg, 'warning');
+                                    } else {
+                                        window.location.href = '/topic/' + data.data.info.post_base_id ;
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                        }
+                        
+                    });
+                },
+                init: function() {
+                    global.GotoIndex();
+                    this.getPostForEdit();
+                    this.bindEvent();
+                }
+            }
+            postEdit.init();
+        </script>
+<%- include base/footerMobile.ejs %>    

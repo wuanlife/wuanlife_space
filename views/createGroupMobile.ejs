@@ -1,0 +1,80 @@
+<%- include base/headerMobile.ejs %>
+        <div class="main">
+            <div class="mask"></div>
+            <div class="location clearfix">
+                <h1><a href="/" title="">创建星球</a></h1>
+            </div> 
+            <div class="create-p">
+                <form class="cp-form line-form" action="/createGroup" title="" method="post">
+                    <div class="cp-group line-fgroup">
+                        <label for="planet-name"></label>
+                        <input type="text" name="" value="" placeholder="请输入星球名称" id="planet-name"> 
+                    </div>
+                    <div class="cp-des">
+                        <h4>星球介绍（选填）：</h4>
+                        <textarea class="form-control" placeholder="内容"></textarea>
+                    </div>
+                    <button type="submit">创建</button>
+                </form>
+            </div>
+        </div>
+<%- include base/baseJSMobile.ejs %>
+        <script type="text/javascript">
+            var create_p ={
+                pName: $("#planet-name"),
+                cpForm: $(".cp-form"),
+                cpDes: $(".cp-des").children('textarea'),
+                verificate: function(){
+                    var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+                    if (this.pName.val().length<1 || this.pName.val().length>20) {
+                        sweetAlert("格式错误","请输入1-20位字符做为星球名称","warning");
+                        return false;
+                    }
+                    if (!myreg.test(this.pName.val())) {
+                        sweetAlert("格式错误","只允许中文、数字、字母和下划线","warning");
+                        return false;
+                    }
+                    return true;
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.cpForm.submit(function(event){
+                       event.preventDefault();
+                        if (self.verificate()) {
+                            $.ajax({
+                                type: "post",
+                                url: "/createGroup",
+                                async: true,
+                                data:{
+                                    name: self.pName.val(),
+                                    user_id: localStorage.getItem("userID"),
+                                    g_introduction: self.cpDes.val().trim(),
+                                    g_image: null
+                                },
+                                success:function(data){
+                                    console && console.log(data);
+                                    if (data.ret == 200 && data.data){
+                                        if (data.data.code == 0 && data.data.msg){
+                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        } else {
+                                            window.location.href = '/group/' + data.data.info.group_base_id;
+                                            //console.log(data.data.group_base_id);
+                                        }
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                        }
+                        //return false;
+                    });
+                },
+                init: function(){
+                    global.GotoIndex();
+                    this.bindEvent();
+                }
+            }
+            create_p.init();
+        </script>
+ <%- include base/footerMobile.ejs %>   

@@ -1,0 +1,93 @@
+<%- include base/headerMobile.ejs %>
+        <div class="main">
+            <div class="mask"></div>
+            <div class="login">
+                <form class="login-form line-form" action="/register" title="" method="post">
+                    <div class="login-group line-fgroup">
+                        <label for="nickname" class="lable-name"></label>
+                        <input type="text" name="nickname" value="" placeholder="昵称" id="nickname">
+                    </div>
+                    <div class="login-group line-fgroup">
+                        <label for="email" class="lable-e"></label>
+                        <input type="email" name="email" value="" placeholder="邮箱" id="email">
+                    </div>
+                    <div class="login-group line-fgroup">
+                        <label for="pw" class="label-paw"></label>
+                        <input type="password" name="password" value="" placeholder="密码" id="pw">
+                    </div>
+                    <button id='register' type="submit">注册</button>
+                </form>
+            </div>
+        </div>
+<%- include base/baseJSMobile.ejs %>
+        <script type="text/javascript">
+            var register = {
+                nickname: $("#nickname"),
+                email: $("#email"),
+                pw: $("#pw"),
+                loginform: $(".login-form"),
+                verificate: function() {
+                    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+                    var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+                    if (this.nickname.val().length == 0 || this.nickname.val().length>18) {
+                        sweetAlert('格式错误', '请输入1-18位字符做为昵称！', 'warning');
+                        return false;
+                    }
+                    if (!myregName.test(this.nickname.val())){
+                        sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
+                        return false;
+                    }
+                    if (!myreg.test(this.email.val())) {
+                        sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
+                        return false;
+                    }
+                    if (this.pw.val().length == 0) {
+                        sweetAlert('格式错误', '请填写密码！', 'warning');
+                        return false;
+                    }
+                    if (this.pw.val().length<8 || this.pw.val().length>20){
+                        sweetAlert('格式错误', '请填写8-20位密码', 'warning');
+                        return false;
+                    }
+                    return true;
+                },
+                bindEvent: function() {
+                    var self = this;
+                    self.loginform.submit(function(event) {
+                        event.preventDefault();
+                        if (self.verificate()) {
+                            $.ajax({
+                                type: "post",
+                                url: "/register",
+                                async: true,
+                                data: {
+                                    email: self.email.val(),
+                                    password: self.pw.val(),
+                                    nickname: self.nickname.val()
+                                },
+                                success: function(data) {
+                                    console && console.log(data);
+                                    if(data.ret == 200 && data.data){
+                                        if (data.data.code == 0 && data.data.msg) {
+                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        } else {
+                                            window.location.href = '/';
+                                            localStorage.setItem("userName",data.data.info.nickname);
+                                            localStorage.setItem("userID",data.data.info.userID);
+                                        }
+                                    } 
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                        }
+                    });
+                },
+                init: function() {
+                    this.bindEvent();
+                }
+            }
+            register.init();
+        </script>
+<%- include base/footerMobile.ejs %>    
