@@ -10,10 +10,10 @@
                 <% result.lists.forEach(function(item) { %>
                     <li class="planet-item clearfix col-sm-4"> 
                         <div class="planet-pic">
-                            <a href="#?" title="<%-item.name%>"><img src="<%-item.g_image%>" alt=""></a>
+                            <a href="/group/<%=item.id%>" title="<%=item.name%>"><img src="<%-item.g_image%>" alt=""></a>
                         </div>
                         <div class="planet-info">
-                            <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%-item.name%>"><%-item.name%></a></h2>
+                            <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%=item.name%>"><%=item.name%></a></h2>
                             <p><%-item.g_introduction%></p>
                         </div>
                     </li>
@@ -40,10 +40,10 @@
              {{each lists as item i}}
                     <li class="planet-item clearfix col-sm-4"> 
                         <div class="planet-pic">
-                            <a href="#?" title="{{#item.name}}"><img src="{{#item.g_image}}" alt=""></a>
+                            <a href="/group/{{item.id}}" title="{{item.name}}"><img src="{{#item.g_image}}" alt=""></a>
                         </div>
                         <div class="planet-info">
-                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{#item.name}}">{{#item.name}}</a></h2>
+                            <h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{item.name}}">{{item.name}}</a></h2>
                             <p>{{#item.g_introduction}}</p>
                         </div>
                     </li>
