@@ -18,7 +18,7 @@ router.get('/:groupid', function(req, res, next) {
 
 router.post('/:groupid', function(req, res, next) {
 	request.post({
-		url: config.server + 'demo/?service=Group.Posts',
+		url: config.server + '?service=Group.Posts',
 		formData: {
 			user_id: req.param('user_id'),
 			group_base_id: req.param('groupid'),

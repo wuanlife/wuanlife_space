@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 router.post('/', function(req, res, next) {
 	request.post({
-		url: config.server + 'demo/?service=User.Login',
+		url: config.server + '?service=User.Login',
 		formData: {
 			Email: req.param('email'),
 			password: req.param('password')

@@ -7,7 +7,7 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/:userid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	request(config.server + 'demo/?service=Post.GetMyGroupPost&id=' + req.param("userid"),
+	request(config.server + '?service=Post.GetMyGroupPost&id=' + req.param("userid"),
 		function(error, response, body) {
 			if (error) {
 				next(error);

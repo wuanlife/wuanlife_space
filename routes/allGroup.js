@@ -7,7 +7,7 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
-	request(config.server + "demo/?service=Group.Lists", function(error, response, body) {
+	request(config.server + "?service=Group.Lists", function(error, response, body) {
 		if (!error) {
 			console.log('Planet Success:OK');
 			var result = JSON.parse(body);
