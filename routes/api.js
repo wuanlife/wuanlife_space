@@ -203,7 +203,7 @@ router.post('/:method', function(req, res, next) {
         			url: config.server + '?service=Post.StickyPost',
         			formData: {
             			user_id: req.param('user_id'),
-            			post_id: req.param('post_id'),
+            			post_id: req.param('post_id')
         			}    
     		}, function optionalCallback(err, httpResponse, body) {
         			if (err) {
@@ -215,6 +215,50 @@ router.post('/:method', function(req, res, next) {
             			});
         			}
         			console.log('Sticky success:', JSON.parse(body));
+       		 		res.header('Content-type', 'application/json');
+        			res.header('Charset', 'utf8');
+        			res.send(JSON.parse(body));
+    		});
+			break;
+		case 'unstickyPost':
+			request.post({
+        			url: config.server + '?service=Post.UnStickyPost',
+        			formData: {
+            			user_id: req.param('user_id'),
+            			post_id: req.param('post_id')
+        			}    
+    		}, function optionalCallback(err, httpResponse, body) {
+        			if (err) {
+            			console.error('Unsticky failed:', err);
+            			res.header('Content-type', 'application/json');
+            			res.header('Charset', 'utf8');
+            			res.send({
+                		err: err
+            			});
+        			}
+        			console.log('Unsticky success:', JSON.parse(body));
+       		 		res.header('Content-type', 'application/json');
+        			res.header('Charset', 'utf8');
+        			res.send(JSON.parse(body));
+    		});
+			break;
+		case 'deletePost':
+			request.post({
+        			url: config.server + '?service=Post.DeletePost',
+        			formData: {
+            			user_id: req.param('user_id'),
+            			post_id: req.param('post_id')
+        			}    
+    		}, function optionalCallback(err, httpResponse, body) {
+        			if (err) {
+            			console.error('Delete failed:', err);
+            			res.header('Content-type', 'application/json');
+            			res.header('Charset', 'utf8');
+            			res.send({
+                		err: err
+            			});
+        			}
+        			console.log('Delete success:', JSON.parse(body));
        		 		res.header('Content-type', 'application/json');
         			res.header('Charset', 'utf8');
         			res.send(JSON.parse(body));
