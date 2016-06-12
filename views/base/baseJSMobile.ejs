@@ -57,7 +57,7 @@
                 logout: $("#nav-logout"),
                 bindEvent: function() {
                     var self = this;
-                    self.logout.on("click", function(event) {
+                    self.logout.on("touchend", function(event) {
                         event.preventDefault();
                         $.ajax({
                             type: "get",
