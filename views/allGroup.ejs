@@ -87,12 +87,14 @@
                                 currentpage: self.currentpage - 1
                             }, function(data) {
                                 if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+                                    if (self.currentpage == self.pageCount) {
+                                        self.next.removeClass('unCBtn');
+                                    }
                                     self.currentpage -= 1;
                                     var compiled = template("planet-list", data.data);
                                     self.main.html(compiled);
                                     self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                                     self.loading.hide();
-                                    self.next.removeClass('unCBtn');
                                     if (data.data.currentPage == 1) {
                                         self.pre.addClass('unCBtn');
                                     } 
@@ -112,12 +114,14 @@
                                 currentpage: self.currentpage + 1
                             }, function(data) {
                                 if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+                                    if (self.currentpage == 1) {
+                                        self.pre.removeClass('unCBtn');
+                                    }
                                     self.currentpage += 1;
                                     var compiled = template("planet-list", data.data);
                                     self.main.html(compiled);
                                     self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                                     self.loading.hide();
-                                    self.pre.removeClass('unCBtn');
                                     if (data.data.currentPage == data.data.pageCount) {
                                         self.next.addClass('unCBtn');
                                     }
