@@ -260,10 +260,18 @@ button.unCBtn{
 .chapter-info a{
     color:#999999;
 }
+.postIn{
+    margin-right: 4px;
+    margin-left: 4px;
+}
 .cha-time{
     float:right;
 }
-
+.chapter-info .text-ellipsis{
+    display:inline-block;
+    max-width: 200px;
+    vertical-align: bottom;
+}
 
 /*************************
 *********全部星球********

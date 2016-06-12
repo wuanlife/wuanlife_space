@@ -88,21 +88,15 @@ ul{
     position: absolute;
     display:block;
     padding: 0 0.466667rem ;
+    width:1.466667rem;
     left:0;
     top:0;
     bottom:0;
     cursor: pointer;
+    background: url(../images/navBtn_03.png) no-repeat ;
+    background-position: center;
+    background-size: 0.613333rem 0.4rem;
     background-color: inherit;
-}
-.icon-bar{
-    display:block;
-    font-size: 0;
-    width:0.613333rem;
-    height:0.093333rem;
-    background-color: #fff;
-}
-.icon-bar+.icon-bar{
-    margin-top:0.093333rem;
 }
 /****************************
 ******移动端侧栏*
@@ -420,22 +414,25 @@ button.unCBtn{
 }
 .chapter-info span{
     font-size: 0.333333rem;
-    line-height: 0.44rem;
+    line-height: 0.5rem;
+    height:0.5rem;
 }
 .chapter-info a{
     color:#a7a7a7;
+   /* display:inline-block;*/
 }
 .chapter-info .text-ellipsis{
     display:inline-block;
     max-width: 2.133333rem;
+    vertical-align: bottom;
 }
 .cha-icon{
     display:inline-block;
     vertical-align: bottom;
     margin-left: 0.4rem;
     margin-right: 0.066667rem;
-    width:0.44rem;
-    height:0.44rem;
+    width:0.5rem;
+    height:0.5rem;
     background:url(../images/cp_03.png) no-repeat;
     background-size: 100% 100%;
 }
@@ -693,6 +690,15 @@ textarea.form-control{
     font-size: 0.32rem;
     color:#a7a7a7;
     margin-bottom: 0.373333rem;
+}
+.post-info .text-ellipsis{
+    display:inline-block;
+    max-width: 2.133333rem;
+    vertical-align: bottom;
+}
+.postIn{
+    display:inline-block;
+    margin:0 0.133333rem;
 }
 .post-info a{
     color:#a7a7a7;
