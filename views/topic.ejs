@@ -1,5 +1,5 @@
 <%- include base/header.ejs %>
-			<div class="main main-page">
+			<div class="main">
 				<div class="post-detail">
                     <div class="post-md">
                         <h1 class="post-title"><%-result.title%></h1>
@@ -21,7 +21,7 @@
                         <div class="post-cm-group">
                             <div class="post-cm-item">
                                 <div class="post-cm-info clearfix">
-                                    <span><a href="" title=""></a></span>
+                                    <span><a href="#?" title=""></a></span>
                                     <span class="post-cm-time"></span>
                                 </div>
                                 <div class="post-cm-content"></div>
@@ -47,7 +47,7 @@
 			{{each reply as item i}}
 			<div class="post-cm-item">
 				<div class="post-cm-info clearfix">
-					<span><a href="" title="{{item.nickname}}">{{item.nickname}}</a></span>
+					<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 					<span class="post-cm-time">{{item.createTime}}</span>
 				</div>
 				<div class="post-cm-content">{{item.text}}</div>
@@ -73,6 +73,10 @@
 				myReplyForm: $(".post-detail-form"),
 				myReplyContent: $(".post-detail-form").children('textarea'),
 				myReplyBtn: $('#myReplyBtn'),
+                isSticky:0,
+                setStickyData:function(){
+                    this.isSticky = parseInt("<%=result.sticky%>");
+                },
 				verificate: function() {
 					if (this.myReplyContent.val().length < 1) {
 						sweetAlert('格式错误', '回复内容不能为空', 'warning');
@@ -109,7 +113,7 @@
 							}
 							self.pageCount = data.data.pageCount;
 						} else {
-							self.reply_md.html("");
+							self.reply_md.remove();
 						}
 					});
 				},
@@ -122,6 +126,11 @@
 						if (data.ret == 200 && data.data) {
                             if (data.data.stickyRight == 1) {
                                 self.post_up.css('display', 'inline-block');
+                                if (self.isSticky) {
+                                    self.post_up.text("取消置顶");
+                                } else{
+                                    self.post_up.text("置顶");
+                                }
                             } else{
                                 self.post_up.remove();
                             }
@@ -134,6 +143,9 @@
                                 self.post_delete.css('display', 'inline-block');
                             } else{
                                 self.post_delete.remove();
+                            }
+                            if (!data.data.stickyRight && !data.data.editRight && !data.data.deleteRight) {
+                                self.post_opt.remove();
                             }
 						} 
 					});
@@ -151,18 +163,20 @@
 								post_id: postid
 							}, function(data) {
 								if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+                                    if (self.currentpage == self.pageCount) {
+                                        self.next.removeClass('unCBtn');
+                                    }
 									self.currentpage -= 1;
 									var compiled = template("listtemplate", data.data);
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
-									self.next.removeClass('unCBtn');
                                     if (data.data.currentPage == 1) {
                                         self.pre.addClass('unCBtn');
                                     } 
 									var postComY = $(".post-comment").offset().top;
-									//var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
-									$(window).scrollTop(postComY);
+									var scroollY =  postComY-$(".navbar").height() ;
+									$(window).scrollTop(scroollY);
 								}
 							});
 						}
@@ -178,26 +192,84 @@
 								post_id: postid
 							}, function(data) {
 								if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+                                    if (self.currentpage == 1) {
+                                        self.pre.removeClass('unCBtn');
+                                    }
 									self.currentpage += 1;
 									var compiled = template("listtemplate", data.data);
 									self.reply_main.html(compiled);
 									self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 									self.loading.hide();
-									self.pre.removeClass('unCBtn');
                                     if (data.data.currentPage == data.data.pageCount) {
                                         self.next.addClass('unCBtn');
                                     }
 									var postComY = $(".post-comment").offset().top;
-									//var scroollY =  mobile == true ? postComY-$(".navbar-header").height() : postComY;
-									$(window).scrollTop(postComY);
+									var scroollY =  postComY-$(".navbar").height() ;
+									$(window).scrollTop(scroollY);
 								}
 							});
 						}
 					});
                     self.post_up.on("click",function(){
+                        switch(self.isSticky){
+                            // 还未置顶，帖子置顶操作
+                            case 0:
+                            $.ajax({
+                                type:"post",
+                                url:"/api/stickyPost",
+                                async:true,
+                                data:{
+                                    user_id:localStorage.getItem("userID"),
+                                    post_id: postid
+                                },
+                                success:function(data){
+                                    console && console.log(data);
+                                    if (data.data.code == 0 && data.data.msg) {
+                                        sweetAlert('提示', data.data.msg, 'warning');
+                                    } else if(data.data.code == 1){
+                                        self.isSticky = 1;
+                                        self.post_up.text("取消置顶");
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                            break;
+                            // 已经置顶，取消置顶
+                            case 1:
+                            $.ajax({
+                                type:"post",
+                                url:"/api/unstickyPost",
+                                async:true,
+                                data:{
+                                    user_id:localStorage.getItem("userID"),
+                                    post_id: postid
+                                },
+                                success:function(data){
+                                    console && console.log(data);
+                                    if (data.data.code == 0 && data.data.msg) {
+                                        sweetAlert('提示', data.data.msg, 'warning');
+                                    } else if(data.data.code == 1){
+                                        self.isSticky = 0;
+                                        self.post_up.text("置顶");
+                                    }
+                                },
+                                error: function(x, h, r) {
+                                    console && console.log(x, h, r);
+                                }
+                            });
+                            break;
+                            default:
+                            console.log(self.isSticky);
+                            sweetAlert('提示', "无操作权限", 'warning');
+                            break;
+                        }
+                    });
+                    self.post_delete.on("click",function(){
                         $.ajax({
                             type:"post",
-                            url:"/api/stickyPost",
+                            url:"/api/deletePost",
                             async:true,
                             data:{
                                 user_id:localStorage.getItem("userID"),
@@ -208,7 +280,7 @@
                                 if (data.data.code == 0 && data.data.msg) {
                                     sweetAlert('提示', data.data.msg, 'warning');
                                 } else if(data.data.code == 1){
-                                    self.post_up.text("取消置顶");
+                                    window.location.href = '/group/' + '<%=result.groupID%>';
                                 }
                             },
                             error: function(x, h, r) {
@@ -252,6 +324,7 @@
 					});
 				},
 				init: function() {
+                    this.setStickyData();
 					this.setReplyData();
 					this.setOptRightData();
 					this.bindEvent();
