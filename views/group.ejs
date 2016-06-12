@@ -16,9 +16,9 @@
                         <img src="images/chapter_03.png" alt="">
                    	</div>
                     <div class="chapter-info">
-                        <span><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
-                        <span>发表于</span>
-                        <span><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
+                        <span class="text-ellipsis"><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
+                        <span class="postIn">发表于</span>
+                        <span class="text-ellipsis"><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
                         <span class="cha-time"><%=item.createTime%></span>
                     </div>
                 </div>
@@ -46,9 +46,9 @@
 				<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 				<div class="chapter-text">{{#item.text}}</div>
 				<div class="chapter-info">
-					<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
-					<span>发表于</span>
-					<span><a href="/group/{{groupID}}" title="{{groupName}}">{{groupName}}</a></span>
+					<span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
+					<span class="postIn">发表于</span>
+					<span class="text-ellipsis"><a href="/group/{{groupID}}" title="{{groupName}}">{{groupName}}</a></span>
 					<span class="cha-time">{{item.createTime}}</span>
 				</div>
 			</div>
