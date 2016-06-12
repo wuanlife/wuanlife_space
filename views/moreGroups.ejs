@@ -1,7 +1,7 @@
  <%- include base/header.ejs %>
         <div class="main main-page">
             <div class="location clearfix">
-                <h1><a href="/" title="">我加入的星球</a></h1>
+                <h1><a href="/moreGroups/<%=userid%>" title="">我加入的星球</a></h1>
             </div>  
             <div class="myJoinMd">
             <%if(result.groups.length > 0){%>
@@ -35,7 +35,7 @@
                 <button type="button" id="next">下一页</button>
             </div>
             <div class="emptyPage" style="display:none;">
-                目前还没有星球哦~~
+                目前还没有加入任何星球哦~~
             </div>
         </div>
 <%- include base/baseJS.ejs %>
@@ -98,6 +98,8 @@
                                 self.joinPageCount = data.data.pageCount;
                                 console.log(self.joinPageCount);
                                 self.pageCount = self.pageCount>data.data.pageCount ? self.pageCount : data.data.pageCount;
+                            } else{
+                                self.myJoindMD.remove();
                             }
                             if (self.pageCount > 0 ) {
                                 self.page.text('1/' + self.pageCount);
