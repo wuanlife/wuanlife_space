@@ -17,7 +17,8 @@ router.get('/:userid', function(req, res, next) {
                     res.render(page, {
                         'path':'../',
                         result: result.data,
-                        'title':"我加入的星球"
+                        'title':"我加入的星球",
+                        'userid':req.param("userid")
                     });
                 }
             } else {
