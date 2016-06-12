@@ -41,6 +41,10 @@
                         sweetAlert("格式错误","只允许中文、数字、字母和下划线","warning");
                         return false;
                     }
+                    if (this.cpDes.val().length > 50){
+                        sweetAlert("格式错误","星球介绍不能超于50字","warning");
+                        return false;
+                    }
                     return true;
                 },
                 validateImg:function(data,filters){
