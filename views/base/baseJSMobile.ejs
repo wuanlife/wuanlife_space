@@ -36,7 +36,7 @@
                 var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
                 var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
                 var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
-                $(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+                $(".uil-default-css").attr('style', '-webkit-transform:scale(0.3);transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
             };
             //设置登录时页面状态
             var setLoginStatus = function() {
