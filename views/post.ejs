@@ -37,11 +37,13 @@
                 'aligncenter',
                 'alignright',
                 '|',
+                'img',
                 'link',
                 'emotion',
                 'undo',
                 'redo',
                 ];
+                editor.config.uploadImgUrl = '/post/<%=result%>';
                 editor.create();
                 $(".wangEditor-container").find('*').focus(function(event) {
                     /* Act on the event */
@@ -72,6 +74,17 @@
                     }
                     return true;
                 },
+                imgVerification:function(){
+                    var imgs = editor.$txt.find('img').length;
+                    var reg = /^data:/;
+                    for(var i=0;i<imgs;i++){
+                        var src = editor.$txt.find('img').eq(i).attr("src");
+                        if (reg.test(src)) {
+                            //console.log(src);
+                            return src;
+                        }
+                    }
+                },
                 bindEvent: function() {
                     var self = this;
                     self.postForm.submit(function(){
@@ -84,7 +97,8 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text: editor.$txt.html().trim()
+                                    text: editor.$txt.html().trim(),
+                                    p_image: self.imgVerification()
                                 },
                                 success: function(data) {
                                     console && console.log(data);

@@ -84,11 +84,13 @@
                                     'aligncenter',
                                     'alignright',
                                     '|',
+                                    'img',
                                     'link',
                                     'emotion',
                                     'undo',
                                     'redo',
                                     ];
+                                    editor.config.uploadImgUrl = '/postEdit/<%=result%>';
                                     editor.create();
                                     self.editorEvent();
                                     self.postTitle.val(data.data.title);
