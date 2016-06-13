@@ -115,5 +115,11 @@
             $(window).resize(function(event) {
                 global.setCenterLoadingDiv();
             });
+            $("input,textarea").focus(function(event){
+                $(".navbar").css("position","absolute");
+            });
+            $("input,textarea").blur(function(event){
+                $(".navbar").css("position","fixed");
+            });
         });
     </script>
