@@ -23,7 +23,8 @@ router.post('/:groupid', function(req, res, next) {
 			user_id: req.param('user_id'),
 			group_base_id: req.param('groupid'),
 			title: xss(req.param('title')),
-			text: xss(req.param('text'))
+			text: xss(req.param('text')),
+			p_image: req.param('p_image')
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
