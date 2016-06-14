@@ -45,7 +45,8 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text:  self.editor.val().trim()
+                                    text:  self.editor.val().trim(),
+                                    p_image:null
                                 },
                                 success: function(data) {
                                     console && console.log(data);

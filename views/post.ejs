@@ -56,6 +56,7 @@
             var post = {
                 title: $("#post-title"),
                 postForm: $(".post-form"),
+                imgArr:[],
                 verificate: function(){
                     if (this.title.val().length == 0) {
                         sweetAlert('格式错误', '请填写标题！', 'warning');
@@ -75,12 +76,15 @@
                     return true;
                 },
                 imgVerification:function(){
+                    var self = this;
                     var imgs = editor.$txt.find('img').length;
                     var reg = /^data:/;
                     for(var i=0;i<imgs;i++){
-                        var src = editor.$txt.find('img').eq(i).attr("src");
+                        var img = editor.$txt.find('img').eq(i);
+                        var src = img.attr("src");
                         if (reg.test(src)) {
-                            //console.log(src);
+                            self.imgArr.push(src);
+                            //console.log(self.imgArr);
                             return src;
                         }
                     }
@@ -97,8 +101,8 @@
                                 data: {
                                     user_id: localStorage.getItem("userID"),
                                     title: self.title.val(),
-                                    text: editor.$txt.html().trim(),
-                                    p_image: self.imgVerification()
+                                    p_image: self.imgVerification(),
+                                    text: editor.$txt.html().trim()
                                 },
                                 success: function(data) {
                                     console && console.log(data);
