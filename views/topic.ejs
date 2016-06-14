@@ -62,6 +62,7 @@
 				page: $(".page-turn").find('span').eq(0),
 				currentpage: 1,
 				pageCount: 0,
+                postImg:$(".post-content").find('img:not([src^="http://img.t.sinajs.cn"])'),
 				loading: $(".loading"),
 				reply_md: $(".post-comment"),
 				reply_main: $(".post-cm-group"),
@@ -74,8 +75,27 @@
 				myReplyContent: $(".post-detail-form").children('textarea'),
 				myReplyBtn: $('#myReplyBtn'),
                 isSticky:0,
+                p_image:[],
                 setStickyData:function(){
                     this.isSticky = parseInt("<%=result.sticky%>");
+                },
+                setImage:function(){ 
+                    var self = this;
+                    var json = '<%-JSON.stringify(result.p_image)%>'
+                    json = JSON.parse(json);
+                    //console.log(json);
+                    self.p_image = json;
+                    //console.log(self.p_image[0]);
+                    var imgNum = self.postImg.length;
+                    for(var i=0;i<imgNum;i++){
+                        var img = self.postImg.eq(i);
+                        var src = self.p_image[i].URL;
+                        var imgId = self.p_image[i].id;
+                        img.attr({
+                            src: src,
+                            id: imgId
+                        });
+                    }
                 },
 				verificate: function() {
 					if (this.myReplyContent.val().length < 1) {
@@ -325,6 +345,7 @@
 				},
 				init: function() {
                     this.setStickyData();
+                    this.setImage();
 					this.setReplyData();
 					this.setOptRightData();
 					this.bindEvent();
