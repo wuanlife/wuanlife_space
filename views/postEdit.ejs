@@ -10,6 +10,7 @@
                         <textarea name="" class="form-control" id="textareaPC">
                             
                         </textarea>
+                        <div class="getContent" style="display:none;"></div>
                     </div>
                     <button type="submit" class="post-sub" id="post-issue">发表</button>
                 </form>  
@@ -23,6 +24,22 @@
                 postTitle:$("#post-title"),
 				title: $("#post-title"),
 				postForm: $(".post-form"),
+                getContent:$(".getContent"),
+                p_image:[],
+                setImage:function(imgs,imageData){ 
+                    var self = this;
+                    self.p_image = imageData;
+                    var imgNum = imgs.length;
+                    for(var i=0;i<imgNum;i++){
+                        var img = imgs.eq(i);
+                        var src = self.p_image[i].URL;
+                        var imgId = self.p_image[i].id;
+                        img.attr({
+                            src: src,
+                            id: imgId
+                        });
+                    }
+                },
 				verificate: function() {
 					if (this.title.val().length == 0) {
 						sweetAlert('格式错误', '请填写标题！', 'warning');
@@ -64,7 +81,11 @@
                             success: function(data) {
                                 console && console.log(data);
                               if (data.ret == 200 && data.data && data.data.editRight == 1){
-                                    self.PCtext.html(data.data.text);
+                                    self.getContent.html(data.data.text);
+                                    var imgs = self.getContent.find('img:not([src^="http://img.t.sinajs.cn"])');
+                                    self.setImage(imgs, data.data.p_image);
+                                    self.PCtext.html(self.getContent.html());
+                                    self.getContent.remove();
                                     //禁止输出log调试
                                     wangEditor.config.printLog = false;
                                     editor = new wangEditor("textareaPC");
@@ -101,9 +122,27 @@
                             }
                     });
                 },
+                getDeleteImg:function(){
+                    var self = this;
+                    var imgs = editor.$txt.find('img[src^="http://dev.wuanlife.com:800"]');
+                    //console.log(imgs[0]);
+                    var retainImg = [];
+                    var deleteImg = [];
+                    for(var i=0;i<imgs.length;i++){
+                        retainImg.push(parseInt(imgs.eq(i).attr('id')));
+                    }
+                    for(var j=0;j<self.p_image.length;j++){
+                        var originId = parseInt(self.p_image[j].id);
+                        if ($.inArray(originId, retainImg)<0) {
+                            deleteImg.push(originId);
+                        }
+                    }
+                    console.log(deleteImg);
+                },
 				bindEvent: function() {
 					var self = this;
 					self.postForm.submit(function() {
+                        self.getDeleteImg();
 						event.preventDefault();
 						if (self.verificate()) {
 							$.ajax({
