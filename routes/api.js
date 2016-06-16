@@ -197,7 +197,6 @@ router.get('/:method', function(req, res, next) {
 router.post('/:method', function(req, res, next) {
 	var data = {};
 	switch (req.params.method) {
-
 		case 'stickyPost':
 			request.post({
         			url: config.server + '?service=Post.StickyPost',
