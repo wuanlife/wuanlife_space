@@ -25,6 +25,7 @@ var isLogin = require('./routes/isLogin');
 var postReply = require('./routes/postReply');
 var moreGroups = require('./routes/moreGroups');
 var test = require('./routes/test');
+var uptoken = require('./routes/uptoken');
 
 
 var app = express();
@@ -90,6 +91,7 @@ app.use('/isLogin',isLogin);
 app.use('/postReply',postReply);
 app.use('/moreGroups',moreGroups);
 app.use('/test',test);
+app.use('/uptoken',uptoken);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
