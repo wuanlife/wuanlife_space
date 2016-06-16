@@ -1,7 +1,7 @@
 <%- include base/header.ejs %>
         <div class="main main-page">
             <div class="location clearfix">
-                <h1><a href="/" title="">首页</a></h1>
+                <h1><a href="/" title="首页">首页</a></h1>
             </div>   
             <%if(result.posts.length > 0){%>
             <div class="chapter-col">
@@ -9,11 +9,6 @@
                 <div class="chapter">
                     <h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
                     <div class="chapter-text"><%-item.text%></div>
-                    <div class="chapter-img clearfix">
-                        <img src="images/chapter_03.png" alt="">
-                        <img src="images/chapter_03.png" alt="">
-                        <img src="images/chapter_03.png" alt="">
-                   </div>
                     <div class="chapter-info">
                         <span class="text-ellipsis"><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
                         <span class="postIn">发表于</span>
@@ -44,11 +39,6 @@
         		<div class="chapter">
 					<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 					<div class="chapter-text">{{#item.text}}</div>
-					<div class="chapter-img clearfix">
-                        <img src="images/chapter_03.png" alt="">
-                        <img src="images/chapter_03.png" alt="">
-                        <img src="images/chapter_03.png" alt="">
-                   </div>
 					<div class="chapter-info">
 						<span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 						<span class="postIn">发表于</span>
