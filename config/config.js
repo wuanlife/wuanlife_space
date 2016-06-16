@@ -11,7 +11,12 @@ var config = {
         port: process.env.PORT || 3000,
         db: 'mongodb://localhost:27017/test-app',
         //server: 'http://www.wuanla.com:800/'
-        server: 'http://dev.wuanlife.com:800/'
+        server: 'http://dev.wuanlife.com:800/',
+        'ACCESS_KEY': 'fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs',
+        'SECRET_KEY': 'GWhI_igD2NcqaomXi0fv8R_j8fnGVvH6tJPLwLFk',
+        'Bucket_Name': 'wuanlife',
+        'Uptoken_Url': 'uptoken',
+        'Domain': 'http://qiniu-plupload.qiniudn.com/'
     },
 
     test: {
