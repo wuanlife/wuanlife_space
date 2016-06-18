@@ -28,6 +28,13 @@
                         <span class="cha-time"><%=item.createTime%></span>
                     </div>
                     <div class="chapter-text"><%-item.text%></div>
+                    <%if(item.image.length >0){%>
+                    <div class="chapter-img clearfix">
+                        <%for(var i=0;i<item.image.length;i++){%>
+                        <img src="<%-item.image[i]%>?imageView2/1/w/200/h/200" alt="">
+                        <%}%>
+                    </div>
+                    <%}%>
                 </div>
                 <% }); %>
             </div>
@@ -55,8 +62,18 @@
                         <span class="cha-time">{{item.createTime}}</span>
                     </div>
                     <div class="chapter-text">{{#item.text}}</div>
+                    {{if item.image.length}}
+                        {{include 'imgtemplate' item}}
+                    {{/if}}
                 </div>
             {{/each}}
+        </script>
+        <script type="text/html" id="imgtemplate">
+            <div class="chapter-img clearfix"> 
+            {{each image as item i}}
+                <img src="{{item}}?imageView2/1/w/200/h/200" alt="">
+            {{/each}}  
+            </div>
         </script>
         <script type="text/html" id="Groupstemplate">
             {{each groups as item i}}

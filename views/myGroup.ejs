@@ -19,6 +19,13 @@
 				<div class="chapter">
 					<h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
 					<div class="chapter-text"><%-item.text%></div>
+					<%if(item.image.length >0){%>
+                    <div class="chapter-img clearfix">
+                        <%for(var i=0;i<item.image.length;i++){%>
+                        <img src="<%-item.image[i]%>?imageView2/1/w/100/h/100" alt="">
+                        <%}%>
+                    </div>
+                    <%}%>
 					<div class="chapter-info">
 						<span class="text-ellipsis"><a href="" title=""><%=item.nickname%></a></span>
 						<span class="postIn">发表于</span>
@@ -46,6 +53,9 @@
 			<div class="chapter">
 				<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
 				<div class="chapter-text">{{#item.text}}</div>
+				{{if item.image.length}}
+                    {{include 'imgtemplate' item}}
+                {{/if}}
 				<div class="chapter-info">
 					<span class="text-ellipsis"><a href="#?" title="">{{item.nickname}}</a></span>
 					<span class="postIn">发表于</span>
@@ -55,6 +65,13 @@
 			</div>
 			{{/each}}
 		</script>
+		<script type="text/html" id="imgtemplate">
+            <div class="chapter-img clearfix"> 
+            {{each image as item i}}
+                <img src="{{item}}?imageView2/1/w/100/h/100" alt="">
+            {{/each}}  
+            </div>
+        </script>
 		<script type="text/html" id="Groupstemplate">
 			{{each groups as item i}}
 				<li class="planetTag col-sm-3"><a href="/group/{{item.id}}" title="{{item.name}}" class="text-ellipsis">{{item.name}}</a></li>
