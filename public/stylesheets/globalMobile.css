@@ -380,18 +380,19 @@ button.unCBtn{
 /*列表正文*/
 .chapter-text{
     font-size: 0.373333rem;
-    margin-bottom: 0.231481rem;
+   /* margin-bottom: 0.231481rem;*/
     color:#5c5c5c;
     word-wrap: break-word;
 }
 /*列表图片*/
 .chapter-img{
-    margin-bottom: 0.44rem;
     position:relative;
 }
 .chapter-img img{
     width:2.133333rem;
     height:2.133333rem;
+    margin-bottom: 0.2rem;
+    margin-top: 0.231481rem;
 }
 .chapter-img img:first-child{
     float:left;

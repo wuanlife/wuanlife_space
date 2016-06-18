@@ -243,15 +243,14 @@ button.unCBtn{
 /*列表图片*/
 .chapter-img{
     position: relative;
-    margin-bottom: 10px;
 }
 .chapter-img img{
     width:100px;
     height:100px;
     float:left;
     margin-right: 35px;
+    margin-bottom: 10px;
 }
-
 /*列表信息*/
 .chapter-info{
     font-size: 12px;
