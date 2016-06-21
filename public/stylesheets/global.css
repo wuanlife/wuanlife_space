@@ -531,6 +531,9 @@ textarea.form-control{
     color:#4d4d4d;
     margin-bottom: 23px;
 }
+.post-content img{
+    max-width: 100%;
+}
 /*帖子操作*/
 .post-opt{
     margin-right: -5px;

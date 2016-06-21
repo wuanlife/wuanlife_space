@@ -713,6 +713,9 @@ textarea.form-control{
     color:#5c5c5c;
     margin-bottom: 0.866667rem;
 }
+.post-content img{
+    max-width: 100%;
+}
 .post-opt{
     margin-right: -0.186667rem;
     margin-left: -0.186667rem;
