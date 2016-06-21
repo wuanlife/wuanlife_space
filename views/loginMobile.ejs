@@ -22,6 +22,7 @@
                 email: $("#email"),
                 pw: $("#pw"),
                 loginform: $(".login-form"),
+                main:$(".main"),
                 verificate: function() {
                     var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
                     if (!myreg.test(this.email.val())) {
@@ -33,6 +34,10 @@
                         return false;
                     }
                     return true;
+                },
+                setMainHeight:function(){
+                     windowHeight = $(window).height();
+                     this.main.css('minHeight', windowHeight);
                 },
                 bindEvent: function() {
                     var self = this;
@@ -67,6 +72,7 @@
                     });
                 },
                 init: function() {
+                    this.setMainHeight();
                     this.bindEvent();
                 }
             }
