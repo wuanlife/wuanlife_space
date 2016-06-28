@@ -162,8 +162,8 @@
                             success: function(data) {
                                 console && console.log(data);
                               if (data.ret == 200 && data.data && data.data.editRight == 1){
-                                    self.PCtext.html(data.data.text);
-                                    console.log(self.PCtext.html());
+                                    //self.PCtext.html(data.data.text);
+                                    //console.log(self.PCtext.html());
                                     //禁止输出log调试
                                     wangEditor.config.printLog = false;
                                     editor = new wangEditor("textareaPC");
@@ -192,6 +192,7 @@
                                     editor.config.customUpload = true;
                                     editor.config.customUploadInit = uploadInit;
                                     editor.create();
+                                    editor.$txt.html(data.data.text);
                                     self.editorEvent();
                                     self.postTitle.val(data.data.title);
                                 }
