@@ -191,9 +191,10 @@ ul{
     line-height: 0.509259rem;
     margin:0 auto;
 }
-a.navbar-account-item{
+a.navbar-account-item,button.navbar-account-item{
     background-color: #fff;
     color:#53aaeb;
+    font-size: 0.462963rem; 
 }
 span.navbar-account-item{
     background-color: #5ab8fe;
