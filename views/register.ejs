@@ -29,7 +29,7 @@
                     var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
                     var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
                     if (this.nickname.val().length == 0 || this.nickname.val().length>18) {
-                        sweetAlert('格式错误', '请输入1-18位字符做为昵称！', 'warning');
+                        sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
                         return false;
                     }
                     if (!myregName.test(this.nickname.val())){
@@ -44,8 +44,8 @@
                         sweetAlert('格式错误', '请填写密码！', 'warning');
                         return false;
                     }
-                    if (this.pw.val().length<8 || this.pw.val().length>20){
-                        sweetAlert('格式错误', '请填写8-20位密码', 'warning');
+                    if (this.pw.val().length<6 || this.pw.val().length>20){
+                        sweetAlert('格式错误', '请填写6-20位密码', 'warning');
                         return false;
                     }
                     return true;
