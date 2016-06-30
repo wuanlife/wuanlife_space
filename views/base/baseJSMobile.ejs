@@ -58,7 +58,6 @@
                 bindEvent: function() {
                     var self = this;
                     self.logout.on("touchend", function(event) {
-                        event.preventDefault();
                         $.ajax({
                             type: "get",
                             async: true,
