@@ -193,6 +193,12 @@
 								}, function(data) {
 									console.log(data);
 									if (data.ret == 200 && data.data && data.data.code == 1) {
+										sweetAlert({
+										title:'提示',
+										text:'加入成功',
+										type:'success',
+										timer:2000
+										});
 										self.joinBtn.text('+发帖'); //加入成功
 										self.isjoin = 1;
 									}
