@@ -13,13 +13,20 @@ router.get('/:postid', function(req, res, next) {
 });
 
 router.post('/:postid', function(req, res, next) {
+	var html = xss(req.param('text'),{
+		onTag:function(tag,html,options){
+			if (tag == "strike") {
+				return html;
+			}
+		}
+	});
 	request.post({
 		url: config.server + '?service=Post.editPost',
 		formData: {
 			user_id: req.param('user_id'),
 			post_id: req.param('postid'),
 			title: xss(req.param('title')),
-			text: xss(req.param('text'))
+			text: html
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
