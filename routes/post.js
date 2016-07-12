@@ -17,13 +17,21 @@ router.get('/:groupid', function(req, res, next) {
 });
 
 router.post('/:groupid', function(req, res, next) {
+	var html = xss(req.param('text'),{
+		onTag:function(tag,html,options){
+			if (tag == "strike") {
+				return html;
+			}
+		}
+	});
 	request.post({
 		url: config.server + '?service=Group.Posts',
 		formData: {
 			user_id: req.param('user_id'),
 			group_base_id: req.param('groupid'),
 			title: xss(req.param('title')),
-			text: xss(req.param('text'))
+			// text: xss(req.param('text'))
+			text:html
 			// p_image: req.param('p_image')
 		}
 	}, function optionalCallback(err, httpResponse, body) {
