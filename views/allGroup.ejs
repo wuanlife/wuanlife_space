@@ -132,12 +132,13 @@
                         
                     });
                     self.createPBtn.on("click",function(event){
-                        event.preventDefault();
-                        if (localStorage.getItem("userName")!=null){
-                            window.location.href = '/createGroup';
-                        } else {
-                            window.location.href = '/login';
-                        }
+                        // event.preventDefault();
+                        // if (localStorage.getItem("userName")!=null){
+                        //     window.location.href = '/createGroup';
+                        // } else {
+                        //     window.location.href = '/login';
+                        // }
+                        window.location.href = '/createGroup';
                     });
                 },
                 init: function() {

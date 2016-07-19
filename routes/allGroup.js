@@ -17,11 +17,20 @@ router.get('/', function(req, res, next) {
 				res.render(page, {
 					'path':'',
 					result: result.data,
-					'title':'全部星球'
+					'title':'全部星球',
+					'user':req.session.user
+				});
+			} else{
+				res.render('error', {
+					'message': data.msg,
+					error: {
+						'status': data.ret,
+						'stack': ''
+					}
 				});
 			}
 		} else {
-			console.error('allGroup failed:', err);
+			console.error('allGroup failed:', error);
 			next(error);
 		}
 	})

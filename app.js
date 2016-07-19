@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 // var session = require('express-session');
 // var RedisStore = require('connect-redis')(session);
 
@@ -26,6 +28,8 @@ var postReply = require('./routes/postReply');
 var moreGroups = require('./routes/moreGroups');
 var test = require('./routes/test');
 var uptoken = require('./routes/uptoken');
+var config = require('./config/config');
+var mongodb = require('./models/db.js');
 
 
 var app = express();
@@ -57,6 +61,14 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: config.db.cookieSecret,
+  key: config.db.db,//cookie name
+  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+  store: new MongoStore({
+    url: 'mongodb://localhost/wuanDB'
+  })
+}));
 
 
 app.use('/api/', api);

@@ -195,6 +195,8 @@
                                     editor.$txt.html(data.data.text);
                                     self.editorEvent();
                                     self.postTitle.val(data.data.title);
+                                } else{
+                                    window.location.href = '/404';
                                 }
                             },
                             error: function(x, h, r) {

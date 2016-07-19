@@ -13,11 +13,11 @@ router.get('/', function(req, res, next) {
 			var data = JSON.parse(body);
 			if (data.ret == 200) {
 				var page = agent.Mobile ? 'indexMobile' : 'index';
-				// console.log(page);
 				res.render(page, {
 					'path':'',
 					'result': data.data,
-					'title':'首页'
+					'title':'首页',
+					'user':req.session.user
 				});
 			} else {
 				res.render('error', {

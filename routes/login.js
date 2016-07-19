@@ -8,7 +8,7 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
 	var page = agent.Mobile ? 'loginMobile' : 'login';
-	res.render(page, {'path':'','title':'登录'});
+	res.render(page, {'path':'','title':'登录','user':req.session.user});
 });
 router.post('/', function(req, res, next) {
 	request.post({
@@ -26,15 +26,14 @@ router.post('/', function(req, res, next) {
 				err: err
 			});
 		}
-
-		// req.session.regenerate(function(){
-  //         req.session.user = JSON.parse(body).data.info;;
-  //         req.session.save();  //保存一下修改后的Session
-  //     });
-		console.log('Login successful!  Server responded with:', JSON.parse(body));
-		res.header('Content-type', 'application/json');
-		res.header('Charset', 'utf8');
-		res.send(JSON.parse(body));
+		req.session.regenerate(function() {
+			req.session.user = JSON.parse(body).data.info;
+			req.session.save(); //保存一下修改后的Session
+			console.log('Login successful!  Server responded with:', body);
+			res.header('Content-type', 'application/json');
+			res.header('Charset', 'utf8');
+			res.send(JSON.parse(body));
+		});
 	});
 
 });

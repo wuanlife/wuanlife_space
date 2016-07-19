@@ -1,7 +1,11 @@
 <%- include base/header.ejs %>
 	<div class="main main-page">
 		<div class="location clearfix">
+			<% if (user) { %>
 			<h1><a href="/myGroup/<%=userid%>" title="">我的星球</a></h1>
+			<% } else { %>
+			<h1><a href="/myGroup/<%=userid%>" title="">他的星球</a></h1>
+			<% } %>
 		</div>
 		<div class="myPGroup" id="myJoind" style="display:none;">
                 <h2>已加入 <a href="/moreGroups/<%=userid%>" title=""></a></h2>
@@ -123,7 +127,7 @@
 					var flagJ = 0;
 					var flagC = 0;
 					self.getCreateData({
-						user_id:localStorage.getItem("userID")
+						user_id:parseInt("<%=userid%>")
 					},function(data){
 						if (data.ret == 200 && data.data) {
 							//console.log(data.data.groups.length);
@@ -144,7 +148,7 @@
 						}
 					});
 					self.getJoindData({
-						user_id:localStorage.getItem("userID")
+						user_id:parseInt("<%=userid%>")
 					},function(data){
 						if (data.ret == 200 && data.data) {
 							//console.log(data.data.groups.length);

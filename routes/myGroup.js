@@ -20,7 +20,8 @@ router.get('/:userid', function(req, res, next) {
 							'path':'../',
 							result: result.data,
 							'title':'我的星球',
-							'userid':req.param("userid")
+							'userid':req.param("userid"),
+							'user':req.session.user
 						});
 					}
 				}

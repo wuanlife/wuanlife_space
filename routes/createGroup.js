@@ -8,9 +8,17 @@ var formidable = require("formidable");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	var agent = ua(req.headers['user-agent']);
-	var page = agent.Mobile ? 'createGroupMobile' : 'createGroup';
-	res.render(page, {'path':'','title':'创建星球'});
+	if (req.session.user) {
+		var agent = ua(req.headers['user-agent']);
+		var page = agent.Mobile ? 'createGroupMobile' : 'createGroup';
+		res.render(page, {
+			'path': '',
+			'title': '创建星球',
+			'user':req.session.user
+		});
+	} else{
+		res.redirect('/login');
+	}
 });
 router.post('/', function(req, res, next) {
 	// var body = req.param('g_image'),
