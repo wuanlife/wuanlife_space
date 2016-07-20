@@ -4,7 +4,7 @@ var request = require('request');
 var config = require('../config/config');
 var ua = require('mobile-agent');
 var xss = require('xss');
-var formidable = require("formidable");
+// var formidable = require("formidable");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
 		url: config.server + '?service=Group.Create',
 		formData: {
 			name: req.param('name'),
-			user_id: req.param('user_id'),
+			user_id: req.session.user.userID,
 			g_image:req.param('g_image'),
 			g_introduction:xss(req.param('g_introduction'))
 		}
@@ -48,7 +48,6 @@ router.post('/', function(req, res, next) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
 		res.send(JSON.parse(body));
-		// res.render('/planetDetail/2' {});
 	});
 })
 module.exports = router;
