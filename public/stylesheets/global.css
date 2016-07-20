@@ -163,7 +163,7 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe; 
 }
-.location>button{
+.location>button,.location>a{
     display:inline-block;
     font-size: 18px;
     padding:4px 27px; 
