@@ -88,7 +88,7 @@
                        // printLog(sourceLink);
                         console.log(sourceLink);
                         var url = 'url(' + sourceLink + ')';
-                        // 插入图片到editor
+                        // 设置图片为背景
                         $("#upImgBtn").html("");
                         $("#upImgBtn").css('background-image', url);
                     },
@@ -208,7 +208,6 @@
                                 async: true,
                                 data:{
                                     name: self.pName.val(),
-                                    user_id: localStorage.getItem("userID"),
                                     g_introduction: self.cpDes.val().trim(),
                                     g_image: self.imgData
                                     //g_image:self.upImg[0].value
@@ -220,7 +219,6 @@
                                             sweetAlert('提示', data.data.msg, 'warning');
                                         } else {
                                             window.location.href = '/group/' + data.data.info.group_base_id;
-                                            //console.log(data.data.group_base_id);
                                         }
                                     }
                                 },
@@ -238,7 +236,6 @@
                     // });
                 },
                 init: function(){
-                    global.GotoIndex();
                     this.bindEvent();
                 }
             }

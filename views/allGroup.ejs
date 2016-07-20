@@ -2,7 +2,7 @@
         <div class="main main-page">
             <div class="location clearfix">
                 <h1><a href="/allGroup" title="">全部星球</a></h1>
-                <button type="button" id="cpBtn">创建星球</button>
+                <a href="/createGroup" title="创建星球">创建星球</a>
             </div>  
             <%if(result.lists.length > 0){%>
             <div class="planet"> 
@@ -55,10 +55,8 @@
                 next: $(".page-turn").find('button').last(),
                 page: $(".page-turn").find('span').eq(0),
                 main: $(".planetList"),
-                cpBtn: $("#cpBtn"),
                 nav_planetA: $("#nav-allP").children("a"),
                 loading: $(".loading"),
-                createPBtn: $(".location").children("button"),
                 currentpage: 1,
                 pageCount: 0,
                 ClientData: function() {
@@ -130,15 +128,6 @@
                             });
                         }
                         
-                    });
-                    self.createPBtn.on("click",function(event){
-                        // event.preventDefault();
-                        // if (localStorage.getItem("userName")!=null){
-                        //     window.location.href = '/createGroup';
-                        // } else {
-                        //     window.location.href = '/login';
-                        // }
-                        window.location.href = '/createGroup';
                     });
                 },
                 init: function() {
