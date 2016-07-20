@@ -2,18 +2,18 @@
 	<div class="main main-page">
 		<div class="location clearfix">
 			<% if (user) { %>
-			<h1><a href="/myGroup/<%=userid%>" title="">我的星球</a></h1>
+			<h1><a href="/uGroup/<%=userid%>" title="">我的星球</a></h1>
 			<% } else { %>
-			<h1><a href="/myGroup/<%=userid%>" title="">他的星球</a></h1>
+			<h1><a href="/uGroup/<%=userid%>" title="">他的星球</a></h1>
 			<% } %>
 		</div>
 		<div class="myPGroup" id="myJoind" style="display:none;">
-                <h2>已加入 <a href="/moreGroups/<%=userid%>" title=""></a></h2>
+                <h2>已加入 <a href="/uGroup/<%=userid%>/moreGroups" title=""></a></h2>
                 <ul class="planetTags clearfix">
                 </ul>
          </div>
             <div class="myPGroup" id="myCreate" style="display:none;">
-                <h2>已创建 <a href="/moreGroups/<%=userid%>" title=""></a></h2>
+                <h2>已创建 <a href="/uGroup/<%=userid%>/moreGroups" title=""></a></h2>
                 <ul class="planetTags clearfix">
                 </ul>
             </div>
@@ -180,7 +180,7 @@
 							self.loading.show();
 							self.getServerData({
 								currentpage: self.currentpage - 1,
-								userId: localStorage.getItem("userID")
+								userId: parseInt("<%=userid%>")
 							}, function(data) {
 								if (data.ret == 200 && data.data) {
 									self.currentpage -= 1;
@@ -206,7 +206,7 @@
 							self.loading.show();
 							self.getServerData({
 								currentpage: self.currentpage + 1,
-								userId: localStorage.getItem("userID")
+								userId: parseInt("<%=userid%>")
 							}, function(data) {
 								if (data.ret == 200 && data.data) {
 									self.currentpage += 1;
