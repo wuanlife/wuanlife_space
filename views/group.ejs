@@ -72,13 +72,12 @@
 				next: $(".page-turn").find('button').last(),
 				page: $(".page-turn").find('span').eq(0),
 				main: $(".chapter-col"),
-				chapter_text: $(".chapter-text"),
 				joinBtn: $("#joinBtn"),
-				nav_logout: $("#nav-logout"),
 				loading: $(".loading"),
 				isjoin: 0,
 				currentpage: 1,
 				pageCount: 0,
+				user:'<%- JSON.stringify(user) %>',
 				ClientData: function() {
 					this.currentpage = parseInt('<%=result.currentPage%>');
 					this.pageCount = parseInt('<%=result.pageCount%>');
@@ -101,18 +100,12 @@
 							cb(data);
 						});
 				},
-				setChapterText:function(){
-					this.chapter_text.each(function() {
-						var text = $(this).text();
-						$(this).html(text);
-					});
-				},
 				setJoinBtnVal: function() {
 					var self = this;
-					if (localStorage.getItem("userID") != null) {
+					if (self.user) {
 						self.getJoinBtnVal({
 							groupid: parseInt("<%=result.groupID%>"),
-							userid: localStorage.getItem("userID")
+							userid: JSON.parse(self.user).userID
 						}, function(data) {
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
@@ -128,9 +121,6 @@
 				},
 				bindEvent: function() {
 					var self = this;
-					self.nav_logout.on("click", function() {
-						self.joinBtn.text('+加入');
-					});
 					self.pre.on("click", function(event) {
 						event.preventDefault();
 						if (self.currentpage == 1) {
@@ -185,11 +175,11 @@
 					});
 					self.joinBtn.on("click", function(event) {
 						event.preventDefault();
-						if (localStorage.getItem("userID") != null) {
+						if (self.user) {
 							if (self.isjoin == 0) {
 								self.getJoinPData({
 									groupid: parseInt("<%=result.groupID%>"),
-									userid: localStorage.getItem("userID")
+									userid: JSON.parse(self.user).userID
 								}, function(data) {
 									console.log(data);
 									if (data.ret == 200 && data.data && data.data.code == 1) {
@@ -214,7 +204,6 @@
 				},
 				init: function() {
 					this.ClientData();
-					//this.setChapterText();
 					this.setJoinBtnVal();
 					this.bindEvent();
 				}

@@ -1,7 +1,11 @@
  <%- include base/header.ejs %>
         <div class="main main-page">
             <div class="location clearfix">
-                <h1><a href="/moreGroups/<%=userid%>" title="">我加入的星球</a></h1>
+                <% if (user) { %>
+                <h1><a href="/uGroup/<%=userid%>/moreGroups" title="">我加入的星球</a></h1>
+                <% } else { %>
+                <h1><a href="/uGroup/<%=userid%>/moreGroups" title="">他加入的星球</a></h1>
+                <% } %>
             </div>  
             <div class="myJoinMd">
             <%if(result.groups.length > 0){%>
@@ -88,7 +92,7 @@
                         self.createPageCount = parseInt("<%=result.pageCount%>");
                     }
                     self.getJoindData({
-                        user_id:localStorage.getItem("userID")
+                        user_id:parseInt("<%=userid%>")
                     },function(data){
                         if (data.ret == 200 && data.data) {
                             if (data.data.groups.length>0) {
@@ -170,7 +174,7 @@
                                 } 
                             } else{
                                 self.getCreateData({
-                                    user_id:localStorage.getItem("userID"),
+                                    user_id:parseInt("<%=userid%>"),
                                     pn: self.currentpage - 1
                                 },function(data){
                                     if (data.ret == 200 && data.data){
@@ -190,7 +194,7 @@
                                 } 
                             } else{
                                 self.getJoindData({
-                                    user_id:localStorage.getItem("userID"),
+                                    user_id:parseInt("<%=userid%>"),
                                     pn: self.currentpage - 1
                                 },function(data){
                                     if (data.ret == 200 && data.data){
@@ -219,7 +223,7 @@
                                 } 
                             } else{
                                 self.getCreateData({
-                                    user_id:localStorage.getItem("userID"),
+                                    user_id:parseInt("<%=userid%>"),
                                     pn: self.currentpage + 1
                                 },function(data){
                                     if (data.ret == 200 && data.data){
@@ -239,7 +243,7 @@
                                 } 
                             } else{
                                 self.getJoindData({
-                                    user_id:localStorage.getItem("userID"),
+                                    user_id:parseInt("<%=userid%>"),
                                     pn: self.currentpage + 1
                                 },function(data){
                                     if (data.ret == 200 && data.data){
@@ -256,7 +260,6 @@
                     });
                 },
                 init:function(){
-                    global.GotoIndex();
                     this.setPageData();
                     this.bindEvent();
                 }
