@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 	var page = agent.Mobile ? 'registerMobile' : 'register';
 	res.render(page, {
 		'path':'',
-		'title':'注册'
+		'title':'注册',
+		'user':req.session.user
 	});
 });
 router.post('/', function(req, res, next) {
