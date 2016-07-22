@@ -175,7 +175,7 @@ ul{
 .navbar-option>li:nth-child(2) .navbar-option-item:before{
     background-image: url(../images/navbar-icons_06.png);
 }
-.navbar-option>li:nth-child(3) .navbar-option-item:before{
+.navbar-option>li:last-child .navbar-option-item:before{
     background-image: url(../images/navbar-icons_09.png);
 }
 /*折叠账户*/
@@ -215,16 +215,16 @@ span.navbar-account-item{
     width:0.518519rem;
     margin-right: 0.166667rem;
 }
-.navbar-account>li:nth-child(1) .navbar-account-item:before{
+.aNLog:nth-child(1) .navbar-account-item:before{
     background-image: url(../images/navbar-icons_02.png);
 }
-.navbar-account>li:nth-child(2) .navbar-account-item:before{
+.aNLog:nth-child(2) .navbar-account-item:before{
     background-image: url(../images/navbar-icons_04.png);
 }
-.navbar-account>li:nth-child(3) .navbar-account-item:before{
+.aLogged:nth-child(1) .navbar-account-item:before{
     background-image: url(../images/navbar-icons_05.png);
 }
-.navbar-account>li:nth-child(4) .navbar-account-item:before{
+.aLogged:nth-child(2) .navbar-account-item:before{
     background-image: url(../images/exit_03.png);
 }
 .nav-anone{
@@ -294,7 +294,7 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe; 
 }
-.location>button{
+.location>button,.location>a{
     display:inline-block;
     color:#f6fafb;
     font-size: 0.333333rem;
@@ -305,10 +305,10 @@ span.navbar-account-item{
     float:right;
     border-radius: 5px 5px;
 }
-[data-dpr="2"] .location>a{
+[data-dpr="2"] .location>a,[data-dpr="2"] .location>button{
     border-radius: 10px 10px;
 }
-[data-dpr="3"] .location>a{
+[data-dpr="3"] .location>a,[data-dpr="2"] .location>button{
     border-radius: 15px 15px;
 }
 /******************
