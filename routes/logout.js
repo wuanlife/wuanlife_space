@@ -9,19 +9,11 @@ router.get('/', function(req, res, next) {
         if (!error && response.statusCode == 200) {
             console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
             var data = JSON.parse(body);
-            if (data.ret == 200 && data.data.code == 1) {
+            if (data.ret == 200) {//操作成功或失败均注销成功
                 req.session.destroy(function() {
                     res.redirect('back');
                 });
-            } else {
-                res.render('error', {
-                    'message': data.msg,
-                    error: {
-                        'status': data.ret,
-                        'stack': ''
-                    }
-                });
-            }
+            } 
         } else {
             next(error);
         }

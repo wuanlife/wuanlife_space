@@ -22,9 +22,9 @@ router.get('/', function(req, res, next) {
 				});
 			} else{
 				res.render('error', {
-					'message': data.msg,
+					'message': result.msg,
 					error: {
-						'status': data.ret,
+						'status': result.ret,
 						'stack': ''
 					}
 				});
