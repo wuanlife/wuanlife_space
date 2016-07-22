@@ -72,17 +72,12 @@
                 next: $("#next"),
                 page: $(".page-turn").find('span').eq(0),
                 main: $(".chapter-col"),
-                chapter_text: $(".chapter-text"),
-                nav_home: $(".navbar-option").find('.navbar-option-item').eq(0),
                 loading: $(".loading"),
                 currentpage: 1,
                 pageCount: 0,
                 ClientData: function() {
                     this.currentpage = parseInt("<%=result.currentPage%>");
                     this.pageCount = parseInt("<%=result.pageCount%>");
-                },
-                navActive:function(){
-                    this.nav_home.addClass("navbar-active");
                 },
                 getServerData: function(param, cb) {
                     $.getJSON("api/getindex", param,
@@ -113,6 +108,8 @@
                                         self.pre.addClass('unCBtn');
                                     } 
                                     $(window).scrollTop(0);
+                                } else{
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }
@@ -138,6 +135,8 @@
                                         self.next.addClass('unCBtn');
                                     }
                                     $(window).scrollTop(0);
+                                } else{
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }

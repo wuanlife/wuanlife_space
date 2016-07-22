@@ -4,10 +4,10 @@
                 <h1>编辑帖子</h1>
             </div> 
             <div class="post">
-                <form class="post-form clearfix" action="/postEdit/<%=result%>" method="post">
-                    <input type="text" name="" value="" class="form-control" id="post-title">
+                <form class="post-form clearfix" action="/topic/<%=topicID%>/edit" method="post">
+                    <input type="text" name="title" value="" class="form-control" id="post-title">
                     <div class="wangEditor-pc-container" id="wangEditor-pc-container">
-                        <textarea name="" class="form-control" id="textareaPC">
+                        <textarea name="text" class="form-control" id="textareaPC">
                             
                         </textarea>
                     </div>
@@ -121,7 +121,10 @@
                 postTitle:$("#post-title"),
 				title: $("#post-title"),
 				postForm: $(".post-form"),
+                subBtn:$("#post-issue"),
 				verificate: function() {
+                    this.title.val(this.title.val().trim());
+                    editor.$txt.html(editor.$txt.html().trim());
 					if (this.title.val().length == 0) {
 						sweetAlert('格式错误', '请填写标题！', 'warning');
 						return false;
@@ -131,8 +134,7 @@
                         return false;
                     }
                     var imgs = editor.$txt.find('img').length;
-                    var iframes = editor.$txt.find('iframe').length;
-                    if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0&& imgs == 0 && iframes == 0) {
+                    if (editor.$txt.formatText().replace(/&nbsp;|\s/g,"").length == 0&& imgs == 0 ) {
                         sweetAlert('格式错误', '请填写内容！', 'warning');
                         return false;
                     }
@@ -156,8 +158,7 @@
                             url: "/api/getPostForEdit",
                             async: true,
                             data: {
-                                postid:<%=result%>,
-                                userid:localStorage.getItem("userID")    
+                                postid:parseInt("<%=topicID%>")   
                             },
                             success: function(data) {
                                 console && console.log(data);
@@ -206,37 +207,15 @@
                 },
 				bindEvent: function() {
 					var self = this;
-					self.postForm.submit(function() {
-						event.preventDefault();
-						if (self.verificate()) {
-							$.ajax({
-								type: "post",
-								url: "/postEdit/<%=result%>",
-								async: true,
-								data: {
-									user_id: localStorage.getItem("userID"),
-									title: self.title.val(),
-									text: editor.$txt.html().trim()
-								},
-								success: function(data) {
-									console && console.log(data);
-                                    if (data.ret == 200 && data.data){
-                                        if (data.data.code == 0 && data.data.msg) {
-                                            sweetAlert('提示', data.data.msg, 'warning');
-                                        } else {
-                                            window.location.href = '/topic/' + data.data.info.post_base_id;
-                                        }
-                                    }
-								},
-								error: function(x, h, r) {
-									console && console.log(x, h, r);
-								}
-							});
-						}
-					});
+                    self.subBtn.on('click', function(event) {
+                        event.preventDefault();
+                        /* Act on the event */
+                        if (self.verificate()) {
+                            self.postForm.submit();
+                        }
+                    });
 				},
 				init: function() {
-                    global.GotoIndex();
                     this.getPostForEdit();
 					this.bindEvent();
 				}

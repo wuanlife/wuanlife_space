@@ -74,11 +74,11 @@
                 page: $(".page-turn").find('span').eq(0),
                 main: $(".chapter-col"),
                 joinBtn: $("#joinBtn"),
-                nav_logout: $("#nav-logout"),
                 loading: $(".loading"),
                 isjoin: 0,
                 currentpage: 1,
                 pageCount: 0,
+                user:'<%- JSON.stringify(user) %>',
                 ClientData: function() {
                     this.currentpage = parseInt('<%=result.currentPage%>');
                     this.pageCount = parseInt('<%=result.pageCount%>');
@@ -103,10 +103,9 @@
                 },
                 setJoinBtnVal: function() {
                     var self = this;
-                    if (localStorage.getItem("userID") != null) {
+                    if (self.user) {
                         self.getJoinBtnVal({
-                            groupid: parseInt("<%=result.groupID%>"),
-                            userid: localStorage.getItem("userID")
+                            groupid: parseInt("<%=result.groupID%>")
                         }, function(data) {
                             if (data.ret == 200 && data.data) {
                                 if (data.data.code == 1) {
@@ -122,9 +121,6 @@
                 },
                 bindEvent: function() {
                     var self = this;
-                    self.nav_logout.on("touchend", function() {
-                        self.joinBtn.text('+加入');
-                    });
                     self.pre.on("touchend", function(event) {
                         event.preventDefault();
                         if (self.currentpage == 1) {
@@ -147,6 +143,9 @@
                                         self.pre.addClass('unCBtn');
                                     } 
                                     $(window).scrollTop(0);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据请求失败', 'error');
                                 }
                             });
                         }
@@ -173,17 +172,19 @@
                                         self.next.addClass('unCBtn');
                                     }
                                     $(window).scrollTop(0);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据请求失败', 'error');
                                 }
                             });
                         }
                     });
                     self.joinBtn.on("touchend", function(event) {
                         event.preventDefault();
-                        if (localStorage.getItem("userID") != null) {
+                        if (self.user) {
                             if (self.isjoin == 0) {
                                 self.getJoinPData({
-                                    groupid: parseInt("<%=result.groupID%>"),
-                                    userid: localStorage.getItem("userID")
+                                    groupid: parseInt("<%=result.groupID%>")
                                 }, function(data) {
                                     console.log(data);
                                     if (data.ret == 200 && data.data && data.data.code == 1) {
@@ -195,11 +196,13 @@
                                         });
                                         self.joinBtn.text('+发帖'); //加入成功
                                         self.isjoin = 1;
+                                    } else{
+                                        sweetAlert('错误', '加入星球失败', 'error');
                                     }
                                 });
                             }
                             if (self.isjoin == 1) {
-                                window.location.href = '/post/<%=result.groupID%>';
+                                window.location.href = '/group/<%=result.groupID%>/post';
                             }
                         } else {
                             window.location.href = '/login';

@@ -129,42 +129,37 @@
 					self.getCreateData({
 						user_id:parseInt("<%=userid%>")
 					},function(data){
-						if (data.ret == 200 && data.data) {
+						if (data.ret == 200 && data.data && data.data.groups.length>0) {
+							var arr = (data.data.groups.length > 4)? data.data.groups.slice(0, 4) : data.data.groups;
+							var data = {groups:arr};
+							var compiled = template("Groupstemplate", data);
+							self.myCreateMD.css('display', 'block');
+							self.myCreate.html(compiled);
 							//console.log(data.data.groups.length);
-							if (data.data.groups.length>0) {
-								var arr = (data.data.groups.length > 4)? data.data.groups.slice(0, 4) : data.data.groups;
-								var data = {groups:arr};
-								var compiled = template("Groupstemplate", data);
-								self.myCreateMD.css('display', 'block');
-								self.myCreate.html(compiled);
-							} else {
-								flagC = 1;
-								if (flagC == 1 && flagJ == 1) {
-									self.emptyPage.css('display', 'block');
-									self.myCreateMD.remove();
-									self.myJoindMD.remove();
-								}
+						} else {
+							flagC = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.emptyPage.css('display', 'block');
+								self.myCreateMD.remove();
+								self.myJoindMD.remove();
 							}
 						}
 					});
 					self.getJoindData({
 						user_id:parseInt("<%=userid%>")
 					},function(data){
-						if (data.ret == 200 && data.data) {
-							//console.log(data.data.groups.length);
-							if (data.data.groups.length>0) {
-								var arr = (data.data.groups.length > 8)? data.data.groups.slice(0, 8) : data.data.groups;
-								var data = {groups:arr};
-								var compiled = template("Groupstemplate", data);
-								self.myJoindMD.css('display', 'block');
-								self.myJoind.html(compiled);
-							} else {
-								flagJ = 1;
-								if (flagC == 1 && flagJ == 1) {
-									self.emptyPage.css('display', 'block');
-									self.myCreateMD.remove();
-									self.myJoindMD.remove();
-								}
+						if (data.ret == 200 && data.data && data.data.groups.length>0) {
+							var arr = (data.data.groups.length > 8)? data.data.groups.slice(0, 8) : data.data.groups;
+							var data = {groups:arr};
+							var compiled = template("Groupstemplate", data);
+							self.myJoindMD.css('display', 'block');
+							self.myJoind.html(compiled);
+						}else {
+							flagJ = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.emptyPage.css('display', 'block');
+								self.myCreateMD.remove();
+								self.myJoindMD.remove();
 							}
 						}
 					});
@@ -193,6 +188,8 @@
                                         self.pre.addClass('unCBtn');
                                     } 
 									$(window).scrollTop(0);
+								} else{
+									sweetAlert('错误', '数据获取失败', 'error');
 								}
 							});
 						}
@@ -219,13 +216,14 @@
                                         self.next.addClass('unCBtn');
                                     }
 									$(window).scrollTop(0);
+								} else{
+									sweetAlert('错误', '数据获取失败', 'error');
 								}
 							});
 						}
 					})
 				},
 				init: function() {
-					global.GotoIndex();
 					this.ClientData();
 					this.setPageData();
 					this.navActive();

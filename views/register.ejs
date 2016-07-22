@@ -8,7 +8,7 @@
                     </div>
                     <div class="login-group line-fgroup">
                         <label for="email" class="lable-e"></label>
-                        <input type="email" name="email" value="" placeholder="邮箱" id="email">
+                        <input type="email" name="Email" value="" placeholder="邮箱" id="email">
                     </div>
                     <div class="login-group line-fgroup">
                         <label for="pw" class="label-paw"></label>
@@ -67,12 +67,14 @@
                                 success: function(data) {
                                     console && console.log(data);
                                     if(data.ret == 200 && data.data){
-                                        if (data.data.code == 0 && data.data.msg) {
-                                            sweetAlert('提示', data.data.msg, 'warning');
+                                        if (data.data.code == 1) {
+                                            window.location.href = '/'; //注册成功
                                         } else {
-                                            window.location.href = '/';
+                                            sweetAlert('提示', data.data.msg, 'warning');
                                         }
-                                    } 
+                                    } else{
+                                        sweetAlert('错误', data.msg, 'error');
+                                    }
                                 },
                                 error: function(x, h, r) {
                                     console && console.log(x, h, r);

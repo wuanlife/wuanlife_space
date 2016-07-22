@@ -11,11 +11,20 @@
                         <span class="post-time"><%=result.createTime%></span>
                     </div>
                     <div class="post-content"><%-result.text%></div>
+                    <% if (result.stickyRight || result.deleteRight) { %>
                     <div class="post-opt">
-                        <button class="post-opt-item"  style="display:none;" id="stickBtn">置顶</button>
-                        <a href="/postEdit/<%=result.postID%>" title="" class="post-opt-item" style="display:none;" id="editBtn">编辑</a>
-                        <button class="post-opt-item" style="display:none;" id="delBtn">删除</button>
+                        <% if (result.stickyRight) { %>
+                            <% if (result.sticky) { %>
+                            <button class="post-opt-item" id="stickBtn">取消置顶</button>
+                            <% } else { %>
+                            <button class="post-opt-item" id="stickBtn">置顶</button>
+                            <% } %>
+                        <% } %>
+                        <% if (result.deleteRight) { %>
+                        <button class="post-opt-item" id="delBtn">删除</button>
+                        <% } %>
                     </div>
+                    <% } %>
                 </div>
                 <div class="post-comment" style="display:none;">
                     <h2></h2>
@@ -63,7 +72,6 @@
                 page: $(".page-turn").find('span').eq(0),
                 currentpage: 1,
                 pageCount: 0,
-                // postImg:$(".post-content").find('img:not([src^="http://img.t.sinajs.cn"])'),
                 loading: $(".loading"),
                 reply_md: $(".post-comment"),
                 reply_main: $(".post-cm-group"),
@@ -76,28 +84,10 @@
                 myReplyContent: $(".post-detail-form").children('textarea'),
                 myReplyBtn: $('#myReplyBtn'),
                 isSticky:0,
-                p_image:[],
+                user:'<%- JSON.stringify(user) %>',
                 setStickyData:function(){
                     this.isSticky = parseInt("<%=result.sticky%>");
                 },
-                // setImage:function(){ 
-                //     var self = this;
-                //     var json = '<%-JSON.stringify(result.p_image)%>'
-                //     json = JSON.parse(json);
-                //     //console.log(json);
-                //     self.p_image = json;
-                //     //console.log(self.p_image[0]);
-                //     var imgNum = self.postImg.length;
-                //     for(var i=0;i<imgNum;i++){
-                //         var img = self.postImg.eq(i);
-                //         var src = self.p_image[i].URL;
-                //         var imgId = self.p_image[i].id;
-                //         img.attr({
-                //             src: src,
-                //             id: imgId
-                //         });
-                //     }
-                // },
                 verificate: function() {
                     if (this.myReplyContent.val().length < 1) {
                         sweetAlert('格式错误', '回复内容不能为空', 'warning');
@@ -111,12 +101,12 @@
                             cb(data);
                         });
                 },
-                getOptRightData: function(param, cb) {
-                    $.getJSON("/api/getPostOptRight", param,
-                        function(data) {
-                            cb(data);
-                        });
-                },
+                // getOptRightData: function(param, cb) {
+                //     $.getJSON("/api/getPostOptRight", param,
+                //         function(data) {
+                //             cb(data);
+                //         });
+                // },
                 setReplyData: function() {
                     var self = this;
                     self.getReplyData({
@@ -138,39 +128,38 @@
                         }
                     });
                 },
-                setOptRightData: function() {
-                    var self = this;
-                    self.getOptRightData({
-                        user_id: localStorage.getItem("userID"),
-                        post_id: postid
-                    }, function(data) {
-                        if (data.ret == 200 && data.data) {
-                            if (data.data.stickyRight == 1) {
-                                self.post_up.css('display', 'inline-block');
-                                if (self.isSticky) {
-                                    self.post_up.text("取消置顶");
-                                } else{
-                                    self.post_up.text("置顶");
-                                }
-                            } else{
-                                self.post_up.remove();
-                            }
-                            if (data.data.editRight == 1) {
-                                self.post_edit.css('display', 'inline-block');
-                            } else{
-                                self.post_edit.remove();
-                            }
-                            if (data.data.deleteRight == 1) {
-                                self.post_delete.css('display', 'inline-block');
-                            } else{
-                                self.post_delete.remove();
-                            }
-                            if (!data.data.stickyRight && !data.data.editRight && !data.data.deleteRight) {
-                                self.post_opt.remove();
-                            }
-                        } 
-                    });
-                },
+                // setOptRightData: function() {
+                //     var self = this;
+                //     self.getOptRightData({
+                //         post_id: postid
+                //     }, function(data) {
+                //         if (data.ret == 200 && data.data) {
+                //             if (data.data.stickyRight == 1) {
+                //                 self.post_up.css('display', 'inline-block');
+                //                 if (self.isSticky) {
+                //                     self.post_up.text("取消置顶");
+                //                 } else{
+                //                     self.post_up.text("置顶");
+                //                 }
+                //             } else{
+                //                 self.post_up.remove();
+                //             }
+                //             if (data.data.editRight == 1) {
+                //                 self.post_edit.css('display', 'inline-block');
+                //             } else{
+                //                 self.post_edit.remove();
+                //             }
+                //             if (data.data.deleteRight == 1) {
+                //                 self.post_delete.css('display', 'inline-block');
+                //             } else{
+                //                 self.post_delete.remove();
+                //             }
+                //             if (!data.data.stickyRight && !data.data.editRight && !data.data.deleteRight) {
+                //                 self.post_opt.remove();
+                //             }
+                //         } 
+                //     });
+                // },
                 bindEvent: function() {
                     var self = this;
                     self.pre.on("touchend", function() {
@@ -198,6 +187,9 @@
                                     var postComY = $(".post-comment").offset().top;
                                     var scroollY =  postComY-$(".navbar").height() ;
                                     $(window).scrollTop(scroollY);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }
@@ -227,6 +219,9 @@
                                     var postComY = $(".post-comment").offset().top;
                                     var scroollY =  postComY-$(".navbar").height() ;
                                     $(window).scrollTop(scroollY);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }
@@ -240,16 +235,19 @@
                                 url:"/api/stickyPost",
                                 async:true,
                                 data:{
-                                    user_id:localStorage.getItem("userID"),
                                     post_id: postid
                                 },
                                 success:function(data){
                                     console && console.log(data);
-                                    if (data.data.code == 0 && data.data.msg) {
-                                        sweetAlert('提示', data.data.msg, 'warning');
-                                    } else if(data.data.code == 1){
-                                        self.isSticky = 1;
-                                        self.post_up.text("取消置顶");
+                                    if (data.ret == 200 && data.data) {
+                                        if (data.data.code == 1) { //操作成功
+                                            self.isSticky = 1;
+                                            self.post_up.text("取消置顶");
+                                        } else{
+                                            sweetAlert('提示', data.data.re, 'warning');
+                                        }
+                                    } else{
+                                        sweetAlert('错误', data.msg, 'error');
                                     }
                                 },
                                 error: function(x, h, r) {
@@ -264,16 +262,19 @@
                                 url:"/api/unstickyPost",
                                 async:true,
                                 data:{
-                                    user_id:localStorage.getItem("userID"),
                                     post_id: postid
                                 },
                                 success:function(data){
                                     console && console.log(data);
-                                    if (data.data.code == 0 && data.data.msg) {
-                                        sweetAlert('提示', data.data.msg, 'warning');
-                                    } else if(data.data.code == 1){
-                                        self.isSticky = 0;
-                                        self.post_up.text("置顶");
+                                     if (data.ret == 200 && data.data) {
+                                        if (data.data.code == 1) { //操作成功
+                                            self.isSticky = 0;
+                                            self.post_up.text("置顶");
+                                        } else{
+                                            sweetAlert('提示', data.data.re, 'warning');
+                                        }
+                                    } else{
+                                        sweetAlert('错误', data.msg, 'error');
                                     }
                                 },
                                 error: function(x, h, r) {
@@ -301,15 +302,18 @@
                                 url:"/api/deletePost",
                                 async:true,
                                 data:{
-                                    user_id:localStorage.getItem("userID"),
                                     post_id: postid
                                 },
                                 success:function(data){
                                     console && console.log(data);
-                                    if (data.data.code == 0 && data.data.msg) {
-                                        sweetAlert('提示', data.data.msg, 'warning');
-                                    } else if(data.data.code == 1){
-                                        window.location.href = '/group/' + '<%=result.groupID%>';
+                                    if (data.ret == 200 && data.data) {
+                                        if (data.data.code == 1) { //操作成功
+                                            window.location.href = '/group/' + '<%=result.groupID%>';
+                                        } else{
+                                            sweetAlert('提示', data.data.re, 'warning');
+                                        }
+                                    } else{
+                                        sweetAlert('错误', data.msg, 'error');
                                     }
                                 },
                                 error: function(x, h, r) {
@@ -320,27 +324,22 @@
                     });
                     self.myReplyForm.submit(function(event) {
                         event.preventDefault();
-                        if (localStorage.getItem("userID") != null) {
+                        if (self.user) {
                             if (self.verificate()) {
                                 $.ajax({
                                     type: "post",
-                                    url: "/postReply",
+                                    url: "/api/postReply",
                                     async: true,
                                     data: {
-                                        user_id: localStorage.getItem("userID"),
                                         post_id: postid,
                                         text: self.myReplyContent.val()
                                     },
                                     success: function(data) {
                                         console && console.log(data);
-                                        // console.log(data.data.code);
                                         if (data.ret == 200 && data.data){
-                                            if (data.data.msg) {
-                                                sweetAlert('提示', data.data.msg, 'warning');
-                                            } else {
-                                                self.myReplyContent.val("");
-                                                window.location.href = '/topic/' + postid;
-                                            }
+                                            window.location.href = '/topic/' + postid;
+                                        } else{
+                                            sweetAlert('错误', data.msg, 'error');
                                         }
                                     },
                                     error: function(x, h, r) {
@@ -355,9 +354,8 @@
                 },
                 init: function() {
                     this.setStickyData();
-                    // this.setImage();
                     this.setReplyData();
-                    this.setOptRightData();
+                    //this.setOptRightData();
                     this.bindEvent();
                 }
             }

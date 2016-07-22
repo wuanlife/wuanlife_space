@@ -104,8 +104,7 @@
 					var self = this;
 					if (self.user) {
 						self.getJoinBtnVal({
-							groupid: parseInt("<%=result.groupID%>"),
-							userid: JSON.parse(self.user).userID
+							groupid: parseInt("<%=result.groupID%>")
 						}, function(data) {
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
@@ -143,6 +142,9 @@
                                         self.pre.addClass('unCBtn');
                                     } 
 									$(window).scrollTop(0);
+								} else{
+									self.loading.hide();
+									sweetAlert('错误', '数据请求失败', 'error');
 								}
 							});
 						}
@@ -169,6 +171,9 @@
                                         self.next.addClass('unCBtn');
                                     }
 									$(window).scrollTop(0);
+								} else{
+									self.loading.hide();
+									sweetAlert('错误', '数据请求失败', 'error');
 								}
 							});
 						}
@@ -178,8 +183,7 @@
 						if (self.user) {
 							if (self.isjoin == 0) {
 								self.getJoinPData({
-									groupid: parseInt("<%=result.groupID%>"),
-									userid: JSON.parse(self.user).userID
+									groupid: parseInt("<%=result.groupID%>")
 								}, function(data) {
 									console.log(data);
 									if (data.ret == 200 && data.data && data.data.code == 1) {
@@ -191,11 +195,13 @@
 										});
 										self.joinBtn.text('+发帖'); //加入成功
 										self.isjoin = 1;
+									} else{
+										sweetAlert('错误', '加入星球失败', 'error');
 									}
 								});
 							}
 							if (self.isjoin == 1) {
-								window.location.href = '/post/<%=result.groupID%>';
+								window.location.href = '/group/<%=result.groupID%>/post';
 							}
 						} else {
 							window.location.href = '/login';

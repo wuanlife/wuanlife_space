@@ -111,7 +111,9 @@
                                         self.pre.addClass('unCBtn');
                                     } 
 									$(window).scrollTop(0);
-								}
+								} else {
+                                    sweetAlert('错误', '数据获取失败', 'error');
+                                }
 							});
 						}
 					});
@@ -136,7 +138,9 @@
                                         self.next.addClass('unCBtn');
                                     }
 									$(window).scrollTop(0);
-								}
+								} else{
+                                    sweetAlert('错误', '数据获取失败', 'error');
+                                }
 							});
 						}
 					})

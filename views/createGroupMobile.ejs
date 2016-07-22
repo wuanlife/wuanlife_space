@@ -51,19 +51,18 @@
                                 async: true,
                                 data:{
                                     name: self.pName.val(),
-                                    user_id: localStorage.getItem("userID"),
-                                    g_introduction: self.cpDes.val().trim(),
-                                    g_image: null
+                                    g_introduction: self.cpDes.val().trim()
                                 },
                                 success:function(data){
                                     console && console.log(data);
                                     if (data.ret == 200 && data.data){
-                                        if (data.data.code == 0 && data.data.msg){
-                                            sweetAlert('提示', data.data.msg, 'warning');
-                                        } else {
+                                        if (data.data.code == 1) { //创建成功
                                             window.location.href = '/group/' + data.data.info.group_base_id;
-                                            //console.log(data.data.group_base_id);
+                                        } else{
+                                            sweetAlert('提示', data.data.msg, 'warning');
                                         }
+                                    } else{
+                                        sweetAlert('错误', data.msg, 'error');
                                     }
                                 },
                                 error: function(x, h, r) {
@@ -75,7 +74,6 @@
                     });
                 },
                 init: function(){
-                    global.GotoIndex();
                     this.bindEvent();
                 }
             }

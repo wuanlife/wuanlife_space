@@ -3,7 +3,7 @@
             <div class="mask"></div>
             <div class="location clearfix">
                 <h1><a href="/allGroup" title="">全部星球</a></h1>
-                <button type="button" id="cpBtn">创建星球</button>
+                <a href="/createGroup" title="创建星球">创建星球</a>
             </div>
             <%if(result.lists.length > 0){%> 
             <div class="planet"> 
@@ -57,7 +57,6 @@
                 page: $(".page-turn").find('span').eq(0),
                 main: $("#planetList"),
                 loading: $(".loading"),
-                createPBtn: $(".location").children("button"),
                 currentpage: 1,
                 pageCount: 0,
                 ClientData: function() {
@@ -94,6 +93,9 @@
                                         self.pre.addClass('unCBtn');
                                     } 
                                     $(window).scrollTop(0);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据请求失败', 'error');
                                 }
                             });
                         }
@@ -121,18 +123,13 @@
                                         self.next.addClass('unCBtn');
                                     }
                                     $(window).scrollTop(0);
+                                } else{
+                                    self.loading.hide();
+                                    sweetAlert('错误', '数据请求失败', 'error');
                                 }
                             });
                         }
                         
-                    });
-                    self.createPBtn.on("touchend",function(event){
-                       
-                        if (localStorage.getItem("userName")!=null){
-                            window.location.href = '/createGroup';
-                        } else {
-                            window.location.href = '/login';
-                        }
                     });
                 },
                 init: function() {

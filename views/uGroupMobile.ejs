@@ -2,16 +2,20 @@
         <div class="main main-page">
             <div class="mask"></div>
             <div class="location clearfix">
-                <h1><a href="/myGroup/<%=userid%>" title="">我的星球</a></h1>
+                <% if (user) { %>
+                <h1><a href="/uGroup/<%=userid%>" title="">我的星球</a></h1>
+                <% } else { %>
+                <h1><a href="/uGroup/<%=userid%>" title="">他的星球</a></h1>
+                <% } %>
             </div> 
             <div class="myPGroups" style="display:none;">
                 <div class="myPGroup" id="myJoind" style="display:none;">
-                    <h2>我加入的星球 <a href="/moreGroups/<%=userid%>" title=""></a></h2>
+                    <h2>已加入的星球 <a href="/uGroup/<%=userid%>/moreGroups" title=""></a></h2>
                     <ul class="planetTags clearfix">
                     </ul>
                 </div>
                 <div class="myPGroup" id="myCreate" style="display:none;">
-                    <h2>我创建的星球 <a href="/moreGroups/<%=userid%>" title=""></a></h2>
+                    <h2>已创建的星球 <a href="/uGroup/<%=userid%>/moreGroups" title=""></a></h2>
                     <ul class="planetTags clearfix">
                     </ul>
                 </div>
@@ -122,44 +126,38 @@
                     var flagJ = 0;
                     var flagC = 0;
                     self.getCreateData({
-                        user_id:localStorage.getItem("userID")
+                        user_id:parseInt("<%=userid%>")
                     },function(data){
-                        if (data.ret == 200 && data.data) {
-                            //console.log(data.data.groups.length);
-                            if (data.data.groups.length>0) {
-                                var arr = (data.data.groups.length > 2)? data.data.groups.slice(0, 2) : data.data.groups;
-                                var data = {groups:arr};
-                                var compiled = template("Groupstemplate", data);
-                                self.myPGroups.css('display', 'block');
-                                self.myCreateMD.css('display', 'block');
-                                self.myCreate.html(compiled);
-                            } else {
-                                flagC = 1;
-                                if (flagC == 1 && flagJ == 1) {
-                                    self.emptyPage.css('display', 'block');
-                                    self.myPGroups.remove();
-                                }
+                        if (data.ret == 200 && data.data && data.data.groups.length>0) {
+                            var arr = (data.data.groups.length > 2)? data.data.groups.slice(0, 2) : data.data.groups;
+                            var data = {groups:arr};
+                            var compiled = template("Groupstemplate", data);
+                            self.myPGroups.css('display', 'block');
+                            self.myCreateMD.css('display', 'block');
+                            self.myCreate.html(compiled);
+                        }else {
+                            flagC = 1;
+                            if (flagC == 1 && flagJ == 1) {
+                                self.emptyPage.css('display', 'block');
+                                self.myPGroups.remove();
                             }
                         }
                     });
                     self.getJoindData({
-                        user_id:localStorage.getItem("userID")
+                        user_id:parseInt("<%=userid%>")
                     },function(data){
-                        if (data.ret == 200 && data.data) {
-                            //console.log(data.data.groups.length);
-                            if (data.data.groups.length>0) {
-                                var arr = (data.data.groups.length > 4)? data.data.groups.slice(0, 4) : data.data.groups;
-                                var data = {groups:arr};
-                                var compiled = template("Groupstemplate", data);
-                                self.myPGroups.css('display', 'block');
-                                self.myJoindMD.css('display', 'block');
-                                self.myJoind.html(compiled);
-                            } else {
-                                flagJ = 1;
-                                if (flagC == 1 && flagJ == 1) {
-                                    self.emptyPage.css('display', 'block');
-                                    self.myPGroups.remove();
-                                }
+                        if (data.ret == 200 && data.data && data.data.groups.length>0) {
+                            var arr = (data.data.groups.length > 4)? data.data.groups.slice(0, 4) : data.data.groups;
+                            var data = {groups:arr};
+                            var compiled = template("Groupstemplate", data);
+                            self.myPGroups.css('display', 'block');
+                            self.myJoindMD.css('display', 'block');
+                            self.myJoind.html(compiled);
+                        } else {
+                            flagJ = 1;
+                            if (flagC == 1 && flagJ == 1) {
+                                self.emptyPage.css('display', 'block');
+                                self.myPGroups.remove();
                             }
                         }
                     });
@@ -175,7 +173,7 @@
                             self.loading.show();
                             self.getServerData({
                                 currentpage: self.currentpage - 1,
-                                userId: localStorage.getItem("userID")
+                                userId: parseInt("<%=userid%>")
                             }, function(data) {
                                 if (data.ret == 200 && data.data) {
                                     self.currentpage -= 1;
@@ -188,6 +186,8 @@
                                         self.pre.addClass('unCBtn');
                                     } 
                                     $(window).scrollTop(0);
+                                } else{
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }
@@ -201,7 +201,7 @@
                             self.loading.show();
                             self.getServerData({
                                 currentpage: self.currentpage + 1,
-                                userId: localStorage.getItem("userID")
+                                userId: parseInt("<%=userid%>")
                             }, function(data) {
                                 if (data.ret == 200 && data.data) {
                                     self.currentpage += 1;
@@ -214,13 +214,14 @@
                                         self.next.addClass('unCBtn');
                                     }
                                     $(window).scrollTop(0);
+                                } else{
+                                    sweetAlert('错误', '数据获取失败', 'error');
                                 }
                             });
                         }
                     });
                 },
                 init: function() {
-                    global.GotoIndex();
                     this.ClientData();
                     this.setPageData();
                     this.bindEvent();
