@@ -23,7 +23,10 @@ a{
 a:hover{
     text-decoration: none;
 }
-h1,h2,h3,h4,h5,p,ul,li{
+h1,h2,h3,h4,h5,h6{
+    font-weight: 500;
+}
+h1,h2,h3,h4,h5,h6,p,ul,li,nav,footer{
     margin:0;
     padding:0;
 }
