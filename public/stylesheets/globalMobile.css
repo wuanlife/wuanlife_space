@@ -1,4 +1,3 @@
-
 html,body{
     height:100%;
 }
@@ -560,6 +559,33 @@ button.unCBtn{
     font-size: 0.466667rem;
     line-height: 1.5;
     padding:0.24rem 0;
+}
+/*上传星球头像*/
+.upPIcon{
+    margin-bottom: 0.96rem;
+}
+.upPIcon h4{
+    margin-bottom: 0.426667rem;
+}
+.upPIcon button{
+    display:block;
+    margin:0 auto;
+    padding:0;
+    border: 2px solid #5ab8fe;
+    width:1.413333rem;
+    height:1.413333rem;
+    background-color: inherit;
+    color:#5ab8fe;
+    font-size: 0.533333rem;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+[data-dpr="2"] .upPIcon button{
+    border-width: 4px;
+}
+[data-dpr="3"] .upPIcon button{
+    border-width: 6px;
 }
 /*星球说明*/
 .cp-des{
