@@ -27,6 +27,8 @@
             function printLog(title, info) {
                 window.console && console.log(title, info);
             }
+            //星球头像url
+            var url = '';
             // 创建上传对象
             var uploader = Qiniu.uploader({
                 runtimes: 'html5,flash,html4',    //上传模式,依次退化
@@ -86,10 +88,11 @@
 
                        // printLog(sourceLink);
                         console.log(sourceLink);
-                        var url = 'url(' + sourceLink + ')';
+                        url = sourceLink + '?imageView2/1/w/100/h/100';
+                        var src = 'url(' + url + ')';
                         // 设置图片为背景
                         $("#upImgBtn").html("");
-                        $("#upImgBtn").css('background-image', url);
+                        $("#upImgBtn").css('background-image', src);
                     },
                     'Error': function(up, err, errTip) {
                         //上传出错时,处理相关的事情
@@ -150,7 +153,8 @@
                                 async: true,
                                 data:{
                                     name: self.pName.val(),
-                                    g_introduction: self.cpDes.val().trim()
+                                    g_introduction: self.cpDes.val().trim(),
+                                    g_image: url
                                 },
                                 success:function(data){
                                     console && console.log(data);
