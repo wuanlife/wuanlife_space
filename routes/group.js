@@ -42,26 +42,28 @@ router.get('/:groupid/post', function(req, res, next) {
 		var agent = ua(req.headers['user-agent']);
 		var userid = (req.session.user) ? req.session.user.userID : null;
 		var page = agent.Mobile ? 'postMobile' : 'post';
+		var tip = agent.Mobile ? 'tipMobile':'tip'
 		request(config.server + "?service=Group.GStatus&group_base_id=" + req.params.groupid + "&user_id=" + userid,
 			function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
 					console.log(result);
-					if (result.ret == 200 && result.msg == "" && result.data.code ==1) {
-						res.render(page, {
-							'path': '../../',
-							'groupID': req.params.groupid,
-							'title': '发表帖子',
-							'user': req.session.user
-						});
-					} else {
-						res.render('error', {
-							'message': result.msg,
-							error: {
-								'status': 404,
-								'stack': ''
-							}
-						});
+					if (result.ret == 200 && result.msg == "") {
+						if (result.data.code == 1) {
+							res.render(page, {
+								'path': '../../',
+								'groupID': req.params.groupid,
+								'title': '发表帖子',
+								'user': req.session.user
+							});
+						} else {
+							res.render(tip, {
+								'path': '../../',
+								'tip':'您没有权限操作',
+								'title': '发表帖子',
+								'user': req.session.user
+							});
+						}
 					}
 				} else {
 					console.error('group failed:', error);
