@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使用'connect-mongo/es5'
 // var session = require('express-session');
 // var RedisStore = require('connect-redis')(session);
 
