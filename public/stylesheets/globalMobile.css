@@ -587,6 +587,12 @@ button.unCBtn{
 [data-dpr="3"] .upPIcon button{
     border-width: 6px;
 }
+.img-upload-progress{
+    height:2px;
+    background-color: #1e88e5;
+    display:none;
+    width:0;
+}
 /*星球说明*/
 .cp-des{
     margin-bottom: 1.333333rem;
