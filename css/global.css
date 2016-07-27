@@ -1,0 +1,681 @@
+
+html,body{
+    height:100%;
+}
+body{
+    font-family: 'Microsoft YaHei',sans-serif;
+    line-height: 1.5;
+    margin:0;
+}
+input,button{
+    outline: none;
+    border:none; 
+}
+input,textarea,button{
+   font-family: 'Microsoft YaHei',sans-serif; 
+}
+img{
+    vertical-align: middle;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: 500;
+}
+h1,h2,h3,h4,h5,h6,p,ul,li,nav,footer{
+    margin:0;
+    padding:0;
+}
+ul{
+    list-style: none;
+}
+*{
+    box-sizing: border-box;
+}
+:before,:after{
+    box-sizing: border-box;
+}
+.clearfix:before,.clearfix:after,.container:before,.container:after,.row:before,.row:after,.navbar:before,.navbar:after,.main:before,.main:after{
+    display:table;
+    content: "";
+}
+.clearfix:after,.row:after,.container:after,.navbar:after{
+    clear:both;
+}
+.col-sm-4{
+    width:33.33333333%;
+    float:left;
+}
+.col-sm-3{
+    width:25%;
+    float:left;
+}
+/*文本单行超出省略号表示*/
+.text-ellipsis{
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.all-wrapper{
+    position: relative;
+    height:100%;
+}
+/****************************
+***********导航栏***********
+****************************/
+.navbar{
+    position: fixed;
+    width:100%;
+    min-width: 900px;
+    top:0;
+    left:0;
+    height:60px;
+    background-color: #5ab8fe;
+    color:#fff;
+    text-align: center;
+    z-index: 1;
+}
+.navbar a{
+    color:#fff;
+}
+/*导航标题*/
+.navbar-title{
+    font-size: 30px;
+    padding:7.5px 0 7.5px 140px;
+    position: absolute;
+    left:0;
+    top:0;
+}
+/*导航选项*/
+.navbar-option{
+    padding:10px 0 ;
+    text-align: center;
+}
+.navbar-option>li{
+    display:inline-block;
+    margin:0 26px;
+    font-size: 22px;
+}
+.navbar-option-item{
+    display:inline-block;
+    padding:3.5px 10px;
+    border-radius: 5px 5px ;
+}
+.navbar-active{
+    background-color: #8acdff;
+} 
+
+/*导航账户*/
+.navbar-account{
+    position: absolute;
+    right:35px;
+    top:0;
+    bottom:0;
+}
+.navbar-account>li{
+    float:left;
+    font-size: 18px;
+}
+.navbar-account-item{
+    display:inline-block;
+    padding:16.5px 15px ;
+}
+span.navbar-account-item{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow:hidden;
+    max-width: 150px;
+}
+.nav-anone{
+    display:none;
+}
+.nav-ahidden{
+    visibility: hidden;
+}
+
+/*************************
+**********主栏*****
+***************************/
+.main{
+    position: relative;
+    width:750px;
+    min-height:100%;
+    padding-top: 60px;
+    margin:0 auto ;
+}
+.main-page{
+    position: relative;
+    padding-bottom: 70px;
+}
+/********************
+*********当前位置***
+*******************/
+.location{
+    padding:25px 0 8px;
+}
+.location>h1{
+    float: left; 
+    font-size: 30px;
+    line-height: 35px;
+    color:#5ab8fe; 
+}
+.location>h1>a{
+   color:#5ab8fe; 
+}
+.location>button,.location>a{
+    display:inline-block;
+    font-size: 18px;
+    padding:4px 27px; 
+    float:right;
+    border-radius: 4px;
+    color:#f6fafb;
+    background-color: #5ab8fe; 
+    cursor:pointer;
+}
+
+/******************
+********翻页模块***
+*******************/
+.page-turn{
+    font-size: 16px;
+    padding:23px 0;
+    color:#949494;
+    text-align: center;
+}
+.page-turn>span{
+    margin:0 20px;
+}
+.page-turn button{
+    font-size: 16px;
+    color:#5ab8fe;
+    margin:0 20px;
+    padding:0;
+    background-color: inherit;
+    cursor:pointer;
+}
+/*不可点击的翻页*/
+button.unCBtn{
+    color:#bababa;
+    cursor:default;
+}
+.main-page>.page-turn{
+    position: absolute;
+    bottom:0;
+    width:100%;
+    left:0;
+}
+
+/***************
+*******空白页****
+*****************/
+.emptyPage{
+    color:#cccccc;
+    text-align: center;
+    font-size: 20px;
+    padding:160px 0 ;
+    margin:0;
+}
+/****************
+*********文章*****
+******************/
+.chapter{
+    padding:17px 0 7px;
+    border-bottom: 1px solid #e8e8e8;
+}
+.chapter>h2{
+    font-size: 18px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+.chapter>h2>a{
+    color:#5ab8fe;
+}
+/*列表正文*/
+.chapter-text{
+    font-size: 14px;
+    color:#5c5c5c;
+    margin-bottom: 9px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    /*white-space: pre-wrap;*/
+}
+/*列表图片*/
+.chapter-img{
+    position: relative;
+}
+.chapter-img img{
+    width:100px;
+    height:100px;
+    float:left;
+    margin-right: 35px;
+    margin-bottom: 10px;
+}
+/*列表信息*/
+.chapter-info{
+    font-size: 12px;
+    color:#999999;
+}
+.chapter-info a{
+    color:#999999;
+}
+.postIn{
+    margin-right: 4px;
+    margin-left: 4px;
+}
+.cha-time{
+    float:right;
+}
+.chapter-info .text-ellipsis{
+    display:inline-block;
+    max-width: 200px;
+    vertical-align: bottom;
+}
+
+/*************************
+*********全部星球********
+************************/
+/*星球单条选项*/
+
+.planet{
+    margin:48px 0 86px;
+}
+.planetList{
+    margin-right: -20px;
+    margin-left: -20px;
+}
+
+.planet-item{
+    padding:10px 20px;
+}
+.planet-pic{
+    margin-right: 18px;
+    float:left;
+}
+.planet-pic img{
+    width:60px;
+    height:60px;
+}
+.planet-info h2{
+    font-size: 20px;
+    margin-bottom: 2px;
+    color:#5ab8fe; /*省略号也可以有颜色*/
+}
+.planet-info a{
+    color:#5ab8fe;    
+}
+.planet-info p{
+    color:#bbbbbb;
+    font-size: 12px;
+    line-height: 14px;
+    height:28px;
+    overflow: hidden;
+}
+/************************
+登陆注册及创建星球底线表单
+*************************/
+.line-form .line-fgroup{
+    position: relative;
+    border-bottom: 1px solid #5ab8fe;
+}
+.line-form label{
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    cursor:pointer;
+}
+.line-form input{
+    border:none;
+    width:100%;
+    background-color: transparent;
+    color:#b4b4b4;
+}
+.line-form button[type="submit"]{
+    width:100%;
+    background-color: #5ab8fe;
+    color:#f6fafb;
+    border-radius: 5px;
+    cursor:pointer;
+}
+/********************
+****创建星球**********
+**********************/
+.create-p{
+    padding:20px 0 70px;
+}
+.create-p h4{
+    font-size: 18px;
+    color:#b4b4b4;
+    font-weight: normal;
+}
+.cp-form{
+    width:325px;
+    margin:0 auto;
+}
+/*输入星球名字*/
+.cp-group{
+    padding-bottom: 4px;
+    margin-bottom: 65px;
+}
+.cp-group label{
+    width:36px;
+    height:36px;
+    background-image:url(../images/cp_03.png); 
+}
+.cp-group input{
+    font-size: 18px;
+    line-height: 36px;
+    padding-left: 50px;
+    height:36px;
+}
+/*创建星球按钮*/
+.cp-form button[type="submit"]{
+    font-size: 21px;
+    line-height: 1.5;
+    padding:5px 0;
+    border-radius: 8px 7px;
+}
+/*上传星球头像*/
+.upPIcon{
+    margin-bottom: 70px;
+}
+.upPIcon h4{
+    margin-bottom: 30px;
+}
+.upPIcon button{
+    display:block;
+    margin:0 auto;
+    padding:0;
+    border: 2px solid #5ab8fe;
+    width:60px;
+    height:60px;
+    background-color: inherit;
+    color:#5ab8fe;
+    font-size: 32px;
+    cursor:pointer;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.upPIcon input[type="file"]{
+    display:none;
+}
+/*星球说明*/
+.cp-des{
+    margin-bottom: 40px;
+}
+.cp-des h4{
+    margin-bottom: 15px;
+}
+.cp-des textarea{
+    height:160px;
+}
+/*******************
+******登陆和注册***********
+******************/
+.login{
+    position: fixed;
+    top:50%;
+    left:0;
+    right:0;
+    width:325px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);    
+    margin: 0 auto ;
+
+}
+.login-group{
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+.login-group label{
+    width:36px;
+    height:36px;
+}
+.lable-name{
+    background-image: url(../images/login_01.png);
+}
+.lable-e{
+    background-image: url(../images/login_03.png);
+}
+.label-paw{
+    background-image: url(../images/login_06.png);
+}
+.login-group input{
+    font-size: 17px;
+    line-height: 36px;
+    height:36px;
+    padding-left: 51px;   
+}
+.login-form button[type="submit"]{  
+    font-size: 21px;
+    padding:8.5px 0;
+    border-radius: 7px;
+    margin-top: 35px;
+}
+.login-form a{
+    font-size: 14px;
+    color:#5ab8fe;
+}
+/*******************
+****各种帖子中的表单***
+*******************/
+.form-control{
+    display:block;
+    width:100%;
+    line-height: 1.5;
+    color:#b4b4b4;
+    font-size: 14px;
+    padding:7px 10px;
+    border-radius: 10px ; 
+    border:1px solid #ccc;
+    background-color: #f6fafb;
+}
+.form-control:focus{
+    border-color: #5ab8fe;
+    outline:0;
+    box-shadow: inset 0 0 2px 1px #5ab8fe,0 0 2px  #5ab8fe;
+}
+.post-sub{
+    font-size: 18px;
+    line-height: 1.5;
+    width:auto;
+    border-radius: 4px;
+    color:#f6fafb;
+    background-color: #5ab8fe;
+    padding:5px 25px;
+    float:right;
+    cursor:pointer;
+}
+textarea.form-control{
+    resize: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/*******************
+帖子详情
+*******************/
+.post-detail{
+    padding:22px 0 93px;
+}
+/*帖子内容模块*/
+.post-md{
+    margin-bottom: 68px;
+}
+/*标题*/
+.post-title{
+    font-size: 24px;
+    color: #313131;
+}
+/*帖子相关信息*/
+.post-info{
+    font-size: 12px;
+    margin-bottom: 9px;
+    color:#a7a7a7;
+}
+.post-info a{
+    color:#a7a7a7;
+}
+.post-time{
+    float: right;
+}
+/*帖子主内容*/
+.post-content{
+    word-wrap: break-word;
+    /*white-space: pre-wrap;*/
+    font-size: 14px;
+    color:#4d4d4d;
+    margin-bottom: 23px;
+}
+.post-content img{
+    max-width: 100%;
+}
+/*帖子操作*/
+.post-opt{
+    margin-right: -5px;
+    margin-left: -5px;
+    text-align: right;
+}
+.post-opt-item{
+    font-size: 18px;
+    color:#5ab8fe;
+    display: inline-block;
+    padding:0 5px;
+    background-color: inherit;
+    cursor:pointer;
+}
+/*帖子回复*/
+.post-comment{
+    margin-bottom: 20px;
+}
+.post-comment>h2{
+    color:#4d4d4d;
+    font-size: 18px;
+}
+/*单条回复*/
+.post-cm-item{
+    padding:13px 0 4px;
+    border-bottom: 1px solid #e8e8e8;
+}
+/*回复信息*/
+.post-cm-info{
+    font-size: 12px;
+    margin-bottom: 5px;
+    color:#363636;
+}
+.post-cm-info a{
+    color:#363636;
+}
+.post-cm-time{
+    float:right;
+}
+/*回复内容*/
+.post-cm-content{
+    font-size: 16px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    color:#5b5b5b;
+}
+/*回复内容的翻页*/
+.post-comment .page-turn{
+    padding:10px 0 0;
+    text-align: right;
+}
+/*我的回复*/
+.my-comment>h2{
+    color:#5ab8fe;
+    font-size:18px;
+    margin-bottom: 14px;
+}
+/*表单*/
+.post-detail-form textarea{
+    margin-bottom: 20px;
+    height:161px;
+}
+
+/******************
+创建及编辑帖子
+******************/
+.post-form input{
+     margin-bottom: 30px;
+}
+.post-form textarea{
+    height:360px;
+    margin-bottom:20px ;
+}
+.post{
+    margin:70px 0 93px;
+}
+
+/*PC文本编辑器*/
+.post-form .wangEditor-container{
+        font-size: 14px;
+        border-radius: 10px 10px;
+        margin-bottom: 20px;
+        padding:2px 2px 0;
+}
+.post-form .wangEditor-menu-container{
+        border-radius: 10px ;
+}
+/*文本编辑器focus状态*/
+.textarea-focus{
+    border-color: #5ab8fe;
+    outline:0;
+    box-shadow: inset 0 0 2px 1px #5ab8fe,0 0 2px  #5ab8fe;
+}
+/***********************
+********我的星球星球标签**
+***************************/
+.myPGroup{
+
+}
+.myPGroup h2{
+    font-size: 18px;
+    line-height: 40px;
+    color:#5ab8fe;
+}
+.myPGroup h2 a{
+    display:inline-block;
+    width:15px;
+    height:40px;
+    background: url(../images/moreP_03.png) no-repeat;
+    background-size: 100% 100%;
+    float:right;
+    vertical-align: top;
+}
+.planetTags{
+    margin-right: -25px;
+    margin-left: -25px;
+}
+.planetTag{
+    padding:4px 25px;
+}
+.planetTag a{
+    display:block;
+    font-size: 14px;
+    color:#ffffff;
+    background-color: #5ab8fe;
+    border-radius: 4px;
+    text-align: center;
+    padding:4.5px 0;
+}
+/*********************
+********我加入的星球*****
+***********************/
+.myJoinMd{
+    margin-top: 30px;
+}
+.myJoinList {
+    margin-bottom: 20px;
+}
+.myJoinList h2{
+    font-size: 20px;
+    color:#5ab8fe;
+}

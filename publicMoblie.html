@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/sweetAlert.css">
+        <link rel="stylesheet" type="text/css" href="css/globalMobile.css">
+        <link rel="stylesheet" type="text/css" href="css/loading.css">
+        <title><%=title%> - 午安网 - 过你想过的生活</title>
+    </head>
+    <body>
+        <div class="container all-wrapper">
+           <div class="navbar">
+                <h1>午安网</h1>
+                <button type="button" class="navbar-toggle"></button>
+            </div>
+            <div class="sidebarContainer">
+                <div class="sidebar">
+                    <h1>午安网</h1>
+                    <ul class="navbar-option">
+                        <li><a href="/" title="" class="navbar-icon navbar-option-item">首页</a></li>
+                    
+                        <li><a href="/uGroup/<%=user.userID%>" title="" class="navbar-icon navbar-option-item">我的星球</a></li>
+                        <li><a href="/allGroup" title="" class="navbar-icon navbar-option-item">全部星球</a></li>
+                    </ul>
+                    <ul class="navbar-account">
+                        <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>
+                        <li class="aNLog"><a href="/register" title="" class="navbar-icon navbar-account-item">注册</a></li>
+                    </ul>
+                </div>
+            </div> 
+            <div class="main">
+                <div class="mask"></div>
+            </div>
+            <div class="loading">
+                <div class='uil-default-css' style='display: none;'>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(0deg) translate(0,-60px);transform:rotate(0deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(30deg) translate(0,-60px);transform:rotate(30deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(60deg) translate(0,-60px);transform:rotate(60deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(90deg) translate(0,-60px);transform:rotate(90deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(120deg) translate(0,-60px);transform:rotate(120deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(150deg) translate(0,-60px);transform:rotate(150deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(180deg) translate(0,-60px);transform:rotate(180deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(210deg) translate(0,-60px);transform:rotate(210deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(240deg) translate(0,-60px);transform:rotate(240deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(270deg) translate(0,-60px);transform:rotate(270deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(300deg) translate(0,-60px);transform:rotate(300deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(330deg) translate(0,-60px);transform:rotate(330deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/zepto.min.js"></script>
+        <script type="text/javascript" src="js/zepto.touch.js"></script>
+        <script src="js/sweetAlert.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="js/plupload/plupload.full.min.js"></script>
+        <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
+        <script type="text/javascript" src="js/qiniu.js"></script>
+        <script type = "text/javascript">
+            var global = (function() {
+                // 设置loading位置
+                var setCenterLoadingDiv = function() {
+                    var loadingClientheight = parseInt($(".uil-default-css").css("height"));
+                    var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
+                    var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
+                    var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
+                    $(".uil-default-css").attr('style', '-webkit-transform:scale(0.3);transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+                };
+                //设置侧栏切换按钮
+                var setToggleBtn = function() {
+                    $(".navbar-toggle").on("touchend", function() {
+                        $(".all-wrapper").toggleClass('sidebar-extend');
+                        if ($(".all-wrapper").hasClass('sidebar-extend')) {
+                            $(".mask").on("touchend", function(e) {
+                                //e.stopPropagation();
+                                $(".all-wrapper").removeClass('sidebar-extend');
+                                return false; //zepto return false 则会阻止事件冒泡以及默认操作
+                            });
+                        }
+                    });
+                };
+                //设置输入框处于输入和非输入状态下导航栏的位置
+                var setEditboxPosition = function(){
+                    $("input,textarea").focus(function(event) {
+                        $(".navbar").css("position", "absolute");
+                    });
+                    $("input,textarea").blur(function(event) {
+                        $(".navbar").css("position", "fixed");
+                    });
+                };
+                return {
+                    setCenterLoadingDiv: setCenterLoadingDiv,
+                    setToggleBtn: setToggleBtn,
+                    setEditboxPosition:setEditboxPosition
+                }
+            }());
+        $(document).ready(function() {
+            global.setCenterLoadingDiv();
+            global.setToggleBtn();
+            global.setEditboxPosition();
+            $(window).resize(function(event) {
+                global.setCenterLoadingDiv();
+            });
+        }); 
+        </script>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta name="keywords" content="午安网">
+        <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/sweetAlert.css">
+        <link rel="stylesheet" type="text/css" href="css/global.css">
+        <link rel="stylesheet" type="text/css" href="css/loading.css">
+        <link rel="stylesheet" type="text/css" href="css/wangEditor.min.css">
+        <title><%=title%> - 午安网 - 过你想过的生活</title>
+    </head>
+    <body>
+        <div class="container all-wrapper">
+            <div class="navbar">
+                <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
+                <ul class="navbar-account">
+                    <li id="nav-login"><a href="/login" title="" class="navbar-account-item">登录</a></li>
+                    <li id="nav-register"><a href="/register" title="" class="navbar-account-item">注册</a></li>
+                </ul>
+                <ul class="navbar-option">
+                    <li><a href="/" title="" class="navbar-option-item">首页</a></li>
+                    <li id="nav-myP"><a href="/uGroup/<%=user.userID%>" title="" class="navbar-option-item">我的星球</a></li>
+                    <li id="nav-allP"><a href="/allGroup" title="" class="navbar-option-item">全部星球</a></li>
+                </ul>
+            </div>  
+            <div class="main">
+                
+            </div>
+            <div class="loading">
+                <div class='uil-default-css' style='display: none;'>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(0deg) translate(0,-60px);transform:rotate(0deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(30deg) translate(0,-60px);transform:rotate(30deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(60deg) translate(0,-60px);transform:rotate(60deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(90deg) translate(0,-60px);transform:rotate(90deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(120deg) translate(0,-60px);transform:rotate(120deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(150deg) translate(0,-60px);transform:rotate(150deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(180deg) translate(0,-60px);transform:rotate(180deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(210deg) translate(0,-60px);transform:rotate(210deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(240deg) translate(0,-60px);transform:rotate(240deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(270deg) translate(0,-60px);transform:rotate(270deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(300deg) translate(0,-60px);transform:rotate(300deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                    <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(330deg) translate(0,-60px);transform:rotate(330deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script src="js/sweetAlert.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/template.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/wangEditor.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="js/plupload/plupload.full.min.js"></script>
+        <script type="text/javascript" src="js/plupload/i18n/zh_CN.js"></script>
+        <script type="text/javascript" src="js/qiniu.js"></script>
+        <script type="text/javascript">
+        var global = (function() {
+            // 设置loading位置
+            var setCenterLoadingDiv = function() {
+                var loadingClientheight = parseInt($(".uil-default-css").css("height"));
+                var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
+                var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
+                var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
+                $(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
+            };
+            return {
+                setCenterLoadingDiv: setCenterLoadingDiv
+            }
+        }());
+        $(document).ready(function() {
+            global.setCenterLoadingDiv();
+            $(window).resize(function(event) {
+                global.setCenterLoadingDiv();
+            });
+        });
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?cac982e73a359535cd584c3d20b769bc";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </body>
+</html>
