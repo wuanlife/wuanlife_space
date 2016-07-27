@@ -82,6 +82,11 @@ router.post('/:groupid/post', function(req, res, next) {
 			if (tag == "strike") {
 				return html;
 			}
+		},
+		onTagAttr:function(tag,name,value,isWhiteAttr){
+			if (name == 'style') {
+				return name + '="' + value + '"';
+			}
 		}
 	});
 	request.post({
