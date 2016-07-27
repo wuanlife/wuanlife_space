@@ -1,254 +1,258 @@
 <%- include base/headerMobile.ejs %>
-        <div class="main main-page">
-            <div class="mask"></div>
-            <div class="location clearfix">
-                <% if (user) { %>
-                <h1><a href="/uGroup/<%=userid%>/moreGroups" title="">我加入的星球</a></h1>
-                <% } else { %>
-                <h1><a href="/uGroup/<%=userid%>/moreGroups" title="">他加入的星球</a></h1>
-                <% } %>
-            </div>  
-            <div class="myJoinMd">
-            <%if(result.groups.length > 0){%>
-                <div class="myPGroup"  id="myCreate">
-                    <h2>我创建的星球</h2>
-                    <ul class="planetTags clearfix">
-                        <% result.groups.forEach(function(item) { %>
-                        <li class="planetTag"><a href="/group/<%=item.id%>" title="" class="text-ellipsis"><%=item.name%></a></li>
-                        <% }); %>
-                    </ul>
-                </div>
-            <%}%>
-                <div class="myPGroup" id="myJoind" style="display:none;">
-                    <h2>我加入的星球</h2>
-                    <ul class="planetTags clearfix">
-                        <li class="planetTag"><a href="" title="" class="text-ellipsis">陶陶天地</a></li>                       
-                    </ul>
-                </div>
-            </div>
-            <div class="page-turn" style="display:none;">
-                <button type="button" class="unCBtn" id="pre">上一页</button>
-                <span></span>
-                <button type="button" id="next">下一页</button>
-            </div>
-            <div class="emptyPage" style="display:none;">
-                目前还没有加入任何星球哦~~
-            </div>
-        </div>
+<div class="main main-page">
+	<div class="mask"></div>
+	<div class="location clearfix">
+		<% if (user) { %>
+		<h1><a href="/uGroup/<%=userid%>/moreGroups" title="">我加入的星球</a></h1>
+		<% } else { %>
+		<h1><a href="/uGroup/<%=userid%>/moreGroups" title="">他加入的星球</a></h1>
+		<% } %>
+	</div>
+	<div class="myJoinMd">
+		<%if(result.groups.length > 0){%>
+		<div class="myPGroup" id="myCreate">
+			<h2>我创建的星球</h2>
+			<ul class="planetTags clearfix">
+				<% result.groups.forEach(function(item) { %>
+				<li class="planetTag">
+					<a href="/group/<%=item.id%>" title="" class="text-ellipsis">
+						<%=item.name%>
+					</a>
+				</li>
+				<% }); %>
+			</ul>
+		</div>
+		<%}%>
+		<div class="myPGroup" id="myJoind" style="display:none;">
+			<h2>我加入的星球</h2>
+			<ul class="planetTags clearfix">
+				<li class="planetTag"><a href="" title="" class="text-ellipsis">陶陶天地</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="page-turn" style="display:none;">
+		<button type="button" class="unCBtn" id="pre">上一页</button>
+		<span></span>
+		<button type="button" id="next">下一页</button>
+	</div>
+	<div class="emptyPage" style="display:none;">
+		目前还没有加入任何星球哦~~
+	</div>
+</div>
 <%- include base/baseJSMobile.ejs %>
-        <script type="text/html" id="Groupstemplate">
-            {{each groups as item i}}
-                <li class="planetTag"><a href="/group/{{item.id}}" title="" class="text-ellipsis">{{item.name}}</a></li>
-            {{/each}}
-        </script>
-        <script>
-            var moreGroups = {
-                pre: $("#pre"),
-                next: $("#next"),
-                page: $(".page-turn").find('span').eq(0),
-                page_turn: $(".page-turn"),
-                main:$(".myJoinMd"),
-                myCreateMD:$("#myCreate"),
-                myJoindMD:$("#myJoind"),
-                myJoind:$("#myJoind").find('.planetTags'),
-                myCreate:$("#myCreate").find('.planetTags'),
-                emptyPage:$(".emptyPage"),
-                loading: $(".loading"),
-                currentpage: 1,
-                pageCount: 0,
-                createPageCount:0,
-                joinPageCount:0,
-                getCreateData:function(param,cb){
-                    $.getJSON("/api/getCreateGroup", param,
-                        function(data) {
-                            cb(data);
-                        });
-                },
-                getJoindData:function(param,cb){
-                    $.getJSON("/api/getJoindGroup", param,
-                        function(data) {
-                            cb(data);
-                        });
-                },
-                setPageData: function() {
-                    var self = this;
-                    if ( parseInt("<%=result.groups.length%>") > 0) {
-                        self.pageCount = parseInt("<%=result.pageCount%>");
-                        self.createPageCount = parseInt("<%=result.pageCount%>");
-                    }
-                    self.getJoindData({
-                        user_id:parseInt("<%=userid%>")
-                    },function(data){
-                        if (data.ret == 200 && data.data) {
-                            if (data.data.groups.length>0) {
-                                var compiled = template("Groupstemplate", data.data);
-                                self.myJoindMD.css('display', 'block');
-                                self.myJoind.html(compiled);
-                                self.joinPageCount = data.data.pageCount;
-                                console.log(self.joinPageCount);
-                                self.pageCount = self.pageCount>data.data.pageCount ? self.pageCount : data.data.pageCount;
-                            } else{
-                                self.myJoindMD.remove();
-                            }
-                            if (self.pageCount > 0 ) {
-                                self.page.text('1/' + self.pageCount);
-                                if (self.pageCount == 1) {
-                                    self.next.addClass('unCBtn');
-                                }
-                                self.page_turn.css('display', 'block');
-                                self.emptyPage.remove();
-                            } else{
-                                self.emptyPage.css('display', 'block');
-                                self.page_turn.remove();
-                                self.main.remove();
-                            }
-                        }
-                    });
-                },
-                pageUp:function(){
-                    var self = this;
-                        if (self.currentpage == self.pageCount) {
-                            self.next.removeClass('unCBtn');
-                        }
-                        self.currentpage -= 1;
-                        self.page.text(self.currentpage + '/' + self.pageCount);
-                        self.loading.hide();
-                        if (self.currentpage == 1) {
-                            self.pre.addClass('unCBtn');
-                        } 
-                        if (self.currentpage == self.createPageCount) {
-                            self.main.prepend(self.myCreateMD);
-                        }
-                        if (self.currentpage == self.joinPageCount) {
-                            self.main.append(self.myJoindMD);
-                        }
-                        $(window).scrollTop(0);
-                },
-                pageDown:function(){
-                    var self = this;
-                    if (self.currentpage == 1) {
-                        self.pre.removeClass('unCBtn');
-                    }
-                    self.currentpage += 1;
-                    self.page.text(self.currentpage + '/' + self.pageCount);
-                    self.loading.hide();
-                    if (self.currentpage ==  self.pageCount) {
-                        self.next.addClass('unCBtn');
-                    } 
-                    if (self.currentpage == (self.createPageCount + 1)) {
-                            self.myCreateMD.remove();
-                    }
-                    if (self.currentpage == (self.joinPageCount + 1)) {
-                            self.myJoindMD.remove();
-                    }
-                    $(window).scrollTop(0);
-                },
-                bindEvent:function(){
-                    var self = this;
-                    self.pre.on("touchend",function(){
-                        if (self.currentpage == 1) {
-                            return;
-                        } else{
-                            self.loading.show();
-                            var flagJ = 0;
-                            var flagC = 0;
-                            if ((self.currentpage - 1) > self.createPageCount) {
-                                flagC = 1;
-                                if (flagC == 1 && flagJ == 1){
-                                    self.pageUp();
-                                } 
-                            } else{
-                                self.getCreateData({
-                                    user_id:parseInt("<%=userid%>"),
-                                    pn: self.currentpage - 1
-                                },function(data){
-                                    if (data.ret == 200 && data.data){
-                                        flagC = 1;
-                                        var compiled = template("Groupstemplate", data.data);
-                                        self.myCreate.html(compiled);
-                                        if (flagC == 1 && flagJ == 1) {
-                                            self.pageUp();
-                                        }
-                                    }
-                                });
-                            }
-                            if ((self.currentpage - 1) > self.joinPageCount) {
-                                flagJ = 1;
-                                if (flagC == 1 && flagJ == 1){
-                                    self.pageUp();
-                                } 
-                            } else{
-                                self.getJoindData({
-                                    user_id:parseInt("<%=userid%>"),
-                                    pn: self.currentpage - 1
-                                },function(data){
-                                    if (data.ret == 200 && data.data){
-                                        flagJ = 1;
-                                        var compiled = template("Groupstemplate", data.data);
-                                        self.myJoind.html(compiled);
-                                        if (flagC == 1 && flagJ == 1) {
-                                            self.pageUp();
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    self.next.on("touchend",function(){
-                        if (self.currentpage == self.pageCount) {
-                            return;
-                        } else{
-                            self.loading.show();
-                            var flagJ = 0;
-                            var flagC = 0;
-                            if ((self.currentpage + 1) > self.createPageCount) {
-                                flagC = 1;
-                                if (flagC == 1 && flagJ == 1){
-                                    self.pageDown();
-                                } 
-                            } else{
-                                self.getCreateData({
-                                    user_id:parseInt("<%=userid%>"),
-                                    pn: self.currentpage + 1
-                                },function(data){
-                                    if (data.ret == 200 && data.data){
-                                        flagC = 1;
-                                        var compiled = template("Groupstemplate", data.data);
-                                        self.myCreate.html(compiled);
-                                        if (flagC == 1 && flagJ == 1) {
-                                            self.pageDown();
-                                        }
-                                    }
-                                });
-                            }
-                            if ((self.currentpage + 1) > self.joinPageCount) {
-                                flagJ = 1;
-                                if (flagC == 1 && flagJ == 1){
-                                    self.pageDown();
-                                } 
-                            } else{
-                                self.getJoindData({
-                                    user_id:parseInt("<%=userid%>"),
-                                    pn: self.currentpage + 1
-                                },function(data){
-                                    if (data.ret == 200 && data.data){
-                                        flagJ = 1;
-                                        var compiled = template("Groupstemplate", data.data);
-                                        self.myJoind.html(compiled);
-                                        if (flagC == 1 && flagJ == 1) {
-                                            self.pageDown();
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-                },
-                init:function(){
-                    this.setPageData();
-                    this.bindEvent();
-                }
-            }
-            moreGroups.init();
-        </script>
-  <%- include base/footerMobile.ejs %>       
+<script type="text/html" id="Groupstemplate">
+	{{each groups as item i}}
+	<li class="planetTag"><a href="/group/{{item.id}}" title="" class="text-ellipsis">{{item.name}}</a></li>
+	{{/each}}
+</script>
+<script>
+	var moreGroups = {
+		pre: $("#pre"),
+		next: $("#next"),
+		page: $(".page-turn").find('span').eq(0),
+		page_turn: $(".page-turn"),
+		main: $(".myJoinMd"),
+		myCreateMD: $("#myCreate"),
+		myJoindMD: $("#myJoind"),
+		myJoind: $("#myJoind").find('.planetTags'),
+		myCreate: $("#myCreate").find('.planetTags'),
+		emptyPage: $(".emptyPage"),
+		loading: $(".loading"),
+		currentpage: 1,
+		pageCount: 0,
+		createPageCount: 0,
+		joinPageCount: 0,
+		getCreateData: function(param, cb) {
+			$.getJSON("/api/getCreateGroup", param,
+				function(data) {
+					cb(data);
+				});
+		},
+		getJoindData: function(param, cb) {
+			$.getJSON("/api/getJoindGroup", param,
+				function(data) {
+					cb(data);
+				});
+		},
+		setPageData: function() {
+			var self = this;
+			if (parseInt("<%=result.groups.length%>") > 0) {
+				self.pageCount = parseInt("<%=result.pageCount%>");
+				self.createPageCount = parseInt("<%=result.pageCount%>");
+			}
+			self.getJoindData({
+				user_id: parseInt("<%=userid%>")
+			}, function(data) {
+				if (data.ret == 200 && data.data) {
+					if (data.data.groups.length > 0) {
+						var compiled = template("Groupstemplate", data.data);
+						self.myJoindMD.css('display', 'block');
+						self.myJoind.html(compiled);
+						self.joinPageCount = data.data.pageCount;
+						console.log(self.joinPageCount);
+						self.pageCount = self.pageCount > data.data.pageCount ? self.pageCount : data.data.pageCount;
+					} else {
+						self.myJoindMD.remove();
+					}
+					if (self.pageCount > 0) {
+						self.page.text('1/' + self.pageCount);
+						if (self.pageCount == 1) {
+							self.next.addClass('unCBtn');
+						}
+						self.page_turn.css('display', 'block');
+						self.emptyPage.remove();
+					} else {
+						self.emptyPage.css('display', 'block');
+						self.page_turn.remove();
+						self.main.remove();
+					}
+				}
+			});
+		},
+		pageUp: function() {
+			var self = this;
+			if (self.currentpage == self.pageCount) {
+				self.next.removeClass('unCBtn');
+			}
+			self.currentpage -= 1;
+			self.page.text(self.currentpage + '/' + self.pageCount);
+			self.loading.hide();
+			if (self.currentpage == 1) {
+				self.pre.addClass('unCBtn');
+			}
+			if (self.currentpage == self.createPageCount) {
+				self.main.prepend(self.myCreateMD);
+			}
+			if (self.currentpage == self.joinPageCount) {
+				self.main.append(self.myJoindMD);
+			}
+			$(window).scrollTop(0);
+		},
+		pageDown: function() {
+			var self = this;
+			if (self.currentpage == 1) {
+				self.pre.removeClass('unCBtn');
+			}
+			self.currentpage += 1;
+			self.page.text(self.currentpage + '/' + self.pageCount);
+			self.loading.hide();
+			if (self.currentpage == self.pageCount) {
+				self.next.addClass('unCBtn');
+			}
+			if (self.currentpage == (self.createPageCount + 1)) {
+				self.myCreateMD.remove();
+			}
+			if (self.currentpage == (self.joinPageCount + 1)) {
+				self.myJoindMD.remove();
+			}
+			$(window).scrollTop(0);
+		},
+		bindEvent: function() {
+			var self = this;
+			self.pre.on("touchend", function() {
+				if (self.currentpage == 1) {
+					return;
+				} else {
+					self.loading.show();
+					var flagJ = 0;
+					var flagC = 0;
+					if ((self.currentpage - 1) > self.createPageCount) {
+						flagC = 1;
+						if (flagC == 1 && flagJ == 1) {
+							self.pageUp();
+						}
+					} else {
+						self.getCreateData({
+							user_id: parseInt("<%=userid%>"),
+							pn: self.currentpage - 1
+						}, function(data) {
+							if (data.ret == 200 && data.data) {
+								flagC = 1;
+								var compiled = template("Groupstemplate", data.data);
+								self.myCreate.html(compiled);
+								if (flagC == 1 && flagJ == 1) {
+									self.pageUp();
+								}
+							}
+						});
+					}
+					if ((self.currentpage - 1) > self.joinPageCount) {
+						flagJ = 1;
+						if (flagC == 1 && flagJ == 1) {
+							self.pageUp();
+						}
+					} else {
+						self.getJoindData({
+							user_id: parseInt("<%=userid%>"),
+							pn: self.currentpage - 1
+						}, function(data) {
+							if (data.ret == 200 && data.data) {
+								flagJ = 1;
+								var compiled = template("Groupstemplate", data.data);
+								self.myJoind.html(compiled);
+								if (flagC == 1 && flagJ == 1) {
+									self.pageUp();
+								}
+							}
+						});
+					}
+				}
+			});
+			self.next.on("touchend", function() {
+				if (self.currentpage == self.pageCount) {
+					return;
+				} else {
+					self.loading.show();
+					var flagJ = 0;
+					var flagC = 0;
+					if ((self.currentpage + 1) > self.createPageCount) {
+						flagC = 1;
+						if (flagC == 1 && flagJ == 1) {
+							self.pageDown();
+						}
+					} else {
+						self.getCreateData({
+							user_id: parseInt("<%=userid%>"),
+							pn: self.currentpage + 1
+						}, function(data) {
+							if (data.ret == 200 && data.data) {
+								flagC = 1;
+								var compiled = template("Groupstemplate", data.data);
+								self.myCreate.html(compiled);
+								if (flagC == 1 && flagJ == 1) {
+									self.pageDown();
+								}
+							}
+						});
+					}
+					if ((self.currentpage + 1) > self.joinPageCount) {
+						flagJ = 1;
+						if (flagC == 1 && flagJ == 1) {
+							self.pageDown();
+						}
+					} else {
+						self.getJoindData({
+							user_id: parseInt("<%=userid%>"),
+							pn: self.currentpage + 1
+						}, function(data) {
+							if (data.ret == 200 && data.data) {
+								flagJ = 1;
+								var compiled = template("Groupstemplate", data.data);
+								self.myJoind.html(compiled);
+								if (flagC == 1 && flagJ == 1) {
+									self.pageDown();
+								}
+							}
+						});
+					}
+				}
+			});
+		},
+		init: function() {
+			this.setPageData();
+			this.bindEvent();
+		}
+	}
+	moreGroups.init();
+</script>
+<%- include base/footerMobile.ejs %>

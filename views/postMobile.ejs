@@ -1,55 +1,55 @@
 <%- include base/headerMobile.ejs %>
-        <div class="main">
-            <div class="mask"></div>
-            <div class="location clearfix">
-                <h1>发表帖子</h1>
-            </div> 
-            <div class="post">
-                <form class="post-form clearfix" action="/group/<%=groupID%>/post" method="post">
-                    <input type="text" name="title" value="" placeholder="标题" class="form-control" id="post-title">
-                    <textarea placeholder="内容" class="form-control" id="textareaMobile" name="text"></textarea>
-                    <button type="submit" class="post-sub" id="post-issue">发表</button>
-                </form>  
-            </div>
-        </div>
+<div class="main">
+	<div class="mask"></div>
+	<div class="location clearfix">
+		<h1>发表帖子</h1>
+	</div>
+	<div class="post">
+		<form class="post-form clearfix" action="/group/<%=groupID%>/post" method="post">
+			<input type="text" name="title" value="" placeholder="标题" class="form-control" id="post-title">
+			<textarea placeholder="内容" class="form-control" id="textareaMobile" name="text"></textarea>
+			<button type="submit" class="post-sub" id="post-issue">发表</button>
+		</form>
+	</div>
+</div>
 <%- include base/baseJSMobile.ejs %>
-        <script>
-            var post = {
-                editor:$("#textareaMobile"),
-                title: $("#post-title"),
-                postForm: $(".post-form"),
-                subBtn:$("#post-issue"),
-                verificate: function(){
-                    this.title.val(this.title.val().trim());
-                    this.editor.val(this.editor.val().trim());
-                    if (this.title.val().length == 0) {
-                        sweetAlert('格式错误', '请填写标题！', 'warning');
-                        return false;
-                    }
-                    if (this.title.val().length > 20) {
-                        sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
-                        return false;
-                    }
-                    if (this.editor.val().length == 0) {
-                        sweetAlert('格式错误', '请填写内容！', 'warning');
-                        return false;
-                    }
-                    return true;
-                },
-                bindEvent: function() {
-                    var self = this;
-                    self.subBtn.on('touchend', function(event) {
-                        event.preventDefault();
-                        /* Act on the event */
-                        if (self.verificate()) {
-                            self.postForm.submit();
-                        }
-                    });
-                },
-                init: function() {
-                    this.bindEvent();
-                }
-            }
-            post.init();
-        </script>
-<%- include base/footerMobile.ejs %>    
+<script>
+	var post = {
+		editor: $("#textareaMobile"),
+		title: $("#post-title"),
+		postForm: $(".post-form"),
+		subBtn: $("#post-issue"),
+		verificate: function() {
+			this.title.val(this.title.val().trim());
+			this.editor.val(this.editor.val().trim());
+			if (this.title.val().length == 0) {
+				sweetAlert('格式错误', '请填写标题！', 'warning');
+				return false;
+			}
+			if (this.title.val().length > 20) {
+				sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
+				return false;
+			}
+			if (this.editor.val().length == 0) {
+				sweetAlert('格式错误', '请填写内容！', 'warning');
+				return false;
+			}
+			return true;
+		},
+		bindEvent: function() {
+			var self = this;
+			self.subBtn.on('touchend', function(event) {
+				event.preventDefault();
+				/* Act on the event */
+				if (self.verificate()) {
+					self.postForm.submit();
+				}
+			});
+		},
+		init: function() {
+			this.bindEvent();
+		}
+	}
+	post.init();
+</script>
+<%- include base/footerMobile.ejs %>

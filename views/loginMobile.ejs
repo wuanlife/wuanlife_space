@@ -1,81 +1,81 @@
 <%- include base/headerMobile.ejs %>
-        <div class="main">
-            <div class="mask"></div>
-            <div class="login">
-                <form class="login-form line-form" action="/login" title="" method="post">
-                    <div class="login-group line-fgroup">
-                        <label for="email" class="lable-e"></label>
-                        <input type="email" name="email" value="" placeholder="邮箱" id="email">
-                    </div>
-                    <div class="login-group line-fgroup">
-                        <label for="pw" class="label-paw"></label>
-                        <input type="password" name="password" value="" placeholder="密码" id="pw">
-                    </div>
-                    <a href="/register" title="">注册账号</a>
-                    <button id='login' type="submit">登录</button>
-                </form>
-            </div>
-        </div>
+<div class="main">
+	<div class="mask"></div>
+	<div class="login">
+		<form class="login-form line-form" action="/login" title="" method="post">
+			<div class="login-group line-fgroup">
+				<label for="email" class="lable-e"></label>
+				<input type="email" name="email" value="" placeholder="邮箱" id="email">
+			</div>
+			<div class="login-group line-fgroup">
+				<label for="pw" class="label-paw"></label>
+				<input type="password" name="password" value="" placeholder="密码" id="pw">
+			</div>
+			<a href="/register" title="">注册账号</a>
+			<button id='login' type="submit">登录</button>
+		</form>
+	</div>
+</div>
 <%- include base/baseJSMobile.ejs %>
-        <script type="text/javascript">
-            var login = {
-                email: $("#email"),
-                pw: $("#pw"),
-                loginform: $(".login-form"),
-                main:$(".main"),
-                verificate: function() {
-                    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-                    if (!myreg.test(this.email.val())) {
-                        sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-                        return false;
-                    }
-                    if (this.pw.val().length == 0) {
-                        sweetAlert('格式错误', '请填写密码！', 'warning');
-                        return false;
-                    }
-                    return true;
-                },
-                setMainHeight:function(){
-                     windowHeight = $(window).height();
-                     this.main.css('minHeight', windowHeight);
-                },
-                bindEvent: function() {
-                    var self = this;
-                    self.loginform.submit(function(event) {
-                        event.preventDefault();
-                        if (self.verificate()) {
-                            $.ajax({
-                                type: "post",
-                                url: "/login",
-                                async: true,
-                                data: {
-                                    email: self.email.val(),
-                                    password: self.pw.val()
-                                },
-                                success: function(data) {
-                                    console && console.log(data);
-                                    if(data.ret == 200 && data.data){
-                                        if (data.data.code == 1) {
-                                            window.location.href = '/'; 
-                                        } else {
-                                            sweetAlert('提示', data.data.msg, 'warning');
-                                        }
-                                    } else{
-                                        sweetAlert('错误', data.msg, 'error');
-                                    } 
-                                },
-                                error: function(x, h, r) {
-                                    console && console.log(x, h, r);
-                                }
-                            });
-                        }
-                    });
-                },
-                init: function() {
-                    this.setMainHeight();
-                    this.bindEvent();
-                }
-            }
-            login.init();
-        </script>
-    <%- include base/footerMobile.ejs %>    
+<script type="text/javascript">
+	var login = {
+		email: $("#email"),
+		pw: $("#pw"),
+		loginform: $(".login-form"),
+		main: $(".main"),
+		verificate: function() {
+			var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			if (!myreg.test(this.email.val())) {
+				sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
+				return false;
+			}
+			if (this.pw.val().length == 0) {
+				sweetAlert('格式错误', '请填写密码！', 'warning');
+				return false;
+			}
+			return true;
+		},
+		setMainHeight: function() {
+			windowHeight = $(window).height();
+			this.main.css('minHeight', windowHeight);
+		},
+		bindEvent: function() {
+			var self = this;
+			self.loginform.submit(function(event) {
+				event.preventDefault();
+				if (self.verificate()) {
+					$.ajax({
+						type: "post",
+						url: "/login",
+						async: true,
+						data: {
+							email: self.email.val(),
+							password: self.pw.val()
+						},
+						success: function(data) {
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/';
+								} else {
+									sweetAlert('提示', data.data.msg, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						},
+						error: function(x, h, r) {
+							console && console.log(x, h, r);
+						}
+					});
+				}
+			});
+		},
+		init: function() {
+			this.setMainHeight();
+			this.bindEvent();
+		}
+	}
+	login.init();
+</script>
+<%- include base/footerMobile.ejs %>

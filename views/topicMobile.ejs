@@ -1,364 +1,366 @@
 <%- include base/headerMobile.ejs %>
-        <div class="main">
-            <div class="mask"></div>
-            <div class="post-detail">
-                <div class="post-md">
-                    <h1 class="post-title"><%-result.title%></h1>
-                    <div class="post-info clearfix">
-                        <span class="text-ellipsis"><a href="#?" title="<%=result.nickname%>"><%=result.nickname%></a></span>
-                        <span class="postIn">发表于</span>
-                        <span class="text-ellipsis"><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
-                        <span class="post-time"><%=result.createTime%></span>
-                    </div>
-                    <div class="post-content"><%-result.text%></div>
-                    <% if (result.stickyRight || result.deleteRight) { %>
-                    <div class="post-opt">
-                        <% if (result.stickyRight) { %>
-                            <% if (result.sticky) { %>
-                            <button class="post-opt-item" id="stickBtn">取消置顶</button>
-                            <% } else { %>
-                            <button class="post-opt-item" id="stickBtn">置顶</button>
-                            <% } %>
-                        <% } %>
-                        <% if (result.deleteRight) { %>
-                        <button class="post-opt-item" id="delBtn">删除</button>
-                        <% } %>
-                    </div>
-                    <% } %>
-                </div>
-                <div class="post-comment" style="display:none;">
-                    <h2></h2>
-                    <div class="post-cm-group">
-                        <div class="post-cm-item">
-                            <div class="post-cm-info clearfix">
-                                <span><a href="#?" title=""></a></span>
-                                <span class="post-cm-time"></span>
-                            </div>
-                            <div class="post-cm-content"></div>
-                        </div>
-                    </div>
-                    <div class="page-turn">
-                        <button class="unCBtn">上一页</button>
-                        <span></span>
-                        <button>下一页</button>
-                    </div>
-                </div>
-                <div class="my-comment">
-                    <h2>我的回复</h2>
-                    <form class="post-detail-form clearfix" action="/postReply" method="post">
-                        <textarea name="" class="form-control" placeholder="内容"></textarea>
-                        <button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="main">
+	<div class="mask"></div>
+	<div class="post-detail">
+		<div class="post-md">
+			<h1 class="post-title"><%-result.title%></h1>
+			<div class="post-info clearfix">
+				<span class="text-ellipsis"><a href="#?" title="<%=result.nickname%>"><%=result.nickname%></a></span>
+				<span class="postIn">发表于</span>
+				<span class="text-ellipsis"><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
+				<span class="post-time"><%=result.createTime%></span>
+			</div>
+			<div class="post-content">
+				<%-result.text%>
+			</div>
+			<% if (result.stickyRight || result.deleteRight) { %>
+			<div class="post-opt">
+				<% if (result.stickyRight) { %>
+				<% if (result.sticky) { %>
+				<button class="post-opt-item" id="stickBtn">取消置顶</button>
+				<% } else { %>
+				<button class="post-opt-item" id="stickBtn">置顶</button>
+				<% } %>
+				<% } %>
+				<% if (result.deleteRight) { %>
+				<button class="post-opt-item" id="delBtn">删除</button>
+				<% } %>
+			</div>
+			<% } %>
+		</div>
+		<div class="post-comment" style="display:none;">
+			<h2></h2>
+			<div class="post-cm-group">
+				<div class="post-cm-item">
+					<div class="post-cm-info clearfix">
+						<span><a href="#?" title=""></a></span>
+						<span class="post-cm-time"></span>
+					</div>
+					<div class="post-cm-content"></div>
+				</div>
+			</div>
+			<div class="page-turn">
+				<button class="unCBtn">上一页</button>
+				<span></span>
+				<button>下一页</button>
+			</div>
+		</div>
+		<div class="my-comment">
+			<h2>我的回复</h2>
+			<form class="post-detail-form clearfix" action="/postReply" method="post">
+				<textarea name="" class="form-control" placeholder="内容"></textarea>
+				<button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
+			</form>
+		</div>
+	</div>
+</div>
 <%- include base/baseJSMobile.ejs %>
-        <script type="text/html" id="listtemplate">
-            {{each reply as item i}}
-            <div class="post-cm-item">
-                <div class="post-cm-info clearfix">
-                    <span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
-                    <span class="post-cm-time">{{item.createTime}}</span>
-                </div>
-                <div class="post-cm-content">{{item.text}}</div>
-            </div>
-            {{/each}}
-        </script>
-        <script type="text/javascript">
-            var postid = '<%=result.postID%>';
-            var postReply = {
-                pre: $(".page-turn").find('button').first(),
-                next: $(".page-turn").find('button').last(),
-                page: $(".page-turn").find('span').eq(0),
-                currentpage: 1,
-                pageCount: 0,
-                loading: $(".loading"),
-                reply_md: $(".post-comment"),
-                reply_main: $(".post-cm-group"),
-                reply_title: $(".post-comment").children('h2'),
-                post_opt: $(".post-opt"),
-                post_up:$("#stickBtn"),
-                post_edit: $("#editBtn"),
-                post_delete: $("#delBtn"),
-                myReplyForm: $(".post-detail-form"),
-                myReplyContent: $(".post-detail-form").children('textarea'),
-                myReplyBtn: $('#myReplyBtn'),
-                isSticky:0,
-                user:'<%- JSON.stringify(user) %>',
-                setStickyData:function(){
-                    this.isSticky = parseInt("<%=result.sticky%>");
-                },
-                verificate: function() {
-                    if (this.myReplyContent.val().length < 1) {
-                        sweetAlert('格式错误', '回复内容不能为空', 'warning');
-                        return false;
-                    }
-                    return true;
-                },
-                getReplyData: function(param, cb) {
-                    $.getJSON("/api/getPostReplys", param,
-                        function(data) {
-                            cb(data);
-                        });
-                },
-                // getOptRightData: function(param, cb) {
-                //     $.getJSON("/api/getPostOptRight", param,
-                //         function(data) {
-                //             cb(data);
-                //         });
-                // },
-                setReplyData: function() {
-                    var self = this;
-                    self.getReplyData({
-                        currentpage: 1,
-                        post_id: postid
-                    }, function(data) {
-                        if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-                            var compiled = template("listtemplate", data.data);
-                            self.reply_md.css('display', 'block');
-                            self.reply_title.text(data.data.replyCount + "个回复");
-                            self.reply_main.html(compiled);
-                            self.page.text('1' + '/' + data.data.pageCount);
-                            if (data.data.pageCount == 1) {
-                                self.next.addClass('unCBtn');
-                            }
-                            self.pageCount = data.data.pageCount;
-                        } else {
-                            self.reply_md.remove();
-                        }
-                    });
-                },
-                // setOptRightData: function() {
-                //     var self = this;
-                //     self.getOptRightData({
-                //         post_id: postid
-                //     }, function(data) {
-                //         if (data.ret == 200 && data.data) {
-                //             if (data.data.stickyRight == 1) {
-                //                 self.post_up.css('display', 'inline-block');
-                //                 if (self.isSticky) {
-                //                     self.post_up.text("取消置顶");
-                //                 } else{
-                //                     self.post_up.text("置顶");
-                //                 }
-                //             } else{
-                //                 self.post_up.remove();
-                //             }
-                //             if (data.data.editRight == 1) {
-                //                 self.post_edit.css('display', 'inline-block');
-                //             } else{
-                //                 self.post_edit.remove();
-                //             }
-                //             if (data.data.deleteRight == 1) {
-                //                 self.post_delete.css('display', 'inline-block');
-                //             } else{
-                //                 self.post_delete.remove();
-                //             }
-                //             if (!data.data.stickyRight && !data.data.editRight && !data.data.deleteRight) {
-                //                 self.post_opt.remove();
-                //             }
-                //         } 
-                //     });
-                // },
-                bindEvent: function() {
-                    var self = this;
-                    self.pre.on("touchend", function() {
-                        if (self.currentpage == 1) {
-                            //sweetAlert('错误', '当前页是第一页', 'error');
-                            return;
-                        } else {
-                            self.loading.show();
-                            self.getReplyData({
-                                currentpage: self.currentpage - 1,
-                                post_id: postid
-                            }, function(data) {
-                                if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-                                    if (self.currentpage == self.pageCount) {
-                                        self.next.removeClass('unCBtn');
-                                    }
-                                    self.currentpage -= 1;
-                                    var compiled = template("listtemplate", data.data);
-                                    self.reply_main.html(compiled);
-                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-                                    self.loading.hide();
-                                    if (data.data.currentPage == 1) {
-                                        self.pre.addClass('unCBtn');
-                                    } 
-                                    var postComY = $(".post-comment").offset().top;
-                                    var scroollY =  postComY-$(".navbar").height() ;
-                                    $(window).scrollTop(scroollY);
-                                } else{
-                                    self.loading.hide();
-                                    sweetAlert('错误', '数据获取失败', 'error');
-                                }
-                            });
-                        }
-                    });
-                    self.next.on("touchend", function() {
-                        if (self.currentpage == self.pageCount) {
-                            //sweetAlert('错误', '当前页是最后一页', 'error');
-                            return;
-                        } else {
-                            self.loading.show();
-                            self.getReplyData({
-                                currentpage: self.currentpage + 1,
-                                post_id: postid
-                            }, function(data) {
-                                if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-                                    if (self.currentpage == 1) {
-                                        self.pre.removeClass('unCBtn');
-                                    }
-                                    self.currentpage += 1;
-                                    var compiled = template("listtemplate", data.data);
-                                    self.reply_main.html(compiled);
-                                    self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-                                    self.loading.hide();
-                                    if (data.data.currentPage == data.data.pageCount) {
-                                        self.next.addClass('unCBtn');
-                                    }
-                                    var postComY = $(".post-comment").offset().top;
-                                    var scroollY =  postComY-$(".navbar").height() ;
-                                    $(window).scrollTop(scroollY);
-                                } else{
-                                    self.loading.hide();
-                                    sweetAlert('错误', '数据获取失败', 'error');
-                                }
-                            });
-                        }
-                    });
-                    self.post_up.on("touchend",function(){
-                        switch(self.isSticky){
-                            // 还未置顶，帖子置顶操作
-                            case 0:
-                            $.ajax({
-                                type:"post",
-                                url:"/api/stickyPost",
-                                async:true,
-                                data:{
-                                    post_id: postid
-                                },
-                                success:function(data){
-                                    console && console.log(data);
-                                    if (data.ret == 200 && data.data) {
-                                        if (data.data.code == 1) { //操作成功
-                                            self.isSticky = 1;
-                                            self.post_up.text("取消置顶");
-                                        } else{
-                                            sweetAlert('提示', data.data.re, 'warning');
-                                        }
-                                    } else{
-                                        sweetAlert('错误', data.msg, 'error');
-                                    }
-                                },
-                                error: function(x, h, r) {
-                                    console && console.log(x, h, r);
-                                }
-                            });
-                            break;
-                            // 已经置顶，取消置顶
-                            case 1:
-                            $.ajax({
-                                type:"post",
-                                url:"/api/unstickyPost",
-                                async:true,
-                                data:{
-                                    post_id: postid
-                                },
-                                success:function(data){
-                                    console && console.log(data);
-                                     if (data.ret == 200 && data.data) {
-                                        if (data.data.code == 1) { //操作成功
-                                            self.isSticky = 0;
-                                            self.post_up.text("置顶");
-                                        } else{
-                                            sweetAlert('提示', data.data.re, 'warning');
-                                        }
-                                    } else{
-                                        sweetAlert('错误', data.msg, 'error');
-                                    }
-                                },
-                                error: function(x, h, r) {
-                                    console && console.log(x, h, r);
-                                }
-                            });
-                            break;
-                            default:
-                            console.log(self.isSticky);
-                            sweetAlert('提示', "无操作权限", 'warning');
-                            break;
-                        }
-                    });
-                    self.post_delete.on("touchend",function(){
-                        sweetAlert({
-                            title:'提示',
-                            text:'是否删除帖子',
-                            type:'warning',
-                            showCancelButton:true,
-                            confirmButtonText:'删除',
-                            cancelButtonText:'取消'
-                        },function(){
-                            $.ajax({
-                                type:"post",
-                                url:"/api/deletePost",
-                                async:true,
-                                data:{
-                                    post_id: postid
-                                },
-                                success:function(data){
-                                    console && console.log(data);
-                                    if (data.ret == 200 && data.data) {
-                                        if (data.data.code == 1) { //操作成功
-                                            window.location.href = '/group/' + '<%=result.groupID%>';
-                                        } else{
-                                            sweetAlert('提示', data.data.re, 'warning');
-                                        }
-                                    } else{
-                                        sweetAlert('错误', data.msg, 'error');
-                                    }
-                                },
-                                error: function(x, h, r) {
-                                    console && console.log(x, h, r);
-                                }
-                            });
-                        });
-                    });
-                    self.myReplyForm.submit(function(event) {
-                        event.preventDefault();
-                        if (self.user) {
-                            if (self.verificate()) {
-                                $.ajax({
-                                    type: "post",
-                                    url: "/api/postReply",
-                                    async: true,
-                                    data: {
-                                        post_id: postid,
-                                        text: self.myReplyContent.val()
-                                    },
-                                    success: function(data) {
-                                        console && console.log(data);
-                                        if (data.ret == 200 && data.data){
-                                            window.location.href = '/topic/' + postid;
-                                        } else{
-                                            sweetAlert('错误', data.msg, 'error');
-                                        }
-                                    },
-                                    error: function(x, h, r) {
-                                        console && console.log(x, h, r);
-                                    }
-                                });
-                            }
-                        } else {
-                            window.location.href = '/login';
-                        }
-                    });
-                },
-                init: function() {
-                    this.setStickyData();
-                    this.setReplyData();
-                    //this.setOptRightData();
-                    this.bindEvent();
-                }
-            }
-            postReply.init();
-        </script>
-<%- include base/footerMobile.ejs %>    
+<script type="text/html" id="listtemplate">
+	{{each reply as item i}}
+	<div class="post-cm-item">
+		<div class="post-cm-info clearfix">
+			<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
+			<span class="post-cm-time">{{item.createTime}}</span>
+		</div>
+		<div class="post-cm-content">{{item.text}}</div>
+	</div>
+	{{/each}}
+</script>
+<script type="text/javascript">
+	var postid = '<%=result.postID%>';
+	var postReply = {
+		pre: $(".page-turn").find('button').first(),
+		next: $(".page-turn").find('button').last(),
+		page: $(".page-turn").find('span').eq(0),
+		currentpage: 1,
+		pageCount: 0,
+		loading: $(".loading"),
+		reply_md: $(".post-comment"),
+		reply_main: $(".post-cm-group"),
+		reply_title: $(".post-comment").children('h2'),
+		post_opt: $(".post-opt"),
+		post_up: $("#stickBtn"),
+		post_edit: $("#editBtn"),
+		post_delete: $("#delBtn"),
+		myReplyForm: $(".post-detail-form"),
+		myReplyContent: $(".post-detail-form").children('textarea'),
+		myReplyBtn: $('#myReplyBtn'),
+		isSticky: 0,
+		user: '<%- JSON.stringify(user) %>',
+		setStickyData: function() {
+			this.isSticky = parseInt("<%=result.sticky%>");
+		},
+		verificate: function() {
+			if (this.myReplyContent.val().length < 1) {
+				sweetAlert('格式错误', '回复内容不能为空', 'warning');
+				return false;
+			}
+			return true;
+		},
+		getReplyData: function(param, cb) {
+			$.getJSON("/api/getPostReplys", param,
+				function(data) {
+					cb(data);
+				});
+		},
+		// getOptRightData: function(param, cb) {
+		//     $.getJSON("/api/getPostOptRight", param,
+		//         function(data) {
+		//             cb(data);
+		//         });
+		// },
+		setReplyData: function() {
+			var self = this;
+			self.getReplyData({
+				currentpage: 1,
+				post_id: postid
+			}, function(data) {
+				if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+					var compiled = template("listtemplate", data.data);
+					self.reply_md.css('display', 'block');
+					self.reply_title.text(data.data.replyCount + "个回复");
+					self.reply_main.html(compiled);
+					self.page.text('1' + '/' + data.data.pageCount);
+					if (data.data.pageCount == 1) {
+						self.next.addClass('unCBtn');
+					}
+					self.pageCount = data.data.pageCount;
+				} else {
+					self.reply_md.remove();
+				}
+			});
+		},
+		// setOptRightData: function() {
+		//     var self = this;
+		//     self.getOptRightData({
+		//         post_id: postid
+		//     }, function(data) {
+		//         if (data.ret == 200 && data.data) {
+		//             if (data.data.stickyRight == 1) {
+		//                 self.post_up.css('display', 'inline-block');
+		//                 if (self.isSticky) {
+		//                     self.post_up.text("取消置顶");
+		//                 } else{
+		//                     self.post_up.text("置顶");
+		//                 }
+		//             } else{
+		//                 self.post_up.remove();
+		//             }
+		//             if (data.data.editRight == 1) {
+		//                 self.post_edit.css('display', 'inline-block');
+		//             } else{
+		//                 self.post_edit.remove();
+		//             }
+		//             if (data.data.deleteRight == 1) {
+		//                 self.post_delete.css('display', 'inline-block');
+		//             } else{
+		//                 self.post_delete.remove();
+		//             }
+		//             if (!data.data.stickyRight && !data.data.editRight && !data.data.deleteRight) {
+		//                 self.post_opt.remove();
+		//             }
+		//         } 
+		//     });
+		// },
+		bindEvent: function() {
+			var self = this;
+			self.pre.on("touchend", function() {
+				if (self.currentpage == 1) {
+					//sweetAlert('错误', '当前页是第一页', 'error');
+					return;
+				} else {
+					self.loading.show();
+					self.getReplyData({
+						currentpage: self.currentpage - 1,
+						post_id: postid
+					}, function(data) {
+						if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+							if (self.currentpage == self.pageCount) {
+								self.next.removeClass('unCBtn');
+							}
+							self.currentpage -= 1;
+							var compiled = template("listtemplate", data.data);
+							self.reply_main.html(compiled);
+							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+							self.loading.hide();
+							if (data.data.currentPage == 1) {
+								self.pre.addClass('unCBtn');
+							}
+							var postComY = $(".post-comment").offset().top;
+							var scroollY = postComY - $(".navbar").height();
+							$(window).scrollTop(scroollY);
+						} else {
+							self.loading.hide();
+							sweetAlert('错误', '数据获取失败', 'error');
+						}
+					});
+				}
+			});
+			self.next.on("touchend", function() {
+				if (self.currentpage == self.pageCount) {
+					//sweetAlert('错误', '当前页是最后一页', 'error');
+					return;
+				} else {
+					self.loading.show();
+					self.getReplyData({
+						currentpage: self.currentpage + 1,
+						post_id: postid
+					}, function(data) {
+						if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+							if (self.currentpage == 1) {
+								self.pre.removeClass('unCBtn');
+							}
+							self.currentpage += 1;
+							var compiled = template("listtemplate", data.data);
+							self.reply_main.html(compiled);
+							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+							self.loading.hide();
+							if (data.data.currentPage == data.data.pageCount) {
+								self.next.addClass('unCBtn');
+							}
+							var postComY = $(".post-comment").offset().top;
+							var scroollY = postComY - $(".navbar").height();
+							$(window).scrollTop(scroollY);
+						} else {
+							self.loading.hide();
+							sweetAlert('错误', '数据获取失败', 'error');
+						}
+					});
+				}
+			});
+			self.post_up.on("touchend", function() {
+				switch (self.isSticky) {
+					// 还未置顶，帖子置顶操作
+					case 0:
+						$.ajax({
+							type: "post",
+							url: "/api/stickyPost",
+							async: true,
+							data: {
+								post_id: postid
+							},
+							success: function(data) {
+								console && console.log(data);
+								if (data.ret == 200 && data.data) {
+									if (data.data.code == 1) { //操作成功
+										self.isSticky = 1;
+										self.post_up.text("取消置顶");
+									} else {
+										sweetAlert('提示', data.data.re, 'warning');
+									}
+								} else {
+									sweetAlert('错误', data.msg, 'error');
+								}
+							},
+							error: function(x, h, r) {
+								console && console.log(x, h, r);
+							}
+						});
+						break;
+						// 已经置顶，取消置顶
+					case 1:
+						$.ajax({
+							type: "post",
+							url: "/api/unstickyPost",
+							async: true,
+							data: {
+								post_id: postid
+							},
+							success: function(data) {
+								console && console.log(data);
+								if (data.ret == 200 && data.data) {
+									if (data.data.code == 1) { //操作成功
+										self.isSticky = 0;
+										self.post_up.text("置顶");
+									} else {
+										sweetAlert('提示', data.data.re, 'warning');
+									}
+								} else {
+									sweetAlert('错误', data.msg, 'error');
+								}
+							},
+							error: function(x, h, r) {
+								console && console.log(x, h, r);
+							}
+						});
+						break;
+					default:
+						console.log(self.isSticky);
+						sweetAlert('提示', "无操作权限", 'warning');
+						break;
+				}
+			});
+			self.post_delete.on("touchend", function() {
+				sweetAlert({
+					title: '提示',
+					text: '是否删除帖子',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '删除',
+					cancelButtonText: '取消'
+				}, function() {
+					$.ajax({
+						type: "post",
+						url: "/api/deletePost",
+						async: true,
+						data: {
+							post_id: postid
+						},
+						success: function(data) {
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) { //操作成功
+									window.location.href = '/group/' + '<%=result.groupID%>';
+								} else {
+									sweetAlert('提示', data.data.re, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						},
+						error: function(x, h, r) {
+							console && console.log(x, h, r);
+						}
+					});
+				});
+			});
+			self.myReplyForm.submit(function(event) {
+				event.preventDefault();
+				if (self.user) {
+					if (self.verificate()) {
+						$.ajax({
+							type: "post",
+							url: "/api/postReply",
+							async: true,
+							data: {
+								post_id: postid,
+								text: self.myReplyContent.val()
+							},
+							success: function(data) {
+								console && console.log(data);
+								if (data.ret == 200 && data.data) {
+									window.location.href = '/topic/' + postid;
+								} else {
+									sweetAlert('错误', data.msg, 'error');
+								}
+							},
+							error: function(x, h, r) {
+								console && console.log(x, h, r);
+							}
+						});
+					}
+				} else {
+					window.location.href = '/login';
+				}
+			});
+		},
+		init: function() {
+			this.setStickyData();
+			this.setReplyData();
+			//this.setOptRightData();
+			this.bindEvent();
+		}
+	}
+	postReply.init();
+</script>
+<%- include base/footerMobile.ejs %>
