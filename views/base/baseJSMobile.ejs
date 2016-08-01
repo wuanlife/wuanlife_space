@@ -54,10 +54,32 @@
                     $(".navbar").css("position", "fixed");
                 });
             };
+            //ajax获取数据
+            var getData =  function(url,param,cb){
+                $.getJSON(url, param, function(data) {
+                    cb(data);
+                });
+            };
+            //ajax提交数据
+            var subData = function(url,data,success){
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:data,
+                    success:function(d){
+                        success(d);
+                    },
+                    error:function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                });
+            };
             return {
                 setCenterLoadingDiv: setCenterLoadingDiv,
                 setToggleBtn: setToggleBtn,
-                setEditboxPosition:setEditboxPosition
+                setEditboxPosition:setEditboxPosition,
+                getData:getData,
+                subData:subData
             }
         }());
     $(document).ready(function() {

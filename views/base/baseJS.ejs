@@ -32,11 +32,13 @@
 				var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
 				$(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
 			};
+            //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
                     cb(data);
                 });
             };
+            //ajax提交数据
             var subData = function(url,data,success){
                 $.ajax({
                     type:"post",
