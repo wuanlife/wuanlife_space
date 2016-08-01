@@ -32,8 +32,28 @@
 				var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
 				$(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
 			};
+            var getData =  function(url,param,cb){
+                $.getJSON(url, param, function(data) {
+                    cb(data);
+                });
+            };
+            var subData = function(url,data,success){
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:data,
+                    success:function(d){
+                        success(d);
+                    },
+                    error:function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                });
+            };
 			return {
-				setCenterLoadingDiv: setCenterLoadingDiv
+				setCenterLoadingDiv: setCenterLoadingDiv,
+                getData:getData,
+                subData:subData
 			}
 		}());
 		$(document).ready(function() {
