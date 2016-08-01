@@ -166,29 +166,20 @@
 			self.cpForm.submit(function(event) {
 				event.preventDefault();
 				if (self.verificate()) {
-					$.ajax({
-						type: "post",
-						url: "/createGroup",
-						async: true,
-						data: {
-							name: self.pName.val(),
-							g_introduction: self.cpDes.val().trim(),
-							g_image: url
-						},
-						success: function(data) {
-							console && console.log(data);
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) { //创建成功
-									window.location.href = '/group/' + data.data.info.group_base_id;
-								} else {
-									sweetAlert('提示', data.data.msg, 'warning');
-								}
+					global.subData('/createGroup',{
+						name: self.pName.val(),
+						g_introduction: self.cpDes.val().trim(),
+						g_image: url
+					},function(data){
+						console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) {//创建成功
+								window.location.href = '/group/' + data.data.info.group_base_id;
 							} else {
-								sweetAlert('错误', data.msg, 'error');
+								sweetAlert('提示', data.data.msg, 'warning');
 							}
-						},
-						error: function(x, h, r) {
-							console && console.log(x, h, r);
+						} else {
+							sweetAlert('错误', data.msg, 'error');
 						}
 					});
 				}

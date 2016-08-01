@@ -38,28 +38,19 @@
 			self.loginform.submit(function(event) {
 				event.preventDefault();
 				if (self.verificate()) {
-					$.ajax({
-						type: "post",
-						url: "/login",
-						async: true,
-						data: {
-							email: self.email.val(),
-							password: self.pw.val()
-						},
-						success: function(data) {
-							console && console.log(data);
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									window.location.href = '/'; //登录成功
-								} else {
-									sweetAlert('提示', data.data.msg, 'warning');
-								}
+					global.subData('/login',{
+						email: self.email.val(),
+						password: self.pw.val()
+					},function(data){
+						console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) {
+								window.location.href = '/'; //登录成功
 							} else {
-								sweetAlert('错误', data.msg, 'error');
+								sweetAlert('提示', data.data.msg, 'warning');
 							}
-						},
-						error: function(x, h, r) {
-							console && console.log(x, h, r);
+						} else {
+							sweetAlert('错误', data.msg, 'error');
 						}
 					});
 				}

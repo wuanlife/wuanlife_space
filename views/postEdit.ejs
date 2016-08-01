@@ -156,22 +156,17 @@
 		},
 		getPostForEdit: function(param, cb) {
 			var self = this;
-			$.ajax({
-				type: "get",
-				url: "/api/getPostForEdit",
-				async: true,
-				data: {
-					postid: parseInt("<%=topicID%>")
-				},
-				success: function(data) {
-					console && console.log(data);
-					if (data.ret == 200 && data.data && data.data.editRight == 1) {
-						//self.PCtext.html(data.data.text);
-						//console.log(self.PCtext.html());
-						//禁止输出log调试
-						wangEditor.config.printLog = false;
-						editor = new wangEditor("textareaPC");
-						editor.config.menus = [
+			global.getData('/api/getPostForEdit',{
+				postid: parseInt("<%=topicID%>")
+			},function(data){
+				console && console.log(data);
+				if (data.ret == 200 && data.data && data.data.editRight == 1) {
+					//self.PCtext.html(data.data.text);
+					//console.log(self.PCtext.html());
+					//禁止输出log调试
+					wangEditor.config.printLog = false;
+					editor = new wangEditor("textareaPC");
+					editor.config.menus = [
 							'fontfamily',
 							'fontsize',
 							'bold',
@@ -192,19 +187,15 @@
 							'emotion',
 							'undo',
 							'redo',
-						];
-						editor.config.customUpload = true;
-						editor.config.customUploadInit = uploadInit;
-						editor.create();
-						editor.$txt.html(data.data.text);
-						self.editorEvent();
-						self.postTitle.val(data.data.title);
-					} else {
-						window.location.href = '/404';
-					}
-				},
-				error: function(x, h, r) {
-					console && console.log(x, h, r);
+					];
+					editor.config.customUpload = true;
+					editor.config.customUploadInit = uploadInit;
+					editor.create();
+					editor.$txt.html(data.data.text);
+					self.editorEvent();
+					self.postTitle.val(data.data.title);
+				} else {
+					window.location.href = '/404';
 				}
 			});
 		},

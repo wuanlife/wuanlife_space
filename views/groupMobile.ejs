@@ -83,22 +83,13 @@
 			this.pageCount = parseInt('<%=result.pageCount%>');
 		},
 		getServerData: function(param, cb) {
-			$.getJSON("/api/getGroupPlanetShow", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getGroupPlanetShow",param,cb);
 		},
 		getJoinPData: function(param, cb) {
-			$.getJSON("/api/joinPlant", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/joinPlant",param,cb);
 		},
 		getJoinBtnVal: function(param, cb) {
-			$.getJSON("/api/isJoinP", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/isJoinP",param,cb);
 		},
 		setJoinBtnVal: function() {
 			var self = this;

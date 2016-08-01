@@ -63,16 +63,10 @@
 		createPageCount: 0,
 		joinPageCount: 0,
 		getCreateData: function(param, cb) {
-			$.getJSON("/api/getCreateGroup", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getCreateGroup",param,cb);
 		},
 		getJoindData: function(param, cb) {
-			$.getJSON("/api/getJoindGroup", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getJoindGroup",param,cb);
 		},
 		setPageData: function() {
 			var self = this;

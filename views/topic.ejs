@@ -99,10 +99,7 @@
 			return true;
 		},
 		getReplyData: function(param, cb) {
-			$.getJSON("/api/getPostReplys", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getPostReplys",param,cb);
 		},
 		setReplyData: function() {
 			var self = this;
@@ -127,7 +124,6 @@
 		},
 		bindEvent: function() {
 			var self = this;
-			console.log(self.userid);
 			self.pre.on("click", function() {
 				if (self.currentpage == 1) {
 					//sweetAlert('错误', '当前页是第一页', 'error');
@@ -196,55 +192,37 @@
 				switch (self.isSticky) {
 					// 还未置顶，帖子置顶操作
 					case 0:
-						$.ajax({
-							type: "post",
-							url: "/api/stickyPost",
-							async: true,
-							data: {
-								post_id: parseInt("<%=result.postID%>")
-							},
-							success: function(data) {
-								console && console.log(data);
-								if (data.ret == 200 && data.data) {
-									if (data.data.code == 1) { //操作成功
-										self.isSticky = 1;
-										self.post_up.text("取消置顶");
-									} else {
-										sweetAlert('提示', data.data.re, 'warning');
-									}
+						global.subData("/api/stickyPost",{
+							post_id: parseInt("<%=result.postID%>")
+						},function(data){
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) { //操作成功
+									self.isSticky = 1;
+									self.post_up.text("取消置顶");
 								} else {
-									sweetAlert('错误', data.msg, 'error');
+									sweetAlert('提示', data.data.re, 'warning');
 								}
-							},
-							error: function(x, h, r) {
-								console && console.log(x, h, r);
+							} else {
+								sweetAlert('错误', data.msg, 'error');
 							}
 						});
 						break;
 						// 已经置顶，取消置顶
 					case 1:
-						$.ajax({
-							type: "post",
-							url: "/api/unstickyPost",
-							async: true,
-							data: {
-								post_id: parseInt("<%=result.postID%>")
-							},
-							success: function(data) {
-								console && console.log(data);
-								if (data.ret == 200 && data.data) {
-									if (data.data.code == 1) { //操作成功
-										self.isSticky = 0;
-										self.post_up.text("置顶");
-									} else {
-										sweetAlert('提示', data.data.re, 'warning');
-									}
+						global.subData("/api/unstickyPost",{
+							post_id: parseInt("<%=result.postID%>")
+						},function(data){
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) { //操作成功
+									self.isSticky = 0;
+									self.post_up.text("置顶");
 								} else {
-									sweetAlert('错误', data.msg, 'error');
+									sweetAlert('提示', data.data.re, 'warning');
 								}
-							},
-							error: function(x, h, r) {
-								console && console.log(x, h, r);
+							} else {
+								sweetAlert('错误', data.msg, 'error');
 							}
 						});
 						break;
@@ -263,27 +241,18 @@
 					confirmButtonText: '删除',
 					cancelButtonText: '取消'
 				}, function() {
-					$.ajax({
-						type: "post",
-						url: "/api/deletePost",
-						async: true,
-						data: {
-							post_id: parseInt("<%=result.postID%>")
-						},
-						success: function(data) {
-							console && console.log(data);
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) { //操作成功
-									window.location.href = '/group/' + '<%=result.groupID%>';
-								} else {
-									sweetAlert('提示', data.data.re, 'warning');
-								}
+					global.subData("/api/deletePost",{
+						post_id: parseInt("<%=result.postID%>")
+					},function(data){
+						console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) { //操作成功
+								window.location.href = '/group/' + '<%=result.groupID%>';
 							} else {
-								sweetAlert('错误', data.msg, 'error');
+								sweetAlert('提示', data.data.re, 'warning');
 							}
-						},
-						error: function(x, h, r) {
-							console && console.log(x, h, r);
+						} else {
+							sweetAlert('错误', data.msg, 'error');
 						}
 					});
 				});
@@ -292,24 +261,15 @@
 				event.preventDefault();
 				if (self.user) {
 					if (self.verificate()) {
-						$.ajax({
-							type: "post",
-							url: "/api/postReply",
-							async: true,
-							data: {
-								post_id: parseInt("<%=result.postID%>"),
-								text: self.myReplyContent.val()
-							},
-							success: function(data) {
-								console && console.log(data);
-								if (data.ret == 200 && data.data) {
-									window.location.href = '/topic/' + "<%=result.postID%>";
-								} else {
-									sweetAlert('错误', data.msg, 'error');
-								}
-							},
-							error: function(x, h, r) {
-								console && console.log(x, h, r);
+						global.subData("/api/postReply",{
+							post_id: parseInt("<%=result.postID%>"),
+							text: self.myReplyContent.val()
+						},function(data){
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								window.location.href = '/topic/' + "<%=result.postID%>";
+							} else {
+								sweetAlert('错误', data.msg, 'error');
 							}
 						});
 					}

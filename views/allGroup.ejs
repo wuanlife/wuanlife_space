@@ -69,10 +69,7 @@
 			this.nav_planetA.addClass("navbar-active");
 		},
 		getServerData: function(param, cb) {
-			$.getJSON("api/getPlanetAll", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getPlanetAll",param,cb);
 		},
 		bindEvent: function() {
 			var self = this;

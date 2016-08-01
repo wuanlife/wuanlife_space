@@ -82,10 +82,7 @@
 			this.nav_home.addClass("navbar-active");
 		},
 		getServerData: function(param, cb) {
-			$.getJSON("api/getindex", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getindex",param,cb);
 		},
 		bindEvent: function() {
 			var self = this;

@@ -91,7 +91,6 @@
 		myJoind: $("#myJoind").find('.planetTags'),
 		myCreate: $("#myCreate").find('.planetTags'),
 		emptyPage: $(".emptyPage"),
-		chapter_text: $(".chapter-text"),
 		nav_myP: $("#nav-myP").children("a"),
 		loading: $(".loading"),
 		currentpage: 1,
@@ -101,22 +100,13 @@
 			this.pageCount = parseInt("<%=result.pageCount%>");
 		},
 		getServerData: function(param, cb) {
-			$.getJSON("/api/getMyPlanet", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getMyPlanet",param,cb);
 		},
 		getCreateData: function(param, cb) {
-			$.getJSON("/api/getCreateGroup", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getCreateGroup",param,cb);
 		},
 		getJoindData: function(param, cb) {
-			$.getJSON("/api/getJoindGroup", param,
-				function(data) {
-					cb(data);
-				});
+			global.getData("/api/getJoindGroup",param,cb);
 		},
 		navActive: function() {
 			this.nav_myP.addClass("navbar-active");
