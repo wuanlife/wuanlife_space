@@ -14,8 +14,8 @@ router.post('/', function(req, res, next) {
 	request.post({
 		url: config.server + '?service=User.Login',
 		formData: {
-			Email: req.param('email'),
-			password: req.param('password')
+			Email: req.body.email,
+			password: req.body.password
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {

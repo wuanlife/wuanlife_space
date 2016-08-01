@@ -19,9 +19,9 @@ router.post('/', function(req, res, next) {
 	request.post({
 		url: config.server + '?service=User.Reg',
 		formData: {
-			Email: req.param('email'),
-			password: req.param('password'),
-			nickname: req.param('nickname')
+			Email: req.body.email,
+			password: req.body.password,
+			nickname: req.body.nickname
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (err) {
