@@ -18,8 +18,9 @@ router.get('/:userid', function(req, res, next) {
 					res.render(page, {
 						'path': '../',
 						'result': data.data,
-						'title': '我的星球',
+						'title': data.data.user_name + '的星球',
 						'userid': req.param("userid"),
+                        'ownerName':data.data.user_name,
 						'user': req.session.user
 					});
 				} else {
@@ -48,8 +49,9 @@ router.get('/:userid/moreGroups', function(req, res, next) {
                     res.render(page, {
                         'path':'../../',
                         result: result.data,
-                        'title':"我加入的星球",
+                        'title':result.data.user_name + "加入的星球",
                         'userid':req.param("userid"),
+                        'ownerName':result.data.user_name,
                         'user': req.session.user
                     });
                 } else {
