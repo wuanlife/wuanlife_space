@@ -5,7 +5,7 @@
 		<% if (user) { %>
 		<h1><a href="/uGroup/<%=userid%>" title="">我的星球</a></h1>
 		<% } else { %>
-		<h1><a href="/uGroup/<%=userid%>" title="">他的星球</a></h1>
+		<h1><a href="/uGroup/<%=userid%>" title=""><%=ownerName%>的星球</a></h1>
 		<% } %>
 	</div>
 	<div class="myPGroups" style="display:none;">

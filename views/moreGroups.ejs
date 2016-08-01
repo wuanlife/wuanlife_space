@@ -4,13 +4,17 @@
 		<% if (user) { %>
 		<h1><a href="/uGroup/<%=userid%>/moreGroups" title="">我加入的星球</a></h1>
 		<% } else { %>
-		<h1><a href="/uGroup/<%=userid%>/moreGroups" title="">他加入的星球</a></h1>
+		<h1><a href="/uGroup/<%=userid%>/moreGroups" title=""><%=ownerName%>加入的星球</a></h1>
 		<% } %>
 	</div>
 	<div class="myJoinMd">
 		<%if(result.groups.length > 0){%>
 		<div class="myJoinList" id="myCreate">
+			<% if (user) { %>
 			<h2>我创建的星球</h2>
+			<% } else { %>
+			<h2><%=ownerName%>创建的星球</h2>
+			<% } %>
 			<ul class="planetList clearfix">
 				<% result.groups.forEach(function(item) { %>
 				<li class="planet-item clearfix col-sm-4">
@@ -29,7 +33,11 @@
 		</div>
 		<%}%>
 		<div class="myJoinList" id="myJoind" style="display:none;">
+			<% if (user) { %>
 			<h2>我加入的星球</h2>
+			<% } else { %>
+			<h2><%=ownerName%>加入的星球</h2>
+			<% } %>
 			<ul class="planetList clearfix">
 
 			</ul>
