@@ -30,6 +30,10 @@ h1,h2,h3,h4,h5,h6,p,ul,li,nav,footer{
     margin:0;
     padding:0;
 }
+i,address,caption,cite,code,dfn,em,th,var{
+    font-style: normal;
+    font-weight: normal;
+}
 ul{
     list-style: none;
 }
@@ -63,6 +67,13 @@ ul{
 .all-wrapper{
     position: relative;
     height:100%;
+}
+/*小图标*/
+.icon{
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    vertical-align: bottom;
 }
 /****************************
 ***********导航栏***********
@@ -166,7 +177,7 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe; 
 }
-.location>button,.location>a{
+.locBtn{
     display:inline-block;
     font-size: 18px;
     padding:4px 27px; 
@@ -176,7 +187,13 @@ span.navbar-account-item{
     background-color: #5ab8fe; 
     cursor:pointer;
 }
-
+/*星球设置图标*/
+.gSet{
+    width:33px;
+    height:33px;
+    background-image: url(../images/gset_03.png);
+    margin-left: 27px;
+}
 /******************
 ********翻页模块***
 *******************/
@@ -226,10 +243,17 @@ button.unCBtn{
     padding:17px 0 7px;
     border-bottom: 1px solid #e8e8e8;
 }
+/*文章置顶标识*/
+.cha-top{
+    padding:2px 7px;
+    border:1px solid;
+    margin-right: 12px;
+}
 .chapter>h2{
     font-size: 18px;
     margin-bottom: 8px;
     font-weight: bold;
+    color:#5ab8fe;
 }
 .chapter>h2>a{
     color:#5ab8fe;

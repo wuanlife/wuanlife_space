@@ -1,3 +1,4 @@
+
 html,body{
     height:100%;
 }
@@ -25,6 +26,10 @@ a:hover{
 h1,h2,h3,h4,h5,p,ul,li{
     margin:0;
     padding:0;
+}
+i,address,caption,cite,code,dfn,em,th,var{
+    font-style: normal;
+    font-weight: normal;
 }
 ul{
     list-style: none;
@@ -61,7 +66,13 @@ ul{
     background-color: #f6fafb;
     height:100%;
 }
-
+/*小图标*/
+.icon{
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    vertical-align: bottom;
+}
 /*******************************
 **********移动端导航条*********
 *********************************/
@@ -293,7 +304,7 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe; 
 }
-.location>button,.location>a{
+.locBtn{
     display:inline-block;
     color:#f6fafb;
     font-size: 0.333333rem;
@@ -304,11 +315,23 @@ span.navbar-account-item{
     float:right;
     border-radius: 5px 5px;
 }
-[data-dpr="2"] .location>a,[data-dpr="2"] .location>button{
+[data-dpr="2"] .locBtn{
     border-radius: 10px 10px;
 }
-[data-dpr="3"] .location>a,[data-dpr="2"] .location>button{
+[data-dpr="3"] .locBtn{
     border-radius: 15px 15px;
+}
+/*星球标题长度限制*/
+.groupH{
+    max-width: 6.0rem;
+    display:inline-block;
+}
+/*星球设置图标*/
+.gSet{
+    width:0.666667rem;
+    height:0.666667rem;
+    background-image: url(../images/gset_03.png);
+    margin-left: 0.666667rem;
 }
 /******************
 ********翻页模块***
@@ -376,6 +399,22 @@ button.unCBtn{
 }
 .chapter>h2>a{
     color:#363636;
+}
+/*文章置顶标识*/
+.cha-top{
+    display:inline-block;
+    padding:0.066667rem 0.266667rem;
+    background-color: #5ab8fe;
+    color:#f6fafb;
+    margin-right: 0.4rem;
+    font-size: 0.346667rem;
+    border-radius: 3px;
+}
+[data-dpr="2"] .cha-top{
+    border-radius: 6px;
+}
+[data-dpr="3"] .cha-top{
+    border-radius: 9px;
 }
 /*列表正文*/
 .chapter-text{
