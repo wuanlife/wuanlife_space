@@ -1,14 +1,23 @@
 <%- include base/header.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
-		<h1><a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a></h1>
-		<button type="button" id="joinBtn">+加入</button>
+		<h1>
+		<a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a>
+		<%if(creator){%>
+		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
+		<% } %>
+		</h1>
+		<button type="button" id="joinBtn" class="locBtn">+加入</button>
 	</div>
 	<%if(result.posts.length > 0){%>
 	<div class="chapter-col">
 		<% result.posts.forEach(function(item) { %>
 		<div class="chapter">
-			<h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
+			<h2>
+				<%if(parseInt(item.sticky)){%>
+				<i class="cha-top">置顶</i>
+				<%}%>
+				<a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
 			<div class="chapter-text">
 				<%-item.text%>
 			</div>
@@ -47,7 +56,10 @@
 <script type="text/html" id="listtemplate">
 	{{each posts as item i}}
 	<div class="chapter">
-		<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
+		<h2>
+			{{if item.sticky>0}}<i class="cha-top">置顶</i> {{/if}}
+			<a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a>
+		</h2>
 		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 		<div class="chapter-info">
