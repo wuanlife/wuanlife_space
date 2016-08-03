@@ -42,7 +42,7 @@ router.get('/:groupid/post', function(req, res, next) {
 		var agent = ua(req.headers['user-agent']);
 		var userid = (req.session.user) ? req.session.user.userID : null;
 		var page = agent.Mobile ? 'postMobile' : 'post';
-		var tip = agent.Mobile ? 'tipMobile':'tip'
+		var tip = agent.Mobile ? 'tipMobile' : 'tip'
 		request(config.server + "?service=Group.GStatus&group_base_id=" + req.params.groupid + "&user_id=" + userid,
 			function(error, response, body) {
 				if (!error && response.statusCode == 200) {
@@ -59,11 +59,19 @@ router.get('/:groupid/post', function(req, res, next) {
 						} else {
 							res.render(tip, {
 								'path': '../../',
-								'tip':'您没有权限操作',
+								'tip': '您没有权限操作',
 								'title': '发表帖子',
 								'user': req.session.user
 							});
 						}
+					} else {
+						res.render('error', {
+							'message': result.msg,
+							error: {
+								'status': result.ret,
+								'stack': ''
+							}
+						});
 					}
 				} else {
 					console.error('group failed:', error);
@@ -118,5 +126,79 @@ router.post('/:groupid/post', function(req, res, next) {
 	});
 
 });
+
+//设置星球
+router.get('/:groupid/set', function(req, res, next) {
+	var agent = ua(req.headers['user-agent']);
+	var userid = (req.session.user) ? req.session.user.userID : null;
+	var page = agent.Mobile ? 'setGroupMobile' : 'setGroup';
+	var tip = agent.Mobile ? 'tipMobile' : 'tip'
+	request(config.server + "?service=Group.GetGroupInfo&group_id=" + req.params.groupid + "&user_id=" + userid,
+		function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				var result = JSON.parse(body);
+				console.log(result);
+				if (result.ret == 200) {
+					if (result.data.creator == 1) {
+						res.render(page, {
+							'result': result.data,
+							'title': '星球设置',
+							'user': req.session.user
+						});
+					} else {
+						res.render(tip, {
+							'tip': '您没有权限操作',
+							'title': '星球设置',
+							'user': req.session.user
+						});
+					}
+				} else {
+					res.render('error', {
+						'message': result.msg,
+						error: {
+							'status': result.ret,
+							'stack': ''
+						}
+					});
+				}
+			} else {
+				console.error('group failed:', error);
+				next(error);
+			}
+		});
+});
+
+router.post('/:groupid/set', function(req, res, next) {
+	var userid = (req.session.user) ? req.session.user.userID : null;
+	request.post({
+		url: config.server + '?service=Group.alterGroupInfo',
+		formData: {
+			user_id: userid,
+			group_id: req.params.groupid,
+			g_introduction: xss(req.body.g_introduction),
+			g_image: req.body.g_image
+		}
+	}, function optionalCallback(err, httpResponse, body) {
+		if (!err && httpResponse.statusCode == 200) {
+			var result = JSON.parse(body);
+			console.log(result);
+			if (result.ret == 200  && (result.data == 1 || result.data == 0)) {
+				res.redirect('/group/' + req.params.groupid);
+			} else {
+				res.render('error', {
+					'message': result.msg,
+					error: {
+						'status': result.ret,
+						'stack': result.data
+					}
+				});
+			}
+		} else {
+			next(err);
+		}
+	});
+
+});
+
 
 module.exports = router;
