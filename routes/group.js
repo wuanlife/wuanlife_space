@@ -8,10 +8,12 @@ var xss = require('xss');
 /* GET users listing. */
 router.get('/:groupid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
+	var userid = (req.session.user) ? req.session.user.userID : null;
 	request(config.server + "?service=Post.GetGroupPost&group_id=" + req.params.groupid,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);
+				var creator = (userid == result.data.creatorID) ? 1:0;
 				console.log(result);
 				if (result.ret == 200 && result.msg == "") {
 					var page = agent.Mobile ? 'groupMobile' : 'group';
@@ -19,6 +21,7 @@ router.get('/:groupid', function(req, res, next) {
 						'path': '../',
 						result: result.data,
 						'title': result.data.groupName,
+						'creator':creator,
 						'user': req.session.user
 					});
 				} else {
