@@ -331,6 +331,7 @@ span.navbar-account-item{
 .groupH{
     max-width: 6.0rem;
     display:inline-block;
+    word-wrap: break-word;/*英文长单词断行*/
 }
 /*星球设置图标*/
 .gSet{
