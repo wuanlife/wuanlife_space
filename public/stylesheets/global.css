@@ -58,6 +58,12 @@ ul{
     width:25%;
     float:left;
 }
+.fL{
+    float:left;
+}
+.fR{
+    float:right;
+}
 /*文本单行超出省略号表示*/
 .text-ellipsis{
     white-space: nowrap; 
@@ -441,7 +447,7 @@ button.unCBtn{
     height:160px;
 }
 /*******************
-******登陆和注册***********
+******登陆、注册、找回密码***********
 ******************/
 .login{
     position: fixed;
@@ -462,14 +468,25 @@ button.unCBtn{
     width:36px;
     height:36px;
 }
+/*用户名*/
 .lable-name{
     background-image: url(../images/login_01.png);
 }
+/*邮箱*/
 .lable-e{
     background-image: url(../images/login_03.png);
 }
+/*密码*/
 .label-paw{
     background-image: url(../images/login_06.png);
+}
+/*验证码*/
+.label-code{
+    background-image: url(../images/authcode.png);
+}
+/*确认密码*/
+.label-cPass{
+    background-image: url(../images/ConPass.png);
 }
 .login-group input{
     font-size: 17px;
