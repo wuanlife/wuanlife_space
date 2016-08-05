@@ -25,6 +25,7 @@
 		email: $("#email"),
 		pw: $("#pw"),
 		loginform: $(".login-form"),
+		loading: $(".loading"),
 		verificate: function() {
 			var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
 			var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
@@ -55,12 +56,14 @@
 			self.loginform.submit(function(event) {
 				event.preventDefault();
 				if (self.verificate()) {
+					self.loading.show();
 					global.subData('/register',{
 						email: self.email.val(),
 						password: self.pw.val(),
 						nickname: self.nickname.val()
 					},function(data){
 						console && console.log(data);
+						self.loading.hide();
 						if (data.ret == 200 && data.data) {
 							if (data.data.code == 1) {
 								window.location.href = '/'; //注册成功
