@@ -22,6 +22,7 @@ var allGroup = require('./routes/allGroup');
 var uGroup = require('./routes/uGroup');
 var logout = require('./routes/logout');
 var isLogin = require('./routes/isLogin');
+var resetPassword = require('./routes/resetPassword');
 var test = require('./routes/test');
 var uptoken = require('./routes/uptoken');
 var config = require('./config/config');
@@ -94,6 +95,7 @@ app.use('/group', group);
 app.use('/allGroup', allGroup);
 app.use('/logout',logout);
 app.use('/isLogin',isLogin);
+app.use('/resetPassword',resetPassword);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 
