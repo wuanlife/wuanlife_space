@@ -26,7 +26,7 @@ router.post('/', function(req, res, next) {
 		formData: {
 			name: req.param('name'),
 			user_id: req.session.user.userID,
-			g_image: req.param('g_image'),
+			g_image: xss(req.param('g_image')),
 			g_introduction:xss(req.param('g_introduction'))
 		}
 	}, function optionalCallback(err, httpResponse, body) {

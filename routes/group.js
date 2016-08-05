@@ -179,7 +179,7 @@ router.post('/:groupid/set', function(req, res, next) {
 			user_id: userid,
 			group_id: req.params.groupid,
 			g_introduction: xss(req.body.g_introduction),
-			g_image: req.body.g_image
+			g_image: xss(req.body.g_image)
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		if (!err && httpResponse.statusCode == 200) {
