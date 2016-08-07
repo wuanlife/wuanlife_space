@@ -1,7 +1,7 @@
 <%- include base/header.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
-		<% if (user) { %>
+		<% if (user.userID == userid) { %>
 		<h1><a href="/uGroup/<%=userid%>" title="">我的星球</a></h1>
 		<% } else { %>
 		<h1><a href="/uGroup/<%=userid%>" title=""><%=ownerName%>的星球</a></h1>
