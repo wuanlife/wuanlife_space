@@ -185,14 +185,17 @@ ul{
     height:0.533333rem;
     margin-right: 0.138889rem;
 }
-.navbar-option>li:nth-child(1) .navbar-option-item:before{
+.nav-h:before{
     background-image: url(../images/navbar-icons_03.png);
 }
-.navbar-option>li:nth-child(2) .navbar-option-item:before{
+.nav-mg:before{
     background-image: url(../images/navbar-icons_06.png);
 }
-.navbar-option>li:last-child .navbar-option-item:before{
+.nav-ag:before{
     background-image: url(../images/navbar-icons_09.png);
+}
+.nav-per:before{
+    background-image: url(../images/personal.png);
 }
 /*折叠账户*/
 .navbar-account>li{
