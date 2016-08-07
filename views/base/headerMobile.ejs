@@ -23,11 +23,14 @@
             <div class="sidebar">
                 <h1>午安网</h1>
                 <ul class="navbar-option">
-                    <li><a href="/" title="" class="navbar-icon navbar-option-item">首页</a></li>
+                    <li><a href="/" title="" class="navbar-icon navbar-option-item nav-h">首页</a></li>
                     <% if (user) { %>
-                    <li><a href="/uGroup/<%=user.userID%>" title="" class="navbar-icon navbar-option-item">我的星球</a></li>
+                    <li><a href="/uGroup/<%=user.userID%>" title="" class="navbar-icon navbar-option-item nav-mg">我的星球</a></li>
                     <% } %>
-                    <li><a href="/allGroup" title="" class="navbar-icon navbar-option-item">全部星球</a></li>
+                    <li><a href="/allGroup" title="" class="navbar-icon navbar-option-item nav-ag">全部星球</a></li>
+                    <% if (user) { %>
+                    <li><a href="" title="" class="navbar-icon navbar-option-item nav-per">个人中心</a></li>
+                    <% } %>
                 </ul>
                 <ul class="navbar-account">
                     <% if (user) { %>
