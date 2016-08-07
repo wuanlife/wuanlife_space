@@ -43,7 +43,7 @@ router.get('/:groupid', function(req, res, next) {
 router.get('/:groupid/post', function(req, res, next) {
 	if (req.session.user) {
 		var agent = ua(req.headers['user-agent']);
-		var userid = (req.session.user) ? req.session.user.userID : null;
+		var userid = req.session.user.userID;
 		var page = agent.Mobile ? 'postMobile' : 'post';
 		var tip = agent.Mobile ? 'tipMobile' : 'tip'
 		request(config.server + "?service=Group.GStatus&group_base_id=" + req.params.groupid + "&user_id=" + userid,
@@ -185,14 +185,14 @@ router.post('/:groupid/set', function(req, res, next) {
 		if (!err && httpResponse.statusCode == 200) {
 			var result = JSON.parse(body);
 			console.log(result);
-			if (result.ret == 200  && (result.data == 1 || result.data == 0)) {
+			if (result.ret == 200  && result.data.data == 1) {
 				res.redirect('/group/' + req.params.groupid);
 			} else {
 				res.render('error', {
 					'message': result.msg,
 					error: {
 						'status': result.ret,
-						'stack': result.data
+						'stack': result.data.msg
 					}
 				});
 			}
