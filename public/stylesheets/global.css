@@ -447,7 +447,7 @@ button.unCBtn{
     height:160px;
 }
 /*******************
-******登陆、注册、找回密码***********
+******登陆、注册、找回密码、个人中心***********
 ******************/
 .login{
     position: fixed;
@@ -469,11 +469,11 @@ button.unCBtn{
     height:36px;
 }
 /*用户名*/
-.lable-name{
+.label-name{
     background-image: url(../images/login_01.png);
 }
 /*邮箱*/
-.lable-e{
+.label-e{
     background-image: url(../images/login_03.png);
 }
 /*密码*/
@@ -487,6 +487,14 @@ button.unCBtn{
 /*确认密码*/
 .label-cPass{
     background-image: url(../images/ConPass.png);
+}
+/*生日*/
+.label-br{
+    background-image: url(../images/br_03.png);
+}
+/*性别*/
+.label-sex{
+    background-image: url(../images/sex_03.png);
 }
 .login-group input{
     font-size: 17px;
@@ -503,6 +511,25 @@ button.unCBtn{
 .login-form a{
     font-size: 14px;
     color:#5ab8fe;
+}
+.login-group .radiobox{
+    font-size: 17px;
+    height:36px;
+    padding-left: 51px;
+}
+.radiobox label{
+    position:static;
+    width:auto;
+}
+.radiobox .login-r{
+    color:#b4b4b4;
+    line-height: 36px;
+    height:36px;
+    margin-right: 10px;
+}
+.radiobox input[type='radio']{
+    width:13px;
+    height:13px;
 }
 /*******************
 ****各种帖子中的表单***
