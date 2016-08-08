@@ -17,8 +17,9 @@
             <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
             <ul class="navbar-account">
                 <% if (user) { %>
-                <li id="nav-userId"><span title="" class="navbar-account-item"><%=user.nickname%> </span></li>
-                <li id="nav-logout"><a href="/logout" title="" class="navbar-account-item">退出</a></li>
+                <li><a href="/users" class="navbar-account-item">个人中心</a></li>
+                <li id="nav-userId"><span class="navbar-account-item"><%=user.nickname%> </span></li>
+                <li id="nav-logout"><a href="/logout" class="navbar-account-item">退出</a></li>
                 <% } else { %>
                 <li id="nav-login"><a href="/login" title="" class="navbar-account-item">登录</a></li>
                 <li id="nav-register"><a href="/register" title="" class="navbar-account-item">注册</a></li>
