@@ -467,6 +467,7 @@ button.unCBtn{
 .login-group label{
     width:36px;
     height:36px;
+    z-index: 1;
 }
 /*用户名*/
 .label-name{
@@ -500,7 +501,8 @@ button.unCBtn{
     font-size: 17px;
     line-height: 36px;
     height:36px;
-    padding-left: 51px;   
+    padding-left: 51px;  
+    position: relative; 
 }
 .login-form button[type="submit"]{  
     font-size: 21px;
@@ -517,6 +519,7 @@ button.unCBtn{
     height:36px;
     padding-left: 51px;
 }
+/*单选框*/
 .radiobox label{
     position:static;
     width:auto;
@@ -531,12 +534,18 @@ button.unCBtn{
     width:13px;
     height:13px;
 }
+/*邮箱验证*/
 .verify {
-    display: inline-block;
     position: absolute;
-    right: -15%;
-    font-size: 20px;
-    color: rgb(90, 184, 254);
+    font-size: 17px;
+    line-height: 36px;
+    height:36px;
+    left:100%;
+    top:0;
+    white-space: nowrap;
+}
+a.verify {
+    font-size: 17px;
 }
 /*******************
 ****各种帖子中的表单***
