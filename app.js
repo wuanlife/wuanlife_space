@@ -25,8 +25,6 @@ var isLogin = require('./routes/isLogin');
 var resetPassword = require('./routes/resetPassword');
 var test = require('./routes/test');
 var uptoken = require('./routes/uptoken');
-var changeProfile = require('./routes/changeProfile');
-var verifyEmail = require('./routes/verifyEmail');
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
 
@@ -100,8 +98,6 @@ app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
-app.use('/changeProfile',changeProfile);
-app.use('/verifyEmail',verifyEmail);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
