@@ -56,7 +56,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-	request(config.server + "?service=User.alterUserInfo&user_id=" + req.body.user_id +
+	request(config.server + "?service=User.alterUserInfo&" +
+				"user_id=" + req.body.userID +
 				"&sex=" + req.body.sex + 
 				"&year=" + req.body.year + 
 				"&month=" + req.body.month + 
@@ -71,12 +72,13 @@ router.post('/', function(req, res, next) {
 				//			});
 				next(err);
 			}
-			console.log('changeProfile successful!  Server responded with:', body);
-			res.header('Content-type', 'application/json');
-	        res.header('Charset', 'utf8');
-	        res.send(JSON.parse(body));
+			else {
+				console.log('changeProfile successful!  Server responded with:', body);
+				res.header('Content-type', 'application/json');
+		        res.header('Charset', 'utf8');
+		        res.send(JSON.parse(body));
+	    	}
 		})
-	
 });
 
 
