@@ -1,0 +1,48 @@
+<%- include base/header.ejs %>
+<div class="main">
+    <div class="login">
+    	<form class="login-form line-form" action="/changeProfile" title="" method="post">
+	        <div class="login-group line-fgroup">
+				<label for="code" class="lable-e"></label>
+				<input type="text" name="Code" value="" placeholder="验证码" id="code">
+
+	        </div>
+	        <button id='login' type="submit">下一步</button>  
+        </form>  
+    </div>                             
+</div>
+<%- include base/baseJS.ejs %>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("form").submit(function() {
+        	$.post(
+                '/',
+                {
+					Email: "<%=user['Email']%>",
+					code: $("#code").val()
+				},
+                function(msg){
+                    if(msg.data['code'] == 1) {
+                        alert('成功发送');
+                    }
+                },function(data) {
+					console && console.log(data);
+                    self.loading.hide();
+					if (data.ret == 200 && data.data) {
+						if (data.data.code == 1) {
+							//验证成功
+							var temp = template("template");
+							self.main.html(temp);
+						} else {
+							sweetAlert('提示', data.data.msg, 'warning');
+						}
+					} else {
+						sweetAlert('错误', data.msg, 'error');
+					}
+				},
+                'json'
+            );
+        });
+    });     
+</script>
+<%- include base/footer.ejs %>

@@ -531,6 +531,13 @@ button.unCBtn{
     width:13px;
     height:13px;
 }
+.verify {
+    display: inline-block;
+    position: absolute;
+    right: -15%;
+    font-size: 20px;
+    color: rgb(90, 184, 254);
+}
 /*******************
 ****各种帖子中的表单***
 *******************/
