@@ -25,9 +25,6 @@
                 <%}else{%>
                 <input type="text" value="" placeholder="如: 1970-01-01" id="br">
                 <% } %>
-                <input type="hidden" name="year" value="<%=result.year%>" id="year">
-                <input type="hidden" name="month" value="<%=result.month%>" id="month">
-                <input type="hidden" name="day" value="<%=result.day%>" id="day">
             </div>
             <button type="submit">保存</button>
         </form>
@@ -39,7 +36,24 @@
         br:$("#br"),
         loginform: $(".login-form"),
         loading: $(".loading"),
+        year:null,
+        month:null,
+        day:null,
+        sex:0,
+        ClientData:function(){
+            this.year = "<%=result.year%>";
+            this.month = "<%=result.month%>";
+            this.day = "<%=result.day%>";
+            this.sex = parseInt("<%=result.mailChecked%>");
+        },
+        setSexChecked:function(){
+            $(':radio[value=<%=result.mailChecked%>]').attr('checked','checked');
+        },
         verificate: function() {
+            if (!(this.br.val())) {
+                this.year = this.month = this.day = null;
+                return true;
+            }
             var myreg =  /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
             if (!myreg.test(this.br.val())) {
                 sweetAlert('格式错误', '请填写正确的日期！', 'warning');
@@ -68,6 +82,9 @@
                     return false;
                 }
             }
+            this.year.val(year);
+            this.month.val(month);
+            this.day.val(day);
             return true;
         },
         bindEvent: function() {
@@ -96,6 +113,8 @@
             });
         },
         init: function() {
+            this.ClientData();
+            this.setSexChecked();
             this.bindEvent();
         }
     }
