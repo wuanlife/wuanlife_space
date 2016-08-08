@@ -5,12 +5,12 @@
     	<form class="login-form line-form" title="">
 	        <div class="login-group line-fgroup">
 				<label for="email" class="label-e"></label>
-				<input type="email" name="Email" value="<%=Email%>" placeholder="邮 箱" id="email" readonly="true">
+				<input type="email" name="Email" value="<%=Email%>" placeholder="邮 箱" id="email" disabled="disabled">
 
 	        </div>
 	        <div class="login-group line-fgroup">
 				<label for="nickname" class="label-name"></label>
-				<input type="text" name="nickname" value="<%=nickname%>" placeholder="昵 称" id="nickname">
+				<input type="text" name="nickname" value="<%=nickname%>" placeholder="昵 称" id="nickname" disabled="disabled">
 	        </div>
 	        <div class="login-group line-fgroup">
 	        	<label for="sex" class="label-sex"></label>
@@ -20,60 +20,95 @@
 	        	<label for="birth" class="label-br"></label>
 				<input type="text" name="birth" value="<%=year+'-'+month+'-'+day%>" placeholder="生 日" id="birth">
 	        </div>
-	        <button id='login' type="button">保 存</button>  
+	        <button type="submit">保 存</button>  
         </form>  
     </div>                             
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/javascript">
-    var emailReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
-    $(document).ready(function() {
-
-
-        $("a.verify").click(function() {
-
-        	if(<%=mailChecked == 1%>) {
-        		sweetAlert('已经验证过的邮箱');
-        		return;
-        	}
-            var emailOJ = $("#email");
-            if(!emailOJ.val().match(emailReg)) {
-                sweetAlert("邮箱有误请从重新输入");
-                return;
+    var users = {
+        br:$("#birth"),
+        loginform: $(".login-form"),
+        loading: $(".loading"),
+        verificate: function() {
+            var myreg =  /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
+            if (!myreg.test(this.br.val())) {
+                sweetAlert('格式错误', '请填写正确的日期！(请注意单个数前面加0)', 'warning');
+                return false;
             }
-            location.href = "/verifyEmail";
-        });
+            var lessMonth = [4,6,9,11];
+            var d = new Date();
+            var date = myreg.exec(this.br.val());
+            var year = parseInt(date[1]);
+            var month = parseInt(date[2]);
+            var day = parseInt(date[3]);
+            if (year<1900 || year>d.getFullYear()) {
+                sweetAlert('格式错误', '请填写正确的年份！', 'warning');
+                return false;
+            }
+            if ((lessMonth.indexOf(month) > -1) &&(day>30) ) {
+                sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+                return false;
+            }
+            if (month == 2) {
+                if ((year%4 == 0) && (year%100 !=0 || year%400 == 0) &&(day>29)) {
+                    sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+                    return false;
+                } else if (day>28) {
+                    sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+                    return false;
+                }
+            }
+            return true;
+        },
+        bindEvent: function() {
+            var self = this;
+            var birth = $('#birth').val().split('-');
+            self.loginform.submit(function(event) {
+                event.preventDefault();
+                if (self.verificate()) {
+                    self.loading.show();
+                    global.subData('/changeProfile',{
+						userID: "<%=userID%>",
+						sex: $('#sex').val(),
+						year: birth[0],
+						month: birth[1],
+						day: birth[2]
+                    },function(data){
+                        console && console.log(data);
+                        self.loading.hide();
+                        if (data.ret == 200 && data.data) {
+                            if (data.data.code == 1) {
+                                window.location.href = '/'; //登录成功
+                            } else {
+                                sweetAlert('提示', data.data.msg, 'warning');
+                            }
+                        } else {
+                            sweetAlert('错误', data.msg, 'error');
+                        }
+                    });
+                }
+            });
+	        $("a.verify").click(function() {
+	        	var emailReg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	        	if(<%=mailChecked == 1%>) {
+	        		sweetAlert('已经验证过的邮箱');
+	        		return;
+	        	}
+	            var emailOJ = $("#email");
+	            if(!emailOJ.val().match(emailReg)) {
+	                sweetAlert("邮箱有误请从重新输入");
+	                return;
+	            }
+	            location.href = "/verifyEmail";
+	        });
 
-        
-        $("#login").click(function() {
-        	var birth = $('#birth').val().split('-');
-        	$.post(
-                '/changeProfile',
-                {
-					userID: "<%=userID%>",
-					sex: $('#sex').val(),
-					year: birth[0],
-					month: birth[1],
-					day: birth[2]
-
-				},function(data) {
-					console && console.log(data);
-                    //self.loading.hide();
-					if (data.ret == 200 && data.data) {
-						if (data.data.code == 1) {
-							//修改成功
-							var temp = template("template");
-							self.main.html(temp);
-						} else {
-							sweetAlert('提示', data.data.msg, 'warning');
-						}
-					} else {
-						sweetAlert('错误', data.msg, 'error');
-					}
-				},
-                'json'
-            );
-        });
-    });     
+        },
+        init: function() {
+            this.bindEvent();
+        }
+    }
+    users.init();
+    
 </script>
 <%- include base/footer.ejs %>
