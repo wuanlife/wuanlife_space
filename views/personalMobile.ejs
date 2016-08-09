@@ -2,7 +2,7 @@
 <div class="main">
     <div class="mask"></div>
     <div class="location clearfix">
-        <h1></h1>
+        <h1>个人中心</h1>
     </div>
     <div class="login">
         <form class="login-form line-form" method="post">
@@ -42,6 +42,7 @@
 <%- include base/baseJSMobile.ejs %>
 <script type="text/javascript">
     var users = {
+        main: $(".main"),
         br:$("#br"),
         personalForm: $(".login-form"),
         loading: $(".loading"),
@@ -57,11 +58,15 @@
             this.sex = "<%=result.sex%>";
         },
         setSexChecked:function(){
-            $(':radio[value=<%=result.sex%>]').attr('checked','checked');
+            $('input[type="radio"][value="<%=result.sex%>"]').attr('checked','checked');
             if (this.sexChoose.indexOf(this.sex) == -1) {
-               $(':radio[value="0"]').attr('checked','checked'); 
+               $('input[type="radio"][value="0"]').attr('checked','checked'); 
                this.sex = '0';
             }
+        },
+        setMainHeight: function() {
+            windowHeight = $(window).height();
+            this.main.css('minHeight', windowHeight);
         },
         verificate: function() {
             //性别验证
@@ -143,6 +148,7 @@
             });
         },
         init: function() {
+            this.setMainHeight();
             this.ClientData();
             this.setSexChecked();
             this.bindEvent();
