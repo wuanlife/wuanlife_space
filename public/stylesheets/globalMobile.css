@@ -732,18 +732,19 @@ button.unCBtn{
     color:#b4b4b4;
     line-height: 0.64rem;
     height:0.64rem;
-    margin-right: 10px;
+    margin-right: 0.4rem;
 }
 .radiobox input[type='radio']{
-    width:0.173333rem;
-    height:0.173333rem;
+    width:0.266667rem;
+    height:0.266667rem;
+    margin:3px 3px 0 5px;
 }
 /*邮箱验证*/
 .verify {
     position: absolute;
-    font-size: 17px;
+    font-size: 0.373333rem;
     line-height: 0.64rem;
-    height:36px;
+    height:0.64rem;
     left:100%;
     top:0;
     white-space: nowrap;
