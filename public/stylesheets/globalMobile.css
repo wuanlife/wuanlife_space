@@ -673,12 +673,15 @@ button.unCBtn{
     width:0.64rem;
     height:0.64rem;
 }
-.lable-name{
+/*用户名*/
+.label-name{
     background-image: url(../images/login_01.png);
 }
-.lable-e{
+/*邮箱*/
+.label-e{
     background-image: url(../images/login_03.png);
 }
+/*密码*/
 .label-paw{
     background-image: url(../images/login_06.png);
 }
@@ -689,6 +692,14 @@ button.unCBtn{
 /*确认密码*/
 .label-cPass{
     background-image: url(../images/ConPass.png);
+}
+/*生日*/
+.label-br{
+    background-image: url(../images/br_03.png);
+}
+/*性别*/
+.label-sex{
+    background-image: url(../images/sex_03.png);
 }
 .login-group input{
     font-size: 0.373333rem;
@@ -706,6 +717,39 @@ button.unCBtn{
 .login-form a{
     font-size: 0.32rem;
     color:#5ab8fe;
+}
+.login-group .radiobox{
+    font-size: 0.373333rem;
+    height:0.64rem;
+    padding-left: 1.133333rem;
+}
+/*单选框*/
+.radiobox label{
+    position:static;
+    width:auto;
+}
+.radiobox .login-r{
+    color:#b4b4b4;
+    line-height: 0.64rem;
+    height:0.64rem;
+    margin-right: 10px;
+}
+.radiobox input[type='radio']{
+    width:0.173333rem;
+    height:0.173333rem;
+}
+/*邮箱验证*/
+.verify {
+    position: absolute;
+    font-size: 17px;
+    line-height: 0.64rem;
+    height:36px;
+    left:100%;
+    top:0;
+    white-space: nowrap;
+}
+a.verify {
+    font-size: 17px;
 }
 /*******************
 ****各种帖子中的表单***

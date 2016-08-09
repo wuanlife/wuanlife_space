@@ -1,5 +1,9 @@
-<%- include base/header.ejs %>
+<%- include base/headerMobile.ejs %>
 <div class="main">
+    <div class="mask"></div>
+    <div class="location clearfix">
+        <h1></h1>
+    </div>
     <div class="login">
         <form class="login-form line-form" method="post">
             <div class="login-group line-fgroup">
@@ -35,7 +39,7 @@
         </form>
     </div>
 </div>
-<%- include base/baseJS.ejs %>
+<%- include base/baseJSMobile.ejs %>
 <script type="text/javascript">
     var users = {
         br:$("#br"),
@@ -146,4 +150,4 @@
     }
     users.init();
 </script>
-<%- include base/footer.ejs %>
+<%- include base/footerMobile.ejs %>
