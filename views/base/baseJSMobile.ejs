@@ -74,12 +74,18 @@
                     }
                 });
             };
+            //登录等表单页面设置main模块最小高度为屏幕高度
+            var setMainHeight =  function(main){
+            	windowHeight = $(window).height();
+            	main.css('minHeight', windowHeight);
+            };
             return {
                 setCenterLoadingDiv: setCenterLoadingDiv,
                 setToggleBtn: setToggleBtn,
                 setEditboxPosition:setEditboxPosition,
                 getData:getData,
-                subData:subData
+                subData:subData,
+                setMainHeight:setMainHeight
             }
         }());
     $(document).ready(function() {
