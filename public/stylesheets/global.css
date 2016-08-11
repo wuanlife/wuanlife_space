@@ -547,6 +547,17 @@ button.unCBtn{
 a.verify {
     font-size: 17px;
 }
+button.verify{
+    width:130px;
+    background-color: #5ab8fe;
+    color:#fff;
+    cursor:pointer;
+    border-radius: 7px;
+}
+.verify.unCBtn{
+    background-color: #bababa;
+    cursor:default;
+}
 /*******************
 ****各种帖子中的表单***
 *******************/
