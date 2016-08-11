@@ -19,58 +19,56 @@
 </div>
 <%- include base/baseJSMobile.ejs %>
 <script type="text/javascript">
-	var login = {
-		email: $("#email"),
-		pw: $("#pw"),
-		loginform: $(".login-form"),
-		main: $(".main"),
-		loading: $(".loading"),
-		verificate: function() {
-			var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-			if (!myreg.test(this.email.val())) {
-				sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-				return false;
-			}
-			if (this.pw.val().length == 0) {
-				sweetAlert('格式错误', '请填写密码！', 'warning');
-				return false;
-			}
-			return true;
-		},
-		setMainHeight: function() {
-			windowHeight = $(window).height();
-			this.main.css('minHeight', windowHeight);
-		},
-		bindEvent: function() {
-			var self = this;
-			self.loginform.submit(function(event) {
-				event.preventDefault();
-				if (self.verificate()) {
-					self.loading.show();
-					global.subData('/login',{
-						email: self.email.val(),
-						password: self.pw.val()
-					},function(data){
-						console && console.log(data);
-						self.loading.hide();
-						if (data.ret == 200 && data.data) {
-							if (data.data.code == 1) {
-								window.location.href = '/'; //登录成功
-							} else {
-								sweetAlert('提示', data.data.msg, 'warning');
-							}
-						} else {
-							sweetAlert('错误', data.msg, 'error');
-						}
-					});
+	(function() {
+		var login = {
+			email: $("#email"),
+			pw: $("#pw"),
+			loginform: $(".login-form"),
+			main: $(".main"),
+			loading: $(".loading"),
+			verificate: function() {
+				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				if (!myreg.test(this.email.val())) {
+					sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
+					return false;
 				}
-			});
-		},
-		init: function() {
-			this.setMainHeight();
-			this.bindEvent();
+				if (this.pw.val().length == 0) {
+					sweetAlert('格式错误', '请填写密码！', 'warning');
+					return false;
+				}
+				return true;
+			},
+			bindEvent: function() {
+				var self = this;
+				self.loginform.submit(function(event) {
+					event.preventDefault();
+					if (self.verificate()) {
+						self.loading.show();
+						global.subData('/login', {
+							email: self.email.val(),
+							password: self.pw.val()
+						}, function(data) {
+							console && console.log(data);
+							self.loading.hide();
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/'; //登录成功
+								} else {
+									sweetAlert('提示', data.data.msg, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+			},
+			init: function() {
+				global.setMainHeight(this.main);
+				this.bindEvent();
+			}
 		}
-	}
-	login.init();
+		login.init();
+	})();
 </script>
 <%- include base/footerMobile.ejs %>

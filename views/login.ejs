@@ -18,7 +18,8 @@
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/javascript">
-	var login = {
+	(function(){
+		var login = {
 		email: $("#email"),
 		pw: $("#pw"),
 		loginform: $(".login-form"),
@@ -65,5 +66,6 @@
 		}
 	}
 	login.init();
+	})();
 </script>
 <%- include base/footer.ejs %>

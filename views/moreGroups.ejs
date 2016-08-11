@@ -67,207 +67,209 @@
 	{{/each}}
 </script>
 <script>
-	var moreGroups = {
-		pre: $("#pre"),
-		next: $("#next"),
-		page: $(".page-turn").find('span').eq(0),
-		page_turn: $(".page-turn"),
-		main: $(".myJoinMd"),
-		myCreateMD: $("#myCreate"),
-		myJoindMD: $("#myJoind"),
-		myJoind: $("#myJoind").find('.planetList'),
-		myCreate: $("#myCreate").find('.planetList'),
-		emptyPage: $(".emptyPage"),
-		loading: $(".loading"),
-		currentpage: 1,
-		pageCount: 0,
-		createPageCount: 0,
-		joinPageCount: 0,
-		getCreateData: function(param, cb) {
-			global.getData("/api/getCreateGroup",param,cb);
-		},
-		getJoindData: function(param, cb) {
-			global.getData("/api/getJoindGroup",param,cb);
-		},
-		setPageData: function() {
-			var self = this;
-			if (parseInt("<%=result.groups.length%>") > 0) {
-				self.pageCount = parseInt("<%=result.pageCount%>");
-				self.createPageCount = parseInt("<%=result.pageCount%>");
-			}
-			self.getJoindData({
-				user_id: parseInt("<%=userid%>")
-			}, function(data) {
-				if (data.ret == 200 && data.data) {
-					if (data.data.groups.length > 0) {
-						var compiled = template("Groupstemplate", data.data);
-						self.myJoindMD.css('display', 'block');
-						self.myJoind.html(compiled);
-						self.joinPageCount = data.data.pageCount;
-						console.log(self.joinPageCount);
-						self.pageCount = self.pageCount > data.data.pageCount ? self.pageCount : data.data.pageCount;
-					} else {
-						self.myJoindMD.remove();
-					}
-					if (self.pageCount > 0) {
-						self.page.text('1/' + self.pageCount);
-						if (self.pageCount == 1) {
-							self.next.addClass('unCBtn');
-						}
-						self.page_turn.css('display', 'block');
-						self.emptyPage.remove();
-					} else {
-						self.emptyPage.css('display', 'block');
-						self.page_turn.remove();
-						self.main.remove();
-					}
+	(function() {
+		var moreGroups = {
+			pre: $("#pre"),
+			next: $("#next"),
+			page: $(".page-turn").find('span').eq(0),
+			page_turn: $(".page-turn"),
+			main: $(".myJoinMd"),
+			myCreateMD: $("#myCreate"),
+			myJoindMD: $("#myJoind"),
+			myJoind: $("#myJoind").find('.planetList'),
+			myCreate: $("#myCreate").find('.planetList'),
+			emptyPage: $(".emptyPage"),
+			loading: $(".loading"),
+			currentpage: 1,
+			pageCount: 0,
+			createPageCount: 0,
+			joinPageCount: 0,
+			getCreateData: function(param, cb) {
+				global.getData("/api/getCreateGroup", param, cb);
+			},
+			getJoindData: function(param, cb) {
+				global.getData("/api/getJoindGroup", param, cb);
+			},
+			setPageData: function() {
+				var self = this;
+				if (parseInt("<%=result.groups.length%>") > 0) {
+					self.pageCount = parseInt("<%=result.pageCount%>");
+					self.createPageCount = parseInt("<%=result.pageCount%>");
 				}
-			});
-		},
-		pageUp: function() {
-			var self = this;
-			if (self.currentpage == self.pageCount) {
-				self.next.removeClass('unCBtn');
-			}
-			self.currentpage -= 1;
-			self.page.text(self.currentpage + '/' + self.pageCount);
-			self.loading.hide();
-			if (self.currentpage == 1) {
-				self.pre.addClass('unCBtn');
-			}
-			if (self.currentpage == self.createPageCount) {
-				self.main.prepend(self.myCreateMD);
-			}
-			if (self.currentpage == self.joinPageCount) {
-				self.main.append(self.myJoindMD);
-			}
-			$(window).scrollTop(0);
-		},
-		pageDown: function() {
-			var self = this;
-			if (self.currentpage == 1) {
-				self.pre.removeClass('unCBtn');
-			}
-			self.currentpage += 1;
-			self.page.text(self.currentpage + '/' + self.pageCount);
-			self.loading.hide();
-			if (self.currentpage == self.pageCount) {
-				self.next.addClass('unCBtn');
-			}
-			if (self.currentpage == (self.createPageCount + 1)) {
-				self.myCreateMD.remove();
-			}
-			if (self.currentpage == (self.joinPageCount + 1)) {
-				self.myJoindMD.remove();
-			}
-			$(window).scrollTop(0);
-		},
-		bindEvent: function() {
-			var self = this;
-			self.pre.on("click", function() {
-				if (self.currentpage == 1) {
-					return;
-				} else {
-					self.loading.show();
-					var flagJ = 0;
-					var flagC = 0;
-					if ((self.currentpage - 1) > self.createPageCount) {
-						flagC = 1;
-						if (flagC == 1 && flagJ == 1) {
-							self.pageUp();
+				self.getJoindData({
+					user_id: parseInt("<%=userid%>")
+				}, function(data) {
+					if (data.ret == 200 && data.data) {
+						if (data.data.groups.length > 0) {
+							var compiled = template("Groupstemplate", data.data);
+							self.myJoindMD.css('display', 'block');
+							self.myJoind.html(compiled);
+							self.joinPageCount = data.data.pageCount;
+							console.log(self.joinPageCount);
+							self.pageCount = self.pageCount > data.data.pageCount ? self.pageCount : data.data.pageCount;
+						} else {
+							self.myJoindMD.remove();
 						}
-					} else {
-						self.getCreateData({
-							user_id: parseInt("<%=userid%>"),
-							pn: self.currentpage - 1
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								flagC = 1;
-								var compiled = template("Groupstemplate", data.data);
-								self.myCreate.html(compiled);
-								if (flagC == 1 && flagJ == 1) {
-									self.pageUp();
-								}
+						if (self.pageCount > 0) {
+							self.page.text('1/' + self.pageCount);
+							if (self.pageCount == 1) {
+								self.next.addClass('unCBtn');
 							}
-						});
-					}
-					if ((self.currentpage - 1) > self.joinPageCount) {
-						flagJ = 1;
-						if (flagC == 1 && flagJ == 1) {
-							self.pageUp();
+							self.page_turn.css('display', 'block');
+							self.emptyPage.remove();
+						} else {
+							self.emptyPage.css('display', 'block');
+							self.page_turn.remove();
+							self.main.remove();
 						}
-					} else {
-						self.getJoindData({
-							user_id: parseInt("<%=userid%>"),
-							pn: self.currentpage - 1
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								flagJ = 1;
-								var compiled = template("Groupstemplate", data.data);
-								self.myJoind.html(compiled);
-								if (flagC == 1 && flagJ == 1) {
-									self.pageUp();
-								}
-							}
-						});
 					}
-				}
-			});
-			self.next.on("click", function() {
+				});
+			},
+			pageUp: function() {
+				var self = this;
 				if (self.currentpage == self.pageCount) {
-					return;
-				} else {
-					self.loading.show();
-					var flagJ = 0;
-					var flagC = 0;
-					if ((self.currentpage + 1) > self.createPageCount) {
-						flagC = 1;
-						if (flagC == 1 && flagJ == 1) {
-							self.pageDown();
-						}
-					} else {
-						self.getCreateData({
-							user_id: parseInt("<%=userid%>"),
-							pn: self.currentpage + 1
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								flagC = 1;
-								var compiled = template("Groupstemplate", data.data);
-								self.myCreate.html(compiled);
-								if (flagC == 1 && flagJ == 1) {
-									self.pageDown();
-								}
-							}
-						});
-					}
-					if ((self.currentpage + 1) > self.joinPageCount) {
-						flagJ = 1;
-						if (flagC == 1 && flagJ == 1) {
-							self.pageDown();
-						}
-					} else {
-						self.getJoindData({
-							user_id: parseInt("<%=userid%>"),
-							pn: self.currentpage + 1
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								flagJ = 1;
-								var compiled = template("Groupstemplate", data.data);
-								self.myJoind.html(compiled);
-								if (flagC == 1 && flagJ == 1) {
-									self.pageDown();
-								}
-							}
-						});
-					}
+					self.next.removeClass('unCBtn');
 				}
-			});
-		},
-		init: function() {
-			this.setPageData();
-			this.bindEvent();
+				self.currentpage -= 1;
+				self.page.text(self.currentpage + '/' + self.pageCount);
+				self.loading.hide();
+				if (self.currentpage == 1) {
+					self.pre.addClass('unCBtn');
+				}
+				if (self.currentpage == self.createPageCount) {
+					self.main.prepend(self.myCreateMD);
+				}
+				if (self.currentpage == self.joinPageCount) {
+					self.main.append(self.myJoindMD);
+				}
+				$(window).scrollTop(0);
+			},
+			pageDown: function() {
+				var self = this;
+				if (self.currentpage == 1) {
+					self.pre.removeClass('unCBtn');
+				}
+				self.currentpage += 1;
+				self.page.text(self.currentpage + '/' + self.pageCount);
+				self.loading.hide();
+				if (self.currentpage == self.pageCount) {
+					self.next.addClass('unCBtn');
+				}
+				if (self.currentpage == (self.createPageCount + 1)) {
+					self.myCreateMD.remove();
+				}
+				if (self.currentpage == (self.joinPageCount + 1)) {
+					self.myJoindMD.remove();
+				}
+				$(window).scrollTop(0);
+			},
+			bindEvent: function() {
+				var self = this;
+				self.pre.on("click", function() {
+					if (self.currentpage == 1) {
+						return;
+					} else {
+						self.loading.show();
+						var flagJ = 0;
+						var flagC = 0;
+						if ((self.currentpage - 1) > self.createPageCount) {
+							flagC = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.pageUp();
+							}
+						} else {
+							self.getCreateData({
+								user_id: parseInt("<%=userid%>"),
+								pn: self.currentpage - 1
+							}, function(data) {
+								if (data.ret == 200 && data.data) {
+									flagC = 1;
+									var compiled = template("Groupstemplate", data.data);
+									self.myCreate.html(compiled);
+									if (flagC == 1 && flagJ == 1) {
+										self.pageUp();
+									}
+								}
+							});
+						}
+						if ((self.currentpage - 1) > self.joinPageCount) {
+							flagJ = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.pageUp();
+							}
+						} else {
+							self.getJoindData({
+								user_id: parseInt("<%=userid%>"),
+								pn: self.currentpage - 1
+							}, function(data) {
+								if (data.ret == 200 && data.data) {
+									flagJ = 1;
+									var compiled = template("Groupstemplate", data.data);
+									self.myJoind.html(compiled);
+									if (flagC == 1 && flagJ == 1) {
+										self.pageUp();
+									}
+								}
+							});
+						}
+					}
+				});
+				self.next.on("click", function() {
+					if (self.currentpage == self.pageCount) {
+						return;
+					} else {
+						self.loading.show();
+						var flagJ = 0;
+						var flagC = 0;
+						if ((self.currentpage + 1) > self.createPageCount) {
+							flagC = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.pageDown();
+							}
+						} else {
+							self.getCreateData({
+								user_id: parseInt("<%=userid%>"),
+								pn: self.currentpage + 1
+							}, function(data) {
+								if (data.ret == 200 && data.data) {
+									flagC = 1;
+									var compiled = template("Groupstemplate", data.data);
+									self.myCreate.html(compiled);
+									if (flagC == 1 && flagJ == 1) {
+										self.pageDown();
+									}
+								}
+							});
+						}
+						if ((self.currentpage + 1) > self.joinPageCount) {
+							flagJ = 1;
+							if (flagC == 1 && flagJ == 1) {
+								self.pageDown();
+							}
+						} else {
+							self.getJoindData({
+								user_id: parseInt("<%=userid%>"),
+								pn: self.currentpage + 1
+							}, function(data) {
+								if (data.ret == 200 && data.data) {
+									flagJ = 1;
+									var compiled = template("Groupstemplate", data.data);
+									self.myJoind.html(compiled);
+									if (flagC == 1 && flagJ == 1) {
+										self.pageDown();
+									}
+								}
+							});
+						}
+					}
+				});
+			},
+			init: function() {
+				this.setPageData();
+				this.bindEvent();
+			}
 		}
-	}
-	moreGroups.init();
+		moreGroups.init();
+	})();
 </script>
 <%- include base/footer.ejs %>

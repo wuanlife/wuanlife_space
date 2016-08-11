@@ -4,15 +4,15 @@
 		<form class="login-form line-form" action="/register" title="" method="post">
 			<div class="login-group line-fgroup">
 				<label for="nickname" class="label-name"></label>
-				<input type="text" name="nickname" value="" placeholder="昵称" id="nickname">
+				<input type="text" name="nickname" placeholder="昵称" id="nickname">
 			</div>
 			<div class="login-group line-fgroup">
 				<label for="email" class="label-e"></label>
-				<input type="email" name="Email" value="" placeholder="邮箱" id="email">
+				<input type="email" name="Email" placeholder="邮箱" id="email">
 			</div>
 			<div class="login-group line-fgroup">
 				<label for="pw" class="label-paw"></label>
-				<input type="password" name="password" value="" placeholder="密码" id="pw">
+				<input type="password" name="password" placeholder="密码" id="pw">
 			</div>
 			<button id='login' type="submit">注册</button>
 		</form>
@@ -20,67 +20,69 @@
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/javascript">
-	var register = {
-		nickname: $("#nickname"),
-		email: $("#email"),
-		pw: $("#pw"),
-		loginform: $(".login-form"),
-		loading: $(".loading"),
-		verificate: function() {
-			var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-			var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-			if (this.nickname.val().length == 0 || this.nickname.val().length > 18) {
-				sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
-				return false;
-			}
-			if (!myregName.test(this.nickname.val())) {
-				sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
-				return false;
-			}
-			if (!myreg.test(this.email.val())) {
-				sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-				return false;
-			}
-			if (this.pw.val().length == 0) {
-				sweetAlert('格式错误', '请填写密码！', 'warning');
-				return false;
-			}
-			if (this.pw.val().length < 6 || this.pw.val().length > 20) {
-				sweetAlert('格式错误', '请填写6-20位密码', 'warning');
-				return false;
-			}
-			return true;
-		},
-		bindEvent: function() {
-			var self = this;
-			self.loginform.submit(function(event) {
-				event.preventDefault();
-				if (self.verificate()) {
-					self.loading.show();
-					global.subData('/register',{
-						email: self.email.val(),
-						password: self.pw.val(),
-						nickname: self.nickname.val()
-					},function(data){
-						console && console.log(data);
-						self.loading.hide();
-						if (data.ret == 200 && data.data) {
-							if (data.data.code == 1) {
-								window.location.href = '/'; //注册成功
-							} else {
-								sweetAlert('提示', data.data.msg, 'warning');
-							}
-						} else {
-							sweetAlert('错误', data.msg, 'error');
-						}
-					});
+	(function() {
+		var register = {
+			nickname: $("#nickname"),
+			email: $("#email"),
+			pw: $("#pw"),
+			loginform: $(".login-form"),
+			loading: $(".loading"),
+			verificate: function() {
+				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+				if (this.nickname.val().length == 0 || this.nickname.val().length > 18) {
+					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
+					return false;
 				}
-			});
-		},
-		init: function() {
-			this.bindEvent();
+				if (!myregName.test(this.nickname.val())) {
+					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
+					return false;
+				}
+				if (!myreg.test(this.email.val())) {
+					sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
+					return false;
+				}
+				if (this.pw.val().length == 0) {
+					sweetAlert('格式错误', '请填写密码！', 'warning');
+					return false;
+				}
+				if (this.pw.val().length < 6 || this.pw.val().length > 20) {
+					sweetAlert('格式错误', '请填写6-20位密码', 'warning');
+					return false;
+				}
+				return true;
+			},
+			bindEvent: function() {
+				var self = this;
+				self.loginform.submit(function(event) {
+					event.preventDefault();
+					if (self.verificate()) {
+						self.loading.show();
+						global.subData('/register', {
+							email: self.email.val(),
+							password: self.pw.val(),
+							nickname: self.nickname.val()
+						}, function(data) {
+							console && console.log(data);
+							self.loading.hide();
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/'; //注册成功
+								} else {
+									sweetAlert('提示', data.data.msg, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+			},
+			init: function() {
+				this.bindEvent();
+			}
 		}
-	}
-	register.init();
+		register.init();
+	})();
 </script>
 <%- include base/footer.ejs %>

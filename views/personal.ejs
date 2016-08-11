@@ -1,152 +1,146 @@
 <%- include base/header.ejs %>
 <div class="main">
-    <div class="location clearfix">
-        <h1>个人中心</h1>
-    </div>
-    <div class="login">
-        <form class="login-form line-form" method="post">
-            <div class="login-group line-fgroup">
-                <label for="email" class="label-e"></label>
-                <input type="email" value="<%=result.Email%>" id="email" disabled="disabled">
-                <% if(result.mailChecked >0){%>
-                <span class="verify">已验证</span>
-                <%}else{%>
-                <a href="" title="" class="verify">验证</a>
-                <% } %>
-            </div>
-            <div class="login-group line-fgroup">
-                <label for="email" class="label-name"></label>
-                <input type="text" value="<%=result.nickname%>" id="name" disabled="disabled">
-            </div>
-            <div class="login-group line-fgroup">
-                <label class="label-sex"></label>
-                <div class="radiobox">
-                    <label for="male" class="login-r">男<input type="radio" id="male" name="sex" value="1"></label>
-                    <label for="female" class="login-r">女<input type="radio" id="female" name="sex" value="2"></label>
-                    <label for="privated" class="login-r">保密<input type="radio" id="privated" name="sex" value="0"></label>  
-                </div>
-            </div>
-            <div class="login-group line-fgroup">
-                <label for="br" class="label-br"></label>
-                <%if(result.year && result.month && result.day){%>
-                <input type="text" value="<%=result.year%>-<%=result.month%>-<%=result.day%>" id="br" placeholder="如: 1970-01-01">
-                <%}else{%>
-                <input type="text" value="" placeholder="如: 1970-01-01" id="br">
-                <% } %>
-            </div>
-            <button type="submit">保存</button>
-        </form>
-    </div>
+	<div class="location clearfix">
+		<h1>个人中心</h1>
+	</div>
+	<div class="login">
+		<form class="login-form line-form" method="post">
+			<div class="login-group line-fgroup">
+				<label for="email" class="label-e"></label>
+				<input type="email" value="<%=result.Email%>" id="email" disabled="disabled">
+				<% if(result.mailChecked >0){%>
+				<span class="verify">已验证</span>
+				<%}else{%>
+				<a href="/verifyEmail" title="" class="verify">验证</a>
+				<% } %>
+			</div>
+			<div class="login-group line-fgroup">
+				<label for="email" class="label-name"></label>
+				<input type="text" value="<%=result.nickname%>" id="name" disabled="disabled">
+			</div>
+			<div class="login-group line-fgroup">
+				<label class="label-sex"></label>
+				<div class="radiobox">
+					<label for="male" class="login-r">男<input type="radio" id="male" name="sex" value="1"<% if(result.sex == 1){%> checked="checked" <% } %>></label>
+					<label for="female" class="login-r">女<input type="radio" id="female" name="sex" value="2" <% if(result.sex == 2){%> checked="checked" <% } %>></label>
+					<label for="privated" class="login-r">保密<input type="radio" id="privated" name="sex" value="0" <% if(result.sex != 2 && result.sex !=1){%> checked="checked" <% } %>></label>
+				</div>
+			</div>
+			<div class="login-group line-fgroup">
+				<label for="br" class="label-br"></label>
+				<%if(result.year && result.month && result.day){%>
+				<input type="text" value="<%=result.year%>-<%=result.month%>-<%=result.day%>" id="br" placeholder="如: 1970-01-01">
+				<%}else{%>
+				<input type="text" value="" placeholder="如: 1970-01-01" id="br">
+				<% } %>
+			</div>
+			<button type="submit">保存</button>
+		</form>
+	</div>
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/javascript">
-    var users = {
-        br:$("#br"),
-        personalForm: $(".login-form"),
-        loading: $(".loading"),
-        year:null,
-        month:null,
-        day:null,
-        sex:'0',
-        sexChoose:['1','2'],
-        ClientData:function(){
-            this.year = "<%=result.year%>";
-            this.month = "<%=result.month%>";
-            this.day = "<%=result.day%>";
-            this.sex = "<%=result.sex%>";
-        },
-        setSexChecked:function(){
-            $(':radio[value=<%=result.sex%>]').attr('checked','checked');
-            if (this.sexChoose.indexOf(this.sex) == -1) {
-               $(':radio[value="0"]').attr('checked','checked'); 
-               this.sex = '0';
-            }
-        },
-        verificate: function() {
-            //性别验证
-            if (this.sexChoose.indexOf($(":checked").val()) == -1) {
-                this.sex = '0';
-            } else{
-                this.sex = $(":checked").val();
-            }
-            if (!(this.br.val())) {
-                this.year = this.month = this.day = null;
-                return true;
-            }
-            //日期验证
-            var myreg =  /^(\d{4})-(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$/;
-            if (!myreg.test(this.br.val())) {
-                sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-                return false;
-            }
-            var lessMonth = ['04','06','09','11'];
-            var d = new Date();
-            var date = myreg.exec(this.br.val());
-            console.log(date);
-            var year = date[1];
-            var month = (date[2].length == 1)? ('0'+date[2]):date[2];
-            var day = (date[3].length == 1)? ('0'+date[3]):date[3];
-            if (year<1900 || year>d.getFullYear()) {
-                sweetAlert('格式错误', '请填写正确的年份！', 'warning');
-                return false;
-            }
-            if ((lessMonth.indexOf(month) > -1) &&(day>30) ) {
-                sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-                return false;
-            }
-            if (month == 2) {
-                if ((year%4 == 0) && (year%100 !=0 || year%400 == 0)) {
-                    if (day>29) {
-                        sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-                        return false;
-                    }
-                } else if (day>28) {
-                    sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-                    return false;
-                }
-            }
-            this.year = year;
-            this.month = month;
-            this.day = day;
-            return true;
-        },
-        bindEvent: function() {
-            var self = this;
-            self.personalForm.submit(function(event) {
-                event.preventDefault();
-                if (self.verificate()) {
-                    self.loading.show();
-                    global.subData('/users',{
-                        sex: self.sex,
-                        year: self.year,
-                        month: self.month,
-                        day: self.day
-                    },function(data){
-                        console && console.log(data);
-                        self.loading.hide();
-                        if (data.ret == 200 && data.data) {
-                            if (data.data.data == 1) {
-                                sweetAlert('提示', '资料更新成功', 'success'); 
-                                if (self.year) {
-                                  self.br.val(self.year +'-' + self.month + '-' + self.day);  
-                                }
-                                //登录成功
-                            } else {
-                                sweetAlert('提示', data.data.msg, 'warning');
-                            }
-                        } else {
-                            sweetAlert('错误', data.msg, 'error');
-                        }
-                    });
-                }
-            });
-        },
-        init: function() {
-            this.ClientData();
-            this.setSexChecked();
-            this.bindEvent();
-        }
-    }
-    users.init();
+	(function() {
+		var users = {
+			br: $("#br"),
+			personalForm: $(".login-form"),
+			loading: $(".loading"),
+			year: null,
+			month: null,
+			day: null,
+			sex: '0',
+			sexChoose: ['1', '2'],
+			ClientData: function() {
+				this.year = "<%=result.year%>";
+				this.month = "<%=result.month%>";
+				this.day = "<%=result.day%>";
+				this.sex = "<%=result.sex%>";
+			},
+			verificate: function() {
+				//性别验证
+				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
+					this.sex = '0';
+				} else {
+					this.sex = $(":checked").val();
+				}
+				if (!(this.br.val())) {
+					this.year = this.month = this.day = null;
+					return true;
+				}
+				//日期验证
+				var myreg = /^(\d{4})-(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$/;
+				if (!myreg.test(this.br.val())) {
+					sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+					return false;
+				}
+				var lessMonth = ['04', '06', '09', '11'];
+				var d = new Date();
+				var date = myreg.exec(this.br.val());
+				console.log(date);
+				var year = date[1];
+				var month = (date[2].length == 1) ? ('0' + date[2]) : date[2];
+				var day = (date[3].length == 1) ? ('0' + date[3]) : date[3];
+				if (year < 1900 || year > d.getFullYear()) {
+					sweetAlert('格式错误', '请填写正确的年份！', 'warning');
+					return false;
+				}
+				if ((lessMonth.indexOf(month) > -1) && (day > 30)) {
+					sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+					return false;
+				}
+				if (month == 2) {
+					if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
+						if (day > 29) {
+							sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+							return false;
+						}
+					} else if (day > 28) {
+						sweetAlert('格式错误', '请填写正确的日期！', 'warning');
+						return false;
+					}
+				}
+				this.year = year;
+				this.month = month;
+				this.day = day;
+				return true;
+			},
+			bindEvent: function() {
+				var self = this;
+				self.personalForm.submit(function(event) {
+					event.preventDefault();
+					if (self.verificate()) {
+						self.loading.show();
+						global.subData('/users', {
+							sex: self.sex,
+							year: self.year,
+							month: self.month,
+							day: self.day
+						}, function(data) {
+							console && console.log(data);
+							self.loading.hide();
+							if (data.ret == 200 && data.data) {
+								if (data.data.data == 1) {
+									sweetAlert('提示', '资料更新成功', 'success');
+									if (self.year) {
+										self.br.val(self.year + '-' + self.month + '-' + self.day);
+									}
+									//登录成功
+								} else {
+									sweetAlert('提示', data.data.msg, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+			},
+			init: function() {
+				this.ClientData();
+				this.bindEvent();
+			}
+		}
+		users.init();
+	})();
 </script>
 <%- include base/footer.ejs %>

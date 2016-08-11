@@ -38,12 +38,12 @@
 		<% }); %>
 	</div>
 	<div class="page-turn">
-		<button class="unCBtn">上一页</button>
+		<button class="unCBtn" id="pre">上一页</button>
 		<span><%=result.currentPage%>/<%=result.pageCount%></span>
 		<%if(result.pageCount == 1){%>
-		<button type="button" class="unCBtn">下一页</button>
+		<button type="button" class="unCBtn" id="next">下一页</button>
 		<%}else{%>
-		<button type="button">下一页</button>
+		<button type="button" id="next">下一页</button>
 		<%}%>
 	</div>
 	<%}else{%>
@@ -78,33 +78,33 @@
 	</div>
 </script>
 <script type="text/javascript">
-	var planetDetail = {
-		pre: $(".page-turn").find('button').first(),
-		next: $(".page-turn").find('button').last(),
-		page: $(".page-turn").find('span').eq(0),
-		main: $(".chapter-col"),
-		joinBtn: $("#joinBtn"),
-		loading: $(".loading"),
-		isjoin: 0,
-		currentpage: 1,
-		pageCount: 0,
-		user: '<%- JSON.stringify(user) %>',
-		ClientData: function() {
-			this.currentpage = parseInt('<%=result.currentPage%>');
-			this.pageCount = parseInt('<%=result.pageCount%>');
-		},
-		getServerData: function(param, cb) {
-			global.getData("/api/getGroupPlanetShow",param,cb);
-		},
-		getJoinPData: function(param, cb) {
-			global.getData("/api/joinPlant",param,cb);
-		},
-		getJoinBtnVal: function(param, cb) {
-			global.getData("/api/isJoinP",param,cb);
-		},
-		setJoinBtnVal: function() {
-			var self = this;
-			if (self.user) {
+	(function() {
+		var group = {
+			pre: $("#pre"),
+			next: $("#next"),
+			page: $(".page-turn").find('span').eq(0),
+			main: $(".chapter-col"),
+			joinBtn: $("#joinBtn"),
+			loading: $(".loading"),
+			isjoin: 0,
+			currentpage: 1,
+			pageCount: 0,
+			ClientData: function() {
+				this.currentpage = parseInt('<%=result.currentPage%>');
+				this.pageCount = parseInt('<%=result.pageCount%>');
+			},
+			getServerData: function(param, cb) {
+				global.getData("/api/getGroupPlanetShow", param, cb);
+			},
+			getJoinPData: function(param, cb) {
+				global.getData("/api/joinPlant", param, cb);
+			},
+			getJoinBtnVal: function(param, cb) {
+				global.getData("/api/isJoinP", param, cb);
+			},
+			<%if(user){%>
+			setJoinBtnVal: function() {
+				var self = this;
 				self.getJoinBtnVal({
 					groupid: parseInt("<%=result.groupID%>")
 				}, function(data) {
@@ -112,78 +112,77 @@
 						if (data.data.code == 1) {
 							self.joinBtn.text('+发帖');
 							self.isjoin = 1; //已加入
-						} else {
-							self.joinBtn.text('+加入');
-							self.isjoin = 0; //未加入
 						}
 					}
 				});
-			}
-		},
-		bindEvent: function() {
-			var self = this;
-			self.pre.on("touchend", function(event) {
-				event.preventDefault();
-				if (self.currentpage == 1) {
-					//sweetAlert('错误', '当前页是第一页', 'error');
-					return;
-				} else {
-					self.loading.show();
-					self.getServerData({
-						currentpage: self.currentpage - 1,
-						groupid: parseInt("<%=result.groupID%>")
-					}, function(data) {
-						if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-							self.currentpage -= 1;
-							var compiled = template("listtemplate", data.data);
-							self.main.html(compiled);
-							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-							self.loading.hide();
-							self.next.removeClass('unCBtn');
-							if (data.data.currentPage == 1) {
-								self.pre.addClass('unCBtn');
+			},
+			<%}%>
+			bindEvent: function() {
+				var self = this;
+				self.pre.on("touchend", function(event) {
+					event.preventDefault();
+					if (self.currentpage == 1) {
+						//sweetAlert('错误', '当前页是第一页', 'error');
+						return;
+					} else {
+						self.loading.show();
+						self.getServerData({
+							currentpage: self.currentpage - 1,
+							groupid: parseInt("<%=result.groupID%>")
+						}, function(data) {
+							if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+								self.currentpage -= 1;
+								var compiled = template("listtemplate", data.data);
+								self.main.html(compiled);
+								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+								self.loading.hide();
+								self.next.removeClass('unCBtn');
+								if (data.data.currentPage == 1) {
+									self.pre.addClass('unCBtn');
+								}
+								$(window).scrollTop(0);
+							} else {
+								self.loading.hide();
+								sweetAlert('错误', '数据请求失败', 'error');
 							}
-							$(window).scrollTop(0);
-						} else {
-							self.loading.hide();
-							sweetAlert('错误', '数据请求失败', 'error');
-						}
-					});
-				}
-			});
-			self.next.on("touchend", function(event) {
-				event.preventDefault();
-				if (self.currentpage == self.pageCount) {
-					//sweetAlert('错误', '当前页是最后一页', 'error');
-					return;
-				} else {
-					self.loading.show();
-					self.getServerData({
-						currentpage: self.currentpage + 1,
-						groupid: parseInt("<%=result.groupID%>")
-					}, function(data) {
-						if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-							self.currentpage += 1;
-							var compiled = template("listtemplate", data.data);
-							self.main.html(compiled);
-							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-							self.loading.hide();
-							self.pre.removeClass('unCBtn');
-							if (data.data.currentPage == data.data.pageCount) {
-								self.next.addClass('unCBtn');
+						});
+					}
+				});
+				self.next.on("touchend", function(event) {
+					event.preventDefault();
+					if (self.currentpage == self.pageCount) {
+						//sweetAlert('错误', '当前页是最后一页', 'error');
+						return;
+					} else {
+						self.loading.show();
+						self.getServerData({
+							currentpage: self.currentpage + 1,
+							groupid: parseInt("<%=result.groupID%>")
+						}, function(data) {
+							if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+								self.currentpage += 1;
+								var compiled = template("listtemplate", data.data);
+								self.main.html(compiled);
+								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+								self.loading.hide();
+								self.pre.removeClass('unCBtn');
+								if (data.data.currentPage == data.data.pageCount) {
+									self.next.addClass('unCBtn');
+								}
+								$(window).scrollTop(0);
+							} else {
+								self.loading.hide();
+								sweetAlert('错误', '数据请求失败', 'error');
 							}
-							$(window).scrollTop(0);
-						} else {
-							self.loading.hide();
-							sweetAlert('错误', '数据请求失败', 'error');
-						}
-					});
-				}
-			});
-			self.joinBtn.on("touchend", function(event) {
-				event.preventDefault();
-				if (self.user) {
-					if (self.isjoin == 0) {
+						});
+					}
+				});
+				self.joinBtn.on("touchend", function(event) {
+					event.preventDefault();
+					<%if(user){%>
+					if (self.isjoin == 1) {
+						window.location.href = '/group/<%=result.groupID%>/post';
+					} else{
 						self.getJoinPData({
 							groupid: parseInt("<%=result.groupID%>")
 						}, function(data) {
@@ -202,20 +201,20 @@
 							}
 						});
 					}
-					if (self.isjoin == 1) {
-						window.location.href = '/group/<%=result.groupID%>/post';
-					}
-				} else {
+					<%}else{%>
 					window.location.href = '/login';
-				}
-			});
-		},
-		init: function() {
-			this.ClientData();
-			this.setJoinBtnVal();
-			this.bindEvent();
+					<%}%>
+				});
+			},
+			init: function() {
+				this.ClientData();
+				<%if(user){%>
+				this.setJoinBtnVal();
+				<%}%>
+				this.bindEvent();
+			}
 		}
-	}
-	planetDetail.init();
+		group.init();
+	})();
 </script>
 <%- include base/footerMobile.ejs %>

@@ -23,12 +23,12 @@
 		</ul>
 	</div>
 	<div class="page-turn">
-		<button type="button" class="unCBtn">上一页</button>
+		<button type="button" class="unCBtn" id="pre">上一页</button>
 		<span><%=result.currentPage%>/<%=result.pageCount%></span>
 		<%if(result.pageCount == 1){%>
-		<button type="button" class="unCBtn">下一页</button>
+		<button type="button" class="unCBtn" id="next">下一页</button>
 		<%}else{%>
-		<button type="button">下一页</button>
+		<button type="button" id="next">下一页</button>
 		<%}%>
 	</div>
 	<%}else{%>
@@ -52,95 +52,97 @@
 	{{/each}}
 </script>
 <script>
-	var all_planet = {
-		pre: $(".page-turn").find('button').first(),
-		next: $(".page-turn").find('button').last(),
-		page: $(".page-turn").find('span').eq(0),
-		main: $(".planetList"),
-		nav_planetA: $("#nav-allP").children("a"),
-		loading: $(".loading"),
-		currentpage: 1,
-		pageCount: 0,
-		ClientData: function() {
-			this.currentpage = parseInt("<%=result.currentPage%>");
-			this.pageCount = parseInt("<%=result.pageCount%>");
-		},
-		navActive: function() {
-			this.nav_planetA.addClass("navbar-active");
-		},
-		getServerData: function(param, cb) {
-			global.getData("/api/getPlanetAll",param,cb);
-		},
-		bindEvent: function() {
-			var self = this;
-			self.pre.on("click", function(event) {
-				event.preventDefault();
-				if (self.currentpage == 1) {
-					// sweetAlert('错误', '当前页是第一页', 'error');
-					return;
-				} else {
-					self.loading.show();
-					self.getServerData({
-						currentpage: self.currentpage - 1
-					}, function(data) {
-						if (data.ret == 200 && data.data && data.data.lists.length > 0) {
-							if (self.currentpage == self.pageCount) {
-								self.next.removeClass('unCBtn');
+	(function() {
+		var allGroup = {
+			pre: $("#pre"),
+			next: $("#next"),
+			page: $(".page-turn").find('span').eq(0),
+			main: $(".planetList"),
+			nav_planetA: $("#nav-allP").children("a"),
+			loading: $(".loading"),
+			currentpage: 1,
+			pageCount: 0,
+			ClientData: function() {
+				this.currentpage = parseInt("<%=result.currentPage%>");
+				this.pageCount = parseInt("<%=result.pageCount%>");
+			},
+			navActive: function() {
+				this.nav_planetA.addClass("navbar-active");
+			},
+			getServerData: function(param, cb) {
+				global.getData("/api/getPlanetAll", param, cb);
+			},
+			bindEvent: function() {
+				var self = this;
+				self.pre.on("click", function(event) {
+					event.preventDefault();
+					if (self.currentpage == 1) {
+						// sweetAlert('错误', '当前页是第一页', 'error');
+						return;
+					} else {
+						self.loading.show();
+						self.getServerData({
+							currentpage: self.currentpage - 1
+						}, function(data) {
+							if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+								if (self.currentpage == self.pageCount) {
+									self.next.removeClass('unCBtn');
+								}
+								self.currentpage -= 1;
+								var compiled = template("planet-list", data.data);
+								self.main.html(compiled);
+								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+								self.loading.hide();
+								if (data.data.currentPage == 1) {
+									self.pre.addClass('unCBtn');
+								}
+								$(window).scrollTop(0);
+							} else {
+								self.loading.hide();
+								sweetAlert('错误', '数据请求失败', 'error');
 							}
-							self.currentpage -= 1;
-							var compiled = template("planet-list", data.data);
-							self.main.html(compiled);
-							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-							self.loading.hide();
-							if (data.data.currentPage == 1) {
-								self.pre.addClass('unCBtn');
+						});
+					}
+				});
+				self.next.on("click", function(event) {
+					event.preventDefault();
+					if (self.currentpage == self.pageCount) {
+						//sweetAlert('错误', '当前页是最后一页', 'error');
+						return;
+					} else {
+						self.loading.show();
+						self.getServerData({
+							currentpage: self.currentpage + 1
+						}, function(data) {
+							if (data.ret == 200 && data.data && data.data.lists.length > 0) {
+								if (self.currentpage == 1) {
+									self.pre.removeClass('unCBtn');
+								}
+								self.currentpage += 1;
+								var compiled = template("planet-list", data.data);
+								self.main.html(compiled);
+								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+								self.loading.hide();
+								if (data.data.currentPage == data.data.pageCount) {
+									self.next.addClass('unCBtn');
+								}
+								$(window).scrollTop(0);
+							} else {
+								self.loading.hide();
+								sweetAlert('错误', '数据请求失败', 'error');
 							}
-							$(window).scrollTop(0);
-						} else {
-							self.loading.hide();
-							sweetAlert('错误', '数据请求失败', 'error');
-						}
-					});
-				}
-			});
-			self.next.on("click", function(event) {
-				event.preventDefault();
-				if (self.currentpage == self.pageCount) {
-					//sweetAlert('错误', '当前页是最后一页', 'error');
-					return;
-				} else {
-					self.loading.show();
-					self.getServerData({
-						currentpage: self.currentpage + 1
-					}, function(data) {
-						if (data.ret == 200 && data.data && data.data.lists.length > 0) {
-							if (self.currentpage == 1) {
-								self.pre.removeClass('unCBtn');
-							}
-							self.currentpage += 1;
-							var compiled = template("planet-list", data.data);
-							self.main.html(compiled);
-							self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-							self.loading.hide();
-							if (data.data.currentPage == data.data.pageCount) {
-								self.next.addClass('unCBtn');
-							}
-							$(window).scrollTop(0);
-						} else {
-							self.loading.hide();
-							sweetAlert('错误', '数据请求失败', 'error');
-						}
-					});
-				}
+						});
+					}
 
-			});
-		},
-		init: function() {
-			this.ClientData();
-			this.bindEvent();
-			this.navActive();
+				});
+			},
+			init: function() {
+				this.ClientData();
+				this.bindEvent();
+				this.navActive();
+			}
 		}
-	}
-	all_planet.init();
+		allGroup.init();
+	})();
 </script>
 <%- include base/footer.ejs %>
