@@ -132,8 +132,8 @@
 				sweetAlert('格式错误', '请填写标题！', 'warning');
 				return false;
 			}
-			if (this.title.val().length > 20) {
-				sweetAlert('格式错误', '请设置20字符以内标题', 'warning');
+			if (this.title.val().length > 50) {
+				sweetAlert('格式错误', '请设置50字符以内标题', 'warning');
 				return false;
 			}
 			var imgs = editor.$txt.find('img').length;
