@@ -18,15 +18,15 @@
             <ul class="navbar-account">
                 <% if (user) { %>
                 <li><a href="/users" class="navbar-account-item">个人中心</a></li>
-                <li id="nav-userId"><span class="navbar-account-item"><%=user.nickname%> </span></li>
-                <li id="nav-logout"><a href="/logout" class="navbar-account-item">退出</a></li>
+                <li><span class="navbar-account-item"><%=user.nickname%> </span></li>
+                <li><a href="/logout" class="navbar-account-item">退出</a></li>
                 <% } else { %>
-                <li id="nav-login"><a href="/login" title="" class="navbar-account-item">登录</a></li>
-                <li id="nav-register"><a href="/register" title="" class="navbar-account-item">注册</a></li>
+                <li><a href="/login" title="" class="navbar-account-item">登录</a></li>
+                <li><a href="/register" title="" class="navbar-account-item">注册</a></li>
                 <% } %>
             </ul>
             <ul class="navbar-option">
-                <li><a href="/" title="" class="navbar-option-item">首页</a></li>
+                <li><a href="/" title="" class="navbar-option-item">首页</a></li>   
                 <% if (user) { %>
                 <li id="nav-myP"><a href="/uGroup/<%=user.userID%>" title="" class="navbar-option-item">我的星球</a></li>
                 <% } %>
