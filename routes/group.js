@@ -18,7 +18,6 @@ router.get('/:groupid', function(req, res, next) {
 				if (result.ret == 200 && result.msg == "") {
 					var page = agent.Mobile ? 'groupMobile' : 'group';
 					res.render(page, {
-						'path': '../',
 						result: result.data,
 						'title': result.data.groupName,
 						'creator':creator,
@@ -39,7 +38,7 @@ router.get('/:groupid', function(req, res, next) {
 			}
 		})
 });
-
+//星球发帖
 router.get('/:groupid/post', function(req, res, next) {
 	if (req.session.user) {
 		var agent = ua(req.headers['user-agent']);
@@ -54,14 +53,12 @@ router.get('/:groupid/post', function(req, res, next) {
 					if (result.ret == 200 && result.msg == "") {
 						if (result.data.code == 1) {
 							res.render(page, {
-								'path': '../../',
 								'groupID': req.params.groupid,
 								'title': '发表帖子',
 								'user': req.session.user
 							});
 						} else {
 							res.render(tip, {
-								'path': '../../',
 								'tip': '您没有权限操作',
 								'title': '发表帖子',
 								'user': req.session.user
