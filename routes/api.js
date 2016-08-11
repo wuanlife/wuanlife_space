@@ -198,6 +198,7 @@ router.get('/:method', function(req, res, next) {
 router.post('/:method', function(req, res, next) {
     var data = {};
     var userID = (req.session.user) ? req.session.user.userID : null;
+    var email = (req.session.user) ? req.session.user.Email : null;
     switch (req.params.method) {
         //帖子置顶
         case 'stickyPost':
@@ -287,6 +288,27 @@ router.post('/:method', function(req, res, next) {
                     });
                 }
                 console.log('Reply success:', JSON.parse(body));
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                res.send(JSON.parse(body));
+            });
+            break;
+        case 'sendAuthCode':
+            request.post({
+                url: config.server + '?service=User.CheckMail',
+                formData: {
+                    Email: email
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                if (err) {
+                    console.error('Send email failed:', err);
+                    res.header('Content-type', 'application/json');
+                    res.header('Charset', 'utf8');
+                    res.send({
+                        err: err
+                    });
+                }
+                console.log('Send email success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));
