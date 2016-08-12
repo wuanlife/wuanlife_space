@@ -54,7 +54,7 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				self.verifyBtn.on('click', function(event) {
+				self.verifyBtn.on('touchend', function(event) {
 					event.preventDefault();
 					/* Act on the event */
 					if (self.count != 60) {
