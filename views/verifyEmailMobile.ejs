@@ -1,0 +1,107 @@
+<%- include base/headerMobile.ejs %>
+<div class="main">
+	<div class="mask"></div>
+	<div class="location clearfix">
+		<h1>验证邮箱</h1>
+	</div>
+	<div class="login">
+		<form class="login-form line-form" method="post">
+			<div class="login-group line-fgroup">
+				<label for="email" class="label-code"></label>
+				<input type="text" name="code" placeholder="验证码" id="code">
+				<button type="button" class="verify" id="required">获取验证码</button>
+			</div>
+			<button type="submit">确认</button>
+		</form>
+	</div>
+</div>
+<%- include base/baseJSMobile.ejs %>
+<script type="text/javascript">
+	(function() {
+		var verify = {
+			code: $("#code"),
+			verifyForm: $(".login-form"),
+			loading: $(".loading"),
+			verifyBtn: $('#required'),
+			count: 60,
+			timer: undefined,
+			verificate: function() {
+				var myreg = /^\d{5}$/;
+				if (this.code.val().length == 0) {
+					sweetAlert('格式错误', '请填验证码！', 'warning');
+					return false;
+				}
+				if (!myreg.test(this.code.val())) {
+					sweetAlert('格式错误', '请输入5位数字验证码', 'warning');
+					return false;
+				}
+				return true;
+			},
+			endTimer: function() {
+				window.clearInterval(this.timer);
+				this.verifyBtn.html('获取验证码');
+				this.verifyBtn.removeClass('unCBtn');
+				this.count = 60;
+			},
+			setRemainTime: function() {
+				if (this.count == 0) {
+					this.endTimer();
+				} else {
+					this.count--;
+					this.verifyBtn.addClass('unCBtn');
+					this.verifyBtn.html(this.count + 's后重新发送');
+				}
+			},
+			bindEvent: function() {
+				var self = this;
+				self.verifyBtn.on('click', function(event) {
+					event.preventDefault();
+					/* Act on the event */
+					if (self.count != 60) {
+						return;
+					} else {
+						self.timer = window.setInterval(self.setRemainTime.bind(self), 1000);
+						global.subData('/api/sendAuthCode', {}, function(data) {
+							console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 0) {
+									self.endTimer();
+									sweetAlert('错误', data.data.msg, 'error');
+								}
+							} else {
+								self.endTimer();
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+				self.verifyForm.submit(function(event) {
+					event.preventDefault();
+					if (self.verificate()) {
+						self.loading.show();
+						global.subData('/verifyEmail', {
+							code: self.code.val()
+						}, function(data) {
+							console && console.log(data);
+							self.loading.hide();
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/users'; //验证成功
+								} else {
+									sweetAlert('提示', data.data.msg, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+			},
+			init: function() {
+				this.bindEvent();
+			}
+		}
+		verify.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>
