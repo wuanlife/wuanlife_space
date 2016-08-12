@@ -14,42 +14,44 @@
 </div>
 <%- include base/baseJSMobile.ejs %>
 <script>
-	var post = {
-		editor: $("#textareaMobile"),
-		title: $("#post-title"),
-		postForm: $(".post-form"),
-		subBtn: $("#post-issue"),
-		verificate: function() {
-			this.title.val(this.title.val().trim());
-			this.editor.val(this.editor.val().trim());
-			if (this.title.val().length == 0) {
-				sweetAlert('格式错误', '请填写标题！', 'warning');
-				return false;
-			}
-			if (this.title.val().length > 50) {
-				sweetAlert('格式错误', '请设置50字符以内标题', 'warning');
-				return false;
-			}
-			if (this.editor.val().length == 0) {
-				sweetAlert('格式错误', '请填写内容！', 'warning');
-				return false;
-			}
-			return true;
-		},
-		bindEvent: function() {
-			var self = this;
-			self.subBtn.on('touchend', function(event) {
-				event.preventDefault();
-				/* Act on the event */
-				if (self.verificate()) {
-					self.postForm.submit();
+	(function() {
+		var post = {
+			editor: $("#textareaMobile"),
+			title: $("#post-title"),
+			postForm: $(".post-form"),
+			subBtn: $("#post-issue"),
+			verificate: function() {
+				this.title.val(this.title.val().trim());
+				this.editor.val(this.editor.val().trim());
+				if (this.title.val().length == 0) {
+					sweetAlert('格式错误', '请填写标题！', 'warning');
+					return false;
 				}
-			});
-		},
-		init: function() {
-			this.bindEvent();
+				if (this.title.val().length > 50) {
+					sweetAlert('格式错误', '请设置50字符以内标题', 'warning');
+					return false;
+				}
+				if (this.editor.val().length == 0) {
+					sweetAlert('格式错误', '请填写内容！', 'warning');
+					return false;
+				}
+				return true;
+			},
+			bindEvent: function() {
+				var self = this;
+				self.subBtn.on('touchend', function(event) {
+					event.preventDefault();
+					/* Act on the event */
+					if (self.verificate()) {
+						self.postForm.submit();
+					}
+				});
+			},
+			init: function() {
+				this.bindEvent();
+			}
 		}
-	}
-	post.init();
+		post.init();
+	})();
 </script>
 <%- include base/footerMobile.ejs %>
