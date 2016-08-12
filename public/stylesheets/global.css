@@ -547,6 +547,7 @@ button.unCBtn{
 a.verify {
     font-size: 17px;
 }
+/*发送验证码按钮*/
 button.verify{
     width:130px;
     background-color: #5ab8fe;
