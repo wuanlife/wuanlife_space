@@ -752,7 +752,7 @@ button.unCBtn{
 a.verify {
     font-size: 0.373333rem;
 }
-@media (max-width:600px) {
+@media (max-width:660px) {
 button.verify{
     background-color: #5ab8fe;
     color:#fff;
