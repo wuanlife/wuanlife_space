@@ -52,14 +52,24 @@
                     }
                 });
             };
+            //导航折叠按钮
+            var setToggleBtn =  function(){
+                $('#navbar-toggle').on('click', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    $('.navbar-account').toggle();
+                });
+            };
 			return {
 				setCenterLoadingDiv: setCenterLoadingDiv,
                 getData:getData,
-                subData:subData
+                subData:subData,
+                setToggleBtn:setToggleBtn
 			}
 		}());
 		$(document).ready(function() {
 			global.setCenterLoadingDiv();
+            global.setToggleBtn();
 			$(window).resize(function(event) {
 				global.setCenterLoadingDiv();
 			});
