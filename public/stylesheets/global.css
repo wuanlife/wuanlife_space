@@ -87,7 +87,7 @@ ul{
 .navbar{
     position: fixed;
     width:100%;
-    min-width: 900px;
+    min-width: 750px;
     top:0;
     left:0;
     height:60px;
@@ -146,6 +146,73 @@ span.navbar-account-item{
     white-space: nowrap;
     overflow:hidden;
     max-width: 150px;
+    vertical-align: bottom;
+}
+/*折叠按钮*/
+.navbar-toggle{
+    position: absolute;
+    right:0;
+    top:0;
+    border:1px solid #ddd;
+    background-color: #fff;
+    margin:10px 10px 10px 0;
+    padding:9px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display:none;
+}
+.navbar-toggle .icon-bar{
+    display:block;
+    width:25px;
+    height:4px;
+    border-radius: 1px;
+    background-color:#5ab8fe;
+}
+.navbar-toggle .icon-bar+.icon-bar{
+    margin-top: 4px;
+}
+@media (max-width:1200px){
+    /*导航标题*/
+    .navbar-title{
+        padding-left: 20px;
+    }
+    /*折叠按钮*/
+    .navbar-toggle{
+        display:block;
+    }
+    /*导航账户*/
+    .navbar-account{
+        right:0;
+        top:100%;
+        bottom:auto;
+        width:180px;
+        background-color: #fff;
+        color:#5ab8fe;
+        border:1px solid rgba(0,0,0,.15);
+        border-radius: 3px;
+        display:none;
+    }
+    .navbar-account>li{
+        width:100%;
+    }
+    .navbar-account-item{
+        width:100%;
+        padding:10px 10px;
+    }
+    .navbar-account-item:hover{
+        background-color:rgba(0,0,0,.15) ;
+    }
+    span.navbar-account-item{
+        max-width: 100%;
+    }
+    .navbar-account a{
+        color:#5ab8fe;
+    }
+}
+@media (min-width:1201px){
+    .navbar-account{
+        display:block!important;
+    }
 }
 .nav-anone{
     display:none;
@@ -159,9 +226,11 @@ span.navbar-account-item{
 ***************************/
 .main{
     position: relative;
-    width:750px;
+    width:780px;
     min-height:100%;
     padding-top: 60px;
+    padding-right: 15px;
+    padding-left: 15px;
     margin:0 auto ;
 }
 .main-page{
