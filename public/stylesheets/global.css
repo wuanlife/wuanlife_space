@@ -311,6 +311,14 @@ button.unCBtn{
     padding:160px 0 ;
     margin:0;
 }
+/*跳转链接*/
+.goto{
+    color:#5ab8fe;
+    text-decoration: underline;
+}
+.goto:hover{
+    text-decoration: underline;
+}
 /****************
 *********文章*****
 ******************/
