@@ -6,33 +6,42 @@ var ua = require('mobile-agent');
 
 /* 重置密码：发送邮件 */
 router.get('/', function(req, res, next) {
-    var agent = ua(req.headers['user-agent']);
-    var page = agent.Mobile ? 'resetPasswordMobile' : 'resetPassword';
-    res.render(page, {'title':'重设密码','user':req.session.user});
+    var agent = ua(req.headers['user-agent']),
+        email = req.flash('email').toString(),
+        page;
+    if (email) {
+        page = agent.Mobile ? 'resetPasswordMobile' : 'resetPassword';
+    } else{
+        page = agent.Mobile ? 'forgetMobile' : 'forget';
+    }
+    res.render(page, {'title':'重设密码','user':req.session.user,'email':email});
 });
 router.post('/', function(req, res, next) {
+    var email = req.body.email;
     request.post({
         url: config.server + '?service=User.SendMail',
         formData: {
             Email: req.body.email
         }
     }, function optionalCallback(err, httpResponse, body) {
-        if (err) {
-            console.error('email send failed:', err);
-            res.header('Content-type', 'application/json');
-            res.header('Charset', 'utf8');
-            res.send({
-                err: err
-            });
+        if (!err && httpResponse.statusCode == 200) {
+            var result = JSON.parse(body);
+            console.log(result);
+            if (result.ret == 200  && result.data.code == 1) {
+                req.flash('email',email);
+                res.redirect('back');
+            } else {
+                res.render('error', {
+                    'message': result.msg,
+                    error: {
+                        'status': result.ret,
+                        'stack': result.data.msg
+                    }
+                });
+            }
+        } else {
+            next(err);
         }
-        //session保存用于找回密码邮箱
-        if (JSON.parse(body).data.code == 1) {
-            req.session.resetEmail = req.body.email;
-        }
-        console.log('Email send successful!  Server responded with:', body);
-        res.header('Content-type', 'application/json');
-        res.header('Charset', 'utf8');
-        res.send(JSON.parse(body));
     });
 });
 
@@ -41,7 +50,7 @@ router.post('/set', function(req, res, next) {
     request.post({
         url: config.server + '?service=User.RePsw',
         formData: {
-            Email: req.session.resetEmail,
+            Email: req.body.email,
             code:req.body.code,
             password:req.body.password,
             psw:req.body.psw
