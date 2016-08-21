@@ -8,13 +8,15 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
     var agent = ua(req.headers['user-agent']),
         email = req.flash('email').toString(),
+        error = req.flash('error').toString(),
+        verify = req.flash('verify').toString(),
         page;
-    if (email) {
+    if (verify) {
         page = agent.Mobile ? 'resetPasswordMobile' : 'resetPassword';
     } else{
         page = agent.Mobile ? 'forgetMobile' : 'forget';
     }
-    res.render(page, {'title':'重设密码','user':req.session.user,'email':email});
+    res.render(page, {'title':'重设密码','user':req.session.user,'email':email,'error':error});
 });
 router.post('/', function(req, res, next) {
     var email = req.body.email;
@@ -27,7 +29,12 @@ router.post('/', function(req, res, next) {
         if (!err && httpResponse.statusCode == 200) {
             var result = JSON.parse(body);
             console.log(result);
-            if (result.ret == 200  && result.data.code == 1) {
+            if (result.ret == 200) {
+                if (result.data.code == 1) {
+                    req.flash('verify',true);
+                } else{
+                    req.flash('error',result.data.msg);
+                }
                 req.flash('email',email);
                 res.redirect('back');
             } else {
@@ -35,7 +42,7 @@ router.post('/', function(req, res, next) {
                     'message': result.msg,
                     error: {
                         'status': result.ret,
-                        'stack': result.data.msg
+                        'stack': ''
                     }
                 });
             }
