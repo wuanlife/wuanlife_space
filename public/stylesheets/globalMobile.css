@@ -766,6 +766,16 @@ button.verify{
     background-color: #bababa;
     cursor:default;
 }
+/*错误提示*/
+.errTip{
+    display:block;
+    color:#a94442;
+}
+.line-fgroup .errTip{
+    position: absolute;
+    top:100%;
+    margin-top: 0.266667rem;
+}
 /*******************
 ****各种帖子中的表单***
 *******************/
