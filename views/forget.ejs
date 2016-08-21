@@ -7,7 +7,10 @@
         <form class="login-form line-form" method="post" id="forget" action="/resetPassword">
             <div class="login-group line-fgroup">
                 <label for="email" class="label-e"></label>
-                <input type="email" name="email" placeholder="邮箱" id="email">
+                <input type="email" name="email" placeholder="邮箱" id="email" value="<%=email%>">
+                <%if(error){%>
+                <span class="errTip"><%=error%></span>
+                <%}%>
             </div>
             <button type="submit" id="subBtn">下一步</button>
         </form>
@@ -38,6 +41,10 @@
                         self.loading.show();
                         self.sendEform.submit();
                     }
+                });
+                self.email.one('focus', function(event) {
+                    /* Act on the event */
+                    $('.errTip').css('visibility', 'hidden');
                 });
             },
             init: function() {
