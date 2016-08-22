@@ -71,6 +71,55 @@ ul{
     position: relative;
     background-color: #f6fafb;
     height:100%;
+    overflow:hidden;
+}
+/*主栏*/
+.main-wrapper{
+    -webkit-transform:none;
+            transform:none;
+    -webkit-transition: -webkit-transform .15s linear;
+            transition: transform .15s linear;
+    will-change: transform;
+    background-color: inherit;
+    position: relative;
+}
+.sidebar-extend .main-wrapper{
+    -webkit-transform:translateX(5.546667rem);
+            transform:translateX(5.546667rem);
+    /*-webkit-animation: open .35s ease-in-out;
+    animation: open .35s ease-in-out;*/
+}
+@-webkit-keyframes open {
+    0%      {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
+    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
+    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
+}
+@keyframes open {
+    0%      {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
+    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
+    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
+}
+/**************
+*****折叠状态****
+***************/
+/*侧栏出现时main上层遮罩*/
+.sidebar-extend .mask{
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 30;
+    height:100%;
+    background-color: #000;
+    opacity: 0.1;
+}
+/*主内容容器*/
+.mainContainer{
+    height:100%;
+    overflow-y: scroll;
+    position: relative;
+    z-index: 10;
 }
 /*小图标*/
 .icon{
@@ -91,12 +140,7 @@ ul{
     text-align: center;
     background-color: #5ab8fe;
     color:#fff;
-    -webkit-transform:none;
-            transform:none;
-    -webkit-transition: -webkit-transform .15s linear;
-            transition: transform .15s linear;
-    will-change: transform;
-    z-index: 1;
+    z-index: 20;
 }
 .navbar h1{
     font-size: 0.56rem;
@@ -262,13 +306,7 @@ span.navbar-account-item{
 .main{
     padding: 1.133333rem 0.466667rem 0;
     position: relative;
-    left:0;
     background-color: inherit;
-    -webkit-transform:none;
-            transform:none;
-    -webkit-transition: -webkit-transform .15s linear;
-            transition: transform .15s linear;
-    will-change: transform;
     width:100%;
     min-height: 100%;
 }
@@ -276,35 +314,6 @@ span.navbar-account-item{
     padding-bottom: 1.866667rem;
     position: relative;
 }
-/**************
-*****折叠状态****
-***************/
-/*侧栏出现时main上层遮罩*/
-.sidebar-extend .mask{
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index: 1;
-}
-.sidebar-extend .main,.sidebar-extend .navbar{
-    -webkit-transform:translateX(5.546667rem);
-            transform:translateX(5.546667rem);
-    /*-webkit-animation: open .35s ease-in-out;
-    animation: open .35s ease-in-out;*/
-}
-@-webkit-keyframes open {
-    0%      {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
-    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
-    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
-}
-@keyframes open {
-    0%      {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
-    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
-    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
-}
-
 /********************
 *********当前位置***
 *******************/
