@@ -91,8 +91,11 @@ ul{
     text-align: center;
     background-color: #5ab8fe;
     color:#fff;
-    -webkit-transition: left .15s linear; 
-    transition: left .15s linear;
+    -webkit-transform:none;
+            transform:none;
+    -webkit-transition: -webkit-transform .15s linear;
+            transition: transform .15s linear;
+    will-change: transform;
     z-index: 1;
 }
 .navbar h1{
@@ -261,8 +264,11 @@ span.navbar-account-item{
     position: relative;
     left:0;
     background-color: inherit;
-    -webkit-transition: left .15s linear; 
-    transition: left .15s linear;
+    -webkit-transform:none;
+            transform:none;
+    -webkit-transition: -webkit-transform .15s linear;
+            transition: transform .15s linear;
+    will-change: transform;
     width:100%;
     min-height: 100%;
 }
@@ -283,19 +289,20 @@ span.navbar-account-item{
     z-index: 1;
 }
 .sidebar-extend .main,.sidebar-extend .navbar{
-     left:5.546667rem; 
+    -webkit-transform:translateX(5.546667rem);
+            transform:translateX(5.546667rem);
     -webkit-animation: open .35s ease-in-out;
     animation: open .35s ease-in-out;
 }
 @-webkit-keyframes open {
-    0%      {left:0;}
-    70%    {left:6.5rem;}
-    100%  {left:5.546667rem;}
+    0%      {-webkit-transform:translateX(0);transform:translateX(0);}
+    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
+    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
 }
 @keyframes open {
-    0%      {left:0;}
-    70%    {left:6.5rem;}
-    100%  {left:5.546667rem;}
+    0%      {-webkit-transform:translateX(0);transform:translateX(0);}
+    70%    {-webkit-transform:translateX(6.5rem);transform:translateX(6.5rem);}
+    100%  {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
 }
 
 /********************
