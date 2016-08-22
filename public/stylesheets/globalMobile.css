@@ -291,8 +291,8 @@ span.navbar-account-item{
 .sidebar-extend .main,.sidebar-extend .navbar{
     -webkit-transform:translateX(5.546667rem);
             transform:translateX(5.546667rem);
-    -webkit-animation: open .35s ease-in-out;
-    animation: open .35s ease-in-out;
+    /*-webkit-animation: open .35s ease-in-out;
+    animation: open .35s ease-in-out;*/
 }
 @-webkit-keyframes open {
     0%      {-webkit-transform:translateX(5.546667rem);transform:translateX(5.546667rem);}
