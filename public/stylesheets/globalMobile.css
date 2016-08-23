@@ -79,6 +79,7 @@ ul{
     background-color: inherit;
     position: relative;
     height:100%;
+    z-index: 1;
 }
 .sidebar-extend .main-wrapper{
     -webkit-transform:translateX(5.546667rem);
@@ -677,6 +678,11 @@ button.unCBtn{
     margin: 0 auto ;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);  
+}
+.loginL{
+    width:7.066667rem;
+    margin: 0 auto ;
+    padding: 0.866667rem 0 2.0rem;
 }
 .login-group{
     padding-bottom: 0.2rem;
