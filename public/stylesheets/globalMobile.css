@@ -752,6 +752,8 @@ button.unCBtn{
     width:0.266667rem;
     height:0.266667rem;
     margin:0;
+    padding:0;
+    vertical-align: middle;
 }
 /*邮箱验证*/
 .verify {
