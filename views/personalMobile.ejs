@@ -7,7 +7,7 @@
 		<form class="login-form line-form" method="post">
 			<div class="login-group line-fgroup">
 				<label for="email" class="label-e"></label>
-				<input type="email" value="<%=result.Email%>" id="email" disabled="disabled">
+				<input type="email" value="<%=result.Email%>" id="email" readonly>
 				<% if(result.mailChecked >0){%>
 				<span class="verify">已验证</span>
 				<%}else{%>
@@ -16,7 +16,7 @@
 			</div>
 			<div class="login-group line-fgroup">
 				<label for="email" class="label-name"></label>
-				<input type="text" value="<%=result.nickname%>" id="name" disabled="disabled">
+				<input type="text" value="<%=result.nickname%>" id="name" readonly>
 			</div>
 			<div class="login-group line-fgroup">
 				<label class="label-sex"></label>
