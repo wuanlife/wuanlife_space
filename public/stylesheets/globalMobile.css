@@ -71,6 +71,8 @@ ul{
 }
 /*主栏*/
 .main-wrapper{
+    -webkit-animation: close .15s ease-in-out;
+        animation: close .15s ease-in-out;
     -webkit-transform:none;
             transform:none;
     /*-webkit-transition: -webkit-transform .15s linear;
@@ -96,6 +98,14 @@ ul{
     0%      {transform:translateX(0);}
     70%    {transform:translateX(6.5rem);}
     100%  {transform:translateX(5.546667rem);}
+}
+@-webkit-keyframes close {
+    0%      {-webkit-transform:translateX(5.546667rem);}
+    100%  {-webkit-transform:translateX(0);}
+}
+@keyframes close {
+    0%      {transform:translateX(5.546667rem);}
+    100%  {transform:translateX(0);}
 }
 /**************
 *****折叠状态****
