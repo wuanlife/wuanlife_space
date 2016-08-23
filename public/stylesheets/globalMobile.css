@@ -168,7 +168,7 @@ ul{
     position: fixed;
     top:0;
     left:0;
-    overflow-y: auto; 
+    overflow-y: scroll; 
     background-color: #53aaeb; 
 }
 .sidebar{
@@ -177,7 +177,6 @@ ul{
     color:#fff;
     min-height: 100%;
     text-align: center;
-    overflow-y: scroll;
     position: relative;
     padding-bottom: 1.333333rem;
    /* z-index: 1;*/
