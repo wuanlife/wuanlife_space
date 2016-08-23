@@ -734,7 +734,7 @@ button.unCBtn{
 .login-group .radiobox{
     font-size: 0.373333rem;
     height:0.64rem;
-    padding-left: 1.133333rem;
+    margin-left: 1.133333rem;
 }
 /*单选框*/
 .radiobox label{
@@ -745,7 +745,8 @@ button.unCBtn{
     color:#b4b4b4;
     line-height: 0.64rem;
     height:0.64rem;
-    margin-right: 0.2rem;
+    /*margin-right: 0.2rem;*/
+    width:25%;
 }
 .radiobox input[type='radio']{
     width:0.266667rem;
