@@ -60,18 +60,24 @@
                 $(".uil-default-css").attr('style', '-webkit-transform:scale(0.3);transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
             };
             //设置侧栏切换按钮
-            var setToggleBtn = function() {
-                $(".navbar-toggle").on("touchend", function() {
-                    $(".all-wrapper").toggleClass('sidebar-extend');
-                    if ($(".all-wrapper").hasClass('sidebar-extend')) {
-                        $(".mask").on("touchend", function(e) {
-                            //e.stopPropagation();
-                            $(".all-wrapper").removeClass('sidebar-extend');
-                            return false; //zepto return false 则会阻止事件冒泡以及默认操作
-                        });
+            (function() {
+                $(".navbar-toggle").on("touchend", function() {                   
+                    var all = $(".all-wrapper");
+                    if (all.hasClass('open')) {
+                        all.removeClass('open').addClass('close');
+                    } else{
+                        all.removeClass('close').addClass('open');
                     }
                 });
-            };
+            })(); 
+            //主栏遮罩
+            (function(){
+                $(".mask").on("touchend", function(e) {
+                    //e.stopPropagation();
+                    $(".all-wrapper").removeClass('open').addClass('close');
+                    return false; //zepto return false 则会阻止事件冒泡以及默认操作
+                });
+            })();
             //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
@@ -99,7 +105,6 @@
             }
             return {
                 setCenterLoadingDiv: setCenterLoadingDiv,
-                setToggleBtn: setToggleBtn,
                 getData:getData,
                 subData:subData,
                 setMainHeight:setMainHeight
@@ -107,7 +112,6 @@
         }());
     $(document).ready(function() {
         global.setCenterLoadingDiv();
-        global.setToggleBtn();
         global.setMainHeight();
         $(window).resize(function(event) {
             global.setCenterLoadingDiv();

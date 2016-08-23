@@ -71,23 +71,23 @@ ul{
 }
 /*主栏*/
 .main-wrapper{
-    -webkit-animation: close .15s ease-in-out;
-        animation: close .15s ease-in-out;
-    -webkit-transform:none;
-            transform:none;
-    /*-webkit-transition: -webkit-transform .15s linear;
-            transition: transform .15s linear;*/
     will-change: transform;
     background-color: inherit;
     position: relative;
     height:100%;
     z-index: 1;
 }
-.sidebar-extend .main-wrapper{
+.open .main-wrapper{
     -webkit-animation: open .35s ease-in-out;
         animation: open .35s ease-in-out;
     -webkit-transform:translateX(5.546667rem);
             transform:translateX(5.546667rem);
+}
+.close .main-wrapper{
+    -webkit-animation: close .15s ease-in-out;
+        animation: close .15s ease-in-out;
+    -webkit-transform:none;
+            transform:none;
 }
 @-webkit-keyframes open {
     0%      {-webkit-transform:translateX(0);}
@@ -111,7 +111,11 @@ ul{
 *****折叠状态****
 ***************/
 /*侧栏出现时main上层遮罩*/
-.sidebar-extend .mask{
+.mask{
+    display:none;
+}
+.open .mask{
+    display:block;
     position: absolute;
     top:0;
     bottom:0;
