@@ -88,7 +88,7 @@ ul{
             transition: transform .15s linear;
     will-change: transform;
 }
-.sidebar-extend .main-wrapper,.sidebar-extend .sidebarContainer{
+.sidebar-extend .main-wrapper{
     -webkit-transform:translateX(5.546667rem);
             transform:translateX(5.546667rem);
     /*-webkit-animation: open .35s ease-in-out;
@@ -172,9 +172,9 @@ ul{
 .sidebarContainer{
     height:100%;
     width:100%;
-    position: fixed;
+    position: absolute;
     top:0;
-    left:-5.546667rem;
+    left:0;
     overflow:hidden;
     overflow-y: scroll;
 }
