@@ -177,7 +177,7 @@ ul{
     color:#fff;
     min-height: 100%;
     text-align: center;
-    overflow-y: auto;
+    overflow-y: scroll;
     position: relative;
     padding-bottom: 1.333333rem;
    /* z-index: 1;*/
