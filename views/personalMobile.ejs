@@ -42,7 +42,6 @@
 <script type="text/javascript">
 	(function() {
 		var users = {
-			main: $(".main"),
 			br: $("#br"),
 			personalForm: $(".login-form"),
 			loading: $(".loading"),
@@ -56,10 +55,6 @@
 				this.month = "<%=result.month%>";
 				this.day = "<%=result.day%>";
 				this.sex = "<%=result.sex%>";
-			},
-			setMainHeight: function() {
-				windowHeight = $(window).height();
-				this.main.css('minHeight', windowHeight);
 			},
 			verificate: function() {
 				//性别验证
@@ -141,7 +136,6 @@
 				});
 			},
 			init: function() {
-				this.setMainHeight();
 				this.ClientData();
 				this.bindEvent();
 			}
