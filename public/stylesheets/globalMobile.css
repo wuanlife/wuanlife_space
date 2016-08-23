@@ -1,7 +1,4 @@
 
-html,body{
-   /* height:100%;*/
-}
 body{
     font-family: 'Microsoft YaHei',sans-serif;
     line-height: 1.5;
@@ -70,7 +67,6 @@ ul{
 .all-wrapper{
     position: relative;
     background-color: #f6fafb;
-    height:100%;
     overflow:hidden;
 }
 /*主栏*/
@@ -749,12 +745,12 @@ button.unCBtn{
     color:#b4b4b4;
     line-height: 0.64rem;
     height:0.64rem;
-    margin-right: 0.4rem;
+    margin-right: 0.2rem;
 }
 .radiobox input[type='radio']{
     width:0.266667rem;
     height:0.266667rem;
-    margin:3px 3px 0 5px;
+    margin:0.133333rem 0.133333rem 0 0.2rem;
 }
 /*邮箱验证*/
 .verify {
