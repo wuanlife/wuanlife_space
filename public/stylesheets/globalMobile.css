@@ -1,6 +1,6 @@
 
 html,body{
-    height:100%;
+   /* height:100%;*/
 }
 body{
     font-family: 'Microsoft YaHei',sans-serif;
@@ -82,6 +82,7 @@ ul{
     will-change: transform;
     background-color: inherit;
     position: relative;
+    height:100%;
 }
 .sidebar-extend .main-wrapper{
     -webkit-transform:translateX(5.546667rem);
