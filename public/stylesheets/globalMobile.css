@@ -751,7 +751,7 @@ button.unCBtn{
 .radiobox input[type='radio']{
     width:0.266667rem;
     height:0.266667rem;
-    margin:0.133333rem 0.133333rem 0 0.2rem;
+    margin:0;
 }
 /*邮箱验证*/
 .verify {
