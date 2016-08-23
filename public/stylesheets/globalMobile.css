@@ -81,7 +81,14 @@ ul{
     height:100%;
     z-index: 1;
 }
-.sidebar-extend .main-wrapper{
+.main-wrapper,.sidebarContainer{
+    -webkit-transform:none;
+            transform:none;
+    -webkit-transition: -webkit-transform .15s linear;
+            transition: transform .15s linear;
+    will-change: transform;
+}
+.sidebar-extend .main-wrapper,.sidebar-extend .sidebarContainer{
     -webkit-transform:translateX(5.546667rem);
             transform:translateX(5.546667rem);
     /*-webkit-animation: open .35s ease-in-out;
@@ -167,8 +174,9 @@ ul{
     width:100%;
     position: fixed;
     top:0;
-    left:0;
+    left:-5.546667rem;
     overflow:hidden;
+    overflow-y: scroll;
 }
 .sidebar{
     width:5.546667rem;
