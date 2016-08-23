@@ -72,15 +72,6 @@
                     }
                 });
             };
-            //设置输入框处于输入和非输入状态下导航栏的位置
-            var setEditboxPosition = function(){
-                $("input,textarea").focus(function(event) {
-                    $(".navbar").css("position", "relative");
-                });
-                $("input,textarea").blur(function(event) {
-                    $(".navbar").css("position", "fixed");
-                });
-            };
             //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
@@ -101,20 +92,14 @@
                     }
                 });
             };
-            //登录等表单页面设置main模块最小高度为屏幕高度
-            var setMainHeight =  function(main){
-            	windowHeight = $(window).height();
-            	main.css('minHeight', windowHeight);
-            };
             //设置主栏主内容容器高度
-            (function(){
+            var setMainHeight =  function(){
                 windowHeight = $(window).height();
                 $('.all-wrapper').css('height', windowHeight);
-            })();
+            }
             return {
                 setCenterLoadingDiv: setCenterLoadingDiv,
                 setToggleBtn: setToggleBtn,
-                setEditboxPosition:setEditboxPosition,
                 getData:getData,
                 subData:subData,
                 setMainHeight:setMainHeight
@@ -123,9 +108,10 @@
     $(document).ready(function() {
         global.setCenterLoadingDiv();
         global.setToggleBtn();
-       // global.setEditboxPosition();
+        global.setMainHeight();
         $(window).resize(function(event) {
             global.setCenterLoadingDiv();
+            global.setMainHeight();
         });
     }); 
     </script>
