@@ -73,8 +73,8 @@ ul{
 .main-wrapper{
     -webkit-transform:none;
             transform:none;
-    -webkit-transition: -webkit-transform .15s linear;
-            transition: transform .15s linear;
+    /*-webkit-transition: -webkit-transform .15s linear;
+            transition: transform .15s linear;*/
     will-change: transform;
     background-color: inherit;
     position: relative;
