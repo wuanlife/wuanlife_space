@@ -15,30 +15,6 @@
     </head>
     <body>
     <div class="container all-wrapper">
-        <div class="sidebarContainer">
-            <div class="sidebar">
-                <h1>午安网</h1>
-                <ul class="navbar-option">
-                    <li><a href="/" class="navbar-icon navbar-option-item nav-h">首页</a></li>
-                    <% if (user) { %>
-                    <li><a href="/uGroup/<%=user.userID%>" class="navbar-icon navbar-option-item nav-mg">我的星球</a></li>
-                    <% } %>
-                    <li><a href="/allGroup" class="navbar-icon navbar-option-item nav-ag">全部星球</a></li>
-                    <% if (user) { %>
-                    <li><a href="/users" class="navbar-icon navbar-option-item nav-per">个人中心</a></li>
-                    <% } %>
-                </ul>
-                <ul class="navbar-account">
-                    <% if (user) { %>
-                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item"><%=user.nickname%></span></li>
-                    <li class="aLogged"><a href="/logout" class="navbar-icon navbar-account-item">退出</a></li>
-                    <% } else { %>
-                    <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>
-                    <li class="aNLog"><a href="/register" title="" class="navbar-icon navbar-account-item">注册</a></li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
         <div class="main-wrapper">
             <div class="navbar">
                 <h1>午安网</h1>
