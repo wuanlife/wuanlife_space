@@ -103,7 +103,7 @@
 								if (data.data.currentPage == 1) {
 									self.pre.addClass('unCBtn');
 								}
-								$(window).scrollTop(0);
+								$('.mainContainer').scrollTop(0);
 							} else {
 								sweetAlert('错误', '数据获取失败', 'error');
 							}
@@ -130,7 +130,7 @@
 								if (data.data.currentPage == data.data.pageCount) {
 									self.next.addClass('unCBtn');
 								}
-								$(window).scrollTop(0);
+								$('.mainContainer').scrollTop(0);
 							} else {
 								sweetAlert('错误', '数据获取失败', 'error');
 							}

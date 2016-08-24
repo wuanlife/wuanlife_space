@@ -146,7 +146,7 @@
 								}
 								var postComY = $(".post-comment").offset().top;
 								var scroollY = postComY - $(".navbar").height();
-								$(window).scrollTop(scroollY);
+								$('.mainContainer').scrollTop(scroollY);
 							} else {
 								self.loading.hide();
 								sweetAlert('错误', '数据获取失败', 'error');
@@ -178,7 +178,7 @@
 								}
 								var postComY = $(".post-comment").offset().top;
 								var scroollY = postComY - $(".navbar").height();
-								$(window).scrollTop(scroollY);
+								$('.mainContainer').scrollTop(scroollY);
 							} else {
 								self.loading.hide();
 								sweetAlert('错误', '数据获取失败', 'error');

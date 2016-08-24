@@ -128,7 +128,7 @@
 				if (self.currentpage == self.joinPageCount) {
 					self.main.append(self.myJoindMD);
 				}
-				$(window).scrollTop(0);
+				$('.mainContainer').scrollTop(0);
 			},
 			pageDown: function() {
 				var self = this;
@@ -147,7 +147,7 @@
 				if (self.currentpage == (self.joinPageCount + 1)) {
 					self.myJoindMD.remove();
 				}
-				$(window).scrollTop(0);
+				$('.mainContainer').scrollTop(0);
 			},
 			bindEvent: function() {
 				var self = this;
