@@ -117,30 +117,6 @@
 				var self = this;
 				self.pre.on("touchend", function(event) {
 					event.preventDefault();
-					// if (self.currentpage == 1) {
-					// 	// sweetAlert('错误', '当前页是第一页', 'error');
-					// 	return;
-					// } else {
-					// 	self.loading.show();
-					// 	self.getServerData({
-					// 		currentpage: self.currentpage - 1
-					// 	}, function(data) {
-					// 		if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-					// 			self.currentpage -= 1;
-					// 			var compiled = template("listtemplate", data.data);
-					// 			self.main.html(compiled);
-					// 			self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-					// 			self.loading.hide();
-					// 			self.next.removeClass('unCBtn');
-					// 			if (data.data.currentPage == 1) {
-					// 				self.pre.addClass('unCBtn');
-					// 			}
-					// 			$('.mainContainer').scrollTop(0);
-					// 		} else {
-					// 			sweetAlert('错误', '数据获取失败', 'error');
-					// 		}
-					// 	});
-					// }
 					var pageNow = self.getPageNow();
 					if (pageNow == 1) {
 						return;
@@ -153,30 +129,6 @@
 				});
 				self.next.on("touchend", function(event) {
 					event.preventDefault();
-					// if (self.currentpage == self.pageCount) {
-					// 	//sweetAlert('错误', '当前页是最后一页', 'error');
-					// 	return;
-					// } else {
-					// 	self.loading.show();
-					// 	self.getServerData({
-					// 		currentpage: self.currentpage + 1
-					// 	}, function(data) {
-					// 		if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-					// 			self.currentpage += 1;
-					// 			var compiled = template("listtemplate", data.data);
-					// 			self.main.html(compiled);
-					// 			self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-					// 			self.loading.hide();
-					// 			self.pre.removeClass('unCBtn');
-					// 			if (data.data.currentPage == data.data.pageCount) {
-					// 				self.next.addClass('unCBtn');
-					// 			}
-					// 			$('.mainContainer').scrollTop(0);
-					// 		} else {
-					// 			sweetAlert('错误', '数据获取失败', 'error');
-					// 		}
-					// 	});
-					// }
 					var pageNow = self.getPageNow();
 					if (pageNow == self.pageCount) {
 						return;
