@@ -7,7 +7,7 @@ var config = require('../config/config');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
-		pn = req.query.p || 1;
+		pn = req.query.page || 1;
 	request(config.server + '?service=Post.GetIndexPost&pn=' + pn, function(error, response, body) {
 		if (!error && response.statusCode == 200) {
 			console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 

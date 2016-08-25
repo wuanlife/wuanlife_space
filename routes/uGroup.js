@@ -7,8 +7,9 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 
 router.get('/:userid', function(req, res, next) {
-	var agent = ua(req.headers['user-agent']);
-	request(config.server + '?service=Post.GetMyGroupPost&id=' + req.param("userid"),
+	var agent = ua(req.headers['user-agent']),
+        pn = req.query.page || 1;
+	request(config.server + '?service=Post.GetMyGroupPost&id=' + req.param("userid") + '&pn=' + pn,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
