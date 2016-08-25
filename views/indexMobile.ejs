@@ -80,15 +80,9 @@
 			getServerData: function(param, cb) {
 				global.getData("/api/getindex", param, cb);
 			},
-			getPageNow:function(){
-				var reg = /p=(\d+)/,
-					regMatch = reg.exec(location.search),
-					pageNow = regMatch === null ? 1:regMatch[1];
-				return pageNow;
-			},
 			updateByPage:function(){
 				var self = this;
-				var pageNow = self.getPageNow();
+				var pageNow = global.getPageNow();
 				self.loading.show();
 				self.getServerData({
 					currentpage: pageNow
@@ -105,8 +99,8 @@
 						if (data.data.currentPage == data.data.pageCount) {
 							self.next.addClass('unCBtn')
 						}
-						$('.mainContainer').scrollTop(0);
 						self.loading.hide();
+						$('.mainContainer').scrollTop(0);
 					} else {
 						self.loading.hide();
 						sweetAlert('错误', '数据获取失败', 'error');
@@ -115,30 +109,7 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				self.pre.on("touchend", function(event) {
-					event.preventDefault();
-					var pageNow = self.getPageNow();
-					if (pageNow == 1) {
-						return;
-					} else{
-						pageNow--;
-						var newURL = location.pathname + '?p=' + pageNow;
-						history.pushState(null,'',newURL);
-						self.updateByPage();
-					}
-				});
-				self.next.on("touchend", function(event) {
-					event.preventDefault();
-					var pageNow = self.getPageNow();
-					if (pageNow == self.pageCount) {
-						return;
-					} else{
-						pageNow++;
-						var newURL = location.pathname + '?p=' + pageNow;
-						history.pushState(null,'',newURL);
-						self.updateByPage();
-					}
-				});
+				global.pageTurning.apply(self,[self.pre,self.next,self.pageCount,self.updateByPage]);
 				$(window).on('popstate', function(event) {
 					event.preventDefault();
 					/* Act on the event */

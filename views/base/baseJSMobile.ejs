@@ -103,11 +103,50 @@
                 var windowHeight = $(window).height();
                 $('.all-wrapper').css('height', windowHeight);
             }
+            //获取翻页页数
+            var getPageNow = function(){
+                var reg = /page=(\d+)/,
+                    regMatch = reg.exec(location.search),
+                    pageNow = regMatch === null ? 1:regMatch[1];
+                return pageNow;
+            };
+            //翻页事件处理
+            var pageTurning = function(pre,next,pageCount,updata){
+                var self = this;
+                pre.on('touchend', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    var pageNow = global.getPageNow();
+                    if (pageNow == 1) {
+                        return;
+                    } else{
+                        pageNow--;
+                        var newURL = location.pathname + '?page=' + pageNow;
+                        history.pushState(null,'',newURL);
+                        updata.apply(self,[]);
+                    }
+                });
+                next.on('touchend', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    var pageNow = global.getPageNow();
+                    if (pageNow == pageCount) {
+                        return;
+                    } else{
+                        pageNow++;
+                        var newURL = location.pathname + '?page=' + pageNow;
+                        history.pushState(null,'',newURL);
+                        updata.apply(self,[]);
+                    }
+                });
+            };
             return {
                 setCenterLoadingDiv: setCenterLoadingDiv,
                 getData:getData,
                 subData:subData,
-                setMainHeight:setMainHeight
+                setMainHeight:setMainHeight,
+                getPageNow:getPageNow,
+                pageTurning:pageTurning
             }
         }());
     $(document).ready(function() {

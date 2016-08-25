@@ -60,11 +60,50 @@
                     $('.navbar-account').toggle();
                 });
             };
+            //获取翻页页数
+            var getPageNow = function(){
+                var reg = /page=(\d+)/,
+                    regMatch = reg.exec(location.search),
+                    pageNow = regMatch === null ? 1:regMatch[1];
+                return pageNow;
+            };
+            //翻页事件处理
+            var pageTurning = function(pre,next,pageCount,updata){
+                var self = this;
+                pre.on('click', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    var pageNow = global.getPageNow();
+                    if (pageNow == 1) {
+                        return;
+                    } else{
+                        pageNow--;
+                        var newURL = location.pathname + '?page=' + pageNow;
+                        history.pushState(null,'',newURL);
+                        updata.apply(self,[]);
+                    }
+                });
+                next.on('click', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    var pageNow = global.getPageNow();
+                    if (pageNow == pageCount) {
+                        return;
+                    } else{
+                        pageNow++;
+                        var newURL = location.pathname + '?page=' + pageNow;
+                        history.pushState(null,'',newURL);
+                        updata.apply(self,[]);
+                    }
+                });
+            };
 			return {
 				setCenterLoadingDiv: setCenterLoadingDiv,
                 getData:getData,
                 subData:subData,
-                setToggleBtn:setToggleBtn
+                setToggleBtn:setToggleBtn,
+                getPageNow:getPageNow,
+                pageTurning:pageTurning
 			}
 		}());
 		$(document).ready(function() {
