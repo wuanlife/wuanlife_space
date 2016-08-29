@@ -113,6 +113,8 @@
             //翻页事件处理
             var pageTurning = function(pre,next,pageCount,updata){
                 var self = this;
+                var everPushed = false;
+                var initialUrl = location.href;
                 pre.on('touchend', function(event) {
                     event.preventDefault();
                     /* Act on the event */
@@ -123,6 +125,7 @@
                         pageNow--;
                         var newURL = location.pathname + '?page=' + pageNow;
                         history.pushState(null,'',newURL);
+                        everPushed = true;
                         updata.apply(self,[]);
                     }
                 });
@@ -136,8 +139,18 @@
                         pageNow++;
                         var newURL = location.pathname + '?page=' + pageNow;
                         history.pushState(null,'',newURL);
+                        everPushed = true;
                         updata.apply(self,[]);
                     }
+                });
+                //popstate
+                $(window).on('popstate',  function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    var onloadPop = !everPushed && location.href == initialUrl;
+                    everPushed = true;
+                    if (onloadPop) return;
+                    updata.apply(self,[]);
                 });
             };
             return {

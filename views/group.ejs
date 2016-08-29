@@ -175,11 +175,6 @@
 					<%}%>
 				});
 				global.pageTurning.apply(self,[self.pre,self.next,self.pageCount,self.updateByPage]);
-				$(window).on('popstate', function(event) {
-					event.preventDefault();
-					/* Act on the event */
-					self.updateByPage();
-				});
 			},
 			init: function() {
 				<%if(user){%>
