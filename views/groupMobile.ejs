@@ -123,6 +123,9 @@
 					currentpage: pageNow,
 					groupid: parseInt("<%=result.groupID%>")
 				}, function(data) {
+					if (pageNow != global.getPageNow()) {
+						return;
+					}
 					if (data.ret == 200 && data.data && data.data.posts.length > 0) {
 						var compiled = template("listtemplate", data.data);
 						self.main.html(compiled);

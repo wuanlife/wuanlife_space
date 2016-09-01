@@ -165,6 +165,9 @@
 					currentpage: pageNow,
 					userId: parseInt("<%=userid%>")
 				}, function(data) {
+					if (pageNow != global.getPageNow()) {
+						return;
+					}
 					if (data.ret == 200 && data.data) {
 						var compiled = template("listtemplate", data.data);
 						self.main.html(compiled);
