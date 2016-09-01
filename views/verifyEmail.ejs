@@ -61,7 +61,6 @@
 					} else {
 						self.timer = window.setInterval(self.setRemainTime.bind(self), 1000);
 						global.subData('/api/sendAuthCode', {}, function(data) {
-							console && console.log(data);
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 0) {
 									self.endTimer();
@@ -81,7 +80,6 @@
 						global.subData('/verifyEmail', {
 							code: self.code.val()
 						}, function(data) {
-							console && console.log(data);
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {

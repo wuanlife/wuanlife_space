@@ -56,7 +56,6 @@
 							g_introduction: self.cpDes.val().trim(),
 							g_image: self.url
 						}, function(data) {
-							console && console.log(data);
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) { //创建成功
 									window.location.href = '/group/' + data.data.info.group_base_id;
@@ -136,8 +135,6 @@
 					var domain = up.getOption('domain');
 					var res = $.parseJSON(info);
 					var sourceLink = domain + res.key; //获取上传成功后的文件的Url
-					// printLog(sourceLink);
-					console.log(sourceLink);
 					var url = sourceLink + '?imageView2/1/w/100/h/100';
 					var src = 'url(' + url + ')';
 					// 设置图片为背景

@@ -157,7 +157,6 @@
 						self.getJoinPData({
 							groupid: parseInt("<%=result.groupID%>")
 						}, function(data) {
-							console.log(data);
 							if (data.ret == 200 && data.data && data.data.code == 1) {
 								sweetAlert({
 									title: '提示',
