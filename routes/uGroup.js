@@ -14,7 +14,7 @@ router.get('/:userid', function(req, res, next) {
 	request(config.server + '?service=Post.GetMyGroupPost&id=' + req.param("userid") + '&pn=' + pn,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
-				console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+				//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 				var data = JSON.parse(body);
 				if (data.ret == 200 && data.msg == '') {
 					var page = agent.Mobile ? 'uGroupMobile' : 'uGroup';
@@ -48,8 +48,8 @@ router.get('/:userid/moreGroups', function(req, res, next) {
         request.getAsync(config.server + "?service=Group.GetJoined&user_id=" + req.param("userid") + "&page=" + pn)]).spread(function(create,joined){
             var createResult = JSON.parse(create.body);
             var joinedResult = JSON.parse(joined.body);
-            console.log(createResult);
-            console.log(joinedResult);
+            // console.log(createResult);
+            // console.log(joinedResult);
             if (createResult.ret == 200 && joinedResult.ret == 200) {
                 var page = agent.Mobile ? 'moreGroupsMobile' : 'moreGroups';
                 return res.render(page, {

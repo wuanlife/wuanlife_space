@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 			function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
-					console.log(result);
+					//console.log(result);
 					if (result.ret == 200 && result.data) {
 						if (result.data.mailChecked == 1) {
 							res.render(tip, {
@@ -60,7 +60,7 @@ router.post('/', function(req, res, next) {
 			console.error('Check email failed:', err);
 			next(err);
 		}
-		console.log('Check Email successful!  Server responded with:', body);
+		//console.log('Check Email successful!  Server responded with:', body);
 		res.header('Content-type', 'application/json');
 	    res.header('Charset', 'utf8');
 	    res.send(JSON.parse(body));

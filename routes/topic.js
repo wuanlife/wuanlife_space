@@ -13,7 +13,7 @@ router.get('/:id', function(req, res, next) {
 		function(err, response, body) {
 			if (!err && response.statusCode == 200) {
 				var result = JSON.parse(body);
-				console.log(result);
+				//console.log(result);
 				if (result.ret == 200 && result.msg == "") {
 					var page = agent.Mobile ? 'topicMobile' : 'topic';
 					res.render(page, {
@@ -54,7 +54,7 @@ router.get('/:id/edit', function(req, res, next) {
 			function(err, response, body) {
 				if (!err && response.statusCode == 200) {
 					var result = JSON.parse(body);
-					console.log(result);
+					//console.log(result);
 					if (result.ret == 200 && result.msg == "" && result.data.editRight == 1) {
 						res.render('postEdit', {
 							'path': '../../',
@@ -103,7 +103,7 @@ router.post('/:id/edit', function(req, res, next) {
 	}, function optionalCallback(err, httpResponse, body) {
 		if (!err && httpResponse.statusCode == 200) {
 			var result = JSON.parse(body);
-			console.log(result);
+			//console.log(result);
 			if (result.ret == 200 && result.msg == "" ) {
 				res.redirect('/topic/' + req.params.id);
 			} else {

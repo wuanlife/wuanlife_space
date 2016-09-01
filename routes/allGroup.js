@@ -10,9 +10,8 @@ router.get('/', function(req, res, next) {
 		pn = req.query.page || 1;
 	request(config.server + "?service=Group.Lists&page=" + pn, function(error, response, body) {
 		if (!error) {
-			console.log('Planet Success:OK');
 			var result = JSON.parse(body);
-			console.log(result);
+			//console.log(result);
 			if (result.ret == 200 && result.msg == "") {
 				var page = agent.Mobile ? 'allGroupMobile' : 'allGroup';
 				res.render(page, {

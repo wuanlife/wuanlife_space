@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
     }, function optionalCallback(err, httpResponse, body) {
         if (!err && httpResponse.statusCode == 200) {
             var result = JSON.parse(body);
-            console.log(result);
+            //console.log(result);
             if (result.ret == 200) {
                 if (result.data.code == 1) {
                     req.flash('verify',true);
@@ -71,7 +71,7 @@ router.post('/set', function(req, res, next) {
                 err: err
             });
         }
-        console.log('Reset Password successful!  Server responded with:', body);
+       // console.log('Reset Password successful!  Server responded with:', body);
         res.header('Content-type', 'application/json');
         res.header('Charset', 'utf8');
         res.send(JSON.parse(body));

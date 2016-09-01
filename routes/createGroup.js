@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
 			//			});
 			next(err);
 		}
-		console.log('CreatePlanet successful!  Server responded with:', body);
+		//console.log('CreatePlanet successful!  Server responded with:', body);
 		
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');

@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 		pn = req.query.page || 1;
 	request(config.server + '?service=Post.GetIndexPost&pn=' + pn, function(error, response, body) {
 		if (!error && response.statusCode == 200) {
-			console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+			//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 			var data = JSON.parse(body);
 			if (data.ret == 200) {
 				var page = agent.Mobile ? 'indexMobile' : 'index';

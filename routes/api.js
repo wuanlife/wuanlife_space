@@ -25,7 +25,7 @@ router.get('/:method', function(req, res, next) {
 			var id = req.param('userId'); //路由参数，获取相应用户星球展示，非session.user.userid
 			request(config.server + '?service=Post.GetMyGroupPost&id=' + id + '&pn=' + pn, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -36,7 +36,7 @@ router.get('/:method', function(req, res, next) {
 			var pn = req.param('currentpage');
 			request(config.server + '?service=Group.Lists&page=' + pn, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -49,7 +49,7 @@ router.get('/:method', function(req, res, next) {
 			request(config.server + '?service=Post.GetPostReply&post_id=' + post_id + '&pn=' + pn,
 				function(error, response, body) {
 					if (!error && response.statusCode == 200) {
-						console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 						res.header('Content-type', 'application/json');
 						res.header('Charset', 'utf8');
 						res.send(body);
@@ -62,7 +62,7 @@ router.get('/:method', function(req, res, next) {
 			request(config.server + '?service=Post.GetPostBase&post_id=' + post_id + '&id=' + user_id,
 				function(error, response, body) {
 					if (!error && response.statusCode == 200) {
-						console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 						res.header('Content-type', 'application/json');
 						res.header('Charset', 'utf8');
 						res.send(body);
@@ -74,7 +74,7 @@ router.get('/:method', function(req, res, next) {
 			var groupid = req.param('groupid');
 			request(config.server + '?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -87,7 +87,7 @@ router.get('/:method', function(req, res, next) {
 			request(config.server + '?service=Post.GetPostBase&post_id=' + postid+ '&id=' + user_id,
 				function(error, response, body) {
 					if (!error && response.statusCode == 200) {
-						console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 						res.header('Content-type', 'application/json');
 						res.header('Charset', 'utf8');
 						res.send(body);
@@ -102,7 +102,7 @@ router.get('/:method', function(req, res, next) {
 					console.log(error);
 				}
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -114,7 +114,7 @@ router.get('/:method', function(req, res, next) {
 			var userid = userID;
 			request(config.server + '?service=Group.GStatus&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -127,7 +127,7 @@ router.get('/:method', function(req, res, next) {
 			request(config.server + '?service=Group.GetJoined&user_id=' + user_id + '&page=' + pn, 
 				function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -140,60 +140,17 @@ router.get('/:method', function(req, res, next) {
 			request(config.server + '?service=Group.GetCreate&user_id=' + user_id + '&page=' + pn, 
 				function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body));// Show the HTML for the Google homepage. 
-					//console.log("lalala"); 
+					//console.log(JSON.parse(body));// Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
 				}
 			})
 			break;
-		case 'isLogin':
-			if (req.session.user != null) {
-				console.log('Session Login successful!  Server responded with:', req.session.user);
-				res.header('Content-type', 'application/json');
-				res.header('Charset', 'utf8');
-				res.send(req.session.user);
-			} else {
-				request(config.server + 'demo/?service=Group.UStatus', function(error, response, body) {
-					if (!error && response.statusCode == 200) {
-						console.log(JSON.parse(body)) // Show the HTML for the Google homepage. 
-						var result = JSON.parse(body);
-						if (result.ret == 200 && result.data.code == '0') {
-							router.post('/', function(req, res, next) {
-								request.post({
-									url: config.server + 'demo/?service=User.Login',
-									formData: {
-										Email: req.param('email'),
-										password: req.param('password')
-									}
-								}, function optionalCallback(err, httpResponse, body) {
-									if (err) {
-										console.error('Login failed:', err);
-										res.header('Content-type', 'application/json');
-										res.header('Charset', 'utf8');
-										res.send({
-											err: err
-										});
-									}
-									console.log('Login successful!  Server responded with:', body);
-									res.header('Content-type', 'application/json');
-									res.header('Charset', 'utf8');
-									res.send(JSON.parse(body));
-								});
-
-							});
-						}
-					}
-
-				});
-			}
-			break;
 		default:
 			res.send('respond with a resource');
 			break;
 	}
-
 });
 router.post('/:method', function(req, res, next) {
     var data = {};
@@ -217,7 +174,7 @@ router.post('/:method', function(req, res, next) {
                         err: err
                     });
                 }
-                console.log('Sticky success:', JSON.parse(body));
+                //console.log('Sticky success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));
@@ -240,7 +197,7 @@ router.post('/:method', function(req, res, next) {
                         err: err
                     });
                 }
-                console.log('Unsticky success:', JSON.parse(body));
+                //console.log('Unsticky success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));
@@ -263,7 +220,7 @@ router.post('/:method', function(req, res, next) {
                         err: err
                     });
                 }
-                console.log('Delete success:', JSON.parse(body));
+                //console.log('Delete success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));
@@ -287,7 +244,7 @@ router.post('/:method', function(req, res, next) {
                         err: err
                     });
                 }
-                console.log('Reply success:', JSON.parse(body));
+                //console.log('Reply success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));
@@ -308,7 +265,7 @@ router.post('/:method', function(req, res, next) {
                         err: err
                     });
                 }
-                console.log('Send email success:', JSON.parse(body));
+                //console.log('Send email success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 res.send(JSON.parse(body));

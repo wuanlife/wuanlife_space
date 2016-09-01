@@ -50,7 +50,7 @@ router.get('/:groupid/post', function(req, res, next) {
 			function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
-					console.log(result);
+					//console.log(result);
 					if (result.ret == 200 && result.msg == "") {
 						if (result.data.code == 1) {
 							res.render(page, {
@@ -109,7 +109,7 @@ router.post('/:groupid/post', function(req, res, next) {
 	}, function optionalCallback(err, httpResponse, body) {
 		if (!err && httpResponse.statusCode == 200) {
 			var result = JSON.parse(body);
-			console.log(result);
+			//console.log(result);
 			if (result.ret == 200 && result.msg == "" && result.data.code == 1) {
 				res.redirect('/topic/' + result.data.info.post_base_id);
 			} else {
@@ -138,7 +138,7 @@ router.get('/:groupid/set', function(req, res, next) {
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);
-				console.log(result);
+				//console.log(result);
 				if (result.ret == 200) {
 					if (result.data.creator == 1) {
 						res.render(page, {
@@ -182,7 +182,7 @@ router.post('/:groupid/set', function(req, res, next) {
 	}, function optionalCallback(err, httpResponse, body) {
 		if (!err && httpResponse.statusCode == 200) {
 			var result = JSON.parse(body);
-			console.log(result);
+			//console.log(result);
 			if (result.ret == 200  && result.data.data == 1) {
 				res.redirect('/group/' + req.params.groupid);
 			} else {
