@@ -30,20 +30,17 @@ router.post('/', function(req, res, next) {
 			g_introduction:xss(req.param('g_introduction'))
 		}
 	}, function optionalCallback(err, httpResponse, body) {
-		if (err) {
-			console.error('CreatePlant failed:', err);
-			//			res.header('Content-type', 'application/json');
-			//			res.header('Charset', 'utf8');
-			//			res.send({
-			//				err: err
-			//			});
-			next(err);
-		}
-		//console.log('CreatePlanet successful!  Server responded with:', body);
-		
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
-		res.send(JSON.parse(body));
+		if (!err && httpResponse.statusCode == 200) {
+			//console.log('CreatePlanet successful!  Server responded with:', body);
+			 return res.send(JSON.parse(body));
+		}
+		console.error('CreatePlant failed:', err.toString());
+		res.send({
+			ret: 500,
+			msg:'服务器异常'
+		});
 	});
 })
 module.exports = router;

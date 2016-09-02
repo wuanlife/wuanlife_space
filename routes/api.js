@@ -166,18 +166,16 @@ router.post('/:method', function(req, res, next) {
                     post_id: req.param('post_id')
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error('Sticky failed:', err);
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send({
-                        err: err
-                    });
-                }
-                //console.log('Sticky success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                res.send(JSON.parse(body));
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('Sticky failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
             });
             break;
         //帖子取消置顶
@@ -189,18 +187,16 @@ router.post('/:method', function(req, res, next) {
                     post_id: req.param('post_id')
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error('Unsticky failed:', err);
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send({
-                        err: err
-                    });
-                }
-                //console.log('Unsticky success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                res.send(JSON.parse(body));
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('Unsticky failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
             });
             break;
         //删除帖子
@@ -212,18 +208,16 @@ router.post('/:method', function(req, res, next) {
                     post_id: req.param('post_id')
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error('Delete failed:', err);
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send({
-                        err: err
-                    });
-                }
-                //console.log('Delete success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                res.send(JSON.parse(body));
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('Delete failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
             });
             break;
         //帖子回复
@@ -236,18 +230,16 @@ router.post('/:method', function(req, res, next) {
                     text: xss(req.param('text'))
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error('Reply failed:', err);
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send({
-                        err: err
-                    });
-                }
-                //console.log('Reply success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                res.send(JSON.parse(body));
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('Reply failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
             });
             break;
         case 'sendAuthCode':
@@ -257,18 +249,16 @@ router.post('/:method', function(req, res, next) {
                     Email: email
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                if (err) {
-                    console.error('Send email failed:', err);
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send({
-                        err: err
-                    });
-                }
-                //console.log('Send email success:', JSON.parse(body));
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                res.send(JSON.parse(body));
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('Send email failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
             });
             break;
         default:
