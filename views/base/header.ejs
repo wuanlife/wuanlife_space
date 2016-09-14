@@ -9,7 +9,11 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/global.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
         <link rel="stylesheet" type="text/css" href="/editor/wangEditor.min.css">
+        <% if(title == '首页'){%>
+        <title>午安网 - 过你想过的生活</title>
+        <%}else{%>
         <title><%=title%> - 午安网 - 过你想过的生活</title>
+        <%}%>
     </head>
     <body>
     <div class="container all-wrapper">
