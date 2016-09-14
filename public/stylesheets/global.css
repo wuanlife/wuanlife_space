@@ -720,6 +720,11 @@ textarea.form-control{
 .post-content img{
     max-width: 100%;
 }
+.post-content p{
+    margin:10px 0;
+    line-height: 1.8;
+}
+
 /*帖子操作*/
 .post-opt{
     margin-right: -5px;
