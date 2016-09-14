@@ -26,6 +26,7 @@ var isLogin = require('./routes/isLogin');
 var resetPassword = require('./routes/resetPassword');
 var verifyEmail = require('./routes/verifyEmail');
 var test = require('./routes/test');
+var news = require('./routes/news').router;
 var uptoken = require('./routes/uptoken');
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -101,6 +102,7 @@ app.use('/logout',logout);
 app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/verifyEmail',verifyEmail);
+app.use('/news',news);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 

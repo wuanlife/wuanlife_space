@@ -1,0 +1,35 @@
+<%- include base/header.ejs %>
+<div class="main">
+    <div class="location clearfix">
+        <h1>发送消息</h1>
+    </div>
+    <div class="login">
+        <form class="login-form line-form"  action="/news" method="post">
+            <div class="login-group line-fgroup">
+                <label for="userid" class="label-e"></label>
+                <input type="text" name="userid"  placeholder="用户id" id="userid">
+            </div>
+            <button id='login' type="submit">登录</button>
+        </form>
+    </div>
+</div>
+<%- include base/baseJS.ejs %>
+<script>
+    var news = {
+        subBtn:$('#login'),
+        value:$('#userid'),
+        bindEvent: function() {
+                var self = this;
+                self.subBtn.on('click', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    // socket.emit('setNews',{data:self.value.val()});
+                });
+            },
+        init: function() {
+                this.bindEvent();
+            }
+    };
+    //news.init();
+</script>
+<%- include base/footer.ejs %>
