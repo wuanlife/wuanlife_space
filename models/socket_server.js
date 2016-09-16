@@ -1,17 +1,36 @@
 var io = require('socket.io')();
+var sessionMiddleware = require('../app').sessionMiddleware;
 var router = require('../routes/news').post;
 
+io.use(function(socket,next){
+    sessionMiddleware(socket.request,socket.request.res,next);
+});
 io.on('connection',function(socket){
-    console.log('one connected');
+    //console.log('one connected');
+    if (socket.request.session.user) {
+        var roomid = 'wuan' + socket.request.session.user.userID;
+        socket.join(roomid);
+        //console.log('user joined room:'+roomid);
+    }
     socket.on('disconnect',function(){
-        console.log('one leave');
+        if (socket.request.session.user) {
+            var roomid = 'wuan' + socket.request.session.user.userID;
+            socket.leave(roomid);
+            //console.log('user leave room:'+roomid);
+        }
+        //console.log('one leave');
     });
 });
 router(function(req,res){
     var userid = req.body.userid;
-    console.log(userid);
-    var clients = io.sockets.clients();
-    console.log(clients);
+    var roomid = 'wuan' + userid;
+    if (io.sockets.adapter.rooms[roomid]) {
+        //console.log(io.sockets.adapter.rooms[roomid].length);
+        io.sockets.in(roomid).emit('news');
+        res.send({ret:200,code:1});
+    } else{
+        res.send({ret:200,code:0});
+    }
 });
 exports.listen = function(server){
     return io.listen(server);

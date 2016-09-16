@@ -63,14 +63,25 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: config.db.cookieSecret,
-  key: config.db.db,//cookie name
-  cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
-  store: new MongoStore({
-    url: 'mongodb://localhost/wuanDB'
-  })
-}));
+var sessionMiddleware = session({
+    secret: config.db.cookieSecret,
+    key: config.db.db, //cookie name
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 30
+    }, //30 days
+    store: new MongoStore({
+        url: 'mongodb://localhost/wuanDB'
+    })
+});
+// app.use(session({
+//   secret: config.db.cookieSecret,
+//   key: config.db.db,//cookie name
+//   cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
+//   store: new MongoStore({
+//     url: 'mongodb://localhost/wuanDB'
+//   })
+// }));
+app.use(sessionMiddleware);
 
 
 app.use('/api/', api);
@@ -138,3 +149,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+module.exports.sessionMiddleware = sessionMiddleware;
