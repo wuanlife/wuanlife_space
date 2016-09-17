@@ -13,7 +13,7 @@ router.get('/:id', function(req, res, next) {
 		function(err, response, body) {
 			if (!err && response.statusCode == 200) {
 				var result = JSON.parse(body);
-				//console.log(result);
+				console.log(result);
 				if (result.ret == 200 && result.msg == "") {
 					var page = agent.Mobile ? 'topicMobile' : 'topic';
 					res.render(page, {
