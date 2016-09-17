@@ -13,7 +13,7 @@ router.get('/:method', function(req, res, next) {
 			var pn = req.param('currentpage');
 			request(config.server + '?service=Post.GetIndexPost&pn=' + pn, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
-					console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
 					res.send(body);
@@ -255,6 +255,49 @@ router.post('/:method', function(req, res, next) {
                     return res.send(JSON.parse(body));
                 }
                 console.error('Send email failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+            break;
+        //锁定帖子
+        case 'lockPost':
+            request.post({
+                url: config.server + '?service=Post.LockPost',
+                formData: {
+                    post_id: req.body.post_id,
+                    user_id: userID
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    console.log(JSON.parse(body));
+                    return res.send(JSON.parse(body));
+                }
+                console.error('lockPost failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+            break;
+        //解锁帖子
+        case 'unlockPost':
+            request.post({
+                url: config.server + '?service=Post.UnlockPost',
+                formData: {
+                    user_id: userID,
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('unlockPost failed:', err);
                 res.send({
                     ret: 500,
                     msg:'服务器异常'
