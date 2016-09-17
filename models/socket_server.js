@@ -24,12 +24,14 @@ io.on('connection',function(socket){
 router(function(req,res){
     var userid = req.body.userid;
     var roomid = 'wuan' + userid;
+    res.header('Content-type', 'application/json');
+    res.header('Charset', 'utf8');
     if (io.sockets.adapter.rooms[roomid]) {
         //console.log(io.sockets.adapter.rooms[roomid].length);
         io.sockets.in(roomid).emit('news');
-        res.send({ret:200,code:1});
+        res.send(JSON.stringify({ret:200,code:1}));
     } else{
-        res.send({ret:200,code:0});
+        res.send(JSON.stringify({ret:200,code:0}));
     }
 });
 exports.listen = function(server){
