@@ -27,7 +27,8 @@ router.post('/', function(req, res, next) {
 			name: req.param('name'),
 			user_id: req.session.user.userID,
 			g_image: xss(req.param('g_image')),
-			g_introduction:xss(req.param('g_introduction'))
+			g_introduction:xss(req.param('g_introduction')),
+			private:req.body.private || 0
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
