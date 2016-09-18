@@ -57,7 +57,7 @@
 		<% if (!result.lock) { %>
 		<div class="my-comment">
 			<h2>我的回复</h2>
-			<form class="post-detail-form clearfix" action="/postReply" method="post">
+			<form class="post-detail-form clearfix" method="post">
 				<textarea name="" class="form-control" placeholder="内容"></textarea>
 				<button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
 			</form>
@@ -93,7 +93,7 @@
 			post_up: $("#stickBtn"),
 			post_edit: $("#editBtn"),
 			post_delete: $("#delBtn"),
-			post_lock:$('#lockBtn'),
+			post_lock: $('#lockBtn'),
 			myReplyForm: $(".post-detail-form"),
 			myReplyContent: $(".post-detail-form").children('textarea'),
 			myReplyBtn: $('#myReplyBtn'),
@@ -131,48 +131,48 @@
 				});
 			},
 			<% if (result.lockRight) { %>
-			lockPost:function(){
-				var self =  this;
-				switch(self.isLock){
+			lockPost: function() {
+				var self = this;
+				switch (self.isLock) {
 					//未锁定
 					case 0:
-						global.subData('/api/lockPost',{
+						global.subData('/api/lockPost', {
 							post_id: parseInt("<%=result.postID%>")
-						},function(data){
+						}, function(data) {
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
 									self.isLock = 1;
 									self.post_lock.text('取消锁帖');
 									$('.my-comment').remove();
 									self.myReplyForm = null;
-								} else{
+								} else {
 									sweetAlert('提示', data.data.re, 'warning');
 								}
-							} else{
+							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});
 						break;
-					//已锁定
+						//已锁定
 					case 1:
-						global.subData('/api/unlockPost',{
+						global.subData('/api/unlockPost', {
 							post_id: parseInt("<%=result.postID%>")
-						},function(data){
+						}, function(data) {
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
 									self.isLock = 0;
 									self.post_lock.text('锁帖');
-									$('.post-detail').append('<div class="my-comment"><h2>我的回复</h2><form class="post-detail-form clearfix" action="/postReply" method="post"><textarea name="" class="form-control" placeholder="内容"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form></div>');
+									$('.post-detail').append('<div class="my-comment"><h2>我的回复</h2><form class="post-detail-form clearfix" method="post"><textarea name="" class="form-control" placeholder="内容"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form></div>');
 									self.myReplyForm = $(".post-detail-form");
 									self.myReplyContent = $(".post-detail-form").children('textarea');
 									self.myReplyForm.submit(function(event) {
 										event.preventDefault();
 										self.subReply.apply(self);
 									});
-								} else{
+								} else {
 									sweetAlert('提示', data.data.re, 'warning');
 								}
-							} else{
+							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});
@@ -185,70 +185,20 @@
 			},
 			<% } %>
 			<% if (result.stickyRight) { %>
-			upPost:function(){
-					var self = this;
-					console.log(self.isSticky);
-					switch (self.isSticky) {
-						// 还未置顶，帖子置顶操作
-						case 0:
-							global.subData("/api/stickyPost", {
-								post_id: parseInt("<%=result.postID%>")
-							}, function(data) {
-								//console && console.log(data);
-								if (data.ret == 200 && data.data) {
-									if (data.data.code == 1) { //操作成功
-										self.isSticky = 1;
-										self.post_up.text("取消置顶");
-									} else {
-										sweetAlert('提示', data.data.re, 'warning');
-									}
-								} else {
-									sweetAlert('错误', data.msg, 'error');
-								}
-							});
-							break;
-							// 已经置顶，取消置顶
-						case 1:
-							global.subData("/api/unstickyPost", {
-								post_id: parseInt("<%=result.postID%>")
-							}, function(data) {
-								//console && console.log(data);
-								if (data.ret == 200 && data.data) {
-									if (data.data.code == 1) { //操作成功
-										self.isSticky = 0;
-										self.post_up.text("置顶");
-									} else {
-										sweetAlert('提示', data.data.re, 'warning');
-									}
-								} else {
-									sweetAlert('错误', data.msg, 'error');
-								}
-							});
-							break;
-						default:
-							console.log(self.isSticky);
-							sweetAlert('提示', "无操作权限", 'warning');
-							break;
-					}
-			},
-			<% } %>
-			<% if (result.deleteRight) { %>
-			deletePost:function(){
-					sweetAlert({
-						title: '提示',
-						text: '是否删除帖子',
-						type: 'warning',
-						showCancelButton: true,
-						confirmButtonText: '删除',
-						cancelButtonText: '取消'
-					}, function() {
-						global.subData("/api/deletePost", {
+			upPost: function() {
+				var self = this;
+				console.log(self.isSticky);
+				switch (self.isSticky) {
+					// 还未置顶，帖子置顶操作
+					case 0:
+						global.subData("/api/stickyPost", {
 							post_id: parseInt("<%=result.postID%>")
 						}, function(data) {
-							console && console.log(data);
+							//console && console.log(data);
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) { //操作成功
-									window.location.href = '/group/' + '<%=result.groupID%>';
+									self.isSticky = 1;
+									self.post_up.text("取消置顶");
 								} else {
 									sweetAlert('提示', data.data.re, 'warning');
 								}
@@ -256,28 +206,78 @@
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});
-					});
-			},
-			<% } %>
-			subReply:function(){
-					var self = this;
-					<% if (user) { %>
-					if (self.verificate()) {
-						global.subData("/api/postReply", {
-							post_id: parseInt("<%=result.postID%>"),
-							text: self.myReplyContent.val()
+						break;
+						// 已经置顶，取消置顶
+					case 1:
+						global.subData("/api/unstickyPost", {
+							post_id: parseInt("<%=result.postID%>")
 						}, function(data) {
 							//console && console.log(data);
 							if (data.ret == 200 && data.data) {
-								window.location.href = '/topic/' + "<%=result.postID%>";
+								if (data.data.code == 1) { //操作成功
+									self.isSticky = 0;
+									self.post_up.text("置顶");
+								} else {
+									sweetAlert('提示', data.data.re, 'warning');
+								}
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});
-					}
-					<%} else {%>
-					window.location.href = '/login';
-					<%}%>
+						break;
+					default:
+						console.log(self.isSticky);
+						sweetAlert('提示', "无操作权限", 'warning');
+						break;
+				}
+			},
+			<% } %>
+			<% if (result.deleteRight) { %>
+			deletePost: function() {
+				sweetAlert({
+					title: '提示',
+					text: '是否删除帖子',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '删除',
+					cancelButtonText: '取消'
+				}, function() {
+					global.subData("/api/deletePost", {
+						post_id: parseInt("<%=result.postID%>")
+					}, function(data) {
+						console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) { //操作成功
+								window.location.href = '/group/' + '<%=result.groupID%>';
+							} else {
+								sweetAlert('提示', data.data.re, 'warning');
+							}
+						} else {
+							sweetAlert('错误', data.msg, 'error');
+						}
+					});
+				});
+			},
+			<% } %>
+			subReply: function() {
+				var self = this;
+				<% if (user) { %>
+				if (self.verificate()) {
+					global.subData("/api/postReply", {
+						post_id: parseInt("<%=result.postID%>"),
+						text: self.myReplyContent.val()
+					}, function(data) {
+						//console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							window.location.href = '/topic/' + "<%=result.postID%>";
+						} else {
+							sweetAlert('错误', data.msg, 'error');
+						}
+					});
+				}
+				<%} else {%>
+				window.location.href = '/login';
+				<%}%>
 			},
 			bindEvent: function() {
 				var self = this;
@@ -349,10 +349,10 @@
 				self.post_up.on("click", self.upPost.bind(self));
 				<% } %>
 				<% if (result.deleteRight) { %>
-				self.post_delete.on("click",self.deletePost);
+				self.post_delete.on("click", self.deletePost);
 				<% } %>
 				<% if (result.lockRight) { %>
-				self.post_lock.on('click',self.lockPost.bind(self));
+				self.post_lock.on('click', self.lockPost.bind(self));
 				<% } %>
 				self.myReplyForm.submit(function(event) {
 					event.preventDefault();
