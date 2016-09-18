@@ -451,6 +451,10 @@ button.unCBtn{
     border-radius: 5px;
     cursor:pointer;
 }
+.checkbox label{
+    position:static;
+    width:auto;
+}
 /********************
 ****创建星球**********
 **********************/
@@ -522,6 +526,34 @@ button.unCBtn{
 }
 .cp-des textarea{
     height:160px;
+}
+/*是否私密*/
+.checksq{
+    margin-bottom: 25px;
+    margin-top: -35px;
+}
+.checksq input[type='checkbox']{
+    display:none;
+}
+.checksq label{
+    font-size: 14px;
+    color:#b4b4b4;
+}
+.checksq label:before{
+    display:inline-block;
+    margin-right: 8px;
+    content:'';
+    width:11px;
+    height:11px;
+    background-size: 100%;
+    vertical-align: middle;
+    background-image: url(../images/check_03.png);
+}
+.chk_sq:checked + label{
+    color:#5ab8fe;
+}
+.chk_sq:checked + label:before{
+    background-image: url(../images/checked_03.png);
 }
 /*******************
 ******登陆、注册、找回密码、个人中心***********
