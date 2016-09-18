@@ -1,0 +1,41 @@
+<%- include base/header.ejs %>
+<div class="main main-page">
+    <!--   之后记住照着uGroup改一下这里 -->
+    <div class="location clearfix">
+        <h1><a href="/allGroup" title="">消息中心</a></h1>
+    </div>
+    <div class="message-col">
+        <div class="message clearfix">
+            <h2>
+                <p>我们都是技术宅加入《煎饼计划》星球这是一个</p>
+            </h2>
+            <button class="meg-button" type="button">拒绝</button>
+            <button class="meg-button" type="button">同意</button>
+        </div>
+        <div class="message clearfix">
+            <h2>
+                <p>我们都是技术宅加入《煎饼计划》星球</p>
+            </h2>
+            <button class="meg-button" type="button">查看</button>
+        </div>
+        <div class="message clearfix">
+            <h2>
+                <p>一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test</p>
+            </h2>
+            <button class="meg-button" type="button">前往</button>
+        </div>
+    </div>
+
+</div>
+<%- include base/baseJS.ejs %>
+
+<script type="text/html" id="imgtemplate">
+    <div class="chapter-img clearfix">
+        {{each image as item i}}
+        <img src="{{item}}?imageView2/1/w/100/h/100" alt=""> {{/each}}
+    </div>
+</script>
+<script type="text/javascript">
+
+</script>
+<%- include base/footer.ejs %>

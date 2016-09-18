@@ -899,3 +899,30 @@ textarea.form-control{
     font-size: 20px;
     color:#5ab8fe;
 }
+
+/****************
+*********消息*****
+******************/
+.message {
+    padding: 30px 0 28px 0;
+    border-bottom: 1px solid rgba(194,222,248,1.0)
+}
+
+.message > h2 {
+    float: left;
+    line-height: 35px;
+    font-size: 22px;
+    color: rgba(90,184,254,1.0);
+}
+
+.meg-button {
+    display: inline-block;
+    font-size: 18px;
+    padding: 4px 4px;
+    margin-left: 27px;
+    float: right;
+    border-radius: 4px;
+    color: rgba(246, 250, 251,1.0);
+    background-color: rgba(90,184,254,1.0);
+    cursor: pointer;
+}
