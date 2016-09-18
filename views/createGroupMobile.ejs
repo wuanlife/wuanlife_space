@@ -18,6 +18,10 @@
 				<h4>星球介绍（选填）：</h4>
 				<textarea class="form-control" placeholder="内容"></textarea>
 			</div>
+			<div class="checkbox checksq">
+				<input type="checkbox" name="private" value="1" class="chk_sq" id="private">
+				<label for="private">私密星球</label>
+			</div>
 			<button type="submit">创建</button>
 		</form>
 	</div>
@@ -30,7 +34,12 @@
 			cpForm: $(".cp-form"),
 			cpDes: $(".cp-des").children('textarea'),
 			url: '',
+			private:0,
 			verificate: function() {
+				this.private = $('#private:checked').val();
+				if (this.private!=1 && this.private!=0) {
+					this.private = 0;
+				}
 				var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
 				if (this.pName.val().length < 1 || this.pName.val().length > 20) {
 					sweetAlert("格式错误", "请输入1-20位字符做为星球名称", "warning");
@@ -54,7 +63,8 @@
 						global.subData('/createGroup', {
 							name: self.pName.val(),
 							g_introduction: self.cpDes.val().trim(),
-							g_image: self.url
+							g_image: self.url,
+							private:self.private
 						}, function(data) {
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) { //创建成功
