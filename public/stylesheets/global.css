@@ -168,6 +168,7 @@ span.navbar-account-item{
 }
 /*信息提醒信封*/
 .mNote{
+    position: relative;
     display:inline-block;
     height:27px;
     width:24px;
@@ -176,6 +177,15 @@ span.navbar-account-item{
     background-repeat: no-repeat;
     background-size:  100% auto;
     background-position: center;
+}
+.red-point{
+    position: absolute;
+    right:-3px;
+    top:3px;
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+    background-color: #ff0000;
 }
 /*下拉菜单*/
 .dropdown-account{

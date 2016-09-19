@@ -21,7 +21,11 @@
             <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
             <ul class="navbar-account">
                 <% if (user) { %>
-                <li><a href="" class="navbar-account-item"><span class="mNote"></span></a></li>
+                <li>
+                    <a href="" class="navbar-account-item">
+                        <span class="mNote"><i class="red-point"></i></span>
+                    </a>
+                </li>
                 <li data-toggle='dropdown'>
                     <span class="navbar-account-item" ><%=user.nickname%><span class="caret"></span></span>
                     <ul class="dropdown-account">
