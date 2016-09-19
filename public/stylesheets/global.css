@@ -770,13 +770,10 @@ textarea.form-control{
     font-size: 14px;
     color:#4d4d4d;
     margin-bottom: 23px;
+    line-height: 2;
 }
 .post-content img{
     max-width: 100%;
-}
-.post-content p{
-    margin:10px 0;
-    line-height: 1.8;
 }
 
 /*帖子操作*/
