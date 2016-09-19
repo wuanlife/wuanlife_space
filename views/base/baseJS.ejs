@@ -31,6 +31,19 @@
     </script>
 	<script type="text/javascript">
 		var global = (function() {
+            //下拉菜单
+            (function(){
+                $('[data-toggle="dropdown"]').on('mouseover',function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    $(this).addClass('open');
+                });
+                $('[data-toggle="dropdown"]').on('mouseleave',function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    $(this).removeClass('open');
+                });
+            })();
 			// 设置loading位置
 			var setCenterLoadingDiv = function() {
 				var loadingClientheight = parseInt($(".uil-default-css").css("height"));

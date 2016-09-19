@@ -19,16 +19,16 @@
     <div class="container all-wrapper">
         <div class="navbar">
             <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
-            <button type="button" class="navbar-toggle" id="navbar-toggle">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <ul class="navbar-account">
                 <% if (user) { %>
-                <li><a href="/users" class="navbar-account-item">个人中心</a></li>
-                <li><span class="navbar-account-item"><%=user.nickname%> </span></li>
-                <li><a href="/logout" class="navbar-account-item">退出</a></li>
+                <li><a href="" class="navbar-account-item"><span class="mNote"></span></a></li>
+                <li data-toggle='dropdown'>
+                    <span class="navbar-account-item" ><%=user.nickname%><span class="caret"></span></span>
+                    <ul class="dropdown-account">
+                        <li><a href="/users" class="per-icon">个人中心</a></li>
+                        <li><a href="/logout" class="exit-icon">退出</a></li>
+                    </ul>
+                </li>
                 <% } else { %>
                 <li><a href="/login" title="" class="navbar-account-item">登录</a></li>
                 <li><a href="/register" title="" class="navbar-account-item">注册</a></li>
