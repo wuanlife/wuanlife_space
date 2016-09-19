@@ -81,6 +81,16 @@ ul{
     background-size: 100% 100%;
     vertical-align: bottom;
 }
+/*三角图标*/
+.caret{
+    display:inline-block;
+    width:0;
+    height:0;
+    border-top: 4px solid #fff;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    vertical-align: middle;
+}
 /****************************
 ***********导航栏***********
 ****************************/
@@ -136,83 +146,80 @@ ul{
 .navbar-account>li{
     float:left;
     font-size: 18px;
+    position: relative;
 }
 .navbar-account-item{
     display:inline-block;
     padding:16.5px 15px ;
 }
+/*账户名称*/
 span.navbar-account-item{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow:hidden;
     max-width: 150px;
     vertical-align: bottom;
+    cursor:pointer;
 }
-/*折叠按钮*/
-.navbar-toggle{
+/*三角按钮*/
+.navbar-account-item .caret{
+    border-width: 6px;
+    margin-left: 8px;
+}
+/*信息提醒信封*/
+.mNote{
+    display:inline-block;
+    height:27px;
+    width:24px;
+    vertical-align: bottom;
+    background-image: url(../images/mess_03.png);
+    background-repeat: no-repeat;
+    background-size:  100% auto;
+    background-position: center;
+}
+/*下拉菜单*/
+.dropdown-account{
     position: absolute;
     right:0;
-    top:0;
-    border:1px solid #ddd;
-    background-color: #fff;
-    margin:10px 10px 10px 0;
-    padding:9px 10px;
-    border-radius: 5px;
-    cursor: pointer;
+    top:100%;
+    width:130px;
+    color:#fff;
+    background-color: #5ab8fe;
+    text-align: left;
+    padding:0 6px;
+    border-radius: 4px;
     display:none;
 }
-.navbar-toggle .icon-bar{
+.open .dropdown-account{
     display:block;
-    width:25px;
-    height:4px;
-    border-radius: 1px;
-    background-color:#5ab8fe;
 }
-.navbar-toggle .icon-bar+.icon-bar{
-    margin-top: 4px;
+.dropdown-account>li{
+    padding:0 5px;
 }
-@media (max-width:1200px){
-    /*导航标题*/
-    .navbar-title{
-        padding-left: 20px;
-    }
-    /*折叠按钮*/
-    .navbar-toggle{
-        display:block;
-    }
-    /*导航账户*/
-    .navbar-account{
-        right:0;
-        top:100%;
-        bottom:auto;
-        width:180px;
-        background-color: #fff;
-        color:#5ab8fe;
-        border:1px solid rgba(0,0,0,.15);
-        border-radius: 3px;
-        display:none;
-    }
-    .navbar-account>li{
-        width:100%;
-    }
-    .navbar-account-item{
-        width:100%;
-        padding:10px 10px;
-    }
-    .navbar-account-item:hover{
-        background-color:rgba(0,0,0,.15) ;
-    }
-    span.navbar-account-item{
-        max-width: 100%;
-    }
-    .navbar-account a{
-        color:#5ab8fe;
-    }
+.dropdown-account>li + li{
+    border-top: 1px solid #fff;
 }
-@media (min-width:1201px){
-    .navbar-account{
-        display:block!important;
-    }
+.dropdown-account a{
+    display:inline-block;
+    font-size: 18px;
+    padding:10px 0;
+}
+.dropdown-account a:before{
+    display:inline-block;
+    content:'';
+    width:21px;
+    height:17px;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin-top: -1px;
+    margin-right: 13px;
+}
+.per-icon:before{
+    background-image: url(../images/navbar-icons_05.png);
+}
+.exit-icon:before{
+    background-image: url(../images/exit_07.png);
 }
 .nav-anone{
     display:none;
