@@ -16,7 +16,6 @@ router.get('/:groupid', function(req, res, next) {
 				var result = JSON.parse(body);
 				var creator = (userid == result.data.creatorID) ? 1:0;
 				console.log(result);
-                console.log(result.data);
 				if (result.ret == 200 && result.msg == "") {
 					var page = agent.Mobile ? 'groupMobile' : 'group';
 					res.render(page, {
