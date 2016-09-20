@@ -945,3 +945,18 @@ textarea.form-control{
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
 }
+
+/* 私密星球权限不够  */
+.blockPage {
+    color:#cccccc;
+    text-align: center;
+    font-size: 32px;
+    padding:40px 0 ;
+    margin:0;   
+}
+.blockPage p {
+    margin: 15px 0;
+}
+.blockPage img{
+    
+}
