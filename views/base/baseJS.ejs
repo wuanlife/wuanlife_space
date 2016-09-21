@@ -30,28 +30,20 @@
         });
     </script>
 	<script type="text/javascript">
-		var global = (function() {
+		var global = (function($) {
             //下拉菜单
-            (function(){
-                $('[data-toggle="dropdown"]').on('mouseover',function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    $(this).addClass('open');
-                });
-                $('[data-toggle="dropdown"]').on('mouseleave',function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    $(this).removeClass('open');
-                });
-            })();
+            $('[data-toggle="dropdown"]').on('mouseover',function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                $(this).addClass('open');
+            });
+            $('[data-toggle="dropdown"]').on('mouseleave',function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                $(this).removeClass('open');
+            });
 			// 设置loading位置
-			var setCenterLoadingDiv = function() {
-				var loadingClientheight = parseInt($(".uil-default-css").css("height"));
-				var loadingClientwidth = parseInt($(".uil-default-css").css("width"));
-				var centerheight = ($(window).height() / 2 - (loadingClientheight / 2)) + 'px'
-				var centerwidth = ($(window).width() / 2 - (loadingClientwidth / 2)) + 'px';
-				$(".uil-default-css").attr('style', 'transform: scale(0.3);margin-top:' + centerheight + ';margin-left: ' + centerwidth + ';');
-			};
+            $(".uil-default-css").attr('style', '-webkit-transform:scale(0.3);transform: scale(0.3);position:absolute;top:0;bottom:0;left:0;right:0;margin:auto;');
             //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
@@ -70,14 +62,6 @@
                     error:function(x,h,r){
                         console && console.log(x, h, r);
                     }
-                });
-            };
-            //导航折叠按钮
-            var setToggleBtn =  function(){
-                $('#navbar-toggle').on('click', function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    $('.navbar-account').toggle();
                 });
             };
             //获取翻页页数
@@ -131,19 +115,10 @@
                 });
             };
 			return {
-				setCenterLoadingDiv: setCenterLoadingDiv,
                 getData:getData,
                 subData:subData,
-                setToggleBtn:setToggleBtn,
                 getPageNow:getPageNow,
                 pageTurning:pageTurning
 			}
-		}());
-		$(document).ready(function() {
-			global.setCenterLoadingDiv();
-            global.setToggleBtn();
-			$(window).resize(function(event) {
-				global.setCenterLoadingDiv();
-			});
-		});
+		}(jQuery));
 	</script>
