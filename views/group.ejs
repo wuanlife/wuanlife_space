@@ -7,6 +7,11 @@
 		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 		<% } %>
 		</h1>
+		<h2>
+			<p>
+			创建者：<%=result.creatorName%>
+			</p>
+		</h2>
 		<button type="button" id="joinBtn" class="locBtn">+加入</button>
 	</div>
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>

@@ -5,9 +5,20 @@
 		<%if(creator){%>
 		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 		<% } %>
+		<h2>
+			<p>
+			创建者：<%=result.creatorName%>
+			</p>
+		</h2>
+		
+	</div>
+	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
+	<div class="blockPage">
+		<p>您还未加入，无法浏览内容</p>
+		<img src="../images/sadface_mobile.png">
 		<button type="button" id="joinBtn" class="locBtn">+加入</button>
 	</div>
-	<%if(result.posts.length > 0){%>
+	<%} else if(result.posts.length > 0){%>
 	<div class="chapter-col">
 		<% result.posts.forEach(function(item) { %>
 		<div class="chapter">
