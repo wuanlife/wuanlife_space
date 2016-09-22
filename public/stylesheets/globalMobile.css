@@ -1109,29 +1109,33 @@ textarea.form-control{
 /****************
 *********消息*****
 ******************/
+.message-col {
+    padding:0.4rem 0.506667rem 0.8rem;
+}
 .message {
-    padding: 30px 0 28px 0;
+    padding: 0.4rem 0;
     border-bottom: 1px solid rgba(194,222,248,1.0)
 }
 
 .message > h2 {
+    width: 70%;
     float: left;
     line-height: 35px;
-    font-size: 22px;
+    font-size: 0.35rem;
     color: rgba(90,184,254,1.0);
 }
 
 .meg-button {
     display: inline-block;
-    font-size: 18px;
+    font-size: 0.3rem;
     padding: 4px 4px;
-    margin-left: 27px;
-    float: right;
+    margin-left: 0.2rem;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
 }
+
 
 /* 私密星球权限不够  */
 .blockPage {
