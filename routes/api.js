@@ -304,6 +304,30 @@ router.post('/:method', function(req, res, next) {
                 });
             });
             break;
+        case 'applyPrivateGroup':
+            request.post({
+                url: config.server + '?service=Group.PrivateGroup',
+                formData: {
+                    Email: email,
+                    user_id: userID,
+                    group_id: req.param('groupid')
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('apply failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+
+            break;
+
+
         default:
             res.send('respond with a resource');
             break;

@@ -4,26 +4,23 @@
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
     </div>
+    <%if(result.code == 1){%>
     <div class="message-col">
+        <% result.info.forEach(function(item) { %>
         <div class="message clearfix">
             <h2>
                 <p class="text-ellipsis">我们都是技术宅加入《煎饼计划》星球这是一个</p>
             </h2>
+            <%if(item.messageType == '01') { %>
             <button class="meg-button" type="button">同意</button>
             <button class="meg-button" type="button">拒绝</button>
+            <% } else if(item.messageType == '02') { %>
+
+
+            <% } %>
         </div>
-        <div class="message clearfix">
-            <h2>
-                <p class="text-ellipsis">我们都是技术宅加入《煎饼计划》星球</p>
-            </h2>
-            <button class="meg-button" type="button">查看</button>
-        </div>
-        <div class="message clearfix">
-            <h2>
-                <p class="text-ellipsis">一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test</p>
-            </h2>
-            <button class="meg-button" type="button">前往</button>
-        </div>
+
+        <% }); %>
     </div>
     <div class="page-turn">
         <%if(result.currentPage == 1){%>
@@ -38,6 +35,11 @@
         <button type="button" id="next">下一页</button>
         <%}%>
     </div>
+    <%}else{%>
+    <div class="emptyPage">
+        您还没有消息哦
+    </div>
+    <%} %>
 </div>
 <%- include base/baseJS.ejs %>
 
