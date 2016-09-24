@@ -255,6 +255,28 @@ ul{
 .nav-per:before{
     background-image: url(../images/personal.png);
 }
+.nav-mes:before{
+    background-image: url(../images/mes.png);
+}
+.red-point{
+    display:none;
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+    background-color: #ff0000;
+    vertical-align: middle;
+    margin-left: 0.266667rem;
+}
+[data-dpr="2"] .red-point{
+    width:16px;
+    height:16px;
+    border-radius: 16px;
+}
+[data-dpr="3"] .red-point{
+    width:24px;
+    height:24px;
+    border-radius: 24px;
+}
 /*折叠账户*/
 .navbar-account>li{
     margin-bottom: 0.37037rem;
