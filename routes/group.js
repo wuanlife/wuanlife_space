@@ -10,7 +10,7 @@ router.get('/:groupid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 		pn = req.query.page || 1;
 	var userid = (req.session.user) ? req.session.user.userID : null;
-	request(config.server + "?service=Post.GetGroupPost&group_id=" + req.params.groupid + "&pn=" + pn,
+	request(config.server + "?service=Post.GetGroupPost&group_id=" + req.params.groupid + "&user_id=" + userid + "&pn=" + pn,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);

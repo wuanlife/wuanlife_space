@@ -1,0 +1,44 @@
+<%- include base/headerMobile.ejs %>
+<div class="main">
+    <div class="location clearfix">
+        <h1><a href="/message" title="">消息中心</a></h1>
+    </div>
+    <div class="message-col">
+        <div class="message clearfix">
+            <h2>
+                <p class="text-ellipsis">我们都是技术宅加入《煎饼计划》星球这是一个</p>
+            </h2>
+            <button class="meg-button" type="button">同意</button>
+            <button class="meg-button" type="button">拒绝</button>
+        </div>
+        <div class="message clearfix">
+            <h2>
+                <p class="text-ellipsis">我们都是技术宅加入《煎饼计划》星球</p>
+            </h2>
+            <button class="meg-button" type="button">查看</button>
+        </div>
+        <div class="message clearfix">
+            <h2>
+                <p class="text-ellipsis">一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test一个溢出test</p>
+            </h2>
+            <button class="meg-button" type="button">前往</button>
+        </div>
+    </div>
+    <div class="page-turn">
+        <%if(result.currentPage == 1){%>
+        <button type="button" class="unCBtn" id="pre">上一页</button>
+        <%}else{%>
+        <button type="button" id="pre">上一页</button>
+        <%}%>
+        <span><%=result.currentPage%>/<%=result.pageCount%></span>
+        <%if(result.currentPage == result.pageCount){%>
+        <button type="button" class="unCBtn" id="next">下一页</button>
+        <%}else{%>
+        <button type="button" id="next">下一页</button>
+        <%}%>
+    </div>
+</div>
+<%- include base/baseJSMobile.ejs %>
+<script type="text/javascript">
+</script>
+<%- include base/footerMobile.ejs %>

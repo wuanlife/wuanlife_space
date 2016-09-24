@@ -379,6 +379,15 @@ span.navbar-account-item{
 [data-dpr="3"] .locBtn{
     border-radius: 15px 15px;
 }
+/*location副标题(星球创建者名) */
+.location>h2 {
+    margin-left: 1rem;
+    float: left;
+    font-size: 0.4rem;
+    color: #5ab8fe;
+    line-height: 0.8rem;
+}
+
 /*星球标题长度限制*/
 .groupH{
     max-width: 6.0rem;
@@ -1116,4 +1125,56 @@ textarea.form-control{
 ************************/
 .myJoinMd{
     padding-bottom: 0.426667rem;
+}
+
+
+/****************
+*********消息*****
+******************/
+.message-col {
+    padding:0.4rem 0.506667rem 0.8rem;
+}
+.message {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(194,222,248,1.0)
+}
+
+.message > h2 {
+    width: 70%;
+    float: left;
+    line-height: 35px;
+    font-size: 0.35rem;
+    color: rgba(90,184,254,1.0);
+}
+
+.meg-button {
+    display: inline-block;
+    font-size: 0.3rem;
+    padding: 4px 4px;
+    margin-left: 0.2rem;
+    border-radius: 4px;
+    color: rgba(246, 250, 251,1.0);
+    background-color: rgba(90,184,254,1.0);
+    cursor: pointer;
+}
+
+
+/* 私密星球权限不够  */
+.blockPage {
+    color:#cccccc;
+    text-align: center;
+    font-size: 0.426667rem;
+    padding: 40px 0;
+    margin:0 10%;   
+}
+.blockPage p {
+    margin: 15px 0;
+}
+.blockPage img{
+    width: 100%;
+    margin: 1rem 0 2rem 0;
+}
+.blockPage > button {
+    width: 100%;
+    height: 70px;
 }

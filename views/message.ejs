@@ -1,0 +1,49 @@
+<%- include base/header.ejs %>
+<div class="main main-page">
+    <!--   之后记住照着uGroup改一下这里 -->
+    <div class="location clearfix">
+        <h1><a href="/message" title="">消息中心</a></h1>
+    </div>
+    <%if(result.code == 1){%>
+    <div class="message-col">
+        <% result.info.forEach(function(item) { %>
+        <div class="message clearfix">
+            <h2>
+                <p class="text-ellipsis">我们都是技术宅加入《煎饼计划》星球这是一个</p>
+            </h2>
+            <%if(item.messageType == '01') { %>
+            <button class="meg-button" type="button">同意</button>
+            <button class="meg-button" type="button">拒绝</button>
+            <% } else if(item.messageType == '02') { %>
+
+
+            <% } %>
+        </div>
+
+        <% }); %>
+    </div>
+    <div class="page-turn">
+        <%if(result.currentPage == 1){%>
+        <button type="button" class="unCBtn" id="pre">上一页</button>
+        <%}else{%>
+        <button type="button" id="pre">上一页</button>
+        <%}%>
+        <span><%=result.currentPage%>/<%=result.pageCount%></span>
+        <%if(result.currentPage == result.pageCount){%>
+        <button type="button" class="unCBtn" id="next">下一页</button>
+        <%}else{%>
+        <button type="button" id="next">下一页</button>
+        <%}%>
+    </div>
+    <%}else{%>
+    <div class="emptyPage">
+        您还没有消息哦
+    </div>
+    <%} %>
+</div>
+<%- include base/baseJS.ejs %>
+
+<script type="text/javascript">
+
+</script>
+<%- include base/footer.ejs %>
