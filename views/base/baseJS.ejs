@@ -73,9 +73,12 @@
                 return pageNow;
             };
             //翻页事件处理
+            var everPushed = false;
+            var changeEverPushed = function(){
+                everPushed = true;
+            }
             var pageTurning = function(pre,next,pageCount,updata){
                 var self = this;
-                var everPushed = false;
                 var initialUrl = location.href;
                 $(document).on('click', pre,function(event) {
                     event.preventDefault();
@@ -119,7 +122,8 @@
                 getData:getData,
                 subData:subData,
                 getPageNow:getPageNow,
-                pageTurning:pageTurning
+                pageTurning:pageTurning,
+                changeEverPushed:changeEverPushed
 			}
 		}(jQuery));
 	</script>
