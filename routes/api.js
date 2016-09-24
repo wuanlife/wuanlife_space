@@ -94,21 +94,6 @@ router.get('/:method', function(req, res, next) {
 					}
 			})
 			break;
-		case 'joinPlant':
-			var groupid = req.param('groupid');
-			var userid = userID;
-			request(config.server + '?service=Group.Join&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
-				if (error) {
-					console.log(error);
-				}
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
-			break;
 		case 'isJoinP':
 			var groupid = req.param('groupid');
 			var userid = userID;
@@ -304,13 +289,34 @@ router.post('/:method', function(req, res, next) {
                 });
             });
             break;
+        //加入普通星球
+        case 'applyGroup':
+            request.post({
+                url: config.server + '?service=Group.Join',
+                formData: {
+                    user_id: userID,
+                    group_base_id: req.body.groupid
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('apply failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+            break;
+        //加入私密星球
         case 'applyPrivateGroup':
             request.post({
                 url: config.server + '?service=Group.PrivateGroup',
                 formData: {
-                    Email: email,
                     user_id: userID,
-                    group_id: req.param('groupid')
+                    group_id: req.body.groupid
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -326,8 +332,6 @@ router.post('/:method', function(req, res, next) {
             });
 
             break;
-
-
         default:
             res.send('respond with a resource');
             break;
