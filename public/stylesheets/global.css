@@ -937,7 +937,7 @@ textarea.form-control{
 }
 .message {
     padding: 30px 0;
-    border-bottom: 1px solid rgba(194,222,248,1.0)
+    border-bottom: 1px solid rgba(194,222,248,1.0);
 }
 
 .message > h2 {
