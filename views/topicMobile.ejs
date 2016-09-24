@@ -34,23 +34,7 @@
 			</div>
 			<% } %>
 		</div>
-		<div class="post-comment" style="display:none;">
-			<h2></h2>
-			<div class="post-cm-group">
-				<div class="post-cm-item">
-					<div class="post-cm-info clearfix">
-						<span><a href="#?" title=""></a></span>
-						<span class="post-cm-time"></span>
-					</div>
-					<div class="post-cm-content"></div>
-				</div>
-			</div>
-			<div class="page-turn">
-				<button class="unCBtn">上一页</button>
-				<span></span>
-				<button>下一页</button>
-			</div>
-		</div>
+		<div id="comment"></div>
 		<% if (!result.lock) { %>
 		<div class="my-comment">
 			<h2>我的回复</h2>
@@ -65,7 +49,7 @@
 <%- include base/baseJSMobile.ejs %>
 <script type="text/html" id="listtemplate">
 	{{each reply as item i}}
-	<div class="post-cm-item">
+	<div class="post-cm-item" data-id="{{item.floor}}">
 		<div class="post-cm-info clearfix">
 			<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 			<span class="post-cm-time">{{item.createTime}}</span>
@@ -78,15 +62,9 @@
 	(function() {
 		var postid = '<%=result.postID%>';
 		var postReply = {
-			pre: $(".page-turn").find('button').first(),
-			next: $(".page-turn").find('button').last(),
-			page: $(".page-turn").find('span').eq(0),
-			currentpage: 1,
 			pageCount: 0,
 			loading: $(".loading"),
-			reply_md: $(".post-comment"),
-			reply_main: $(".post-cm-group"),
-			reply_title: $(".post-comment").children('h2'),
+			comment:$('#comment'),
 			post_opt: $(".post-opt"),
 			post_up: $("#stickBtn"),
 			post_edit: $("#editBtn"),
@@ -107,24 +85,79 @@
 			getReplyData: function(param, cb) {
 				global.getData("/api/getPostReplys", param, cb);
 			},
-			setReplyData: function() {
+			setReplyData: function(set,floor) {
 				var self = this;
+				var pageNow = global.getPageNow();
 				self.getReplyData({
-					currentpage: 1,
-					post_id: postid
+					currentpage: pageNow,
+					post_id: parseInt("<%=result.postID%>")
 				}, function(data) {
+					if (pageNow != global.getPageNow()) {
+						return;
+					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
 						var compiled = template("listtemplate", data.data);
-						self.reply_md.css('display', 'block');
-						self.reply_title.text(data.data.replyCount + "个回复");
-						self.reply_main.html(compiled);
-						self.page.text('1' + '/' + data.data.pageCount);
-						if (data.data.pageCount == 1) {
-							self.next.addClass('unCBtn');
-						}
+						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+pageNow + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
+						self.comment.html(reply);
 						self.pageCount = data.data.pageCount;
-					} else {
-						self.reply_md.remove();
+						if (set) {
+							global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+						}
+						if (pageNow == 1) {
+							$("#pre").addClass('unCBtn');
+						}
+						if (pageNow == data.data.pageCount) {
+							$("#next").addClass('unCBtn');
+						}
+						if (pageNow>1) {
+							var position = floor? $('[data-id =' + '"'+floor+'"' +']') : $(".post-comment");
+							var postComY = position.position().top;
+							var scroollY = postComY - $(".navbar").height();
+							$('.mainContainer').scrollTop(scroollY);
+						} else{
+							var scroollY = floor? ($('[data-id =' + '"'+floor+'"' +']').position().top - $(".navbar").height()) :0;
+							$('.mainContainer').scrollTop(scroollY);
+						}
+					} else{
+						self.comment.html('');
+					}
+				});
+			},
+			updateByPage: function() {
+				var self = this;
+				var pageNow = global.getPageNow();
+				self.loading.show();
+				self.getReplyData({
+					currentpage: pageNow,
+					post_id: parseInt("<%=result.postID%>")
+				}, function(data) {
+					if (pageNow != global.getPageNow()) {
+						return;
+					}
+					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+						var compiled = template("listtemplate", data.data);
+						$('.post-cm-group').html(compiled);
+						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
+						$(".page-turn").find('span').eq(0).html(pageNow + '/' + self.pageCount);
+						$("#pre").removeAttr('class');
+						$("#next").removeAttr('class');
+						if (pageNow == 1) {
+							$("#pre").addClass('unCBtn');
+						}
+						if (pageNow == data.data.pageCount) {
+							$("#next").addClass('unCBtn');
+						}
+						self.loading.hide();
+						if (pageNow>1) {
+							var postComY = $(".post-comment").position().top;
+							var scroollY = postComY - $(".navbar").height();
+							$('.mainContainer').scrollTop(scroollY);
+						} else{
+							$('.mainContainer').scrollTop(0);
+						}
+					} else{
+						self.loading.hide();
+						sweetAlert('错误', '数据获取失败', 'error');
 					}
 				});
 			},
@@ -261,14 +294,24 @@
 				var self = this;
 				<% if (user) { %>
 				if (self.verificate()) {
+					self.loading.show();
 					global.subData("/api/postReply", {
 						post_id: parseInt("<%=result.postID%>"),
 						text: self.myReplyContent.val()
 					}, function(data) {
 						//console && console.log(data);
 						if (data.ret == 200 && data.data) {
-							window.location.href = '/topic/' + "<%=result.postID%>";
+							self.myReplyContent.val('');
+							var page = parseInt((data.data.floor - 2)/30) + 1;
+							if (page != global.getPageNow()) {
+								var newURL = location.pathname + '?page=' + page;
+								history.pushState(null,'',newURL);
+								global.changeEverPushed();
+							}
+							self.setReplyData(false,data.data.floor);
+							self.loading.hide();
 						} else {
+							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
@@ -279,70 +322,6 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				self.pre.on("touchend", function() {
-					if (self.currentpage == 1) {
-						//sweetAlert('错误', '当前页是第一页', 'error');
-						return;
-					} else {
-						self.loading.show();
-						self.getReplyData({
-							currentpage: self.currentpage - 1,
-							post_id: postid
-						}, function(data) {
-							if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-								if (self.currentpage == self.pageCount) {
-									self.next.removeClass('unCBtn');
-								}
-								self.currentpage -= 1;
-								var compiled = template("listtemplate", data.data);
-								self.reply_main.html(compiled);
-								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-								self.loading.hide();
-								if (data.data.currentPage == 1) {
-									self.pre.addClass('unCBtn');
-								}
-								var postComY = $(".post-comment").offset().top;
-								var scroollY = postComY - $(".navbar").height();
-								$('.mainContainer').scrollTop(scroollY);
-							} else {
-								self.loading.hide();
-								sweetAlert('错误', '数据获取失败', 'error');
-							}
-						});
-					}
-				});
-				self.next.on("touchend", function() {
-					if (self.currentpage == self.pageCount) {
-						//sweetAlert('错误', '当前页是最后一页', 'error');
-						return;
-					} else {
-						self.loading.show();
-						self.getReplyData({
-							currentpage: self.currentpage + 1,
-							post_id: postid
-						}, function(data) {
-							if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-								if (self.currentpage == 1) {
-									self.pre.removeClass('unCBtn');
-								}
-								self.currentpage += 1;
-								var compiled = template("listtemplate", data.data);
-								self.reply_main.html(compiled);
-								self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-								self.loading.hide();
-								if (data.data.currentPage == data.data.pageCount) {
-									self.next.addClass('unCBtn');
-								}
-								var postComY = $(".post-comment").offset().top;
-								var scroollY = postComY - $(".navbar").height();
-								$('.mainContainer').scrollTop(scroollY);
-							} else {
-								self.loading.hide();
-								sweetAlert('错误', '数据获取失败', 'error');
-							}
-						});
-					}
-				});
 				<% if (result.stickyRight) { %>
 				self.post_up.on("touchend", self.upPost.bind(self));
 				<% } %>
@@ -358,7 +337,7 @@
 				});
 			},
 			init: function() {
-				this.setReplyData();
+				this.setReplyData(true);
 				this.bindEvent();
 			}
 		}
