@@ -176,7 +176,7 @@
 					window.location.href = '/login';
 					<%}%>
 				});
-				global.pageTurning.apply(self,[self.pre,self.next,self.pageCount,self.updateByPage]);
+				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
 			},
 			init: function() {
 				<%if(user){%>
