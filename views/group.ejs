@@ -12,7 +12,13 @@
 			创建者：<%=result.creatorName%>
 			</p>
 		</h2>
+		<%if(result.identity == '01' || result.identity == '02'){%>
+		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
+		<%}else if(result.identity == '04'){%>
+		<button type="button" id="joinBtn" class="locBtn">+已申请</button>
+		<%}else{%>
 		<button type="button" id="joinBtn" class="locBtn">+加入</button>
+		<%}%>
 	</div>
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
 	<div class="blockPage">
@@ -100,35 +106,12 @@
 			main: $(".chapter-col"),
 			joinBtn: $("#joinBtn"),
 			loading: $(".loading"),
-			isjoin: 0,
+			identity: parseInt("<%=result.identity%>"),
 			pageCount: parseInt("<%=result.pageCount%>"),
+			private:parseInt("<%=result.private%>"),
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
-			getJoinPData: function(param, cb) {
-				global.getData("/api/joinPlant", param, cb);
-			},
-			postApplyPrivate: function(param, cb) {
-				global.getData("api/applyPrivateGroup")
-			},
-			getJoinBtnVal: function(param, cb) {
-				global.getData("/api/isJoinP", param, cb);
-			},
-			<%if(user){%>
-			setJoinBtnVal: function() {
-				var self = this;
-				self.getJoinBtnVal({
-					groupid: parseInt("<%=result.groupID%>")
-				}, function(data) {
-					if (data.ret == 200 && data.data) {
-						if (data.data.code == 1) {
-							self.joinBtn.text('+发帖');
-							self.isjoin = 1; //已加入
-						}
-					}
-				});
-			},
-			<%}%>
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();
@@ -165,42 +148,56 @@
 				self.joinBtn.on("click", function(event) {
 					event.preventDefault();
 					<%if(user){%>
-					if (self.isjoin == 1) {
-						window.location.href = '/group/<%=result.groupID%>/post';
-					} else if(result.private=="0"){
-						self.getJoinPData({
-							groupid: parseInt("<%=result.groupID%>")
-						}, function(data) {
-							if (data.ret == 200 && data.data && data.data.code == 1) {
-									sweetAlert({
-									title: '提示',
-									text: '加入成功',
-									type: 'success',
-									timer: 2000
+					switch(self.identity){
+						case 1:
+							window.location.href = '/group/<%=result.groupID%>/post';
+							break;
+						case 2:
+							window.location.href = '/group/<%=result.groupID%>/post';
+							break;
+						case 3:
+							if(self.private == 0){
+								global.subData('/api/applyGroup',{
+									groupid: parseInt("<%=result.groupID%>")
+								}, function(data) {
+									if (data.ret == 200 && data.data && data.data.code == 1) {
+										sweetAlert({
+										title: '提示',
+										text: '加入成功',
+										type: 'success',
+										timer: 2000
+										});
+										self.joinBtn.text('+发帖'); //加入成功
+										self.identity = 2;
+									} else {
+										sweetAlert('错误', '加入星球失败', 'error');
+									}
 								});
-								self.joinBtn.text('+发帖'); //加入成功
-								self.isjoin = 1;
-							} else {
-								sweetAlert('错误', '加入星球失败', 'error');
+							} else if(self.private == 1) {
+								global.subData("/api/applyPrivateGroup",{
+									groupid: parseInt("<%=result.groupID%>")
+								}, function(data) {
+									if (data.ret == 200 && data.data && data.data.code == 1) {
+											sweetAlert({
+											title: '提示',
+											text: '申请成功等待审核',
+											type: 'success',
+											timer: 2000
+											});
+										self.joinBtn.text('+已申请'); //正在申请
+										self.identity = 4;
+									} else {
+										sweetAlert('错误', '加入星球失败', 'error');
+									}
+								});					
 							}
-						});
-					} else if(result.private=="1") {
-						self.postApplyPrivate({
-							groupid: parseInt("<%=result.groupID%>")
-						}, function(data) {
-							if (data.ret == 200 && data.data && data.data.code == 1) {
-									sweetAlert({
-									title: '提示',
-									text: '申请成功等待审核',
-									type: 'success',
-									timer: 2000
-								});
-								self.joinBtn.text('已申请'); //加入成功
-								self.isjoin = 0;
-							} else {
-								sweetAlert('错误', '加入星球失败', 'error');
-							}
-						});					
+							break;
+						case 4:
+							sweetAlert('提示', '正在申请加入', 'warning');
+							break;
+						default:
+							console.log(self.identity);
+							break;
 					}
 					<%}else{%>
 					window.location.href = '/login';
@@ -209,9 +206,6 @@
 				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
 			},
 			init: function() {
-				<%if(user){%>
-				this.setJoinBtnVal();
-				<%}%>
 				this.bindEvent();
 			}
 		}
