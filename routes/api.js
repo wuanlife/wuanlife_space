@@ -81,6 +81,18 @@ router.get('/:method', function(req, res, next) {
 				}
 			})
 			break;
+        case 'getMessageShow':
+            var pn = req.param('currentpage');
+            var user_id = req.param('userId');
+            request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                    res.header('Content-type', 'application/json');
+                    res.header('Charset', 'utf8');
+                    res.send(body);
+                }
+            })
+            break;            
 		case 'getPostForEdit':
 			var postid = req.param('postid');
             var user_id = userID;
@@ -331,6 +343,28 @@ router.post('/:method', function(req, res, next) {
                 });
             });
             break;
+        //处理申请加入私密星球
+        case 'processApplyPrivateGroup':
+            request.post({
+                url: config.server + '?service=User.ProcessApp',
+                formData: {
+                    user_id: userID,
+                    message_id: req.body.messageID,
+                    mark: req.body.operation
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('processApply failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+        break;
         //是否有新消息
         case 'checkNewInfo':
             request.post({

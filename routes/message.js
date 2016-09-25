@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
                     var page = agent.Mobile ? 'messageMobile' : 'message';
                     res.render(page, {
                         result: result.data,
-                        title: 'whatthefuck',
+                        title: '你的信息',
                         'user': req.session.user
                     });
                 } else {
