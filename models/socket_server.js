@@ -22,16 +22,20 @@ io.on('connection',function(socket){
     });
 });
 router(function(req,res){
-    var userid = req.body.userid;
-    var roomid = 'wuan' + userid;
     res.header('Content-type', 'application/json');
     res.header('Charset', 'utf8');
+    var userid = req.body.userid;
+    var reg = /^\d+$/;
+    if (!reg.test(userid)) {
+        return res.send(JSON.stringify({ret:400,data:{},msg:'请输入正确的用户id'}));
+    }
+    var roomid = 'wuan' + userid;
     if (io.sockets.adapter.rooms[roomid]) {
         //console.log(io.sockets.adapter.rooms[roomid].length);
         io.sockets.in(roomid).emit('news');
-        res.send(JSON.stringify({ret:200,code:1}));
+        res.send(JSON.stringify({ret:200,data:{code:1,msg:''},msg:''}));
     } else{
-        res.send(JSON.stringify({ret:200,code:0}));
+        res.send(JSON.stringify({ret:200,data:{code:0,msg:'该用户不在线'},msg:''}));
     }
 });
 exports.listen = function(server){
