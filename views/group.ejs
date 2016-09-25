@@ -109,7 +109,7 @@
 				global.getData("/api/joinPlant", param, cb);
 			},
 			postApplyPrivate: function(param, cb) {
-				global.getData("api/applyPrivateGroup")
+				global.subData("/api/applyPrivateGroup", param, cb)
 			},
 			getJoinBtnVal: function(param, cb) {
 				global.getData("/api/isJoinP", param, cb);
@@ -167,7 +167,7 @@
 					<%if(user){%>
 					if (self.isjoin == 1) {
 						window.location.href = '/group/<%=result.groupID%>/post';
-					} else if(result.private=="0"){
+					} else if(<%=result.private%>=="0"){
 						self.getJoinPData({
 							groupid: parseInt("<%=result.groupID%>")
 						}, function(data) {
@@ -184,7 +184,7 @@
 								sweetAlert('错误', '加入星球失败', 'error');
 							}
 						});
-					} else if(result.private=="1") {
+					} else if(<%=result.private%>=="1") {
 						self.postApplyPrivate({
 							groupid: parseInt("<%=result.groupID%>")
 						}, function(data) {
@@ -198,7 +198,7 @@
 								self.joinBtn.text('已申请'); //加入成功
 								self.isjoin = 0;
 							} else {
-								sweetAlert('错误', '加入星球失败', 'error');
+								sweetAlert('错误', '申请加入星球失败', 'error');
 							}
 						});					
 					}
