@@ -356,10 +356,29 @@ router.post('/:method', function(req, res, next) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 if (!err && httpResponse.statusCode == 200){
-                    console.log(JSON.parse(body))
                     return res.send(JSON.parse(body));
                 }
-                console.error('apply failed:', err);
+                console.error('processApply failed:', err);
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            });
+        break;
+        //是否有新消息
+        case 'checkNewInfo':
+            request.post({
+                url: config.server + '?service=User.CheckNewInfo',
+                formData: {
+                    user_id: userID
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                if (!err && httpResponse.statusCode == 200){
+                    return res.send(JSON.parse(body));
+                }
+                console.error('check failed:', err);
                 res.send({
                     ret: 500,
                     msg:'服务器异常'

@@ -53,15 +53,6 @@
     <script type="text/javascript" src="/javascripts/plupload/plupload.full.min.js"></script>
     <script type="text/javascript" src="/javascripts/plupload/i18n/zh_CN.js"></script>
     <script type="text/javascript" src="/javascripts/qiniu.js"></script>
-    <script>
-        (function(){
-            var socket = io(location.hostname+':'+location.port);
-                socket.on('news',function(data){
-                // console.log('accept');
-                $('#mrp').css('display','inline-block');
-            });
-        }());
-    </script>
     <script type = "text/javascript">
         var global = (function() {
             //设置侧栏切换按钮
@@ -174,3 +165,19 @@
         global.setMainHeight();
     }); 
     </script>
+    <% if (user) { %>
+    <script>
+        (function(){
+            var socket = io(location.hostname+':'+location.port);
+                socket.on('news',function(data){
+                // console.log('accept');
+                $('#mrp').css('display','inline-block');
+            });
+            global.subData('/api/checkNewInfo',{},function(data){
+                if (data.ret == 200 && data.data && data.data.num == 1) {
+                    $('#mrp').css('display','inline-block');
+                }
+            });
+        }());
+    </script>
+    <% } %>
