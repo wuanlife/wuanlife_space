@@ -1,12 +1,12 @@
 <%- include base/headerMobile.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
-		<h1><a href="/group/<%=result.groupID%>" title=""class="groupH"><%=result.groupName%></a></h1>
+		<h1><a class="text-ellipsis" href="/group/<%=result.groupID%>" title=""class="groupH"><%=result.groupName%></a></h1>
 		<%if(creator){%>
 		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 		<% } %>
-		<h2>
-			<p>
+		<h2 >
+			<p class="text-ellipsis"> 
 			创建者：<%=result.creatorName%>
 			</p>
 		</h2>

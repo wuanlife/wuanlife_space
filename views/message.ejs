@@ -8,20 +8,28 @@
     <div class="message-col">
        
         <% result.info.forEach(function(item) { %>
-        <div class="message clearfix" data-identity="{'user_id':<%=user%>, 'group_id':<%=user%> }">
+        <div id="<%=item.id %>" class="message clearfix">
             <h2>
                 <p class="text-ellipsis"><%=item.information%></p>
             </h2>
-            <%if(item.messagetype == '01') { %>
-            <button class="meg-button agree" type="button">同意</button>
-            <button class="meg-button disagree" type="button">拒绝</button>
-            <% } else if(item.messagetype == '02') { %>
+            <%if(item.messagetype == '1') { %>
+                <%if(item.status == '1') { %>
+                    <button class="meg-button agree" type="button">同意</button>
+                    <button class="meg-button disagree" type="button">拒绝</button>
+                <%} else if(item.status == '2'){ %>
+                    <button class="meg-button disable" type="button">已同意</button>
+                <%} else if(item.status == '3'){ %>
+                    <button class="meg-button disable" type="button">已同意</button>
+                <$} else {%>
+                    <button class="meg-button disable" type="button">已同意</button>
+                <%} %>
 
+            <% } else if(item.messagetype == '2') { %>
 
             <% } %>
         </div>
 
-        <% }); %>
+        <% }) %>
     </div>
     <div class="page-turn">
         <%if(result.currentPage == 1){%>
@@ -43,59 +51,117 @@
     <%} %>
 </div>
 <%- include base/baseJS.ejs %>
+<script type="text/html" id="listtemplate">
+    {{each info as item i}}
+    <div id="{{item.id}}" class="message clearfix">
+        <h2>
+            <p class="text-ellipsis">{{item.information}}</p>
+        </h2>
+
+        {{if item.messagetype == '1' }}
+            {{if item.status == '1'}}
+                <button class="meg-button agree" type="button">同意</button>
+                <button class="meg-button disagree" type="button">拒绝</button>
+            {{else if item.status == '2' }}
+                <button class="meg-button disable" type="button">已同意</button>
+            {{else if item.status == '3' }}
+                <button class="meg-button disable" type="button">已拒绝</button>
+            {{else}}
+            {{/if}}
+        {{else if item.messagetype == '2' }}
+
+        {{/if}}
+
+    </div>
+    {{/each}}
+</script>
+
+
+
 
 <script type="text/javascript">
     (function() {
-        var group = {
+        var message = {
             pre: $("#pre"),
             next: $("#next"),
             page: $(".page-turn").find('span').eq(0),
             main: $(".message-col"),
-            joinBtn: $("#joinBtn"),
             loading: $(".loading"),
-            isjoin: 0,
             pageCount: parseInt("<%=result.pageCount%>"),
             getServerData: function(param, cb) {
-                global.getData("/api/getGroupPlanetShow", param, cb);
-            },
-            getJoinPData: function(param, cb) {
-                global.getData("/api/joinPlant", param, cb);
+                global.getData("/api/getMessageShow", param, cb);
             },
             postApplyPrivate: function(param, cb) {
-                global.getData("api/applyPrivateGroup")
+                global.getData("/api/applyPrivateGroup");
             },
-            getJoinBtnVal: function(param, cb) {
-                global.getData("/api/isJoinP", param, cb);
-            },
-            <%if(user){%>
-            setJoinBtnVal: function() {
+            rebindButton: function() {
                 var self = this;
-                self.getJoinBtnVal({
-                    groupid: parseInt("<%=result.groupID%>")
-                }, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        if (data.data.code == 1) {
-                            self.joinBtn.text('+发帖');
-                            self.isjoin = 1; //已加入
-                        }
-                    }
+                $(".meg-button.agree").each(function(){
+                    var thisButton = $(this);
+                    var thisMessage = thisButton.parent();
+                    thisButton.on("click", function () {
+                        self.loading.show();
+                        global.subData("/api/processApplyPrivateGroup",{
+                            messageID: parseInt(thisMessage.eq(0).attr('id')),
+                            operation: 1
+                        },function(data){
+                            self.loading.hide();
+                            if (data.ret == 200 && data.data) {
+                                if (data.data.code == 1) {
+                                    thisMessage.children(".meg-button.disagree").remove();
+                                    thisButton.removeClass("agree");
+                                    thisButton.addClass("disable");
+                                    thisButton.html("已同意")
+                                } else {
+                                    sweetAlert('提示', data.data.msg, 'warning');
+                                }
+                            } else {
+                                sweetAlert('错误', data.msg, 'error');
+                            }
+                        });
+                    });
+                });
+                $(".meg-button.disagree").each(function(){
+                    var thisButton = $(this);
+                    var thisMessage = thisButton.parent();
+                    thisButton.on("click", function () {
+                        self.loading.show();
+                        global.subData('/api/processApplyPrivateGroup',{
+                            messageID: parseInt(thisMessage.eq(0).attr('id')),
+                            operation: 0
+                        },function(data){
+                            self.loading.hide();
+                            if (data.ret == 200 && data.data) {
+                                if (data.data.code == 1) {
+                                    thisMessage.children(".meg-button.agree").remove();
+                                    thisButton.removeClass("disagree");
+                                    thisButton.addClass("disable");
+                                    thisButton.html("已拒绝")
+                                } else {
+                                    sweetAlert('提示', data.data.msg, 'warning');
+                                }
+                            } else {
+                                sweetAlert('错误', data.msg, 'error');
+                            }
+                        });
+                    });
                 });
             },
-            <%}%>
             updateByPage:function(){
                 var self = this;
                 var pageNow = global.getPageNow();
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    groupid: parseInt("<%=result.groupID%>")
+                    userId: <%=user.userID%>
                 }, function(data) {
                     if (pageNow != global.getPageNow()) {
                         return;
                     }
-                    if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+                    if (data.ret == 200 && data.data && data.data.info.length > 0) {
                         var compiled = template("listtemplate", data.data);
                         self.main.html(compiled);
+                        self.rebindButton();
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                         self.pre.removeAttr('class');
                         self.next.removeAttr('class');
@@ -115,60 +181,14 @@
             },
             bindEvent: function() {
                 var self = this;
-                self.joinBtn.on("click", function(event) {
-                    event.preventDefault();
-                    <%if(user){%>
-                    if (self.isjoin == 1) {
-                        window.location.href = '/group/<%=result.groupID%>/post';
-                    } else if(result.private=="0"){
-                        self.getJoinPData({
-                            groupid: parseInt("<%=result.groupID%>")
-                        }, function(data) {
-                            if (data.ret == 200 && data.data && data.data.code == 1) {
-                                    sweetAlert({
-                                    title: '提示',
-                                    text: '加入成功',
-                                    type: 'success',
-                                    timer: 2000
-                                });
-                                self.joinBtn.text('+发帖'); //加入成功
-                                self.isjoin = 1;
-                            } else {
-                                sweetAlert('错误', '加入星球失败', 'error');
-                            }
-                        });
-                    } else if(result.private=="1") {
-                        self.postApplyPrivate({
-                            groupid: parseInt("<%=result.groupID%>")
-                        }, function(data) {
-                            if (data.ret == 200 && data.data && data.data.code == 1) {
-                                    sweetAlert({
-                                    title: '提示',
-                                    text: '申请成功等待审核',
-                                    type: 'success',
-                                    timer: 2000
-                                });
-                                self.joinBtn.text('已申请'); //加入成功
-                                self.isjoin = 0;
-                            } else {
-                                sweetAlert('错误', '加入星球失败', 'error');
-                            }
-                        });                 
-                    }
-                    <%}else{%>
-                    window.location.href = '/login';
-                    <%}%>
-                });
-                global.pageTurning.apply(self,[self.pre,self.next,self.pageCount,self.updateByPage]);
+                global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
             },
             init: function() {
-                <%if(user){%>
-                this.setJoinBtnVal();
-                <%}%>
                 this.bindEvent();
+                this.rebindButton();
             }
         }
-        group.init();
+        message.init();
     })();
 </script>
 <%- include base/footer.ejs %>

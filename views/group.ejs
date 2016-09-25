@@ -2,7 +2,7 @@
 <div class="main main-page">
 	<div class="location clearfix">
 		<h1>
-		<a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a>
+		<a class="text-ellipsis" href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a>
 		<%if(creator){%>
 		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 		<% } %>

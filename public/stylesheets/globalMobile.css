@@ -358,6 +358,8 @@ span.navbar-account-item{
     line-height: 1;
     float: left; 
     color:#5ab8fe; 
+    width: 100%;
+    text-align: center;
 }
 .location>h1>a{
    color:#5ab8fe; 
@@ -381,11 +383,14 @@ span.navbar-account-item{
 }
 /*location副标题(星球创建者名) */
 .location>h2 {
-    margin-left: 1rem;
-    float: left;
+    display:inline-block;
     font-size: 0.4rem;
     color: #5ab8fe;
+    margin: 0.5rem 0;
+    padding: 0 0.5rem;
     line-height: 0.8rem;
+    width: 100%;
+    text-align: center;
 }
 
 /*星球标题长度限制*/
@@ -1132,10 +1137,11 @@ textarea.form-control{
 *********消息*****
 ******************/
 .message-col {
-    padding:0.4rem 0.506667rem 0.8rem;
+    border-top: 1px solid rgba(194,222,248,1.0);
+    margin: 0.5rem 0;
 }
 .message {
-    padding: 0.4rem 0;
+    padding: 0.2rem 0;
     border-bottom: 1px solid rgba(194,222,248,1.0);
 }
 
@@ -1148,13 +1154,13 @@ textarea.form-control{
 }
 
 .meg-button {
-    display: inline-block;
     font-size: 0.3rem;
     padding: 4px 4px;
-    margin-left: 0.2rem;
+    margin: 6px 0 6px 0.2rem;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
+    line-height: 18px;
     cursor: pointer;
 }
 
