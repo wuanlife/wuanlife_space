@@ -88,7 +88,7 @@
 			getReplyData: function(param, cb) {
 				global.getData("/api/getPostReplys", param, cb);
 			},
-			setReplyData: function(set) {
+			setReplyData: function(set,floor) {
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.getReplyData({
@@ -103,7 +103,9 @@
 						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+pageNow + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
 						self.comment.html(reply);
 						self.pageCount = data.data.pageCount;
-						global.pageTurning.apply(self,[$("#pre"),$("#next"),self.pageCount,self.updateByPage]);
+						if (set) {
+							global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+						}
 						if (pageNow == 1) {
 							$("#pre").addClass('unCBtn');
 						}
@@ -111,18 +113,20 @@
 							$("#next").addClass('unCBtn');
 						}
 						if (pageNow>1) {
-							var postComY = $(".post-comment").offset().top;
+							var position = floor? $('[data-id =' + floor +']') : $(".post-comment");
+							var postComY = position.offset().top;
 							var scroollY = postComY - $(".navbar").height();
 							$(window).scrollTop(scroollY);
 						} else{
-							$(window).scrollTop(0);
+							var scroollY = floor? ($('[data-id =' + floor +']').offset().top - $(".navbar").height()) :0;
+							$(window).scrollTop(scroollY);
 						}
 					} else{
 						self.comment.html('');
 					}
 				});
 			},
-			updateByPage: function(floor) {
+			updateByPage: function() {
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.loading.show();
@@ -135,17 +139,9 @@
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
 						var compiled = template("listtemplate", data.data);
-						self.loading.hide();
-						if ($('.post-cm-group').length == 0) {
-							var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+pageNow + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
-							self.comment.html(reply);
-							self.pageCount = data.data.pageCount;
-							global.pageTurning.apply(self,[$("#pre"),$("#next"),self.pageCount,self.updateByPage]);
-						} else{
-							$('.post-cm-group').html(compiled);
-							$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
-							$(".page-turn").find('span').eq(0).html(pageNow + '/' + self.pageCount);
-						}
+						$('.post-cm-group').html(compiled);
+						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
+						$(".page-turn").find('span').eq(0).html(pageNow + '/' + self.pageCount);
 						$("#pre").removeAttr('class');
 						$("#next").removeAttr('class');
 						if (pageNow == 1) {
@@ -154,15 +150,13 @@
 						if (pageNow == data.data.pageCount) {
 							$("#next").addClass('unCBtn');
 						}
+						self.loading.hide();
 						if (pageNow>1) {
-							var position = floor? $('[data-id =' + floor +']') : $(".post-comment");
-							console.log($('[data-id =' + floor +']'));
-							var postComY = position.offset().top;
+							var postComY = $(".post-comment").offset().top;
 							var scroollY = postComY - $(".navbar").height();
 							$(window).scrollTop(scroollY);
 						} else{
-							var scroollY = floor? ($('[data-id =' + floor +']').offset().top - $(".navbar").height()) :0;
-							$(window).scrollTop(scroollY);
+							$(window).scrollTop(0);
 						}
 					} else{
 						self.loading.hide();
@@ -303,6 +297,7 @@
 				var self = this;
 				<% if (user) { %>
 				if (self.verificate()) {
+					self.loading.show();
 					global.subData("/api/postReply", {
 						post_id: parseInt("<%=result.postID%>"),
 						text: self.myReplyContent.val()
@@ -314,9 +309,12 @@
 							if (page != global.getPageNow()) {
 								var newURL = location.pathname + '?page=' + page;
 								history.pushState(null,'',newURL);
+								global.changeEverPushed();
 							}
-							self.updateByPage(data.data.floor);
+							self.setReplyData(false,data.data.floor);
+							self.loading.hide();
 						} else {
+							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
@@ -342,7 +340,7 @@
 				});
 			},
 			init: function() {
-				this.setReplyData();
+				this.setReplyData(true);
 				this.bindEvent();
 			}
 		}

@@ -195,3 +195,13 @@
 	width: 200px;
 	height: 200px;
 }
+.uil-default-css{
+	-webkit-transform:scale(0.3);
+	transform: scale(0.3);
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin:auto;
+}

@@ -191,6 +191,7 @@ span.navbar-account-item{
     height:8px;
     border-radius: 8px;
     background-color: #ff0000;
+    display:none;
 }
 /*下拉菜单*/
 .dropdown-account{
@@ -202,7 +203,8 @@ span.navbar-account-item{
     background-color: #5ab8fe;
     text-align: left;
     padding:0 6px;
-    border-radius: 4px;
+    border-top: 1px solid #fff;
+    border-radius: 0 0 4px 4px ;
     display:none;
 }
 .open .dropdown-account{
@@ -935,7 +937,7 @@ textarea.form-control{
 }
 .message {
     padding: 30px 0;
-    border-bottom: 1px solid rgba(194,222,248,1.0)
+    border-bottom: 1px solid rgba(194,222,248,1.0);
 }
 
 .message > h2 {

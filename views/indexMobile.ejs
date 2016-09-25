@@ -112,7 +112,7 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				global.pageTurning.apply(self,[self.pre,self.next,self.pageCount,self.updateByPage]);
+				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
 			},
 			init: function() {+
 				this.bindEvent();
