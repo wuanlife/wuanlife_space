@@ -359,10 +359,11 @@ span.navbar-account-item{
     float: left; 
     color:#5ab8fe; 
     width: 100%;
-    text-align: center;
 }
 .location>h1>a{
-   color:#5ab8fe; 
+   color:#5ab8fe;
+   display: inline-block;
+   width: 60%;
 }
 .locBtn{
     display:inline-block;
@@ -374,12 +375,31 @@ span.navbar-account-item{
     background-color: #5ab8fe;
     float:right;
     border-radius: 5px 5px;
+    cursor: pointer;
 }
 [data-dpr="2"] .locBtn{
     border-radius: 10px 10px;
 }
 [data-dpr="3"] .locBtn{
     border-radius: 15px 15px;
+}
+.bot{ 
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
+.botBtn{
+    width: 60%;
+    color:#f6fafb;
+    font-size: 0.333333rem;
+    padding:0 0.2rem;
+    height:0.64rem;
+    line-height: 0.64rem;
+    background-color: #5ab8fe;
+    border-radius: 5px 5px;
+    cursor: pointer;
 }
 /*location副标题(星球创建者名) */
 .location>h2 {
@@ -401,10 +421,12 @@ span.navbar-account-item{
 }
 /*星球设置图标*/
 .gSet{
-    width:0.666667rem;
+    width:0.666667rem !important;
     height:0.666667rem;
     background-image: url(../images/gset_03.png);
-    margin-left: 0.666667rem;
+    margin: 0 0.666667rem;
+    display: inline-block;
+    float: right;
 }
 /******************
 ********翻页模块***
