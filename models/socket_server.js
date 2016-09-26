@@ -25,9 +25,6 @@ router(function(req,res){
     res.header('Content-type', 'application/json');
     res.header('Charset', 'utf8');
     var userid = req.body.userid;
-    if (!userid) {
-        return res.send(JSON.stringify({ret:400,data:{},msg:'缺少必须参数userid'}));
-    }
     var reg = /^\d+$/;
     if (!reg.test(userid)) {
         return res.send(JSON.stringify({ret:400,data:{},msg:'请输入正确的用户id'}));
