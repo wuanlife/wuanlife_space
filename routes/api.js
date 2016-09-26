@@ -72,7 +72,7 @@ router.get('/:method', function(req, res, next) {
 		case 'getGroupPlanetShow':
 			var pn = req.param('currentpage');
 			var groupid = req.param('groupid');
-			request(config.server + '?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn, function(error, response, body) {
+			request(config.server + '?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn + '&user_id=' + userID, function(error, response, body) {
 				if (!error && response.statusCode == 200) {
 					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
 					res.header('Content-type', 'application/json');
