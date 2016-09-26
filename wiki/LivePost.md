@@ -30,7 +30,7 @@ http://apihost/news
         "ret": 200,
         "data": {
             "code": 0,
-            "msg": "该用户不在线",
+            "msg": "该用户不在线"
         },
         "msg": ""
     }
