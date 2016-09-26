@@ -24,7 +24,8 @@ io.on('connection',function(socket){
 router(function(req,res){
     res.header('Content-type', 'application/json');
     res.header('Charset', 'utf8');
-    var userid = req.body.userid;
+    // var userid = req.body.userid;
+    var userid = req.param('userid');
     if (!userid) {
         return res.send(JSON.stringify({ret:400,data:{},msg:'缺少必须参数userid'}));
     }
