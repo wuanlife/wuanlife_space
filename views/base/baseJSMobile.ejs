@@ -56,24 +56,20 @@
     <script type = "text/javascript">
         var global = (function() {
             //设置侧栏切换按钮
-            (function() {
-                $(".navbar-toggle").on("touchend", function() {                   
-                    var all = $(".all-wrapper");
-                    if (all.hasClass('open')) {
-                        all.removeClass('open').addClass('close');
-                    } else{
-                        all.removeClass('close').addClass('open');
-                    }
-                });
-            })(); 
+            $(".navbar-toggle").on("touchend", function() {                   
+                var all = $(".all-wrapper");
+                if (all.hasClass('open')) {
+                    all.removeClass('open').addClass('close');
+                } else{
+                    all.removeClass('close').addClass('open');
+                }
+            });
             //主栏遮罩
-            (function(){
-                $(".mask").on("touchend", function(e) {
-                    //e.stopPropagation();
-                    $(".all-wrapper").removeClass('open').addClass('close');
-                    return false; //zepto return false 则会阻止事件冒泡以及默认操作
-                });
-            })();
+            $(".mask").on("touchend", function(e) {
+                //e.stopPropagation();
+                $(".all-wrapper").removeClass('open').addClass('close');
+                return false; //zepto return false 则会阻止事件冒泡以及默认操作
+            });
             //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
@@ -95,10 +91,17 @@
                 });
             };
             //设置主栏主内容容器高度
-            var setMainHeight =  function(){
-                var windowHeight = $(window).height();
-                $('.all-wrapper').css('height', windowHeight);
-            }
+            $(document).ready(function() {
+               var windowHeight = $(window).height();
+               $('.all-wrapper').css('height', windowHeight);
+               $(window).resize(function(event) {
+                   /* Act on the event */
+                   var currentHeight = $(window).height();
+                   if (currentHeight >= windowHeight) {
+                        $('.all-wrapper').css('height', currentHeight);
+                   }
+               });
+            }); 
             //获取翻页页数
             var getPageNow = function(){
                 var reg = /page=(\d+)/,
@@ -155,15 +158,11 @@
             return {
                 getData:getData,
                 subData:subData,
-                setMainHeight:setMainHeight,
                 getPageNow:getPageNow,
                 pageTurning:pageTurning,
                 changeEverPushed:changeEverPushed
             }
         }());
-    $(document).ready(function() {
-        global.setMainHeight();
-    }); 
     </script>
     <% if (user) { %>
     <script>
