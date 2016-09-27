@@ -8,8 +8,8 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']),
-            pn = req.query.page || 1;
-        var userid = (req.session.user) ? req.session.user.userID : null;    
+            pn = req.query.page || 1,
+            userid = req.session.user.userID;    
         request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
                         var page = agent.Mobile ? 'messageMobile' : 'message';
                         res.render(page, {
                             result: result.data,
-                            title: '你的信息',
+                            title: '消息中心',
                             'user': req.session.user
                         });
                     } else {
