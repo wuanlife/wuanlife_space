@@ -1,5 +1,5 @@
 <%- include base/headerMobile.ejs %>
-<div class="main">
+<div class="main main-page">
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
     </div>
@@ -166,7 +166,7 @@
                             self.next.addClass('unCBtn')
                         }
                         self.loading.hide();
-                        $(window).scrollTop(0);
+                        $('.mainContainer').scrollTop(0);
                     } else {
                         self.loading.hide();
                         sweetAlert('错误', '数据获取失败', 'error');

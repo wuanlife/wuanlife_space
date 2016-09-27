@@ -143,7 +143,7 @@
 							self.next.addClass('unCBtn')
 						}
 						self.loading.hide();
-						$(window).scrollTop(0);
+						$('.mainContainer').scrollTop(0);
 					} else {
 						self.loading.hide();
 						sweetAlert('错误', '数据获取失败', 'error');
