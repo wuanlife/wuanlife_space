@@ -288,6 +288,7 @@ span.navbar-account-item{
 }
 /*location副标题(星球创建者名) */
 .location>h2 {
+    width: 20%;
     margin-left: 35px;
     float: left;
     font-size: 18px;
@@ -949,13 +950,17 @@ textarea.form-control{
 }
 
 .meg-button {
-    display: inline-block;
     font-size: 18px;
     padding: 4px 4px;
     margin-left: 27px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
+    cursor: pointer;
+}
+.meg-button.disable{
+    color: rgba(105, 94, 92,1.0);
+    background-color: rgba(202, 192, 190,1.0);
     cursor: pointer;
 }
 
