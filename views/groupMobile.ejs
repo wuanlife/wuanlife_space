@@ -14,7 +14,7 @@
 			<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 			<% } %>
 		</h1>
-		<h2 >
+		<h2 class="text-ellipsis">
 			<p class="text-ellipsis"> 
 			创建者：<%=result.creatorName%>
 			</p>
@@ -152,7 +152,7 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				self.joinBtn.on("click", function(event) {
+				self.joinBtn.on("touchend", function(event) {
 					event.preventDefault();
 					<%if(user){%>
 					switch(self.identity){

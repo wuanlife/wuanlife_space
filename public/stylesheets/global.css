@@ -288,6 +288,7 @@ span.navbar-account-item{
 }
 /*location副标题(星球创建者名) */
 .location>h2 {
+    width: 20%;
     margin-left: 35px;
     float: left;
     font-size: 18px;
