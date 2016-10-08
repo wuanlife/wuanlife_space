@@ -333,14 +333,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('apply failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('apply failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //处理申请加入私密星球
