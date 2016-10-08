@@ -118,7 +118,15 @@
 							var scroollY = floor? ($('[data-id =' + '"'+floor+'"' +']').position().top - $(".navbar").height()) :0;
 							$('.mainContainer').scrollTop(scroollY);
 						}
+						if (!set) {
+							self.loading.hide();
+						}
 					} else{
+						if (!set) {
+							self.loading.hide();
+							sweetAlert('错误', '数据获取失败', 'error');
+							return;
+						}
 						self.comment.html('');
 					}
 				});
@@ -309,7 +317,7 @@
 								global.changeEverPushed();
 							}
 							self.setReplyData(false,data.data.floor);
-							self.loading.hide();
+							//self.loading.hide();
 						} else {
 							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
