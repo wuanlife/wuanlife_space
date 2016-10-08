@@ -14,7 +14,7 @@ router.get('/:id', function(req, res, next) {
 			if (!err && response.statusCode == 200) {
 				var result = JSON.parse(body);
 				console.log(result);
-				if (result.ret == 200 && result.msg == "") {
+				if (result.ret == 200 && result.msg == "" && result.data.code == 1) {
 					var page = agent.Mobile ? 'topicMobile' : 'topic';
 					res.render(page, {
 						'path': '../',
@@ -24,7 +24,7 @@ router.get('/:id', function(req, res, next) {
 					});
 				} else {
 					res.render('error', {
-						'message': result.msg,
+						'message': result.msg || '未加入该私密星球',
 						error: {
 							'status': result.ret,
 							'stack': ''
