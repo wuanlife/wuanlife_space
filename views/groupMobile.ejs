@@ -116,6 +116,7 @@
 			identity: parseInt("<%=result.identity%>"),
 			pageCount: parseInt("<%=result.pageCount%>"),
 			private:parseInt("<%=result.private%>"),
+			disabled:false,
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
@@ -163,6 +164,8 @@
 							window.location.href = '/group/<%=result.groupID%>/post';
 							break;
 						case 3:
+							if (self.disabled) return;
+							self.disabled = true;
 							if(self.private == 0){
 								global.subData('/api/applyGroup',{
 									groupid: parseInt("<%=result.groupID%>")
@@ -174,13 +177,12 @@
 										type: 'success',
 										timer: 2000
 										});
-										self.joinBtn.remove();
-										$("<button id=\"joinBtn\" class=\"locBtn\" type=\"button\">+发帖</button>").appendTo($(".location > h1"));
 										self.joinBtn.text('+发帖'); //加入成功
 										self.identity = 2;
 									} else {
 										sweetAlert('错误', '加入星球失败', 'error');
 									}
+									self.disabled = false;
 								});
 							} else if(self.private == 1) {
 								global.subData("/api/applyPrivateGroup",{
@@ -193,13 +195,14 @@
 											type: 'success',
 											timer: 2000
 											});
-										self.joinBtn.remove();
-										$("<button id=\"joinBtn\" class=\"locBtn\" type=\"button\">+已申请</button>").appendTo($(".location > h1"));
+										self.joinBtn.attr('class', 'locBtn');
+										$(".location > h1").append(self.joinBtn);
 										self.joinBtn.text('+已申请'); //正在申请
 										self.identity = 4;
 									} else {
 										sweetAlert('错误', '加入星球失败', 'error');
 									}
+									self.disabled = false;
 								});					
 							}
 							break;

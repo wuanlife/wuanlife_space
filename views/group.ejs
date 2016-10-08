@@ -156,6 +156,7 @@
 							window.location.href = '/group/<%=result.groupID%>/post';
 							break;
 						case 3:
+							self.joinBtn.attr('disabled',true);
 							if(self.private == 0){
 								global.subData('/api/applyGroup',{
 									groupid: parseInt("<%=result.groupID%>")
@@ -172,6 +173,7 @@
 									} else {
 										sweetAlert('错误', '加入星球失败', 'error');
 									}
+									self.joinBtn.removeAttr('disabled');
 								});
 							} else if(self.private == 1) {
 								global.subData("/api/applyPrivateGroup",{
@@ -189,6 +191,7 @@
 									} else {
 										sweetAlert('错误', '加入星球失败', 'error');
 									}
+									self.joinBtn.removeAttr('disabled');
 								});					
 							}
 							break;
