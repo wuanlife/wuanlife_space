@@ -14,14 +14,17 @@ router.get('/:id', function(req, res, next) {
 			if (!err && response.statusCode == 200) {
 				var result = JSON.parse(body);
 				console.log(result);
-				if (result.ret == 200 && result.msg == "" && result.data.code == 1) {
-					var page = agent.Mobile ? 'topicMobile' : 'topic';
-					res.render(page, {
-						'path': '../',
-						result: result.data,
-						'title': result.data.title,
-						'user': req.session.user
-					});
+				if (result.ret == 200 && result.msg == "") {
+					if (result.data.code == 1) {
+						var page = agent.Mobile ? 'topicMobile' : 'topic';
+						res.render(page, {
+							result: result.data,
+							'title': result.data.title,
+							'user': req.session.user
+						});
+					} else{
+						res.redirect('/group/' + result.data.groupID);
+					}
 				} else {
 					res.render('error', {
 						'message': result.msg || '未加入该私密星球',
