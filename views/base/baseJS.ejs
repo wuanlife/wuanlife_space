@@ -39,6 +39,9 @@
                 /* Act on the event */
                 $(this).removeClass('open');
             });
+            //IE清除缓存
+            $.ajaxSetup({ cache: false });
+            //getJson获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
                     cb(data);
