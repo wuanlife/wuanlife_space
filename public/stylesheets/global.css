@@ -550,6 +550,14 @@ button.unCBtn{
 .upPIcon input[type="file"]{
     display:none;
 }
+/*上传头像进度条*/
+.img-upload-progress{
+    height:2px;
+    margin-bottom: 8px;
+    background-color: #1e88e5;
+    visibility:hidden;
+    width:0;
+}
 /*星球说明*/
 .cp-des{
     margin-bottom: 40px;

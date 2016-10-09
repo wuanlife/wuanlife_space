@@ -11,6 +11,7 @@
 			</div>
 			<div class="upPIcon">
 				<h4>星球头像（选填）：</h4>
+				<div class="img-upload-progress"></div>
 				<button type="button" id="upImgBtn">+</button>
 			</div>
 			<div class="cp-des">
@@ -129,7 +130,7 @@
 				},
 				'UploadProgress': function(up, file) {
 					// 显示进度条
-					//editor.showUploadProgress(file.percent);
+					showUploadProgress(file.percent);
 				},
 				'FileUploaded': function(up, file, info) {
 					// 每个文件上传成功后,处理相关的事情
@@ -161,7 +162,7 @@
 						//printLog('on UploadComplete');
 
 						// 隐藏进度条
-						//editor.hideUploadProgress();
+						hideUploadProgress();
 					}
 					// Key 函数如果有需要自行配置，无特殊需要请注释
 					//,
@@ -176,6 +177,16 @@
 		});
 		// domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
 		// uploader 为一个plupload对象，继承了所有plupload的方法，参考http://plupload.com/docs
+		function showUploadProgress(progress) {
+			var $progress = $(".img-upload-progress");
+			var width = $(".upPIcon").width();
+			$progress.css('visibility', 'visible');
+			$progress.width(progress * width / 100);
+		}
+		function hideUploadProgress() {
+			var $progress = $(".img-upload-progress");
+			$progress.css('visibility', 'hidden');
+		}
 		createGroup.init();
 	})();
 </script>
