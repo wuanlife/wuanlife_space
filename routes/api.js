@@ -361,9 +361,11 @@ router.post('/:method', function(req, res, next) {
                     mark: req.body.operation
                 }
             }, function optionalCallback(err, httpResponse, body) {
+                try {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 if (!err && httpResponse.statusCode == 200){
+                    console.log(JSON.parse(body));
                     return res.send(JSON.parse(body));
                 }
                 console.error('processApply failed:', err);
@@ -371,6 +373,12 @@ router.post('/:method', function(req, res, next) {
                     ret: 500,
                     msg:'服务器异常'
                 });
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
         break;
         //是否有新消息
