@@ -11,6 +11,7 @@
 			</div>
 			<div class="upPIcon">
 				<h4>星球头像（选填）：</h4>
+				<div class="img-upload-progress"></div>
 				<%if(result.g_image){%>
 				<button type="button" id="upImgBtn" style="background-image:url(<%=result.g_image%>);"></button>
 				<%}else{%>
@@ -33,6 +34,7 @@
 			cpForm: $(".cp-form"),
 			cpDes: $(".cp-des").children('textarea'),
 			subBtn: $("#saveBtn"),
+			loading: $(".loading"),
 			verificate: function() {
 				if (this.cpDes.val().length > 50) {
 					sweetAlert("格式错误", "星球介绍不能超于50字", "warning");
@@ -46,6 +48,7 @@
 					event.preventDefault();
 					/* Act on the event */
 					if (self.verificate()) {
+						self.loading.show();
 						self.cpForm.submit();
 					}
 				});
@@ -97,7 +100,7 @@
 				},
 				'UploadProgress': function(up, file) {
 					// 显示进度条
-					//editor.showUploadProgress(file.percent);
+					showUploadProgress(file.percent);
 				},
 				'FileUploaded': function(up, file, info) {
 					// 每个文件上传成功后,处理相关的事情
@@ -132,7 +135,7 @@
 						//printLog('on UploadComplete');
 
 						// 隐藏进度条
-						//editor.hideUploadProgress();
+						hideUploadProgress();
 					}
 					// Key 函数如果有需要自行配置，无特殊需要请注释
 					//,
@@ -145,6 +148,17 @@
 					// }
 			}
 		});
+		function showUploadProgress(progress) {
+			var $progress = $(".img-upload-progress");
+			var width = $(".upPIcon").width();
+			$progress.css('visibility', 'visible');
+			$progress.width(progress * width / 100);
+		}
+
+		function hideUploadProgress() {
+			var $progress = $(".img-upload-progress");
+			$progress.css('visibility', 'hidden');
+		}
 		setGroup.init();
 	})();
 </script>
