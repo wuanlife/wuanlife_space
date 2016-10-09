@@ -51,9 +51,11 @@
 							if (data.data.code == 1) {
 								window.location.href = '/'; //登录成功
 							} else {
+								self.loading.hide();
 								sweetAlert('提示', data.data.msg, 'warning');
 							}
 						} else {
+							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
