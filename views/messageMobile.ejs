@@ -90,6 +90,26 @@
             },
             rebindButton: function() {
                 var self = this;
+                //策略模式
+                var ChangeStrategies = {
+                    //输入Jquery对象button和其父元素message
+                    agree2disable: function(button, message) {
+                        message.children(".meg-button.disagree").remove();
+                        button.removeClass("agree");
+                        button.addClass("disable");
+                        button.html("已同意");
+                        button.unbind("touchend");                       
+                    },
+                    disagree2disable: function(button, message) {
+                        message.children(".meg-button.agree").remove();
+                        button.removeClass("disagree");
+                        button.addClass("disable");
+                        button.html("已拒绝");
+                        button.unbind("touchend");  
+                    }
+
+                }; 
+                
                 $(".meg-button.agree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
@@ -102,10 +122,7 @@
                             self.loading.hide();
                             if (data.ret == 200 && data.data) {
                                 if (data.data.code == 1) {
-                                    thisMessage.children(".meg-button.disagree").remove();
-                                    thisButton.removeClass("agree");
-                                    thisButton.addClass("disable");
-                                    thisButton.html("已同意")
+                                    ChangeStrategies.agree2disable(thisButton, thisMessage);
                                 } else {
                                     sweetAlert('提示', data.data.msg, 'warning');
                                 }
@@ -127,10 +144,7 @@
                             self.loading.hide();
                             if (data.ret == 200 && data.data) {
                                 if (data.data.code == 1) {
-                                    thisMessage.children(".meg-button.agree").remove();
-                                    thisButton.removeClass("disagree");
-                                    thisButton.addClass("disable");
-                                    thisButton.html("已拒绝")
+                                    ChangeStrategies.disagree2disable(thisButton, thisMessage)
                                 } else {
                                     sweetAlert('提示', data.data.msg, 'warning');
                                 }

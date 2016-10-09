@@ -35,6 +35,7 @@
 			cpDes: $(".cp-des").children('textarea'),
 			subBtn: $("#saveBtn"),
 			url: '<%=result.g_image%>',
+			loading: $(".loading"),
 			verificate: function() {
 				if (this.cpDes.val().length > 50) {
 					sweetAlert("格式错误", "星球介绍不能超于50字", "warning");
@@ -48,6 +49,7 @@
 					event.preventDefault();
 					/* Act on the event */
 					if (self.verificate()) {
+						self.loading.show();
 						self.cpForm.submit();
 					}
 					return false;
@@ -59,7 +61,7 @@
 		}
 		setGroup.uploader = Qiniu.uploader({
 			runtimes: 'html5,flash,html4', //上传模式,依次退化
-			browse_button: upImgBtn, //上传选择的点选按钮，**必需**
+			browse_button: 'upImgBtn', //上传选择的点选按钮，**必需**
 			uptoken_url: '/uptoken',
 			//Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
 			// uptoken : '<Your upload token>',

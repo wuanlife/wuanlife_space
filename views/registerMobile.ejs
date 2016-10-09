@@ -63,14 +63,15 @@
 							password: self.pw.val(),
 							nickname: self.nickname.val()
 						}, function(data) {
-							self.loading.hide();
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
 									window.location.href = '/'; //注册成功
 								} else {
+									self.loading.hide();
 									sweetAlert('提示', data.data.msg, 'warning');
 								}
 							} else {
+								self.loading.hide();
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});

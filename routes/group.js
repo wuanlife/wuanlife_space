@@ -12,30 +12,40 @@ router.get('/:groupid', function(req, res, next) {
 	var userid = (req.session.user) ? req.session.user.userID : null;
 	request(config.server + "?service=Post.GetGroupPost&group_id=" + req.params.groupid + "&user_id=" + userid + "&pn=" + pn,
 		function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				var result = JSON.parse(body);
-				var creator = (userid == result.data.creatorID) ? 1:0;
-				console.log(result);
-				if (result.ret == 200 && result.msg == "") {
-					var page = agent.Mobile ? 'groupMobile' : 'group';
-					res.render(page, {
-						result: result.data,
-						'title': result.data.groupName,
-						'creator':creator,
-						'user': req.session.user
-					});
+			try {
+				if (!error && response.statusCode == 200) {
+					var result = JSON.parse(body);
+					var creator = (userid == result.data.creatorID) ? 1 : 0;
+					console.log(result);
+					if (result.ret == 200 && result.msg == "") {
+						var page = agent.Mobile ? 'groupMobile' : 'group';
+						res.render(page, {
+							result: result.data,
+							'title': result.data.groupName,
+							'creator': creator,
+							'user': req.session.user
+						});
+					} else {
+						res.render('error', {
+							'message': result.msg,
+							error: {
+								'status': result.ret,
+								'stack': ''
+							}
+						});
+					}
 				} else {
-					res.render('error', {
-						'message': result.msg,
+					console.error('group failed:', error);
+					next(error);
+				}
+			} catch (e) {
+				res.render('error', {
+						'message': '服务器异常',
 						error: {
-							'status': result.ret,
-							'stack': ''
+							'status': 500,
+							'stack': e.message
 						}
 					});
-				}
-			} else {
-				console.error('group failed:', error);
-				next(error);
 			}
 		})
 });
@@ -92,7 +102,7 @@ router.post('/:groupid/post', function(req, res, next) {
 				return html;
 			}
 		},
-		onTagAttr:function(tag,name,value,isWhiteAttr){
+		onTagAttr: function(tag, name, value, isWhiteAttr) {
 			if (name == 'style') {
 				return name + '="' + value + '"';
 			}
@@ -183,7 +193,7 @@ router.post('/:groupid/set', function(req, res, next) {
 		if (!err && httpResponse.statusCode == 200) {
 			var result = JSON.parse(body);
 			//console.log(result);
-			if (result.ret == 200  && result.data.data == 1) {
+			if (result.ret == 200 && result.data.data == 1) {
 				res.redirect('/group/' + req.params.groupid);
 			} else {
 				res.render('error', {
