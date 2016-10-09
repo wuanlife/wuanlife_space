@@ -34,6 +34,7 @@
 			cpDes: $(".cp-des").children('textarea'),
 			url: '',
 			private:0,
+			loading: $(".loading"),
 			verificate: function() {
 				this.private = $('#private:checked').val();
 				if (this.private!=1 && this.private!=0) {
@@ -59,6 +60,7 @@
 				self.cpForm.submit(function(event) {
 					event.preventDefault();
 					if (self.verificate()) {
+						self.loading.show();
 						global.subData('/createGroup', {
 							name: self.pName.val(),
 							g_introduction: self.cpDes.val().trim(),
@@ -69,9 +71,11 @@
 								if (data.data.code == 1) { //创建成功
 									window.location.href = '/group/' + data.data.info.group_base_id;
 								} else {
+									self.loading.hide();
 									sweetAlert('提示', data.data.msg, 'warning');
 								}
 							} else {
+								self.loading.hide();
 								sweetAlert('错误', data.msg, 'error');
 							}
 						});
