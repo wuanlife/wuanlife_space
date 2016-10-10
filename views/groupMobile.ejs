@@ -10,7 +10,7 @@
 			<%}else if(result.private=="0") {%>
 			<button type="button" id="joinBtn" class="locBtn">+加入</button>
 			<%} %>
-			<%if(creator){%>
+			<%if(result.identity == '01'){%>
 			<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 			<% } %>
 		</h1>

@@ -15,14 +15,12 @@ router.get('/:groupid', function(req, res, next) {
 			try {
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
-					var creator = (userid == result.data.creatorID) ? 1 : 0;
-					console.log(result);
+					//console.log(result);
 					if (result.ret == 200 && result.msg == "") {
 						var page = agent.Mobile ? 'groupMobile' : 'group';
 						res.render(page, {
 							result: result.data,
 							'title': result.data.groupName,
-							'creator': creator,
 							'user': req.session.user
 						});
 					} else {
