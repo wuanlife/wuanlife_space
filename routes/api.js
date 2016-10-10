@@ -332,6 +332,7 @@ router.post('/:method', function(req, res, next) {
                 res.header('Charset', 'utf8');
                 try{
                     if (!err && httpResponse.statusCode == 200){
+                       // console.log(JSON.parse(body));
                         return res.send(JSON.parse(body));
                     }
                     console.error('Reply failed:', err);
