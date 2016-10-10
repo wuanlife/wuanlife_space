@@ -56,15 +56,17 @@ router.post('/', function(req, res, next) {
 			code: req.body.code
 		}
 	}, function optionalCallback(err, httpResponse, body) {
-		if (err) {
-			console.error('Check email failed:', err);
-			next(err);
-		}
-		//console.log('Check Email successful!  Server responded with:', body);
 		res.header('Content-type', 'application/json');
 	    res.header('Charset', 'utf8');
+		if (err) {
+			console.error('verify email failed:', err);
+			return res.send({
+				ret:500,
+				msg:'服务器异常'
+			});
+		}
+		//console.log('Check Email successful!  Server responded with:', body);
 	    res.send(JSON.parse(body));
-
 	});
 });
 module.exports = router;

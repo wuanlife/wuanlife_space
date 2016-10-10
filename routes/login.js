@@ -25,14 +25,14 @@ router.post('/', function(req, res, next) {
 				req.session.user = JSON.parse(body).data.info;
 				req.session.save(); //保存一下修改后的Session
 				//console.log('Login successful!  Server responded with:', body);
-				res.send(body);
+				res.send(JSON.parse(body));
 			});
 		} else{
 			console.error('Login failed:', err.toString());
-			res.send(JSON.stringify({
+			res.send({
 				ret:500,
 				msg:'服务器异常'
-			}));
+			});
 		}
 	});
 });

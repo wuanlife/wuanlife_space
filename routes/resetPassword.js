@@ -63,17 +63,16 @@ router.post('/set', function(req, res, next) {
             psw:req.body.psw
         }
     }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
         if (err) {
             console.error('email send failed:', err);
-            res.header('Content-type', 'application/json');
-            res.header('Charset', 'utf8');
-            res.send({
-                err: err
+            return res.send({
+                ret: 500,
+                msg:'服务器异常'
             });
         }
        // console.log('Reset Password successful!  Server responded with:', body);
-        res.header('Content-type', 'application/json');
-        res.header('Charset', 'utf8');
         res.send(JSON.parse(body));
     });
 });
