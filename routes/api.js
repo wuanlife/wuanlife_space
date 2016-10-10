@@ -12,137 +12,214 @@ router.get('/:method', function(req, res, next) {
 		case 'getindex':
 			var pn = req.param('currentpage');
 			request(config.server + '?service=Post.GetIndexPost&pn=' + pn, function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getMyPlanet':
 			var pn = req.param('currentpage');
 			var id = req.param('userId'); //路由参数，获取相应用户星球展示，非session.user.userid
 			request(config.server + '?service=Post.GetMyGroupPost&id=' + id + '&pn=' + pn, function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getPlanetAll':
 			var pn = req.param('currentpage');
 			request(config.server + '?service=Group.Lists&page=' + pn, function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getPostReplys':
 			var pn = req.param('currentpage');
 			var post_id = req.param('post_id');
 			request(config.server + '?service=Post.GetPostReply&post_id=' + post_id + '&pn=' + pn,
-				function(error, response, body) {
-					if (!error && response.statusCode == 200) {
-						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-						res.header('Content-type', 'application/json');
-						res.header('Charset', 'utf8');
-						res.send(body);
-					}
-				})
+			function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getPostOptRight':
 			var post_id = req.param('post_id');
 			var user_id = userID;
 			request(config.server + '?service=Post.GetPostBase&post_id=' + post_id + '&id=' + user_id,
-				function(error, response, body) {
-					if (!error && response.statusCode == 200) {
-						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-						res.header('Content-type', 'application/json');
-						res.header('Charset', 'utf8');
-						res.send(body);
-					}
-				})
+			function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getGroupPlanetShow':
 			var pn = req.param('currentpage');
 			var groupid = req.param('groupid');
 			request(config.server + '?service=Post.GetGroupPost&group_id=' + groupid + '&pn=' + pn + '&user_id=' + userID, function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
         case 'getMessageShow':
             var pn = req.param('currentpage');
             var user_id = req.param('userId');
             request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn, function(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-                    res.header('Content-type', 'application/json');
-                    res.header('Charset', 'utf8');
-                    res.send(body);
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-            })
+            });
             break;            
 		case 'getPostForEdit':
 			var postid = req.param('postid');
             var user_id = userID;
 			request(config.server + '?service=Post.GetPostBase&post_id=' + postid+ '&id=' + user_id,
-				function(error, response, body) {
-					if (!error && response.statusCode == 200) {
-						//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-						res.header('Content-type', 'application/json');
-						res.header('Charset', 'utf8');
-						res.send(body);
-					}
-			})
+			function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'isJoinP':
 			var groupid = req.param('groupid');
 			var userid = userID;
 			request(config.server + '?service=Group.GStatus&group_base_id=' + groupid + '&user_id=' + userid, function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getJoindGroup':
 			var user_id = req.param('user_id'); //路由参数，获取相应用户星球展示，非session.user.userid
 			var pn = req.param('pn');
 			request(config.server + '?service=Group.GetJoined&user_id=' + user_id + '&page=' + pn, 
-				function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+			function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		case 'getCreateGroup':
 			var user_id = req.param('user_id');  //路由参数，获取相应用户星球展示，非session.user.userid
 			var pn = req.param('pn');
 			request(config.server + '?service=Group.GetCreate&user_id=' + user_id + '&page=' + pn, 
-				function(error, response, body) {
-				if (!error && response.statusCode == 200) {
-					//console.log(JSON.parse(body));// Show the HTML for the Google homepage. 
-					res.header('Content-type', 'application/json');
-					res.header('Charset', 'utf8');
-					res.send(body);
-				}
-			})
+			function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+			});
 			break;
 		default:
 			res.send('respond with a resource');
@@ -165,14 +242,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Sticky failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('Sticky failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //帖子取消置顶
@@ -186,14 +271,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Unsticky failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('Unsticky failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //删除帖子
@@ -207,14 +300,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Delete failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('Delete failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //帖子回复
@@ -229,14 +330,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Reply failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('Reply failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         case 'sendAuthCode':
@@ -248,14 +357,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Send email failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('Send email failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //锁定帖子
@@ -269,15 +386,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    console.log(JSON.parse(body));
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('lockPost failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('lockPost failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //解锁帖子
@@ -291,14 +415,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('unlockPost failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('unlockPost failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //加入普通星球
@@ -312,14 +444,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('apply failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('apply failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         //加入私密星球
@@ -361,18 +501,18 @@ router.post('/:method', function(req, res, next) {
                     mark: req.body.operation
                 }
             }, function optionalCallback(err, httpResponse, body) {
-                try {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    console.log(JSON.parse(body));
-                    return res.send(JSON.parse(body));
-                }
-                console.error('processApply failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                try {
+                    if (!err && httpResponse.statusCode == 200){
+                        //console.log(JSON.parse(body));
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('processApply failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 } catch(e){
                     res.send({
                         ret: 500,
@@ -391,14 +531,22 @@ router.post('/:method', function(req, res, next) {
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
-                if (!err && httpResponse.statusCode == 200){
-                    return res.send(JSON.parse(body));
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('check failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 }
-                console.error('check failed:', err);
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
             });
             break;
         default:
