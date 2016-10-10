@@ -312,16 +312,23 @@
 						text: self.myReplyContent.val()
 					}, function(data) {
 						//console && console.log(data);
-						if (data.ret == 200 && data.data) {
-							self.myReplyContent.val('');
-							var page = parseInt((data.data.floor - 2)/30) + 1;
-							if (page != global.getPageNow()) {
-								var newURL = location.pathname + '?page=' + page;
-								history.pushState(null,'',newURL);
-								global.changeEverPushed();
+						if (data.ret == 200) {
+							if (data.data) {
+								self.myReplyContent.val('');
+								var page = parseInt((data.data.floor - 2)/30) + 1;
+								if (page != global.getPageNow()) {
+									var newURL = location.pathname + '?page=' + page;
+									history.pushState(null,'',newURL);
+									global.changeEverPushed();
+								}
+								self.setReplyData(false,data.data.floor);
+							} else{
+								self.loading.hide();
+								sweetAlert('提示', '帖子已经被锁定', 'warning');
+								$('.my-comment').remove();
+								self.isLock = 1;
+								self.post_lock.text('取消锁帖');
 							}
-							self.setReplyData(false,data.data.floor);
-							// self.loading.hide();
 						} else {
 							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
