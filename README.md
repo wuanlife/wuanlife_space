@@ -5,6 +5,20 @@
 
 ##ChangeLog
 
+Version 1.1.3（2016.10.5）<br>
+1.新增私密星球<br>
+2.新增消息中心<br>
+3.新增帖子锁定功能<br>
+4.新增子项目：管理中心（wuanlife_console）<br>
+参与人员：阿狸、haha214、caoyu、aunhappy、jinchaojian、梁王、梁文元、马太阳
+
+Version 1.1.2（2016.9.7）<br>
+1.新增个人中心<br>
+2.新增密码找回<br>
+3.新增星球设置<br>
+4.置顶帖加入置顶标志<br>
+参与人员：wanghouyi、haha214、caoyu、aunhappy、jinchaojian、梁王、天晴了
+
 Version 1.1.1（2016.7.9）<br>
 1.新增星球头像、星球说明<br>
 2.新增“我加入的星球”入口及页面<br>
