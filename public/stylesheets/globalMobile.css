@@ -1186,8 +1186,8 @@ textarea.form-control{
     cursor: pointer;
 }
 .meg-button.disable{
-    color: rgba(105, 94, 92,1.0);
-    background-color: rgba(202, 192, 190,1.0);
+    color: rgba(0, 102, 255,1.0);
+    background-color: rgba(202, 192, 190,0.0);
     cursor: pointer;
 }
 
