@@ -75,6 +75,7 @@
 			myReplyBtn: $('#myReplyBtn'),
 			isSticky: parseInt("<%=result.sticky%>"),
 			isLock: parseInt("<%=result.lock%>"),
+			lockDisable:false,
 			verificate: function() {
 				if (this.myReplyContent.val().length < 1) {
 					sweetAlert('格式错误', '回复内容不能为空', 'warning');
@@ -175,6 +176,8 @@
 				switch (self.isLock) {
 					//未锁定
 					case 0:
+						if (self.lockDisable) return;
+						self.lockDisable = true;
 						global.subData('/api/lockPost', {
 							post_id: parseInt("<%=result.postID%>")
 						}, function(data) {
@@ -190,10 +193,13 @@
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
+							self.lockDisable = false;
 						});
 						break;
 						//已锁定
 					case 1:
+						if (self.lockDisable) return;
+						self.lockDisable = true;
 						global.subData('/api/unlockPost', {
 							post_id: parseInt("<%=result.postID%>")
 						}, function(data) {
@@ -214,6 +220,7 @@
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
+							self.lockDisable = false;
 						});
 						break;
 					default:
