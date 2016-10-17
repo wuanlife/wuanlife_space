@@ -1,6 +1,4 @@
-html,body{
-    height:100%;
-}
+
 body{
     font-family: 'Microsoft YaHei',sans-serif;
     line-height: 1.5;
@@ -26,6 +24,10 @@ h1,h2,h3,h4,h5,p,ul,li{
     margin:0;
     padding:0;
 }
+i,address,caption,cite,code,dfn,em,th,var{
+    font-style: normal;
+    font-weight: normal;
+}
 ul{
     list-style: none;
 }
@@ -50,6 +52,12 @@ ul{
     width:25%;
     float:left;
 }
+.fL{
+    float:left;
+}
+.fR{
+    float:right;
+}
 /*文本单行超出省略号表示*/
 .text-ellipsis{
     white-space: nowrap; 
@@ -59,14 +67,84 @@ ul{
 .all-wrapper{
     position: relative;
     background-color: #f6fafb;
-    height:100%;
+    overflow:hidden;
 }
-
+/*主栏*/
+.main-wrapper{
+    will-change: transform;
+    background-color: inherit;
+    position: relative;
+    height:100%;
+    z-index: 1;
+}
+.open .main-wrapper{
+    -webkit-animation: open .35s ease-in-out;
+        animation: open .35s ease-in-out;
+    -webkit-transform:translateX(5.546667rem);
+            transform:translateX(5.546667rem);
+}
+.close .main-wrapper{
+    -webkit-animation: close .15s ease-in-out;
+        animation: close .15s ease-in-out;
+    -webkit-transform:none;
+            transform:none;
+}
+@-webkit-keyframes open {
+    0%      {-webkit-transform:translateX(0);}
+    70%    {-webkit-transform:translateX(6.5rem);}
+    100%  {-webkit-transform:translateX(5.546667rem);}
+}
+@keyframes open {
+    0%      {transform:translateX(0);}
+    70%    {transform:translateX(6.5rem);}
+    100%  {transform:translateX(5.546667rem);}
+}
+@-webkit-keyframes close {
+    0%      {-webkit-transform:translateX(5.546667rem);}
+    100%  {-webkit-transform:translateX(0);}
+}
+@keyframes close {
+    0%      {transform:translateX(5.546667rem);}
+    100%  {transform:translateX(0);}
+}
+/**************
+*****折叠状态****
+***************/
+/*侧栏出现时main上层遮罩*/
+.mask{
+    display:none;
+}
+.open .mask{
+    display:block;
+    position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 30;
+    height:100%;
+    background-color: #000;
+    opacity: 0.1;
+}
+/*主内容容器*/
+.mainContainer{
+    height:100%;
+    overflow-y: scroll;
+    position: relative;
+    z-index: 10;
+}
+/*小图标*/
+.icon{
+    display:inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    vertical-align: bottom;
+}
 /*******************************
 **********移动端导航条*********
 *********************************/
 .navbar{
-    position: fixed;
+    position: absolute;
     top:0;
     left:0;
     width:100%;
@@ -74,9 +152,7 @@ ul{
     text-align: center;
     background-color: #5ab8fe;
     color:#fff;
-    -webkit-transition: left .15s linear; 
-    transition: left .15s linear;
-    z-index: 1;
+    z-index: 20;
 }
 .navbar h1{
     font-size: 0.56rem;
@@ -103,11 +179,11 @@ ul{
 .sidebarContainer{
     height:100%;
     width:100%;
-    position: fixed;
+    position: absolute;
     top:0;
     left:0;
-    overflow-y: auto; 
-    background-color: #53aaeb; 
+    overflow:hidden;
+    overflow-y: scroll;
 }
 .sidebar{
     width:5.546667rem;
@@ -115,7 +191,6 @@ ul{
     color:#fff;
     min-height: 100%;
     text-align: center;
-    overflow-y: auto;
     position: relative;
     padding-bottom: 1.333333rem;
    /* z-index: 1;*/
@@ -168,14 +243,39 @@ ul{
     height:0.533333rem;
     margin-right: 0.138889rem;
 }
-.navbar-option>li:nth-child(1) .navbar-option-item:before{
+.nav-h:before{
     background-image: url(../images/navbar-icons_03.png);
 }
-.navbar-option>li:nth-child(2) .navbar-option-item:before{
+.nav-mg:before{
     background-image: url(../images/navbar-icons_06.png);
 }
-.navbar-option>li:last-child .navbar-option-item:before{
+.nav-ag:before{
     background-image: url(../images/navbar-icons_09.png);
+}
+.nav-per:before{
+    background-image: url(../images/personal.png);
+}
+.nav-mes:before{
+    background-image: url(../images/mes.png);
+}
+.red-point{
+    display:none;
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+    background-color: #ff0000;
+    vertical-align: middle;
+    margin-left: 0.266667rem;
+}
+[data-dpr="2"] .red-point{
+    width:16px;
+    height:16px;
+    border-radius: 16px;
+}
+[data-dpr="3"] .red-point{
+    width:24px;
+    height:24px;
+    border-radius: 24px;
 }
 /*折叠账户*/
 .navbar-account>li{
@@ -239,10 +339,7 @@ span.navbar-account-item{
 .main{
     padding: 1.133333rem 0.466667rem 0;
     position: relative;
-    left:0;
     background-color: inherit;
-    -webkit-transition: left .15s linear; 
-    transition: left .15s linear;
     width:100%;
     min-height: 100%;
 }
@@ -250,34 +347,6 @@ span.navbar-account-item{
     padding-bottom: 1.866667rem;
     position: relative;
 }
-/**************
-*****折叠状态****
-***************/
-/*侧栏出现时main上层遮罩*/
-.sidebar-extend .mask{
-    position: absolute;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    z-index: 1;
-}
-.sidebar-extend .main,.sidebar-extend .navbar{
-     left:5.546667rem; 
-    -webkit-animation: open .35s ease-in-out;
-    animation: open .35s ease-in-out;
-}
-@-webkit-keyframes open {
-    0%      {left:0;}
-    70%    {left:6.5rem;}
-    100%  {left:5.546667rem;}
-}
-@keyframes open {
-    0%      {left:0;}
-    70%    {left:6.5rem;}
-    100%  {left:5.546667rem;}
-}
-
 /********************
 *********当前位置***
 *******************/
@@ -289,11 +358,14 @@ span.navbar-account-item{
     line-height: 1;
     float: left; 
     color:#5ab8fe; 
+    width: 100%;
 }
 .location>h1>a{
-   color:#5ab8fe; 
+   color:#5ab8fe;
+   display: inline-block;
+   width: 60%;
 }
-.location>button,.location>a{
+.locBtn{
     display:inline-block;
     color:#f6fafb;
     font-size: 0.333333rem;
@@ -303,12 +375,58 @@ span.navbar-account-item{
     background-color: #5ab8fe;
     float:right;
     border-radius: 5px 5px;
+    cursor: pointer;
 }
-[data-dpr="2"] .location>a,[data-dpr="2"] .location>button{
+[data-dpr="2"] .locBtn{
     border-radius: 10px 10px;
 }
-[data-dpr="3"] .location>a,[data-dpr="2"] .location>button{
+[data-dpr="3"] .locBtn{
     border-radius: 15px 15px;
+}
+.bot{ 
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
+.botBtn{
+    width: 60%;
+    color:#f6fafb;
+    font-size: 0.333333rem;
+    padding:0 0.2rem;
+    height:0.9rem;
+    line-height: 0.64rem;
+    background-color: #5ab8fe;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+/*location副标题(星球创建者名) */
+.location>h2 {
+    display:inline-block;
+    font-size: 0.4rem;
+    color: #5ab8fe;
+    margin: 0.5rem 0;
+    padding: 0 0.5rem;
+    line-height: 0.8rem;
+    width: 100%;
+    text-align: center;
+}
+
+/*星球标题长度限制*/
+.groupH{
+    max-width: 6.0rem;
+    display:inline-block;
+    word-wrap: break-word;/*英文长单词断行*/
+}
+/*星球设置图标*/
+.gSet{
+    width:0.666667rem !important;
+    height:0.666667rem;
+    background-image: url(../images/gset_03.png);
+    margin: 0 0.666667rem;
+    display: inline-block;
+    float: right;
 }
 /******************
 ********翻页模块***
@@ -376,6 +494,22 @@ button.unCBtn{
 }
 .chapter>h2>a{
     color:#363636;
+}
+/*文章置顶标识*/
+.cha-top{
+    display:inline-block;
+    padding:0.066667rem 0.266667rem;
+    background-color: #5ab8fe;
+    color:#f6fafb;
+    margin-right: 0.4rem;
+    font-size: 0.346667rem;
+    border-radius: 3px;
+}
+[data-dpr="2"] .cha-top{
+    border-radius: 6px;
+}
+[data-dpr="3"] .cha-top{
+    border-radius: 9px;
 }
 /*列表正文*/
 .chapter-text{
@@ -521,6 +655,10 @@ button.unCBtn{
 [data-dpr="3"] .line-form button[type="submit"]{
     border-radius: 15px;
 }
+.checkbox label{
+    position:static;
+    width:auto;
+}
 /********************
 ****创建星球**********
 **********************/
@@ -603,8 +741,37 @@ button.unCBtn{
 .cp-des textarea{
     height:3.4rem;
 }
+/*是否私密*/
+.checksq{
+    margin-bottom: 0.773333rem;
+    margin-top:-1rem;
+}
+.checksq input[type='checkbox']{
+    display:none;
+}
+.checksq label{
+    font-size: 0.373333rem;
+    color:#b4b4b4;
+    line-height: 1;
+}
+.checksq label:before{
+    display:inline-block;
+    margin-right: 0.226667rem;
+    content:'';
+    width:0.333333rem;
+    height:0.333333rem;
+    background-size: 100%;
+    vertical-align: middle;
+    background-image: url(../images/check_03.png);
+}
+.chk_sq:checked + label{
+    color:#5ab8fe;
+}
+.chk_sq:checked + label:before{
+    background-image: url(../images/checked_03.png);
+}
 /*******************
-******登陆和注册***********
+******登陆、注册、重置密码***********
 ******************/
 .login{
     position: absolute;
@@ -616,6 +783,11 @@ button.unCBtn{
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);  
 }
+.loginL{
+    width:7.066667rem;
+    margin: 0 auto ;
+    padding: 0.866667rem 0 2.0rem;
+}
 .login-group{
     padding-bottom: 0.2rem;
     margin-bottom:0.426667rem;
@@ -624,14 +796,33 @@ button.unCBtn{
     width:0.64rem;
     height:0.64rem;
 }
-.lable-name{
+/*用户名*/
+.label-name{
     background-image: url(../images/login_01.png);
 }
-.lable-e{
+/*邮箱*/
+.label-e{
     background-image: url(../images/login_03.png);
 }
+/*密码*/
 .label-paw{
     background-image: url(../images/login_06.png);
+}
+/*验证码*/
+.label-code{
+    background-image: url(../images/authcode.png);
+}
+/*确认密码*/
+.label-cPass{
+    background-image: url(../images/ConPass.png);
+}
+/*生日*/
+.label-br{
+    background-image: url(../images/br_03.png);
+}
+/*性别*/
+.label-sex{
+    background-image: url(../images/sex_03.png);
 }
 .login-group input{
     font-size: 0.373333rem;
@@ -649,6 +840,68 @@ button.unCBtn{
 .login-form a{
     font-size: 0.32rem;
     color:#5ab8fe;
+}
+.login-group .radiobox{
+    font-size: 0.373333rem;
+    height:0.64rem;
+    margin-left: 1.133333rem;
+}
+/*单选框*/
+.radiobox label{
+    position:static;
+    width:auto;
+}
+.radiobox .login-r{
+    color:#b4b4b4;
+    line-height: 0.64rem;
+    height:0.64rem;
+    /*margin-right: 0.2rem;*/
+    width:25%;
+}
+.radiobox input[type='radio']{
+    width:0.266667rem;
+    height:0.266667rem;
+    margin:0;
+    margin-left: 0.133333rem;
+    padding:0;
+    vertical-align: middle;
+}
+/*邮箱验证*/
+.verify {
+    position: absolute;
+    font-size: 0.373333rem;
+    line-height: 0.64rem;
+    height:0.64rem;
+    left:100%;
+    top:0;
+    white-space: nowrap;
+}
+a.verify {
+    font-size: 0.373333rem;
+}
+/*发送验证码按钮*/
+button.verify{
+    background-color: #5ab8fe;
+    color:#fff;
+    cursor:pointer;
+    border-radius: 7px;
+    right:0;
+    left:auto;
+    width:3.2rem;
+}    
+.verify.unCBtn{
+    background-color: #bababa;
+    cursor:default;
+}
+/*错误提示*/
+.errTip{
+    display:block;
+    color:#a94442;
+}
+.line-fgroup .errTip{
+    position: absolute;
+    top:100%;
+    margin-top: 0.266667rem;
 }
 /*******************
 ****各种帖子中的表单***
@@ -899,4 +1152,62 @@ textarea.form-control{
 ************************/
 .myJoinMd{
     padding-bottom: 0.426667rem;
+}
+
+
+/****************
+*********消息*****
+******************/
+.message-col {
+    border-top: 1px solid rgba(194,222,248,1.0);
+    margin: 0.5rem 0;
+}
+.message {
+    padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(194,222,248,1.0);
+}
+
+.message > h2 {
+    width: 70%;
+    float: left;
+    line-height: 35px;
+    font-size: 0.35rem;
+    color: rgba(90,184,254,1.0);
+}
+
+.meg-button {
+    font-size: 0.3rem;
+    padding: 4px 4px;
+    margin: 6px 0 6px 0.2rem;
+    border-radius: 4px;
+    color: rgba(246, 250, 251,1.0);
+    background-color: rgba(90,184,254,1.0);
+    line-height: 18px;
+    cursor: pointer;
+}
+.meg-button.disable{
+    color: rgba(0, 102, 255,1.0);
+    background-color: rgba(202, 192, 190,0.0);
+    cursor: pointer;
+}
+
+
+/* 私密星球权限不够  */
+.blockPage {
+    color:#cccccc;
+    text-align: center;
+    font-size: 0.426667rem;
+    padding: 40px 0;
+    margin:0 10%;   
+}
+.blockPage p {
+    margin: 15px 0;
+}
+.blockPage img{
+    width: 100%;
+    margin: 1rem 0 2rem 0;
+}
+.blockPage > button {
+    width: 100%;
+    height: 70px;
 }
