@@ -20,8 +20,10 @@
 			postForm: $(".post-form"),
 			subBtn: $("#post-issue"),
 			verificate: function() {
-				this.title.val(this.title.val().trim());
-				this.editor.val(this.editor.val().trim());
+				var title = $.trim(this.title.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
+				var text = global.utf16toEntities($.trim(this.editor.val()));
+				this.title.val(title);
+				this.editor.val(text);
 				if (this.title.val().length == 0) {
 					sweetAlert('格式错误', '请填写标题！', 'warning');
 					return false;

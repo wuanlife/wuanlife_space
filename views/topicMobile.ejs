@@ -76,11 +76,14 @@
 			isSticky: parseInt("<%=result.sticky%>"),
 			isLock: parseInt("<%=result.lock%>"),
 			lockDisable:false,
+			replyText:'',
 			verificate: function() {
-				if (this.myReplyContent.val().length < 1) {
+				this.replyText = $.trim(this.myReplyContent.val());
+				if (this.replyText.length < 1) {
 					sweetAlert('格式错误', '回复内容不能为空', 'warning');
 					return false;
 				}
+				this.replyText = global.utf16toEntities(this.replyText);
 				return true;
 			},
 			getReplyData: function(param, cb) {
@@ -312,7 +315,7 @@
 					self.loading.show();
 					global.subData("/api/postReply", {
 						post_id: parseInt("<%=result.postID%>"),
-						text: self.myReplyContent.val()
+						text: self.replyText
 					}, function(data) {
 						//console && console.log(data);
 						if (data.ret == 200) {
