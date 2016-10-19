@@ -126,11 +126,12 @@
 			title: $("#post-title"),
 			postForm: $(".post-form"),
 			subBtn: $("#post-issue"),
+			loading: $(".loading"),
+			text:'',
 			verificate: function() {
 				var title = $.trim(this.title.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
-				var text =  global.utf16toEntities($.trim(editor.$txt.html()));
 				this.title.val(title);
-				editor.$txt.html(text);
+				// editor.$txt.html(text);
 				if (this.title.val().length == 0) {
 					sweetAlert('格式错误', '请填写标题！', 'warning');
 					return false;
@@ -144,6 +145,8 @@
 					sweetAlert('格式错误', '请填写内容！', 'warning');
 					return false;
 				}
+				var text =  global.utf16toEntities($.trim(editor.$txt.html()));
+				this.text = text;
 				return true;
 			},
 			editorEvent: function() {
@@ -162,7 +165,7 @@
 				global.getData('/api/getPostForEdit', {
 					postid: parseInt("<%=topicID%>")
 				}, function(data) {
-					console && console.log(data);
+					//console && console.log(data);
 					if (data.ret == 200 && data.data && data.data.editRight == 1) {
 						//self.PCtext.html(data.data.text);
 						//console.log(self.PCtext.html());
@@ -204,11 +207,26 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				self.subBtn.on('click', function(event) {
+				self.postForm.submit(function(event){
 					event.preventDefault();
-					/* Act on the event */
 					if (self.verificate()) {
-						self.postForm.submit();
+						self.loading.show();
+						global.subData("/topic/"+"<%=topicID%>"+"/edit",{
+							title:self.title.val(),
+							text:self.text
+						},function(data){
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/topic/' + '<%=topicID%>';
+								} else{
+									self.loading.hide();
+									sweetAlert('错误', '编辑失败', 'error');
+								}
+							} else{
+								self.loading.hide();
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
 					}
 				});
 			},
