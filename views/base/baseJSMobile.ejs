@@ -121,6 +121,7 @@
                     event.preventDefault();
                     /* Act on the event */
                     var pageNow = global.getPageNow();
+                    if (pageNow>pageCount) pageNow = pageCount;
                     if (pageNow == 1) {
                         return;
                     } else{
@@ -135,6 +136,7 @@
                     event.preventDefault();
                     /* Act on the event */
                     var pageNow = global.getPageNow();
+                    if (pageNow>pageCount) pageNow = pageCount;
                     if (pageNow == pageCount) {
                         return;
                     } else{
