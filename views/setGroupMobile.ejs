@@ -37,7 +37,9 @@
 			url: '<%=result.g_image%>',
 			loading: $(".loading"),
 			verificate: function() {
-				if (this.cpDes.val().length > 50) {
+				var des = $.trim(this.cpDes.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
+				this.cpDes.val(des);
+				if (des.length > 50) {
 					sweetAlert("格式错误", "星球介绍不能超于50字", "warning");
 					return false;
 				}
