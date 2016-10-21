@@ -20,6 +20,12 @@
         <div class="navbar">
             <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
             <ul class="navbar-account">
+                <li>
+                    <form method="get" accept-charset="utf-8" class="search">
+                        <input type="text" name="" value="" placeholder="请输入搜索内容" >
+                        <button></button>
+                    </form>
+                </li>
                 <% if (user) { %>
                 <li>
                     <a href="/message" class="navbar-account-item">
@@ -44,5 +50,6 @@
                 <li id="nav-myP"><a href="/uGroup/<%=user.userID%>" title="" class="navbar-option-item">我的星球</a></li>
                 <% } %>
                 <li id="nav-allP"><a href="/allGroup" title="" class="navbar-option-item">全部星球</a></li>
+               
             </ul>
         </div>  
