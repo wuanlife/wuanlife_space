@@ -20,7 +20,8 @@ router.get('/', function(req, res, next) {
                         "searchText": text,
                         "title": "搜索结果",
                         "result": result.data,
-                        "user": req.session.user
+                        "user": req.session.user,
+                        "unsearchbtn":true
                     });
                 } else {
                     res.render('error', {
