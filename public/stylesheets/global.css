@@ -964,7 +964,7 @@ textarea.form-control{
     margin-bottom: 20px;
 }
 .myJoinList h2{
-    font-size: 20px;
+    font-size: 16px;
     color:#5ab8fe;
 }
 
@@ -1016,6 +1016,37 @@ textarea.form-control{
 .blockPage img{
     
 }
+/****************
+*******搜索结果*****
+*****************/
+.resultShow{
+    padding-top: 35px;
+}
+.rsH{
+    font-size: 30px;
+    border-bottom: 4px solid #f5f5f5;
+    color:#5ab8fe;
+}
+.showMore{
+    position: relative;
+}
+.showMoreBtn{
+    width:100%;
+    height:45px;
+    color:#5ab8fe;
+    background-color: #f5f5f5;
+    font-size: 22px;
+    line-height: 45px;
+    cursor: pointer;
+    display:block;
+}
+.noFind{
+    font-size: 32px;
+    color:#bababa;
+    padding:105px 0 45px;
+    text-align: center;
+}
+
 /******************
 *******底栏********
 ******************/
