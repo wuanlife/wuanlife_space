@@ -172,10 +172,10 @@ span.navbar-account-item{
     cursor:pointer;
 }
 /*全局查询表单*/
-.navbar-account .search{
+.navbar-account .gl-search{
     position: relative;
 }
-.navbar-account .search input{
+.navbar-account .gl-search input{
     width:235px;
     height:28px;
     line-height: 28px;
@@ -186,7 +186,7 @@ span.navbar-account-item{
     margin-right: 13px;
     font-size: 12px;
 }
-.navbar-account .search button{
+.navbar-account .gl-search button{
     position: absolute;
     bottom:0;
     left:0;

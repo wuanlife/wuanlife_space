@@ -173,6 +173,20 @@ ul{
     background-size: 0.613333rem 0.4rem;
     background-color: inherit;
 }
+/*搜素按钮*/
+.gl-search-btn{
+    position: absolute;
+    display:block;
+    padding: 0 0.533333rem;
+    width:1.546667rem;
+    right:0;
+    top:0;
+    bottom:0;
+    cursor:pointer;
+    background:url(../images/searchicon_03.png) no-repeat;
+    background-position: center;
+    background-size: 0.466667rem 0.506667rem;
+}
 /****************************
 ******移动端侧栏*
 ****************************/
@@ -1210,4 +1224,92 @@ textarea.form-control{
 .blockPage > button {
     width: 100%;
     height: 70px;
+}
+/********************
+********全局搜素页面******
+*********************/
+.gl-search{
+    position: relative;
+    margin-top: 0.213333rem;
+}
+.gl-search input{
+    width:100%;
+    height:0.8rem;
+    padding-left: 0.8rem;
+    color:#333333;
+    background-color: #eeeeee;
+    border:none;
+    border-radius: 3.5px;
+    font-size: 0.32rem;
+    line-height: 0.8rem;
+}
+[data-dpr="2"] .gl-search input{
+    border-radius: 7px;
+}
+[data-dpr="3"] .gl-search input{
+    border-radius: 10.5px;
+}
+.gl-search button{
+    position: absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    width:0.8rem;
+    background:url(../images/searchbtn_03.png) no-repeat;
+    background-position: center;
+    background-size: 0.373333rem 0.373333rem;
+    background-color: transparent;
+}
+/*****************
+*****搜素结果展示**
+*****************/
+.resultShow{
+
+}
+.rsH{
+    font-size: 0.48rem;
+    height:0.933333rem;
+    line-height: 0.933333rem;
+    color:#5ab8fe;
+    border-bottom:1px solid #eee;
+}
+[data-dpr="2"] .rsH{
+    border-bottom:2px solid #eee;
+}
+[data-dpr="3"] .rsH{
+    border-bottom:3px solid #eee;
+}
+.noFind{
+    font-size: 0.533333rem;
+    color:#b2b2b2;
+    padding:1.066667rem 0 1.333333rem;
+    text-align: center;
+}
+/*分割线*/
+.rsdivision{
+    height:0.293333rem;
+    background-color: #eee;
+    border:none;
+}
+/*查看更多*/
+.showMore{
+    position:relative;
+    text-align: center;  
+}
+.showMore a{
+    display:inline-block;
+    color:#5ab8fe;
+    font-size: 0.293333rem;
+    padding-bottom: 0.186667rem;
+}
+.showMoreBtn{
+    cursor: pointer;
+}
+.showMoreBtn,.showLoaded{
+    width:100%;
+    color:#5ab8fe;
+    font-size: 0.293333rem;
+    padding:0.266667rem 0 0.186667rem;
+    background-color: inherit;
+    text-align: center;
 }
