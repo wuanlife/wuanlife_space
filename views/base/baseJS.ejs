@@ -43,6 +43,16 @@
             });
             //IE清除缓存
             $.ajaxSetup({ cache: false });
+            //全局搜素表单
+            $('#gl-search').submit(function(event){
+                var text = $.trim($(this).children('input').val());
+                if (text.length>0) {
+                    $(this).children('input').val(text);
+                    return true;
+                } else{
+                    return false;
+                }
+            });
             //getJson获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
