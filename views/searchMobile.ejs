@@ -1,0 +1,22 @@
+<%- include base/headerMobile.ejs %>
+<div class="main">
+    <form action="/searchResult" method="get" accept-charset="utf-8" class="gl-search">
+        <input type="text" name="text" value="" placeholder="搜素">
+        <button></button>
+    </form>
+</div>
+<%- include base/baseJSMobile.ejs %>
+<script>
+    (function(){
+        $('.gl-search').submit(function(event){
+            var text = $.trim($('.gl-search').children('input').val());
+            if (text.length<1){
+                return false;
+            } else{
+                $('.gl-search').children('input').val(text);
+                return true;
+            }
+        });
+    })();
+</script>
+<%- include base/footerMobile.ejs %>
