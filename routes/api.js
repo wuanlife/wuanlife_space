@@ -221,6 +221,50 @@ router.get('/:method', function(req, res, next) {
                 }
 			});
 			break;
+        //搜索星球结果
+        case 'getSearchGroup':
+            var text = encodeURIComponent(xss(req.query.text));
+            var gnum = req.query.gnum;
+            var gn = req.query.gn;
+            request(config.server + '?service=Group.Search&text=' + text + '&gnum=' + gnum + '&gn=' + gn, 
+            function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            });
+            break;
+        //搜索帖子结果
+        case 'getSearchPost':
+            var text = encodeURIComponent(xss(req.query.text));
+            var pnum = req.query.pnum;
+            var pn = req.query.pn;
+            request(config.server + '?service=Group.Search&text=' + text + '&pnum=' + pnum + '&pn=' + pn, 
+            function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            });
+            break;
 		default:
 			res.send('respond with a resource');
 			break;
