@@ -1,6 +1,6 @@
 <%- include base/headerMobile.ejs %>
 <div class="main">
-    <form action="/searchResult" method="get" accept-charset="utf-8" class="gl-search">
+    <form action="/search/r" method="get" accept-charset="utf-8" class="gl-search">
         <input type="text" name="text" value="<%=searchText%>" placeholder="搜素">
         <button></button>
     </form>
@@ -24,7 +24,7 @@
         </ul>
         <%if(result.GroupPage > 1){%>
         <div class="showMore">
-            <a href="" title="">查看更多</a>
+            <a href="/search/r/g?text=<%=searchText%>">查看更多</a>
         </div>
         <%}%>
         <%}else{%>
@@ -83,7 +83,7 @@
         <%}%>
         <%}else{%>
         <div class="noFind">
-            没有找到相关星球
+            没有找到相关帖子
         </div>
         <%}%>
     </div>
