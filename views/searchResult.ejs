@@ -1,7 +1,9 @@
 <%- include base/header.ejs %>
 <div class="main">
+    <div class="location clearfix">
+        <h1>星球</h1>
+    </div>
     <div class="resultShow">
-        <h1 class="rsH">星球</h1>
         <%if(result.group.length > 0){%>
         <ul class="planetList clearfix">
             <% result.group.forEach(function(item) { %>
@@ -45,8 +47,10 @@
         </div>
         <%}%>
     </div>
+    <div class="location clearfix">
+        <h1>帖子</h1>
+    </div>
     <div class="resultShow">
-        <h1 class="rsH">帖子</h1>
         <%if(result.posts.length > 0){%>
         <div class="chapter-col">
             <% result.posts.forEach(function(item) { %>
