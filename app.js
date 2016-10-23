@@ -26,7 +26,6 @@ var isLogin = require('./routes/isLogin');
 var resetPassword = require('./routes/resetPassword');
 var verifyEmail = require('./routes/verifyEmail');
 var search = require('./routes/search');
-var searchResult = require('./routes/searchResult');
 var test = require('./routes/test');
 var news = require('./routes/news').router;
 var message = require('./routes/message');
@@ -119,7 +118,6 @@ app.use('/verifyEmail',verifyEmail);
 app.use('/news',news);
 app.use('/message',message);
 app.use('/search',search);
-app.use('/searchResult',searchResult);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 
