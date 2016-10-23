@@ -1019,14 +1019,11 @@ textarea.form-control{
 /****************
 *******搜索结果*****
 *****************/
-.resultShow{
-    padding-top: 35px;
-}
-.rsH{
+/*.rsH{
     font-size: 30px;
     border-bottom: 4px solid #f5f5f5;
     color:#5ab8fe;
-}
+}*/
 .showMore{
     position: relative;
 }
