@@ -121,9 +121,7 @@ ul{
 .navbar-option{
     padding:10px 0 ;
     text-align: center;
-    margin-left: 280px;
-    float:left;
-    width:475px;
+    width:100%;
 }
 .navbar-option>li{
     display:inline-block;
@@ -138,6 +136,13 @@ ul{
 .navbar-active{
     background-color: #8acdff;
 } 
+@media (max-width: 1300px){
+    .navbar-option{
+        margin-left: 280px;
+        float:left;
+        width:475px;
+    }
+}
 @media (max-width: 1200px){
     .navbar-title {
         padding-left: 20px;
