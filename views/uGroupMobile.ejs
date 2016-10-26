@@ -23,7 +23,7 @@
 	<div class="chapter-col">
 		<% result.posts.forEach(function(item) { %>
 		<div class="chapter">
-			<h2 class="text-ellipsis"><a href="/topic/<%=item.postID%>" title=""><%-item.title%></a></h2>
+			<h2 class="text-ellipsis"><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
 			<div class="chapter-info">
 				<span class="text-ellipsis"><a href="#?" title=""><%=item.nickname%></a></span>
 				<span class="cha-icon"></span>
@@ -31,7 +31,7 @@
 				<span class="cha-time"><%=item.createTime%></span>
 			</div>
 			<div class="chapter-text">
-				<%-item.text%>
+				<%=item.text%>
 			</div>
 			<%if(item.image.length >0){%>
 			<div class="chapter-img clearfix">
@@ -63,14 +63,14 @@
 <script type="text/html" id="listtemplate">
 	{{each posts as item i}}
 	<div class="chapter">
-		<h2 class="text-ellipsis"><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
+		<h2 class="text-ellipsis"><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
 		<div class="chapter-info">
 			<span class="text-ellipsis"><a href="#?" title="">{{item.nickname}}</a></span>
 			<span class="cha-icon"></span>
 			<span class="text-ellipsis"><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
 			<span class="cha-time">{{item.createTime}}</span>
 		</div>
-		<div class="chapter-text">{{#item.text}}</div>
+		<div class="chapter-text">{{item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 	</div>
 	{{/each}}
