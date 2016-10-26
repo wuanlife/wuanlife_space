@@ -6,7 +6,17 @@
     </div>
     <%if(result.code == 1){%>
     <div class="message-col">
-       
+
+        <div id="6666" class="message clearfix">
+            <div class="meg-brief">
+                <img src="images/authcode.png">
+                <h2 class="text-ellipsis text-link">i am a test</p>
+            </div>
+            <button class="meg-button agree" type="button">同意</button>
+            <button class="meg-button disagree" type="button">拒绝</button>
+        </div>
+
+
         <% result.info.forEach(function(item) { %>
         <div id="<%=item.id %>" class="message clearfix">
             <h2>

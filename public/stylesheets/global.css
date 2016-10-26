@@ -91,6 +91,11 @@ ul{
     border-left: 4px solid transparent;
     vertical-align: middle;
 }
+/*文本链接样式*/
+.text-link {
+    color: rgba(90,184,254,1.0);
+    cursor: pointer;
+}
 /****************************
 ***********导航栏***********
 ****************************/
@@ -984,15 +989,24 @@ textarea.form-control{
     border-bottom: 1px solid rgba(194,222,248,1.0);
 }
 
-.message > h2 {
-    width: 70%;
+.meg-brief {
+    width: 60%;
     float: left;
     line-height: 35px;
     font-size: 22px;
     color: rgba(90,184,254,1.0);
 }
+.meg-brief > img {
+    width: 66px;
+    height: 66px;
+    float: left;
+}
+.meg-brief > h2 {
+    float: left;
+}
 
 .meg-button {
+    width: 90px;
     font-size: 18px;
     padding: 4px 4px;
     margin-left: 27px;
