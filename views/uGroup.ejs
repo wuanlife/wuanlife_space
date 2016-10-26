@@ -21,7 +21,7 @@
 	<div class="chapter-col">
 		<% result.posts.forEach(function(item) { %>
 		<div class="chapter">
-			<h2><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
+			<h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
 			<div class="chapter-text">
 				<%-item.text%>
 			</div>
@@ -61,7 +61,7 @@
 <script type="text/html" id="listtemplate">
 	{{each posts as item i}}
 	<div class="chapter">
-		<h2><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
+		<h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
 		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 		<div class="chapter-info">

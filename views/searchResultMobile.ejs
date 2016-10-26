@@ -16,7 +16,7 @@
                 <div class="planet-info">
                     <h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title=""><%=item.name%></a></h2>
                     <p>
-                        <%-item.g_introduction%>
+                        <%=item.g_introduction%>
                     </p>
                 </div>
             </li>
@@ -40,7 +40,7 @@
         <div class="chapter-col">
             <% result.posts.forEach(function(item) { %>
             <div class="chapter">
-                <h2 class="text-ellipsis"><a href="/topic/<%=item.postID%>" title="<%-item.title%>"><%-item.title%></a></h2>
+                <h2 class="text-ellipsis"><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
                 <div class="chapter-info">
                     <span class="text-ellipsis"><a href="#?" title=""><%=item.nickname%></a></span>
                     <span class="cha-icon"></span>
@@ -105,7 +105,7 @@
 <script type="text/html" id="postlist">
     {{each posts as item i}}
     <div class="chapter">
-        <h2 class="text-ellipsis"><a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a></h2>
+        <h2 class="text-ellipsis"><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
         <div class="chapter-info">
             <span class="text-ellipsis"><a href="#?" title="">{{item.nickname}}</a></span>
             <span class="cha-icon"></span>

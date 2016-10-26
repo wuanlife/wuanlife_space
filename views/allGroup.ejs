@@ -15,7 +15,7 @@
 				<div class="planet-info">
 					<h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title="<%=item.name%>"><%=item.name%></a></h2>
 					<p>
-						<%-item.g_introduction%>
+						<%=item.g_introduction%>
 					</p>
 				</div>
 			</li>
@@ -50,7 +50,7 @@
 		</div>
 		<div class="planet-info">
 			<h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{item.name}}">{{item.name}}</a></h2>
-			<p>{{#item.g_introduction}}</p>
+			<p>{{item.g_introduction}}</p>
 		</div>
 	</li>
 	{{/each}}

@@ -34,7 +34,7 @@
 				<%if(parseInt(item.sticky)){%>
 				<i class="cha-top">置顶</i>
 				<%}%>
-				<a href="/topic/<%=item.postID%>" title=""><%-item.title%></a>
+				<a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a>
 			</h2>
 			<div class="chapter-info">
 				<span class="text-ellipsis"><a href="#?" title=""><%=item.nickname%></a></span>
@@ -85,7 +85,7 @@
 	<div class="chapter">
 		<h2 class="text-ellipsis">
 			{{if item.sticky>0}}<i class="cha-top">置顶</i> {{/if}}
-			<a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a>
+			<a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a>
 		</h2>
 		<div class="chapter-info">
 			<span class="text-ellipsis"><a href="#?" title="">{{item.nickname}}</a></span>
