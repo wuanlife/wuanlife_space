@@ -48,7 +48,7 @@
                     <span class="cha-time"><%=item.createTime%></span>
                 </div>
                 <div class="chapter-text">
-                    <%=item.text%>
+                    <%-item.text%>
                 </div>
             </div>
             <% }); %>
@@ -112,7 +112,7 @@
             <span class="text-ellipsis"><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
             <span class="cha-time">{{item.createTime}}</span>
         </div>
-        <div class="chapter-text">{{item.text}}</div>
+        <div class="chapter-text">{{#item.text}}</div>
     </div>
     {{/each}}
 </script>

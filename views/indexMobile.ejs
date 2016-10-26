@@ -15,7 +15,7 @@
 				<span class="cha-time"><%=item.createTime%></span>
 			</div>
 			<div class="chapter-text">
-				<%=item.text%>
+				<%-item.text%>
 			</div>
 			<%if(item.image.length >0){%>
 			<div class="chapter-img clearfix">
@@ -57,7 +57,7 @@
 			<span class="text-ellipsis"><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
 			<span class="cha-time">{{item.createTime}}</span>
 		</div>
-		<div class="chapter-text">{{item.text}}</div>
+		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 	</div>
 	{{/each}}

@@ -57,7 +57,7 @@
             <div class="chapter">
                 <h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
                 <div class="chapter-text">
-                    <%=item.text%>
+                    <%-item.text%>
                 </div>
                 <div class="chapter-info">
                     <span class="text-ellipsis"><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
@@ -114,7 +114,7 @@
     {{each posts as item i}}
     <div class="chapter">
         <h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
-        <div class="chapter-text">{{item.text}}</div>
+        <div class="chapter-text">{{#item.text}}</div>
         <div class="chapter-info">
             <span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
             <span class="postIn">发表于</span>

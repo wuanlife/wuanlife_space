@@ -9,7 +9,7 @@
 		<div class="chapter">
 			<h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
 			<div class="chapter-text">
-				<%=item.text%>
+				<%-item.text%>
 			</div>
 			<%if(item.image.length >0){%>
 			<div class="chapter-img clearfix">
@@ -51,7 +51,7 @@
 	{{each posts as item i}}
 	<div class="chapter">
 		<h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
-		<div class="chapter-text">{{item.text}}</div>
+		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 		<div class="chapter-info">
 			<span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
