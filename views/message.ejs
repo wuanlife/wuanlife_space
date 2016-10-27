@@ -3,40 +3,56 @@
     <!--   之后记住照着uGroup改一下这里 -->
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
+        <div class="location-plus">
+            <a class="fliter" href="#"></a>
+            <ul class="fliter-list text-white">
+                <li>全部</li>
+                <li>已读</li>
+                <li>未读</li>
+            </ul>
+        </div>
     </div>
     <%if(result.code == 1){%>
     <div class="message-col">
-
-        <div id="6666" class="message clearfix">
-            <div class="meg-brief">
-                <img src="images/authcode.png">
-                <h2 class="text-ellipsis text-link">i am a test</p>
-            </div>
-            <button class="meg-button agree" type="button">同意</button>
-            <button class="meg-button disagree" type="button">拒绝</button>
-        </div>
-
-
         <% result.info.forEach(function(item) { %>
-        <div id="<%=item.id %>" class="message clearfix">
-            <h2>
-                <p class="text-ellipsis"><%=item.information%></p>
-            </h2>
-            <%if(item.messagetype == '1') { %>
-                <%if(item.status == '1') { %>
+
+        <div id="<%=item.id %>" class="message clearfix vertical-container">
+            <div class="meg-brief">
+                <img src="<%=item.user_image%>">
+                <div class="meg-content">
+                    <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
+                    <%if(item.messagetype == '1') { %>
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请加入：</p>
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                    </div>
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请信息：</p>
+                        <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
+                    </div>   
+                    <% } else if(item.messagetype == '2') { %>
+                    <div class="meg-content-row clearfix">
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                    </div>
+                    <% } %>
+                 
+                </div>
+            </div>
+            <%if(item.messagetype == '1') { 
+                if(item.messageInfo.status == '1') { %>
                     <button class="meg-button agree" type="button">同意</button>
                     <button class="meg-button disagree" type="button">拒绝</button>
-                <%} else if(item.status == '2'){ %>
-                    <button class="meg-button disable" type="button">已同意</button>
-                <%} else if(item.status == '3'){ %>
-                    <button class="meg-button disable" type="button">已拒绝</button>
-                <%} else {%>
-                <%} %>
-
+                <% } else if(item.messageInfo.status == '2') {%>
+                    <button class="meg-right-text" type="button">已同意</button>
+                <% } else if(item.messageInfo.status == '3') {%>
+                    <button class="meg-right-text" type="button">已拒绝</button>
+                <% } %>
             <% } else if(item.messagetype == '2') { %>
-
+                <button class="meg-right-text" type="button"><%=item.messageInfo.information%></button>
             <% } %>
+
         </div>
+
 
         <% }) %>
     </div>
@@ -177,6 +193,7 @@
                 self.getServerData({
                     currentpage: pageNow,
                     userId: <%=user.userID%>
+                    status: 1,
                 }, function(data) {
                     if (pageNow != global.getPageNow()) {
                         return;

@@ -96,6 +96,20 @@ ul{
     color: rgba(90,184,254,1.0);
     cursor: pointer;
 }
+.text-grey {
+    color: rgba(155,155,155,1.0);
+}
+.text-white {
+    color: rgba(255,255,255,1.0);
+}
+/*子元素垂直居中CSS3(套于父元素)*/
+.vertical-container{  
+    display: flex; 
+    align-items: center; 
+}
+
+
+
 /****************************
 ***********导航栏***********
 ****************************/
@@ -982,15 +996,16 @@ textarea.form-control{
 *********消息*****
 ******************/
 .message-col {
-    margin:48px 0 86px;
+    margin:14px 0 86px;
 }
 .message {
     padding: 30px 0;
-    border-bottom: 1px solid rgba(194,222,248,1.0);
+    border-top: 1px solid rgba(229,229,229,1.0);
+    border-bottom: 1px solid rgba(229,229,229,1.0);
 }
 
 .meg-brief {
-    width: 60%;
+    width: 70%;
     float: left;
     line-height: 35px;
     font-size: 22px;
@@ -998,28 +1013,82 @@ textarea.form-control{
 }
 .meg-brief > img {
     width: 66px;
-    height: 66px;
+    padding-top: 15px;
     float: left;
 }
 .meg-brief > h2 {
     float: left;
+}
+.meg-content {
+    float: left;
+    margin-left: 15px;
+}
+.meg-content-row > p {
+    float: left;
+}
+.meg-content-row > .text-link {
+    width: 260px;
 }
 
 .meg-button {
     width: 90px;
     font-size: 18px;
     padding: 4px 4px;
-    margin-left: 27px;
+    margin-right: 20px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
 }
 .meg-button.disable{
-    color: rgba(0, 102, 255,1.0);
+    color: rgba(102, 102, 102,1.0);
     background-color: rgba(202, 192, 190,0.0);
     cursor: pointer;
 }
+.meg-right-text {
+    position: absolute;
+    right: 20px;
+    font-size: 18px;
+    color: rgba(102, 102, 102,1.0);
+    background-color: rgba(202, 192, 190,0.0);
+}
+
+/*消息中心的过滤图标(可能在之后会复用)*/
+.fliter {
+    width: 33px;
+    height: 33px;
+    background-image: url(../images/filter.png);
+    margin-left: 27px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.fliter-list{
+    display: inline-block;
+    background-color: rgba(90, 184,254,1.0);
+    border-radius: 6px;
+    margin-left: 12px;
+}
+.fliter-list::before {
+    content: '';
+    float: left;
+    position: relative;
+    margin-left: -12px;
+    top: 10px;
+    border-style: solid;
+    border-width: 10px 14px 10px 0;
+    border-color: rgba(0, 0, 0, 0) rgba(90, 184,254,1.0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
+.fliter-list > li{
+    float: left;
+    padding: 0 17px;
+    margin: 6px 0;
+}
+.fliter-list > li:nth-child(2) {
+    border-left: 1px solid rgba(229,229,229,1.0);
+    border-right: 1px solid rgba(229,229,229,1.0);
+}
+
 
 /* 私密星球权限不够  */
 .blockPage {
