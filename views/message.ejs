@@ -1,6 +1,5 @@
 <%- include base/header.ejs %>
 <div class="main main-page">
-    <!--   之后记住照着uGroup改一下这里 -->
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
         <div class="location-plus">
@@ -211,7 +210,7 @@
                 self.getServerData({
                     currentpage: pageNow,
                     userId: <%=user.userID%>,
-                    status: self.status,
+                    status: self.filterType,
                 }, function(data) {
                     if (pageNow != global.getPageNow()) {
                         return;
@@ -245,7 +244,7 @@
 
                 var bindFilterEventByStatus = function(Jobject, status) {
                     Jobject.on("click", function() {
-                        self.status = status;
+                        self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
                         self.updateByPage();                  
