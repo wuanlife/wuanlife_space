@@ -286,6 +286,18 @@ span.navbar-account-item{
     background-color: #5ab8fe; 
     cursor:pointer;
 }
+/*成员管理入口*/
+.userManageBtn{
+    display:inline-block;
+    font-size: 18px;
+    padding:3px 27px; 
+    margin-right: 20px;
+    float:right;
+    border-radius: 4px;
+    color:#f6fafb;
+    background-color: #5ab8fe; 
+    cursor:pointer;
+}
 /*location副标题(星球创建者名) */
 .location>h2 {
     width: 20%;
@@ -985,4 +997,27 @@ textarea.form-control{
 }
 .blockPage img{
     
+}
+/********************
+*********星球成员管理***
+*******************/
+.user-manage{
+    border-bottom: solid 2px #f5f5f5;
+}
+.normal-user{
+    margin-top: 5px;
+   font-size: 18px;
+   line-height: 35px;
+   color:#5ab8fe; 
+   clear: both;
+}
+.delete-Btn{
+    display:inline-block;
+    font-size: 16px;
+    padding:2px 4px; 
+    float:left;
+    border-radius: 4px;
+    color:white;
+    background-color: #5ab8fe; 
+    cursor:pointer;
 }
