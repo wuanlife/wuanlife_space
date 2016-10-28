@@ -10,8 +10,7 @@ router.get('/', function(req, res, next) {
         var agent = ua(req.headers['user-agent']),
             pn = req.query.page || 1,
             userid = req.session.user.userID,
-            status = req.query.status || 1, 
-
+            status = req.query.status || 1;
         request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn + "&status=" + status,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -37,7 +36,8 @@ router.get('/', function(req, res, next) {
                     console.error('group failed:', error);
                     next(error);
                 }
-            })
+            }
+        );
     }
     else {
         res.redirect('/login');
