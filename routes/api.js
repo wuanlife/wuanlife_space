@@ -598,9 +598,6 @@ router.post('/:method', function(req, res, next) {
         case 'deleteMember':
             //var groupid=req.param('groupid');
             //var userid=userID;
-            console.log(req.param('groupid'));
-            console.log(userID);
-            console.log(req.param('memberid'));
             request.post({
                 url:config.server + '?service=Group.DeleteGroupMember',
                 formData:{
@@ -614,7 +611,7 @@ router.post('/:method', function(req, res, next) {
                 try{
                    if (!error && response.statusCode == 200) {
                         //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-                        //res.send(JSON.parse(body));
+                        return res.send(JSON.parse(body));
                     } 
                 } catch(e){
                     res.send({

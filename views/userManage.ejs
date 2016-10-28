@@ -40,7 +40,7 @@
             delete:function(){
             	var self=this;
                 
-                    $('button').each(function(){
+                    $('button').each(function(index){
                     	$(this).click(function(){
                     		 //console.log(this.title);
                            self.postServerData(
@@ -49,12 +49,22 @@
                                 memberid:parseInt(this.title)
 
                             },function(data){
-                            	
-                                console.log("success");
-
+                                //console.log("success");
+                              if (data.ret == 200 && data.data && data.data.code == 1){
+                              	$('button').eq(index).parent().parent().remove();
+                              	sweetAlert({
+										title: '提示',
+										text: '删除成功',
+										type: 'success',
+										timer: 2000
+										});
+                              }
+                              else {
+										sweetAlert('错误', data.data.msg, 'error');
+									}
                             }
                             );
-                           $(this).parent().parent().hide();
+                           
                     	  })
                     });
 
