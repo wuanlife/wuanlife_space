@@ -149,6 +149,7 @@
                             self.postPage++;
                             if (self.postPage ==  self.postCount) {
                                 self.psBtn.remove();
+                                $('.mainContainer').off('scroll');
                                 self.showLoaded.show();
                             }
                             self.loading.hide();

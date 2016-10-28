@@ -116,6 +116,7 @@
                         self.groupPage++;
                         if (self.groupPage ==  self.groupCount) {
                             self.gsBtn.remove();
+                            $('.mainContainer').off('scroll');
                             self.showLoaded.show();
                         }
                         self.loading.hide();

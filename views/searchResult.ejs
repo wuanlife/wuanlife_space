@@ -192,6 +192,7 @@
                         self.postPage++;
                         if (self.postPage ==  self.postCount) {
                             self.psBtn.remove();
+                            $(window).off('scroll');
                         }
                         self.psloading.hide();
                         self.psBtn.html("更多");
