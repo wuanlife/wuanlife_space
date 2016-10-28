@@ -97,7 +97,7 @@ ul{
 .navbar{
     position: fixed;
     width:100%;
-    min-width: 750px;
+    min-width: 1030px;
     top:0;
     left:0;
     height:60px;
@@ -117,15 +117,11 @@ ul{
     left:0;
     top:0;
 }
-@media (max-width: 1200px){
-    .navbar-title {
-        padding-left: 20px;
-    }
-}
 /*导航选项*/
 .navbar-option{
     padding:10px 0 ;
     text-align: center;
+    width:100%;
 }
 .navbar-option>li{
     display:inline-block;
@@ -140,7 +136,21 @@ ul{
 .navbar-active{
     background-color: #8acdff;
 } 
-
+@media (max-width: 1300px){
+    .navbar-option{
+        margin-left: 280px;
+        float:left;
+        width:475px;
+    }
+}
+@media (max-width: 1200px){
+    .navbar-title {
+        padding-left: 20px;
+    }
+    .navbar-option{
+        margin-left: 145px;
+    }
+}
 /*导航账户*/
 .navbar-account{
     position: absolute;
@@ -166,6 +176,30 @@ span.navbar-account-item{
     vertical-align: bottom;
     cursor:pointer;
 }
+/*全局查询表单*/
+.navbar-account .gl-search{
+    position: relative;
+}
+.navbar-account .gl-search input{
+    width:235px;
+    height:28px;
+    line-height: 28px;
+    padding-left: 34px;
+    background-color: #fff;
+    vertical-align: middle;
+    margin-top: 16px;
+    margin-right: 13px;
+    font-size: 12px;
+}
+.navbar-account .gl-search button{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:26px;
+    height:28px;
+    background:url(../images/search_03.png) no-repeat;
+    cursor: pointer;
+}
 /*三角按钮*/
 .navbar-account-item .caret{
     border-width: 6px;
@@ -176,17 +210,17 @@ span.navbar-account-item{
     position: relative;
     display:inline-block;
     height:27px;
-    width:24px;
+    width:22px;
     vertical-align: bottom;
-    background-image: url(../images/mess_03.png);
+    background-image: url(../images/bell_05.png);
     background-repeat: no-repeat;
     background-size:  100% auto;
     background-position: center;
 }
 .red-point{
     position: absolute;
-    right:-3px;
-    top:3px;
+    /*right:-3px;
+    top:3px;*/
     width:8px;
     height:8px;
     border-radius: 8px;
@@ -255,11 +289,12 @@ span.navbar-account-item{
     padding-top: 60px;
     padding-right: 15px;
     padding-left: 15px;
+    padding-bottom: 60px;
     margin:0 auto ;
 }
 .main-page{
     position: relative;
-    padding-bottom: 70px;
+    padding-bottom: 130px;
 }
 /********************
 *********当前位置***
@@ -341,7 +376,7 @@ button.unCBtn{
 }
 .main-page>.page-turn{
     position: absolute;
-    bottom:0;
+    bottom:60px;
     width:100%;
     left:0;
 }
@@ -452,7 +487,7 @@ button.unCBtn{
     height:60px;
 }
 .planet-info h2{
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 2px;
     color:#5ab8fe; /*省略号也可以有颜色*/
 }
@@ -946,7 +981,7 @@ textarea.form-control{
     margin-bottom: 20px;
 }
 .myJoinList h2{
-    font-size: 20px;
+    font-size: 16px;
     color:#5ab8fe;
 }
 
@@ -998,6 +1033,7 @@ textarea.form-control{
 .blockPage img{
     
 }
+<<<<<<< HEAD
 /********************
 *********星球成员管理***
 *******************/
@@ -1020,4 +1056,56 @@ textarea.form-control{
     color:white;
     background-color: #5ab8fe; 
     cursor:pointer;
+=======
+/****************
+*******搜索结果*****
+*****************/
+/*.rsH{
+    font-size: 30px;
+    border-bottom: 4px solid #f5f5f5;
+    color:#5ab8fe;
+}*/
+.showMore{
+    position: relative;
+}
+.showMoreBtn{
+    width:100%;
+    height:45px;
+    color:#5ab8fe;
+    background-color: #f5f5f5;
+    font-size: 22px;
+    line-height: 45px;
+    cursor: pointer;
+    display:block;
+}
+.noFind{
+    font-size: 28px;
+    color:#bababa;
+    padding:58px 0 30px;
+    text-align: center;
+}
+
+/******************
+*******底栏********
+******************/
+.footer{
+    position: relative;
+    left:0;
+    top:-60px;
+    height:60px;
+    line-height: 60px;
+    background-color: #e5e5e5;
+    font-size: 16px;
+    text-align: center;
+}
+.footer .version{
+    color:#999;
+    padding:0 15px;
+    margin-right: 35px;
+}
+.footer .public{
+    color:#5ab8fe;
+    padding:0 20px;
+    letter-spacing: 5px;
+>>>>>>> upstream/dev
 }
