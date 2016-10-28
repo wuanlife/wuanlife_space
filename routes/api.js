@@ -595,6 +595,36 @@ router.post('/:method', function(req, res, next) {
                 }
             });
             break;
+        //删除星球成员
+        case 'deleteMember':
+            //var groupid=req.param('groupid');
+            //var userid=userID;
+            console.log(req.param('groupid'));
+            console.log(userID);
+            console.log(req.param('memberid'));
+            request.post({
+                url:config.server + '?service=Group.DeleteGroupMember',
+                formData:{
+                    group_id:req.body.groupid,
+                    user_id:userID,
+                    member_id:req.body.memberid
+                    }   
+            },function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        //res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            });
+            break;
         default:
             res.send('respond with a resource');
             break;

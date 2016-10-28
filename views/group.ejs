@@ -12,7 +12,10 @@
 			创建者：<%=result.creatorName%>
 			</p>
 		</h2>
-		<%if(result.identity == '01' || result.identity == '02'){%>
+		<%if(result.identity=='01'){%>
+		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
+		<a href="/userManage/<%=result.groupID%>" class="userManageBtn">成员管理</a>
+		<%}else if(result.identity == '02'){%>
 		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
 		<%}else if(result.identity == '04'){%>
 		<button type="button" id="joinBtn" class="locBtn">+已申请</button>
