@@ -112,6 +112,23 @@
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
+			//根据SweetAlert的自定义样式方法改了下，在这个页面下封装了午安输入框。以后可以考虑放到baseJS里面
+			//压缩成一行了
+			//复用性有待提高，目标：实现相当于在swal外封装一层，提高复用性。
+			sweetAlertForPost: function() {
+				var compressedCSS = "";
+
+				swal({
+					title: '发送信息',
+					html: '<style>' + compressedCSS+'</style>',
+					input: 'textarea',
+					showCancelButton: true
+				}).then(function(text) {
+					if (text) {
+						swal(text)
+					}
+				});
+			},
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();

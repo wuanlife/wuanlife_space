@@ -1,32 +1,57 @@
 <%- include base/header.ejs %>
 <div class="main main-page">
-    <!--   之后记住照着uGroup改一下这里 -->
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
+        <div class="location-plus">
+            <a class="filter" href="#"></a>
+            <ul class="filter-list text-white">
+                <li class="filter-all">全部</li>
+                <li class="filter-read">已读</li>
+                <li class="filter-notread">未读</li>
+            </ul>
+        </div>
     </div>
     <%if(result.code == 1){%>
     <div class="message-col">
-       
         <% result.info.forEach(function(item) { %>
-        <div id="<%=item.id %>" class="message clearfix">
-            <h2>
-                <p class="text-ellipsis"><%=item.information%></p>
-            </h2>
-            <%if(item.messagetype == '1') { %>
-                <%if(item.status == '1') { %>
+
+        <div id="<%=item.id %>" class="message clearfix vertical-container">
+            <div class="meg-brief">
+                <img src="<%=item.user_image%>">
+                <div class="meg-content">
+                    <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
+                    <%if(item.messagetype == '1') { %>
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请加入：</p>
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                    </div>
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请信息：</p>
+                        <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
+                    </div>   
+                    <% } else if(item.messagetype == '2') { %>
+                    <div class="meg-content-row clearfix">
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                    </div>
+                    <% } %>
+                 
+                </div>
+            </div>
+            <%if(item.messagetype == '1') { 
+                if(item.messageInfo.status == '1') { %>
                     <button class="meg-button agree" type="button">同意</button>
                     <button class="meg-button disagree" type="button">拒绝</button>
-                <%} else if(item.status == '2'){ %>
-                    <button class="meg-button disable" type="button">已同意</button>
-                <%} else if(item.status == '3'){ %>
-                    <button class="meg-button disable" type="button">已拒绝</button>
-                <%} else {%>
-                <%} %>
-
+                <% } else if(item.messageInfo.status == '2') {%>
+                    <button class="meg-right-text" type="button">已同意</button>
+                <% } else if(item.messageInfo.status == '3') {%>
+                    <button class="meg-right-text" type="button">已拒绝</button>
+                <% } %>
             <% } else if(item.messagetype == '2') { %>
-
+                <button class="meg-right-text" type="button"><%=item.messageInfo.information%></button>
             <% } %>
+
         </div>
+
 
         <% }) %>
     </div>
@@ -52,27 +77,44 @@
 <%- include base/baseJS.ejs %>
 <script type="text/html" id="listtemplate">
     {{each info as item i}}
-    <div id="{{item.id}}" class="message clearfix">
-        <h2>
-            <p class="text-ellipsis">{{item.information}}</p>
-        </h2>
-
+    <div id="{{item.id}}" class="message clearfix vertical-container">
+        <div class="meg-brief">
+            <img src="{{item.user_image}}">
+            <div class="meg-content">
+                <h2 class="text-ellipsis text-link">{{item.nickname}}</h2>
+                {{if item.messagetype == '1' }}
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请加入：</p>
+                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                    </div>
+                    <div class="meg-content-row clearfix">
+                        <p class="text-grey">申请信息：</p>
+                        <p class="text-link text-ellipsis">{{item.messageInfo.text}}</p>
+                    </div>   
+                {{else if item.messagetype == '2' }}
+                    <div class="meg-content-row clearfix">
+                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                    </div>
+                {{/if}}
+             
+            </div>
+        </div>
         {{if item.messagetype == '1' }}
-            {{if item.status == '1'}}
+            {{if item.messageInfo.status == '1' }}
                 <button class="meg-button agree" type="button">同意</button>
                 <button class="meg-button disagree" type="button">拒绝</button>
-            {{else if item.status == '2' }}
-                <button class="meg-button disable" type="button">已同意</button>
-            {{else if item.status == '3' }}
-                <button class="meg-button disable" type="button">已拒绝</button>
-            {{else}}
+            {{else if item.messageInfo.status == '2' }}
+                <button class="meg-right-text" type="button">已同意</button>
+            {{else if item.messageInfo.status == '3' }}
+                <button class="meg-right-text" type="button">已拒绝</button>
             {{/if}}
-        {{else if item.messagetype == '2' }}
-
+        {{else if item.messagetype == '2' }}    
+            <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
         {{/if}}
 
     </div>
     {{/each}}
+
 </script>
 
 
@@ -87,6 +129,7 @@
             main: $(".message-col"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
+            filterType: '1',
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -102,14 +145,14 @@
                     agree2disable: function(button, message) {
                         message.children(".meg-button.disagree").remove();
                         button.removeClass("agree");
-                        button.addClass("disable");
+                        button.addClass("meg-right-text");
                         button.html("已同意");
                         button.unbind("click");                       
                     },
                     disagree2disable: function(button, message) {
                         message.children(".meg-button.agree").remove();
                         button.removeClass("disagree");
-                        button.addClass("disable");
+                        button.addClass("meg-right-text");
                         button.html("已拒绝");
                         button.unbind("click");  
                     }
@@ -166,7 +209,8 @@
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    userId: <%=user.userID%>
+                    userId: <%=user.userID%>,
+                    status: self.filterType,
                 }, function(data) {
                     if (pageNow != global.getPageNow()) {
                         return;
@@ -192,9 +236,29 @@
                     }
                 });
             },
+            bindFilterEvent: function() {
+                var self = this;
+                var all = $('.filter-all');
+                var read = $('.filter-read');
+                var notread = $('.filter-notread');
+
+                var bindFilterEventByStatus = function(Jobject, status) {
+                    Jobject.on("click", function() {
+                        self.filterType = status;
+                        $(this).siblings("*").removeClass("filter-clicked")    
+                        $(this).addClass("filter-clicked");
+                        self.updateByPage();                  
+                    })
+                };
+                bindFilterEventByStatus(all, 1);
+                bindFilterEventByStatus(read, 2);
+                bindFilterEventByStatus(notread, 3);
+            },
             bindEvent: function() {
                 var self = this;
                 global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                //绑定过滤器事件
+                this.bindFilterEvent();    
             },
             init: function() {
                 this.bindEvent();
