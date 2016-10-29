@@ -121,6 +121,7 @@
 			//压缩成一行了
 			//复用性有待提高，目标：实现相当于在swal外封装一层，提高复用性。
 			sweetAlertForPost: function() {
+                var self = this;
                 //发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
 				var compressedCSS = ".swal2-show{padding:20px 60px!important;width:680px!important;height:400px!important}.swal2-show>h2{float:left!important;color:#5ab8fe!important;font-weight:unset!important}.swal2-textarea{outline:0!important;resize:none!important;height:240px!important;margin:0!important;background-color:rgba(243,243,243,1)!important}.swal2-cancel{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}.swal2-confirm{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}";
 
@@ -132,8 +133,10 @@
                     confirmButtonText: '申请',
                     cancelButtonText: '取消'
 				}).then(function(text) {
+                    self.loading.show();
                     global.subData("/api/applyPrivateGroup",{
-                        groupid: parseInt("<%=result.groupID%>")
+                        groupid: parseInt("<%=result.groupID%>"),
+                        applyText: text
                     }, function(data) {
                         if (data.ret == 200 && data.data && data.data.code == 1) {
                                 sweetAlert({
@@ -147,6 +150,7 @@
                         } else {
                             sweetAlert('错误', '加入星球失败', 'error');
                         }
+                        self.loading.hide();
                         self.joinBtn.removeAttr('disabled');
                     }); 
 				}, function() {
@@ -217,7 +221,8 @@
 									self.joinBtn.removeAttr('disabled');
 								});
 							} else if(self.private == 1) {
-                                self.sweetAlertForPost();				
+                                self.sweetAlertForPost();
+                                self.joinBtn.removeAttr('disabled');				
 							}
 							break;
 						case 4:
@@ -232,6 +237,7 @@
 					<%}%>
 				});
 				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                var fuck=0;
 			},
 			init: function() {
 				this.bindEvent();
