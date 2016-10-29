@@ -1,0 +1,84 @@
+<%- include base/header.ejs %>
+<div class="main main-page">
+    <div class="location clearfix user-manage">
+        <h1><a href="" title="">成员管理</a></h1>
+	</div>
+	<h2 class="normal-user">普通成员</h2>
+    <%if(result.data.code!=0&&result.data.info.length > 0){%>
+    <div class="planet">
+		<ul class="planetList clearfix">
+			<% result.data.info.forEach(function(item) { %>
+			<li class="planet-item clearfix col-sm-4">
+				<div class="planet-pic">
+					<a href="" title="<%=item.user_name%>"><img src="<%-item.user_image	%>" alt=""></a>
+				</div>
+				<div class="planet-info">
+					<h2 class="text-ellipsis"><a href="" title="<%=item.user_name%>"><%=item.user_name%></a></h2>
+					<button type="button" class="delete-Btn" title="<%=item.user_id%>">删除</button>
+				</div>
+			</li>
+			<% }); %>
+		</ul>
+	</div>
+	<%}else if(result.data.code==0){%>
+	<div class="emptyPage">
+		<%=result.data.msg%>
+	</div>
+	<%}%>
+	
+</div>
+<%- include base/baseJS.ejs %>
+<script>
+    (function() {
+    	
+        var deletemanage = {
+        	mem:$('button'),
+            
+            postServerData:function(data, success) {
+                global.subData("/api/deleteMember", data, success);
+            },
+            delete:function(){
+            	var self=this;
+                
+                    $('button').each(function(index){
+                    	$(this).click(function(){
+                    		 //console.log(this.title);
+                           self.postServerData(
+                            {
+                                groupid:parseInt(<%=result.data.group_id%>),
+                                memberid:parseInt(this.title)
+
+                            },function(data){
+                                //console.log("success");
+                              if (data.ret == 200 && data.data && data.data.code == 1){
+                              	$('button').eq(index).parent().parent().remove();
+                              	sweetAlert({
+										title: '提示',
+										text: '删除成功',
+										type: 'success',
+										timer: 2000
+										});
+                              }
+                              else {
+										sweetAlert('错误', data.data.msg, 'error');
+									}
+                            }
+                            );
+                           
+                    	  })
+                    });
+
+                
+            },
+            init: function() {
+                this.delete();
+                //this.navActive();
+
+            }
+        }
+        deletemanage.init();
+    })();
+</script>
+<%- include base/footer.ejs %>
+
+
