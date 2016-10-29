@@ -120,7 +120,7 @@
             main: $(".message-col"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
-            filterType: '1',
+            filterType: global.getUrlParam('status'),
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
