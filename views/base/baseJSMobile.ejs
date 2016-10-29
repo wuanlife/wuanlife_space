@@ -134,7 +134,8 @@
                         return;
                     } else{
                         pageNow--;
-                        var newURL = location.pathname + '?page=' + pageNow;
+                        var search = location.search.replace(/page=\d+/,'page='+pageNow);
+                        var newURL = location.pathname + search;
                         history.pushState(null,'',newURL);
                         everPushed = true;
                         updata.apply(self,[]);
@@ -149,7 +150,10 @@
                         return;
                     } else{
                         pageNow++;
-                        var newURL = location.pathname + '?page=' + pageNow;
+                        var reg = /page=\d+/;
+                        var symbol = location.search?'&':'?';
+                        var search = reg.test(location.search)?location.search.replace(reg,'page='+pageNow):location.search + symbol + 'page=' + pageNow;
+                        var newURL = location.pathname + search;
                         history.pushState(null,'',newURL);
                         everPushed = true;
                         updata.apply(self,[]);
