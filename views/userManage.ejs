@@ -35,14 +35,14 @@
             delMen: function(){
                 var target = $(this).attr('data-target');
                 var member = $(this).prev('h2').text();
-                sweetAlert({
+                swal({
                     title: '删除成员',
                     text: '是否删除成员' + member,
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: '删除',
                     cancelButtonText: '取消'
-                }, function(){
+                }).then(function(){
                     $(this).off('click');
                     $(".loading").show();
                     global.subData("/api/deleteMember",{

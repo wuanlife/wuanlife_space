@@ -283,14 +283,14 @@
 			<% } %>
 			<% if (result.deleteRight) { %>
 			deletePost: function() {
-				sweetAlert({
+				swal({
 					title: '提示',
 					text: '是否删除帖子',
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonText: '删除',
 					cancelButtonText: '取消'
-				}, function() {
+				}).then(function() {
 					global.subData("/api/deletePost", {
 						post_id: parseInt("<%=result.postID%>")
 					}, function(data) {
