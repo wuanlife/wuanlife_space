@@ -90,6 +90,14 @@
                     }
                 });
             };
+            /*获取get参数*/
+            var getUrlParam = function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) 
+                    return unescape(r[2]); 
+                return null; //返回参数值
+            }; 
             //设置主栏主内容容器高度
             $(document).ready(function() {
                var windowHeight = $(window).height();
@@ -176,6 +184,7 @@
             return {
                 getData:getData,
                 subData:subData,
+                getUrlParam: getUrlParam,
                 getPageNow:getPageNow,
                 pageTurning:pageTurning,
                 changeEverPushed:changeEverPushed,
