@@ -339,27 +339,8 @@ span.navbar-account-item{
     color:#f6fafb;
     background-color: #5ab8fe; 
     cursor:pointer;
-}
-/*成员管理入口*/
-.userManageBtn{
-    display:inline-block;
-    font-size: 18px;
-    padding:3px 27px; 
-    margin-right: 20px;
-    float:right;
-    border-radius: 4px;
-    color:#f6fafb;
-    background-color: #5ab8fe; 
-    cursor:pointer;
-}
-/*location副标题(星球创建者名) */
-.location>h2 {
-    width: 20%;
-    margin-left: 35px;
-    float: left;
-    font-size: 18px;
-    line-height: 40px;
-    color: #5ab8fe;
+    line-height: 1.5;
+    margin-left: 10px;
 }
 /*星球设置图标*/
 .gSet{
@@ -368,6 +349,26 @@ span.navbar-account-item{
     background-image: url(../images/gset_03.png);
     margin-left: 27px;
 }
+/*星球相关信息*/
+.group-related{
+    margin-top: 15px;
+}
+.gCreator{
+    width: 20%;
+    float: left;
+    font-size: 18px;
+    line-height: 40px;
+    color: #5ab8fe;
+}
+/*location副标题(星球创建者名) */
+/*.location>h2{
+    width: 20%;
+    margin-left: 35px;
+    float: left;
+    font-size: 18px;
+    line-height: 40px;
+    color: #5ab8fe;
+}*/
 /******************
 ********翻页模块***
 *******************/

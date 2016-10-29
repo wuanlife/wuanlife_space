@@ -7,14 +7,16 @@
 		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 		<% } %>
 		</h1>
-		<h2>
+	</div>
+	<div class="group-related clearfix">
+		<h2 class="gCreator">
 			<p class="text-ellipsis">
 			创建者：<%=result.creatorName%>
 			</p>
 		</h2>
 		<%if(result.identity=='01'){%>
 		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
-		<a href="/userManage/<%=result.groupID%>" class="userManageBtn">成员管理</a>
+		<a href="/userManage/<%=result.groupID%>" class="locBtn">成员管理</a>
 		<%}else if(result.identity == '02'){%>
 		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
 		<%}else if(result.identity == '04'){%>
