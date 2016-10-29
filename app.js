@@ -30,6 +30,8 @@ var test = require('./routes/test');
 var news = require('./routes/news').router;
 var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
+var userManage=require('./routes/userManage');
+//var deleteMember=require('./routes/deleteMember');
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
 
@@ -120,6 +122,8 @@ app.use('/message',message);
 app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
+app.use('/userManage',userManage);
+//app.use('/deleteMember',deleteMember);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
