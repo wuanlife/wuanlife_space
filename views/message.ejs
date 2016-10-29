@@ -212,10 +212,17 @@
                     userId: <%=user.userID%>,
                     status: self.filterType,
                 }, function(data) {
+                    if(data.ret == 200 && data.currentPage == undefined) {
+                        self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
+                        $('.page-turn').hide();
+                        self.loading.hide();
+                    }
                     if (pageNow != global.getPageNow()) {
+                        self.main.html(compiled);
                         return;
                     }
                     if (data.ret == 200 && data.data && data.data.info.length > 0) {
+                        $('.page-turn').show();
                         var compiled = template("listtemplate", data.data);
                         self.main.html(compiled);
                         self.rebindButton();
