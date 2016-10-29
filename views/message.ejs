@@ -3,7 +3,7 @@
     <div class="location clearfix">
         <h1><a href="/message" title="">消息中心</a></h1>
         <div class="location-plus">
-            <a class="filter" href="#"></a>
+            <i class="filter"></i>
             <ul class="filter-list text-white">
                 <li class="filter-all">全部</li>
                 <li class="filter-read">已读</li>
@@ -129,7 +129,7 @@
             main: $(".message-col"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
-            filterType: '1',
+            filterType: global.getUrlParam('status'),
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -237,6 +237,20 @@
                 });
             },
             bindFilterEvent: function() {
+                /*绑定过滤器列表显示隐藏*/
+                var filter = $('.filter');
+                var filterList = $('.filter-list');
+                var num = 0;
+                filterList.hide(); 
+                filter.on("click", function() {
+                    num++;
+                    if(num % 2 == 1) {
+                        filterList.show();
+                    } else {
+                        filterList.hide();
+                    }
+                });
+
                 var self = this;
                 var all = $('.filter-all');
                 var read = $('.filter-read');
@@ -247,7 +261,9 @@
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        self.updateByPage();                  
+                        var newURL = location.pathname + '?status=' + status;
+                        history.pushState(null,'',newURL);   
+                        self.updateByPage();        
                     })
                 };
                 bindFilterEventByStatus(all, 1);

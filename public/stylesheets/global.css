@@ -1075,6 +1075,7 @@ textarea.form-control{
     display: inline-block;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    cursor: pointer;
 }
 .filter-list{
     display: inline-block;

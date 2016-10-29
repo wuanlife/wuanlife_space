@@ -246,7 +246,9 @@
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        self.updateByPage();                  
+                        var newURL = location.pathname + '?status=' + status;
+                        history.pushState(null,'',newURL);   
+                        self.updateByPage();                
                     })
                 };
                 bindFilterEventByStatus(all, 1);
