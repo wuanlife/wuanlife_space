@@ -1121,7 +1121,7 @@ textarea.form-control{
 .blockPage img{
     
 }
-<<<<<<< HEAD
+
 /********************
 *********星球成员管理***
 *******************/
@@ -1144,7 +1144,7 @@ textarea.form-control{
     color:white;
     background-color: #5ab8fe; 
     cursor:pointer;
-=======
+}
 /****************
 *******搜索结果*****
 *****************/
@@ -1195,5 +1195,4 @@ textarea.form-control{
     color:#5ab8fe;
     padding:0 20px;
     letter-spacing: 5px;
->>>>>>> upstream/dev
 }

@@ -597,8 +597,6 @@ router.post('/:method', function(req, res, next) {
             break;
         //删除星球成员
         case 'deleteMember':
-            //var groupid=req.param('groupid');
-            //var userid=userID;
             request.post({
                 url:config.server + '?service=Group.DeleteGroupMember',
                 formData:{
@@ -614,6 +612,11 @@ router.post('/:method', function(req, res, next) {
                         //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
                         return res.send(JSON.parse(body));
                     } 
+                    console.error('deleteMember failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
                 } catch(e){
                     res.send({
                         ret: 500,
