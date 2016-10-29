@@ -514,7 +514,8 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Group.PrivateGroup',
                 formData: {
                     user_id: userID,
-                    group_id: req.body.groupid
+                    group_id: req.body.groupid,
+                    text: req.body.applyText
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');

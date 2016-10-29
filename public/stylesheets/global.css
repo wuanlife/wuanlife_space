@@ -1075,6 +1075,7 @@ textarea.form-control{
     display: inline-block;
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    cursor: pointer;
 }
 .filter-list{
     display: inline-block;
@@ -1113,14 +1114,14 @@ textarea.form-control{
     color:#cccccc;
     text-align: center;
     font-size: 32px;
-    padding:40px 0 ;
+    padding:100px 0 ;
     margin:0;   
 }
 .blockPage p {
     margin: 15px 0;
 }
 .blockPage img{
-    
+    width: 750px;
 }
 
 /********************

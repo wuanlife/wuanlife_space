@@ -28,7 +28,7 @@
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
 	<div class="blockPage">
 		<p>您还未加入，无法浏览内容</p>
-		<img src="../images/sadface.png">
+		<img src="../images/not_join.png">
 	</div>
 	<%} else if(result.posts.length > 0){%>
 	<div class="chapter-col">
@@ -117,22 +117,45 @@
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
-			//根据SweetAlert的自定义样式方法改了下，在这个页面下封装了午安输入框。以后可以考虑放到baseJS里面
+			//测试过不影响其他地方的sweetAlert表现
 			//压缩成一行了
 			//复用性有待提高，目标：实现相当于在swal外封装一层，提高复用性。
 			sweetAlertForPost: function() {
-				var compressedCSS = "";
+                var self = this;
+                //发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
+				var compressedCSS = ".swal2-show{padding:20px 60px!important;width:680px!important;height:400px!important}.swal2-show>h2{float:left!important;color:#5ab8fe!important;font-weight:unset!important}.swal2-textarea{outline:0!important;resize:none!important;height:240px!important;margin:0!important;background-color:rgba(243,243,243,1)!important}.swal2-cancel{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}.swal2-confirm{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}";
 
 				swal({
 					title: '发送信息',
 					html: '<style>' + compressedCSS+'</style>',
 					input: 'textarea',
-					showCancelButton: true
+					showCancelButton: true,
+                    confirmButtonText: '申请',
+                    cancelButtonText: '取消'
 				}).then(function(text) {
-					if (text) {
-						swal(text)
-					}
-				});
+                    self.loading.show();
+                    global.subData("/api/applyPrivateGroup",{
+                        groupid: parseInt("<%=result.groupID%>"),
+                        applyText: text
+                    }, function(data) {
+                        if (data.ret == 200 && data.data && data.data.code == 1) {
+                                sweetAlert({
+                                title: '提示',
+                                text: '申请成功等待审核',
+                                type: 'success',
+                                timer: 2000
+                                });
+                            self.joinBtn.text('+已申请'); //正在申请
+                            self.identity = 4;
+                        } else {
+                            sweetAlert('错误', '加入星球失败', 'error');
+                        }
+                        self.loading.hide();
+                        self.joinBtn.removeAttr('disabled');
+                    }); 
+				}, function() {
+                    /*cancel to do*/
+                });
 			},
 			updateByPage:function(){
 				var self = this;
@@ -198,23 +221,8 @@
 									self.joinBtn.removeAttr('disabled');
 								});
 							} else if(self.private == 1) {
-								global.subData("/api/applyPrivateGroup",{
-									groupid: parseInt("<%=result.groupID%>")
-								}, function(data) {
-									if (data.ret == 200 && data.data && data.data.code == 1) {
-											sweetAlert({
-											title: '提示',
-											text: '申请成功等待审核',
-											type: 'success',
-											timer: 2000
-											});
-										self.joinBtn.text('+已申请'); //正在申请
-										self.identity = 4;
-									} else {
-										sweetAlert('错误', '加入星球失败', 'error');
-									}
-									self.joinBtn.removeAttr('disabled');
-								});					
+                                self.sweetAlertForPost();
+                                self.joinBtn.removeAttr('disabled');				
 							}
 							break;
 						case 4:
@@ -229,6 +237,7 @@
 					<%}%>
 				});
 				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                var fuck=0;
 			},
 			init: function() {
 				this.bindEvent();
