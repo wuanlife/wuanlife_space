@@ -133,6 +133,10 @@
                     confirmButtonText: '申请',
                     cancelButtonText: '取消'
 				}).then(function(text) {
+					if(text.length > 60) {
+						sweetAlert('错误', '申请消息长度小于60', 'error');
+						return;
+					}
                     self.loading.show();
                     global.subData("/api/applyPrivateGroup",{
                         groupid: parseInt("<%=result.groupID%>"),
