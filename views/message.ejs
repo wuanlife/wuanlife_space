@@ -231,6 +231,7 @@
                         self.main.html(compiled);
                         self.rebindButton();
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                        global.setPageCount(data.data.pageCount);
                         self.pre.removeAttr('class');
                         self.next.removeAttr('class');
                         if (data.data.currentPage == 1) {
@@ -284,7 +285,8 @@
             },
             bindEvent: function() {
                 var self = this;
-                global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                global.setPageCount(self.pageCount);
+                global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
                 //绑定过滤器事件
                 this.bindFilterEvent();    
             },

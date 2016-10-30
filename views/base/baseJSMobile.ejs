@@ -122,7 +122,11 @@
             var changeEverPushed = function(){
                 everPushed = true;
             }
-            var pageTurning = function(pre,next,pageCount,updata){
+            var pageCount = 1;
+            var setPageCount = function(pn){
+                pageCount = pn;
+            }
+            var pageTurning = function(pre,next,updata){
                 var self = this;
                 var initialUrl = location.href;
                 $(document).on('touchend', pre,function(event) {
@@ -190,6 +194,7 @@
                 subData:subData,
                 getUrlParam: getUrlParam,
                 getPageNow:getPageNow,
+                setPageCount:setPageCount,
                 pageTurning:pageTurning,
                 changeEverPushed:changeEverPushed,
                 utf16toEntities:utf16toEntities
