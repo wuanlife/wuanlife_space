@@ -134,7 +134,7 @@
                     cancelButtonText: '取消'
 				}).then(function(text) {
 					if(text.length > 60) {
-						sweetAlert('错误', '申请消息长度小于60', 'error');
+						sweetAlert('错误', '申请消息长度不能超于60', 'error');
 						return;
 					}
                     self.loading.show();
