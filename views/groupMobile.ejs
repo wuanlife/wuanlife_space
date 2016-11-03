@@ -24,7 +24,7 @@
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
 	<div class="blockPage">
 		<p>您还未加入，无法浏览内容</p>
-		<img src="../images/sadface_mobile.png">
+		<img src="../images/not_join.png">
 	</div>
 	<%} else if(result.posts.length > 0){%>
 	<div class="chapter-col">
@@ -34,7 +34,7 @@
 				<%if(parseInt(item.sticky)){%>
 				<i class="cha-top">置顶</i>
 				<%}%>
-				<a href="/topic/<%=item.postID%>" title=""><%-item.title%></a>
+				<a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a>
 			</h2>
 			<div class="chapter-info">
 				<span class="text-ellipsis"><a href="#?" title=""><%=item.nickname%></a></span>
@@ -85,7 +85,7 @@
 	<div class="chapter">
 		<h2 class="text-ellipsis">
 			{{if item.sticky>0}}<i class="cha-top">置顶</i> {{/if}}
-			<a href="/topic/{{item.postID}}" title="{{#item.title}}">{{#item.title}}</a>
+			<a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a>
 		</h2>
 		<div class="chapter-info">
 			<span class="text-ellipsis"><a href="#?" title="">{{item.nickname}}</a></span>
@@ -120,6 +120,47 @@
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
+			sweetAlertForPost: function() {
+                var self = this;
+                //发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
+				var compressedCSS = ".swal2-show{padding:20px 60px!important;width:680px!important;height:400px!important}.swal2-show>h2{float:left!important;color:#5ab8fe!important;font-weight:unset!important}.swal2-textarea{outline:0!important;resize:none!important;height:240px!important;margin:0!important;background-color:rgba(243,243,243,1)!important}.swal2-cancel{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}.swal2-confirm{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}";
+
+				swal({
+					title: '发送信息',
+					html: '<style>' + compressedCSS+'</style>',
+					input: 'textarea',
+					showCancelButton: true,
+                    confirmButtonText: '申请',
+                    cancelButtonText: '取消'
+				}).then(function(text) {
+					if(text.length > 60) {
+						sweetAlert('错误', '申请消息长度不能超于60', 'error');
+						return;
+					}
+                    self.loading.show();
+                    global.subData("/api/applyPrivateGroup",{
+                        groupid: parseInt("<%=result.groupID%>"),
+                        applyText: text
+                    }, function(data) {
+                        if (data.ret == 200 && data.data && data.data.code == 1) {
+                                sweetAlert({
+                                title: '提示',
+                                text: '申请成功等待审核',
+                                type: 'success',
+                                timer: 2000
+                                });
+                            self.joinBtn.text('+已申请'); //正在申请
+                            self.identity = 4;
+                        } else {
+                            sweetAlert('错误', '加入星球失败', 'error');
+                        }
+                        self.loading.hide();
+                        self.joinBtn.removeAttr('disabled');
+                    }); 
+				}, function() {
+                    /*cancel to do*/
+                });
+			},
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();
@@ -135,6 +176,7 @@
 						var compiled = template("listtemplate", data.data);
 						self.main.html(compiled);
 						self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+						global.setPageCount(data.data.pageCount);
 						self.pre.removeAttr('class');
 						self.next.removeAttr('class');
 						if (data.data.currentPage == 1) {
@@ -185,25 +227,9 @@
 									self.disabled = false;
 								});
 							} else if(self.private == 1) {
-								global.subData("/api/applyPrivateGroup",{
-									groupid: parseInt("<%=result.groupID%>")
-								}, function(data) {
-									if (data.ret == 200 && data.data && data.data.code == 1) {
-											sweetAlert({
-											title: '提示',
-											text: '申请成功等待审核',
-											type: 'success',
-											timer: 2000
-											});
-										self.joinBtn.attr('class', 'locBtn');
-										$(".location > h1").append(self.joinBtn);
-										self.joinBtn.text('+已申请'); //正在申请
-										self.identity = 4;
-									} else {
-										sweetAlert('错误', '加入星球失败', 'error');
-									}
-									self.disabled = false;
-								});					
+								self.sweetAlertForPost();
+								self.joinBtn.removeAttr('disabled');	
+								self.disabled = false;			
 							}
 							break;
 						case 4:
@@ -217,7 +243,8 @@
 					window.location.href = '/login';
 					<%}%>
 				});
-				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+				global.setPageCount(self.pageCount);
+				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
 			},
 			init: function() {
 				this.bindEvent();

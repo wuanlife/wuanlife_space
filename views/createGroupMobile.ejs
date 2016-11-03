@@ -36,12 +36,14 @@
 			url: '',
 			private:0,
 			loading: $(".loading"),
+			des:'',
 			verificate: function() {
 				this.private = $('#private:checked').val();
 				if (this.private!=1 && this.private!=0) {
 					this.private = 0;
 				}
 				var myreg = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+				var des = $.trim(this.cpDes.val());
 				if (this.pName.val().length < 1 || this.pName.val().length > 20) {
 					sweetAlert("格式错误", "请输入1-20位字符做为星球名称", "warning");
 					return false;
@@ -50,10 +52,11 @@
 					sweetAlert("格式错误", "星球名称只允许中文、数字、字母和下划线", "warning");
 					return false;
 				}
-				if (this.cpDes.val().length > 50) {
+				if (des.length > 50) {
 					sweetAlert("格式错误", "星球介绍不能超于50字", "warning");
 					return false;
 				}
+				this.des = des.replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
 				return true;
 			},
 			bindEvent: function() {
@@ -64,7 +67,7 @@
 						self.loading.show();
 						global.subData('/createGroup', {
 							name: self.pName.val(),
-							g_introduction: self.cpDes.val().trim(),
+							g_introduction: self.des,
 							g_image: self.url,
 							private:self.private
 						}, function(data) {

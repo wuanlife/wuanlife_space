@@ -115,23 +115,24 @@ router.post('/:groupid/post', function(req, res, next) {
 			text: html
 		}
 	}, function optionalCallback(err, httpResponse, body) {
-		if (!err && httpResponse.statusCode == 200) {
-			var result = JSON.parse(body);
-			//console.log(result);
-			if (result.ret == 200 && result.msg == "" && result.data.code == 1) {
-				res.redirect('/topic/' + result.data.info.post_base_id);
-			} else {
-				res.render('error', {
-					'message': result.msg,
-					error: {
-						'status': result.ret,
-						'stack': ''
-					}
-				});
-			}
-		} else {
-			next(err);
-		}
+		res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        try{
+        	if (!err && httpResponse.statusCode == 200) {
+        		var result = JSON.parse(body);
+        		//console.log(result);
+        		return res.send(result);
+        	}
+        	res.send({
+        		ret:500,
+        		msg:'服务器异常'
+        	});
+        } catch(e){
+        	res.send({
+        		ret:500,
+        		msg:'服务器异常'
+        	});
+        }
 	});
 
 });

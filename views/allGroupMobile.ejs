@@ -15,7 +15,7 @@
 				<div class="planet-info">
 					<h2 class="text-ellipsis"><a href="/group/<%=item.id%>" title=""><%=item.name%></a></h2>
 					<p>
-						<%-item.g_introduction%>
+						<%=item.g_introduction%>
 					</p>
 				</div>
 			</li>
@@ -50,7 +50,7 @@
 		</div>
 		<div class="planet-info">
 			<h2 class="text-ellipsis"><a href="/group/{{item.id}}" title="{{item.name}}">{{item.name}}</a></h2>
-			<p>{{#item.g_introduction}}</p>
+			<p>{{item.g_introduction}}</p>
 		</div>
 	</li>
 	{{/each}}
@@ -81,6 +81,7 @@
 						var compiled = template("planet-list", data.data);
 						self.main.html(compiled);
 						self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+						global.setPageCount(data.data.pageCount);
 						self.pre.removeAttr('class');
 						self.next.removeAttr('class');
 						if (data.data.currentPage == 1) {
@@ -99,7 +100,8 @@
 			},
 			bindEvent: function() {
 				var self = this;
-				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+				global.setPageCount(self.pageCount);
+				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
 			},
 			init: function() {
 				this.bindEvent();

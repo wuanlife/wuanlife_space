@@ -2,7 +2,7 @@
 <div class="main">
 	<div class="post-detail">
 		<div class="post-md">
-			<h1 class="post-title"><%-result.title%></h1>
+			<h1 class="post-title"><%=result.title%></h1>
 			<div class="post-info clearfix">
 				<span><a href="" title="<%=result.nickname%>"><%=result.nickname%></a></span>
 				<span>发表于</span>
@@ -79,11 +79,14 @@
 			isSticky: parseInt("<%=result.sticky%>"),
 			isLock: parseInt("<%=result.lock%>"),
 			lockDisable:false,
+			replyText:'',
 			verificate: function() {
-				if (this.myReplyContent.val().length < 1) {
+				this.replyText = $.trim(this.myReplyContent.val());
+				if (this.replyText.length < 1) {
 					sweetAlert('格式错误', '回复内容不能为空', 'warning');
 					return false;
 				}
+				this.replyText = global.utf16toEntities(this.replyText);
 				return true;
 			},
 			getReplyData: function(param, cb) {
@@ -104,8 +107,9 @@
 						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+pageNow + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
 						self.comment.html(reply);
 						self.pageCount = data.data.pageCount;
+						global.setPageCount(self.pageCount);
 						if (set) {
-							global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+							global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
 						}
 						if (pageNow == 1) {
 							$("#pre").addClass('unCBtn');
@@ -151,7 +155,9 @@
 						var compiled = template("listtemplate", data.data);
 						$('.post-cm-group').html(compiled);
 						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
-						$(".page-turn").find('span').eq(0).html(pageNow + '/' + self.pageCount);
+						$(".page-turn").find('span').eq(0).html(pageNow + '/' + data.data.pageCount);
+						self.pageCount = data.data.pageCount;
+						global.setPageCount(self.pageCount);
 						$("#pre").removeAttr('class');
 						$("#next").removeAttr('class');
 						if (pageNow == 1) {
@@ -284,14 +290,14 @@
 			<% } %>
 			<% if (result.deleteRight) { %>
 			deletePost: function() {
-				sweetAlert({
+				swal({
 					title: '提示',
 					text: '是否删除帖子',
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonText: '删除',
 					cancelButtonText: '取消'
-				}, function() {
+				}).then(function() {
 					global.subData("/api/deletePost", {
 						post_id: parseInt("<%=result.postID%>")
 					}, function(data) {
@@ -316,7 +322,7 @@
 					self.loading.show();
 					global.subData("/api/postReply", {
 						post_id: parseInt("<%=result.postID%>"),
-						text: self.myReplyContent.val()
+						text: self.replyText
 					}, function(data) {
 						//console && console.log(data);
 						if (data.ret == 200) {

@@ -90,6 +90,14 @@
                     }
                 });
             };
+            /*获取get参数*/
+            var getUrlParam = function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) 
+                    return unescape(r[2]); 
+                return null; //返回参数值
+            }; 
             //设置主栏主内容容器高度
             $(document).ready(function() {
                var windowHeight = $(window).height();
@@ -114,18 +122,24 @@
             var changeEverPushed = function(){
                 everPushed = true;
             }
-            var pageTurning = function(pre,next,pageCount,updata){
+            var pageCount = 1;
+            var setPageCount = function(pn){
+                pageCount = pn;
+            }
+            var pageTurning = function(pre,next,updata){
                 var self = this;
                 var initialUrl = location.href;
                 $(document).on('touchend', pre,function(event) {
                     event.preventDefault();
                     /* Act on the event */
                     var pageNow = global.getPageNow();
+                    if (pageNow>pageCount) pageNow = pageCount;
                     if (pageNow == 1) {
                         return;
                     } else{
                         pageNow--;
-                        var newURL = location.pathname + '?page=' + pageNow;
+                        var search = location.search.replace(/page=\d+/,'page='+pageNow);
+                        var newURL = location.pathname + search;
                         history.pushState(null,'',newURL);
                         everPushed = true;
                         updata.apply(self,[]);
@@ -135,11 +149,15 @@
                     event.preventDefault();
                     /* Act on the event */
                     var pageNow = global.getPageNow();
+                    if (pageNow>pageCount) pageNow = pageCount;
                     if (pageNow == pageCount) {
                         return;
                     } else{
                         pageNow++;
-                        var newURL = location.pathname + '?page=' + pageNow;
+                        var reg = /page=\d+/;
+                        var symbol = location.search?'&':'?';
+                        var search = reg.test(location.search)?location.search.replace(reg,'page='+pageNow):location.search + symbol + 'page=' + pageNow;
+                        var newURL = location.pathname + search;
                         history.pushState(null,'',newURL);
                         everPushed = true;
                         updata.apply(self,[]);
@@ -155,12 +173,31 @@
                     updata.apply(self,[]);
                 });
             };
+            //用于把用utf16编码的字符转换成实体字符，以供后台存储 
+            var utf16toEntities = function(str){
+                var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则  
+                str = str.replace(patt, function(char){  
+                    var H, L, code;  
+                    if (char.length===2) {  
+                        H = char.charCodeAt(0); // 取出高位  
+                        L = char.charCodeAt(1); // 取出低位  
+                        code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法  
+                        return "&#" + code + ";";  
+                    } else {  
+                        return char;  
+                    }  
+                });  
+                return str; 
+            };
             return {
                 getData:getData,
                 subData:subData,
+                getUrlParam: getUrlParam,
                 getPageNow:getPageNow,
+                setPageCount:setPageCount,
                 pageTurning:pageTurning,
-                changeEverPushed:changeEverPushed
+                changeEverPushed:changeEverPushed,
+                utf16toEntities:utf16toEntities
             }
         }());
     </script>
