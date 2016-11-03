@@ -928,6 +928,9 @@ textarea.form-control{
 /******************
 创建及编辑帖子
 ******************/
+.post-form{
+    position: relative;
+}
 .post-form input{
      margin-bottom: 30px;
 }
@@ -938,7 +941,14 @@ textarea.form-control{
 .post{
     margin:70px 0 93px;
 }
-
+/*超字提示*/
+.post-form .word-num-tip{
+    position: absolute;
+    left:100%;
+    bottom:57px;
+    color:#c00;
+    margin-left:5px;
+}
 /*PC文本编辑器*/
 .post-form .wangEditor-container{
         font-size: 14px;
