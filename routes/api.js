@@ -126,7 +126,8 @@ router.get('/:method', function(req, res, next) {
         case 'getMessageShow':
             var pn = req.param('currentpage');
             var user_id = req.param('userId');
-            request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn, function(error, response, body) {
+            var status = req.param('status');
+            request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn + '&status=' + status, function(error, response, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 try{
@@ -513,7 +514,8 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Group.PrivateGroup',
                 formData: {
                     user_id: userID,
-                    group_id: req.body.groupid
+                    group_id: req.body.groupid,
+                    text: req.body.applyText
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -590,6 +592,36 @@ router.post('/:method', function(req, res, next) {
                     res.send({
                         ret: 500,
                         msg:e.message
+                    });
+                }
+            });
+            break;
+        //删除星球成员
+        case 'deleteMember':
+            request.post({
+                url:config.server + '?service=Group.DeleteGroupMember',
+                formData:{
+                    group_id:req.body.groupid,
+                    user_id:userID,
+                    member_id:req.body.memberid
+                    }   
+            },function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        return res.send(JSON.parse(body));
+                    } 
+                    console.error('deleteMember failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
                     });
                 }
             });
