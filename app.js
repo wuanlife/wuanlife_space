@@ -63,7 +63,7 @@ app.use(bodyParser.urlencoded({
 //   secret: 'wuan is powerful'
 // }));
 
-app.use(cookieParser());
+app.use(cookieParser('qefr4MFZAxSm9cdB'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var sessionMiddleware = session({
