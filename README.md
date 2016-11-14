@@ -12,7 +12,7 @@ Version 1.1.4（2016.11.7）<br>
 2.加入私密星球需填写认证信息<br>
 3.星球申请通知可筛选已通过和未通过<br>
 4.新增星球主移除成员功能<br>
-参与人员：阿狸、haha214、caoyu、aunhappy、jinchaojian、梁王、马太阳、hay
+参与人员：阿狸、haha214、梁王、三木、aunhappy、jinchaojian、马太阳、hay
 
 Version 1.1.3（2016.10.5）<br>
 1.新增私密星球<br>
