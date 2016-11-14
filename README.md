@@ -1,6 +1,6 @@
-#午安网 - 过你想过的生活
+#Wuanlife - Live your Life!
 
-本项目为午安网Web部分相关代码，基于Apache协议开源。<br>
+本项目为Wuanlife项目Web部分相关代码，基于Apache协议开源。<br>
 API部分代码见：https://github.com/wuanlife/wuanlife_api<br>
 相关产品原型见：https://github.com/wuanlife/wuanlife_prd<br>
 管理后台代码见：https://github.com/wuanlife/wuanlife_console
