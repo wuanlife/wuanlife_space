@@ -101,7 +101,7 @@
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
 						var compiled = template("listtemplate", data.data);
-						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+pageNow + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
+						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+data.data.currentPage + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
 						self.comment.html(reply);
 						self.pageCount = data.data.pageCount;
 						global.setPageCount(self.pageCount);
