@@ -908,6 +908,27 @@ textarea.form-control{
     white-space: pre-wrap;
     color:#5b5b5b;
 }
+/*回复内容中操作项*/
+.post-cm-opt button{
+    margin-left: 17px;
+    float:right;
+    font-size: 14px;
+    color:#5ab8fe;
+    background-color: transparent;
+    cursor: pointer;
+}
+/*回复内容中楼中楼回复*/
+.post-cm-reply{
+    display:none;
+}
+.post-cm-reply textarea{
+    margin-bottom: 20px;
+    margin-top: 10px;
+    height:50px;
+}
+.post-cm-reply .post-sub{
+    margin-bottom: 25px;
+}
 /*回复内容的翻页*/
 .post-comment .page-turn{
     padding:10px 0 0;
