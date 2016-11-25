@@ -90,6 +90,7 @@
 			isSticky: parseInt("<%=result.sticky%>"),
 			isLock: parseInt("<%=result.lock%>"),
 			lockDisable:false,
+			replyCount:0,
 			verificate: function(textarea) {
 				var replyText = $.trim(textarea.val());
 				if (replyText.length < 1) {
@@ -106,56 +107,7 @@
 			getReplyData: function(param, cb) {
 				global.getData("/api/getPostReplys", param, cb);
 			},
-			setReplyData: function(set,floor) {
-				var self = this;
-				var pageNow = global.getPageNow();
-				self.getReplyData({
-					currentpage: pageNow,
-					post_id: parseInt("<%=result.postID%>")
-				}, function(data) {
-					if (pageNow != global.getPageNow()) {
-						return;
-					}
-					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-						data.data.isLock = self.isLock;
-						var compiled = template("listtemplate", data.data);
-						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+data.data.currentPage + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
-						self.comment.html(reply);
-						self.pageCount = data.data.pageCount;
-						global.setPageCount(self.pageCount);
-						if (set) {
-							global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-						}
-						if (pageNow == 1) {
-							$("#pre").addClass('unCBtn');
-						}
-						if (pageNow == data.data.pageCount) {
-							$("#next").addClass('unCBtn');
-						}
-						if (pageNow>1) {
-							var position = floor? $('[data-id =' + floor +']') : $(".post-comment");
-							var postComY = position.offset().top;
-							var scroollY = postComY - $(".navbar").height();
-							$(window).scrollTop(scroollY);
-						} else{
-							var scroollY = floor? ($('[data-id =' + floor +']').offset().top - $(".navbar").height()) :0;
-							$(window).scrollTop(scroollY);
-						}
-						if (!set) {
-							self.loading.hide();
-						}
-					} else{
-						if (!set) {
-							self.loading.hide();
-							sweetAlert('错误', '数据获取失败', 'error');
-							return;
-						}
-						self.comment.html('');
-						
-					}
-				});
-			},
-			updateByPage: function() {
+			setReplyData: function(set) {
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.loading.show();
@@ -167,32 +119,48 @@
 						return;
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+						if ($('.post-comment').length == 0) {
+							var replyMD = '<div class="post-comment"><h2></h2><div class="post-cm-group"></div><div class="page-turn"><button id="pre">上一页</button><span></span><button id="next">下一页</button></div></div>';
+							self.comment.html(replyMD);
+						}
+						data.data.isLock = self.isLock;
 						var compiled = template("listtemplate", data.data);
 						$('.post-cm-group').html(compiled);
 						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
-						$(".page-turn").find('span').eq(0).html(pageNow + '/' + data.data.pageCount);
+						$(".page-turn").find('span').eq(0).html(data.data.currentPage + '/' + data.data.pageCount);
 						self.pageCount = data.data.pageCount;
+						self.replyCount = data.data.replyCount;
 						global.setPageCount(self.pageCount);
+						if (set) {
+							global.pageTurning.apply(self,["#pre","#next",self.setReplyData]);
+						}
 						$("#pre").removeAttr('class');
 						$("#next").removeAttr('class');
-						if (pageNow == 1) {
+						if (data.data.currentPage == 1) {
 							$("#pre").addClass('unCBtn');
 						}
-						if (pageNow == data.data.pageCount) {
+						if (data.data.currentPage == data.data.pageCount) {
 							$("#next").addClass('unCBtn');
 						}
-						self.loading.hide();
-						if (pageNow>1) {
-							var postComY = $(".post-comment").offset().top;
-							var scroollY = postComY - $(".navbar").height();
+						var rf = $('[data-id =' + global.getUrlParam('rf') +']');
+						if (rf.length != 0 && set) {
+							var scroollY = rf.offset().top - $(".navbar").height(); 
 							$(window).scrollTop(scroollY);
 						} else{
-							$(window).scrollTop(0);
+							if (data.data.currentPage > 1) {
+								var postComY = $(".post-comment").offset().top;
+								var scroollY = postComY - $(".navbar").height();
+								$(window).scrollTop(scroollY);
+							} else{
+								$(window).scrollTop(0);
+							}
 						}
 					} else{
-						self.loading.hide();
-						sweetAlert('错误', '数据获取失败', 'error');
+						if (!set) {
+							sweetAlert('错误', '数据获取失败', 'error');
+						}
 					}
+					self.loading.hide();
 				});
 			},
 			<% if (result.lockRight) { %>
@@ -324,7 +292,7 @@
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
-				});
+				}).catch(swal.noop);
 			},
 			<% } %>
 			deletePostReply: function(btn){
@@ -345,7 +313,13 @@
 						//console && console.log(data);
 						if (data.ret == 200 && data.data) {
 							if (data.data.code == 1) { //操作成功
-								$('[data-id =' + '"'+floor+'"' +']').remove();
+								postReply.replyCount--;
+								if (postReply.replyCount == 0) {
+									$('.post-comment').remove()
+								} else{
+									$('[data-id =' + '"'+floor+'"' +']').remove();
+									$('.post-comment').children('h2').html(postReply.replyCount+'个回复');
+								}
 							} else {
 								sweetAlert('提示', data.data.re, 'warning');
 								btn.removeAttr('disabled');
@@ -355,7 +329,7 @@
 							btn.removeAttr('disabled');
 						}
 					});
-				});
+				}).catch(swal.noop);
 			},
 			subReply: function(textarea,floor) {
 				var self = this;
@@ -369,18 +343,26 @@
 						replyfloor:floor
 					}, function(data) {
 						//console && console.log(data);
+						self.loading.hide();
 						if (data.ret == 200) {
 							if (data.data) {
 								textarea.val('');
-								var page = parseInt((data.data.floor - 2)/30) + 1;
-								if (page != global.getPageNow()) {
-									var newURL = location.pathname + '?page=' + page;
-									history.pushState(null,'',newURL);
-									global.changeEverPushed();
+								postReply.replyCount++;
+								if ($('.post-comment').length == 0) {
+									var replyMD = '<div class="post-comment"><h2></h2><div class="post-cm-group"></div><div class="page-turn"><button id="pre" class="unCBtn">上一页</button><span>1/1</span><button id="next" class="unCBtn">下一页</button></div></div>';
+									self.comment.html(replyMD);
 								}
-								self.setReplyData(false,data.data.floor);
+								$('.post-comment').children('h2').html(postReply.replyCount+'个回复');
+								$('.post-cm-reply').hide();
+								var replyData = {};
+								data.data.deleteRight = 1;
+								replyData.isLock = self.isLock;
+								replyData.reply = [data.data];
+								var compiled = template("listtemplate", replyData);
+								$('.post-cm-group').append(compiled);
+								var scroollY = ($('[data-id =' + data.data.floor +']').offset().top - $(".navbar").height());
+								$(window).scrollTop(scroollY);
 							} else{
-								self.loading.hide();
 								sweetAlert('提示', '帖子已经被锁定', 'warning');
 								$('.my-comment').remove();
 								$('.post-cm-replyBtn').remove();
@@ -389,7 +371,6 @@
 								self.post_lock.text('取消锁帖');
 							}
 						} else {
-							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
