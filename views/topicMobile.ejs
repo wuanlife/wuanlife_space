@@ -55,6 +55,14 @@
 			<span class="post-cm-time">{{item.createTime}}</span>
 		</div>
 		<div class="post-cm-content">{{item.text}}</div>
+		<div class="post-cm-opt clearfix">
+			{{if !isLock}}
+			<button class="post-cm-replyBtn">回复</button>
+			{{/if}}
+			{{if item.deleteRight}}
+			<button class="post-cm-deleteBtn" data-target="{{item.floor}}" type="button">删除</button>
+			{{/if}}
+		</div>
 	</div>
 	{{/each}}
 </script>
@@ -100,6 +108,7 @@
 						return;
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+						data.data.isLock = self.isLock;
 						var compiled = template("listtemplate", data.data);
 						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+data.data.currentPage + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
 						self.comment.html(reply);
@@ -148,6 +157,7 @@
 						return;
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+						data.data.isLock = self.isLock;
 						var compiled = template("listtemplate", data.data);
 						$('.post-cm-group').html(compiled);
 						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
@@ -292,7 +302,8 @@
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonText: '删除',
-					cancelButtonText: '取消'
+					cancelButtonText: '取消',
+					allowOutsideClick: false
 				}).then(function() {
 					global.subData("/api/deletePost", {
 						post_id: parseInt("<%=result.postID%>")
@@ -308,9 +319,43 @@
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
-				});
+				}).catch(swal.noop);
 			},
 			<% } %>
+			deletePostReply: function(btn){
+				if (btn.hasClass('disabled')) {
+					return;
+				}
+				swal({
+					title: '提示',
+					text: '是否删除该回复',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '删除',
+					cancelButtonText: '取消',
+					allowOutsideClick: false
+				}).then(function() {
+					var floor = btn.attr('data-target');
+					btn.addClass('disabled');
+					global.subData("/api/deletePostReply", {
+						post_id: parseInt("<%=result.postID%>"),
+						floor:floor
+					}, function(data) {
+						//console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) { //操作成功
+								$('[data-id =' + '"'+floor+'"' +']').remove();
+							} else {
+								sweetAlert('提示', data.data.re, 'warning');
+								btn.removeClass('disabled');
+							}
+						} else {
+							sweetAlert('错误', data.msg, 'error');
+							btn.removeClass('disabled');
+						}
+					});
+				}).catch(swal.noop);
+			},
 			subReply: function() {
 				var self = this;
 				<% if (user) { %>
@@ -362,6 +407,9 @@
 				self.myReplyForm.submit(function(event) {
 					event.preventDefault();
 					self.subReply.apply(self);
+				});
+				$(document).on('touchend', '.post-cm-deleteBtn',function(event) {
+					self.deletePostReply($(this));
 				});
 			},
 			init: function() {
