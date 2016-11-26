@@ -282,7 +282,7 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Post.StickyPost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -311,7 +311,7 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Post.UnStickyPost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -334,13 +334,71 @@ router.post('/:method', function(req, res, next) {
                 }
             });
             break;
+        //帖子收藏
+        case 'collectPost':
+            request.post({
+                url: config.server + '?service=Post.CollectPost',
+                formData: {
+                    user_id: userID,
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Collect failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
+            });
+            break;
+        //取消帖子收藏
+        case 'uncollectPost':
+            request.post({
+                url: config.server + '?service=Post.DeleteCollectPost',
+                formData: {
+                    user_id: userID,
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('unCollect failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
+            });
+            break;
         //删除帖子
         case 'deletePost':
             request.post({
                 url: config.server + '?service=Post.DeletePost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
