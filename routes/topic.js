@@ -40,6 +40,28 @@ router.get('/:id', function(req, res, next) {
         });
 });
 
+//移动端楼中楼回复页面
+router.get('/:id/comment', function(req, res, next) {
+    var agent = ua(req.headers['user-agent']);
+    if (req.session.user) {
+        try {
+            if (agent.Mobile) {
+                res.render('topicCommentMobile', {
+                    'title': '回复评论',
+                    'user': req.session.user,
+                    'postID': req.params.id,
+                    'reply': req.query.reply
+                });
+            } else {
+                throw 'no page';
+            }
+        } catch (e) {
+            next(e);
+        }
+    } else{
+        res.redirect('/login');
+    }
+});
 
 router.get('/:id/edit', function(req, res, next) {
     var agent = ua(req.headers['user-agent']);
