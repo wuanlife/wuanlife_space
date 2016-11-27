@@ -1018,21 +1018,77 @@ textarea.form-control{
 /****************
 *********消息*****
 ******************/
+.message-page {
+    background: #eee;
+    height: 100%
+}
+.message-left {
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+.message-right {
+    overflow: hidden;
+    background: #fff;
+}
+.message-left h1{
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.message-left li{
+    padding: 15px 0;
+    cursor: pointer;
+    color: #222
+}
+.message-left li:hover,.message-left li.active{
+    background: #b1b6d8
+}
+.message-right-tag {
+    background: #f5f5f5;
+    padding: 20px 10px;
+}
+.message-right-tag li {
+    float: left;
+    margin-left: 26px;
+    cursor: pointer;
+    color: #737373;
+}
+.message-right-tag li:hover,.message-right-tag li.active{
+    color: #5ab8fe
+}
 .message-col {
-    margin:14px 0 86px;
+
 }
 .message {
     padding: 30px 0;
     border-top: 1px solid rgba(229,229,229,1.0);
     border-bottom: 1px solid rgba(229,229,229,1.0);
 }
-
-.meg-brief {
-    width: 70%;
+.meg-reply-title {
     float: left;
-    line-height: 35px;
+}
+.meg-reply-time {
+    float: right;
+    text-align: right;
+}
+.meg-reply h3 {
     font-size: 22px;
-    color: rgba(90,184,254,1.0);
+}
+.meg-reply span {
+    color: #aaa
+}
+.meg-reply button {
+    padding: 5px 10px;
+    background: #5ab8fe;
+    color: #fff;
+    border-radius: 3px;
+}
+.meg-brief {
+    width: 100%;
+    float: left;
+    line-height: 28px;
+    font-size: 16px;
+    color: #222;
 }
 .meg-brief > img {
     width: 66px;
@@ -1043,8 +1099,9 @@ textarea.form-control{
     float: left;
 }
 .meg-content {
+    width: 100%;
     float: left;
-    margin-left: 15px;
+    padding-left: 15px;
 }
 .meg-content-row > p {
     float: left;

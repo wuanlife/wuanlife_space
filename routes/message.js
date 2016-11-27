@@ -10,12 +10,12 @@ router.get('/', function(req, res, next) {
         var agent = ua(req.headers['user-agent']),
             pn = req.query.page || 1,
             userid = req.session.user.userID,
-            status = req.query.status || 1;
-        request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn + "&status=" + status,
-            function(error, response, body) {
+            status = req.query.status || 1,
+            mtype = 1;
+            request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn + "&status=" + status + "&mtype=" + mtype,
+                function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
-                    console.log(result);
                     if (result.ret == 200 && result.msg == "") {
                         var page = agent.Mobile ? 'messageMobile' : 'message';
                         res.render(page, {
