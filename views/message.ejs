@@ -53,6 +53,10 @@
 <%- include base/baseJS.ejs %>
 
 <script type="text/javascript">
+
+
+
+
     (function() {
         var message = {
             pre: $("#pre"),
@@ -62,6 +66,7 @@
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
             filterType: global.getUrlParam('status'),
+            mtype: global.getUrlParam('mtype'),
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -70,7 +75,6 @@
             },
             rebindButton: function() {
                 var self = this;
-
                 //策略模式
                 var ChangeStrategies = {
                     //输入Jquery对象button和其父元素message
