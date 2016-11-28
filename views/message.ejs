@@ -16,57 +16,21 @@
         <%if(result.code == 1){%>
         <div class="message-col">
             <% result.info.forEach(function(item) { %>
-            <div id="<%=item.id %>" class="message clearfix vertical-container">
-                <div class="meg-brief">
-                    <div class="meg-content">
-                        <%if(item.messagetype == '1') { %>
-                        <img src="<%=item.user_image%>">
-                        <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
-                        <div class="meg-content-row clearfix">
-                            <p class="text-grey">申请加入：</p>
-                            <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
-                        </div>
-                        <div class="meg-content-row clearfix">
-                            <p class="text-grey">申请信息：</p>
-                            <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
-                        </div>   
-                        <% } else if(item.messagetype == '2') { %>
-                        <div class="meg-content-row clearfix">
-                            <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
-                        </div>
-                        <% } else { %>
-                        <div class="meg-reply clearfix">
-                            <div class="meg-reply-title">
-                                <h3><%=item.nickname%>：<%=item.replytext%></h3>
-                                <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
-                            </div>
-                            <div class="meg-reply-time">
-                                <div><span><%=item.createTime%></span></div>
-                                <button>回复</button>
-                            </div>
-                        </div>
-                        <% } %>
-                    </div>
+            <div id="<%=item.id %>" class="message clearfix">
+                <div class="meg-reply-title">
+                    <h3><%=item.nickname%>：<%=item.replytext%></h3>
+                    <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
                 </div>
-                <%if(item.messagetype == '1') { 
-                    if(item.messageInfo.status == '1') { %>
-                        <button class="meg-button agree" type="button">同意</button>
-                        <button class="meg-button disagree" type="button">拒绝</button>
-                    <% } else if(item.messageInfo.status == '2') {%>
-                        <button class="meg-right-text" type="button">已同意</button>
-                    <% } else if(item.messageInfo.status == '3') {%>
-                        <button class="meg-right-text" type="button">已拒绝</button>
-                    <% } %>
-                <% } else if(item.messagetype == '2') { %>
-                    <button class="meg-right-text" type="button"><%=item.messageInfo.information%></button>
-                <% } %>
-
+                <div class="meg-reply-time">
+                    <div><span><%=item.createTime%></span></div>
+                    <button>回复</button>
+                </div>
             </div>
             <% }) %>
         </div>     
 
         <div class="page-turn">
-            <%if(result.currentPage == 1){%>
+            <%if(result.currentPage == 1){console.log(result)%>
             <button type="button" class="unCBtn" id="pre">上一页</button>
             <%}else{%>
             <button type="button" id="pre">上一页</button>
@@ -87,50 +51,6 @@
 </div>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/html" id="listtemplate">
-    {{each info as item i}}
-    <div id="{{item.id}}" class="message clearfix vertical-container">
-        <div class="meg-brief">
-            <img src="{{item.user_image}}">
-            <div class="meg-content">
-                <h2 class="text-ellipsis text-link">{{item.nickname}}</h2>
-                {{if item.messagetype == '1' }}
-                    <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
-                    </div>
-                    <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis">{{item.messageInfo.text}}</p>
-                    </div>   
-                {{else if item.messagetype == '2' }}
-                    <div class="meg-content-row clearfix">
-                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
-                    </div>
-                {{/if}}
-             
-            </div>
-        </div>
-        {{if item.messagetype == '1' }}
-            {{if item.messageInfo.status == '1' }}
-                <button class="meg-button agree" type="button">同意</button>
-                <button class="meg-button disagree" type="button">拒绝</button>
-            {{else if item.messageInfo.status == '2' }}
-                <button class="meg-right-text" type="button">已同意</button>
-            {{else if item.messageInfo.status == '3' }}
-                <button class="meg-right-text" type="button">已拒绝</button>
-            {{/if}}
-        {{else if item.messagetype == '2' }}    
-            <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
-        {{/if}}
-
-    </div>
-    {{/each}}
-
-</script>
-
-
-
 
 <script type="text/javascript">
     (function() {
@@ -306,6 +226,7 @@
             init: function() {
                 this.bindEvent();
                 this.rebindButton();
+                this.getServerData()
             }
         }
         message.init();

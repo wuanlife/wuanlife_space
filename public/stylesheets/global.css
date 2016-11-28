@@ -1056,11 +1056,11 @@ textarea.form-control{
 .message-right-tag li:hover,.message-right-tag li.active{
     color: #5ab8fe
 }
-.message-col {
-
+.message-hidden {
+    display: none;
 }
 .message {
-    padding: 30px 0;
+    padding: 30px 0px 30px 10px;
     border-top: 1px solid rgba(229,229,229,1.0);
     border-bottom: 1px solid rgba(229,229,229,1.0);
 }
@@ -1071,66 +1071,17 @@ textarea.form-control{
     float: right;
     text-align: right;
 }
-.meg-reply h3 {
+.message h3 {
     font-size: 22px;
 }
-.meg-reply span {
+.message span {
     color: #aaa
 }
-.meg-reply button {
+.message button {
     padding: 5px 10px;
     background: #5ab8fe;
     color: #fff;
     border-radius: 3px;
-}
-.meg-brief {
-    width: 100%;
-    float: left;
-    line-height: 28px;
-    font-size: 16px;
-    color: #222;
-}
-.meg-brief > img {
-    width: 66px;
-    padding-top: 15px;
-    float: left;
-}
-.meg-brief > h2 {
-    float: left;
-}
-.meg-content {
-    width: 100%;
-    float: left;
-    padding-left: 15px;
-}
-.meg-content-row > p {
-    float: left;
-}
-.meg-content-row > .text-link {
-    width: 260px;
-}
-
-.meg-button {
-    width: 90px;
-    font-size: 18px;
-    padding: 4px 4px;
-    margin-right: 20px;
-    border-radius: 4px;
-    color: rgba(246, 250, 251,1.0);
-    background-color: rgba(90,184,254,1.0);
-    cursor: pointer;
-}
-.meg-button.disable{
-    color: rgba(102, 102, 102,1.0);
-    background-color: rgba(202, 192, 190,0.0);
-    cursor: pointer;
-}
-.meg-right-text {
-    position: absolute;
-    right: 20px;
-    font-size: 18px;
-    color: rgba(102, 102, 102,1.0);
-    background-color: rgba(202, 192, 190,0.0);
 }
 
 /*消息中心的过滤图标(可能在之后会复用)*/
