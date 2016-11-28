@@ -12,7 +12,7 @@
 			<div class="post-content">
 				<%-result.text%>
 			</div>
-			<% if (result.stickyRight || result.editRight || result.deleteRight || result.lockRight) { %>
+			<% if (result.stickyRight || result.editRight || result.deleteRight || result.lockRight || user) { %>
 			<div class="post-opt">
 				<% if (result.stickyRight) { %>
 				<% if (result.sticky) { %>
@@ -32,6 +32,13 @@
 				<button class="post-opt-item" id="lockBtn">取消锁帖</button>
 				<% } else { %>
 				<button class="post-opt-item" id="lockBtn">锁帖</button>
+				<% } %>
+				<% } %>
+				<% if (user) { %>
+				<% if (result.collect) { %>
+				<button class="post-opt-item" id="collectBtn">取消收藏</button>
+				<% } else { %>
+				<button class="post-opt-item" id="collectBtn">收藏</button>
 				<% } %>
 				<% } %>
 			</div>
@@ -57,7 +64,21 @@
 			<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 			<span class="post-cm-time">{{item.createTime}}</span>
 		</div>
-		<div class="post-cm-content">{{item.text}}</div>
+		<div class="post-cm-content">{{if item.replynickname}}回复 @<a style="color:#062eb1" href="#?" title="{{item.replynickname}}">{{item.replynickname}}</a> : {{/if}}{{item.text}}</div>
+		<div class="post-cm-opt clearfix">
+			{{if !isLock}}
+			<button class="post-cm-replyBtn">回复</button>
+			{{/if}}
+			{{if item.deleteRight}}
+			<button class="post-cm-deleteBtn" data-target="{{item.floor}}">删除</button>
+			{{/if}}
+		</div>
+		{{if !isLock}}
+		<form method="post" class="post-cm-reply clearfix">
+			<textarea class="form-control"></textarea>
+			<button type="submit" class="post-sub" id="myReplyBtn">发表回复</button>
+		</form>
+		{{/if}}
 	</div>
 	{{/each}}
 </script>
@@ -73,74 +94,29 @@
 			post_edit: $("#editBtn"),
 			post_delete: $("#delBtn"),
 			post_lock: $('#lockBtn'),
-			myReplyForm: $(".post-detail-form"),
-			myReplyContent: $(".post-detail-form").children('textarea'),
-			myReplyBtn: $('#myReplyBtn'),
+			post_collect:$('#collectBtn'),
 			isSticky: parseInt("<%=result.sticky%>"),
 			isLock: parseInt("<%=result.lock%>"),
+			isCollect: parseInt("<%=result.collect%>"),
 			lockDisable:false,
-			replyText:'',
-			verificate: function() {
-				this.replyText = $.trim(this.myReplyContent.val());
-				if (this.replyText.length < 1) {
+			replyCount:0,
+			verificate: function(textarea) {
+				var replyText = $.trim(textarea.val());
+				if (replyText.length < 1) {
 					sweetAlert('格式错误', '回复内容不能为空', 'warning');
 					return false;
 				}
-				this.replyText = global.utf16toEntities(this.replyText);
-				return true;
+				if (replyText.length > 240) {
+					sweetAlert('格式错误', '回复内容不能超过240个字符', 'warning');
+					return false;
+				}
+				replyText = global.utf16toEntities(replyText);
+				return replyText;
 			},
 			getReplyData: function(param, cb) {
 				global.getData("/api/getPostReplys", param, cb);
 			},
-			setReplyData: function(set,floor) {
-				var self = this;
-				var pageNow = global.getPageNow();
-				self.getReplyData({
-					currentpage: pageNow,
-					post_id: parseInt("<%=result.postID%>")
-				}, function(data) {
-					if (pageNow != global.getPageNow()) {
-						return;
-					}
-					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
-						var compiled = template("listtemplate", data.data);
-						var reply = '<div class="post-comment"><h2>' + data.data.replyCount +'个回复</h2><div class="post-cm-group">' + compiled +  '</div><div class="page-turn"><button id="pre">上一页</button><span>'+data.data.currentPage + '/' + data.data.pageCount+'</span><button id="next">下一页</button></div></div>';
-						self.comment.html(reply);
-						self.pageCount = data.data.pageCount;
-						global.setPageCount(self.pageCount);
-						if (set) {
-							global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-						}
-						if (pageNow == 1) {
-							$("#pre").addClass('unCBtn');
-						}
-						if (pageNow == data.data.pageCount) {
-							$("#next").addClass('unCBtn');
-						}
-						if (pageNow>1) {
-							var position = floor? $('[data-id =' + floor +']') : $(".post-comment");
-							var postComY = position.offset().top;
-							var scroollY = postComY - $(".navbar").height();
-							$(window).scrollTop(scroollY);
-						} else{
-							var scroollY = floor? ($('[data-id =' + floor +']').offset().top - $(".navbar").height()) :0;
-							$(window).scrollTop(scroollY);
-						}
-						if (!set) {
-							self.loading.hide();
-						}
-					} else{
-						if (!set) {
-							self.loading.hide();
-							sweetAlert('错误', '数据获取失败', 'error');
-							return;
-						}
-						self.comment.html('');
-						
-					}
-				});
-			},
-			updateByPage: function() {
+			setReplyData: function(set) {
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.loading.show();
@@ -152,32 +128,48 @@
 						return;
 					}
 					if (data.ret == 200 && data.data && data.data.reply.length > 0) {
+						if ($('.post-comment').length == 0) {
+							var replyMD = '<div class="post-comment"><h2></h2><div class="post-cm-group"></div><div class="page-turn"><button id="pre">上一页</button><span></span><button id="next">下一页</button></div></div>';
+							self.comment.html(replyMD);
+						}
+						data.data.isLock = self.isLock;
 						var compiled = template("listtemplate", data.data);
 						$('.post-cm-group').html(compiled);
 						$(".post-comment").children('h2').html(data.data.replyCount + '个回复');
-						$(".page-turn").find('span').eq(0).html(pageNow + '/' + data.data.pageCount);
+						$(".page-turn").find('span').eq(0).html(data.data.currentPage + '/' + data.data.pageCount);
 						self.pageCount = data.data.pageCount;
+						self.replyCount = data.data.replyCount;
 						global.setPageCount(self.pageCount);
+						if (set) {
+							global.pageTurning.apply(self,["#pre","#next",self.setReplyData]);
+						}
 						$("#pre").removeAttr('class');
 						$("#next").removeAttr('class');
-						if (pageNow == 1) {
+						if (data.data.currentPage == 1) {
 							$("#pre").addClass('unCBtn');
 						}
-						if (pageNow == data.data.pageCount) {
+						if (data.data.currentPage == data.data.pageCount) {
 							$("#next").addClass('unCBtn');
 						}
-						self.loading.hide();
-						if (pageNow>1) {
-							var postComY = $(".post-comment").offset().top;
-							var scroollY = postComY - $(".navbar").height();
+						var rf = $('[data-id =' + global.getUrlParam('rf') +']');
+						if (rf.length != 0 && set) {
+							var scroollY = rf.offset().top - $(".navbar").height(); 
 							$(window).scrollTop(scroollY);
 						} else{
-							$(window).scrollTop(0);
+							if (data.data.currentPage > 1) {
+								var postComY = $(".post-comment").offset().top;
+								var scroollY = postComY - $(".navbar").height();
+								$(window).scrollTop(scroollY);
+							} else{
+								$(window).scrollTop(0);
+							}
 						}
 					} else{
-						self.loading.hide();
-						sweetAlert('错误', '数据获取失败', 'error');
+						if (!set) {
+							sweetAlert('错误', '数据获取失败', 'error');
+						}
 					}
+					self.loading.hide();
 				});
 			},
 			<% if (result.lockRight) { %>
@@ -196,7 +188,8 @@
 									self.isLock = 1;
 									self.post_lock.text('取消锁帖');
 									$('.my-comment').remove();
-									self.myReplyForm = null;
+									$('.post-cm-replyBtn').remove();
+									$('.post-cm-reply').remove();
 								} else {
 									sweetAlert('提示', data.data.re, 'warning');
 								}
@@ -218,12 +211,8 @@
 									self.isLock = 0;
 									self.post_lock.text('锁帖');
 									$('.post-detail').append('<div class="my-comment"><h2>我的回复</h2><form class="post-detail-form clearfix" method="post"><textarea name="" class="form-control" placeholder="内容"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form></div>');
-									self.myReplyForm = $(".post-detail-form");
-									self.myReplyContent = $(".post-detail-form").children('textarea');
-									self.myReplyForm.submit(function(event) {
-										event.preventDefault();
-										self.subReply.apply(self);
-									});
+									$('.post-cm-opt').prepend('<button class="post-cm-replyBtn">回复</button>');
+									$('.post-cm-opt').after('<form method="post" class="post-cm-reply clearfix"><textarea class="form-control"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form>');
 								} else {
 									sweetAlert('提示', data.data.re, 'warning');
 								}
@@ -243,7 +232,7 @@
 			<% if (result.stickyRight) { %>
 			upPost: function() {
 				var self = this;
-				console.log(self.isSticky);
+				self.post_up.attr('disabled', 'disabled');
 				switch (self.isSticky) {
 					// 还未置顶，帖子置顶操作
 					case 0:
@@ -261,6 +250,7 @@
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
+							self.post_up.removeAttr('disabled');
 						});
 						break;
 						// 已经置顶，取消置顶
@@ -279,6 +269,7 @@
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
+							self.post_up.removeAttr('disabled');
 						});
 						break;
 					default:
@@ -301,7 +292,7 @@
 					global.subData("/api/deletePost", {
 						post_id: parseInt("<%=result.postID%>")
 					}, function(data) {
-						console && console.log(data);
+						//console && console.log(data);
 						if (data.ret == 200 && data.data) {
 							if (data.data.code == 1) { //操作成功
 								window.location.href = '/group/' + '<%=result.groupID%>';
@@ -312,38 +303,135 @@
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
-				});
+				}).catch(swal.noop);
 			},
 			<% } %>
-			subReply: function() {
+			deletePostReply: function(btn){
+				swal({
+					title: '提示',
+					text: '是否删除该回复',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '删除',
+					cancelButtonText: '取消'
+				}).then(function() {
+					var floor = btn.attr('data-target');
+					btn.attr('disabled', 'disabled');
+					global.subData("/api/deletePostReply", {
+						post_id: parseInt("<%=result.postID%>"),
+						floor:floor
+					}, function(data) {
+						//console && console.log(data);
+						if (data.ret == 200 && data.data) {
+							if (data.data.code == 1) { //操作成功
+								postReply.replyCount--;
+								if (postReply.replyCount == 0) {
+									$('.post-comment').remove()
+								} else{
+									$('[data-id =' + '"'+floor+'"' +']').remove();
+									$('.post-comment').children('h2').html(postReply.replyCount+'个回复');
+								}
+							} else {
+								sweetAlert('提示', data.data.re, 'warning');
+								btn.removeAttr('disabled');
+							}
+						} else {
+							sweetAlert('错误', data.msg, 'error');
+							btn.removeAttr('disabled');
+						}
+					});
+				}).catch(swal.noop);
+			},
+			<% if (user) { %>
+			collectPost: function(){
+				var self = this;
+				self.post_collect.attr('disabled', 'disabled');
+				switch (self.isCollect) {
+					// 还未收藏，帖子收藏操作
+					case 0:
+						global.subData("/api/collectPost", {
+							post_id: parseInt("<%=result.postID%>")
+						}, function(data) {
+							//console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) { //操作成功
+									self.isCollect = 1;
+									self.post_collect.text("取消收藏");
+								} else {
+									sweetAlert('提示', data.data.re, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+							self.post_collect.removeAttr('disabled');
+						});
+						break;
+						// 已经收藏，取消置收藏
+					case 1:
+						global.subData("/api/uncollectPost", {
+							post_id: parseInt("<%=result.postID%>")
+						}, function(data) {
+							//console && console.log(data);
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) { //操作成功
+									self.isCollect = 0;
+									self.post_collect.text("收藏");
+								} else {
+									sweetAlert('提示', data.data.re, 'warning');
+								}
+							} else {
+								sweetAlert('错误', data.msg, 'error');
+							}
+							self.post_collect.removeAttr('disabled');
+						});
+						break;
+					default:
+						console.log(self.isCollect);
+						sweetAlert('提示', "无操作权限", 'warning');
+						break;
+				}
+			},
+			<% } %>
+			subReply: function(textarea,floor) {
 				var self = this;
 				<% if (user) { %>
-				if (self.verificate()) {
+				var text = self.verificate(textarea);
+				if (text) {
 					self.loading.show();
 					global.subData("/api/postReply", {
 						post_id: parseInt("<%=result.postID%>"),
-						text: self.replyText
+						text: text,
+						replyfloor:floor
 					}, function(data) {
 						//console && console.log(data);
+						self.loading.hide();
 						if (data.ret == 200) {
 							if (data.data) {
-								self.myReplyContent.val('');
-								var page = parseInt((data.data.floor - 2)/30) + 1;
-								if (page != global.getPageNow()) {
-									var newURL = location.pathname + '?page=' + page;
-									history.pushState(null,'',newURL);
-									global.changeEverPushed();
+								textarea.val('');
+								postReply.replyCount++;
+								if ($('.post-comment').length == 0) {
+									var replyMD = '<div class="post-comment"><h2></h2><div class="post-cm-group"></div><div class="page-turn"><button id="pre" class="unCBtn">上一页</button><span>1/1</span><button id="next" class="unCBtn">下一页</button></div></div>';
+									self.comment.html(replyMD);
 								}
-								self.setReplyData(false,data.data.floor);
+								$('.post-comment').children('h2').html(postReply.replyCount+'个回复');
+								$('.post-cm-reply').hide();
+								var replyData = {};
+								data.data.deleteRight = 1;
+								replyData.isLock = self.isLock;
+								replyData.reply = [data.data];
+								var compiled = template("listtemplate", replyData);
+								$('.post-cm-group').append(compiled);
+								var scroollY = ($('[data-id =' + data.data.floor +']').offset().top - $(".navbar").height());
+								$(window).scrollTop(scroollY);
 							} else{
-								self.loading.hide();
 								sweetAlert('提示', '帖子已经被锁定', 'warning');
 								$('.my-comment').remove();
+								$('.post-cm-replyBtn').remove();
+								$('.post-cm-reply').remove();
 								self.isLock = 1;
 								self.post_lock.text('取消锁帖');
 							}
 						} else {
-							self.loading.hide();
 							sweetAlert('错误', data.msg, 'error');
 						}
 					});
@@ -363,9 +451,21 @@
 				<% if (result.lockRight) { %>
 				self.post_lock.on('click', self.lockPost.bind(self));
 				<% } %>
-				self.myReplyForm.submit(function(event) {
+				<% if (user) { %>
+				self.post_collect.on('click',self.collectPost.bind(self));
+				<% } %>	
+				$(document).on('submit', '.post-cm-reply,.post-detail-form', function(event) {
 					event.preventDefault();
-					self.subReply.apply(self);
+					/* Act on the event */
+					var textarea = $(this).children('textarea');
+					var floor = $(this).parent().attr('data-id') || 0;
+					self.subReply.apply(self,[textarea,floor]);
+				});
+				$(document).on('click', '.post-cm-deleteBtn',function(event) {
+					self.deletePostReply($(this));
+				});
+				$(document).on('click', '.post-cm-replyBtn', function(event) {
+					$(this).parent().next().toggle();
 				});
 			},
 			init: function() {
