@@ -211,8 +211,8 @@
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    userId: <%=user.userID%>,
-                    status: self.filterType
+                    status: self.filterType,
+                    mtype: '3'
                 }, function(data) {
                     if(data.ret == 200 && data.currentPage == undefined) {
                         self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
@@ -273,7 +273,7 @@
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        var newURL = location.pathname + '?status=' + status;
+                        var newURL = location.pathname + '?mtype=3' + '&status=' + status ;
                         history.pushState(null,'',newURL);   
                         global.changeEverPushed();
                         self.updateByPage();        
