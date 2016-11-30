@@ -9,6 +9,7 @@
         </ul>
     </div>
     <div class="message-right">
+    <div class="message-main">
         <ul class="message-right-tag clearfix">
             <li class="mtype1 active">回复我的</li>
             <li class="mtype2">其他通知</li>
@@ -26,28 +27,29 @@
                     <button>回复</button>
                 </div>
             </div>
-            <% }) %>
-            <div class="page-turn">
-                <%if(result.currentPage == 1){console.log(result)%>
-                <button type="button" class="unCBtn" id="pre">上一页</button>
-                <%}else{%>
-                <button type="button" id="pre">上一页</button>
-                <%}%>
-                <span><%=result.currentPage%>/<%=result.pageCount%></span>
-                <%if(result.currentPage == result.pageCount){%>
-                <button type="button" class="unCBtn" id="next">下一页</button>
-                <%}else{%>
-                <button type="button" id="next">下一页</button>
-                <%}%>
-            </div>            
-        </div>
-
+            <% }) %>     
+        </div> 
         <%}else{%>
         <div class="emptyPage">
             您还没有消息哦
         </div>
         <%} %>
     </div>
+    <div class="page-turn">
+        <%if(result.currentPage == 1){console.log(result)%>
+        <button type="button" class="unCBtn" id="pre">上一页</button>
+        <%}else{%>
+        <button type="button" id="pre">上一页</button>
+        <%}%>
+        <span><%=result.currentPage%>/<%=result.pageCount%></span>
+        <%if(result.currentPage == result.pageCount){%>
+        <button type="button" class="unCBtn" id="next">下一页</button>
+        <%}else{%>
+        <button type="button" id="next">下一页</button>
+        <%}%>
+    </div>  
+    </div>
+
 </div>
 </div>
 <%- include base/baseJS.ejs %>
@@ -69,19 +71,6 @@
         </div>
     </div>
     {{/each}}
-     <div class="page-turn">
-        <%if(result.currentPage == 1){console.log(result)%>
-        <button type="button" class="unCBtn" id="pre">上一页</button>
-        <%}else{%>
-        <button type="button" id="pre">上一页</button>
-        <%}%>
-        <span><%=result.currentPage%>/<%=result.pageCount%></span>
-        <%if(result.currentPage == result.pageCount){%>
-        <button type="button" class="unCBtn" id="next">下一页</button>
-        <%}else{%>
-        <button type="button" id="next">下一页</button>
-        <%}%>
-    </div>   
     </div>
 
 </script>
@@ -104,6 +93,7 @@
         <li class="filter-read">已读</li>
         <li class="filter-notread">未读</li>
     </ul>
+    <div class="message-col">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix vertical-container">
         <div class="meg-brief">
@@ -139,22 +129,8 @@
         {{else if item.messagetype == '2' }}    
             <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
         {{/if}}
-
     </div>
     {{/each}}
-
-    <div class="page-turn">
-        <%if(result.currentPage == 1){console.log(result)%>
-        <button type="button" class="unCBtn" id="pre">上一页</button>
-        <%}else{%>
-        <button type="button" id="pre">上一页</button>
-        <%}%>
-        <span><%=result.currentPage%>/<%=result.pageCount%></span>
-        <%if(result.currentPage == result.pageCount){%>
-        <button type="button" class="unCBtn" id="next">下一页</button>
-        <%}else{%>
-        <button type="button" id="next">下一页</button>
-        <%}%>
     </div>
 </div>
 </script>
@@ -165,7 +141,7 @@
             pre: $("#pre"),
             next: $("#next"),
             page: $(".page-turn").find('span').eq(0),
-            main: $(".message-right"),
+            main: $(".message-main"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
             filterType: global.getUrlParam('status'),
@@ -244,20 +220,22 @@
             },
             updateAll: function(){
                 var self = this;
+                var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
                 var mtype = global.getUrlParam('mtype');
                 self.filterType = statusNow || 1;
                 self.mtype = mtype || 1;
-                self.page = 1
 
                 self.loading.show();
                 self.getServerData({
-                    currentpage: self.page,
+                    currentpage: pageNow,
                     status: self.filterType,
                     mtype: self.mtype
                 }, function(data) {
-                    console.log(data)
+                    var compiled = template("mtype" + mtype, data.data);
+                    self.main.html(compiled);                         
                     if(data.ret == 200 && data.data.code === 0) {
+                   
                         $('.message-col').html("<div class='emptyPage'>您还没有消息哦</div>")
                         $('.page-turn').hide();
                         self.loading.hide();
@@ -266,9 +244,6 @@
                     if (data.ret == 200 && data.data && data.data.code === 1) {
                         $('.page-turn').show();
 
-                        var compiled = template("mtype" + mtype, data.data);
-                        self.main.html(compiled);
-                        
                         self.loading.hide();
 
                         self.rebindButton();
@@ -323,10 +298,21 @@
 
                 var bindFilterEventByStatus = function(Jobject, status) {
                     Jobject.on("click", function() {
+                        var newURL,
+                            search = location.search,
+                            path = location.pathname;
+                        
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        var newURL = location.pathname + '?status=' + status;
+                        
+                        if (typeof(global.getUrlParam('status')) == 'string' ) {
+                            newURL = path + search.replace(/(status=)\d/, '$1' + status)
+                        }else if (search) {
+                            newURL = path + search + '&status=' + status;
+                        }else {
+                            newURL = path + search + '?status=' + status;
+                        }
                         history.pushState(null,'',newURL);   
                         global.changeEverPushed();
                         self.updateAll();        

@@ -1051,6 +1051,7 @@ textarea.form-control{
 .message-right {
     overflow: hidden;
     background: #fff;
+    min-height: 502px;
 }
 .message-left h1{
     margin-top: 25px;
