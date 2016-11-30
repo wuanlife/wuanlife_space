@@ -1280,17 +1280,28 @@ textarea.form-control{
 .mycol-post-groupname{
     position: absolute;
     left:170px;
-    
+}
+.mycol-post-groupname a{
+    color:#cccccc;
 }
 .mycol-post-creater{
     position: absolute;
     left:300px;
-    
+}
+.mycol-post-creater a{
+    color:#cccccc;
 }
 .mycol-post-status{
     position: absolute;
     left:400px;
     cursor: pointer;
+    color:#cccccc;
+    background-color: white;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+    height:50px;
+    line-height: 60px;
 }
 .mycol-post-time{
     position: absolute;

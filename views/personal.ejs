@@ -143,9 +143,6 @@
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
 									sweetAlert('提示', '资料更新成功', 'success');
-
-										
-
 									if (self.year) {
 										self.br.val(self.year + '-' + self.month + '-' + self.day);
 									}
@@ -153,6 +150,7 @@
 
 								} else {
 									sweetAlert('提示', data.data.msg, 'warning');
+									self.name.val(self.oldname);
 								}
 							} else {
 								sweetAlert('错误', data.msg, 'error');
