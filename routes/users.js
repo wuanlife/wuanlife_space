@@ -62,7 +62,7 @@ router.post('/', function(req, res, next) {
                 msg:'服务器异常'
             });
         }
-        //console.log('alter info successful!  Server responded with:', body);
+        req.session.user.nickname = req.body.user_name;
         res.send(JSON.parse(body));
     });
 });
