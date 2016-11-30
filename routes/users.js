@@ -48,7 +48,9 @@ router.post('/', function(req, res, next) {
             sex: req.body.sex,
             year:req.body.year,
             month:req.body.month,
-            day:req.body.day
+            day:req.body.day,
+            user_name:req.body.user_name,
+            profile_picture:req.body.profile_picture
         }
     }, function optionalCallback(err, httpResponse, body) {
         res.header('Content-type', 'application/json');
