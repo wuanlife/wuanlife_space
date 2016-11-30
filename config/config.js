@@ -9,14 +9,12 @@ var config = {
             name: 'wuan_yo'
         },
         port: process.env.PORT || 3000,
-        //db: 'mongodb://localhost:27017/test-app',
         db: {
             cookieSecret: 'myapp',
             db: 'wuanDB',
             host: 'localhost',
             port: 27017
         },
-        //server: 'http://www.wuanla.com:800/',
         server: 'http://dev.wuanlife.com:800/',
         'ACCESS_KEY': 'fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs',
         'SECRET_KEY': 'GWhI_igD2NcqaomXi0fv8R_j8fnGVvH6tJPLwLFk',
@@ -41,7 +39,12 @@ var config = {
             name: 'wuan_yo'
         },
         port: process.env.PORT || 3000,
-        db: 'mongodb://localhost/yoexpress-production',
+        db: {
+            cookieSecret: '1XT89E0KDMIJ25FR',
+            db: 'wuanDB',
+            host: 'localhost',
+            port: 27017
+        },
         server: 'http://www.wuanla.com:800/',
         'ACCESS_KEY': 'fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs',
         'SECRET_KEY': 'GWhI_igD2NcqaomXi0fv8R_j8fnGVvH6tJPLwLFk',

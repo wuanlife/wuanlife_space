@@ -19,6 +19,7 @@
 		<a href="/userManage/<%=result.groupID%>" class="locBtn">成员管理</a>
 		<%}else if(result.identity == '02'){%>
 		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
+		<button type="button" id="quitBtn" class="locBtn">退出星球</button>
 		<%}else if(result.identity == '04'){%>
 		<button type="button" id="joinBtn" class="locBtn">+已申请</button>
 		<%}else{%>
@@ -110,6 +111,7 @@
 			page: $(".page-turn").find('span').eq(0),
 			main: $(".chapter-col"),
 			joinBtn: $("#joinBtn"),
+			quitBtn:$("#quitBtn"),
 			loading: $(".loading"),
 			identity: parseInt("<%=result.identity%>"),
 			pageCount: parseInt("<%=result.pageCount%>"),
@@ -193,6 +195,42 @@
 					}
 				});
 			},
+			//退出星球处理函数
+			quitGroup:function(){
+				var self = this;
+				swal({
+					title: '退出星球',
+                    text: '是否退出星球 "<%=result.groupName%>"?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+				}).then(function(){
+					$(".loading").show();
+					global.subData("/api/quitGroup",{
+						groupid:parseInt("<%=result.groupID%>")
+					},function(data) {
+                        if (data.data.ret == 200 && data.data.data && data.data.data.code == 1) {
+                                sweetAlert({
+                                title: '提示',
+                                text: data.data.data.msg,
+                                type: 'success',
+                                timer: 2000
+                                });
+                            //self.joinBtn.text('+已申请'); //正在申请
+                            self.identity = 3;
+                            function turn(){
+                            	window.location.href = "/uGroup/"+parseInt(data.userid);
+                            }
+                            //window.location.href = "/uGroup/"+parseInt(data.userid);
+                            var t=setTimeout(turn,2000);
+                        } else {
+                            sweetAlert('错误', '加入星球失败', 'error');
+                        }
+                        $(".loading").hide();
+                    });
+				});
+			},
 			bindEvent: function() {
 				var self = this;
 				self.joinBtn.on("click", function(event) {
@@ -244,9 +282,11 @@
 				global.setPageCount(self.pageCount);
 				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
                 var fuck=0;
+                $("#quitBtn").on('click',self.quitGroup);
 			},
 			init: function() {
 				this.bindEvent();
+
 			}
 		}
 		group.init();

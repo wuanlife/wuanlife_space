@@ -5,6 +5,11 @@
 	</div>
 	<div class="loginL">
 		<form class="login-form line-form" method="post">
+		    <div class="login-image">
+		        <div class="img-upload-progress"></div>
+		    	<button type="button" id="user-image-upload" style="background-image:url(<%=result.profile_picture%>);"></button>
+		    	<input type="hidden" name="g_image" value="<%=result.profile_picture%>" id="g_img">
+		    </div>
 			<div class="login-group line-fgroup">
 				<label for="email" class="label-e"></label>
 				<input type="email" value="<%=result.Email%>" id="email" readonly>
@@ -16,7 +21,7 @@
 			</div>
 			<div class="login-group line-fgroup">
 				<label for="email" class="label-name"></label>
-				<input type="text" value="<%=result.nickname%>" id="name" readonly>
+				<input type="text" value="<%=result.nickname%>" id="name" autocomplete="off">
 			</div>
 			<div class="login-group line-fgroup">
 				<label class="label-sex"></label>
@@ -43,31 +48,42 @@
 	(function() {
 		var users = {
 			br: $("#br"),
+			name:$("#name"),
 			personalForm: $(".login-form"),
 			loading: $(".loading"),
 			year: null,
 			month: null,
 			day: null,
 			sex: '0',
+			user_name:null,
+			oldname:null,
 			sexChoose: ['1', '2'],
 			ClientData: function() {
 				this.year = "<%=result.year%>";
 				this.month = "<%=result.month%>";
 				this.day = "<%=result.day%>";
 				this.sex = "<%=result.sex%>";
+				this.user_name="<%=result.nickname%>";
+				this.oldname="<%=result.nickname%>";
 			},
 			verificate: function() {
+				//昵称字符数控制
+				if($("#name").val().length>18){
+					sweetAlert('格式错误','请输入1-18位字符','warning');
+					return false;
+				}
+                this.user_name=$("#name").val();
 				//性别验证
 				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
 					this.sex = '0';
 				} else {
 					this.sex = $(":checked").val();
 				}
-				//日期验证
 				if (!(this.br.val())) {
 					this.year = this.month = this.day = null;
 					return true;
 				}
+				//日期验证
 				var myreg = /^(\d{4})-(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$/;
 				if (!myreg.test(this.br.val())) {
 					sweetAlert('格式错误', '请填写正确的日期！', 'warning');
@@ -99,6 +115,8 @@
 						return false;
 					}
 				}
+				//判断用户名是否冲突(重名)，本来想写的，发现没接口（摊手）
+				
 				this.year = year;
 				this.month = month;
 				this.day = day;
@@ -110,23 +128,41 @@
 					event.preventDefault();
 					if (self.verificate()) {
 						self.loading.show();
+						//console.log(self.user_name);
+						
 						global.subData('/users', {
+							user_name:self.user_name,
+							profile_picture:$("#g_img").val(),
 							sex: self.sex,
 							year: self.year,
 							month: self.month,
 							day: self.day
+							
 						}, function(data) {
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
-								if (data.data.data == 1) {
+								if (data.data.code_1 == 1) {
 									sweetAlert('提示', '资料更新成功', 'success');
-									if (self.year) {
-										self.br.val(self.year + '-' + self.month + '-' + self.day);
-									}
-									//登录成功
+										if (self.year) {
+											self.br.val(self.year + '-' + self.month + '-' + self.day);
+										            }
+										//
+										if(data.data.code_2 == 1){
+											  function successalert(){
+											  	sweetAlert('提示',data.data.msg_2,'success');
+											  }
+											  var t=setTimeout(successalert,2000);
+											  //$("#navbar-user-name").val(self.user_name);
+											  $("#test-id-id").html($("#name").val());
+									    }else{
+									    	 
+										     sweetAlert('错误',data.data.msg_2,'error');
+										     self.name.val(self.oldname);
+									    }
 								} else {
-									sweetAlert('提示', data.data.msg, 'warning');
+									sweetAlert('提示', data.data.msg_1, 'warning');
 								}
+								
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}
@@ -138,6 +174,108 @@
 				this.ClientData();
 				this.bindEvent();
 			}
+		}
+		users.uploader = Qiniu.uploader({
+			runtimes: 'html5,flash,html4', //上传模式,依次退化
+			browse_button: 'user-image-upload', //上传选择的点选按钮，**必需**
+			uptoken_url: '/uptoken',
+			//Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
+			// uptoken : '<Your upload token>',
+			//若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+			unique_names: true,
+			// 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+			// save_key: true,
+			// 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
+			domain: 'http://7xlx4u.com1.z0.glb.clouddn.com/',
+			//bucket 域名，下载资源时用到，**必需**
+			//container: containerId,           //上传区域DOM ID，默认是browser_button的父元素，
+			max_file_size: '100mb', //最大文件体积限制
+			flash_swf_url: '/javascripts/plupload/Moxie.swf', //引入flash,相对路径
+			filters: {
+				mime_types: [
+					//只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
+					{
+						title: "图片文件",
+						extensions: "jpg,gif,png,bmp"
+					}
+				]
+			},
+			max_retries: 3, //上传失败最大重试次数
+			dragdrop: true, //开启可拖曳上传
+			//drop_element: 'editor-container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+			chunk_size: '4mb', //分块上传时，每片的体积
+			auto_start: true, //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+			init: {
+				'FilesAdded': function(up, files) {
+					plupload.each(files, function(file) {
+						// 文件添加进队列后,处理相关的事情
+						//printLog('on FilesAdded');
+					});
+				},
+				'BeforeUpload': function(up, file) {
+					// 每个文件上传前,处理相关的事情
+					//printLog('on BeforeUpload');
+				},
+				'UploadProgress': function(up, file) {
+					// 显示进度条
+					showUploadProgress(file.percent);
+				},
+				'FileUploaded': function(up, file, info) {
+					// 每个文件上传成功后,处理相关的事情
+					// 其中 info 是文件上传成功后，服务端返回的json，形式如
+					// {
+					//    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
+					//    "key": "gogopher.jpg"
+					//  }
+					//printLog(info);
+					// 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
+
+					var domain = up.getOption('domain');
+					var res = $.parseJSON(info);
+					var sourceLink = domain + res.key; //获取上传成功后的文件的Url
+
+					// printLog(sourceLink);
+					//console.log(sourceLink);
+					var url = sourceLink + '?imageView2/1/w/100/h/100';
+					//设置表单图片数据
+					$("#g_img").val(url);
+					var src = 'url(' + url + ')';
+					// 设置图片为背景
+					$("#user-image-upload").html("");
+					$("#user-image-upload").css('background-image', src);
+				},
+				'Error': function(up, err, errTip) {
+					//上传出错时,处理相关的事情
+					sweetAlert('错误', errTip, 'error');
+				},
+				'UploadComplete': function() {
+						//队列文件处理完毕后,处理相关的事情
+						//printLog('on UploadComplete');
+
+						// 隐藏进度条
+						hideUploadProgress();
+					}
+					// Key 函数如果有需要自行配置，无特殊需要请注释
+					//,
+					// 'Key': function(up, file) {
+					//     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+					//     // 该配置必须要在 unique_names: false , save_key: false 时才生效
+					//     var key = "";
+					//     // do something with key here
+					//     return key
+					// }
+			}
+		});
+		function showUploadProgress(progress) {
+			var $progress = $(".img-upload-progress");
+			var width = $(".login-image").width();
+			$progress.css('visibility', 'visible');
+			$progress.width(progress * width / 100);
+		}
+
+		function hideUploadProgress() {
+			var $progress = $(".img-upload-progress");
+			$progress.css('visibility', 'hidden');
 		}
 		users.init();
 	})();

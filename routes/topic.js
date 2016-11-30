@@ -12,27 +12,24 @@ router.get('/:id', function(req, res, next) {
     request(config.server + "?service=Post.GetPostBase&post_id=" + req.param('id') + "&id=" + userid,
         function(err, response, body) {
             if (!err && response.statusCode == 200) {
-                var result = JSON.parse(body);
-                //console.log(result);
-                if (result.ret == 200 && result.msg == "") {
-                    if (result.data.code == 1) {
-                        var page = agent.Mobile ? 'topicMobile' : 'topic';
-                        res.render(page, {
-                            result: result.data,
-                            'title': result.data.title,
-                            'user': req.session.user
-                        });
-                    } else {
-                        res.redirect('/group/' + result.data.groupID);
-                    }
-                } else {
-                    res.render('error', {
-                        'message': result.msg || '未加入该私密星球',
-                        error: {
-                            'status': result.ret,
-                            'stack': ''
+                try{
+                    var result = JSON.parse(body);
+                    if (result.ret ==200) {
+                        if (result.data.code == 1) {
+                            var page = agent.Mobile ? 'topicMobile' : 'topic';
+                            res.render(page, {
+                                result: result.data,
+                                'title': result.data.title,
+                                'user': req.session.user
+                            });
+                        } else if (result.data.code == 2) {
+                            res.redirect('/group/' + result.data.groupID);
+                        } else{
+                            throw new Error('no page');
                         }
-                    });
+                    }
+                } catch(e){
+                    next(e);
                 }
             } else {
                 next(err);
@@ -40,6 +37,28 @@ router.get('/:id', function(req, res, next) {
         });
 });
 
+//移动端楼中楼回复页面
+router.get('/:id/comment', function(req, res, next) {
+    var agent = ua(req.headers['user-agent']);
+    if (req.session.user) {
+        try {
+            if (agent.Mobile) {
+                res.render('topicCommentMobile', {
+                    'title': '回复评论',
+                    'user': req.session.user,
+                    'postID': req.params.id,
+                    'reply': req.query.reply
+                });
+            } else {
+                throw 'no page';
+            }
+        } catch (e) {
+            next(e);
+        }
+    } else{
+        res.redirect('/login');
+    }
+});
 
 router.get('/:id/edit', function(req, res, next) {
     var agent = ua(req.headers['user-agent']);

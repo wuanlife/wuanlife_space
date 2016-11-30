@@ -64,10 +64,30 @@ router.get('/:method', function(req, res, next) {
                 }
 			});
 			break;
+        //获取我的收藏
+        case 'getMyCollections':
+            var pn=req.param('currentpage');
+            var user_id = userID;
+            request(config.server+'?service=Post.GetCollectPost&user_id='+user_id+'&pn='+pn,
+                function(error, response, body){
+                    res.header('Content-type', 'application/json');
+                    res.header('Charset', 'utf8');
+                    try{
+                        if(!error&&response.statusCode==200){
+                            res.send(JSON.parse(body));
+                        }
+                    }catch(e){
+                        res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                    }
+                });
+            break;
 		case 'getPostReplys':
 			var pn = req.param('currentpage');
 			var post_id = req.param('post_id');
-			request(config.server + '?service=Post.GetPostReply&post_id=' + post_id + '&pn=' + pn,
+			request(config.server + '?service=Post.GetPostReply&post_id=' + post_id + '&user_id=' + userID +'&pn=' + pn,
 			function(error, response, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
@@ -123,11 +143,11 @@ router.get('/:method', function(req, res, next) {
                 }
 			});
 			break;
-        case 'getMessageShow':
+        case 'getMessageShow': 
             var pn = req.param('currentpage');
-            var user_id = req.param('userId');
             var status = req.param('status');
-            request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn + '&status=' + status, function(error, response, body) {
+            var mtype = req.query.mtype;
+            request(config.server + '?service=User.ShowMessage&user_id=' + userID + '&pn=' + pn + '&status=' + status + '&mtype=' + mtype, function(error, response, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 try{
@@ -282,7 +302,7 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Post.StickyPost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -311,7 +331,7 @@ router.post('/:method', function(req, res, next) {
                 url: config.server + '?service=Post.UnStickyPost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -334,13 +354,101 @@ router.post('/:method', function(req, res, next) {
                 }
             });
             break;
+        //帖子收藏
+        case 'collectPost':
+            request.post({
+                url: config.server + '?service=Post.CollectPost',
+                formData: {
+                    user_id: userID,
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Collect failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
+            });
+            break;
+        //取消帖子收藏
+        case 'uncollectPost':
+            request.post({
+                url: config.server + '?service=Post.DeleteCollectPost',
+                formData: {
+                    user_id: userID,
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('unCollect failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
+            });
+            break;
         //删除帖子
         case 'deletePost':
             request.post({
                 url: config.server + '?service=Post.DeletePost',
                 formData: {
                     user_id: userID,
-                    post_id: req.param('post_id')
+                    post_id: req.body.post_id
+                }
+            }, function optionalCallback(err, httpResponse, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                    if (!err && httpResponse.statusCode == 200){
+                        return res.send(JSON.parse(body));
+                    }
+                    console.error('Delete failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+                catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:e.message
+                    });
+                }
+            });
+            break;
+        //删除帖子回复
+        case 'deletePostReply':
+            request.post({
+                url: config.server + '?service=Post.DeletePostReply',
+                formData: {
+                    user_id: userID,
+                    post_base_id: req.body.post_id,
+                    floor: req.body.floor
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
@@ -370,14 +478,15 @@ router.post('/:method', function(req, res, next) {
                 formData: {
                     user_id: userID,
                     post_id: req.param('post_id'),
-                    text: xss(req.param('text'))
+                    text: xss(req.param('text')),
+                    replyfloor: req.body.replyfloor
                 }
             }, function optionalCallback(err, httpResponse, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 try{
                     if (!err && httpResponse.statusCode == 200){
-                       // console.log(JSON.parse(body));
+                        //console.log(JSON.parse(body));
                         return res.send(JSON.parse(body));
                     }
                     console.error('Reply failed:', err);
@@ -625,6 +734,68 @@ router.post('/:method', function(req, res, next) {
                     });
                 }
             });
+            break;
+        //取消收藏
+        case 'deleteCollectPosts':
+            request.post({
+                 url:config.server+'?service=Post.DeleteCollectPost',
+                 formData:{
+                    user_id:userID,
+                    post_id:req.body.postid
+                 }
+            },function(error, response, body) {
+                 res.header('Content-type', 'application/json');
+                 res.header('Charset', 'utf8');
+                 try{
+                    if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        return res.send(JSON.parse(body));
+                    } 
+                    console.error('deleteCollectPosts failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                 }catch(e){
+                     res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                 }
+            })
+            break;
+        //退出星球
+        case 'quitGroup':
+            request.post({
+                        url:config.server + '?service=Group.Quit',
+                        formData:{
+                            user_id:userID,
+                            group_base_id:req.body.groupid
+                        }
+                    },function optionalCallback(err, httpResponse, body){
+                        res.header('Content-type', 'application/json');
+                        res.header('Charset', 'utf8');
+                        try {
+                                    if (!err && httpResponse.statusCode == 200){
+                                        //console.log(JSON.parse(body));
+                                        var result={
+                                            data:JSON.parse(body),
+                                            userid:userID
+                                        }
+                                        return res.send(result);
+                                    }
+                                    //console.error('processApply failed:', err);
+                                    res.send({
+                                        ret: 500,
+                                        msg:'服务器异常'
+                                    });
+                            } catch(e){
+                                    res.send({
+                                        ret: 500,
+                                        msg:e.message
+                                    });
+                            }
+                    })
             break;
         default:
             res.send('respond with a resource');
