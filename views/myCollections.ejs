@@ -170,7 +170,8 @@
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
 				}).then(function(){
-					          $(this).off('click');
+					          //$(this).off('click');
+                    $(this).attr('disabled','disabled');
                     $(".loading").show();
                     global.subData("/api/uncollectPost",{
                     	post_id: target
@@ -188,10 +189,12 @@
                     		}
                     		else{
                     			sweetAlert('错误', data.data.msg, 'error');
+                          $(this).removeAttr('disabled');
                     		}
                     	}
                     	else{
                     		sweetAlert('错误', data.msg, 'error');
+                        $(this).removeAttr('disabled');
                     	}
                     })
 				})

@@ -68,11 +68,17 @@
 			},
 			verificate: function() {
 				//昵称字符数控制
-				if($("#name").val().length>18){
-					sweetAlert('格式错误','请输入1-18位字符','warning');
+				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+				var name = $("#name").val();
+				if (name.length == 0 || name.length > 18) {
+					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
 					return false;
 				}
-                this.user_name=$("#name").val();
+				if (!myregName.test(name)) {
+					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
+					return false;
+				}
+                this.user_name = name;
 				//性别验证
 				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
 					this.sex = '0';
@@ -146,7 +152,7 @@
 										if (self.year) {
 											self.br.val(self.year + '-' + self.month + '-' + self.day);
 										            }
-										//
+										$("#nav-username").val($("#name").val());
 										
 								} else {
 									sweetAlert('提示', data.data.msg, 'warning');

@@ -179,7 +179,7 @@
 			},
 			cancelCollect:function(){
 				var target=$(this).attr('data-target');
-
+                var self=this;
 				swal({
 					title: '取消收藏',
                     text: '是否取消收藏帖子',
@@ -189,6 +189,8 @@
                     cancelButtonText: '取消'
 				}).then(function(){
 					$(this).off('touchend');
+
+					$(this).addClass('disabled');
                     $(".loading").show();
                     global.subData("/api/deleteCollectPosts",{
                     	postid:target
@@ -207,12 +209,13 @@
                     		else{
                     			//console.log(data.data.code);
                     			sweetAlert('错误', data.data.msg, 'error');
+                    			$(this).on('touchend',self.cancelCollect);
                     		}
                     	}
                     	else{
                     		//console.log("错误2");
                     		sweetAlert('错误', data.msg, 'error');
-                    		
+                    		$(this).on('touchend',self.cancelCollect);
                     	}
                     })
 				})
