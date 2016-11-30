@@ -64,6 +64,26 @@ router.get('/:method', function(req, res, next) {
                 }
 			});
 			break;
+        //获取我的收藏
+        case 'getMyCollections':
+            var pn=req.param('currentpage');
+            var user_id = userID;
+            request(config.server+'?service=Post.GetCollectPost&user_id='+user_id+'&pn='+pn,
+                function(error, response, body){
+                    res.header('Content-type', 'application/json');
+                    res.header('Charset', 'utf8');
+                    try{
+                        if(!error&&response.statusCode==200){
+                            res.send(JSON.parse(body));
+                        }
+                    }catch(e){
+                        res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                    }
+                });
+            break;
 		case 'getPostReplys':
 			var pn = req.param('currentpage');
 			var post_id = req.param('post_id');
@@ -625,6 +645,68 @@ router.post('/:method', function(req, res, next) {
                     });
                 }
             });
+            break;
+        //取消收藏
+        case 'deleteCollectPosts':
+            request.post({
+                 url:config.server+'?service=Post.DeleteCollectPost',
+                 formData:{
+                    user_id:userID,
+                    post_id:req.body.postid
+                 }
+            },function(error, response, body) {
+                 res.header('Content-type', 'application/json');
+                 res.header('Charset', 'utf8');
+                 try{
+                    if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        return res.send(JSON.parse(body));
+                    } 
+                    console.error('deleteCollectPosts failed:', err);
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                 }catch(e){
+                     res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                 }
+            })
+            break;
+        //退出星球
+        case 'quitGroup':
+            request.post({
+                        url:config.server + '?service=Group.Quit',
+                        formData:{
+                            user_id:userID,
+                            group_base_id:req.body.groupid
+                        }
+                    },function optionalCallback(err, httpResponse, body){
+                        res.header('Content-type', 'application/json');
+                        res.header('Charset', 'utf8');
+                        try {
+                                    if (!err && httpResponse.statusCode == 200){
+                                        //console.log(JSON.parse(body));
+                                        var result={
+                                            data:JSON.parse(body),
+                                            userid:userID
+                                        }
+                                        return res.send(result);
+                                    }
+                                    //console.error('processApply failed:', err);
+                                    res.send({
+                                        ret: 500,
+                                        msg:'服务器异常'
+                                    });
+                            } catch(e){
+                                    res.send({
+                                        ret: 500,
+                                        msg:e.message
+                                    });
+                            }
+                    })
             break;
         default:
             res.send('respond with a resource');

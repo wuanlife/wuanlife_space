@@ -1,10 +1,18 @@
 <%- include base/headerMobile.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
+	    <h1>
+	    	<a class="text-ellipsis" href="/group/<%=result.groupID%>" title=""class="groupH"><%=result.groupName%></a>
+	    </h1>
 		<h1>
-			<a class="text-ellipsis" href="/group/<%=result.groupID%>" title=""class="groupH"><%=result.groupName%></a>
+		    <p class="text-ellipsis myJoincreater"> 
+			创建者：<%=result.creatorName%>
+			</p>
 			<%if(result.identity == '01' || result.identity == '02'){%>
 			<button type="button" id="joinBtn" class="locBtn">+发帖</button>
+			<%if(result.identity=='02'){%>
+			<button type="button" id="quitBtn" class="locBtn quitButton">退出星球</button>
+			<%}%>
 			<%}else if(result.identity == '04'){%>
 			<button type="button" id="joinBtn" class="locBtn">+已申请</button>
 			<%}else if(result.private=="0") {%>
@@ -14,12 +22,12 @@
 			<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 			<% } %>
 		</h1>
-		<h2 class="text-ellipsis">
+		<!-- <h2 class="text-ellipsis">
 			<p class="text-ellipsis"> 
 			创建者：<%=result.creatorName%>
 			</p>
-		</h2>
-		
+		</h2> -->
+	
 	</div>
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
 	<div class="blockPage">
@@ -161,6 +169,42 @@
                     /*cancel to do*/
                 });
 			},
+			//退出星球处理函数
+			quitGroup:function(){
+				var self = this;
+				swal({
+					title: '退出星球',
+                    text: '是否退出星球 "<%=result.groupName%>"?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消'
+				}).then(function(){
+					$(".loading").show();
+					global.subData("/api/quitGroup",{
+						groupid:parseInt("<%=result.groupID%>")
+					},function(data) {
+                        if (data.data.ret == 200 && data.data.data && data.data.data.code == 1) {
+                                sweetAlert({
+                                title: '提示',
+                                text: data.data.data.msg,
+                                type: 'success',
+                                timer: 2000
+                                });
+                            //self.joinBtn.text('+已申请'); //正在申请
+                            self.identity = 3;
+                            function turn(){
+                            	window.location.href = "/uGroup/"+parseInt(data.userid);
+                            }
+                            //window.location.href = "/uGroup/"+parseInt(data.userid);
+                            var t=setTimeout(turn,2000);
+                        } else {
+                            sweetAlert('错误', '加入星球失败', 'error');
+                        }
+                        $(".loading").hide();
+                    });
+				});
+			},
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();
@@ -245,6 +289,7 @@
 				});
 				global.setPageCount(self.pageCount);
 				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
+				$("#quitBtn").on('touchend',self.quitGroup);
 			},
 			init: function() {
 				this.bindEvent();
