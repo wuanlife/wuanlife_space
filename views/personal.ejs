@@ -146,7 +146,7 @@
 									if (self.year) {
 										self.br.val(self.year + '-' + self.month + '-' + self.day);
 									}
-									$('#nav-username').text(self.user_name);
+									$('#nav-username').html(self.user_name+'<span class="caret"></span>');
 
 								} else {
 									sweetAlert('提示', data.data.msg, 'warning');
