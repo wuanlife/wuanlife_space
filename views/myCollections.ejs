@@ -115,24 +115,18 @@
 			page: $(".page-turn").find('span').eq(0),
 			loading: $(".loading"),
 			pageCount: parseInt("<%=result.pageCount%>"),
-			nav_myplane:$("#nav-myP").children("a"),
-			navActive: function() {
-				this.nav_myplane.addClass("navbar-active");
-			},
 			getServerData: function(param, cb) {
 				global.getData("/api/getMyCollections", param, cb);
 			},
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();
-				//console.log(pageNow);
 				self.loading.show();
 				self.getServerData({
 					currentpage: pageNow
 				}, function(data) {
 					if (pageNow != global.getPageNow()) {
 						return;
-						//console.log("i am text");
 					}
 					if (data.ret == 200 && data.data && data.data.posts.length > 0) {
 						var compiled = template("mycol-list", data.data);
@@ -149,20 +143,14 @@
 						}
 						self.loading.hide();
 						$(window).scrollTop(0);
-						//self.init();
-						$(".mycol-cancel-btn").on('click',self.cancelCollect);
-				        $(".mycol-post-status").on('click',self.cancelCollect);
 					} else {
 						self.loading.hide();
-						//console.log("you are so cure");
 						sweetAlert('错误', '数据获取失败', 'error');
-
 					}
 				});
 			},
 			cancelCollect:function(){
 				var target=$(this).attr('data-target');
-
 				swal({
 					          title: '取消收藏',
                     text: '是否取消收藏帖子',
@@ -173,8 +161,8 @@
 				}).then(function(){
 					          $(this).off('click');
                     $(".loading").show();
-                    global.subData("/api/deleteCollectPosts",{
-                    	postid:target
+                    global.subData("/api/uncollectPost",{
+                    	post_id: target
                     },function(data){
                     	$(".loading").hide();
                     	if(data.ret == 200 && data.data){
@@ -193,7 +181,6 @@
                     	}
                     	else{
                     		sweetAlert('错误', data.msg, 'error');
-                    		$(this).on('click',myCollections.cancelCollect);
                     	}
                     })
 				})
@@ -202,12 +189,12 @@
 				var self = this;
 				global.setPageCount(self.pageCount);
 				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-				$(".mycol-cancel-btn").on('click',self.cancelCollect);
-				$(".mycol-post-status").on('click',self.cancelCollect);
+        $(document).on('click', '.mycol-cancel-btn,.mycol-post-status', function(event) {
+            self.cancelCollect.apply($(this));
+        });
 			},
 			init:function(){
 				this.bindEvent();
-				this.navActive();
 			}
 		}
 		myCollections.init();

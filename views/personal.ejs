@@ -68,11 +68,17 @@
 			},
 			verificate: function() {
 				//昵称字符数控制
-				if($("#name").val().length>18){
-					sweetAlert('格式错误','请输入1-18位字符','warning');
+				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+				var name = $("#name").val();
+				if (name.length == 0 || name.length > 18) {
+					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
 					return false;
 				}
-                this.user_name=$("#name").val();
+				if (!myregName.test(name)) {
+					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
+					return false;
+				}
+                this.user_name = name;
 				//性别验证
 				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
 					this.sex = '0';
@@ -92,7 +98,6 @@
 				var lessMonth = ['04', '06', '09', '11'];
 				var d = new Date();
 				var date = myreg.exec(this.br.val());
-				console.log(date);
 				var year = date[1];
 				var month = (date[2].length == 1) ? ('0' + date[2]) : date[2];
 				var day = (date[3].length == 1) ? ('0' + date[3]) : date[3];
@@ -114,9 +119,7 @@
 						sweetAlert('格式错误', '请填写正确的日期！', 'warning');
 						return false;
 					}
-				}
-				//判断用户名是否冲突(重名)，本来想写的，发现没接口（摊手）
-				
+				}				
 				this.year = year;
 				this.month = month;
 				this.day = day;
@@ -128,8 +131,6 @@
 					event.preventDefault();
 					if (self.verificate()) {
 						self.loading.show();
-						//console.log(self.user_name);
-						
 						global.subData('/users', {
 							user_name:self.user_name,
 							profile_picture:$("#g_img").val(),
@@ -137,32 +138,22 @@
 							year: self.year,
 							month: self.month,
 							day: self.day
-							
 						}, function(data) {
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
-								if (data.data.code_1 == 1) {
+								if (data.data.code == 1) {
 									sweetAlert('提示', '资料更新成功', 'success');
-										if (self.year) {
-											self.br.val(self.year + '-' + self.month + '-' + self.day);
-										            }
-										//
-										if(data.data.code_2 == 1){
-											  function successalert(){
-											  	sweetAlert('提示',data.data.msg_2,'success');
-											  }
-											  var t=setTimeout(successalert,2000);
-											  //$("#navbar-user-name").val(self.user_name);
-											  //$(".navbar-user-id").html($("#name").val());
-									    }else{
-									    	 
-										     sweetAlert('错误',data.data.msg_2,'error');
-										     self.name.val(self.oldname);
-									    }
+
+										
+
+									if (self.year) {
+										self.br.val(self.year + '-' + self.month + '-' + self.day);
+									}
+									$('#nav-username').text(self.user_name);
+
 								} else {
-									sweetAlert('提示', data.data.msg_1, 'warning');
+									sweetAlert('提示', data.data.msg, 'warning');
 								}
-								
 							} else {
 								sweetAlert('错误', data.msg, 'error');
 							}

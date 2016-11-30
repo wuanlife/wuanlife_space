@@ -141,26 +141,16 @@
 						}, function(data) {
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
-								if (data.data.code_1 == 1) {
-									sweetAlert('提示', '资料更新成功', 'success');
+								if (data.data.code == 1) {
+									sweetAlert('提示', data.data.msg, 'success');
 										if (self.year) {
 											self.br.val(self.year + '-' + self.month + '-' + self.day);
 										            }
 										//
-										if(data.data.code_2 == 1){
-											  function successalert(){
-											  	sweetAlert('提示',data.data.msg_2,'success');
-											  }
-											  var t=setTimeout(successalert,2000);
-											  //$("#navbar-user-name").val(self.user_name);
-											  $("#test-id-id").html($("#name").val());
-									    }else{
-									    	 
-										     sweetAlert('错误',data.data.msg_2,'error');
-										     self.name.val(self.oldname);
-									    }
+										
 								} else {
-									sweetAlert('提示', data.data.msg_1, 'warning');
+									sweetAlert('提示', data.data.msg, 'warning');
+									self.name.val(self.oldname);
 								}
 								
 							} else {
