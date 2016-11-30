@@ -1112,6 +1112,15 @@ textarea.form-control{
     white-space: pre-wrap;
     color:#5b5b5b;
 }
+/*回复内容中操作项*/
+.post-cm-opt button,.post-cm-opt a{
+    font-size: 0.373333rem;
+    margin-left: 0.533333rem;
+    float:right;
+    color:#5ab8fe;
+    background-color: transparent;
+    cursor: pointer;
+}
 /*回复内容的翻页*/
 .post-comment .page-turn{
     padding:0.533333rem 0 0;
@@ -1132,6 +1141,16 @@ textarea.form-control{
 .post-detail-form textarea{
     margin-bottom: 1.2rem;
     height:3.466667rem;
+}
+/******************
+楼中楼回复页面
+******************/
+.topic-comment h3{
+    font-size: 0.373333rem;
+    color:#5ab8fe;
+    margin-bottom: 0.28rem;
+    margin-top: 0.4rem;
+    text-align: center;
 }
 /******************
 创建及编辑帖子
