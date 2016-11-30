@@ -125,10 +125,9 @@ router.get('/:method', function(req, res, next) {
 			break;
         case 'getMessageShow':
             var pn = req.param('currentpage');
-            var user_id = req.param('userId');
             var status = req.param('status');
             var mtype = req.param('mtype');
-            request(config.server + '?service=User.ShowMessage&user_id=' + user_id + '&pn=' + pn + '&status=' + status + '&mtype=' + mtype, function(error, response, body) {
+            request(config.server + '?service=User.ShowMessage&user_id=' + userID + '&pn=' + pn + '&status=' + status + '&mtype=' + mtype, function(error, response, body) {
                 res.header('Content-type', 'application/json');
                 res.header('Charset', 'utf8');
                 try{
