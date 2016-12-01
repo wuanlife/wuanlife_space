@@ -219,7 +219,6 @@
                 });
             },
             updateAll: function(){
-                console.log('update')
                 var self = this;
                 var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
@@ -346,7 +345,6 @@
             },
             // 右边选单
             rebindType: function() {
-                console.log('rebindType')
                 var mtypeButton1 = $('.mtype1');
                 var mtypeButton2 = $('.mtype2');
                 var self = this;
@@ -355,7 +353,6 @@
                     console.log(Jobject)
                     Jobject.on("click", function() {
                         self.mtype = mtype;
-                        console.log(mtype)
                         mtypeButton1.removeClass("active");
                         mtypeButton2.removeClass("active");
                         $(this).addClass("active");
@@ -379,7 +376,7 @@
                 this.rebindType();
             },
             init: function() {
-                if (this.mtype && this.mtype !== 1) {
+                if (this.mtype && this.mtype != 1) {
                     this.updateAll()
                 }
                 this.bindEvent();

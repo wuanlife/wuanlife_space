@@ -1,57 +1,41 @@
 <%- include base/headerMobile.ejs %>
-<div class="main main-page">
-    <div class="location clearfix">
-        <h1><a href="/message" title="">消息中心</a></h1>
-        <div class="location-plus">
-            <i class="filter"></i>
-            <ul class="filter-list text-white">
-                <li class="filter-all">全部</li>
-                <li class="filter-read">已读</li>
-                <li class="filter-notread">未读</li>
-            </ul>
-        </div>
+<div class="main ">
+<div class="message-page">
+    <div class="message-top">
+        <ul class="message-nav clearfix">
+            <li class="mtype12 active">通知<i></i></li>
+            <li class="mtype3">私密星球申请</li>
+        </ul>
+        <ul class="mtype-list">
+            <li class="mtype1">回复我的</li>
+            <li class="mtype2">其他通知</li>
+        </ul>
     </div>
-    <%if(result.code == 1){%>
-    <div class="message-col">
-        <% result.info.forEach(function(item) { %>
-        <div id="<%=item.id %>" class="message clearfix vertical-container">
-            <div class="meg-brief">
-                <img src="<%=item.user_image%>">
-                <div class="meg-content">
-                    <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
-                    <%if(item.messagetype == '1') { %>
-                    <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
-                    </div>
-                    <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
-                    </div>   
-                    <% } else if(item.messagetype == '2') { %>
-                    <div class="meg-content-row clearfix">
-                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
-                    </div>
-                    <% } %>
+    <div class="message-right">
+    <div class="message-main">
+        <%if(result.code == 1){%>
+        <div class="message-col">
+            <% result.info.forEach(function(item) { %>
+            <div id="<%=item.id %>" class="message clearfix">
+                <div class="meg-reply-title">
+                    <h3><%=item.nickname%>：<%=item.replytext%></h3>
+                    <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
+                </div>
+                <div class="meg-reply-time">
+                    <div><span><%=item.createTime%></span></div>
+                    <button>回复</button>
                 </div>
             </div>
-            <%if(item.messagetype == '1') { 
-                if(item.messageInfo.status == '1') { %>
-                    <button class="meg-button agree" type="button">同意</button>
-                    <button class="meg-button disagree" type="button">拒绝</button>
-                <% } else if(item.messageInfo.status == '2') {%>
-                    <button class="meg-right-text" type="button">已同意</button>
-                <% } else if(item.messageInfo.status == '3') {%>
-                    <button class="meg-right-text" type="button">已拒绝</button>
-                <% } %>
-            <% } else if(item.messagetype == '2') { %>
-                <button class="meg-right-text" type="button"><%=item.messageInfo.information%></button>
-            <% } %>
+            <% }) %>     
+        </div> 
+        <%}else{%>
+        <div class="emptyPage">
+            您还没有消息哦
         </div>
-        <% }) %>
+        <%} %>
     </div>
     <div class="page-turn">
-        <%if(result.currentPage == 1){%>
+        <%if(result.currentPage == 1){console.log(result)%>
         <button type="button" class="unCBtn" id="pre">上一页</button>
         <%}else{%>
         <button type="button" id="pre">上一页</button>
@@ -62,30 +46,61 @@
         <%}else{%>
         <button type="button" id="next">下一页</button>
         <%}%>
+    </div>  
     </div>
-    <%}else{%>
-    <div class="emptyPage">
-        您还没有消息哦
-    </div>
-    <%} %>
 
 </div>
+</div>
 <%- include base/baseJSMobile.ejs %>
-<script type="text/html" id="listtemplate">
+<script type="text/html" id="mtype1">
+    <div class="message-col">
+    {{each info as item i}}
+    <div id="{{item.id}}" class="message clearfix">
+        <div class="meg-reply-title">
+            <h3>{{item.nickname}}：{{item.replytext}}</h3>
+            <div><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
+        </div>
+        <div class="meg-reply-time">
+            <div><span>{{item.createTime}}</span></div>
+            <button>回复</button>
+        </div>
+    </div>
+    {{/each}}
+    </div>
+
+</script>
+
+<script type="text/html" id="mtype2">
+    {{each info as item i}}
+        <div class="message">{{item.messageInfo}}</div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="mtype3">
+<div class="meg-apply">
+<div class="filter-div clearfix">
+    <i class="filter"></i>
+    <ul class="filter-list text-white clearfix">
+        <li class="filter-all">全部</li>
+        <li class="filter-read">已读</li>
+        <li class="filter-notread">未读</li>
+    </ul>
+</div>
+    <div class="message-col">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix vertical-container">
         <div class="meg-brief">
             <img src="{{item.user_image}}">
             <div class="meg-content">
-                <h2 class="text-ellipsis text-link">{{item.nickname}}</h2>
+                <h3 class="text-ellipsis text-link">{{item.nickname}}</h3>
                 {{if item.messagetype == '1' }}
                     <div class="meg-content-row clearfix">
                         <p class="text-grey">申请加入：</p>
                         <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
                     </div>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis">{{item.messageInfo.text}}</p>
+                        <p class="text-grey">申请信息：<a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.text}}</a></p>
+                        
                     </div>   
                 {{else if item.messagetype == '2' }}
                     <div class="meg-content-row clearfix">
@@ -107,9 +122,10 @@
         {{else if item.messagetype == '2' }}    
             <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
         {{/if}}
-
     </div>
     {{/each}}
+    </div>
+</div>
 </script>
 <script type="text/javascript">
     (function() {
@@ -117,10 +133,11 @@
             pre: $("#pre"),
             next: $("#next"),
             page: $(".page-turn").find('span').eq(0),
-            main: $(".message-col"),
+            main: $(".message-main"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
             filterType: global.getUrlParam('status'),
+            mtype: global.getUrlParam('mtype'),
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -137,22 +154,21 @@
                         button.removeClass("agree");
                         button.addClass("meg-right-text");
                         button.html("已同意");
-                        button.unbind("touchend");                       
+                        button.unbind("click");
                     },
                     disagree2disable: function(button, message) {
                         message.children(".meg-button.agree").remove();
                         button.removeClass("disagree");
                         button.addClass("meg-right-text");
                         button.html("已拒绝");
-                        button.unbind("touchend");  
+                        button.unbind("click");  
                     }
 
                 }; 
-                
                 $(".meg-button.agree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
-                    thisButton.on("touchend", function () {
+                    thisButton.on("click", function () {
                         self.loading.show();
                         global.subData("/api/processApplyPrivateGroup",{
                             messageID: parseInt(thisMessage.eq(0).attr('id')),
@@ -174,7 +190,7 @@
                 $(".meg-button.disagree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
-                    thisButton.on("touchend", function () {
+                    thisButton.on("click", function () {
                         self.loading.show();
                         global.subData('/api/processApplyPrivateGroup',{
                             messageID: parseInt(thisMessage.eq(0).attr('id')),
@@ -194,26 +210,47 @@
                     });
                 });
             },
-            updateByPage:function(){
+            updateAll: function(){
                 var self = this;
                 var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
+                var mtype = global.getUrlParam('mtype');
                 self.filterType = statusNow || 1;
+                self.mtype = mtype || 1;
+
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    userId: <%=user.userID%>,
                     status: self.filterType,
+                    mtype: self.mtype
                 }, function(data) {
-                    if (pageNow != global.getPageNow()) {
-                        return;
+                    var compiled = template("mtype" + mtype, data.data);
+                    self.main.html(compiled);
+                    self.bindFilterEvent();
+
+                    $('.mtype-list').hide()
+                    if (self.mtype == 2) {
+                        $('.mtype2').addClass('active')
+                        $('.mtype1').removeClass('active')
                     }
-                    if (data.ret == 200 && data.data && data.data.info.length > 0) {
+                    if (self.mtype == 3) {
                         $('.filter-list').children('li').removeClass('filter-clicked');
-                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');
-                        var compiled = template("listtemplate", data.data);
-                        self.main.html(compiled);
+                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');                            
+                    }
+                    if(data.ret == 200 && data.data.code === 0) {
+                   
+                        $('.message-col').html("<div class='emptyPage'>您还没有消息哦</div>")
+                        $('.page-turn').hide();
+                        self.loading.hide();
+                        return
+                    }
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
+                        $('.page-turn').show();
+
+                        self.loading.hide();
+
                         self.rebindButton();
+
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                         global.setPageCount(data.data.pageCount);
                         self.pre.removeAttr('class');
@@ -224,8 +261,7 @@
                         if (data.data.currentPage == data.data.pageCount) {
                             self.next.addClass('unCBtn')
                         }
-                        self.loading.hide();
-                        $('.mainContainer').scrollTop(0);
+                        $(window).scrollTop(0);
                     } else {
                         self.loading.hide();
                         sweetAlert('错误', '数据获取失败', 'error');
@@ -236,41 +272,82 @@
                 /*绑定过滤器列表显示隐藏*/
                 var filter = $('.filter');
                 var filterList = $('.filter-list');
-                filter.on("touchend", function() {
-                    filterList.toggle();
-                });
-
-                /*绑定过滤*/
+                filter.on('click', function() {
+                    filterList.toggle()
+                })
                 var self = this;
                 var all = $('.filter-all');
                 var read = $('.filter-read');
                 var notread = $('.filter-notread');
 
                 var bindFilterEventByStatus = function(Jobject, status) {
-                    Jobject.on("touchend", function() {
+                    Jobject.on("click", function() {
+                        var newURL,
+                            search = location.search,
+                            path = location.pathname;
+                        
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        var newURL = location.pathname + '?status=' + status;
+                        
+                        if (typeof(global.getUrlParam('status')) == 'string' ) {
+                            newURL = path + search.replace(/(status=)\d/, '$1' + status)
+                        }else if (search) {
+                            newURL = path + search + '&status=' + status;
+                        }else {
+                            newURL = path + search + '?status=' + status;
+                        }
                         history.pushState(null,'',newURL);   
                         global.changeEverPushed();
-                        self.updateByPage();                
+                        self.updateAll();        
                     })
                 };
                 bindFilterEventByStatus(all, 1);
                 bindFilterEventByStatus(read, 2);
                 bindFilterEventByStatus(notread, 3);
             },
+            bindTypeChange: function() {
+                var mtypeButton1 = $('.mtype1');
+                var mtypeButton2 = $('.mtype2');
+                var mtypeButton3 = $('.mtype3');
+                var mtypeButton12 = $('.mtype12');
+                var self = this;
+
+                var bindTypeEvents = function(Jobject, mtype) {
+                    Jobject.on("click", function() {
+                        self.mtype = mtype;
+                        mtypeButton1.removeClass("active");
+                        mtypeButton2.removeClass("active");
+                        $(this).addClass("active");
+
+                        var newURL = location.pathname +  '?mtype=' + mtype;
+                        history.pushState(null,'',newURL);
+                        global.changeEverPushed();
+                        self.updateAll();        
+                    })
+                };
+                bindTypeEvents(mtypeButton1, 1);
+                bindTypeEvents(mtypeButton2, 2);
+                bindTypeEvents(mtypeButton3, 3);
+
+                mtypeButton12.on('click',function(){
+                    $('.mtype-list').toggle()
+                })
+            },
             bindEvent: function() {
                 var self = this;
                 global.setPageCount(self.pageCount);
-                global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
+                global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
                 //绑定过滤器事件
-                this.bindFilterEvent(); 
+                this.bindTypeChange()
             },
             init: function() {
+                if (this.mtype && this.mtype != 1) {
+                    this.updateAll()
+                }
                 this.bindEvent();
                 this.rebindButton();
+                this.bindFilterEvent();
             }
         }
         message.init();
