@@ -211,4 +211,35 @@ router.post('/:groupid/set', function(req, res, next) {
 });
 
 
+//退出星球
+// router.post('/:groupid/quit', function(req, res, next) {
+// 	var userid = (req.session.user) ? req.session.user.userID : null;
+// 	request.post({
+// 		url:config.server + '?service=Group.Quit',
+// 		formData:{
+// 			user_id:userid,
+// 			group_base_id:req.params.groupid
+// 		}
+// 	},function optionalCallback(err, httpResponse, body){
+// 		res.header('Content-type', 'application/json');
+//         res.header('Charset', 'utf8');
+//         try {
+//                     if (!err && httpResponse.statusCode == 200){
+//                         //console.log(JSON.parse(body));
+//                         return res.send(JSON.parse(body));
+//                     }
+//                     //console.error('processApply failed:', err);
+//                     res.send({
+//                         ret: 500,
+//                         msg:'服务器异常'
+//                     });
+//             } catch(e){
+//                     res.send({
+//                         ret: 500,
+//                         msg:e.message
+//                     });
+//             }
+// 	})
+// });
+
 module.exports = router;

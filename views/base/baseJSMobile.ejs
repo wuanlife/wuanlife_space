@@ -29,11 +29,12 @@
                     <% if (user) { %>
                     <li><a href="/users" class="navbar-icon navbar-option-item nav-per">个人中心</a></li>
                     <li><a href="/message" class="navbar-icon navbar-option-item nav-mes">消息中心<i class="red-point" id="mrp"></i></a></li>
+                    <li><a href="/myCollections" class="navbar-icon navbar-option-item nav-myc">我的收藏</a></li>
                     <% } %>
                 </ul>
                 <ul class="navbar-account">
                     <% if (user) { %>
-                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item"><%=user.nickname%></span></li>
+                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item" id="nav-username"><%=user.nickname%></span></li>
                     <li class="aLogged"><a href="/logout" class="navbar-icon navbar-account-item">退出</a></li>
                     <% } else { %>
                     <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>

@@ -304,7 +304,6 @@
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        
                         if (typeof(global.getUrlParam('status')) == 'string' ) {
                             newURL = path + search.replace(/(status=)\d/, '$1' + status)
                         }else if (search) {

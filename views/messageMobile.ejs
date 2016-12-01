@@ -316,8 +316,12 @@
                 var bindTypeEvents = function(Jobject, mtype) {
                     Jobject.on("click", function() {
                         self.mtype = mtype;
-                        mtypeButton1.removeClass("active");
-                        mtypeButton2.removeClass("active");
+                        mtypeButton12.removeClass("active");
+                        mtypeButton3.removeClass("active");
+
+                        if (mtype === (1 || 2)) {
+                            mtypeButton12.addClass("active")
+                        }
                         $(this).addClass("active");
 
                         var newURL = location.pathname +  '?mtype=' + mtype;

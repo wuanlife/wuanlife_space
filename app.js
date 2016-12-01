@@ -31,8 +31,10 @@ var news = require('./routes/news').router;
 var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
 var userManage=require('./routes/userManage');
+var myCollections=require('./routes/myCollections');
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
+
 
 
 var app = express();
@@ -122,6 +124,7 @@ app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
+app.use('/myCollections',myCollections);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
