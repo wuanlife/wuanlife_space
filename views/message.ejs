@@ -219,6 +219,7 @@
                 });
             },
             updateAll: function(){
+                console.log('update')
                 var self = this;
                 var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
@@ -233,7 +234,17 @@
                     mtype: self.mtype
                 }, function(data) {
                     var compiled = template("mtype" + mtype, data.data);
-                    self.main.html(compiled);                         
+                    self.main.html(compiled);
+                    self.rebindType();
+                    self.bindFilterEvent();
+                    if (self.mtype == 2) {
+                        $('.mtype2').addClass('active')
+                        $('.mtype1').removeClass('active')
+                    }
+                    if (self.mtype == 3) {
+                        $('.filter-list').children('li').removeClass('filter-clicked');
+                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');                            
+                    }
                     if(data.ret == 200 && data.data.code === 0) {
                    
                         $('.message-col').html("<div class='emptyPage'>您还没有消息哦</div>")
@@ -247,17 +258,6 @@
                         self.loading.hide();
 
                         self.rebindButton();
-                        self.rebindType();
-                        self.bindFilterEvent();
-
-                        if (self.mtype == 2) {
-                            $('.mtype2').addClass('active')
-                            $('.mtype1').removeClass('active')
-                        }
-                        if (self.mtype == 3) {
-                            $('.filter-list').children('li').removeClass('filter-clicked');
-                            $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');                            
-                        }
 
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
                         global.setPageCount(data.data.pageCount);
@@ -346,13 +346,16 @@
             },
             // 右边选单
             rebindType: function() {
+                console.log('rebindType')
                 var mtypeButton1 = $('.mtype1');
                 var mtypeButton2 = $('.mtype2');
                 var self = this;
 
                 var bindTypeEvents = function(Jobject, mtype) {
+                    console.log(Jobject)
                     Jobject.on("click", function() {
                         self.mtype = mtype;
+                        console.log(mtype)
                         mtypeButton1.removeClass("active");
                         mtypeButton2.removeClass("active");
                         $(this).addClass("active");
@@ -373,11 +376,14 @@
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
                 //绑定过滤器事件
                 this.bindTypeChange()
+                this.rebindType();
             },
             init: function() {
+                if (this.mtype && this.mtype !== 1) {
+                    this.updateAll()
+                }
                 this.bindEvent();
                 this.rebindButton();
-                this.rebindType()
             }
         }
         message.init();
