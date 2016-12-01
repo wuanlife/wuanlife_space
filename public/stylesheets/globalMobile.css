@@ -1268,18 +1268,15 @@ textarea.form-control{
     float: right;
     text-align: right;
 }
+.meg-time {
+    line-height: 0.9rem
+}
 .message h3 {
     font-size: 0.6875rem;
     line-height: 0.9rem;
 }
 .message span {
     color: #aaa
-}
-.message button {
-    padding: 5px 10px;
-    background: #5ab8fe;
-    color: #fff;
-    border-radius: 3px;
 }
 .meg-brief {
     width: 90%;
@@ -1311,8 +1308,7 @@ textarea.form-control{
 .meg-button {
     width: 1.4rem;
     font-size: 0.4rem;
-    padding: 4px 4px;
-    margin-right: 20px;
+    padding: 4px 10px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);

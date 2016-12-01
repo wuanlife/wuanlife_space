@@ -22,8 +22,8 @@
                     <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
                 </div>
                 <div class="meg-reply-time">
-                    <div><span><%=item.createTime%></span></div>
-                    <button>回复</button>
+                    <div class="meg-time"><span><%=item.createTime%></span></div>
+                    <a href="#" class="meg-button reply">回复</a>
                 </div>
             </div>
             <% }) %>     
@@ -61,8 +61,8 @@
             <div><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
         </div>
         <div class="meg-reply-time">
-            <div><span>{{item.createTime}}</span></div>
-            <button>回复</button>
+            <div class="meg-time"><span>{{item.createTime}}</span></div>
+            <a href="#" class="meg-button reply">回复</a>
         </div>
     </div>
     {{/each}}

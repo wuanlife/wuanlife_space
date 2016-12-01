@@ -1099,12 +1099,6 @@ textarea.form-control{
 .message span {
     color: #aaa
 }
-.message button {
-    padding: 5px 10px;
-    background: #5ab8fe;
-    color: #fff;
-    border-radius: 3px;
-}
 .meg-apply {
     margin-top: 50px;
 }
@@ -1134,12 +1128,14 @@ textarea.form-control{
 .meg-button {
     width: 90px;
     font-size: 18px;
-    padding: 4px 4px;
-    margin-right: 20px;
+    padding: 4px 10px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
+}
+.meg-button.agree{
+    margin-right: 20px;
 }
 .meg-button.disable{
     color: rgba(102, 102, 102,1.0);
