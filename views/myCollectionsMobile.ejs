@@ -6,57 +6,59 @@
 	<%if(result.posts.length>0){%>
 	<div>
 		<ul class="mycol-posts-lists">
-		   <%result.posts.forEach(function(item){%>
-      	   <% if(item.delete==0){%>
-		   <li class="mycol-post-list" data-id="<%=item.postID%>">
-			  <div class="mycol-top">
-			    <%if(item.post_name.length<7){%>
-				<a class="mycol-title" href="/topic/<%=item.postID%>"><%=item.post_name%></a>
-				<%}else{%>
-				<a class="mycol-title" href="/topic/<%=item.postID%>">
-				   <%var postname=''%>
-      		       <%for(i=0;i<6;i++){postname=postname+item.post_name[i]}%>
-                   <%=postname+'...'%>
-				</a>
-                <%}%>
-				<img class="mycol-image" src="../images/myCollections_02.png">
-				<%if(item.groupName.length<6){%>
-				<span class="mycol-groupname">
+			<%result.posts.forEach(function(item){%>
+			<% if(item.delete==0){%>
+			<li class="mycol-post-list" data-id="<%=item.postID%>">
+				<div class="mycol-top">
+					<%if(item.post_name.length<7){%>
+					<a class="mycol-title" href="/topic/<%=item.postID%>">
+						<%=item.post_name%>
+					</a>
+					<%}else{%>
+					<a class="mycol-title" href="/topic/<%=item.postID%>">
+						<%var postname=''%>
+						<%for(i=0;i<6;i++){postname=postname+item.post_name[i]}%>
+						<%=postname+'...'%>
+					</a>
+					<%}%>
+					<img class="mycol-image" src="../images/myCollections_02.png">
+					<%if(item.groupName.length<6){%>
+					<span class="mycol-groupname">
 				<a href="/group/<%=item.gbID%>"><%=item.groupName%></a>
 				</span>
-				<%}else{%>
-				<span class="mycol-groupname">
+					<%}else{%>
+					<span class="mycol-groupname">
 				  <a href="/group/<%=item.gbID%>">
 					<%var groupname=''%>
       			    <%for(i=0;i<4;i++){ groupname=groupname+item.groupName[i] }%>
       			    <%=groupname+'...'%>
       			  </a>
 				</span>
-				<%}%>
-				<%if(item.user_name.length<4){%>
-				<span class="mycol-creater"><a href="#"><%=item.user_name%></a></span>
-				<%}else{%>
-				<span class="mycol-creater">
+					<%}%>
+					<%if(item.user_name.length<4){%>
+					<span class="mycol-creater"><a href="#"><%=item.user_name%></a></span>
+					<%}else{%>
+					<span class="mycol-creater">
 				  <a href="#">
 					<%var username=''%>
       			    <%for(i=0;i<2;i++){ username=username+item.user_name[i] }%>
       			    <%=username+'...'%>
       			  </a>
 				</span>
-				<%}%>
-			  </div>
-			  <div class="mycol-bottom">
-				<span class="mycol-show">收藏于</span>
-				<span class="mycol-time"><%=item.createTime%></span>
-				<span class="mycol-status" data-target="<%=item.postID%>">已收藏</span>
-			  </div>
-		   </li>
-		   <%}else{%>
-		   <li class="mycol-post-list" data-id="<%=item.postID%>">
-		   	   <span class="mycol-post-delete">此贴已被删除，点击<button class="mycol-delete-btn" data-target="<%=item.postID%>">取消收藏</button>，进行操作</span>
-		   </li>
-		   <%}%>
-		   <%})%>
+					<%}%>
+				</div>
+				<div class="mycol-bottom">
+					<span class="mycol-show">收藏于</span>
+					<span class="mycol-time"><%=item.createTime%></span>
+					<span class="mycol-status" data-target="<%=item.postID%>">已收藏</span>
+				</div>
+			</li>
+			<%}else{%>
+			<li class="mycol-post-list" data-id="<%=item.postID%>">
+				<span class="mycol-post-delete">此贴已被删除，点击<button class="mycol-delete-btn" data-target="<%=item.postID%>">取消收藏</button>，进行操作</span>
+			</li>
+			<%}%>
+			<%})%>
 		</ul>
 	</div>
 	<div class="page-turn">
@@ -80,157 +82,139 @@
 </div>
 <%- include base/baseJSMobile.ejs %>
 <script type="text/html" id="mycol-list">
-   {{each posts as item i}}
-   {{if item.delete==0}}
-   <li class="mycol-post-list" data-id="{{item.postID}}">
-        <div class="mycol-top">
-            {{if item.post_name.length<7}}
-      		<a class="mycol-title" href="/topic/{{item.postID}}">
-      		{{item.post_name}}
-      		</a>
-      		{{else}}
-      		<a class="mycol-title" href="/topic/{{item.postID}}">
-      		{{item.post_name[0]}}{{item.post_name[1]}}{{item.post_name[2]}}{{item.post_name[3]}}{{item.post_name[4]}}{{item.post_name[5]}}...
-      		</a>
-      		{{/if}}
-      		<img class="mycol-image" src="../images/myCollections_02.png">
-      		{{if item.groupName.length<6}}
-      		<span class="mycol-groupname"><a href="/group/{{item.gbID}}">{{item.groupName}}</a></span>
-      		{{else}}
-      		<span class="mycol-groupname">
+	{{each posts as item i}} {{if item.delete==0}}
+	<li class="mycol-post-list" data-id="{{item.postID}}">
+		<div class="mycol-top">
+			{{if item.post_name.length
+			<7}} <a class="mycol-title" href="/topic/{{item.postID}}">
+				{{item.post_name}}
+				</a>
+				{{else}}
+				<a class="mycol-title" href="/topic/{{item.postID}}">
+					{{item.post_name[0]}}{{item.post_name[1]}}{{item.post_name[2]}}{{item.post_name[3]}}{{item.post_name[4]}}{{item.post_name[5]}}...
+				</a>
+				{{/if}}
+				<img class="mycol-image" src="../images/myCollections_02.png"> {{if item.groupName.length
+				<6}} <span class="mycol-groupname">
+					<a href="/group/{{item.gbID}}">{{item.groupName}}</a>
+					</span>
+					{{else}}
+					<span class="mycol-groupname">
               <a href="/group/{{item.gbID}}">
       		{{item.groupName[0]}}{{item.groupName[1]}}{{item.groupName[2]}}{{item.groupName[3]}}...
       		  </a>
-      		</span>
-      		{{/if}}
-      		{{if item.user_name.length<4}}
-      		<span class="mycol-creater"><a href="#">{{item.user_name}}</a></span>
-      		{{else}}
-      		<span class="mycol-creater"><a href="#">{{item.user_name[0]}}{{item.user_name[1]}}...</a>
-      		</span>
-      		{{/if}}
-      	</div>
-	    <div class="mycol-bottom">
-				<span class="mycol-show">收藏于</span>
-				<span class="mycol-time">{{item.createTime}}</span>
-				<span class="mycol-status" data-target="{{item.postID}}">已收藏</span>
-	    </div>
-   </li>
-   {{else}}
-   <li  class="mycol-post-list" data-id="{{item.postID}}">
-      		<span class="mycol-post-delete">此贴已被删除，点击<button class="mycol-delete-btn" data-target="{{item.postID}}">取消收藏</button>，进行操作</span>
-   </li>
-   {{/if}}
-   {{/each}}
+      		</span> {{/if}} {{if item.user_name.length
+					<4}} <span class="mycol-creater">
+						<a href="#">{{item.user_name}}</a>
+						</span>
+						{{else}}
+						<span class="mycol-creater"><a href="#">{{item.user_name[0]}}{{item.user_name[1]}}...</a>
+      		</span> {{/if}}
+		</div>
+		<div class="mycol-bottom">
+			<span class="mycol-show">收藏于</span>
+			<span class="mycol-time">{{item.createTime}}</span>
+			<span class="mycol-status" data-target="{{item.postID}}">已收藏</span>
+		</div>
+	</li>
+	{{else}}
+	<li class="mycol-post-list" data-id="{{item.postID}}">
+		<span class="mycol-post-delete">此贴已被删除，点击<button class="mycol-delete-btn" data-target="{{item.postID}}">取消收藏</button>，进行操作</span>
+	</li>
+	{{/if}} {{/each}}
 </script>
 <script>
-	(function(){
-		var myCollections={
-			main:$(".mycol-posts-lists"),
+	(function() {
+		var myCollections = {
+			main: $(".mycol-posts-lists"),
 			pre: $("#pre"),
 			next: $("#next"),
 			page: $(".page-turn").find('span').eq(0),
 			loading: $(".loading"),
 			pageCount: parseInt("<%=result.pageCount%>"),
-			//nav_myplane:$("#nav-myP").children("a"),
-			// navActive: function() {
-			// 	this.nav_myplane.addClass("navbar-active");
-			// },
 			getServerData: function(param, cb) {
 				global.getData("/api/getMyCollections", param, cb);
 			},
-			updateByPage:function(){
+			updateByPage: function() {
 				var self = this;
 				var pageNow = global.getPageNow();
-				//console.log(pageNow);
 				self.loading.show();
 				self.getServerData({
 					currentpage: pageNow
 				}, function(data) {
-					if (pageNow != global.getPageNow()) {
+					if(pageNow != global.getPageNow()) {
 						return;
-						//console.log("i am text");
 					}
-					if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+					if(data.ret == 200 && data.data && data.data.posts.length > 0) {
 						var compiled = template("mycol-list", data.data);
 						self.main.html(compiled);
 						self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 						global.setPageCount(data.data.pageCount);
 						self.pre.removeAttr('class');
 						self.next.removeAttr('class');
-						if (data.data.currentPage == 1) {
+						if(data.data.currentPage == 1) {
 							self.pre.addClass('unCBtn');
 						}
-						if (data.data.currentPage == data.data.pageCount) {
+						if(data.data.currentPage == data.data.pageCount) {
 							self.next.addClass('unCBtn')
 						}
 						self.loading.hide();
-						$(window).scrollTop(0);
-						//self.init();
-						$(".mycol-delete-btn").on('touchend',self.cancelCollect);
-				        $(".mycol-status").on('touchend',self.cancelCollect);
+						$('.mainContainer').scrollTop(0);
 					} else {
 						self.loading.hide();
-						//console.log("you are so cure");
 						sweetAlert('错误', '数据获取失败', 'error');
 
 					}
 				});
 			},
-			cancelCollect:function(){
-				var target=$(this).attr('data-target');
-                var self=this;
+			cancelCollect: function() {
+				var target = $(this).attr('data-target');
+				var self = this;
 				swal({
 					title: '取消收藏',
-                    text: '是否取消收藏帖子',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消'
-				}).then(function(){
+					text: '是否取消收藏帖子',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					allowOutsideClick: false
+				}).then(function() {
 					$(this).off('touchend');
-
-					$(this).addClass('disabled');
-                    $(".loading").show();
-                    global.subData("/api/deleteCollectPosts",{
-                    	postid:target
-                    },function(data){
-                    	$(".loading").hide();
-                    	if(data.ret == 200 && data.data){
-                    		if(data.data.code==1){
-                    			sweetAlert({
-                                    title: '提示',
-                                    text: '帖子取消收藏成功',
-                                    type: 'success',
-                                    timer: 2000
-                                });
-                                $('[data-id =' + '"'+target+'"' +']').remove();
-                    		}
-                    		else{
-                    			//console.log(data.data.code);
-                    			sweetAlert('错误', data.data.msg, 'error');
-                    			$(this).on('touchend',self.cancelCollect);
-                    		}
-                    	}
-                    	else{
-                    		//console.log("错误2");
-                    		sweetAlert('错误', data.msg, 'error');
-                    		$(this).on('touchend',self.cancelCollect);
-                    	}
-                    })
-				})
+					$(".loading").show();
+					global.subData("/api/uncollectPost", {
+						post_id: target
+					}, function(data) {
+						$(".loading").hide();
+						if(data.ret == 200 && data.data) {
+							if(data.data.code == 1) {
+								sweetAlert({
+									title: '提示',
+									text: '帖子取消收藏成功',
+									type: 'success',
+									timer: 2000
+								}).catch(swal.noop);
+								$('[data-id =' + '"' + target + '"' + ']').remove();
+							} else {
+								sweetAlert('错误', data.data.msg, 'error');
+								$(this).on('touchend', self.cancelCollect);
+							}
+						} else {
+							sweetAlert('错误', data.msg, 'error');
+							$(this).on('touchend', self.cancelCollect);
+						}
+					})
+				}).catch(swal.noop);
 			},
-			bindEvent:function(){
+			bindEvent: function() {
 				var self = this;
 				global.setPageCount(self.pageCount);
-				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
+				global.pageTurning.apply(self, ["#pre", "#next", self.updateByPage]);
 				$(document).on('touchend', '.mycol-delete-btn,.mycol-status', function(event) {
-            self.cancelCollect.apply($(this));
-        });
+					self.cancelCollect.apply($(this));
+				});
 			},
-			init:function(){
+			init: function() {
 				this.bindEvent();
-				//this.navActive();
 			}
 		}
 		myCollections.init();

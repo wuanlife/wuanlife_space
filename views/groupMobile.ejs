@@ -1,13 +1,11 @@
 <%- include base/headerMobile.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
-	    <h1>
-	    	<a class="text-ellipsis" href="/group/<%=result.groupID%>" title=""class="groupH"><%=result.groupName%></a>
-	    </h1>
 		<h1>
-		    <p class="text-ellipsis myJoincreater"> 
-			创建者：<%=result.creatorName%>
-			</p>
+	    	<a href="/group/<%=result.groupID%>" title=""><%=result.groupName%></a>
+	    </h1>
+		<h3 class="myJoincreater"> 创建者：<%=result.creatorName%></h3>
+		<div>
 			<%if(result.identity == '01' || result.identity == '02'){%>
 			<button type="button" id="joinBtn" class="locBtn">+发帖</button>
 			<%if(result.identity=='02'){%>
@@ -21,13 +19,7 @@
 			<%if(result.identity == '01'){%>
 			<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
 			<% } %>
-		</h1>
-		<!-- <h2 class="text-ellipsis">
-			<p class="text-ellipsis"> 
-			创建者：<%=result.creatorName%>
-			</p>
-		</h2> -->
-	
+		</div>
 	</div>
 	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
 	<div class="blockPage">
@@ -123,89 +115,93 @@
 			loading: $(".loading"),
 			identity: parseInt("<%=result.identity%>"),
 			pageCount: parseInt("<%=result.pageCount%>"),
-			private:parseInt("<%=result.private%>"),
-			disabled:false,
+			private: parseInt("<%=result.private%>"),
+			disabled: false,
 			getServerData: function(param, cb) {
 				global.getData("/api/getGroupPlanetShow", param, cb);
 			},
 			sweetAlertForPost: function() {
-                var self = this;
-                //发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
+				var self = this;
+				//发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
 				var compressedCSS = ".swal2-show{padding:20px 60px!important;width:680px!important;height:400px!important}.swal2-show>h2{float:left!important;color:#5ab8fe!important;font-weight:unset!important}.swal2-textarea{outline:0!important;resize:none!important;height:240px!important;margin:0!important;background-color:rgba(243,243,243,1)!important}.swal2-cancel{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}.swal2-confirm{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}";
 
 				swal({
 					title: '发送信息',
-					html: '<style>' + compressedCSS+'</style>',
+					html: '<style>' + compressedCSS + '</style>',
 					input: 'textarea',
 					showCancelButton: true,
-                    confirmButtonText: '申请',
-                    cancelButtonText: '取消'
+					confirmButtonText: '申请',
+					cancelButtonText: '取消',
+					allowOutsideClick: false
 				}).then(function(text) {
 					if(text.length > 60) {
 						sweetAlert('错误', '申请消息长度不能超于60', 'error');
 						return;
 					}
-                    self.loading.show();
-                    global.subData("/api/applyPrivateGroup",{
-                        groupid: parseInt("<%=result.groupID%>"),
-                        applyText: text
-                    }, function(data) {
-                        if (data.ret == 200 && data.data && data.data.code == 1) {
-                                sweetAlert({
-                                title: '提示',
-                                text: '申请成功等待审核',
-                                type: 'success',
-                                timer: 2000
-                                });
-                            self.joinBtn.text('+已申请'); //正在申请
-                            self.identity = 4;
-                        } else {
-                            sweetAlert('错误', '加入星球失败', 'error');
-                        }
-                        self.loading.hide();
-                        self.joinBtn.removeAttr('disabled');
-                    }); 
+					self.loading.show();
+					global.subData("/api/applyPrivateGroup", {
+						groupid: parseInt("<%=result.groupID%>"),
+						applyText: text
+					}, function(data) {
+						if(data.ret == 200 && data.data && data.data.code == 1) {
+							sweetAlert({
+								title: '提示',
+								text: '申请成功等待审核',
+								type: 'success',
+								timer: 2000
+							});
+							self.joinBtn.text('+已申请'); //正在申请
+							self.identity = 4;
+						} else {
+							sweetAlert('错误', '加入星球失败', 'error');
+						}
+						self.loading.hide();
+					});
 				}, function() {
-                    /*cancel to do*/
-                });
-			},
-			//退出星球处理函数
-			quitGroup:function(){
-				var self = this;
-				swal({
-					title: '退出星球',
-                    text: '是否退出星球 "<%=result.groupName%>"?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消'
-				}).then(function(){
-					$(".loading").show();
-					global.subData("/api/quitGroup",{
-						groupid:parseInt("<%=result.groupID%>")
-					},function(data) {
-                        if (data.data.ret == 200 && data.data.data && data.data.data.code == 1) {
-                                sweetAlert({
-                                title: '提示',
-                                text: data.data.data.msg,
-                                type: 'success',
-                                timer: 2000
-                                });
-                            //self.joinBtn.text('+已申请'); //正在申请
-                            self.identity = 3;
-                            function turn(){
-                            	window.location.href = "/uGroup/"+parseInt(data.userid);
-                            }
-                            //window.location.href = "/uGroup/"+parseInt(data.userid);
-                            var t=setTimeout(turn,2000);
-                        } else {
-                            sweetAlert('错误', '加入星球失败', 'error');
-                        }
-                        $(".loading").hide();
-                    });
+					/*cancel to do*/
 				});
 			},
-			updateByPage:function(){
+			//退出星球处理函数
+			quitGroup: function() {
+				var self = this;
+				if($("#quitBtn").hasClass('disabled')) {
+					return;
+				}
+				swal({
+					title: '退出星球',
+					text: '是否退出星球 "<%=result.groupName%>"?',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					allowOutsideClick: false
+				}).then(function() {
+					$(".loading").show();
+					$("#quitBtn").addClass('disabled');
+					global.subData("/api/quitGroup", {
+						groupid: parseInt("<%=result.groupID%>")
+					}, function(data) {
+						if(data.data.ret == 200 && data.data.data && data.data.data.code == 1) {
+							sweetAlert({
+								title: '提示',
+								text: data.data.data.msg,
+								type: 'success',
+								timer: 2000
+							}).catch(swal.noop);
+							//self.joinBtn.text('+已申请'); //正在申请
+							self.identity = 3;
+							setTimeout(function() {
+								window.location.href = "/uGroup/" + parseInt(data.userid);
+							}, 2000);
+						} else {
+							sweetAlert('错误', '加入星球失败', 'error');
+							$("#quitBtn").removeClass('disabled');
+						}
+						$(".loading").hide();
+					});
+				}).catch(swal.noop);
+			},
+			updateByPage: function() {
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.loading.show();
@@ -213,20 +209,20 @@
 					currentpage: pageNow,
 					groupid: parseInt("<%=result.groupID%>")
 				}, function(data) {
-					if (pageNow != global.getPageNow()) {
+					if(pageNow != global.getPageNow()) {
 						return;
 					}
-					if (data.ret == 200 && data.data && data.data.posts.length > 0) {
+					if(data.ret == 200 && data.data && data.data.posts.length > 0) {
 						var compiled = template("listtemplate", data.data);
 						self.main.html(compiled);
 						self.page.text(data.data.currentPage + '/' + data.data.pageCount);
 						global.setPageCount(data.data.pageCount);
 						self.pre.removeAttr('class');
 						self.next.removeAttr('class');
-						if (data.data.currentPage == 1) {
+						if(data.data.currentPage == 1) {
 							self.pre.addClass('unCBtn');
 						}
-						if (data.data.currentPage == data.data.pageCount) {
+						if(data.data.currentPage == data.data.pageCount) {
 							self.next.addClass('unCBtn')
 						}
 						self.loading.hide();
@@ -242,7 +238,7 @@
 				self.joinBtn.on("touchend", function(event) {
 					event.preventDefault();
 					<%if(user){%>
-					switch(self.identity){
+					switch(self.identity) {
 						case 1:
 							window.location.href = '/group/<%=result.groupID%>/post';
 							break;
@@ -250,18 +246,18 @@
 							window.location.href = '/group/<%=result.groupID%>/post';
 							break;
 						case 3:
-							if (self.disabled) return;
+							if(self.disabled) return;
 							self.disabled = true;
-							if(self.private == 0){
-								global.subData('/api/applyGroup',{
+							if(self.private == 0) {
+								global.subData('/api/applyGroup', {
 									groupid: parseInt("<%=result.groupID%>")
 								}, function(data) {
-									if (data.ret == 200 && data.data && data.data.code == 1) {
+									if(data.ret == 200 && data.data && data.data.code == 1) {
 										sweetAlert({
-										title: '提示',
-										text: '加入成功',
-										type: 'success',
-										timer: 2000
+											title: '提示',
+											text: '加入成功',
+											type: 'success',
+											timer: 2000
 										});
 										self.joinBtn.text('+发帖'); //加入成功
 										self.identity = 2;
@@ -272,8 +268,7 @@
 								});
 							} else if(self.private == 1) {
 								self.sweetAlertForPost();
-								self.joinBtn.removeAttr('disabled');	
-								self.disabled = false;			
+								self.disabled = false;
 							}
 							break;
 						case 4:
@@ -288,8 +283,8 @@
 					<%}%>
 				});
 				global.setPageCount(self.pageCount);
-				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-				$("#quitBtn").on('touchend',self.quitGroup);
+				global.pageTurning.apply(self, ["#pre", "#next", self.updateByPage]);
+				$("#quitBtn").on('touchend', self.quitGroup);
 			},
 			init: function() {
 				this.bindEvent();

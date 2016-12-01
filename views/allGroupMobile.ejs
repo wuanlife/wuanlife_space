@@ -1,8 +1,10 @@
 <%- include base/headerMobile.ejs %>
 <div class="main main-page">
 	<div class="location clearfix">
-		<h1><a href="/allGroup" title="">全部星球</a></h1>
-		<a href="/createGroup" title="创建星球" class="locBtn">创建星球</a>
+		<h1>
+			<a href="/allGroup" title="">全部星球</a>
+			<a href="/createGroup" title="创建星球" class="locBtn">创建星球</a>
+		</h1>
 	</div>
 	<%if(result.lists.length > 0){%>
 	<div class="planet">
