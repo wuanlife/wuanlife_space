@@ -399,11 +399,10 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe;
    display: inline-block;
-   width: 60%;
 }
 .locBtn{
     display:inline-block;
-    color:#f6fafb;
+    color:#f6fafb !important;
     font-size: 0.333333rem;
     padding:0 0.2rem;
     height:0.64rem;
@@ -1232,15 +1231,6 @@ textarea.form-control{
 .myJoinMd{
     padding-bottom: 0.426667rem;
 }
-.myJoincreater{
-    font-size: 0.4rem;
-    display: inline-block;
-}
-.quitButton{
-    margin-right: 0.2rem;
-}
-
-
 /****************
 *********消息*****
 ******************/
@@ -1339,10 +1329,21 @@ textarea.form-control{
     border-bottom: 1px solid rgba(229,229,229,1.0);
 }
 
-
-
-
-
+/****************
+********星球页面*******
+****************/
+.myJoincreater{
+    font-size: 0.4rem;
+    line-height: 1.5;
+    color:#5ab8fe;
+    float:left;
+    width:100%;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+.quitButton{
+    margin-right: 0.2rem;
+}
 /* 私密星球权限不够  */
 .blockPage {
     color:#cccccc;
