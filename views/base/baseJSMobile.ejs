@@ -34,7 +34,7 @@
                 </ul>
                 <ul class="navbar-account">
                     <% if (user) { %>
-                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item" id="test-id-id"><%=user.nickname%></span></li>
+                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item" id="nav-username"><%=user.nickname%></span></li>
                     <li class="aLogged"><a href="/logout" class="navbar-icon navbar-account-item">退出</a></li>
                     <% } else { %>
                     <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>

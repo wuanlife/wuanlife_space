@@ -757,10 +757,10 @@ button.unCBtn{
     border: 2px solid #5ab8fe;
     width:1.413333rem;
     height:1.413333rem;
-    background-color: inherit;
     color:#5ab8fe;
     font-size: 0.533333rem;
     cursor:pointer;
+    background-color: inherit;
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -899,9 +899,12 @@ button.unCBtn{
 }
 .login-image button{
     width: 100%;
-    height: 100%;
+    height:100%;
     border-radius:0.6rem;
     cursor: pointer;
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 /*单选框*/
 .radiobox label{
@@ -1473,6 +1476,9 @@ textarea.form-control{
     top:0.05rem;
     color:#cccccc;
 }
+.mycol-groupname a{
+    color:#cccccc;
+}
 .mycol-image{
     width: 0.3rem;
     height:0.4rem;
@@ -1485,6 +1491,9 @@ textarea.form-control{
     font-size: 0.453333rem;
     right:0.05rem;
     top:0.05rem;
+    color:#cccccc;
+}
+.mycol-creater a{
     color:#cccccc;
 }
 .mycol-show{

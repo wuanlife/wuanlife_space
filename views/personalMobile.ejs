@@ -68,11 +68,17 @@
 			},
 			verificate: function() {
 				//昵称字符数控制
-				if($("#name").val().length>18){
-					sweetAlert('格式错误','请输入1-18位字符','warning');
+				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
+				var name = $("#name").val();
+				if (name.length == 0 || name.length > 18) {
+					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
 					return false;
 				}
-                this.user_name=$("#name").val();
+				if (!myregName.test(name)) {
+					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
+					return false;
+				}
+                this.user_name = name;
 				//性别验证
 				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
 					this.sex = '0';
@@ -141,26 +147,17 @@
 						}, function(data) {
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
-								if (data.data.code_1 == 1) {
-									sweetAlert('提示', '资料更新成功', 'success');
+								if (data.data.code == 1) {
+									sweetAlert('提示', data.data.msg, 'success');
 										if (self.year) {
 											self.br.val(self.year + '-' + self.month + '-' + self.day);
 										            }
-										//
-										if(data.data.code_2 == 1){
-											  function successalert(){
-											  	sweetAlert('提示',data.data.msg_2,'success');
-											  }
-											  var t=setTimeout(successalert,2000);
-											  //$("#navbar-user-name").val(self.user_name);
-											  $("#test-id-id").html($("#name").val());
-									    }else{
-									    	 
-										     sweetAlert('错误',data.data.msg_2,'error');
-										     self.name.val(self.oldname);
-									    }
+										$("#nav-username").text($("#name").val());
+										console.log($("#name").val());
+										console.log($("#nav-username").val());
 								} else {
-									sweetAlert('提示', data.data.msg_1, 'warning');
+									sweetAlert('提示', data.data.msg, 'warning');
+									self.name.val(self.oldname);
 								}
 								
 							} else {

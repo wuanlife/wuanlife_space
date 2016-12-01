@@ -21,21 +21,27 @@
                 <%}%>
 				<img class="mycol-image" src="../images/myCollections_02.png">
 				<%if(item.groupName.length<6){%>
-				<span class="mycol-groupname"><%=item.groupName%></span>
+				<span class="mycol-groupname">
+				<a href="/group/<%=item.gbID%>"><%=item.groupName%></a>
+				</span>
 				<%}else{%>
 				<span class="mycol-groupname">
+				  <a href="/group/<%=item.gbID%>">
 					<%var groupname=''%>
       			    <%for(i=0;i<4;i++){ groupname=groupname+item.groupName[i] }%>
       			    <%=groupname+'...'%>
+      			  </a>
 				</span>
 				<%}%>
 				<%if(item.user_name.length<4){%>
-				<span class="mycol-creater"><%=item.user_name%></span>
+				<span class="mycol-creater"><a href="#"><%=item.user_name%></a></span>
 				<%}else{%>
 				<span class="mycol-creater">
+				  <a href="#">
 					<%var username=''%>
       			    <%for(i=0;i<2;i++){ username=username+item.user_name[i] }%>
       			    <%=username+'...'%>
+      			  </a>
 				</span>
 				<%}%>
 			  </div>
@@ -89,15 +95,18 @@
       		{{/if}}
       		<img class="mycol-image" src="../images/myCollections_02.png">
       		{{if item.groupName.length<6}}
-      		<span class="mycol-groupname">{{item.groupName}}</span>
+      		<span class="mycol-groupname"><a href="/group/{{item.gbID}}">{{item.groupName}}</a></span>
       		{{else}}
-      		<span class="mycol-groupname">{{item.groupName[0]}}{{item.groupName[1]}}{{item.groupName[2]}}{{item.groupName[3]}}...
+      		<span class="mycol-groupname">
+              <a href="/group/{{item.gbID}}">
+      		{{item.groupName[0]}}{{item.groupName[1]}}{{item.groupName[2]}}{{item.groupName[3]}}...
+      		  </a>
       		</span>
       		{{/if}}
       		{{if item.user_name.length<4}}
-      		<span class="mycol-creater">{{item.user_name}}</span>
+      		<span class="mycol-creater"><a href="#">{{item.user_name}}</a></span>
       		{{else}}
-      		<span class="mycol-creater">{{item.user_name[0]}}{{item.user_name[1]}}...
+      		<span class="mycol-creater"><a href="#">{{item.user_name[0]}}{{item.user_name[1]}}...</a>
       		</span>
       		{{/if}}
       	</div>
@@ -170,7 +179,7 @@
 			},
 			cancelCollect:function(){
 				var target=$(this).attr('data-target');
-
+                var self=this;
 				swal({
 					title: '取消收藏',
                     text: '是否取消收藏帖子',
@@ -179,7 +188,9 @@
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
 				}).then(function(){
-					$(this).off('click');
+					$(this).off('touchend');
+
+					$(this).addClass('disabled');
                     $(".loading").show();
                     global.subData("/api/deleteCollectPosts",{
                     	postid:target
@@ -198,12 +209,13 @@
                     		else{
                     			//console.log(data.data.code);
                     			sweetAlert('错误', data.data.msg, 'error');
+                    			$(this).on('touchend',self.cancelCollect);
                     		}
                     	}
                     	else{
                     		//console.log("错误2");
                     		sweetAlert('错误', data.msg, 'error');
-                    		$(this).on('touchend',myCollections.cancelCollect);
+                    		$(this).on('touchend',self.cancelCollect);
                     	}
                     })
 				})
@@ -212,8 +224,9 @@
 				var self = this;
 				global.setPageCount(self.pageCount);
 				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-				$(".mycol-delete-btn").on('touchend',self.cancelCollect);
-				$(".mycol-status").on('touchend',self.cancelCollect);
+				$(document).on('touchend', '.mycol-delete-btn,.mycol-status', function(event) {
+            self.cancelCollect.apply($(this));
+        });
 			},
 			init:function(){
 				this.bindEvent();

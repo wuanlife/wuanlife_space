@@ -22,24 +22,28 @@
       		<%}%>
       		<img src="../images/myCollections_02.png">
       		<%if(item.groupName.length<6){%>
-      		<span class="mycol-post-groupname"><%=item.groupName%></span>
+      		<span class="mycol-post-groupname"><a href="/group/<%=item.gbID%>"><%=item.groupName%></a></span>
       		<%}else{%>
       		<span class="mycol-post-groupname">
-      		    <%var groupname=''%>
+            <a href="/group/<%=item.gbID%>">
+      		  <%var groupname=''%>
       			<%for(i=0;i<4;i++){ groupname=groupname+item.groupName[i] }%>
       			<%=groupname+'...'%>
+            </a>
       		</span>
       		<%}%>
       		<%if(item.user_name.length<4){%>
-      		<span class="mycol-post-creater"><%=item.user_name%></span>
+      		<span class="mycol-post-creater"><a href="#"><%=item.user_name%></a></span>
       		<%}else{%>
       		<span class="mycol-post-creater">
+            <a href="#">
       		    <%var username=''%>
       			<%for(i=0;i<2;i++){ username=username+item.user_name[i] }%>
       			<%=username+'...'%>
+            </a>
       		</span>
       		<%}%>
-      		<span class="mycol-post-status" data-target="<%=item.postID%>">已收藏</span>
+      		<button class="mycol-post-status" data-target="<%=item.postID%>">已收藏</button>
       		<span class="mycol-post-time">收藏于 <%=item.createTime%></span>
       	</li>
       	<%}else{%>
@@ -85,18 +89,25 @@
       		{{/if}}
       		<img src="../images/myCollections_02.png">
       		{{if item.groupName.length<6}}
-      		<span class="mycol-post-groupname">{{item.groupName}}</span>
+      		<span class="mycol-post-groupname">
+           <a href="/group/{{item.gbID}}">{{item.groupName}}</a>
+           </span>
       		{{else}}
-      		<span class="mycol-post-groupname">{{item.groupName[0]}}{{item.groupName[1]}}{{item.groupName[2]}}{{item.groupName[3]}}...
+      		<span class="mycol-post-groupname">
+            <a href="/group/{{item.gbID}}">
+          {{item.groupName[0]}}{{item.groupName[1]}}{{item.groupName[2]}}{{item.groupName[3]}}...
+            </a>
       		</span>
       		{{/if}}
       		{{if item.user_name.length<4}}
-      		<span class="mycol-post-creater">{{item.user_name}}</span>
+      		<span class="mycol-post-creater"><a href="#">{{item.user_name}}</a></span>
       		{{else}}
-      		<span class="mycol-post-creater">{{item.user_name[0]}}{{item.user_name[1]}}...
+      		<span class="mycol-post-creater"><a href="#">
+            {{item.user_name[0]}}{{item.user_name[1]}}...
+            </a>
       		</span>
       		{{/if}}
-      		<span class="mycol-post-status" data-target="{{item.postID}}">已收藏</span>
+      		<button class="mycol-post-status" data-target="{{item.postID}}">已收藏</button>
       		<span class="mycol-post-time">收藏于{{item.createTime}}</span>
    </li>
    {{else}}
@@ -159,7 +170,8 @@
                     confirmButtonText: '确定',
                     cancelButtonText: '取消'
 				}).then(function(){
-					          $(this).off('click');
+					          //$(this).off('click');
+                    $(this).attr('disabled','disabled');
                     $(".loading").show();
                     global.subData("/api/uncollectPost",{
                     	post_id: target
@@ -177,10 +189,12 @@
                     		}
                     		else{
                     			sweetAlert('错误', data.data.msg, 'error');
+                          $(this).removeAttr('disabled');
                     		}
                     	}
                     	else{
                     		sweetAlert('错误', data.msg, 'error');
+                        $(this).removeAttr('disabled');
                     	}
                     })
 				})
