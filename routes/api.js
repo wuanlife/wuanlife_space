@@ -163,6 +163,26 @@ router.get('/:method', function(req, res, next) {
 				}
 			});
 			break;
+        case 'getMessageShow':
+            var pn = req.param('currentpage');
+            var status = req.param('status');
+            var mtype = req.param('mtype');
+            request(config.server + '?service=User.ShowMessage&user_id=' + userID + '&pn=' + pn + '&status=' + status + '&mtype=' + mtype, function(error, response, body) {
+                res.header('Content-type', 'application/json');
+                res.header('Charset', 'utf8');
+                try{
+                   if (!error && response.statusCode == 200) {
+                        //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
+                        res.send(JSON.parse(body));
+                    } 
+                } catch(e){
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            });
+            break;
 		case 'getPostForEdit':
 			var postid = req.param('postid');
 			var user_id = userID;

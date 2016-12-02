@@ -1235,14 +1235,72 @@ textarea.form-control{
 *********消息*****
 ******************/
 .message {
-    padding: 30px 0;
+    padding: 0.2rem 0;
     border-bottom: 1px solid rgba(229,229,229,1.0);
+    font-size: 0.33rem
+}
+.message-nav {
+    width: calc(100% + 0.466667rem * 2);
+    height: 1.3rem;
+    line-height: 1.3rem;
+    font-size: 0.5rem;
+    margin-left: -0.466667rem;
+    background: #e5e5e5;
+}
+.message-nav > li {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+.message-nav .active {
+    border-bottom: 2px solid #95bbd7;
+}
+.message-nav i {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.3rem;
+    border-top: 0.3rem solid #666 ;
+    border-left: 0.2rem solid rgba(0,0,0,0);
+    border-right: 0.2rem solid rgba(0,0,0,0);
+    border-bottom: 0
+}
+.mtype-list {
+    position: absolute;
+    display: none;
+    width: calc(50% - 0.466667rem);
+    text-align: center;
+    background: #5ab8fe;
+    color: #fff;
+    font-size: 0.5rem;
+    line-height: 1.3rem;
+    z-index: 2
+}
+.mtype-list li{
+    border-bottom: 1px solid #fff;
 }
 
+.meg-reply-title {
+    float: left;
+}
+.meg-reply-time {
+    float: right;
+    text-align: right;
+}
+.meg-time {
+    line-height: 0.9rem
+}
+.message h3 {
+    font-size: 0.6875rem;
+    line-height: 0.9rem;
+}
+.message span {
+    color: #aaa
+}
 .meg-brief {
     width: 90%;
     float: left;
-    line-height: 35px;
+    line-height: 0.7rem;
     font-size: 0.4rem;
     color: rgba(90,184,254,1.0);
 }
@@ -1269,12 +1327,14 @@ textarea.form-control{
 .meg-button {
     width: 1.4rem;
     font-size: 0.4rem;
-    padding: 4px 4px;
-    margin-right: 20px;
+    padding: 4px 6px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
+}
+.meg-button.agree {
+    margin-right: 10px;
 }
 [data-dpr="2"] .meg-button{
     border-radius: 7px;
@@ -1295,12 +1355,14 @@ textarea.form-control{
     background-color: rgba(202, 192, 190,0.0);
 }
 
-/*消息中心的过滤图标(可能在之后会复用)*/
+.filter-div{
+    margin-top: 5px;
+}
 .filter {
-    width: 33px;
-    height: 33px;
+    width: 1rem;
+    height: 1rem;
+    float: left;
     background-image: url(../images/filter.png);
-    margin-left: 27px;
     display: inline-block;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -1310,12 +1372,23 @@ textarea.form-control{
     background-color: rgba(90, 184,254,1.0);
     border-radius: 6px;
     margin-left: 12px;
-    float: left;
+    float: right;
     font-size: 0.4rem;
     display:none;
 
 }
+.filter-list::before {
+    content: '';
+    float: left;
+    position: relative;
+    margin-left: -12px;
+    top: 6px;
+    border-style: solid;
+    border-width: 10px 14px 10px 0;
+    border-color: rgba(0, 0, 0, 0) rgba(90, 184,254,1.0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+}
 .filter-list > li{
+    float: left;
     padding: 5px 17px;
     margin: 0 6px;
     cursor: pointer;

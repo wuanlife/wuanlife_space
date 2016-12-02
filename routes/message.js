@@ -12,36 +12,26 @@ router.get('/', function(req, res, next) {
             userid = req.session.user.userID,
             status = req.query.status || 1,
             mtype = req.query.mtype || 1;
-        request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn + "&status=" + status + "&mtype=" + mtype,
+            request(config.server + "?service=User.ShowMessage&user_id=" + userid + "&pn=" + pn + "&status=" + status + "&mtype=" + mtype,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    try{
-                        var result = JSON.parse(body);
-                        var page = '';
-                        console.log(result);
-                        if (result.ret == 200 && result.data) {
-                            switch(parseInt(mtype)){
-                                case 1:   //消息类型：回复我的
-                                    break;
-                                case 2:   //消息类型: 其他通知
-                                    break;
-                                case 3:   //消息类型：私密星球申请
-                                    page = agent.Mobile ? 'messageMobile' : 'message';
-                                    res.render(page,{
-                                        'result': result.data,
-                                        'title' : '消息中心',
-                                        'user' : req.session.user
-                                    });
-                                    break;
-                                default:
-                                    throw 'no page';
-                                    break;
+                    var result = JSON.parse(body);
+                    console.log(result);
+                    if (result.ret == 200 && result.msg == "") {
+                        var page = agent.Mobile ? 'messageMobile' : 'message';
+                        res.render(page, {
+                            result: result.data,
+                            title: '消息中心',
+                            'user': req.session.user
+                        });
+                    } else {
+                        res.render('error', {
+                            'message': result.msg,
+                            error: {
+                                'status': result.ret,
+                                'stack': ''
                             }
-                        } else{
-                            throw result.msg;
-                        }
-                    } catch(e){
-                        next(e);
+                        });
                     }
                 } else {
                     console.error('group failed:', error);
