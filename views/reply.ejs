@@ -1,0 +1,199 @@
+<%- include base/header.ejs %>
+<div class="main ">
+<div class="message-page">
+    <div class="message-left">
+        <h1><a class="text-link" href="/message" title="">消息中心</a></h1>
+        <ul>
+            <li class="mtype12 active">通知</li>
+            <li class="mtype3">私密星球申请</li>
+        </ul>
+    </div>
+    <div class="message-right">
+        <ul class="message-right-tag clearfix">
+            <li class="mtype1 active">回复我的</li>
+            <li class="mtype2">其他通知</li>
+        </ul>
+        <%if(result.code == 1){%>
+        <div class="message-col">
+            <% result.info.forEach(function(item) { %>
+            <div id="<%=item.id %>" class="message clearfix">
+                <div class="meg-reply-title">
+                    <h3><%=item.nickname%>：<%=item.replytext%></h3>
+                    <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
+                </div>
+                <div class="meg-reply-time">
+                    <div class="meg-time"><span><%=item.createTime%></span></div>
+                    <a href="#" class="meg-button reply">回复</a>
+                </div>
+            </div>
+            <% }) %>     
+        </div> 
+        <%}else{%>
+        <div class="emptyPage">
+            您还没有消息哦
+        </div>
+        <%} %>
+        <div class="page-turn">
+            <%if(result.currentPage == 1){console.log(result)%>
+            <button type="button" class="unCBtn" id="pre">上一页</button>
+            <%}else{%>
+            <button type="button" id="pre">上一页</button>
+            <%}%>
+            <span><%=result.currentPage%>/<%=result.pageCount%></span>
+            <%if(result.currentPage == result.pageCount){%>
+            <button type="button" class="unCBtn" id="next">下一页</button>
+            <%}else{%>
+            <button type="button" id="next">下一页</button>
+            <%}%>
+        </div>
+    </div>
+
+</div>
+</div>
+<%- include base/baseJS.ejs %>
+<script type="text/html" id="mtype1">
+    {{each info as item i}}
+    <div id="{{item.id}}" class="message clearfix">
+        <div class="meg-reply-title">
+            <h3>{{item.nickname}}：{{item.replytext}}</h3>
+            <div><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
+        </div>
+        <div class="meg-reply-time">
+            <div class="meg-time"><span>{{item.createTime}}</span></div>
+            <a href="#" class="meg-button reply">回复</a>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="mtype2">
+    {{each info as item i}}
+        <div class="message">{{item.messageInfo}}</div>
+    {{/each}}
+</script>
+
+<script type="text/javascript">
+    (function() {
+        var message = {
+            pre: $("#pre"),
+            next: $("#next"),
+            page: $(".page-turn").find('span').eq(0),
+            main: $('.message-col'),
+            loading: $(".loading"),
+            pageCount: parseInt("<%=result.pageCount%>"),
+            mtype: global.getUrlParam('mtype'),
+            getServerData: function(param, cb) {
+                global.getData("/api/getMessageShow", param, cb);
+            },
+            postApplyPrivate: function(param, cb) {
+                global.getData("/api/applyPrivateGroup");
+            },
+            updateAll: function(){
+                var self = this;
+                var pageNow = global.getPageNow();
+                var mtype = global.getUrlParam('mtype');
+                self.mtype = mtype || 1;
+
+                self.loading.show();
+                self.getServerData({
+                    currentpage: pageNow,
+                    mtype: self.mtype
+                }, function(data) {
+
+
+                    if(data.ret == 200 && data.data.code === 0) {
+                   
+                        self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
+                        $('.page-turn').hide();
+                        self.loading.hide();
+                        return
+                    }
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
+                        $('.page-turn').show();
+
+                        self.loading.hide();
+                        var compiled = template("mtype" + mtype, data.data);
+                        self.main.html(compiled);
+                        
+                        self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                        global.setPageCount(data.data.pageCount);
+                        self.pre.removeAttr('class');
+                        self.next.removeAttr('class');
+                        if (data.data.currentPage == 1) {
+                            self.pre.addClass('unCBtn');
+                        }
+                        if (data.data.currentPage == data.data.pageCount) {
+                            self.next.addClass('unCBtn')
+                        }
+                        $(window).scrollTop(0);
+                    } else {
+                        self.loading.hide();
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
+            },
+            // 左边栏事件
+            bindTypeChange: function() {
+                var mtypeButton12 = $('.mtype12');
+                var mtypeButton3 = $('.mtype3');
+                var self = this;
+
+                var bindTypeEvents = function(Jobject, mtype) {
+                    Jobject.on("click", function() {
+                        self.mtype = mtype;
+                        mtypeButton12.removeClass("active");
+                        mtypeButton3.removeClass("active");
+                        mtype === 1 ? $('.mtype1').addClass("active") : null;
+                        $(this).addClass("active");
+                        var newURL = location.pathname + '?mtype=' + mtype;
+                        history.pushState(null,'',newURL);   
+                        global.changeEverPushed();
+                        self.updateAll();        
+                    })
+                };
+                bindTypeEvents(mtypeButton12, 1);
+                bindTypeEvents(mtypeButton3, 3);
+            },
+            // 右边选单
+            bindType: function() {
+                var mtypeButton1 = $('.mtype1');
+                var mtypeButton2 = $('.mtype2');
+                var self = this;
+
+                var bindTypeEvents = function(Jobject, mtype) {
+                    console.log(Jobject)
+                    Jobject.on("click", function() {
+                        self.mtype = mtype;
+                        mtypeButton1.removeClass("active");
+                        mtypeButton2.removeClass("active");
+                        $(this).addClass("active");
+
+                        var newURL = location.pathname +  '?mtype=' + mtype;
+                        history.pushState(null,'',newURL);   
+                        global.changeEverPushed();
+                        self.updateAll();        
+                    })
+                };
+                bindTypeEvents(mtypeButton1, 1);
+                bindTypeEvents(mtypeButton2, 2);
+            },
+
+            bindEvent: function() {
+                var self = this;
+                global.setPageCount(self.pageCount);
+                global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
+                //绑定过滤器事件
+                this.bindTypeChange()
+                this.bindType();
+            },
+            init: function() {
+                if (this.mtype && this.mtype != 1) {
+                    this.updateAll()
+                }
+                this.bindEvent();
+            }
+        }
+        message.init();
+    })();
+</script>
+<%- include base/footer.ejs %>

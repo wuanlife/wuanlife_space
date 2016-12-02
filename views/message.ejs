@@ -9,91 +9,70 @@
         </ul>
     </div>
     <div class="message-right">
-    <div class="message-main">
-        <ul class="message-right-tag clearfix">
-            <li class="mtype1 active">回复我的</li>
-            <li class="mtype2">其他通知</li>
+        <i class="filter"></i>
+        <ul class="filter-list text-white">
+            <li class="filter-all">全部</li>
+            <li class="filter-read">已读</li>
+            <li class="filter-notread">未读</li>
         </ul>
-        <%if(result.code == 1){%>
         <div class="message-col">
-            <% result.info.forEach(function(item) { %>
-            <div id="<%=item.id %>" class="message clearfix">
-                <div class="meg-reply-title">
-                    <h3><%=item.nickname%>：<%=item.replytext%></h3>
-                    <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
-                </div>
-                <div class="meg-reply-time">
-                    <div class="meg-time"><span><%=item.createTime%></span></div>
-                    <a href="#" class="meg-button reply">回复</a>
+        {{each info as item i}}
+        <div id="{{item.id}}" class="message clearfix vertical-container">
+            <div class="meg-brief">
+                <img src="{{item.user_image}}">
+                <div class="meg-content">
+                    <h3 class="text-ellipsis text-link">{{item.nickname}}</h3>
+                    {{if item.messagetype == '1' }}
+                        <div class="meg-content-row clearfix">
+                            <p class="text-grey">申请加入：</p>
+                            <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                        </div>
+                        <div class="meg-content-row clearfix">
+                            <p class="text-grey">申请信息：<a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.text}}</a></p>
+                            
+                        </div>   
+                    {{else if item.messagetype == '2' }}
+                        <div class="meg-content-row clearfix">
+                            <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                        </div>
+                    {{/if}}
+                 
                 </div>
             </div>
-            <% }) %>     
-        </div> 
-        <%}else{%>
-        <div class="emptyPage">
-            您还没有消息哦
+            {{if item.messagetype == '1' }}
+                {{if item.messageInfo.status == '1' }}
+                    <button class="meg-button agree" type="button">同意</button>
+                    <button class="meg-button disagree" type="button">拒绝</button>
+                {{else if item.messageInfo.status == '2' }}
+                    <button class="meg-right-text" type="button">已同意</button>
+                {{else if item.messageInfo.status == '3' }}
+                    <button class="meg-right-text" type="button">已拒绝</button>
+                {{/if}}
+            {{else if item.messagetype == '2' }}    
+                <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
+            {{/if}}
         </div>
-        <%} %>
+        {{/each}}
+        </div>
+        <div class="page-turn">
+            <%if(result.currentPage == 1){console.log(result)%>
+            <button type="button" class="unCBtn" id="pre">上一页</button>
+            <%}else{%>
+            <button type="button" id="pre">上一页</button>
+            <%}%>
+            <span><%=result.currentPage%>/<%=result.pageCount%></span>
+            <%if(result.currentPage == result.pageCount){%>
+            <button type="button" class="unCBtn" id="next">下一页</button>
+            <%}else{%>
+            <button type="button" id="next">下一页</button>
+            <%}%>
+        </div>
     </div>
-    <div class="page-turn">
-        <%if(result.currentPage == 1){console.log(result)%>
-        <button type="button" class="unCBtn" id="pre">上一页</button>
-        <%}else{%>
-        <button type="button" id="pre">上一页</button>
-        <%}%>
-        <span><%=result.currentPage%>/<%=result.pageCount%></span>
-        <%if(result.currentPage == result.pageCount){%>
-        <button type="button" class="unCBtn" id="next">下一页</button>
-        <%}else{%>
-        <button type="button" id="next">下一页</button>
-        <%}%>
-    </div>  
-    </div>
-
-</div>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/html" id="mtype1">
-    <ul class="message-right-tag clearfix">
-        <li class="mtype1 active">回复我的</li>
-        <li class="mtype2">其他通知</li>
-    </ul>
-    <div class="message-col">
-    {{each info as item i}}
-    <div id="{{item.id}}" class="message clearfix">
-        <div class="meg-reply-title">
-            <h3>{{item.nickname}}：{{item.replytext}}</h3>
-            <div><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
-        </div>
-        <div class="meg-reply-time">
-            <div class="meg-time"><span>{{item.createTime}}</span></div>
-            <a href="#" class="meg-button reply">回复</a>
-        </div>
-    </div>
-    {{/each}}
-    </div>
-
-</script>
-
-<script type="text/html" id="mtype2">
-    <ul class="message-right-tag clearfix">
-        <li class="mtype1 active">回复我的</li>
-        <li class="mtype2">其他通知</li>
-    </ul>
-    {{each info as item i}}
-        <div class="message">{{item.messageInfo}}</div>
-    {{/each}}
-</script>
 
 <script type="text/html" id="mtype3">
 <div class="meg-apply">
-    <i class="filter"></i>
-    <ul class="filter-list text-white">
-        <li class="filter-all">全部</li>
-        <li class="filter-read">已读</li>
-        <li class="filter-notread">未读</li>
-    </ul>
-    <div class="message-col">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix vertical-container">
         <div class="meg-brief">
@@ -132,7 +111,6 @@
     </div>
     {{/each}}
     </div>
-</div>
 </script>
 
 <script type="text/javascript">
@@ -141,11 +119,10 @@
             pre: $("#pre"),
             next: $("#next"),
             page: $(".page-turn").find('span').eq(0),
-            main: $(".message-main"),
+            main: $(".message-col"),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
             filterType: global.getUrlParam('status'),
-            mtype: global.getUrlParam('mtype'),
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -224,26 +201,14 @@
                 var statusNow = global.getUrlParam('status');
                 var mtype = global.getUrlParam('mtype');
                 self.filterType = statusNow || 1;
-                self.mtype = mtype || 1;
 
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
                     status: self.filterType,
-                    mtype: self.mtype
+                    mtype: 3
                 }, function(data) {
-                    var compiled = template("mtype" + mtype, data.data);
-                    self.main.html(compiled);
-                    self.rebindType();
-                    self.bindFilterEvent();
-                    if (self.mtype == 2) {
-                        $('.mtype2').addClass('active')
-                        $('.mtype1').removeClass('active')
-                    }
-                    if (self.mtype == 3) {
-                        $('.filter-list').children('li').removeClass('filter-clicked');
-                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');                            
-                    }
+
                     if(data.ret == 200 && data.data.code === 0) {
                    
                         $('.message-col').html("<div class='emptyPage'>您还没有消息哦</div>")
@@ -255,6 +220,13 @@
                         $('.page-turn').show();
 
                         self.loading.hide();
+                        var compiled = template("mtype" + mtype, data.data);
+                        self.main.html(compiled);
+
+                        self.bindFilterEvent();
+
+                        $('.filter-list').children('li').removeClass('filter-clicked');
+                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');
 
                         self.rebindButton();
 
@@ -342,37 +314,12 @@
                 bindTypeEvents(mtypeButton12, 1);
                 bindTypeEvents(mtypeButton3, 3);
             },
-            // 右边选单
-            rebindType: function() {
-                var mtypeButton1 = $('.mtype1');
-                var mtypeButton2 = $('.mtype2');
-                var self = this;
-
-                var bindTypeEvents = function(Jobject, mtype) {
-                    console.log(Jobject)
-                    Jobject.on("click", function() {
-                        self.mtype = mtype;
-                        mtypeButton1.removeClass("active");
-                        mtypeButton2.removeClass("active");
-                        $(this).addClass("active");
-
-                        var newURL = location.pathname +  '?mtype=' + mtype;
-                        history.pushState(null,'',newURL);   
-                        global.changeEverPushed();
-                        self.updateAll();        
-                    })
-                };
-                bindTypeEvents(mtypeButton1, 1);
-                bindTypeEvents(mtypeButton2, 2);
-            },
-
             bindEvent: function() {
                 var self = this;
                 global.setPageCount(self.pageCount);
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
                 //绑定过滤器事件
                 this.bindTypeChange()
-                this.rebindType();
             },
             init: function() {
                 if (this.mtype && this.mtype != 1) {
