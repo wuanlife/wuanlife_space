@@ -18,7 +18,6 @@ router.get('/', function(req, res, next) {
                     var result = JSON.parse(body);
                     console.log(result);
                     if (result.ret == 200 && result.msg == "") {
-
                         if (mtype == 3) {
                             var page = agent.Mobile ? 'messageMobile' : 'message';
                             res.render(page, {
@@ -34,8 +33,6 @@ router.get('/', function(req, res, next) {
                                 'user': req.session.user
                             });                            
                         }
-
-
                     } else {
                         res.render('error', {
                             'message': result.msg,
