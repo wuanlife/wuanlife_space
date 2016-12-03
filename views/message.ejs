@@ -258,15 +258,8 @@
                 /*绑定过滤器列表显示隐藏*/
                 var filter = $('.filter');
                 var filterList = $('.filter-list');
-                var num = 0;
-                filterList.hide(); 
                 filter.on("click", function() {
-                    num++;
-                    if(num % 2 == 1) {
-                        filterList.show();
-                    } else {
-                        filterList.hide();
-                    }
+                    filterList.toggle()
                 });
 
                 var self = this;
@@ -308,10 +301,8 @@
                 this.bindFilterEvent()
             },
             init: function() {
-                $('.message-right').css({'min-height': $(document).height() - 120 + 'px'})
-                if (this.mtype && this.mtype != 1) {
-                    this.updateAll()
-                }
+                $('.message-right').css({'min-height': $(window).height - 120 + 'px'})
+                
                 this.bindEvent();
                 this.rebindButton();
             }

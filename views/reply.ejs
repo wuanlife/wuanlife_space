@@ -161,7 +161,7 @@
                 this.bindType();
             },
             init: function() {
-                $('.message-right').css({'min-height': $(document).height() - 120 + 'px'})
+                $('.message-right').css({'min-height': $(window).height() - 120 + 'px'})
                 if (this.mtype && this.mtype != 1) {
                     this.updateAll()
                 }

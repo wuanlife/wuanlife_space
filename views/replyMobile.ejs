@@ -1,14 +1,14 @@
-<%- include base/header.ejs %>
+<%- include base/headerMobile.ejs %>
 <div class="main ">
 <div class="message-page">
     <div class="message-top">
         <ul class="message-nav clearfix">
             <li class="mtype12 active">通知<i></i></li>
-            <li class="mtype3">私密星球申请</li>
+            <li class="mtype3"><a class="meg-link" href="/message?mtype=3">私密星球申请</a></li>
         </ul>
         <ul class="mtype-list">
-            <li class="mtype1">回复我的</li>
-            <li class="mtype2">其他通知</li>
+            <li class="mtype1"><a class="meg-link" href="/message?mtype=1">回复我的</a></li>
+            <li class="mtype2"><a class="meg-link" href="/message?mtype=2">其他通知</a></li>
         </ul>
     </div>
     <div class="message-right">
@@ -17,45 +17,44 @@
             <% result.info.forEach(function(item) { %>
             <div id="<%=item.id %>" class="message clearfix">
                 <div class="meg-reply-title">
-                    <h3><%=item.nickname%>：<%=item.replytext%></h3>
-                    <div><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
+                    <h3  class="text-ellipsis"><%=item.nickname%>：<%=item.replytext%></h3>
+                    <div class="text-ellipsis"><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
                 </div>
                 <div class="meg-reply-time">
                     <div class="meg-time"><span><%=item.createTime%></span></div>
                     <a href="#" class="meg-button reply">回复</a>
                 </div>
             </div>
-            <% }) %>
-            <div class="page-turn">
-                <%if(result.currentPage == 1){console.log(result)%>
-                <button type="button" class="unCBtn" id="pre">上一页</button>
-                <%}else{%>
-                <button type="button" id="pre">上一页</button>
-                <%}%>
-                <span><%=result.currentPage%>/<%=result.pageCount%></span>
-                <%if(result.currentPage == result.pageCount){%>
-                <button type="button" class="unCBtn" id="next">下一页</button>
-                <%}else{%>
-                <button type="button" id="next">下一页</button>
-                <%}%>
-            </div>            
+            <% }) %>     
         </div> 
         <%}else{%>
         <div class="emptyPage">
             您还没有消息哦
         </div>
         <%} %>
-
+        <div class="page-turn">
+            <%if(result.currentPage == 1){console.log(result)%>
+            <button type="button" class="unCBtn" id="pre">上一页</button>
+            <%}else{%>
+            <button type="button" id="pre">上一页</button>
+            <%}%>
+            <span><%=result.currentPage%>/<%=result.pageCount%></span>
+            <%if(result.currentPage == result.pageCount){%>
+            <button type="button" class="unCBtn" id="next">下一页</button>
+            <%}else{%>
+            <button type="button" id="next">下一页</button>
+            <%}%>
+        </div>
     </div>
 </div>
 </div>
-<%- include base/baseJS.ejs %>
+<%- include base/baseJSMobile.ejs %>
 <script type="text/html" id="mtype1">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix">
         <div class="meg-reply-title">
-            <h3>{{item.nickname}}：{{item.replytext}}</h3>
-            <div><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
+            <h3 class="text-ellipsis">{{item.nickname}}：{{item.replytext}}</h3>
+            <div class="text-ellipsis"><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
         </div>
         <div class="meg-reply-time">
             <div class="meg-time"><span>{{item.createTime}}</span></div>
@@ -67,7 +66,7 @@
 
 <script type="text/html" id="mtype2">
     {{each info as item i}}
-        <div class="message">{{item.messageInfo}}</div>
+        <div class="message text-ellipsis" >{{item.messageInfo}}</div>
     {{/each}}
 </script>
 
@@ -80,7 +79,7 @@
             main: $('.message-col'),
             loading: $(".loading"),
             pageCount: parseInt("<%=result.pageCount%>"),
-            mtype: global.getUrlParam('mtype'),
+            mtype: global.getUrlParam('mtype') || 1,
             getServerData: function(param, cb) {
                 global.getData("/api/getMessageShow", param, cb);
             },
@@ -90,16 +89,13 @@
             updateAll: function(){
                 var self = this;
                 var pageNow = global.getPageNow();
-                var mtype = global.getUrlParam('mtype');
-                self.mtype = mtype || 1;
-
+                var mtype = global.getUrlParam('mtype') || 1;
+                self.mtype = mtype;
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
                     mtype: self.mtype
                 }, function(data) {
-
-
                     if(data.ret == 200 && data.data.code === 0) {
                    
                         self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
@@ -109,7 +105,10 @@
                     }
                     if (data.ret == 200 && data.data && data.data.code === 1) {
                         $('.page-turn').show();
-
+                        if (self.mtype == 2) {
+                            $('.mtype').removeClass('active')
+                            $('.mtype2').addClass('active')
+                        }
                         self.loading.hide();
                         var compiled = template("mtype" + mtype, data.data);
                         self.main.html(compiled);
@@ -131,61 +130,16 @@
                     }
                 });
             },
-            // 左边栏事件
-            bindTypeChange: function() {
-                var mtypeButton12 = $('.mtype12');
-                var mtypeButton3 = $('.mtype3');
-                var self = this;
-
-                var bindTypeEvents = function(Jobject, mtype) {
-                    Jobject.on("click", function() {
-                        self.mtype = mtype;
-                        mtypeButton12.removeClass("active");
-                        mtypeButton3.removeClass("active");
-                        mtype === 1 ? $('.mtype1').addClass("active") : null;
-                        $(this).addClass("active");
-                        var newURL = location.pathname + '?mtype=' + mtype;
-                        history.pushState(null,'',newURL);   
-                        global.changeEverPushed();
-                        self.updateAll();        
-                    })
-                };
-                bindTypeEvents(mtypeButton12, 1);
-                bindTypeEvents(mtypeButton3, 3);
-            },
-            // 右边选单
-            bindType: function() {
-                var mtypeButton1 = $('.mtype1');
-                var mtypeButton2 = $('.mtype2');
-                var self = this;
-
-                var bindTypeEvents = function(Jobject, mtype) {
-                    console.log(Jobject)
-                    Jobject.on("click", function() {
-                        self.mtype = mtype;
-                        mtypeButton1.removeClass("active");
-                        mtypeButton2.removeClass("active");
-                        $(this).addClass("active");
-
-                        var newURL = location.pathname +  '?mtype=' + mtype;
-                        history.pushState(null,'',newURL);   
-                        global.changeEverPushed();
-                        self.updateAll();        
-                    })
-                };
-                bindTypeEvents(mtypeButton1, 1);
-                bindTypeEvents(mtypeButton2, 2);
-            },
-
             bindEvent: function() {
                 var self = this;
                 global.setPageCount(self.pageCount);
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
-                //绑定过滤器事件
-                this.bindTypeChange()
-                this.bindType();
+                $('.mtype12').on('click',function(){
+                    $('.mtype-list').toggle()
+                })
             },
             init: function() {
+                $('.message-right').css({'min-height': $(window).height() - 120 + 'px'})
                 if (this.mtype && this.mtype != 1) {
                     this.updateAll()
                 }
@@ -195,4 +149,4 @@
         message.init();
     })();
 </script>
-<%- include base/footer.ejs %>
+<%- include base/footerMobile.ejs %>

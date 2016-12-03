@@ -1119,6 +1119,7 @@ textarea.form-control{
 }
 .meg-reply-title {
     float: left;
+    width: 70%
 }
 .meg-reply-time {
     float: right;
