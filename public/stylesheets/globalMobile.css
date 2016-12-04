@@ -1307,7 +1307,7 @@ textarea.form-control{
 .message span {
     color: #aaa;
 }
-.message-right > .page-turn {
+.message-page .page-turn {
     margin: 1rem 0;
     position: absolute;
     bottom: 0;
