@@ -16,8 +16,8 @@ router.get('/', function(req, res, next) {
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
-                    console.log(result);
-                    if (result.ret == 200 && result.msg == "") {
+                    //console.log(result);
+                    if (result.ret == 200) {
                         if (mtype == 3) {
                             var page = agent.Mobile ? 'messageMobile' : 'message';
                             res.render(page, {

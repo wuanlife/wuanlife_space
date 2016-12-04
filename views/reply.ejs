@@ -24,7 +24,11 @@
                 </div>
                 <div class="meg-reply-time">
                     <div class="meg-time"><span><%=item.createTime%></span></div>
-                    <a href="#" class="meg-button reply">回复</a>
+                    <%if(item.page){%>
+                    <a href="/topic/<%=item.postID%>?page=<%=item.page%>&rf=<%=item.replyfloor%>" class="meg-button reply">回复</a>
+                    <%}else{%>
+                    <a href="#" class="meg-button reply deleted-reply">回复</a>
+                    <%}%>
                 </div>
             </div>
             <% }) %> 
@@ -45,7 +49,7 @@
         </div>
         <%} %>
         <div class="page-turn">
-            <%if(result.currentPage == 1){console.log(result)%>
+            <%if(result.currentPage == 1){%>
             <button type="button" class="unCBtn" id="pre">上一页</button>
             <%}else{%>
             <button type="button" id="pre">上一页</button>
@@ -70,7 +74,11 @@
         </div>
         <div class="meg-reply-time">
             <div class="meg-time"><span>{{item.createTime}}</span></div>
-            <a href="#" class="meg-button reply">回复</a>
+            {{if item.page}}
+            <a href="/topic/{{item.postID}}?page={{item.page}}&rf={{item.replyfloor}}" class="meg-button reply">回复</a>
+            {{else}}
+            <a href="#" class="meg-button reply deleted-reply">回复</a>
+            {{/if}}
         </div>
     </div>
     {{/each}}
@@ -142,13 +150,23 @@
                     }
                 });
             },
+            deletedReply:function(){
+                swal({
+                    title:'提示',
+                    text: '此回复已被删除',
+                    type: 'warning',
+                    timer: 2000
+                }).catch(swal.noop);
+                // 消息已读接口处理预留
+                $(this).parents('.message').remove();
+            },
             bindType: function() {
                 var mtypeButton1 = $('.mtype1');
                 var mtypeButton2 = $('.mtype2');
                 var self = this;
 
                 var bindTypeEvents = function(Jobject, mtype) {
-                    console.log(Jobject)
+                    //console.log(Jobject)
                     Jobject.on("click", function() {
                         self.mtype = mtype;
                         mtypeButton1.removeClass("active");
@@ -169,6 +187,10 @@
                 var self = this;
                 global.setPageCount(self.pageCount);
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
+                $(document).on('click', '.deleted-reply', function(event) {
+                    event.preventDefault();
+                    self.deletedReply.apply($(this));
+                });
                 this.bindType();
             },
             init: function() {

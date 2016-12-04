@@ -23,7 +23,11 @@
                 </div>
                 <div class="meg-reply-time">
                     <div class="meg-time"><span><%=item.createTime%></span></div>
-                    <a href="#" class="meg-button reply">回复</a>
+                    <%if(item.page){%>
+                    <a href="/topic/<%=item.postID%>?page=<%=item.page%>&rf=<%=item.replyfloor%>" class="meg-button reply">回复</a>
+                    <%}else{%>
+                    <a href="#" class="meg-button reply deleted-reply">回复</a>
+                    <%}%>
                 </div>
             </div>
             <% }) %>
@@ -65,7 +69,11 @@
         </div>
         <div class="meg-reply-time">
             <div class="meg-time"><span>{{item.createTime}}</span></div>
-            <a href="#" class="meg-button reply">回复</a>
+            {{if item.page}}
+            <a href="/topic/{{item.postID}}?page={{item.page}}&rf={{item.replyfloor}}" class="meg-button reply">回复</a>
+            {{else}}
+            <a href="#" class="meg-button reply deleted-reply">回复</a>
+            {{/if}}
         </div>
     </div>
     {{/each}}
@@ -130,20 +138,35 @@
                         if (data.data.currentPage == data.data.pageCount) {
                             self.next.addClass('unCBtn')
                         }
-                        $(window).scrollTop(0);
+                        $('.mainContainer').scrollTop(0);
                     } else {
                         self.loading.hide();
                         sweetAlert('错误', '数据获取失败', 'error');
                     }
                 });
             },
+            deletedReply:function(){
+                swal({
+                    title:'提示',
+                    text: '此回复已被删除',
+                    type: 'warning',
+                    allowOutsideClick: false,
+                    timer: 2000
+                }).catch(swal.noop);
+                // 消息已读接口处理预留
+                $(this).parents('.message').remove();
+            },
             bindEvent: function() {
                 var self = this;
                 global.setPageCount(self.pageCount);
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
-                $('.mtype12').on('click',function(){
+                $('.mtype12').on('touchend',function(){
                     $('.mtype-list').toggle()
-                })
+                });
+                $(document).on('touchend', '.deleted-reply', function(event) {
+                    event.preventDefault();
+                    self.deletedReply.apply($(this));
+                });
             },
             init: function() {
                 $('.message-right').css({'min-height': $(window).height() - 200 + 'px'})
