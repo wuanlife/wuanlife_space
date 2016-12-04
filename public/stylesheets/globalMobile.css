@@ -1390,12 +1390,13 @@ textarea.form-control{
     cursor: pointer;
 }
 .filter-list{
+    position: absolute;
+    left: 1.5rem;
     background-color: rgba(90, 184,254,1.0);
     border-radius: 6px;
     margin-left: 12px;
-    float: right;
     font-size: 0.4rem;
-    display:none;
+    display: none;
 
 }
 .filter-list::before {
@@ -1409,7 +1410,6 @@ textarea.form-control{
     border-color: rgba(0, 0, 0, 0) rgba(90, 184,254,1.0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
 }
 .filter-list > li{
-    float: left;
     padding: 5px 17px;
     margin: 0 6px;
     cursor: pointer;

@@ -13,6 +13,7 @@
     </div>
     <div class="message-right">
         <%if(result.code == 1){%>
+         <%if(mtype == 1){%>  
         <div class="message-col">
             <% result.info.forEach(function(item) { %>
             <div id="<%=item.id %>" class="message clearfix">
@@ -25,7 +26,13 @@
                     <a href="#" class="meg-button reply">回复</a>
                 </div>
             </div>
-            <% }) %>     
+            <% }) %>
+        <%}else{%>
+            <div class="message-col">
+            <% result.info.forEach(function(item) { %>
+                <div class="message text-ellipsis" ><%=item.messageInfo%></div>
+            <% }) %>
+        <%}%>
         </div> 
         <%}else{%>
         <div class="emptyPage">
@@ -139,10 +146,7 @@
                 })
             },
             init: function() {
-                $('.message-right').css({'min-height': $(window).height() - 120 + 'px'})
-                if (this.mtype && this.mtype != 1) {
-                    this.updateAll()
-                }
+                $('.message-right').css({'min-height': $(window).height() - 200 + 'px'})
                 this.bindEvent();
             }
         }
