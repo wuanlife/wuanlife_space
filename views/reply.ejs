@@ -8,8 +8,8 @@
             <li class="mtype3"><a class="meg-link" href="/message?mtype=3">私密星球申请</a></li>
         </ul>
     </div>
-    <%if(mtype == 1){%>
     <div class="message-right">
+    <%if(mtype == 1){%>
         <ul class="message-right-tag clearfix">
             <li class="mtype mtype1 active">回复我的</li>
             <li class="mtype mtype2">其他通知</li>
@@ -33,27 +33,6 @@
             </div>
             <% }) %>
         </div>
-        <%}else{%>
-            <div class="emptyPage">
-                您还没有消息哦
-            </div>
-        <%} %>
-    <%}else{%>
-        <ul class="message-right-tag clearfix">
-            <li class="mtype mtype1">回复我的</li>
-            <li class="mtype mtype2 active">其他通知</li>
-        </ul>
-        <%if(result.code == 1){%>
-            <div class="message-col">
-            <% result.info.forEach(function(item) { %>
-                <div class="message text-ellipsis" ><%=item.messageInfo%></div>
-            <% }) %>
-            </div> 
-        <%}else{%>
-        <div class="emptyPage">
-            您还没有消息哦
-        </div>
-    <%}} %>
         <div class="page-turn">
             <%if(result.currentPage == 1){%>
             <button type="button" class="unCBtn" id="pre">上一页</button>
@@ -67,6 +46,40 @@
             <button type="button" id="next">下一页</button>
             <%}%>
         </div>
+        <%}else{%>
+            <div class="emptyPage">
+                您还没有消息哦
+            </div>
+        <%} %>
+    <%}else{%>
+        <ul class="message-right-tag clearfix">
+            <li class="mtype mtype1">回复我的</li>
+            <li class="mtype mtype2 active">其他通知</li>
+        </ul>
+        <%if(result.code == 1){%>
+        <div class="message-col">
+        <% result.info.forEach(function(item) { %>
+            <div class="message text-ellipsis" ><%=item.messageInfo%></div>
+        <% }) %>
+        </div>
+        <div class="page-turn">
+            <%if(result.currentPage == 1){%>
+            <button type="button" class="unCBtn" id="pre">上一页</button>
+            <%}else{%>
+            <button type="button" id="pre">上一页</button>
+            <%}%>
+            <span><%=result.currentPage%>/<%=result.pageCount%></span>
+            <%if(result.currentPage == result.pageCount){%>
+            <button type="button" class="unCBtn" id="next">下一页</button>
+            <%}else{%>
+            <button type="button" id="next">下一页</button>
+            <%}%>
+        </div>
+        <%}else{%>
+        <div class="emptyPage">
+            您还没有消息哦
+        </div>
+    <%}} %>
     </div>
 </div>
 </div>
@@ -202,7 +215,7 @@
                 this.bindType();
             },
             init: function() {
-                $('.message-right').css({'min-height': $(window).height() - 120 + 'px'})
+                $('.message-right').css({'min-height': $(window).height() - 180 + 'px'})
                 this.bindEvent();
             }
         }
