@@ -18,12 +18,21 @@ router.get('/', function(req, res, next) {
                     var result = JSON.parse(body);
                     console.log(result);
                     if (result.ret == 200 && result.msg == "") {
-                        var page = agent.Mobile ? 'messageMobile' : 'message';
-                        res.render(page, {
-                            result: result.data,
-                            title: '消息中心',
-                            'user': req.session.user
-                        });
+                        if (mtype == 3) {
+                            var page = agent.Mobile ? 'messageMobile' : 'message';
+                            res.render(page, {
+                                result: result.data,
+                                title: '消息中心',
+                                'user': req.session.user
+                            });
+                        }else {
+                            var page = agent.Mobile ? 'replyMobile' : 'reply';
+                            res.render(page, {
+                                result: result.data,
+                                title: '消息中心',
+                                'user': req.session.user
+                            });                            
+                        }
                     } else {
                         res.render('error', {
                             'message': result.msg,
