@@ -1058,6 +1058,9 @@ textarea.form-control{
     background: #eee;
     height: 100%
 }
+.message-title {
+    padding: 10px 20px;
+}
 .meg-link {
     display: inline-block;
     width: 100%;
@@ -1097,11 +1100,11 @@ textarea.form-control{
     background: #b1b6d8
 }
 .message-right-tag {
-    padding: 20px 10px;
+    padding-left: 8px;
 }
 .message-right-tag .mtype {
     float: left;
-    margin-left: 26px;
+    margin-right: 26px;
     cursor: pointer;
     border-bottom: 1px solid #000;
     color: #737373;

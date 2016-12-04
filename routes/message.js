@@ -30,8 +30,9 @@ router.get('/', function(req, res, next) {
                             res.render(page, {
                                 result: result.data,
                                 title: '消息中心',
-                                'user': req.session.user
-                            });                            
+                                'user': req.session.user,
+                                'mtype': mtype
+                            }); 
                         }
                     } else {
                         res.render('error', {
