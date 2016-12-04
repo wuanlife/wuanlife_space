@@ -1,5 +1,5 @@
         <div class="footer">
-            <span class="version">Powered by Wuanlife 1.1.4</span>
+            <span class="version">Powered by Wuanlife 1.1.5</span>
             <a href="http://www.wuanla.com/group/8"  class="public">官方公告</a>
             <a href="http://www.wuanla.com/group/9" class="public">意见提交</a>
         </div>
@@ -67,7 +67,9 @@
                     url:url,
                     data:data,
                     success:function(d){
-                        success(d);
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
                     },
                     error:function(x,h,r){
                         console && console.log(x, h, r);

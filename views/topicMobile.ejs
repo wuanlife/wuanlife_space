@@ -31,7 +31,7 @@
 				<button class="post-opt-item" id="lockBtn">锁帖</button>
 				<% } %>
 				<% } %>
-				<% if (user) { %>
+				<% if (user && user.userID != result.id) { %>
 				<% if (result.collect) { %>
 				<button class="post-opt-item" id="collectBtn">取消收藏</button>
 				<% } else { %>

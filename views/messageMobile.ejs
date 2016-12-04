@@ -145,21 +145,21 @@
                         button.removeClass("agree");
                         button.addClass("meg-right-text");
                         button.html("已同意");
-                        button.unbind("click");
+                        button.unbind("touchend");
                     },
                     disagree2disable: function(button, message) {
                         message.children(".meg-button.agree").remove();
                         button.removeClass("disagree");
                         button.addClass("meg-right-text");
                         button.html("已拒绝");
-                        button.unbind("click");  
+                        button.unbind("touchend");  
                     }
 
                 }; 
                 $(".meg-button.agree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
-                    thisButton.on("click", function () {
+                    thisButton.on("touchend", function () {
                         self.loading.show();
                         global.subData("/api/processApplyPrivateGroup",{
                             messageID: parseInt(thisMessage.eq(0).attr('id')),
@@ -181,7 +181,7 @@
                 $(".meg-button.disagree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
-                    thisButton.on("click", function () {
+                    thisButton.on("touchend", function () {
                         self.loading.show();
                         global.subData('/api/processApplyPrivateGroup',{
                             messageID: parseInt(thisMessage.eq(0).attr('id')),
@@ -245,7 +245,7 @@
                         if (data.data.currentPage == data.data.pageCount) {
                             self.next.addClass('unCBtn')
                         }
-                        $(window).scrollTop(0);
+                        $('.mainContainer').scrollTop(0);
                     } else {
                         self.loading.hide();
                         sweetAlert('错误', '数据获取失败', 'error');
@@ -256,7 +256,7 @@
                 /*绑定过滤器列表显示隐藏*/
                 var filter = $('.filter');
                 var filterList = $('.filter-list');
-                filter.on('click', function() {
+                filter.on('touchend', function() {
                     filterList.toggle()
                 })
                 var self = this;
@@ -265,7 +265,7 @@
                 var notread = $('.filter-notread');
 
                 var bindFilterEventByStatus = function(Jobject, status) {
-                    Jobject.on("click", function() {
+                    Jobject.on("touchend", function() {
                         var newURL,
                             search = location.search,
                             path = location.pathname;
@@ -294,7 +294,7 @@
                 var self = this;
                 global.setPageCount(self.pageCount);
                 global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
-                $('.mtype12').on('click',function(){
+                $('.mtype12').on('touchend',function(){
                     $('.mtype-list').toggle()
                 })
                 //绑定过滤器事件

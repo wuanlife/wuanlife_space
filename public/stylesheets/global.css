@@ -1067,7 +1067,7 @@ textarea.form-control{
     width: 100%;
     height: 100%;
     color: #000;
-    padding: 15px 0
+    padding: 15px 0;
 }
 .message-left {
     width: 25%;
@@ -1096,10 +1096,10 @@ textarea.form-control{
 }
 .message-left li{
     cursor: pointer;
-    color: #222
+    color: #222;
 }
 .message-left li:hover,.message-left li.active{
-    background: #b1b6d8
+    background: #b1b6d8;
 }
 .message-right-tag {
     padding-left: 8px;
@@ -1120,22 +1120,24 @@ textarea.form-control{
     display: none;
 }
 .message {
-    padding: 30px 0px 30px 10px;
+    padding: 20px 0px 20px 10px;
     border-bottom: 1px solid rgba(229,229,229,1.0);
 }
 .meg-reply-title {
     float: left;
-    width: 70%
+    width: 70%;
 }
 .meg-reply-time {
     float: right;
     text-align: right;
 }
 .message h3 {
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: normal;
+    max-width: 420px;
 }
 .message span {
-    color: #aaa
+    color: #aaa;
 }
 .meg-apply {
     margin-top: 50px;
@@ -1371,7 +1373,7 @@ textarea.form-control{
     position: absolute;
     left:400px;
     cursor: pointer;
-    color:#cccccc;
+    color: #5ab8fe;
     background-color: white;
     text-align: center;
     font-size: 20px;
