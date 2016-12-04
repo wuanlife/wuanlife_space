@@ -17,7 +17,7 @@
         </ul>
         <div class="message-col">
             <% result.info.forEach(function(item) { %>
-            <div id="<%=item.id %>" class="message clearfix">
+            <div data-id="<%=item.m_id%>" class="message clearfix">
                 <div class="meg-reply-title">
                     <h3  class="text-ellipsis"><%=item.nickname%>：<%=item.replytext%></h3>
                     <div class="text-ellipsis"><span>回复我的主题：</span><%=item.posttitle%> > <%=item.groupname%></div>
@@ -67,7 +67,7 @@
 <%- include base/baseJS.ejs %>
 <script type="text/html" id="mtype1">
     {{each info as item i}}
-    <div id="{{item.id}}" class="message clearfix">
+    <div data-id="{{item.m_id}}" class="message clearfix">
         <div class="meg-reply-title">
             <h3 class="text-ellipsis">{{item.nickname}}：{{item.replytext}}</h3>
             <div class="text-ellipsis"><span>回复我的主题：</span>{{item.posttitle}} > {{item.groupname}}</div>
@@ -151,6 +151,7 @@
                 });
             },
             deletedReply:function(){
+                var mid = $(this).parents('.message').attr('data-id');
                 swal({
                     title:'提示',
                     text: '此回复已被删除',
@@ -158,6 +159,7 @@
                     timer: 2000
                 }).catch(swal.noop);
                 // 消息已读接口处理预留
+                global.subData("/api/readDeletedMessage",{ m_id: mid});
                 $(this).parents('.message').remove();
             },
             bindType: function() {

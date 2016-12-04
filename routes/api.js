@@ -655,6 +655,33 @@ router.post('/:method', function(req, res, next) {
 				}
 			});
 			break;
+			//已删除回复消息已读
+		case 'readDeletedMessage':
+			request.post({
+				url: config.server + '?service=User.DeleteMessage',
+				formData: {
+					m_id: req.body.m_id
+				}
+			}, function optionalCallback(err, httpResponse, body) {
+				res.header('Content-type', 'application/json');
+				res.header('Charset', 'utf8');
+				try {
+					if(!err && httpResponse.statusCode == 200) {
+						return res.send(JSON.parse(body));
+					}
+					console.error('apply failed:', err);
+					res.send({
+						ret: 500,
+						msg: '服务器异常'
+					});
+				} catch(e) {
+					res.send({
+						ret: 500,
+						msg: e.message
+					});
+				}
+			});
+			break;
 			//处理申请加入私密星球
 		case 'processApplyPrivateGroup':
 			request.post({
