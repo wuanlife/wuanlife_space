@@ -17,7 +17,6 @@ router.get('/', function(req, res, next) {
 					var page = agent.Mobile ? 'indexMobile' : 'index';
 					res.render(page, {
 						'result': data.data,
-						'title':'首页',
 						'user':req.session.user
 					});
 				} else {

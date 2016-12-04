@@ -15,17 +15,21 @@ router.get('/:id', function(req, res, next) {
                 try{
                     var result = JSON.parse(body);
                     if (result.ret ==200) {
-                        if (result.data.code == 1) {
+                        if (result.data.code == 1) { //普通帖子正常显示
                             var page = agent.Mobile ? 'topicMobile' : 'topic';
                             res.render(page, {
                                 result: result.data,
                                 'title': result.data.title,
                                 'user': req.session.user
                             });
-                        } else if (result.data.code == 2) {
+                        } else if (result.data.code == 2) { //私密星球帖子无权查看
                             res.redirect('/group/' + result.data.groupID);
-                        } else{
-                            throw new Error('no page');
+                        } else{ //帖子被删除
+                            var page = agent.Mobile ? 'tipMobile' : 'tip';
+                            res.render(page,{
+                                'user': req.session.user,
+                                'tip' : '您查看的帖子已被删除'
+                            });
                         }
                     }
                 } catch(e){

@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/sweetAlert.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/globalMobile.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
-        <% if(title == '首页'){%>
+        <% if(typeof title == 'undefined'){%>
         <title>午安网 - 过你想过的生活</title>
         <%}else{%>
         <title><%=title%> - 午安网 - 过你想过的生活</title>
