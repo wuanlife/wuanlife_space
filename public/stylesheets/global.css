@@ -1057,6 +1057,7 @@ textarea.form-control{
 .message-page {
     background: #eee;
     height: 100%;
+    border-top: 4px solid #f5f5f5
 }
 .message-title {
     padding: 10px 20px;
@@ -1078,6 +1079,7 @@ textarea.form-control{
     position: relative;
     background: #fff;
     min-height: 502px;
+    border-left: 1px solid #667484
 }
 .message-col {
     margin-bottom: 70px;
@@ -1101,6 +1103,7 @@ textarea.form-control{
 }
 .message-right-tag {
     padding-left: 8px;
+    padding-top: 10px;
 }
 .message-right-tag .mtype {
     float: left;
