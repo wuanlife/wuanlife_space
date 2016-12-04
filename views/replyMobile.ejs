@@ -33,17 +33,12 @@
             <% }) %>
         </div>
         <%}else{%>
-            <div class="message-col">
+        <div class="message-col">
             <% result.info.forEach(function(item) { %>
                 <div class="message text-ellipsis" ><%=item.messageInfo%></div>
             <% }) %>
         <%}%>
         </div> 
-        <%}else{%>
-        <div class="emptyPage">
-            您还没有消息哦
-        </div>
-        <%} %>
         <div class="page-turn">
             <%if(result.currentPage == 1){console.log(result)%>
             <button type="button" class="unCBtn" id="pre">上一页</button>
@@ -57,6 +52,11 @@
             <button type="button" id="next">下一页</button>
             <%}%>
         </div>
+        <%}else{%>
+        <div class="emptyPage">
+            您还没有消息哦
+        </div>
+        <%} %>
     </div>
 </div>
 </div>
