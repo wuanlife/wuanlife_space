@@ -136,47 +136,79 @@
 				self.loading.hide();
 				sweetAlert('错误', '数据获取失败', 'error');
 			},
+			// updateByPage:function(){
+			// 	var self = this;
+			// 	var pageNow = global.getPageNow();
+			// 	self.loading.show();
+			// 	if (pageNow>self.createPageCount) {
+			// 		self.getJoindData({
+			// 			user_id: parseInt("<%=userid%>"),
+			// 			pn: pageNow
+			// 		},function(data){
+			// 			if (pageNow != global.getPageNow()) {
+			// 				return;
+			// 			}
+			// 			if (data.ret == 200 && data.data) {
+			// 				self.myCreateMD.css('display', 'none');
+			// 				self.myCreate.html('');
+			// 				var compiled = template("Groupstemplate", data.data);
+			// 				self.myJoind.html(compiled);
+			// 				self.setPageCom();
+			// 			} else{
+			// 				self.errorTip();
+			// 			}
+			// 		});
+			// 	} else if (pageNow>self.joinPageCount) {
+			// 		self.getCreateData({
+			// 			user_id: parseInt("<%=userid%>"),
+			// 			pn: pageNow
+			// 		},function(data){
+			// 			if (pageNow != global.getPageNow()) {
+			// 				return;
+			// 			}
+			// 			if (data.ret == 200 && data.data) {
+			// 				self.myJoindMD.css('display', 'none');
+			// 				self.myJoind.html('');
+			// 				var compiled = template("Groupstemplate", data.data);
+			// 				self.myCreate.html(compiled);
+			// 				self.setPageCom();
+			// 			} else{
+			// 				self.errorTip();
+			// 			}
+			// 		});
+			// 	} else{
+			// 		$.when($.getJSON(
+			// 			"/api/getCreateGroup",
+			// 			{user_id: parseInt("<%=userid%>"),pn: pageNow}
+			// 		),$.getJSON(
+			// 			'/api/getJoindGroup',
+			// 			{user_id: parseInt("<%=userid%>"),pn: pageNow}
+			// 		)).done(function(cdata,jdata){
+			// 			if (pageNow != global.getPageNow()) {
+			// 				return;
+			// 			}
+			// 				cdata = cdata[0];
+			// 				jdata = jdata[0];
+			// 			if (cdata.ret == 200 && jdata.ret == 200 && cdata.data && jdata.data) {
+			// 				var Ccompiled = template("Groupstemplate", cdata.data);
+			// 				var Jcompiled = template("Groupstemplate", jdata.data);
+			// 				self.myCreate.html(Ccompiled);
+			// 				self.myJoind.html(Jcompiled);
+			// 				self.myCreateMD.css('display', 'block');
+			// 				self.myJoindMD.css('display', 'block');
+			// 				self.setPageCom();
+			// 			} else{
+			// 				self.errorTip();
+			// 			}
+			// 		}).fail(function(){
+			// 			self.errorTip();
+			// 		});
+			// 	}
+			// },
 			updateByPage:function(){
 				var self = this;
 				var pageNow = global.getPageNow();
 				self.loading.show();
-				if (pageNow>self.createPageCount) {
-					self.getJoindData({
-						user_id: parseInt("<%=userid%>"),
-						pn: pageNow
-					},function(data){
-						if (pageNow != global.getPageNow()) {
-							return;
-						}
-						if (data.ret == 200 && data.data) {
-							self.myCreateMD.css('display', 'none');
-							self.myCreate.html('');
-							var compiled = template("Groupstemplate", data.data);
-							self.myJoind.html(compiled);
-							self.setPageCom();
-						} else{
-							self.errorTip();
-						}
-					});
-				} else if (pageNow>self.joinPageCount) {
-					self.getCreateData({
-						user_id: parseInt("<%=userid%>"),
-						pn: pageNow
-					},function(data){
-						if (pageNow != global.getPageNow()) {
-							return;
-						}
-						if (data.ret == 200 && data.data) {
-							self.myJoindMD.css('display', 'none');
-							self.myJoind.html('');
-							var compiled = template("Groupstemplate", data.data);
-							self.myCreate.html(compiled);
-							self.setPageCom();
-						} else{
-							self.errorTip();
-						}
-					});
-				} else{
 					$.when($.getJSON(
 						"/api/getCreateGroup",
 						{user_id: parseInt("<%=userid%>"),pn: pageNow}
@@ -190,12 +222,24 @@
 							cdata = cdata[0];
 							jdata = jdata[0];
 						if (cdata.ret == 200 && jdata.ret == 200 && cdata.data && jdata.data) {
-							var Ccompiled = template("Groupstemplate", cdata.data);
-							var Jcompiled = template("Groupstemplate", jdata.data);
-							self.myCreate.html(Ccompiled);
-							self.myJoind.html(Jcompiled);
-							self.myCreateMD.css('display', 'block');
-							self.myJoindMD.css('display', 'block');
+							if (pageNow<= cdata.data.pageCount) {
+								var Ccompiled = template("Groupstemplate", cdata.data);
+								self.myCreate.html(Ccompiled);
+								self.myCreateMD.css('display', 'block');
+							} else{
+								self.myCreateMD.css('display', 'none');
+								self.myCreate.html('');
+							}
+							if (pageNow <= jdata.data.pageCount) {
+								var Jcompiled = template("Groupstemplate", jdata.data);
+								self.myJoind.html(Jcompiled);
+								self.myJoindMD.css('display', 'block');
+							} else{
+								self.myJoindMD.css('display', 'none');
+								self.myJoind.html('');
+							}
+							self.pageCount =  Math.max(cdata.data.pageCount,jdata.data.pageCount);
+							global.setPageCount(self.pageCount);
 							self.setPageCom();
 						} else{
 							self.errorTip();
@@ -203,11 +247,11 @@
 					}).fail(function(){
 						self.errorTip();
 					});
-				}
 			},
 			bindEvent: function() {
 				var self = this;
-				global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+				global.setPageCount(self.pageCount);
+				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
 			},
 			init: function() {
 				this.bindEvent();

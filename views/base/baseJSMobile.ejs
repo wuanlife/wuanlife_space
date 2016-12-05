@@ -29,11 +29,12 @@
                     <% if (user) { %>
                     <li><a href="/users" class="navbar-icon navbar-option-item nav-per">个人中心</a></li>
                     <li><a href="/message" class="navbar-icon navbar-option-item nav-mes">消息中心<i class="red-point" id="mrp"></i></a></li>
+                    <li><a href="/myCollections" class="navbar-icon navbar-option-item nav-myc">我的收藏</a></li>
                     <% } %>
                 </ul>
                 <ul class="navbar-account">
                     <% if (user) { %>
-                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item"><%=user.nickname%></span></li>
+                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item" id="nav-username"><%=user.nickname%></span></li>
                     <li class="aLogged"><a href="/logout" class="navbar-icon navbar-account-item">退出</a></li>
                     <% } else { %>
                     <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>
@@ -83,7 +84,9 @@
                     url:url,
                     data:data,
                     success:function(d){
-                        success(d);
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
                     },
                     error:function(x,h,r){
                         console && console.log(x, h, r);
@@ -122,7 +125,11 @@
             var changeEverPushed = function(){
                 everPushed = true;
             }
-            var pageTurning = function(pre,next,pageCount,updata){
+            var pageCount = 1;
+            var setPageCount = function(pn){
+                pageCount = pn;
+            }
+            var pageTurning = function(pre,next,updata){
                 var self = this;
                 var initialUrl = location.href;
                 $(document).on('touchend', pre,function(event) {
@@ -190,6 +197,7 @@
                 subData:subData,
                 getUrlParam: getUrlParam,
                 getPageNow:getPageNow,
+                setPageCount:setPageCount,
                 pageTurning:pageTurning,
                 changeEverPushed:changeEverPushed,
                 utf16toEntities:utf16toEntities

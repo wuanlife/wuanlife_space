@@ -1,17 +1,26 @@
 <%- include base/headerMobile.ejs %>
-<div class="main main-page">
-    <div class="location clearfix">
-        <h1><a href="/message" title="">消息中心</a></h1>
-        <div class="location-plus">
-            <i class="filter"></i>
-            <ul class="filter-list text-white">
-                <li class="filter-all">全部</li>
-                <li class="filter-read">已读</li>
-                <li class="filter-notread">未读</li>
-            </ul>
-        </div>
+<div class="main ">
+<div class="message-page">
+    <div class="message-top">
+        <ul class="message-nav clearfix">
+            <li class="mtype12">通知<i></i></li>
+            <li class="mtype3 active"><a class="meg-link" href="/message?mtype=1">私密星球申请</a></li>
+        </ul>
+        <ul class="mtype-list">
+            <li class="mtype1"><a class="meg-link" href="/message?mtype=2">回复我的</a></li>
+            <li class="mtype2"><a class="meg-link" href="/message?mtype=3">其他通知</a></li>
+        </ul>
     </div>
+    <div class="message-right">
     <%if(result.code == 1){%>
+    <div class="message-right-tag clearfix">
+        <i class="filter"></i>
+        <ul class="filter-list text-white">
+            <li class="filter-all">全部</li>
+            <li class="filter-read">已读</li>
+            <li class="filter-notread">未读</li>
+        </ul>
+    </div>
     <div class="message-col">
         <% result.info.forEach(function(item) { %>
         <div id="<%=item.id %>" class="message clearfix vertical-container">
@@ -21,12 +30,11 @@
                     <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
                     <%if(item.messagetype == '1') { %>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                        <p class="text-grey">申请加入：<a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a></p>
+                        
                     </div>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
+                        <p class="text-grey">申请信息： <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.text%></a></p>
                     </div>   
                     <% } else if(item.messagetype == '2') { %>
                     <div class="meg-content-row clearfix">
@@ -35,7 +43,7 @@
                     <% } %>
                 </div>
             </div>
-            <%if(item.messagetype == '1') { 
+            <%if(item.messagetype == '1') {
                 if(item.messageInfo.status == '1') { %>
                     <button class="meg-button agree" type="button">同意</button>
                     <button class="meg-button disagree" type="button">拒绝</button>
@@ -68,10 +76,12 @@
         您还没有消息哦
     </div>
     <%} %>
-
+    </div>
+</div>
 </div>
 <%- include base/baseJSMobile.ejs %>
-<script type="text/html" id="listtemplate">
+
+<script type="text/html" id="mtype3">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix vertical-container">
         <div class="meg-brief">
@@ -80,12 +90,10 @@
                 <h2 class="text-ellipsis text-link">{{item.nickname}}</h2>
                 {{if item.messagetype == '1' }}
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                        <p class="text-grey">申请加入： <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a></p>
                     </div>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis">{{item.messageInfo.text}}</p>
+                        <p class="text-grey">申请信息：<a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.text}}</a></p>
                     </div>   
                 {{else if item.messagetype == '2' }}
                     <div class="meg-content-row clearfix">
@@ -137,7 +145,7 @@
                         button.removeClass("agree");
                         button.addClass("meg-right-text");
                         button.html("已同意");
-                        button.unbind("touchend");                       
+                        button.unbind("touchend");
                     },
                     disagree2disable: function(button, message) {
                         message.children(".meg-button.agree").remove();
@@ -148,7 +156,6 @@
                     }
 
                 }; 
-                
                 $(".meg-button.agree").each(function(){
                     var thisButton = $(this);
                     var thisMessage = thisButton.parent();
@@ -194,27 +201,42 @@
                     });
                 });
             },
-            updateByPage:function(){
+            updateAll: function(){
                 var self = this;
                 var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
                 self.filterType = statusNow || 1;
+
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    userId: <%=user.userID%>,
                     status: self.filterType,
+                    mtype: 3
                 }, function(data) {
-                    if (pageNow != global.getPageNow()) {
-                        return;
+
+                    if(data.ret == 200 && data.data.code === 0) {
+                   
+                        self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
+                        $('.page-turn').hide();
+                        self.loading.hide();
+                        return
                     }
-                    if (data.ret == 200 && data.data && data.data.info.length > 0) {
-                        $('.filter-list').children('li').removeClass('filter-clicked');
-                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');
-                        var compiled = template("listtemplate", data.data);
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
+                        $('.page-turn').show();
+
+                        self.loading.hide();
+                        var compiled = template("mtype3", data.data);
                         self.main.html(compiled);
+
+                        $('.mtype-list').hide()
+
+                        $('.filter-list').children('li').removeClass('filter-clicked');
+                        $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');                            
+
                         self.rebindButton();
+
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                        global.setPageCount(data.data.pageCount);
                         self.pre.removeAttr('class');
                         self.next.removeAttr('class');
                         if (data.data.currentPage == 1) {
@@ -223,7 +245,6 @@
                         if (data.data.currentPage == data.data.pageCount) {
                             self.next.addClass('unCBtn')
                         }
-                        self.loading.hide();
                         $('.mainContainer').scrollTop(0);
                     } else {
                         self.loading.hide();
@@ -235,11 +256,9 @@
                 /*绑定过滤器列表显示隐藏*/
                 var filter = $('.filter');
                 var filterList = $('.filter-list');
-                filter.on("touchend", function() {
-                    filterList.toggle();
-                });
-
-                /*绑定过滤*/
+                filter.on('touchend', function() {
+                    filterList.toggle()
+                })
                 var self = this;
                 var all = $('.filter-all');
                 var read = $('.filter-read');
@@ -247,13 +266,24 @@
 
                 var bindFilterEventByStatus = function(Jobject, status) {
                     Jobject.on("touchend", function() {
+                        var newURL,
+                            search = location.search,
+                            path = location.pathname;
+                        
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        var newURL = location.pathname + '?status=' + status;
+                        
+                        if (typeof(global.getUrlParam('status')) == 'string' ) {
+                            newURL = path + search.replace(/(status=)\d/, '$1' + status)
+                        }else if (search) {
+                            newURL = path + search + '&status=' + status;
+                        }else {
+                            newURL = path + search + '?status=' + status;
+                        }
                         history.pushState(null,'',newURL);   
                         global.changeEverPushed();
-                        self.updateByPage();                
+                        self.updateAll();        
                     })
                 };
                 bindFilterEventByStatus(all, 1);
@@ -262,11 +292,16 @@
             },
             bindEvent: function() {
                 var self = this;
-                global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                global.setPageCount(self.pageCount);
+                global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
+                $('.mtype12').on('touchend',function(){
+                    $('.mtype-list').toggle()
+                })
                 //绑定过滤器事件
-                this.bindFilterEvent(); 
+                this.bindFilterEvent();
             },
             init: function() {
+                $('.message-right').css({'min-height':$(window).height() - 200 + 'px'})
                 this.bindEvent();
                 this.rebindButton();
             }

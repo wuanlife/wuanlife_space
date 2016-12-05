@@ -1,20 +1,25 @@
 <%- include base/header.ejs %>
-<div class="main main-page">
-    <div class="location clearfix">
-        <h1><a href="/message" title="">消息中心</a></h1>
-        <div class="location-plus">
-            <i class="filter"></i>
-            <ul class="filter-list text-white">
-                <li class="filter-all">全部</li>
-                <li class="filter-read">已读</li>
-                <li class="filter-notread">未读</li>
-            </ul>
-        </div>
+<div class="main ">
+<h1 class="message-title"><a class="text-link" href="/message" title="">消息中心</a></h1>
+<div class="message-page">
+    <div class="message-left">
+        <ul>
+            <li class="mtype12"><a class="meg-link" href="/message?mtype=1">通知</a></li>
+            <li class="mtype3 active"><a class="meg-link" href="/message?mtype=3">私密星球申请</a></li>
+        </ul>
+    </div>
+    <div class="message-right">
+    <div class="message-right-tag">
+        <i class="filter"></i>
+        <ul class="filter-list text-white">
+            <li class="filter-all">全部</li>
+            <li class="filter-read">已读</li>
+            <li class="filter-notread">未读</li>
+        </ul>
     </div>
     <%if(result.code == 1){%>
     <div class="message-col">
         <% result.info.forEach(function(item) { %>
-
         <div id="<%=item.id %>" class="message clearfix vertical-container">
             <div class="meg-brief">
                 <img src="<%=item.user_image%>">
@@ -22,12 +27,12 @@
                     <h2 class="text-ellipsis text-link"><%=item.nickname%></h2>
                     <%if(item.messagetype == '1') { %>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a>
+                        <p class="text-grey">申请加入：
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.group_name%></a></p>
                     </div>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis"><%=item.messageInfo.text%></p>
+                        <p class="text-grey">申请信息：
+                        <a class="text-link text-ellipsis" href="../group/<%=item.messageInfo.group_id%>"><%=item.messageInfo.text%></a></p>
                     </div>   
                     <% } else if(item.messagetype == '2') { %>
                     <div class="meg-content-row clearfix">
@@ -49,14 +54,11 @@
             <% } else if(item.messagetype == '2') { %>
                 <button class="meg-right-text" type="button"><%=item.messageInfo.information%></button>
             <% } %>
-
         </div>
-
-
         <% }) %>
     </div>
     <div class="page-turn">
-        <%if(result.currentPage == 1){%>
+        <%if(result.currentPage == 1){console.log(result)%>
         <button type="button" class="unCBtn" id="pre">上一页</button>
         <%}else{%>
         <button type="button" id="pre">上一页</button>
@@ -73,23 +75,26 @@
         您还没有消息哦
     </div>
     <%} %>
+    </div>
+</div>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/html" id="listtemplate">
+
+<script type="text/html" id="mtype3">
     {{each info as item i}}
     <div id="{{item.id}}" class="message clearfix vertical-container">
         <div class="meg-brief">
             <img src="{{item.user_image}}">
             <div class="meg-content">
-                <h2 class="text-ellipsis text-link">{{item.nickname}}</h2>
+                <h3 class="text-ellipsis text-link">{{item.nickname}}</h3>
                 {{if item.messagetype == '1' }}
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请加入：</p>
-                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a>
+                        <p class="text-grey">申请加入：
+                        <a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.group_name}}</a></p>
                     </div>
                     <div class="meg-content-row clearfix">
-                        <p class="text-grey">申请信息：</p>
-                        <p class="text-link text-ellipsis">{{item.messageInfo.text}}</p>
+                        <p class="text-grey">申请信息：<a class="text-link text-ellipsis" href="../group/{{item.messageInfo.group_id}}">{{item.messageInfo.text}}</a></p>
+                        
                     </div>   
                 {{else if item.messagetype == '2' }}
                     <div class="meg-content-row clearfix">
@@ -111,14 +116,9 @@
         {{else if item.messagetype == '2' }}    
             <button class="meg-right-text" type="button">{{item.messageInfo.information}}</button>
         {{/if}}
-
     </div>
     {{/each}}
-
 </script>
-
-
-
 
 <script type="text/javascript">
     (function() {
@@ -138,7 +138,6 @@
             },
             rebindButton: function() {
                 var self = this;
-
                 //策略模式
                 var ChangeStrategies = {
                     //输入Jquery对象button和其父元素message
@@ -147,7 +146,7 @@
                         button.removeClass("agree");
                         button.addClass("meg-right-text");
                         button.html("已同意");
-                        button.unbind("click");                       
+                        button.unbind("click");
                     },
                     disagree2disable: function(button, message) {
                         message.children(".meg-button.agree").remove();
@@ -203,34 +202,43 @@
                     });
                 });
             },
-            updateByPage:function(){
+            updateAll: function(){
                 var self = this;
                 var pageNow = global.getPageNow();
                 var statusNow = global.getUrlParam('status');
+                var mtype = global.getUrlParam('mtype');
                 self.filterType = statusNow || 1;
+
                 self.loading.show();
                 self.getServerData({
                     currentpage: pageNow,
-                    userId: <%=user.userID%>,
-                    status: self.filterType
+                    status: self.filterType,
+                    mtype: 3
                 }, function(data) {
-                    if(data.ret == 200 && data.currentPage == undefined) {
-                        self.main.html("<div class='emptyPage'>您还没有消息哦</div>")
+
+                    if(data.ret == 200 && data.data.code === 0) {
+                   
+                        $('.message-col').html("<div class='emptyPage'>您还没有消息哦</div>")
                         $('.page-turn').hide();
                         self.loading.hide();
+                        return
                     }
-                    if (pageNow != global.getPageNow()) {
-                        self.main.html(compiled);
-                        return;
-                    }
-                    if (data.ret == 200 && data.data && data.data.info.length > 0) {
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
                         $('.page-turn').show();
+
+                        self.loading.hide();
+                        var compiled = template("mtype" + mtype, data.data);
+                        self.main.html(compiled);
+
+                        self.bindFilterEvent();
+
                         $('.filter-list').children('li').removeClass('filter-clicked');
                         $('.filter-list').children('li').eq(parseInt(self.filterType - 1)).addClass('filter-clicked');
-                        var compiled = template("listtemplate", data.data);
-                        self.main.html(compiled);
+
                         self.rebindButton();
+
                         self.page.text(data.data.currentPage + '/' + data.data.pageCount);
+                        global.setPageCount(data.data.pageCount);
                         self.pre.removeAttr('class');
                         self.next.removeAttr('class');
                         if (data.data.currentPage == 1) {
@@ -239,7 +247,6 @@
                         if (data.data.currentPage == data.data.pageCount) {
                             self.next.addClass('unCBtn')
                         }
-                        self.loading.hide();
                         $(window).scrollTop(0);
                     } else {
                         self.loading.hide();
@@ -251,15 +258,8 @@
                 /*绑定过滤器列表显示隐藏*/
                 var filter = $('.filter');
                 var filterList = $('.filter-list');
-                var num = 0;
-                filterList.hide(); 
                 filter.on("click", function() {
-                    num++;
-                    if(num % 2 == 1) {
-                        filterList.show();
-                    } else {
-                        filterList.hide();
-                    }
+                    filterList.toggle()
                 });
 
                 var self = this;
@@ -269,26 +269,40 @@
 
                 var bindFilterEventByStatus = function(Jobject, status) {
                     Jobject.on("click", function() {
+                        var newURL,
+                            search = location.search,
+                            path = location.pathname;
+                        
                         self.filterType = status;
                         $(this).siblings("*").removeClass("filter-clicked")    
                         $(this).addClass("filter-clicked");
-                        var newURL = location.pathname + '?status=' + status;
+                        if (typeof(global.getUrlParam('status')) == 'string' ) {
+                            newURL = path + search.replace(/(status=)\d/, '$1' + status)
+                        }else if (search) {
+                            newURL = path + search + '&status=' + status;
+                        }else {
+                            newURL = path + search + '?status=' + status;
+                        }
                         history.pushState(null,'',newURL);   
                         global.changeEverPushed();
-                        self.updateByPage();        
+                        self.updateAll();        
                     })
                 };
                 bindFilterEventByStatus(all, 1);
                 bindFilterEventByStatus(read, 2);
                 bindFilterEventByStatus(notread, 3);
             },
+            // 左边栏事件
             bindEvent: function() {
                 var self = this;
-                global.pageTurning.apply(self,["#pre","#next",self.pageCount,self.updateByPage]);
+                global.setPageCount(self.pageCount);
+                global.pageTurning.apply(self,["#pre","#next",self.updateAll]);
                 //绑定过滤器事件
-                this.bindFilterEvent();    
+                this.bindFilterEvent()
             },
             init: function() {
+                $('.message-right').css({'min-height': $(window).height - 120 + 'px'})
+                
                 this.bindEvent();
                 this.rebindButton();
             }

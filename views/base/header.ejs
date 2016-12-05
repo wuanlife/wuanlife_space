@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/global.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
         <link rel="stylesheet" type="text/css" href="/editor/wangEditor.min.css">
-        <% if(title == '首页'){%>
+        <% if( typeof title == 'undefined'){%>
         <title>午安网 - 过你想过的生活</title>
         <%}else{%>
         <title><%=title%> - 午安网 - 过你想过的生活</title>
@@ -37,9 +37,14 @@
                     </a>
                 </li>
                 <li data-toggle='dropdown'>
-                    <span class="navbar-account-item" ><%=user.nickname%><span class="caret"></span></span>
+
+                    
+
+                    <span class="navbar-account-item" id="nav-username"><%=user.nickname%><span class="caret"></span></span>
+
                     <ul class="dropdown-account">
                         <li><a href="/users" class="per-icon">个人中心</a></li>
+                        <li><a href="/myCollections" class="collect-icon">我的收藏</a></li>
                         <li><a href="/logout" class="exit-icon">退出</a></li>
                     </ul>
                 </li>

@@ -9,8 +9,9 @@
 			<div class="wangEditor-pc-container" id="wangEditor-pc-container">
 				<textarea name="text" class="form-control" id="textareaPC">
                             
-                        </textarea>
+                </textarea>
 			</div>
+			<span class="word-num-tip text-ellipsis"></span>
 			<button type="submit" class="post-sub" id="post-issue">发表</button>
 		</form>
 	</div>
@@ -128,6 +129,7 @@
 			subBtn: $("#post-issue"),
 			loading: $(".loading"),
 			text:'',
+			wmTip:$('.word-num-tip'),
 			verificate: function() {
 				var title = $.trim(this.title.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
 				this.title.val(title);
@@ -200,6 +202,15 @@
 						editor.$txt.html(data.data.text);
 						self.editorEvent();
 						self.postTitle.val(data.data.title);
+						editor.onchange = function(){
+							var num = editor.$txt.html().length;
+							var exceed = num - 5000;
+							if (exceed>0) {
+								self.wmTip.html('已超出'+exceed+'字符');
+							} else{
+								self.wmTip.html('');
+							}
+						};
 					} else {
 						window.location.href = '/404';
 					}

@@ -1,5 +1,5 @@
         <div class="footer">
-            <span class="version">Powered by Wuanlife 1.1.4</span>
+            <span class="version">Powered by Wuanlife 1.1.5</span>
             <a href="http://www.wuanla.com/group/8"  class="public">官方公告</a>
             <a href="http://www.wuanla.com/group/9" class="public">意见提交</a>
         </div>
@@ -67,7 +67,9 @@
                     url:url,
                     data:data,
                     success:function(d){
-                        success(d);
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
                     },
                     error:function(x,h,r){
                         console && console.log(x, h, r);
@@ -94,7 +96,11 @@
             var changeEverPushed = function(){
                 everPushed = true;
             }
-            var pageTurning = function(pre,next,pageCount,updata){
+            var pageCount = 1;
+            var setPageCount = function(pn){
+                pageCount = pn;
+            }
+            var pageTurning = function(pre,next,updata){
                 var self = this;
                 var initialUrl = location.href;
                 $(document).on('click', pre,function(event) {
@@ -164,6 +170,7 @@
                 subData:subData,
                 getUrlParam: getUrlParam,
                 getPageNow:getPageNow,
+                setPageCount:setPageCount,
                 pageTurning:pageTurning,
                 changeEverPushed:changeEverPushed,
                 utf16toEntities:utf16toEntities

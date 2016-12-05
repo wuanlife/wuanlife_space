@@ -291,6 +291,9 @@ ul{
 .nav-mes:before{
     background-image: url(../images/mes.png);
 }
+.nav-myc:before{
+    background-image: url(../images/myCollections_01.png);
+}
 .red-point{
     display:none;
     width:8px;
@@ -396,11 +399,10 @@ span.navbar-account-item{
 .location>h1>a{
    color:#5ab8fe;
    display: inline-block;
-   width: 60%;
 }
 .locBtn{
     display:inline-block;
-    color:#f6fafb;
+    color:#f6fafb !important;
     font-size: 0.333333rem;
     padding:0 0.2rem;
     height:0.64rem;
@@ -754,10 +756,10 @@ button.unCBtn{
     border: 2px solid #5ab8fe;
     width:1.413333rem;
     height:1.413333rem;
-    background-color: inherit;
     color:#5ab8fe;
     font-size: 0.533333rem;
     cursor:pointer;
+    background-color: inherit;
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
@@ -888,6 +890,21 @@ button.unCBtn{
     height:0.64rem;
     margin-left: 1.133333rem;
 }
+/*头像区域*/
+.login-image{
+    width: 1.333333rem;
+    height:1.333333rem;
+    margin:0.266666rem auto;
+}
+.login-image button{
+    width: 100%;
+    height:100%;
+    border-radius:0.6rem;
+    cursor: pointer;
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
 /*单选框*/
 .radiobox label{
     position:static;
@@ -914,7 +931,7 @@ button.unCBtn{
     font-size: 0.373333rem;
     line-height: 0.64rem;
     height:0.64rem;
-    left:100%;
+    left:80%;
     top:0;
     white-space: nowrap;
 }
@@ -1097,6 +1114,15 @@ textarea.form-control{
     white-space: pre-wrap;
     color:#5b5b5b;
 }
+/*回复内容中操作项*/
+.post-cm-opt button,.post-cm-opt a{
+    font-size: 0.373333rem;
+    margin-left: 0.533333rem;
+    float:right;
+    color:#5ab8fe;
+    background-color: transparent;
+    cursor: pointer;
+}
 /*回复内容的翻页*/
 .post-comment .page-turn{
     padding:0.533333rem 0 0;
@@ -1117,6 +1143,16 @@ textarea.form-control{
 .post-detail-form textarea{
     margin-bottom: 1.2rem;
     height:3.466667rem;
+}
+/******************
+楼中楼回复页面
+******************/
+.topic-comment h3{
+    font-size: 0.373333rem;
+    color:#5ab8fe;
+    margin-bottom: 0.28rem;
+    margin-top: 0.4rem;
+    text-align: center;
 }
 /******************
 创建及编辑帖子
@@ -1195,20 +1231,94 @@ textarea.form-control{
 .myJoinMd{
     padding-bottom: 0.426667rem;
 }
-
-
 /****************
 *********消息*****
 ******************/
 .message {
-    padding: 30px 0;
+    padding: 0.2rem 0;
     border-bottom: 1px solid rgba(229,229,229,1.0);
+    font-size: 0.33rem;
+}
+.message-col {
+    margin-top: 2px;
+    margin-bottom: 70px;
+}
+.meg-link {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: #000;
+}
+.message-nav {
+    width: calc(100% + 0.466667rem * 2);
+    height: 1.3rem;
+    line-height: 1.3rem;
+    font-size: 0.5rem;
+    margin-left: -0.466667rem;
+    background: #e5e5e5;
+}
+.message-nav > li {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+.message-nav .active {
+    border-bottom: 2px solid #95bbd7;
+}
+.message-nav i {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.3rem;
+    border-top: 0.3rem solid #666 ;
+    border-left: 0.2rem solid rgba(0,0,0,0);
+    border-right: 0.2rem solid rgba(0,0,0,0);
+    border-bottom: 0;
+}
+.mtype-list {
+    position: absolute;
+    display: none;
+    width: calc(50% - 0.466667rem);
+    text-align: center;
+    background: #5ab8fe;
+    color: #fff;
+    font-size: 0.5rem;
+    line-height: 1.3rem;
+    z-index: 2;
+}
+.mtype-list li{
+    border-bottom: 1px solid #fff;
+}
+
+.meg-reply-title {
+    float: left;
+    width: 50%;
+}
+.meg-reply-time {
+    float: right;
+    text-align: right;
+}
+.meg-time {
+    line-height: 0.9rem;
+}
+.message h3 {
+    line-height: 0.9rem;
+}
+.message span {
+    color: #aaa;
+}
+.message-page .page-turn {
+    margin: 1rem 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 .meg-brief {
     width: 90%;
     float: left;
-    line-height: 35px;
+    line-height: 0.7rem;
     font-size: 0.4rem;
     color: rgba(90,184,254,1.0);
 }
@@ -1231,16 +1341,20 @@ textarea.form-control{
 .meg-content-row > .text-link {
     width: 260px;
 }
-
+.message-right-tag {
+    margin-top: 3px;
+}
 .meg-button {
     width: 1.4rem;
     font-size: 0.4rem;
-    padding: 4px 4px;
-    margin-right: 20px;
+    padding: 4px 6px;
     border-radius: 4px;
     color: rgba(246, 250, 251,1.0);
     background-color: rgba(90,184,254,1.0);
     cursor: pointer;
+}
+.meg-button.agree {
+    margin-right: 10px;
 }
 [data-dpr="2"] .meg-button{
     border-radius: 7px;
@@ -1261,25 +1375,38 @@ textarea.form-control{
     background-color: rgba(202, 192, 190,0.0);
 }
 
-/*消息中心的过滤图标(可能在之后会复用)*/
+.filter-div{
+    margin-top: 5px;
+}
 .filter {
-    width: 33px;
-    height: 33px;
+    width: 1rem;
+    height: 1rem;
+    float: left;
     background-image: url(../images/filter.png);
-    margin-left: 27px;
     display: inline-block;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
 }
 .filter-list{
+    position: absolute;
+    left: 1.5rem;
     background-color: rgba(90, 184,254,1.0);
     border-radius: 6px;
     margin-left: 12px;
-    float: left;
     font-size: 0.4rem;
-    display:none;
+    display: none;
 
+}
+.filter-list::before {
+    content: '';
+    float: left;
+    position: relative;
+    margin-left: -12px;
+    top: 6px;
+    border-style: solid;
+    border-width: 10px 14px 10px 0;
+    border-color: rgba(0, 0, 0, 0) rgba(90, 184,254,1.0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
 }
 .filter-list > li{
     padding: 5px 17px;
@@ -1295,10 +1422,21 @@ textarea.form-control{
     border-bottom: 1px solid rgba(229,229,229,1.0);
 }
 
-
-
-
-
+/****************
+********星球页面*******
+****************/
+.myJoincreater{
+    font-size: 0.4rem;
+    line-height: 1.5;
+    color:#5ab8fe;
+    float:left;
+    width:100%;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+.quitButton{
+    margin-right: 0.2rem;
+}
 /* 私密星球权限不够  */
 .blockPage {
     color:#cccccc;
@@ -1405,4 +1543,76 @@ textarea.form-control{
     padding:0.266667rem 0 0.186667rem;
     background-color: inherit;
     text-align: center;
+}
+/*****************
+*****我的收藏页面**
+*****************/
+.mycol-post-list{
+    padding:0.305556rem 0 0.240741rem;
+    border-bottom: 1px solid #e8e8e8;
+}
+.mycol-top{
+    position: relative;
+    padding-bottom: 0.2rem;
+}
+.mycol-bottom{
+    position: relative;
+}
+.mycol-title{
+    font-size: 0.453333rem;
+    margin-bottom: 0.185185rem;
+    color:#5ab8fe;
+}
+.mycol-groupname{
+    position: absolute;
+    font-size: 0.453333rem;
+    left:3.6rem;
+    top:0.05rem;
+    color:#cccccc;
+}
+.mycol-groupname a{
+    color:#cccccc;
+}
+.mycol-image{
+    width: 0.3rem;
+    height:0.4rem;
+    position: absolute;
+    left:3.2rem;
+    top:0.17rem;
+}
+.mycol-creater{
+    position: absolute;
+    font-size: 0.453333rem;
+    right:0.05rem;
+    top:0.05rem;
+    color:#cccccc;
+}
+.mycol-creater a{
+    color:#cccccc;
+}
+.mycol-show{
+    font-size: 0.266666rem;
+    color:#cccccc;
+}
+.mycol-time{
+    color:#cccccc;
+    font-size: 0.266666rem;
+    position: absolute;
+    left:1.466666rem;
+}
+.mycol-status{
+    color:#5ab8fe;
+    font-size: 0.266666rem;
+    position: absolute;
+    right: 0.05rem;
+}
+.mycol-post-delete{
+    padding-left: 0.533333rem;
+    font-size: 0.453333rem;
+    color:#cccccc;
+}
+.mycol-delete-btn{
+    font-size: 0.453333rem;
+    color:#5ab8fe;
+    background: none;
 }

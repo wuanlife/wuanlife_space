@@ -1,0 +1,80 @@
+<%- include base/headerMobile.ejs %>
+<div class="main">
+    <div class="location clearfix">
+        <h1>回复评论</h1>
+    </div>
+    <div class="topic-comment">
+        <h3><%=reply%></h3>
+        <form  method="post" class="post-form">
+            <textarea class="form-control"></textarea>
+            <button type="submit" class="post-sub">发表回复</button>
+        </form>
+    </div>
+</div>
+<%- include base/baseJSMobile.ejs %>
+<script>
+    (function(){
+        var comment = {
+            loading: $(".loading"),
+            post_comment:$('.post-form'),
+            floor:0,
+            postid:0,
+            initPage: function(){
+                this.postid = parseInt("<%=postID%>");
+                this.floor = global.getUrlParam('floor');
+            },
+            verificate: function(textarea) {
+                var replyText = $.trim(textarea.val());
+                if (replyText.length < 1) {
+                    sweetAlert('格式错误', '回复内容不能为空', 'warning');
+                    return false;
+                }
+                if (replyText.length > 240) {
+                    sweetAlert('格式错误', '回复内容不能超过240个字符', 'warning');
+                    return false;
+                }
+                replyText = global.utf16toEntities(replyText);
+                return replyText;
+            },
+            subReply: function(textarea){
+                var self = this;
+                var text = self.verificate(textarea);
+                if (text) {
+                    self.loading.show();
+                    global.subData("/api/postReply", {
+                        post_id: self.postid,
+                        text: text,
+                        replyfloor: self.floor
+                    },function(data){
+                        if (data.ret == 200) {
+                            if (data.data) {
+                                window.location.href = '/topic/' + self.postid + '?page=' + data.data.page + '&rf=' + data.data.floor;
+                            } else{
+                                sweetAlert('提示', '帖子已经被锁定', 'warning');
+                                self.loading.hide();
+                            }
+                        } else{
+                            sweetAlert('错误', data.msg, 'error');
+                            self.loading.hide();
+                        }
+                    });
+                }
+            },
+            bindEvent:function(){
+                var self = this;
+                self.post_comment.submit(function(event) {
+                    /* Act on the event */
+                    event.preventDefault();
+                    var textarea = $(this).children('textarea');
+                    self.subReply.apply(self,[textarea]);
+                });
+            },
+            init: function(){
+                this.initPage();
+                this.bindEvent();
+            }
+        };
+        comment.init();
+    })();
+</script>
+<%- include base/footerMobile.ejs %>
