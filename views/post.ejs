@@ -65,12 +65,12 @@
 					'FilesAdded': function(up, files) {
 						plupload.each(files, function(file) {
 							// 文件添加进队列后,处理相关的事情
-							printLog('on FilesAdded');
+							//printLog('on FilesAdded');
 						});
 					},
 					'BeforeUpload': function(up, file) {
 						// 每个文件上传前,处理相关的事情
-						printLog('on BeforeUpload');
+						//printLog('on BeforeUpload');
 					},
 					'UploadProgress': function(up, file) {
 						// 显示进度条
@@ -170,13 +170,21 @@
 					sweetAlert('格式错误', '请填写标题！', 'warning');
 					return false;
 				}
-				if (this.title.val().length > 61) {
+				if (this.title.val().length > 60) {
 					sweetAlert('格式错误', '请设置60字符以内标题', 'warning');
 					return false;
 				}
 				var imgs = editor.$txt.find('img').length;
 				if (editor.$txt.formatText().replace(/&nbsp;|\s/g, "").length == 0 && imgs == 0) {
 					sweetAlert('格式错误', '请填写内容！', 'warning');
+					return false;
+				}
+				if (imgs.length > 50) {
+					sweetAlert('格式错误','图片上传不能超过50张','warning');
+					return false;
+				}
+				if (editor.$txt.text().length > 5000) {
+					sweetAlert('格式错误','文章长度不能超出5000字符','warning');
 					return false;
 				}
 				var text =  global.utf16toEntities($.trim(editor.$txt.html()));
@@ -208,7 +216,7 @@
 					}
 				});
 				editor.onchange = function(){
-					var num = editor.$txt.html().length;
+					var num = editor.$txt.text().length;
 					var exceed = num - 5000;
 					if (exceed>0) {
 						self.wmTip.html('已超出'+exceed+'字符');
