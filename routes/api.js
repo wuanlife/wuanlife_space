@@ -11,7 +11,7 @@ router.get('/:method', function(req, res, next) {
 	switch(req.params.method) {
 		case 'getindex':
 			var pn = req.param('currentpage');
-			request(config.server + '?service=Post.GetIndexPost&pn=' + pn, function(error, response, body) {
+			request(config.server + '?service=Post.GetIndexPost&pn=' + pn + '&user_id=' + userID, function(error, response, body) {
 				res.header('Content-type', 'application/json');
 				res.header('Charset', 'utf8');
 				try {

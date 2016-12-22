@@ -12,7 +12,12 @@
 				<span class="text-ellipsis"><a href="#?" title=""><%=item.nickname%></a></span>
 				<span class="cha-icon"></span>
 				<span class="text-ellipsis"><a href="/group/<%=item.groupID%>" title=""><%=item.groupName%></a></span>
+				
 				<span class="cha-time"><%=item.createTime%></span>
+			</div>
+			<div>
+				<% var like = item.approved == '0'?'like-icon':'liked-icon'%>
+				<span class="<%=like%> "><%=item.approvednum%></span>
 			</div>
 			<div class="chapter-text">
 				<%-item.text%>
@@ -56,6 +61,9 @@
 			<span class="cha-icon"></span>
 			<span class="text-ellipsis"><a href="/group/{{item.groupID}}" title="">{{item.groupName}}</a></span>
 			<span class="cha-time">{{item.createTime}}</span>
+		</div>
+		<div>
+			<span class="{{like = item.approved == '0'?'like-icon':'liked-icon'}}">{{item.approvednum}}</span>
 		</div>
 		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}

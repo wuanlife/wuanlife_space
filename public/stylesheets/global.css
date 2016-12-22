@@ -426,25 +426,26 @@ button.unCBtn{
 *******点赞********
 ******************/
 .like-icon,.liked-icon{
-    font-size: 14px;
+    font-size: 18px;
     background-color: transparent;
 }
-.like-icon:hover{
+button.like-icon:hover{
     color: #1296db;
 }
-.liked-icon:hover{
+button.liked-icon:hover{
     color: #c1c1c1;
 }
-.like-icon,.like-icon.suc{
+.like-icon,button.like-icon.suc{
     color: #c1c1c1;
 } 
-.liked-icon,.liked-icon.suc{
+.liked-icon,button.liked-icon.suc{
     color: #1296db;
 }
 .like-icon:before,.liked-icon:before{
     content: '';
     display: inline-block;
     background-repeat: no-repeat;
+    background-size: 100% 100%;
     width: 18px;
     height: 18px;
     margin-right: 5px;
@@ -455,16 +456,16 @@ button.unCBtn{
 .liked-icon:before{
     background-image: url(../images/likes_06.png);
 }
-.like-icon:hover:before{
+button.like-icon:hover:before{
     background-image: url(../images/likes_06.png);
 }
-.liked-icon:hover:before{
+button.liked-icon:hover:before{
     background-image: url(../images/like_03.png);
 }
-.like-icon.suc:before{
+button.like-icon.suc:before{
     background-image: url(../images/likes_03.png);
 }
-.liked-icon.suc:before{
+button.liked-icon.suc:before{
     background-image: url(../images/likes_06.png);
 }
 /****************
