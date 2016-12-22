@@ -9,11 +9,12 @@ var xss = require('xss');
 router.get('/:id', function(req, res, next) {
     var agent = ua(req.headers['user-agent']);
     var userid = (req.session.user) ? req.session.user.userID : null;
-    request(config.server + "?service=Post.GetPostBase&post_id=" + req.param('id') + "&id=" + userid,
+    request(config.server + "?service=Post.GetPostBase&post_id=" + req.param('id') + "&user_id=" + userid,
         function(err, response, body) {
             if (!err && response.statusCode == 200) {
                 try{
                     var result = JSON.parse(body);
+                    //console.log(result);
                     if (result.ret ==200) {
                         if (result.data.code == 1) { //普通帖子正常显示
                             var page = agent.Mobile ? 'topicMobile' : 'topic';

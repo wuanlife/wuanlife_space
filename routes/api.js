@@ -516,6 +516,36 @@ router.post('/:method', function(req, res, next) {
 				}
 			});
 			break;
+			//帖子点赞
+		case 'postLike':
+			request.post({
+				url: config.server + '?service=Post.ApprovePost',
+				formData: {
+					user_id: userID,
+					post_id: req.body.post_id,
+					floor: req.body.floor
+				}
+			}, function optionalCallback(err, httpResponse, body) {
+				res.header('Content-type', 'application/json');
+				res.header('Charset', 'utf8');
+				try {
+					if(!err && httpResponse.statusCode == 200) {
+						//console.log(JSON.parse(body));
+						return res.send(JSON.parse(body));
+					}
+					console.error('Like failed:', err);
+					res.send({
+						ret: 500,
+						msg: '服务器异常'
+					});
+				} catch(e) {
+					res.send({
+						ret: 500,
+						msg: e.message
+					});
+				}
+			});
+			break;
 		case 'sendAuthCode':
 			request.post({
 				url: config.server + '?service=User.CheckMail',
