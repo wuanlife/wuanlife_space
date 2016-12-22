@@ -12,8 +12,12 @@
 			<div class="post-content">
 				<%-result.text%>
 			</div>
-			<% if (result.stickyRight || result.editRight || result.deleteRight || result.lockRight || user) { %>
-			<div class="post-opt">
+			<div class="post-opt clearfix">
+				<% if (result.approved == 0) { %>
+				<button class="like-icon like" data-target='1' data-num='<%-result.approvednum%>'><%-result.approvednum%></button>
+				<% } else { %>
+				<button class="liked-icon like" data-target='1' data-num='<%-result.approvednum%>'><%-result.approvednum%></button>
+				<% } %>
 				<% if (result.stickyRight) { %>
 				<% if (result.sticky) { %>
 				<button class="post-opt-item" id="stickBtn">取消置顶</button>
@@ -42,7 +46,6 @@
 				<% } %>
 				<% } %>
 			</div>
-			<% } %>
 		</div>
 		<div id="comment"></div>
 		<% if (!result.lock) { %>
@@ -63,14 +66,20 @@
 		<div class="post-cm-info clearfix">
 			<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
 			<span class="post-cm-time">{{item.createTime}}</span>
+			<span class="fR">{{item.floor}}楼</span>
 		</div>
-		<div class="post-cm-content">{{if item.replynickname}}回复 @<a style="color:#062eb1" href="#?" title="{{item.replynickname}}">{{item.replynickname}}</a> : {{/if}}{{item.text}}</div>
+		<div class="post-cm-content">{{if item.replynickname}}回复{{if item.replyFloor}}{{item.replyFloor}}楼{{/if}} @<a style="color:#062eb1" href="#?" title="{{item.replynickname}}">{{item.replynickname}}</a> : {{/if}}{{item.text}}</div>
 		<div class="post-cm-opt clearfix">
+			{{if item.approved == 0}}
+			<button class="like-icon like" data-target='{{item.floor}}' data-num='{{item.approvednum}}'>{{item.approvednum}}</button>
+			{{else}}
+			<button class="liked-icon like" data-target='{{item.floor}}' data-num='{{item.approvednum}}'>{{item.approvednum}}</button>
+			{{/if}}
 			{{if !isLock}}
-			<button class="post-cm-replyBtn">回复</button>
+			<button class="post-cm-replyBtn post-cm-btn">回复</button>
 			{{/if}}
 			{{if item.deleteRight}}
-			<button class="post-cm-deleteBtn" data-target="{{item.floor}}">删除</button>
+			<button class="post-cm-deleteBtn post-cm-btn" data-target="{{item.floor}}">删除</button>
 			{{/if}}
 		</div>
 		{{if !isLock}}
@@ -211,7 +220,7 @@
 									self.isLock = 0;
 									self.post_lock.text('锁帖');
 									$('.post-detail').append('<div class="my-comment"><h2>我的回复</h2><form class="post-detail-form clearfix" method="post"><textarea name="" class="form-control" placeholder="内容"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form></div>');
-									$('.post-cm-opt').prepend('<button class="post-cm-replyBtn">回复</button>');
+									$('.post-cm-opt').prepend('<button class="post-cm-replyBtn post-cm-btn">回复</button>');
 									$('.post-cm-opt').after('<form method="post" class="post-cm-reply clearfix"><textarea class="form-control"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form>');
 								} else {
 									sweetAlert('提示', data.data.re, 'warning');
@@ -417,6 +426,9 @@
 								$('.post-cm-reply').hide();
 								var replyData = {};
 								data.data.deleteRight = 1;
+								data.data.approved = 0;
+								data.data.approvednum = 0;
+								data.data.replyFloor = floor;
 								replyData.isLock = self.isLock;
 								replyData.reply = [data.data];
 								var compiled = template("listtemplate", replyData);
@@ -440,8 +452,46 @@
 				window.location.href = '/login';
 				<%}%>
 			},
+			like: function(approvedBtn){
+				<% if (user) { %>
+				if (approvedBtn.hasClass('disabled')) return;
+				approvedBtn.addClass('disabled');
+				var floor = approvedBtn.attr('data-target') ;
+				var num = parseInt(approvedBtn.attr('data-num'));
+				global.subData('/api/postLike',{
+					post_id: parseInt("<%=result.postID%>"),
+					floor: floor
+				},function(data){
+					if (data.ret == 200 && data.data && data.data.code > 0) {
+						num = data.data.code == 1? (num+1) : (num-1)
+						approvedBtn.toggleClass('liked-icon like-icon').addClass('suc').text(num).attr('data-num', num);					
+					} else{
+						sweetAlert('错误','操作失败，请稍后再试','error');
+					}
+					approvedBtn.removeClass('disabled');
+				});
+				<%} else {%>
+				window.location.href = '/login';
+				<%}%>
+			},
 			bindEvent: function() {
 				var self = this;
+				var likeEvents = {
+					'mouseover' : function(event){
+						if ($(this).hasClass('like-icon')) {
+							$(this).removeClass('suc').text('点赞');
+						} else{
+							$(this).removeClass('suc').text('取消赞');
+						}
+					},
+					'mouseleave' : function(event){
+						var num = $(this).attr('data-num');
+						$(this).removeClass('suc').text(num);
+					},
+					'click' : function(event){
+						self.like($(this));
+					}
+				};
 				<% if (result.stickyRight) { %>
 				self.post_up.on("click", self.upPost.bind(self));
 				<% } %>
@@ -454,19 +504,23 @@
 				<% if (user) { %>
 				self.post_collect.on('click',self.collectPost.bind(self));
 				<% } %>	
-				$(document).on('submit', '.post-cm-reply,.post-detail-form', function(event) {
+				$('.main').on('submit', '.post-cm-reply,.post-detail-form', function(event) {
 					event.preventDefault();
 					/* Act on the event */
 					var textarea = $(this).children('textarea');
 					var floor = $(this).parent().attr('data-id') || 0;
 					self.subReply.apply(self,[textarea,floor]);
 				});
-				$(document).on('click', '.post-cm-deleteBtn',function(event) {
-					self.deletePostReply($(this));
+				$('#comment').on('click', function(event) {
+					var target = $(event.target);
+					if (target.hasClass('post-cm-deleteBtn')) {
+						self.deletePostReply(target);
+					}
+					if (target.hasClass('post-cm-replyBtn')) {
+						target.parent().next().toggle();
+					}
 				});
-				$(document).on('click', '.post-cm-replyBtn', function(event) {
-					$(this).parent().next().toggle();
-				});
+				$('.main').on(likeEvents, '.like');
 			},
 			init: function() {
 				this.setReplyData(true);
