@@ -29,12 +29,16 @@
 					sweetAlert('格式错误', '请填写标题！', 'warning');
 					return false;
 				}
-				if (this.title.val().length > 61) {
+				if (this.title.val().length > 60) {
 					sweetAlert('格式错误', '请设置60字符以内标题', 'warning');
 					return false;
 				}
 				if (text.length == 0) {
 					sweetAlert('格式错误', '请填写内容！', 'warning');
+					return false;
+				}
+				if (text.length > 5000) {
+					sweetAlert('格式错误','文章长度不能超出5000字符','warning');
 					return false;
 				}
 				this.text = global.utf16toEntities(text);

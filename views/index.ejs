@@ -8,6 +8,7 @@
 		<% result.posts.forEach(function(item) { %>
 		<div class="chapter">
 			<h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
+			<div><% var like = item.approved == '0'?'like-icon':'liked-icon'%><span class="<%=like%>"><%=item.approvednum%></span></div>
 			<div class="chapter-text">
 				<%-item.text%>
 			</div>
@@ -51,6 +52,9 @@
 	{{each posts as item i}}
 	<div class="chapter">
 		<h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
+		<div>
+			<span class="{{like = item.approved == '0'?'like-icon':'liked-icon'}}">{{item.approvednum}}</span>
+		</div>
 		<div class="chapter-text">{{#item.text}}</div>
 		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
 		<div class="chapter-info">

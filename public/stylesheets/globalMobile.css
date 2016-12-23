@@ -518,6 +518,35 @@ button.unCBtn{
     top:50%;
     left:0;
 }
+/******************
+*********点赞*******
+*******************/
+.like-icon,.liked-icon{
+    background-color: transparent;
+    font-size: 0.373333rem;
+}
+.like-icon{
+    color: #c1c1c1;
+} 
+.liked-icon{
+    color: #1296db;
+}
+.like-icon:before,.liked-icon:before{
+    content: '';
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    vertical-align: top;
+    width: 0.48rem;
+    height: 0.48rem;
+    margin-right: 0.133333rem;
+}
+.like-icon:before{
+    background-image: url(../images/likes_03.png);
+}
+.liked-icon:before{
+    background-image: url(../images/likes_06.png);
+}
 /****************
 *********文章*****
 ******************/
@@ -1074,6 +1103,11 @@ textarea.form-control{
     background-color: inherit;
     cursor:pointer;
 }
+.post-opt .like-icon,.post-opt .liked-icon{
+    font-size: 0.426667rem;
+    float: left;
+    padding:0 0.186667rem;
+}
 /*帖子回复*/
 .post-comment{
     margin-bottom: 0.72rem;
@@ -1101,11 +1135,16 @@ textarea.form-control{
     color:#363636;
     margin-bottom: 0.146667rem;
 }
-.post-cm-info a{
+.post-cm-info .uname{
+    display: inline-block;
+    max-width: 3.333333rem;
+}
+.post-cm-info .uname a{
     color:#363636;
 }
 .post-cm-time{
     float:right;
+    margin-left: 0.346667rem;
 }
 /*回复内容*/
 .post-cm-content{
@@ -1115,7 +1154,7 @@ textarea.form-control{
     color:#5b5b5b;
 }
 /*回复内容中操作项*/
-.post-cm-opt button,.post-cm-opt a{
+.post-cm-btn{
     font-size: 0.373333rem;
     margin-left: 0.533333rem;
     float:right;

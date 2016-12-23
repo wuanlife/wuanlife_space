@@ -12,8 +12,12 @@
 			<div class="post-content">
 				<%-result.text%>
 			</div>
-			<% if (result.stickyRight || result.deleteRight || result.lockRight || user) { %>
-			<div class="post-opt">
+			<div class="post-opt clearfix">
+				<% if (result.approved == 0) { %>
+				<button class="like-icon like" data-target='1' data-num='<%-result.approvednum%>'><%-result.approvednum%></button>
+				<% } else { %>
+				<button class="liked-icon like" data-target='1' data-num='<%-result.approvednum%>'><%-result.approvednum%></button>
+				<% } %>
 				<% if (result.stickyRight) { %>
 				<% if (result.sticky) { %>
 				<button class="post-opt-item" id="stickBtn">取消置顶</button>
@@ -39,7 +43,6 @@
 				<% } %>
 				<% } %>
 			</div>
-			<% } %>
 		</div>
 		<div id="comment"></div>
 		<% if (!result.lock) { %>
@@ -58,16 +61,22 @@
 	{{each reply as item i}}
 	<div class="post-cm-item" data-id="{{item.floor}}" data-name="{{item.nickname}}">
 		<div class="post-cm-info clearfix">
-			<span><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
+			<span class="text-ellipsis uname"><a href="#?" title="{{item.nickname}}" >{{item.nickname}}</a></span>
 			<span class="post-cm-time">{{item.createTime}}</span>
+			<span class="fR">{{item.floor}}楼</span>
 		</div>
-		<div class="post-cm-content">{{if item.replynickname}}回复 @<a style="color:#062eb1" href="#?" title="{{item.replynickname}}">{{item.replynickname}}</a> : {{/if}}{{item.text}}</div>
+		<div class="post-cm-content">{{if item.replynickname}}回复{{if item.replyFloor}}{{item.replyFloor}}楼{{/if}} @<a style="color:#062eb1" href="#?" title="{{item.replynickname}}">{{item.replynickname}}</a> : {{/if}}{{item.text}}</div>
 		<div class="post-cm-opt clearfix">
+			{{if item.approved == 0}}
+			<button class="like-icon like" data-target='{{item.floor}}' data-num='{{item.approvednum}}'>{{item.approvednum}}</button>
+			{{else}}
+			<button class="liked-icon like" data-target='{{item.floor}}' data-num='{{item.approvednum}}'>{{item.approvednum}}</button>
+			{{/if}}
 			{{if !isLock}}
-			<a class="post-cm-replyBtn" href="/topic/<%=result.postID%>/comment?floor={{item.floor}}&reply={{item.nickname}}">回复</a>
+			<a class="post-cm-replyBtn post-cm-btn" href="/topic/<%=result.postID%>/comment?floor={{item.floor}}&reply={{item.nickname}}">回复</a>
 			{{/if}}
 			{{if item.deleteRight}}
-			<button class="post-cm-deleteBtn" data-target="{{item.floor}}" type="button">删除</button>
+			<button class="post-cm-deleteBtn post-cm-btn" data-target="{{item.floor}}" type="button">删除</button>
 			{{/if}}
 		</div>
 	</div>
@@ -202,7 +211,7 @@
 									self.isLock = 0;
 									self.post_lock.text('锁帖');
 									$('.post-detail').append('<div class="my-comment"><h2>我的回复</h2><form class="post-detail-form clearfix" method="post"><textarea name="" class="form-control" placeholder="内容"></textarea><button type="submit" class="post-sub" id="myReplyBtn">发表回复</button></form></div>');
-									$('.post-cm-opt').prepend('<a class="post-cm-replyBtn">回复</a>');
+									$('.post-cm-opt').prepend('<a class="post-cm-replyBtn post-cm-btn">回复</a>');
 									$('.post-cm-replyBtn').each(function() {
 										var name = $(this).parents('.post-cm-item').attr('data-name');
 										var floor = $(this).parents('.post-cm-item').attr('data-id');
@@ -423,6 +432,8 @@
 								$('.post-comment').children('h2').html(self.replyCount+'个回复');
 								var replyData = {};
 								data.data.deleteRight = 1;
+								data.data.approved = 0;
+								data.data.approvednum = 0;
 								replyData.isLock = self.isLock;
 								replyData.reply = [data.data];
 								var compiled = template("listtemplate", replyData);
@@ -445,6 +456,28 @@
 				window.location.href = '/login';
 				<%}%>
 			},
+			like: function(approvedBtn){
+				<% if (user) { %>
+				if (approvedBtn.hasClass('disabled')) return;
+				approvedBtn.addClass('disabled');
+				var floor = approvedBtn.attr('data-target') ;
+				var num = parseInt(approvedBtn.attr('data-num'));
+				global.subData('/api/postLike',{
+					post_id: parseInt("<%=result.postID%>"),
+					floor: floor
+				},function(data){
+					if (data.ret == 200 && data.data && data.data.code > 0) {
+						num = data.data.code == 1? (num+1) : (num-1)
+						approvedBtn.toggleClass('liked-icon like-icon').attr('data-num', num).text(num);
+					} else{
+						sweetAlert('错误','操作失败，请稍后再试','error');
+					}
+					approvedBtn.removeClass('disabled');
+				});
+				<%} else {%>
+				window.location.href = '/login';
+				<%}%>
+			},
 			bindEvent: function() {
 				var self = this;
 				<% if (result.stickyRight) { %>
@@ -459,14 +492,20 @@
 				<% if (user) { %>
 				self.post_collect.on('touchend',self.collectPost.bind(self));
 				<% } %>	
-				$(document).on('submit', '.post-detail-form', function(event) {
+				$('.main').on('submit', '.post-detail-form', function(event) {
 					event.preventDefault();
 					/* Act on the event */
 					var textarea = $(this).children('textarea');
 					self.subReply.apply(self,[textarea]);
 				});
-				$(document).on('touchend', '.post-cm-deleteBtn',function(event) {
-					self.deletePostReply($(this));
+				$('#comment,.post-opt').on('touchend', function(event) {
+					var target = $(event.target);
+					if (target.hasClass('post-cm-deleteBtn')) {
+						self.deletePostReply(target);
+					}
+					if (target.hasClass('like')) {
+						self.like(target);
+					}
 				});
 			},
 			init: function() {
