@@ -3,7 +3,13 @@
 	<div class="location clearfix">
 		<h1>个人中心</h1>
 	</div>
-	<div class="loginL">
+
+	<div class="location-plus clearfix tab-head">
+        <h2 class="selected">基本资料</h2>
+        <h2>密码安全</h2>
+    </div>
+
+	<div class="loginL tab-content show">
 		<form class="login-form line-form" method="post">
 		    <div class="login-image">
 		        <div class="img-upload-progress"></div>
@@ -42,6 +48,23 @@
 			<button type="submit">保存</button>
 		</form>
 	</div>
+	<div class="loginL tab-content">
+		<form class="pwdsafe-form line-form" method="post">
+			<div class="normaltext-group line-fgroup">
+				<label for="email" class="normaltext-group-key">登录密码：</label>
+				<input type="password" placeholder="请输入登陆密码" id="oldpwd" >
+			</div>
+			<div class="normaltext-group line-fgroup">
+				<label for="email" class="normaltext-group-key">新密码  ：</label>
+				<input type="password" placeholder="请输入新密码" id="newpwd" >
+			</div>
+			<div class="normaltext-group line-fgroup">
+				<label for="email" class="normaltext-group-key">确认密码：</label>
+				<input type="password" placeholder="请再次输入新密码" id="newpwd2" >
+			</div>			
+			<button type="submit">保存</button>
+		</form>
+	</div>	
 </div>
 <%- include base/baseJSMobile.ejs %>
 <script type="text/javascript">
@@ -50,7 +73,11 @@
 			br: $("#br"),
 			name:$("#name"),
 			personalForm: $(".login-form"),
+			pwdsafeForm: $(".pwdsafe-form"),
 			loading: $(".loading"),
+			oldpwd: $("#oldpwd"),
+			newpwd: $("#newpwd"),
+			newpwd2: $("#newpwd2"),
 			year: null,
 			month: null,
 			day: null,
@@ -128,6 +155,34 @@
 				this.day = day;
 				return true;
 			},
+			//绑定标签页相关事件
+			bindTabEvent: function() {
+			    var tabs = $(".tab-head > h2");
+			    var contents = $(".main > .tab-content");
+
+			    (function changeTab(tab) {
+			        for(var i = 0, len = tabs.length; i < len; i++) {
+			            $(tabs[i]).on("touchend", showTab);
+
+			        }
+			    })();
+			    //这个循环貌似有点不好，有没有办法提高效率？
+			    function showTab() {
+			        for(var i = 0, len = tabs.length; i < len; i++) {
+			            if(tabs[i] === this) {
+			                $(tabs[i]).addClass("selected");
+			                $(contents[i]).addClass("show");
+			            } else {
+			            	if($(tabs[i]).hasClass("selected")) {
+                            	$(tabs[i]).removeClass("selected");
+                            }
+			            	if($(contents[i]).hasClass("show")) {
+                            	$(contents[i]).removeClass("show");
+                            }                            
+			            }
+			        }
+			    }
+			},
 			bindEvent: function() {
 				var self = this;
 				self.personalForm.submit(function(event) {
@@ -169,6 +224,7 @@
 			init: function() {
 				this.ClientData();
 				this.bindEvent();
+				this.bindTabEvent();
 			}
 		}
 		users.uploader = Qiniu.uploader({

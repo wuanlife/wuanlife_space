@@ -468,9 +468,34 @@ span.navbar-account-item{
 .location-plus {
     display: inline-block;
     position: absolute;
-    top: 2rem;
-    right: 1rem;
+    top: 1.8rem;
+    left: 3rem;
 }
+
+/******************
+******标签页模块***
+*******************/
+.tab-head > h2 {
+    width: 94px;
+    height: 0.64rem;
+    font-size: 0.4rem;
+    margin-left: 0.4rem;
+    padding-bottom: 33px;
+    float: left;
+    text-align: center;
+    color: #b4b4b4;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.show {
+    display: block;
+}
+.selected {
+    border-bottom: 2px solid #5ab8fe;
+    color: #5ab8fe !important;
+}
+
 
 /******************
 ********翻页模块***
@@ -869,6 +894,26 @@ button.unCBtn{
     width:0.64rem;
     height:0.64rem;
 }
+/**/
+.normaltext-group {
+    padding-bottom: 0.2rem;
+    margin-bottom:0.426667rem;
+}
+.normaltext-group input {
+
+    font-size: 0.373333rem;
+    line-height: 0.64rem;
+    height: 0.64rem;
+    padding-left: 2rem;  
+}
+.normaltext-group label  {
+    font-size: 0.373333rem;
+    line-height: 0.64rem;
+    font-weight: 600;
+    height:0.64rem;
+    color: #5ab8fe;
+}
+
 /*用户名*/
 .label-name{
     background-image: url(../images/login_01.png);
@@ -919,6 +964,23 @@ button.unCBtn{
     height:0.64rem;
     margin-left: 1.133333rem;
 }
+/*密码空间*/
+.pwdsafe-form button[type="submit"]{  
+    font-size: 0.453333rem;
+    line-height: 1.2;
+    padding:0.266667rem 0 ;
+    margin-top:0.853333rem;
+}
+.pwdsafe-form a{
+    font-size: 0.32rem;
+    color:#5ab8fe;
+}
+.pwdsafe-group .radiobox{
+    font-size: 0.373333rem;
+    height:0.64rem;
+    margin-left: 1.133333rem;
+}
+
 /*头像区域*/
 .login-image{
     width: 1.333333rem;
