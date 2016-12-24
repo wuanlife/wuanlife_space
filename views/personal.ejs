@@ -221,35 +221,28 @@
 					event.preventDefault();
 					var verifyFlag = true;
 					//密码空间认证,懒得新写一个verificate，有没有办法通过获取当前标签页号来扩展verificate？
-					if (self.oldpwd.val().length == 0 || self.newpwd.val().length == 0 || self.newpwd2.val().length == 0) {
-						sweetAlert('格式错误', '请填写密码！', 'warning');
+					if (self.oldpwd.val().length < 6 || self.newpwd.val().length < 6 || self.newpwd2.val().length < 6) {
+						sweetAlert('格式错误', '密码长度不足6位', 'warning');
 						verifyFlag = false;
 					}
 					if (verifyFlag) {
 						self.loading.show();
-						global.subData('/users', {
-							user_name:self.user_name,
-							profile_picture:$("#g_img").val(),
-							sex: self.sex,
-							year: self.year,
-							month: self.month,
-							day: self.day
+						global.subData('/api/changepwd', {
+							oldpwd: self.oldpwd.val(),
+							newpwd: self.newpwd.val(),
+							newpwd2: self.newpwd2.val(),
 						}, function(data) {
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
-									sweetAlert('提示', '资料更新成功', 'success');
-									if (self.year) {
-										self.br.val(self.year + '-' + self.month + '-' + self.day);
-									}
-									$('#nav-username').html(self.user_name+'<span class="caret"></span>');
+									sweetAlert('提示', '密码修改成功', 'success');
 
 								} else {
 									sweetAlert('提示', data.data.msg, 'warning');
 									self.name.val(self.oldname);
 								}
 							} else {
-								sweetAlert('错误', data.msg, 'error');
+								sweetAlert('错误', data.data.msg, 'error');
 							}
 						});
 					}

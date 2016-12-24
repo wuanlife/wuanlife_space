@@ -832,6 +832,35 @@ router.post('/:method', function(req, res, next) {
 				}
 			})
 			break;
+		//用于个人空间密码修改
+		case 'changepwd':
+			request.post({
+				url: config.server + '?service=User.Changepwd',
+				formData: {
+					user_id: userID,
+		            pwd: req.body.oldpwd,
+		            newpwd:req.body.newpwd,
+		            checkNewpwd:req.body.newpwd2,
+				}
+			}, function optionalCallback(err, httpResponse, body) {
+				res.header('Content-type', 'application/json');
+				res.header('Charset', 'utf8');
+				try {
+					if(!err && httpResponse.statusCode == 200) {
+						return res.send(JSON.parse(body));
+					}
+					res.send({
+						ret: 500,
+						msg: '服务器异常'
+					});
+				} catch(e) {
+					res.send({
+						ret: 500,
+						msg: e.message
+					});
+				}
+			})
+			break;
 		default:
 			res.send('respond with a resource');
 			break;
