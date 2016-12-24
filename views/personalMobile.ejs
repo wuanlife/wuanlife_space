@@ -220,7 +220,7 @@
 						});
 					}
 				});
-				
+
 				//绑定密码安全标签页事件
 				self.pwdsafeForm.submit(function(event) {
 					event.preventDefault();
@@ -240,8 +240,12 @@
 							self.loading.hide();
 							if (data.ret == 200 && data.data) {
 								if (data.data.code == 1) {
-									sweetAlert('提示', '密码修改成功', 'success');
-
+									sweetAlert('提示', '密码修改成功,3秒后跳转到登陆界面', 'success');
+									setTimeout(
+										function(){
+											window.location.href = "/logout";
+										},3000
+									);
 								} else {
 									sweetAlert('提示', data.data.msg, 'warning');
 									self.name.val(self.oldname);
