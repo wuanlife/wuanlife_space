@@ -372,6 +372,34 @@ span.navbar-account-item{
     line-height: 40px;
     color: #5ab8fe;
 }*/
+
+/******************
+******标签页模块***
+*******************/
+.tab-head > h2 {
+    width: 94px;
+    height: 28px;
+    font-size: 22px;
+    margin-right: 25px;
+    padding-bottom: 33px;
+    float: left;
+    text-align: center;
+    color: #b4b4b4;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.show {
+    display: block;
+}
+.selected {
+    border-bottom: 2px solid #5ab8fe;
+    color: #5ab8fe !important;
+}
+
+
+
+
 /******************
 ********翻页模块***
 *******************/
@@ -735,6 +763,25 @@ button.liked-icon.suc:before{
     height:36px;
     z-index: 1;
 }
+/**/
+.normaltext-group {
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+.normaltext-group input {
+    font-size: 17px;
+    line-height: 36px;
+    height:36px;
+    padding-left: 87px;  
+    position: relative; 
+}
+.normaltext-group label  {
+    font-size: 17px;
+    line-height: 36px;
+    font-weight: 500;
+    height:36px;
+    color: #5ab8fe;
+}
 /*用户名*/
 .label-name{
     background-image: url(../images/login_01.png);
@@ -785,6 +832,23 @@ button.liked-icon.suc:before{
     height:36px;
     padding-left: 51px;
 }
+/*密码空间*/
+.pwdsafe-form button[type="submit"]{  
+    font-size: 21px;
+    padding:8.5px 0;
+    border-radius: 7px;
+    margin-top: 35px;
+}
+.pwdsafe-form a{
+    font-size: 14px;
+    color:#5ab8fe;
+}
+.pwdsafe-group .radiobox{
+    font-size: 17px;
+    height:36px;
+    padding-left: 51px;
+}
+
 /*头像区域*/
 .login-image{
     width: 100px;
