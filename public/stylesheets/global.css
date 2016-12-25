@@ -385,6 +385,7 @@ span.navbar-account-item{
     float: left;
     text-align: center;
     color: #b4b4b4;
+    cursor: pointer;
 }
 .tab-content {
     display: none;
