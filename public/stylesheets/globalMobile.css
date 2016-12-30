@@ -1228,7 +1228,6 @@ textarea.form-control{
     cursor: pointer;
     height: 0.506667rem;
     line-height: 0.506667rem;
-    vertical-align: middle;
 }
 /*回复内容的翻页*/
 .post-comment .page-turn{
