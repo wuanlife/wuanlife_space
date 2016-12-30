@@ -1216,6 +1216,9 @@ textarea.form-control{
     color:#5b5b5b;
 }
 /*回复内容中操作项*/
+.post-cm-opt{
+    vertical-align: top;
+}
 .post-cm-btn{
     font-size: 0.373333rem;
     margin-left: 0.533333rem;
@@ -1223,7 +1226,9 @@ textarea.form-control{
     color:#5ab8fe;
     background-color: transparent;
     cursor: pointer;
-    vertical-align: bottom;
+    height: 0.506667rem;
+    line-height: 0.506667rem;
+    vertical-align: middle;
 }
 /*回复内容的翻页*/
 .post-comment .page-turn{
