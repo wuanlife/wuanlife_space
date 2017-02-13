@@ -77,7 +77,7 @@ router.get('/:id/edit', function(req, res, next) {
             }
         });
     } else {
-        request(config.server + "?service=Post.GetPostBase&post_id=" + req.param('id') + "&id=" + userid,
+        request(config.server + "?service=Post.GetPostBase&post_id=" + req.param('id') + "&user_id=" + userid,
             function(err, response, body) {
                 if (!err && response.statusCode == 200) {
                     var result = JSON.parse(body);

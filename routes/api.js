@@ -184,9 +184,9 @@ router.get('/:method', function(req, res, next) {
             });
             break;
 		case 'getPostForEdit':
-			var postid = req.param('postid');
+			var post_id = req.param('postid');
 			var user_id = userID;
-			request(config.server + '?service=Post.GetPostBase&post_id=' + postid + '&id=' + user_id,
+			request(config.server + '?service=Post.GetPostBase&post_id=' + post_id + '&user_id=' + user_id,
 				function(error, response, body) {
 					res.header('Content-type', 'application/json');
 					res.header('Charset', 'utf8');
