@@ -28,6 +28,9 @@
   },
   "devDependencies": {
     "browser-sync": "^2.18.5",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0"
   }
 }
