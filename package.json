@@ -1,6 +1,6 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
+  "name": "wuan",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -29,8 +29,12 @@
   "devDependencies": {
     "browser-sync": "^2.18.5",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
     "gulp-less": "^3.3.0",
+    "gulp-minify-css": "^1.2.4",
     "gulp-notify": "^3.0.0",
-    "gulp-plumber": "^1.1.0"
+    "gulp-plumber": "^1.1.0",
+    "gulp-watch": "^4.3.11",
+    "run-sequence": "^1.2.2"
   }
 }
