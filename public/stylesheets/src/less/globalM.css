@@ -1,0 +1,150 @@
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font: 12px "宋体", "Arial Narrow", HELVETICA;
+  background: #fff;
+  -webkit-text-size-adjust: 100%;
+}
+a {
+  color: #2d374b;
+  text-decoration: none;
+}
+a:hover {
+  color: #cd0200;
+  text-decoration: underline;
+}
+em {
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+img {
+  border: 0;
+  vertical-align: middle;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+p {
+  word-wrap: break-word;
+}
+body {
+  min-height: 100%;
+  width: 100%;
+  min-width: 100%;
+}
+h1 {
+  margin: 0;
+}
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.navbar {
+  position: relative;
+  min-height: 102px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+}
+.navbar-default {
+  background-color: #5677fc;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.navbar-default .container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.navbar-default .container .navbar-header .toggle {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.back-toggle {
+  border: 0;
+  float: left;
+  position: relative;
+  background: transparent;
+  height: 102px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.search-toggle {
+  position: relative;
+  float: right;
+  margin-right: 15px;
+  padding: 9px 10px;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  height: 102px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.navbar-brand {
+  font-size: 20px;
+  float: left;
+  height: 56px;
+  padding: 23px 0 23px 40px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+[data-dpr="2"] .navbar-brand {
+  font-size: 40px;
+}
+[data-dpr="2.5"] .navbar-brand {
+  font-size: 50px;
+}
+[data-dpr="2.75"] .navbar-brand {
+  font-size: 55px;
+}
+[data-dpr="3"] .navbar-brand {
+  font-size: 60px;
+}
+[data-dpr="4"] .navbar-brand {
+  font-size: 80px;
+}
+.icon-back {
+  font-size: 27px;
+  top: -3px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.icon-back::before {
+  content: "<-";
+}
+.icon-search::before {
+  content: "Q-";
+}

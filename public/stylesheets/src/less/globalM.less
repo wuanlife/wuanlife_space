@@ -1,0 +1,144 @@
+@wuanBlue: #5677fc;
+@bgWhite: #ffffff;
+//字体适配
+//使用时.px2px(font-size, 32);
+.px2px(@name, @px) {
+    @{name}: round(@px / 2) * 1px;
+    [data-dpr="2"] & {
+        @{name}: @px * 1px;
+    }
+    // for mx3
+    [data-dpr="2.5"] & {
+        @{name}: round(@px * 2.5 / 2) * 1px;
+    }
+    // for 小米note
+    [data-dpr="2.75"] & {
+        @{name}: round(@px * 2.75 / 2) * 1px;
+    }
+    [data-dpr="3"] & {
+        @{name}: round(@px / 2 * 3) * 1px
+    }
+    // for 三星note4
+    [data-dpr="4"] & {
+        @{name}: @px * 2px;
+    }
+}
+
+
+
+//initial
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
+body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;} 
+a{color:#2d374b;text-decoration:none} 
+a:hover{color:#cd0200;text-decoration:underline} 
+em{font-style:normal} 
+li{list-style:none} 
+img{border:0;vertical-align:middle} 
+table{border-collapse:collapse;border-spacing:0} 
+p{word-wrap:break-word}
+
+
+
+body {
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
+h1 {
+	margin: 0;
+}
+
+.wuanBlueBackground {
+    background-color: @wuanBlue;
+}
+
+//圆角
+.border-radius(@radius: 2px) {
+    border-radius: @radius;
+}
+
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+
+
+@navbar-header-height: 102px;
+.navbar {
+    position: relative;
+    min-height: @navbar-header-height;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.navbar-default {
+    .wuanBlueBackground;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    .container {
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+        .navbar-header {
+            .toggle {
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+        }
+    }
+}
+
+.back-toggle {
+    border: 0;
+    float: left;
+    position: relative;
+    background: transparent;
+    height: @navbar-header-height;
+    .center
+}
+
+.search-toggle {
+    position: relative;
+    float: right;
+    margin-right: 15px;
+    padding: 9px 10px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    height: @navbar-header-height;
+    .center
+}
+
+.bottom-shadow(@hshadow: 8px) {
+    box-shadow: 0 0 @hshadow 0;
+}
+
+.navbar-brand {
+    .px2px(font-size, 40);
+    float: left;
+    height: @navbar-header-height - 46px;
+    padding: 23px 0 23px 40px;
+    .center
+}
+
+//this should be modified later
+.icon-back {
+    font-size: 27px;
+    top: -3px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.icon-back::before {
+    content: "<-";
+}
+
+.icon-search {}
+
+.icon-search::before {
+    content: "Q-";
+}
