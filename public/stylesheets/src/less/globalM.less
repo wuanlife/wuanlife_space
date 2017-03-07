@@ -24,28 +24,67 @@
     }
 }
 
-
+//iconfont
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
 
 //initial
-body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0} 
-body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;} 
-a{color:#2d374b;text-decoration:none} 
-a:hover{color:#cd0200;text-decoration:underline} 
-em{font-style:normal} 
-li{list-style:none} 
-img{border:0;vertical-align:middle} 
-table{border-collapse:collapse;border-spacing:0} 
-p{word-wrap:break-word}
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+    margin: 0;
+    padding: 0
+}
 
+body {
+    font: 12px"宋体", "Arial Narrow", HELVETICA;
+    background: #fff;
+    -webkit-text-size-adjust: 100%;
+}
 
+a {
+    color: #2d374b;
+    text-decoration: none
+}
+
+a:hover {
+    color: #cd0200;
+    text-decoration: underline
+}
+
+em {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+p {
+    word-wrap: break-word
+}
 
 body {
     min-height: 100%;
     width: 100%;
     min-width: 100%;
 }
+
 h1 {
-	margin: 0;
+    margin: 0;
 }
 
 .wuanBlueBackground {
@@ -64,21 +103,30 @@ h1 {
     display: flex;
 }
 
+//清除在父元素里面放
+.clearfix() {
+    min-height: 1px;
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+}
 
 @navbar-header-height: 102px;
-.navbar {
-    position: relative;
-    min-height: @navbar-header-height;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-}
+@navbar-search-height: 128px;
+
 
 .navbar-default {
     .wuanBlueBackground;
     position: fixed;
     top: 0;
+    height: @navbar-header-height;
     width: 100%;
-    .container {
+    .nav-container {
         margin-right: auto;
         margin-left: auto;
         padding-left: 15px;
@@ -92,26 +140,41 @@ h1 {
     }
 }
 
+.navbar-search {
+    .wuanBlueBackground;
+    margin-bottom: 10px;
+    position: fixed;
+    top: 0;
+    height: @navbar-search-height;
+    width: 100%;
+    .bottom-shadow();
+    .nav-container {
+        height: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+        .navbar-header {
+            .toggle {
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+        }
+    }
+}
+
+.navbar-header {
+    .clearfix();
+    align-items: center; //子元素垂直居中
+}
+
 .back-toggle {
+    height: 36px;
+    margin: 48px 0 48px 10px;
     border: 0;
     float: left;
     position: relative;
     background: transparent;
-    height: @navbar-header-height;
-    .center
-}
-
-.search-toggle {
-    position: relative;
-    float: right;
-    margin-right: 15px;
-    padding: 9px 10px;
-    background-color: transparent;
-    background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    height: @navbar-header-height;
-    .center
 }
 
 .bottom-shadow(@hshadow: 8px) {
@@ -120,25 +183,131 @@ h1 {
 
 .navbar-brand {
     .px2px(font-size, 40);
+    font-family: PingFangSC-Medium;
+    opacity:0.87;
+    color: #ffffff;
     float: left;
-    height: @navbar-header-height - 46px;
+    height: 100% - 46px;
     padding: 23px 0 23px 40px;
-    .center
+    margin: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
 }
 
 //this should be modified later
 .icon-back {
-    font-size: 27px;
+    font-size: 36px;
     top: -3px;
     color: rgba(255, 255, 255, 0.8);
 }
 
-.icon-back::before {
-    content: "<-";
+.search-toggle {
+    position: relative;
+    float: right;
+    margin-right: 15px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 16px 0;
+    height: @navbar-header-height - 32px;
+    .center
 }
 
-.icon-search {}
+input[type=search] {
+    appearance: textfield;
+    box-sizing: content-box;
+    font-family: inherit;
+    font-size: 100%;
+}
 
-.icon-search::before {
-    content: "Q-";
+input::search-decoration, input::search-cancel-button {
+    display: none;
+}
+
+//url(http://webdesignerwall.com/demo/expandable-search-form/images/search-icon.png)
+.icon-search {
+    font-size: 36px;
+    margin: auto 0;
+}
+
+.icon-search::before {}
+
+.tab-head {
+    margin-top: 102px;
+    .bottom-shadow;
+    height: 96px;
+    .second-bar {
+        height: 100%;
+    }
+}
+
+ul.second-bar {
+    width: 100%;
+    height: 60px;
+    background-color: @wuanBlue;
+    margin: 0 auto;
+    li {
+        width: 25%;
+        height: 100%;
+        float: left;
+        .center;
+        a {
+            display: inline-block;
+            padding: 0 20px;
+            height: 60px;
+            line-height: 60px;
+            color: #FFF;
+            font-family: "\5FAE\8F6F\96C5\9ED1";
+            font-size: 16px;
+        }
+        a:hover {
+            background: #0095BB;
+        }
+    }
+}
+
+.navbar-search-header {
+    .clearfix();
+    height: 100%;
+
+}
+
+.searcher {
+    float: right;
+    position: absolute;
+    left: 96px;
+    right: 16px;
+    height: 96px;
+    margin: 16px 0;
+    form {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        background: #fafafa;
+        .bottom-shadow(@hshadow: 2px);
+        .border-radius(@radius: 4px);
+
+        input, button {
+            border: none;
+            float: left;
+            background: #fafafa;
+        }
+        input[type=search] {
+            height: 95%;
+            width: 90%;
+            margin-left: 10px;
+            appearance: none;
+        }
+        button {
+            margin: 0 32px 0 0;;
+        }
+    }
+}
+
+
+.container {
+    margin-top: 138px;
 }
