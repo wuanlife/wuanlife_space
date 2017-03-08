@@ -1,76 +1,8 @@
-        <div class="loading" style='display: none;'>
-            <div class='uil-default-css'>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(0deg) translate(0,-60px);transform:rotate(0deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(30deg) translate(0,-60px);transform:rotate(30deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(60deg) translate(0,-60px);transform:rotate(60deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(90deg) translate(0,-60px);transform:rotate(90deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(120deg) translate(0,-60px);transform:rotate(120deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(150deg) translate(0,-60px);transform:rotate(150deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(180deg) translate(0,-60px);transform:rotate(180deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(210deg) translate(0,-60px);transform:rotate(210deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(240deg) translate(0,-60px);transform:rotate(240deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(270deg) translate(0,-60px);transform:rotate(270deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(300deg) translate(0,-60px);transform:rotate(300deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-                <div style='top:80px;left:93px;width:14px;height:40px;background:#00b2ff;-webkit-transform:rotate(330deg) translate(0,-60px);transform:rotate(330deg) translate(0,-60px);border-radius:10px;position:absolute;'></div>
-            </div>
-        </div>
-    </div>
-    <div class="mask"></div>
-    </div>
-        <div class="sidebarContainer">
-            <div class="sidebar">
-                <h1>午安网</h1>
-                <ul class="navbar-option">
-                    <li><a href="/" class="navbar-icon navbar-option-item nav-h">首页</a></li>
-                    <% if (user) { %>
-                    <li><a href="/uGroup/<%=user.userID%>" class="navbar-icon navbar-option-item nav-mg">我的星球</a></li>
-                    <% } %>
-                    <li><a href="/allGroup" class="navbar-icon navbar-option-item nav-ag">全部星球</a></li>
-                    <% if (user) { %>
-                    <li><a href="/users" class="navbar-icon navbar-option-item nav-per">个人中心</a></li>
-                    <li><a href="/message" class="navbar-icon navbar-option-item nav-mes">消息中心<i class="red-point" id="mrp"></i></a></li>
-                    <li><a href="/myCollections" class="navbar-icon navbar-option-item nav-myc">我的收藏</a></li>
-                    <% } %>
-                </ul>
-                <ul class="navbar-account">
-                    <% if (user) { %>
-                    <li class="aLogged"><span title="" class="navbar-icon navbar-account-item" id="nav-username"><%=user.nickname%></span></li>
-                    <li class="aLogged"><a href="/logout" class="navbar-icon navbar-account-item">退出</a></li>
-                    <% } else { %>
-                    <li class="aNLog"><a href="/login" title="" class="navbar-icon navbar-account-item">登录</a></li>
-                    <li class="aNLog"><a href="/register" title="" class="navbar-icon navbar-account-item">注册</a></li>
-                    <% } %>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript" src="/javascripts/zepto.min.js"></script>
-    <script type="text/javascript" src="/javascripts/zepto.touch.js"></script>
-    <script type="text/javascript" src="/javascripts/zepto.callbacks.js"></script>
-    <script type="text/javascript" src="/javascripts/zepto.deferred.js"></script>
-    <script src="/javascripts/sweetAlert.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/javascripts/template.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="/javascripts/plupload/plupload.full.min.js"></script>
-    <script type="text/javascript" src="/javascripts/plupload/i18n/zh_CN.js"></script>
-    <script type="text/javascript" src="/javascripts/qiniu.js"></script>
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="./javascripts/jquery-3.1.1.min.js"></script>
+    <script src="./javascripts/iconfont.js"></script>
     <script type = "text/javascript">
         var global = (function() {
-            //设置侧栏切换按钮
-            $(".navbar-toggle").on("touchend", function() {                   
-                var all = $(".all-wrapper");
-                if (all.hasClass('open')) {
-                    all.removeClass('open').addClass('close');
-                } else{
-                    all.removeClass('close').addClass('open');
-                }
-            });
-            //主栏遮罩
-            $(".mask").on("touchend", function(e) {
-                //e.stopPropagation();
-                $(".all-wrapper").removeClass('open').addClass('close');
-                return false; //zepto return false 则会阻止事件冒泡以及默认操作
-            });
             //ajax获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {
@@ -101,112 +33,20 @@
                     return unescape(r[2]); 
                 return null; //返回参数值
             }; 
-            //设置主栏主内容容器高度
-            $(document).ready(function() {
-               var windowHeight = $(window).height();
-               $('.all-wrapper').css('height', windowHeight);
-               $(window).resize(function(event) {
-                   /* Act on the event */
-                   var currentHeight = $(window).height();
-                   if (currentHeight >= windowHeight) {
-                        $('.all-wrapper').css('height', currentHeight);
-                   }
-               });
-            }); 
-            //获取翻页页数
-            var getPageNow = function(){
-                var reg = /page=(\d+)/,
-                    regMatch = reg.exec(location.search),
-                    pageNow = regMatch === null ? 1:regMatch[1];
-                return pageNow;
-            };
-            //翻页事件处理
-            var everPushed = false;
-            var changeEverPushed = function(){
-                everPushed = true;
-            }
-            var pageCount = 1;
-            var setPageCount = function(pn){
-                pageCount = pn;
-            }
-            var pageTurning = function(pre,next,updata){
-                var self = this;
-                var initialUrl = location.href;
-                $(document).on('touchend', pre,function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    var pageNow = global.getPageNow();
-                    if (pageNow>pageCount) pageNow = pageCount;
-                    if (pageNow == 1) {
-                        return;
-                    } else{
-                        pageNow--;
-                        var search = location.search.replace(/page=\d+/,'page='+pageNow);
-                        var newURL = location.pathname + search;
-                        history.pushState(null,'',newURL);
-                        everPushed = true;
-                        updata.apply(self,[]);
-                    }
-                });
-                $(document).on('touchend', next,function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    var pageNow = global.getPageNow();
-                    if (pageNow>pageCount) pageNow = pageCount;
-                    if (pageNow == pageCount) {
-                        return;
-                    } else{
-                        pageNow++;
-                        var reg = /page=\d+/;
-                        var symbol = location.search?'&':'?';
-                        var search = reg.test(location.search)?location.search.replace(reg,'page='+pageNow):location.search + symbol + 'page=' + pageNow;
-                        var newURL = location.pathname + search;
-                        history.pushState(null,'',newURL);
-                        everPushed = true;
-                        updata.apply(self,[]);
-                    }
-                });
-                //popstate
-                $(window).on('popstate',  function(event) {
-                    event.preventDefault();
-                    /* Act on the event */
-                    var onloadPop = !everPushed && location.href == initialUrl;
-                    everPushed = true;
-                    if (onloadPop) return;
-                    updata.apply(self,[]);
-                });
-            };
-            //用于把用utf16编码的字符转换成实体字符，以供后台存储 
-            var utf16toEntities = function(str){
-                var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则  
-                str = str.replace(patt, function(char){  
-                    var H, L, code;  
-                    if (char.length===2) {  
-                        H = char.charCodeAt(0); // 取出高位  
-                        L = char.charCodeAt(1); // 取出低位  
-                        code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法  
-                        return "&#" + code + ";";  
-                    } else {  
-                        return char;  
-                    }  
-                });  
-                return str; 
-            };
+
+
             return {
                 getData:getData,
                 subData:subData,
                 getUrlParam: getUrlParam,
-                getPageNow:getPageNow,
-                setPageCount:setPageCount,
-                pageTurning:pageTurning,
-                changeEverPushed:changeEverPushed,
-                utf16toEntities:utf16toEntities
             }
         }());
     </script>
     <% if (user) { %>
     <script>
+        /*
         (function(){
+
             var socket = io(location.hostname+':'+location.port);
                 socket.on('news',function(data){
                 // console.log('accept');
@@ -218,5 +58,6 @@
                 }
             });
         }());
+        */
     </script>
     <% } %>

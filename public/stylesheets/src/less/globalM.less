@@ -24,7 +24,7 @@
     }
 }
 
-//iconfont
+//iconfont　通用
 .icon {
     width: 1em;
     height: 1em;
@@ -103,7 +103,7 @@ h1 {
     display: flex;
 }
 
-//清除在父元素里面放
+//清除浮动，在父元素里面放
 .clearfix() {
     min-height: 1px;
     zoom: 1;
@@ -116,29 +116,44 @@ h1 {
     }
 }
 
+.bottom-shadow(@hshadow: 8px) {
+    box-shadow: 0 0 @hshadow 0;
+}
+
+/**
+分割
+**/
+
+
 @navbar-header-height: 102px;
 @navbar-search-height: 128px;
-
-
 .navbar-default {
     .wuanBlueBackground;
     position: fixed;
     top: 0;
     height: @navbar-header-height;
     width: 100%;
+    z-index: 100;
     .nav-container {
         margin-right: auto;
         margin-left: auto;
         padding-left: 15px;
         padding-right: 15px;
         .navbar-header {
+            .clearfix();
+            align-items: center; //子元素垂直居中
             .toggle {
                 margin-right: -15px;
                 margin-left: -15px;
             }
+            svg {
+                font-size: 36px;
+            }
         }
     }
 }
+
+
 
 .navbar-search {
     .wuanBlueBackground;
@@ -163,11 +178,6 @@ h1 {
     }
 }
 
-.navbar-header {
-    .clearfix();
-    align-items: center; //子元素垂直居中
-}
-
 .back-toggle {
     height: 36px;
     margin: 48px 0 48px 10px;
@@ -177,14 +187,12 @@ h1 {
     background: transparent;
 }
 
-.bottom-shadow(@hshadow: 8px) {
-    box-shadow: 0 0 @hshadow 0;
-}
+
 
 .navbar-brand {
     .px2px(font-size, 40);
     font-family: PingFangSC-Medium;
-    opacity:0.87;
+    opacity: 0.87;
     color: #ffffff;
     float: left;
     height: 100% - 46px;
@@ -227,44 +235,41 @@ input::search-decoration, input::search-cancel-button {
     display: none;
 }
 
-//url(http://webdesignerwall.com/demo/expandable-search-form/images/search-icon.png)
-.icon-search {
-    font-size: 36px;
-    margin: auto 0;
-}
 
-.icon-search::before {}
 
 .tab-head {
     margin-top: 102px;
-    .bottom-shadow;
     height: 96px;
-    .second-bar {
-        height: 100%;
-    }
-}
-
-ul.second-bar {
     width: 100%;
-    height: 60px;
-    background-color: @wuanBlue;
-    margin: 0 auto;
-    li {
-        width: 25%;
+    position: fixed;
+    .bottom-shadow;
+
+    ul.tab-head-bar {
+        display: -webkit-flex;
+        display: flex;
+        width: 100%;
         height: 100%;
-        float: left;
-        .center;
-        a {
-            display: inline-block;
-            padding: 0 20px;
-            height: 60px;
-            line-height: 60px;
-            color: #FFF;
-            font-family: "\5FAE\8F6F\96C5\9ED1";
-            font-size: 16px;
-        }
-        a:hover {
-            background: #0095BB;
+        background-color: @wuanBlue;
+        margin: 0 auto;
+        li {
+            flex: 1;
+            height: 100%;
+            .center;
+            a {
+                display: inline-block;
+                padding: 0 20px;
+                height: 60px;
+                line-height: 60px;
+                color: #FFF;
+                font-family: "\5FAE\8F6F\96C5\9ED1";
+                font-size: 16px;
+            }
+            a:hover {
+                background: #0095BB;
+            }
+            svg {
+                font-size: 40px;
+            }
         }
     }
 }
@@ -272,7 +277,6 @@ ul.second-bar {
 .navbar-search-header {
     .clearfix();
     height: 100%;
-
 }
 
 .searcher {
@@ -289,7 +293,6 @@ ul.second-bar {
         background: #fafafa;
         .bottom-shadow(@hshadow: 2px);
         .border-radius(@radius: 4px);
-
         input, button {
             border: none;
             float: left;
@@ -302,12 +305,14 @@ ul.second-bar {
             appearance: none;
         }
         button {
-            margin: 0 32px 0 0;;
+            margin: 0 32px 0 0;
+        }
+        svg {
+            font-size: 36px;
         }
     }
 }
 
-
-.container {
+.search-container {
     margin-top: 138px;
 }

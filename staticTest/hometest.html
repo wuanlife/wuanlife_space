@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8"/>
         <meta content="width=devide-width,initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no" name="viewport"/>
-        <link href="./stylesheets/src/less/globalM.css" rel="stylesheet" type="text/css">
+        <link href="../public/stylesheets/globalM.css" rel="stylesheet" type="text/css">
         </link>
-        <script src="./iconfont.js">
+        <script src="../public/javascripts/iconfont.js">
         </script>
     </head>
     <body>
@@ -13,8 +13,10 @@
             <div class="nav-container">
                 <div class="navbar-header">
                     <button class="search-toggle" type="button">
-                        <i class="icon-search">
-                        </i>
+	                	<svg aria-hidden="true" class="icon">
+	                        <use xlink:href="#icon-search">
+	                        </use>
+	                    </svg>
                     </button>
                     <div class="navbar-brand">
                         <h1>
@@ -25,16 +27,31 @@
             </div>
         </nav>
         <div class="tab-head">
-            <ul class="second-bar">
-                <li class="selected"><i>1111</i></li>
-                <li>                        
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-fanhui">
+            <ul class="tab-head-bar">
+                <li class="selected">                    
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-home">
                         </use>
                     </svg>
                 </li>
-                <li><i>33</i></li>
-                <li><i>444</i></li>
+                <li>                        
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-lightPlanet_blue">
+                        </use>
+                    </svg>
+                </li>
+                <li>
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-message_blue">
+                        </use>
+                    </svg>
+                </li>
+                <li>
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-me_blue">
+                        </use>
+                    </svg>
+                </li>
             </ul>
         </div>
         <div class="tab-content">

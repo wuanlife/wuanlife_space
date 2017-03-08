@@ -74,12 +74,16 @@ h1 {
   align-items: center;
   display: flex;
 }
+/**
+分割
+**/
 .navbar-default {
   background-color: #5677fc;
   position: fixed;
   top: 0;
   height: 102px;
   width: 100%;
+  z-index: 100;
 }
 .navbar-default .nav-container {
   margin-right: auto;
@@ -87,9 +91,24 @@ h1 {
   padding-left: 15px;
   padding-right: 15px;
 }
+.navbar-default .nav-container .navbar-header {
+  min-height: 1px;
+  zoom: 1;
+  align-items: center;
+}
+.navbar-default .nav-container .navbar-header:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
 .navbar-default .nav-container .navbar-header .toggle {
   margin-right: -15px;
   margin-left: -15px;
+}
+.navbar-default .nav-container .navbar-header svg {
+  font-size: 36px;
 }
 .navbar-search {
   background-color: #5677fc;
@@ -110,18 +129,6 @@ h1 {
 .navbar-search .nav-container .navbar-header .toggle {
   margin-right: -15px;
   margin-left: -15px;
-}
-.navbar-header {
-  min-height: 1px;
-  zoom: 1;
-  align-items: center;
-}
-.navbar-header:after {
-  content: "";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
 }
 .back-toggle {
   height: 36px;
@@ -189,33 +196,29 @@ input::search-decoration,
 input::search-cancel-button {
   display: none;
 }
-.icon-search {
-  font-size: 36px;
-  margin: auto 0;
-}
 .tab-head {
   margin-top: 102px;
-  box-shadow: 0 0 8px 0;
   height: 96px;
-}
-.tab-head .second-bar {
-  height: 100%;
-}
-ul.second-bar {
   width: 100%;
-  height: 60px;
+  position: fixed;
+  box-shadow: 0 0 8px 0;
+}
+.tab-head ul.tab-head-bar {
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  height: 100%;
   background-color: #5677fc;
   margin: 0 auto;
 }
-ul.second-bar li {
-  width: 25%;
+.tab-head ul.tab-head-bar li {
+  flex: 1;
   height: 100%;
-  float: left;
   justify-content: center;
   align-items: center;
   display: flex;
 }
-ul.second-bar li a {
+.tab-head ul.tab-head-bar li a {
   display: inline-block;
   padding: 0 20px;
   height: 60px;
@@ -224,8 +227,11 @@ ul.second-bar li a {
   font-family: "\5FAE\8F6F\96C5\9ED1";
   font-size: 16px;
 }
-ul.second-bar li a:hover {
+.tab-head ul.tab-head-bar li a:hover {
   background: #0095BB;
+}
+.tab-head ul.tab-head-bar li svg {
+  font-size: 40px;
 }
 .navbar-search-header {
   min-height: 1px;
@@ -270,6 +276,9 @@ ul.second-bar li a:hover {
 .searcher form button {
   margin: 0 32px 0 0;
 }
-.container {
+.searcher form svg {
+  font-size: 36px;
+}
+.search-container {
   margin-top: 138px;
 }

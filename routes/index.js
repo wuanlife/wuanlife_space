@@ -2,9 +2,10 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var ua = require('mobile-agent');
-var config = require('../config/config');
+//var config = require('../config/config');
 
 /* GET home page. */
+/*
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 		pn = req.query.page || 1,
@@ -38,5 +39,20 @@ router.get('/', function(req, res, next) {
 	})
 
 });
+*/
 
+router.get('/', function(req, res, next) {
+	var agent = ua(req.headers['user-agent']);
+	try{
+		var page = agent.Mobile ? 'indexMobile' : 'index';
+		res.render(page, {
+			'result': null,
+			'user': null
+		});
+	} catch(e){
+		next(e);
+	}
+	
+
+});
 module.exports = router;
