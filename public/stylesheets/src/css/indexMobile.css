@@ -2,15 +2,6 @@
 .index-entries .index-entry-content {
   margin: 0 40px;
 }
-.index-entries .index-entry-header .index-entry-info img {
-  width: 60px;
-  height: 60px;
-}
-
-.index-entries .index-entry-header,
-.index-entries .index-entry-content {
-  margin: 0 40px;
-}
 .index-entries .index-entry-header,
 .index-entries .index-entry-content {
   margin: 0 40px;
@@ -50,5 +41,3 @@
 [data-dpr="4"] .index-entries .index-entry-header p {
   "font-size": 48px;
 }
-
-

@@ -102,6 +102,14 @@ h1 {
     align-items: center; //子元素垂直居中
     display: flex;
 }
+.alignCenter {
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+.horizontalCenter {
+    justify-content: center; //子元素水平居中
+    display: flex;
+}
 
 //清除浮动，在父元素里面放
 .clearfix() {
@@ -314,5 +322,10 @@ input::search-decoration, input::search-cancel-button {
 }
 
 .search-container {
-    margin-top: 138px;
+    position: relative;
+    top: 140px;
+}
+.tab-container {
+    position: relative;
+    top: 210px;
 }

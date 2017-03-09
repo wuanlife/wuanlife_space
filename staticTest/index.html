@@ -1,12 +1,22 @@
-<%- include base/headerMobile.ejs %>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=devide-width,initial-scale=1,maximum-scale=1, minimum-scale=1,user-scalable=no" name="viewport"/>
+        <link href="../public/stylesheets/dist/globalM.css" rel="stylesheet" type="text/css">
+        </link>
+        <script src="../public/javascripts/iconfont.js">
+        </script>
+    </head>
+    <body>
         <nav class="navbar-default">
             <div class="nav-container">
                 <div class="navbar-header">
                     <button class="search-toggle" type="button">
-                        <svg aria-hidden="true" class="icon">
-                            <use xlink:href="#icon-search">
-                            </use>
-                        </svg>
+	                	<svg aria-hidden="true" class="icon">
+	                        <use xlink:href="#icon-search">
+	                        </use>
+	                    </svg>
                     </button>
                     <div class="navbar-brand">
                         <h1>
@@ -19,7 +29,7 @@
         <div class="tab-head">
             <ul class="tab-head-bar">
                 <li class="selected">                    
-                    <svg aria-hidden="true" class="icon">
+                	<svg aria-hidden="true" class="icon">
                         <use xlink:href="#icon-home">
                         </use>
                     </svg>
@@ -31,13 +41,13 @@
                     </svg>
                 </li>
                 <li>
-                    <svg aria-hidden="true" class="icon">
+                	<svg aria-hidden="true" class="icon">
                         <use xlink:href="#icon-message_blue">
                         </use>
                     </svg>
                 </li>
                 <li>
-                    <svg aria-hidden="true" class="icon">
+                	<svg aria-hidden="true" class="icon">
                         <use xlink:href="#icon-me_blue">
                         </use>
                     </svg>
@@ -49,7 +59,7 @@
                 <div class="index-entry">
                     <div class="index-entry-header">
                         <div class="index-entry-info">
-                            <img src="./images/authcode.png">
+                            <img>
                             <p>陶陶　发表于　鬼扯天地</p>
                         </div>
                         <div class="index-entry-date">
@@ -95,25 +105,6 @@
                 </div>
             </div>
         </div>
-<%- include base/baseJSMobile.ejs %>
+    </body>
 
-
-<script>
-	(function() {
-		var index = {
-
-
-			getServerData: function(param, cb) {
-				
-			},
-			bindEvent: function() {
-
-			},
-			init: function() {
-				this.bindEvent();
-			}
-		}
-		index.init();
-	})();
-</script>
-<%- include base/footerMobile.ejs %>
+</html>
