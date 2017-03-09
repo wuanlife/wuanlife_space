@@ -21,41 +21,114 @@
         @{name}: @px * 2px;
     }
 }
-
-
-.index-entries {
-	.index-entry-header, .index-entry-content {
-		margin: 0 40px;
-	}
+//清除浮动，在父元素里面放
+.clearfix() {
+    min-height: 1px;
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+}
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+.alignCenter {
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+.horizontalCenter {
+    justify-content: center; //子元素水平居中
+    display: flex;
 }
 
-.index-entries {
+
+
+.index-entry {
+	background-color: #ffffff;
 	.index-entry-header, .index-entry-content {
 		margin: 0 40px;
 	}
 	.index-entry-header {
-		.alignCenter
+		padding: 10px 0 10px 0;
+		.clearfix();
 		.index-entry-info {
+			height: 60px;
 			float: left;
-					display: inline;
 			img {
 				width: 60px;
 				height: 60px;
-			}
-		}
+			};
+		};
 		.index-entry-date {
+			height: 60px;
 			float: right;
-			display: inline;
-
-		}
+		};
 		p {
 			display: inline;
 			opacity:0.25;
 			font-family:PingFangHK-Regular;
 			color:#000000;
 			text-align:left;
+			line-height: 60px;
 			.px2px("font-size", 24px);
+		};
+	};
+	.index-entry-content {
+
+		.index-entry-title {
+			h1 {
+				.px2px("font-size", 32px);
+				opacity:0.87;
+				font-family:PingFangHK-Medium;
+				color:#2f2f2f;
+				text-align:left;
+			};
+		};
+		.index-entry-brief {
+			p {
+				.px2px("font-size", 28px);
+				opacity:0.54;
+				font-family:PingFangHK-Regular;
+				color:#000000;
+				letter-spacing:0;
+				text-align:justify;
+			}
+		};
+	};
+	.index-entry-footer {
+		margin-top: 10px;
+		border-top: 1px solid rgba(0,0,0,0.25);
+		padding: 10px 0 10px 0;
+		ul {
+			display: -webkit-flex;
+	        display: flex;
+	        width: 100%;
+	        li {
+	        	flex: 1;
+            	height: 100%;
+            	.center();
+            	svg {
+            		font-size: 25px;
+            	}
+            	p {
+            		.px2px("font-size", 24);
+            		padding: 0 10px;
+            		opacity:0.54;
+					font-family:PingFangHK-Regular;
+					
+					color:#5677fc;
+					text-align:justify;
+            	}
+	        }
 		}
 	}
+
 
 }
