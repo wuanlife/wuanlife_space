@@ -124,7 +124,7 @@ app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
-app.use('/myCollections',myCollections);
+app.use('/mycollections',myCollections);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

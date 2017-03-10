@@ -1,54 +1,4 @@
-//字体适配
-//使用时.px2px(font-size, 32);
-.px2px(@name, @px) {
-    @{name}: round(@px / 2) * 1px;
-    [data-dpr="2"] & {
-        @{name}: @px * 1px;
-    }
-    // for mx3
-    [data-dpr="2.5"] & {
-        @{name}: round(@px * 2.5 / 2) * 1px;
-    }
-    // for 小米note
-    [data-dpr="2.75"] & {
-        @{name}: round(@px * 2.75 / 2) * 1px;
-    }
-    [data-dpr="3"] & {
-        @{name}: round(@px / 2 * 3) * 1px
-    }
-    // for 三星note4
-    [data-dpr="4"] & {
-        @{name}: @px * 2px;
-    }
-}
-//清除浮动，在父元素里面放
-.clearfix() {
-    min-height: 1px;
-    zoom: 1;
-    &:after {
-        content: "";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden
-    }
-}
-//水平垂直居中
-.center {
-    justify-content: center; //子元素水平居中
-    align-items: center; //子元素垂直居中
-    display: flex;
-}
-.alignCenter {
-    align-items: center; //子元素垂直居中
-    display: flex;
-}
-.horizontalCenter {
-    justify-content: center; //子元素水平居中
-    display: flex;
-}
-
-
+@import "publicM"; // publicM.less
 
 .index-entry {
 	background-color: #ffffff;
@@ -59,15 +9,15 @@
 		padding: 10px 0 10px 0;
 		.clearfix();
 		.index-entry-info {
-			height: 60px;
+			.px2rem(height, 60);
 			float: left;
 			img {
-				width: 60px;
-				height: 60px;
+				.px2rem(width, 60);
+				.px2rem(height, 60);
 			};
 		};
 		.index-entry-date {
-			height: 60px;
+			.px2rem(height, 60);
 			float: right;
 		};
 		p {
@@ -76,15 +26,15 @@
 			font-family:PingFangHK-Regular;
 			color:#000000;
 			text-align:left;
-			line-height: 60px;
-			.px2px("font-size", 24px);
+			.px2rem(line-height, 60);
+			.px2px(font-size, 24px);
 		};
 	};
 	.index-entry-content {
 
 		.index-entry-title {
 			h1 {
-				.px2px("font-size", 32px);
+				.px2px(font-size, 32px);
 				opacity:0.87;
 				font-family:PingFangHK-Medium;
 				color:#2f2f2f;
@@ -93,7 +43,7 @@
 		};
 		.index-entry-brief {
 			p {
-				.px2px("font-size", 28px);
+				.px2px(font-size, 28px);
 				opacity:0.54;
 				font-family:PingFangHK-Regular;
 				color:#000000;
@@ -115,10 +65,10 @@
             	height: 100%;
             	.center();
             	svg {
-            		font-size: 25px;
+            		.px2px(font-size, 25px);
             	}
             	p {
-            		.px2px("font-size", 24);
+            		.px2px(font-size, 24);
             		padding: 0 10px;
             		opacity:0.54;
 					font-family:PingFangHK-Regular;

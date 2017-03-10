@@ -5,11 +5,12 @@ var config = require('../config/config');
 var ua = require('mobile-agent');
 
 router.get('/', function(req, res, next) {
+    /*
 	if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.userID;
         pn = req.query.page || 1;
-        var page = agent.Mobile ? 'myCollectionsMobile' : 'myCollections';
+        var page = agent.Mobile ? 'mycollectionsMobile' : 'mycollections';
         request(config.server + "?service=Post.GetCollectPost&user_id=" + userid+'&pn='+pn,
             function(error, response, body) {
             	if (!error && response.statusCode == 200) {
@@ -38,6 +39,20 @@ router.get('/', function(req, res, next) {
 	} else {
         res.redirect('/login');
     }
+
+    */
+
+    var agent = ua(req.headers['user-agent']);
+    try{
+        var page = agent.Mobile ? 'mycollectionsMobile' : 'mycollections';
+        res.render(page, {
+            'result': null,
+            'user': null
+        });
+    } catch(e){
+        next(e);
+    }
+    
 });
 
 module.exports = router;

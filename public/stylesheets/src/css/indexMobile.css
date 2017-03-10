@@ -1,3 +1,6 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
 .center {
   justify-content: center;
   align-items: center;
@@ -31,15 +34,15 @@
   visibility: hidden;
 }
 .index-entry .index-entry-header .index-entry-info {
-  height: 60px;
+  height: 0.83333333rem;
   float: left;
 }
 .index-entry .index-entry-header .index-entry-info img {
-  width: 60px;
-  height: 60px;
+  width: 0.83333333rem;
+  height: 0.83333333rem;
 }
 .index-entry .index-entry-header .index-entry-date {
-  height: 60px;
+  height: 0.83333333rem;
   float: right;
 }
 .index-entry .index-entry-header p {
@@ -48,48 +51,48 @@
   font-family: PingFangHK-Regular;
   color: #000000;
   text-align: left;
-  line-height: 60px;
-  "font-size": 12px;
+  line-height: 0.83333333rem;
+  font-size: 12px;
 }
 [data-dpr="2"] .index-entry .index-entry-header p {
-  "font-size": 24px;
+  font-size: 24px;
 }
 [data-dpr="2.5"] .index-entry .index-entry-header p {
-  "font-size": 30px;
+  font-size: 30px;
 }
 [data-dpr="2.75"] .index-entry .index-entry-header p {
-  "font-size": 33px;
+  font-size: 33px;
 }
 [data-dpr="3"] .index-entry .index-entry-header p {
-  "font-size": 36px;
+  font-size: 36px;
 }
 [data-dpr="4"] .index-entry .index-entry-header p {
-  "font-size": 48px;
+  font-size: 48px;
 }
 .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 16px;
+  font-size: 16px;
   opacity: 0.87;
   font-family: PingFangHK-Medium;
   color: #2f2f2f;
   text-align: left;
 }
 [data-dpr="2"] .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 32px;
+  font-size: 32px;
 }
 [data-dpr="2.5"] .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 40px;
+  font-size: 40px;
 }
 [data-dpr="2.75"] .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 44px;
+  font-size: 44px;
 }
 [data-dpr="3"] .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 48px;
+  font-size: 48px;
 }
 [data-dpr="4"] .index-entry .index-entry-content .index-entry-title h1 {
-  "font-size": 64px;
+  font-size: 64px;
 }
 .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 14px;
+  font-size: 14px;
   opacity: 0.54;
   font-family: PingFangHK-Regular;
   color: #000000;
@@ -97,19 +100,19 @@
   text-align: justify;
 }
 [data-dpr="2"] .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 28px;
+  font-size: 28px;
 }
 [data-dpr="2.5"] .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 35px;
+  font-size: 35px;
 }
 [data-dpr="2.75"] .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 39px;
+  font-size: 39px;
 }
 [data-dpr="3"] .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 42px;
+  font-size: 42px;
 }
 [data-dpr="4"] .index-entry .index-entry-content .index-entry-brief p {
-  "font-size": 56px;
+  font-size: 56px;
 }
 .index-entry .index-entry-footer {
   margin-top: 10px;
@@ -129,10 +132,25 @@
   display: flex;
 }
 .index-entry .index-entry-footer ul li svg {
+  font-size: 13px;
+}
+[data-dpr="2"] .index-entry .index-entry-footer ul li svg {
   font-size: 25px;
 }
+[data-dpr="2.5"] .index-entry .index-entry-footer ul li svg {
+  font-size: 31px;
+}
+[data-dpr="2.75"] .index-entry .index-entry-footer ul li svg {
+  font-size: 34px;
+}
+[data-dpr="3"] .index-entry .index-entry-footer ul li svg {
+  font-size: 38px;
+}
+[data-dpr="4"] .index-entry .index-entry-footer ul li svg {
+  font-size: 50px;
+}
 .index-entry .index-entry-footer ul li p {
-  "font-size": 12px;
+  font-size: 12px;
   padding: 0 10px;
   opacity: 0.54;
   font-family: PingFangHK-Regular;
@@ -140,17 +158,17 @@
   text-align: justify;
 }
 [data-dpr="2"] .index-entry .index-entry-footer ul li p {
-  "font-size": 24px;
+  font-size: 24px;
 }
 [data-dpr="2.5"] .index-entry .index-entry-footer ul li p {
-  "font-size": 30px;
+  font-size: 30px;
 }
 [data-dpr="2.75"] .index-entry .index-entry-footer ul li p {
-  "font-size": 33px;
+  font-size: 33px;
 }
 [data-dpr="3"] .index-entry .index-entry-footer ul li p {
-  "font-size": 36px;
+  font-size: 36px;
 }
 [data-dpr="4"] .index-entry .index-entry-footer ul li p {
-  "font-size": 48px;
+  font-size: 48px;
 }
