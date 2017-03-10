@@ -16,7 +16,7 @@ var filepath = {
     'css' : path.join(publicdir,'stylesheets/dist/*.css'),
     'js' : path.join(publicdir,'javascripts/**/*.js'),
     'ejs': path.join(basedir,'views/**/*.ejs'),
-    'less': path.join(publicdir,'stylesheets/src/less/!(global*).less'),
+    'less': path.join(publicdir,'stylesheets/src/less/!(global*|public*).less'),
     'gLess': path.join(publicdir,'stylesheets/src/less/global*.less'),
     'pcCss': path.join(publicdir,'stylesheets/src/css/*PC.css'),
     'mCss' : path.join(publicdir,'stylesheets/src/css/*Mobile.css'),

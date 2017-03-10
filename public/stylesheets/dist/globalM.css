@@ -1,3 +1,19 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
 .icon {
   width: 1em;
   height: 1em;
@@ -69,22 +85,6 @@ html {
 }
 h1 {
   margin: 0;
-}
-.wuanBlueBackground {
-  background-color: #5677fc;
-}
-.center {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.alignCenter {
-  align-items: center;
-  display: flex;
-}
-.horizontalCenter {
-  justify-content: center;
-  display: flex;
 }
 /**
 分割
