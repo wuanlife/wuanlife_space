@@ -1,0 +1,60 @@
+@import "publicM"; // publicM.less
+
+.navbar-default-shadow {
+	.bottom-shadow;
+}
+
+.collection-entry {
+	background-color: #ffffff;
+	.px2rem(margin-top, 12);
+	.collection-entry-header, .collection-entry-content, .collection-entry-footer {
+		margin: 0 40px;
+	}
+	.collection-entry-header {
+
+	};
+	.collection-entry-content {
+		.px2rem(padding-top, 12);
+		.collection-entry-title {
+			h1 {
+				.px2px(font-size, 32);
+				opacity:0.87;
+				font-family:PingFangHK-Medium;
+				color:#2f2f2f;
+				text-align:left;
+			};
+		};
+		.collection-entry-brief {
+			p {
+				.px2px(font-size, 28);
+				opacity:0.54;
+				font-family:PingFangHK-Regular;
+				color:#000000;
+				letter-spacing:0;
+				text-align:justify;
+			}
+		};
+	};
+	.collection-entry-footer {
+		.clearfix();
+		.collection-entry-where {
+			.px2rem(height, 60);
+			float: left;
+		};
+		.collection-entry-date {
+			.px2rem(height, 60);
+			float: right;
+		};
+		p {
+			display: inline;
+			opacity:0.25;
+			font-family:PingFangHK-Regular;
+			color:#000000;
+			text-align:left;
+			.px2rem(line-height, 60);
+			.px2px(font-size, 24px);
+		};
+	}
+
+
+}
