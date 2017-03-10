@@ -17,7 +17,6 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 
 body {
     font: 12px"宋体", "Arial Narrow", HELVETICA;
-    background: #fff;
     -webkit-text-size-adjust: 100%;
 }
 
@@ -71,13 +70,13 @@ h1 {
 **/
 
 
-@navbar-header-height: 102px;
-@navbar-search-height: 128px;
+@navbar-header-height: 102;
+@navbar-search-height: 128;
 .navbar-default {
     .wuanBlueBackground;
     position: fixed;
     top: 0;
-    height: @navbar-header-height;
+    .px2rem(height, @navbar-header-height);
     width: 100%;
     z-index: 100;
     .nav-container {
@@ -93,7 +92,7 @@ h1 {
                 margin-left: -15px;
             }
             svg {
-                font-size: 36px;
+                .px2px(font-size, 36);
             }
         }
     }
@@ -106,7 +105,7 @@ h1 {
     margin-bottom: 10px;
     position: fixed;
     top: 0;
-    height: @navbar-search-height;
+    .px2rem(height, @navbar-search-height);
     width: 100%;
     .bottom-shadow();
     .nav-container {
@@ -142,7 +141,9 @@ h1 {
     color: #ffffff;
     float: left;
     height: 100% - 46px;
-    padding: 23px 0 23px 40px;
+    .px2rem(padding-top, 23);
+    .px2rem(padding-bottom, 23);
+    .px2rem(padding-left, 40);
     margin: auto;
     position: absolute;
     left: 0;
@@ -153,6 +154,7 @@ h1 {
 //this should be modified later
 .icon-back {
     font-size: 36px;
+    .px2px(font-size, 36);
     top: -3px;
     color: rgba(255, 255, 255, 0.8);
 }
@@ -166,8 +168,8 @@ h1 {
     border: 1px solid transparent;
     border-radius: 4px;
     margin: 16px 0;
-    height: @navbar-header-height - 32px;
-    .center
+    .px2rem(height, @navbar-header-height - 32);
+    .center;
 }
 
 input[type=search] {
@@ -184,8 +186,8 @@ input::search-decoration, input::search-cancel-button {
 
 
 .tab-head {
-    margin-top: 102px;
-    height: 96px;
+    .px2rem(margin-top, @navbar-header-height);
+    .px2rem(height, 96);
     width: 100%;
     position: fixed;
     .bottom-shadow;
@@ -204,17 +206,17 @@ input::search-decoration, input::search-cancel-button {
             a {
                 display: inline-block;
                 padding: 0 20px;
-                height: 60px;
-                line-height: 60px;
+                .px2rem(height, 60);
+                .px2rem(line-height, 60);
                 color: #FFF;
                 font-family: "\5FAE\8F6F\96C5\9ED1";
-                font-size: 16px;
+                .px2px(font-size,16);
             }
             a:hover {
                 background: #0095BB;
             }
             svg {
-                font-size: 40px;
+                .px2px(font-size,40);
             }
         }
     }
@@ -228,10 +230,12 @@ input::search-decoration, input::search-cancel-button {
 .searcher {
     float: right;
     position: absolute;
-    left: 96px;
-    right: 16px;
-    height: 96px;
-    margin: 16px 0;
+    .px2rem(left, 96);
+    .px2rem(right, 16);
+    .px2rem(height, 96);
+    .px2rem(margin-top, 16);
+    .px2rem(margin-bottom, 16);
+
     form {
         display: flex;
         height: 100%;
@@ -261,9 +265,9 @@ input::search-decoration, input::search-cancel-button {
 
 .search-container {
     position: relative;
-    top: 140px;
+    .px2rem(top, 140);
 }
 .tab-container {
     position: relative;
-    top: 210px;
+    .px2rem(top, 210);
 }
