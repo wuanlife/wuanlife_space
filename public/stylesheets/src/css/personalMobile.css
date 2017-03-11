@@ -1,0 +1,136 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.tab-container {
+  margin-top: 0.15277778rem;
+  position: fixed;
+  width: 100%;
+}
+.personal-item {
+  background-color: #ffffff;
+  margin-bottom: 0.16666667rem;
+}
+.nextLabel {
+  width: 0.27777778rem;
+  height: 0.44444444rem;
+  background-color: black;
+}
+.personal-details .personal-detail {
+  height: 1.66666667rem;
+  margin-top: 0.01388889rem;
+  width: 100%;
+  align-items: center;
+  display: flex;
+}
+.personal-details .personal-detail .personal-item-icon {
+  margin-left: 0.55555556rem;
+  width: 0.58333333rem;
+  height: 0.44444444rem;
+  background-color: blue;
+}
+.personal-details .personal-detail .personal-item-text {
+  margin-left: 0.22222222rem;
+  width: 1.45833333rem;
+  height: 0.45833333rem;
+  opacity: 0.87;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: #000000;
+  text-align: left;
+}
+[data-dpr="2"] .personal-details .personal-detail .personal-item-text {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .personal-details .personal-detail .personal-item-text {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .personal-details .personal-detail .personal-item-text {
+  font-size: 33px;
+}
+[data-dpr="3"] .personal-details .personal-detail .personal-item-text {
+  font-size: 36px;
+}
+[data-dpr="4"] .personal-details .personal-detail .personal-item-text {
+  font-size: 48px;
+}
+.personal-details .personal-detail .personal-next {
+  width: 0.27777778rem;
+  height: 0.44444444rem;
+  background-color: black;
+  margin-left: 6.34722222rem;
+}
+.personal-logstate {
+  height: 1.94444444rem;
+  align-items: center;
+  display: flex;
+}
+.personal-logstate .personal-personIcon {
+  width: 1.04166667rem;
+  height: 1.06944444rem;
+  background-color: red;
+  float: left;
+  margin-left: 0.54166667rem;
+}
+.personal-logstate .personal-logfont {
+  width: 1.16666667rem;
+  height: 0.56944444rem;
+  margin-left: 0.45833333rem;
+  opacity: 0.87;
+  font-family: PingFangHK-Medium;
+  font-weight: bold;
+  font-size: 28px;
+  color: #000000;
+  text-align: left;
+}
+.personal-logstate .personal-next {
+  width: 0.27777778rem;
+  height: 0.44444444rem;
+  background-color: black;
+  margin-left: 5.94444444rem;
+}
+.personal-signBtn {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: rgba(255, 0, 0, 0);
+  margin-top: 2.97222222rem;
+}
+.personal-signBtn button {
+  width: 8.44444444rem;
+  height: 1.23611111rem;
+  background-color: #5677fc;
+  opacity: 0.87;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+  border-radius: 8px;
+}
+[data-dpr="2"] .personal-signBtn button {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .personal-signBtn button {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .personal-signBtn button {
+  font-size: 44px;
+}
+[data-dpr="3"] .personal-signBtn button {
+  font-size: 48px;
+}
+[data-dpr="4"] .personal-signBtn button {
+  font-size: 64px;
+}
