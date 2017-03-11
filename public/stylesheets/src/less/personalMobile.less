@@ -1,0 +1,94 @@
+@import "publicM";//publicM.less
+
+.tab-container{
+	.px2rem(margin-top,11);
+	position:fixed;
+	width:100%;
+}
+
+.personal-item{
+	background-color: #ffffff;
+	.px2rem(margin-bottom,12);
+}
+
+.nextLabel{
+	.px2rem(width,20);
+	.px2rem(height,32);
+	background-color:black;
+}
+
+.personal-details{
+	.personal-detail{
+		.px2rem(height,120);
+		.px2rem(margin-top,1);
+		width:100%;
+		.alignCenter;
+		.personal-item-icon{
+			.px2rem(margin-left,40);
+			.px2rem(width,42);
+			.px2rem(height,32);
+			background-color:blue;
+		}
+		.personal-item-text{
+			.px2rem(margin-left,16);
+			.px2rem(width,105);
+			.px2rem(height,33);
+			opacity:0.87;
+			font-family:PingFangHK-Regular;
+			.px2px(font-size,24);
+			color:#000000;
+			text-align:left;
+		}
+		.personal-next{
+			.nextLabel;
+			.px2rem(margin-left,457);
+		}
+	}
+}
+
+
+
+.personal-logstate{
+	.px2rem(height,140);
+	.alignCenter;
+	.personal-personIcon{
+		.px2rem(width,75);
+		.px2rem(height,77);
+		background-color:red;
+		float:left;
+		.px2rem(margin-left,39);
+	}
+	.personal-logfont{
+		.px2rem(width,84);
+		.px2rem(height,41);
+		.px2rem(margin-left,33);
+		opacity:0.87;
+		font-family:PingFangHK-Medium;
+		font-weight:bold;
+		font-size:28px;
+		color:#000000;
+		text-align:left;
+	}
+
+	.personal-next{
+		.nextLabel;
+		.px2rem(margin-left,428);
+	}
+}
+
+.personal-signBtn{
+	.center;
+	background-color: rgba(255, 0, 0, 0);
+	.px2rem(margin-top,214);
+	button{
+		.px2rem(width,608);
+		.px2rem(height,89);
+		.wuanBlueBackground;
+		opacity:0.87;
+		font-family:PingFangSC-Regular;
+		.px2px(font-size,32);
+		color:#ffffff;
+		text-align:center;
+		.border-radius(8px);
+	}
+}
