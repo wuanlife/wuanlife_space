@@ -1,0 +1,83 @@
+<%- include base/headerMobile.ejs %>
+        <nav class="navbar-default navbar-default-shadow">
+            <div class="nav-container">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <h1>
+                            <span>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-goback">
+                                    </use>
+                                </svg>
+                            </span>
+                            <span>
+                                注册
+                            </span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="default-container">
+            <div class="register-body">
+                <form>
+                    <div class="register-container">
+                        <input id="email" type="text" class=" register-input">
+                        <label for="email">邮箱</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="nickname" class=" register-input" type="text">
+                        <label>昵称</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="pwd" class="register-input" type="password">
+                        <label>密码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="inviteCode" class=" register-input" type="text">
+                        <label>邀请码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <button class="registerBtn">注册</button>
+                    </div>
+                </form>
+            </div>
+ 
+        </div>
+<%- include base/baseJSMobile.ejs %>
+
+<script>
+    $('.register-input').on('click',function(e){
+        $(this).siblings('label').addClass('active');
+        $(this).siblings('.foot-line').addClass('highlight');
+    });
+
+    $('.register-input').on('blur',function(e){
+        $(this).siblings('label').removeClass('active');
+        $(this).siblings('.foot-line').removeClass('highlight');
+    });
+</script>
+
+<script>
+	(function() {
+		var index = {
+
+
+			getServerData: function(param, cb) {
+				
+			},
+			bindEvent: function() {
+
+			},
+			init: function() {
+				this.bindEvent();
+			}
+		}
+		index.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>

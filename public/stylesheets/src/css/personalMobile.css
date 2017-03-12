@@ -23,10 +23,39 @@
   background-color: #ffffff;
   margin-bottom: 0.16666667rem;
 }
+.onlyBorder {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+}
 .nextLabel {
   width: 0.27777778rem;
   height: 0.44444444rem;
-  background-color: black;
+}
+.nextLabel .personal-next1,
+.nextLabel .personal-next2 {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+  border-top-width: 0.22222222rem;
+  border-bottom-width: 0.22222222rem;
+  border-left-width: 0.25rem;
+  border-right-width: 0.25rem;
+}
+.nextLabel .personal-next1 {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.26);
+}
+.nextLabel .personal-next2 {
+  position: relative;
+  top: -0.44444444rem;
+  right: 0.08333333rem;
+  border-color: transparent transparent transparent #ffffff;
 }
 .personal-details .personal-detail {
   height: 1.66666667rem;
@@ -69,8 +98,29 @@
 .personal-details .personal-detail .personal-next {
   width: 0.27777778rem;
   height: 0.44444444rem;
-  background-color: black;
   margin-left: 6.34722222rem;
+}
+.personal-details .personal-detail .personal-next .personal-next1,
+.personal-details .personal-detail .personal-next .personal-next2 {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+  border-top-width: 0.22222222rem;
+  border-bottom-width: 0.22222222rem;
+  border-left-width: 0.25rem;
+  border-right-width: 0.25rem;
+}
+.personal-details .personal-detail .personal-next .personal-next1 {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.26);
+}
+.personal-details .personal-detail .personal-next .personal-next2 {
+  position: relative;
+  top: -0.44444444rem;
+  right: 0.08333333rem;
+  border-color: transparent transparent transparent #ffffff;
 }
 .personal-logstate {
   height: 1.94444444rem;
@@ -80,9 +130,48 @@
 .personal-logstate .personal-personIcon {
   width: 1.04166667rem;
   height: 1.06944444rem;
-  background-color: red;
+  position: relative;
+  background-color: #ffffff;
   float: left;
   margin-left: 0.54166667rem;
+}
+.personal-logstate .personal-personIcon .personal-personIcon1,
+.personal-logstate .personal-personIcon .personal-personIcon2,
+.personal-logstate .personal-personIcon .personal-personIcon3 {
+  background-color: rgba(0, 0, 0, 0.26);
+  border-radius: 50%;
+}
+.personal-logstate .personal-personIcon .personal-personIcon1 {
+  width: 0.36111111rem;
+  height: 0.33333333rem;
+  position: absolute;
+  top: 0.30555556rem;
+  left: 0.34722222rem;
+}
+.personal-logstate .personal-personIcon .personal-personIcon2 {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.26) #ffffff #ffffff #ffffff;
+  border-width: 0.4375rem;
+  position: absolute;
+  top: 0.68055556rem;
+  left: 0.08333333rem;
+}
+.personal-logstate .personal-personIcon .personal-personIcon3 {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+  position: absolute;
+  border-width: 0.52777778rem;
+  border-color: #ffffff;
+  box-shadow: 1px -5px 10px rgba(0, 0, 0, 0.26);
 }
 .personal-logstate .personal-logfont {
   width: 1.16666667rem;
@@ -98,8 +187,29 @@
 .personal-logstate .personal-next {
   width: 0.27777778rem;
   height: 0.44444444rem;
-  background-color: black;
   margin-left: 5.94444444rem;
+}
+.personal-logstate .personal-next .personal-next1,
+.personal-logstate .personal-next .personal-next2 {
+  width: 0rem;
+  height: 0rem;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+  border-style: solid;
+  border-top-width: 0.22222222rem;
+  border-bottom-width: 0.22222222rem;
+  border-left-width: 0.25rem;
+  border-right-width: 0.25rem;
+}
+.personal-logstate .personal-next .personal-next1 {
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.26);
+}
+.personal-logstate .personal-next .personal-next2 {
+  position: relative;
+  top: -0.44444444rem;
+  right: 0.08333333rem;
+  border-color: transparent transparent transparent #ffffff;
 }
 .personal-signBtn {
   justify-content: center;

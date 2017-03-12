@@ -1,0 +1,78 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.code-producer {
+  background-color: #ffffff;
+  width: 100%;
+  height: 15.61111111rem;
+  position: relative;
+}
+.code-producer .code-tip {
+  color: #5677fc;
+  opacity: 0.87;
+  position: absolute;
+  font-family: PingFangSC-Medium;
+  font-size: 20px;
+  width: 3.90277778rem;
+  height: 0.77777778rem;
+  top: 0.16666667rem;
+  left: 0.43055556rem;
+  font-weight: bold;
+}
+[data-dpr="2"] .code-producer .code-tip {
+  font-size: 40px;
+}
+[data-dpr="2.5"] .code-producer .code-tip {
+  font-size: 50px;
+}
+[data-dpr="2.75"] .code-producer .code-tip {
+  font-size: 55px;
+}
+[data-dpr="3"] .code-producer .code-tip {
+  font-size: 60px;
+}
+[data-dpr="4"] .code-producer .code-tip {
+  font-size: 80px;
+}
+.code-producer .code-genetate {
+  width: 3.11111111rem;
+  height: 1.31944444rem;
+  color: #5677fc;
+  font-weight: bold;
+  font-size: 34px;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 5.625rem;
+  bottom: 8.66666667rem;
+  left: 0;
+  right: 0;
+}
+[data-dpr="2"] .code-producer .code-genetate {
+  font-size: 68px;
+}
+[data-dpr="2.5"] .code-producer .code-genetate {
+  font-size: 85px;
+}
+[data-dpr="2.75"] .code-producer .code-genetate {
+  font-size: 94px;
+}
+[data-dpr="3"] .code-producer .code-genetate {
+  font-size: 102px;
+}
+[data-dpr="4"] .code-producer .code-genetate {
+  font-size: 136px;
+}
