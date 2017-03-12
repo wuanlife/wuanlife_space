@@ -35,6 +35,8 @@ var myCollections=require('./routes/myCollections');
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
 var myself = require('./routes/personal');
+var inviteCode = require('./routes/inviteCode');
+var registerNew = require('./routes/registerNew');
 
 
 
@@ -127,6 +129,8 @@ app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 app.use('/mycollections',myCollections);
 app.use('/myself',myself);
+app.use('/inviteCode',inviteCode);
+app.use('/registerNew',registerNew);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

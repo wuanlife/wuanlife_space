@@ -1,5 +1,6 @@
 @import "publicM";//publicM.less
 
+
 .tab-container{
 	.px2rem(margin-top,11);
 	position:fixed;
@@ -11,10 +12,34 @@
 	.px2rem(margin-bottom,12);
 }
 
+.onlyBorder{
+	.px2rem(width,0);
+	.px2rem(height,0);
+	line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-style:solid;
+}
+
 .nextLabel{
 	.px2rem(width,20);
 	.px2rem(height,32);
-	background-color:black;
+	.personal-next1, .personal-next2{
+		.onlyBorder;
+    	.px2rem(border-top-width,16);
+		.px2rem(border-bottom-width,16);
+		.px2rem(border-left-width,18);
+		.px2rem(border-right-width,18);
+	}
+	.personal-next1{
+		border-color:transparent transparent transparent rgba(0,0,0,0.26);
+	}
+	.personal-next2{
+		position:relative;
+		.px2rem(top,-32);
+		.px2rem(right,6);
+		border-color:transparent transparent transparent @bgWhite;
+	}
 }
 
 .personal-details{
@@ -54,9 +79,39 @@
 	.personal-personIcon{
 		.px2rem(width,75);
 		.px2rem(height,77);
-		background-color:red;
+		position:relative;
+		background-color:@bgWhite;
 		float:left;
 		.px2rem(margin-left,39);
+		.personal-personIcon1, .personal-personIcon2, .personal-personIcon3{
+			background-color: rgba(0,0,0,0.26);
+			border-radius: 50%;
+		}
+		.personal-personIcon1{
+			.px2rem(width,26);
+			.px2rem(height,24);
+			position:absolute;
+			.px2rem(top,22);
+			.px2rem(left,25);
+			
+		}
+
+		.personal-personIcon2{
+			.onlyBorder;
+			border-color:rgba(0,0,0,0.26)  @bgWhite @bgWhite @bgWhite;
+			.px2rem(border-width,31.5);
+			position:absolute;
+			.px2rem(top,49);
+			.px2rem(left,6);
+		}
+
+		.personal-personIcon3{
+			.onlyBorder;
+			position:absolute;
+			.px2rem(border-width,38);
+			border-color:@bgWhite;
+			box-shadow: 1px -5px 10px rgba(0,0,0,0.26);
+		}
 	}
 	.personal-logfont{
 		.px2rem(width,84);
