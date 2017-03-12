@@ -32,9 +32,12 @@ var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
 var userManage=require('./routes/userManage');
 var myCollections=require('./routes/myCollections');
+var myself = require('./routes/personal');
+var myPlanet = require('./routes/myPlanet');
+
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
-var myself = require('./routes/personal');
+
 
 
 
@@ -127,6 +130,7 @@ app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 app.use('/mycollections',myCollections);
 app.use('/myself',myself);
+app.use('/myplanet',myPlanet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
