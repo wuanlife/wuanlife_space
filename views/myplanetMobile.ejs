@@ -1,0 +1,88 @@
+<%- include base/headerMobile.ejs %>
+        <nav class="navbar-default">
+            <div class="nav-container">
+                <div class="navbar-header">
+                    <button class="search-toggle" type="button">
+	                	<svg aria-hidden="true" class="icon">
+	                        <use xlink:href="#icon-search">
+	                        </use>
+	                    </svg>
+                    </button>
+                    <div class="navbar-brand">
+                        <h1>
+                            首页
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="tab-head">
+            <ul class="tab-head-bar">
+                <li class="selected">                    
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-home">
+                        </use>
+                    </svg>
+                </li>
+                <li>                        
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-lightPlanet_blue">
+                        </use>
+                    </svg>
+                </li>
+                <li>
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-message_blue">
+                        </use>
+                    </svg>
+                </li>
+                <li>
+                	<svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-me_blue">
+                        </use>
+                    </svg>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-container">
+            <div class="myplanet-board">
+                <div class="myplanet-item">
+                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489315779999&di=0cd61fda522ec46a58ed29dc5d7be222&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F11%2F55%2F57%2F02v58PIC8Hc.jpg">
+                    <p>whatthefuck</p>
+                </div>
+                <div class="myplanet-item">
+                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489315779999&di=0cd61fda522ec46a58ed29dc5d7be222&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F11%2F55%2F57%2F02v58PIC8Hc.jpg">
+                    <p>asdf</p>
+                </div>
+                <div class="myplanet-item">
+                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489315779999&di=0cd61fda522ec46a58ed29dc5d7be222&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F11%2F55%2F57%2F02v58PIC8Hc.jpg">
+                    <p>sfds</p>
+                </div>
+                <div class="myplanet-item">
+                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489315779999&di=0cd61fda522ec46a58ed29dc5d7be222&imgtype=0&src=http%3A%2F%2Fpic.qiantucdn.com%2F58pic%2F11%2F55%2F57%2F02v58PIC8Hc.jpg">
+                    <p>asdfasf</p>
+                </div>
+            </div>
+        </div>       
+<%- include base/baseJSMobile.ejs %>
+
+
+<script>
+	(function() {
+		var index = {
+
+
+			getServerData: function(param, cb) {
+				
+			},
+			bindEvent: function() {
+
+			},
+			init: function() {
+				this.bindEvent();
+			}
+		}
+		index.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>

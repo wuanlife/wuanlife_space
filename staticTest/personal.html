@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+        <link href="../public/stylesheets/dist/globalM.css" rel="stylesheet" type="text/css">
+        <link href="../public/stylesheets/dist/styleMobile.css" rel="stylesheet" type="text/css">
+        </link>
+        <script src="../public/javascripts/iconfont.js">
+        </script>
+    </head>
+    <body>
+        <nav class="personal-navbar">
+                    <button class="personal-icon-back" type="button">
+                        <svg aria-hidden="true" class="icon">
+                            <use xlink:href="#icon-goback">
+                            </use>
+                        </svg>
+                    </button>
+                    <div class="personal-navbar-brand">
+                        <h1>
+                            个人资料
+                        </h1>
+                    </div>
+        </nav>
+       <div class="personal-content">
+           <form>
+               <div class="personal-image">
+                  <div class="img-upload-progress"></div>
+                  <button type="button" style="background-image:url(../public/images/sadface_mobile.png);"></button>
+                  <input type="hidden" name="g_image" value="../public/images/sadface_mobile.png" id="g_img">
+               </div>
+               <div class="personal-email">
+                    <label for="email" class="label-e">邮箱</label>
+                    <input type="email" value="2660591904@qq.com" id="email" disabled="disabled">
+                    <button type="button">验证</button>
+               </div>
+               <div class="personal-email">
+                    <label for="name" class="label-e">昵称</label>
+                    <input type="text" value="某三木" id="name" disabled="disabled">
+               </div>
+               <div class="personal-sex">
+                    <label for="male" class="label-1">性别</label>
+                    <input type="radio" name="sex" value="male" id="male" checked>
+                    <span>男</span>
+                    <label for="female" class="label-e"></label>
+                    <input type="radio" name="sex" value="male" id="female">
+                    <span>女</span>
+                    <label for="unknow" class="label-e"></label>
+                    <input type="radio" name="sex" value="unknow" id="unknow">
+                    <span>不想透露</span>
+               </div>
+               <div class="personal-birthday">
+                    <label for="year" class="label-year">生日</label>
+                    <input type="text" name="sex" value="1996" id="year">
+                    <label for="month" class="label-month"></label>
+                    <input type="text" name="sex" value="01" id="month">
+                    <label for="day" class="label-day"></label>
+                    <input type="text" name="sex" value="05" id="day">
+               </div>
+               <button type="submit">保存</button>
+           </form>
+       </div>
+    </body>
+</html>
