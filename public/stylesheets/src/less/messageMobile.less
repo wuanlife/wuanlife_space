@@ -1,0 +1,61 @@
+@import "publicM"; // publicM.less
+.message-board {
+	width: 100%;
+	background-color: #fff;
+	.clearfix;
+	.message-line {
+		.px2rem(width, 640);
+		.px2rem(margin-left, 40);
+		.px2rem(margin-right, 40);
+		.px2rem(padding-top, 20);
+		.px2rem(padding-bottom, 20);
+		border-bottom: 2px solid #eff2f4;
+
+		img {
+			.px2rem(width, 100);
+			.px2rem(heigh, 100);
+			border-radius:50%; 
+			overflow:hidden;
+			float: left;
+		};
+		.message-line-header, .message-line-short {
+			display: inline-block;
+		}
+		.message-line-header {
+			.px2rem(width, 540);
+			h1 {
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 30);
+				color:#292929;
+				text-align:left;
+				line-height: 50px;
+				float: left;
+			}
+			button {
+				.border-radius(8px);
+				background:#5677fc;
+				line-height: 50px;
+				.px2rem(width, 126);
+				float: right;
+
+				//button字体相关
+				font-family:PingFangHK-Regular;
+				.px2px(font-szie, 24);
+				color:#ffffff;
+				text-align:center;	
+
+			}
+		}
+		.message-line-short {
+			.px2rem(line-height, 40);
+			.px2rem(width, 540);
+			p {
+				.oneline-text-overflow;
+				.px2rem(width, 500);
+				font-family:PingFangSC-Regular;
+				.px2px(font-size, 28);
+				color:rgba(0,0,0,0.54);
+			}
+		}
+	}
+}

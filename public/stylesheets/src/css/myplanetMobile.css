@@ -14,6 +14,11 @@
   justify-content: center;
   display: flex;
 }
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .myplanet-board {
   min-height: 1px;
   zoom: 1;

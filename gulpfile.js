@@ -28,7 +28,7 @@ gulp.task('watch',function(){
     //设置代理模式并指定5000端口
     //监听files变化并自动刷新浏览器
     browserSync.init({
-        proxy: 'http://localhost:3000',
+        proxy: 'localhost:3000',
         port: 5000,
         files: [filepath.css,filepath.js,filepath.ejs]
     });

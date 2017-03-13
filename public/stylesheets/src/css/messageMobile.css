@@ -1,0 +1,133 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.message-board {
+  width: 100%;
+  background-color: #fff;
+  min-height: 1px;
+  zoom: 1;
+}
+.message-board:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.message-board .message-line {
+  width: 8.88888889rem;
+  margin-left: 0.55555556rem;
+  margin-right: 0.55555556rem;
+  padding-top: 0.27777778rem;
+  padding-bottom: 0.27777778rem;
+  border-bottom: 2px solid #eff2f4;
+}
+.message-board .message-line img {
+  width: 1.38888889rem;
+  heigh: 1.38888889rem;
+  border-radius: 50%;
+  overflow: hidden;
+  float: left;
+}
+.message-board .message-line .message-line-header,
+.message-board .message-line .message-line-short {
+  display: inline-block;
+}
+.message-board .message-line .message-line-header {
+  width: 7.5rem;
+}
+.message-board .message-line .message-line-header h1 {
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  color: #292929;
+  text-align: left;
+  line-height: 50px;
+  float: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-header h1 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-header h1 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-header h1 {
+  font-size: 41px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-header h1 {
+  font-size: 45px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-header h1 {
+  font-size: 60px;
+}
+.message-board .message-line .message-line-header button {
+  border-radius: 8px;
+  background: #5677fc;
+  line-height: 50px;
+  width: 1.75rem;
+  float: right;
+  font-family: PingFangHK-Regular;
+  font-szie: 12px;
+  color: #ffffff;
+  text-align: center;
+}
+[data-dpr="2"] .message-board .message-line .message-line-header button {
+  font-szie: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-header button {
+  font-szie: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-header button {
+  font-szie: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-header button {
+  font-szie: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-header button {
+  font-szie: 48px;
+}
+.message-board .message-line .message-line-short {
+  line-height: 0.55555556rem;
+  width: 7.5rem;
+}
+.message-board .message-line .message-line-short p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 6.94444444rem;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+}
+[data-dpr="2"] .message-board .message-line .message-line-short p {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-short p {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-short p {
+  font-size: 39px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-short p {
+  font-size: 42px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-short p {
+  font-size: 56px;
+}
