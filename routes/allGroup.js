@@ -8,12 +8,12 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 		pn = req.query.page || 1;
-	request(config.server + "?service=Group.Lists&page=" + pn, function(error, response, body) {
+	request(config.server +"group/lists"+ "?service=Group.Lists&page=" + pn, function(error, response, body) {
 		if (!error) {
 			var result = JSON.parse(body);
 			//console.log(result);
-			if (result.ret == 200 && result.msg == "") {
-				var page = agent.Mobile ? 'allGroupMobile' : 'allGroup';
+			if (result.ret == 200) {
+				var page = agent.Mobile ? 'allGroupM' : 'allGroupM';
 				res.render(page, {
 					'path':'',
 					result: result.data,

@@ -49,47 +49,39 @@ router.get('/:groupid', function(req, res, next) {
 });
 //星球发帖
 router.get('/:groupid/post', function(req, res, next) {
-	if (req.session.user) {
+	    console.log("uehfu");
 		var agent = ua(req.headers['user-agent']);
 		var userid = req.session.user.userID;
-		var page = agent.Mobile ? 'postMobile' : 'post';
-		var tip = agent.Mobile ? 'tipMobile' : 'tip'
-		request(config.server + "?service=Group.GStatus&group_base_id=" + req.params.groupid + "&user_id=" + userid,
+		var page = agent.Mobile ? 'publishPostM' : 'publishPostM';
+		var tip = agent.Mobile ? 'tipMobile' : 'tip';
+		//http://dev.wuanlife.com:800/group/posts?group_id=1&user_id=2&p_title=1&p_text=1
+		request(config.server+"group/posts?group_id=1&user_id=2&p_title=1&p_text=1",
 			function(error, response, body) {
+				console.log("jg");
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
-					//console.log(result);
-					if (result.ret == 200 && result.msg == "") {
-						if (result.data.code == 1) {
+					console.log(result);
+					if (result.ret == 200) {
+						
 							res.render(page, {
 								'groupID': req.params.groupid,
 								'title': '发表帖子',
 								'user': req.session.user
 							});
-						} else {
-							res.render(tip, {
-								'tip': '您没有权限操作',
+						
+					} else {
+						res.render(page, {
+								'groupID': req.params.groupid,
 								'title': '发表帖子',
 								'user': req.session.user
 							});
-						}
-					} else {
-						res.render('error', {
-							'message': result.msg,
-							error: {
-								'status': result.ret,
-								'stack': ''
-							}
-						});
 					}
 				} else {
 					console.error('group failed:', error);
 					next(error);
 				}
 			});
-	} else {
-		res.redirect('/login');
-	}
+
 });
 
 router.post('/:groupid/post', function(req, res, next) {
@@ -107,12 +99,12 @@ router.post('/:groupid/post', function(req, res, next) {
 		}
 	});
 	request.post({
-		url: config.server + '?service=Group.Posts',
+		url: config.server + 'group/posts',
 		formData: {
-			user_id: userid,
-			group_base_id: req.params.groupid,
-			title: xss(req.body.title),
-			text: html
+			group_id: 1,
+			user_id: 2,
+			p_title: 1,
+			p_text: 1
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
@@ -141,27 +133,19 @@ router.post('/:groupid/post', function(req, res, next) {
 router.get('/:groupid/set', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
 	var userid = (req.session.user) ? req.session.user.userID : null;
-	var page = agent.Mobile ? 'setGroupMobile' : 'setGroup';
+	var page = agent.Mobile ? 'setGroupM' : 'setGroupM';
 	var tip = agent.Mobile ? 'tipMobile' : 'tip'
-	request(config.server + "?service=Group.GetGroupInfo&group_id=" + req.params.groupid + "&user_id=" + userid,
+	request(config.server +"group/alter_group_info"+"?group_id=" + 1 + "&user_id=" + 2,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);
-				//console.log(result);
+				console.log(result);
 				if (result.ret == 200) {
-					if (result.data.creator == 1) {
-						res.render(page, {
+					res.render(page, {
 							'result': result.data,
 							'title': '星球设置',
 							'user': req.session.user
 						});
-					} else {
-						res.render(tip, {
-							'tip': '您没有权限操作',
-							'title': '星球设置',
-							'user': req.session.user
-						});
-					}
 				} else {
 					res.render('error', {
 						'message': result.msg,
