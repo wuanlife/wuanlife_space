@@ -14,14 +14,14 @@
   justify-content: center;
   display: flex;
 }
-.register-body {
+.retrieve-password-body {
   margin-top: 0.16666667rem;
   height: 15.66666667rem;
   width: 100%;
   position: relative;
   background-color: #ffffff;
 }
-.register-body form {
+.retrieve-password-body form {
   margin: 0px auto;
   margin-top: 1.34722222rem;
   position: absolute;
@@ -90,14 +90,14 @@
   height: 0rem;
   border-width: 0.02083333rem;
 }
-.register-container {
+.retrieve-password-container {
   position: relative;
   margin: 0 auto;
   margin-top: 0rem;
   width: 8.44444444rem;
   margin-bottom: 1.125rem;
 }
-.register-container input {
+.retrieve-password-container input {
   outline: none;
   z-index: 1;
   position: relative;
@@ -110,22 +110,22 @@
   font-family: PingFangSC-Regular;
   margin-left: 0.41666667rem;
 }
-[data-dpr="2"] .register-container input {
+[data-dpr="2"] .retrieve-password-container input {
   font-size: 32px;
 }
-[data-dpr="2.5"] .register-container input {
+[data-dpr="2.5"] .retrieve-password-container input {
   font-size: 40px;
 }
-[data-dpr="2.75"] .register-container input {
+[data-dpr="2.75"] .retrieve-password-container input {
   font-size: 44px;
 }
-[data-dpr="3"] .register-container input {
+[data-dpr="3"] .retrieve-password-container input {
   font-size: 48px;
 }
-[data-dpr="4"] .register-container input {
+[data-dpr="4"] .retrieve-password-container input {
   font-size: 64px;
 }
-.register-container label {
+.retrieve-password-container label {
   position: absolute;
   top: 0;
   left: 0;
@@ -134,22 +134,22 @@
   font-heigth: 0.625rem;
   margin-left: 0.41666667rem;
 }
-[data-dpr="2"] .register-container label {
+[data-dpr="2"] .retrieve-password-container label {
   font-size: 32px;
 }
-[data-dpr="2.5"] .register-container label {
+[data-dpr="2.5"] .retrieve-password-container label {
   font-size: 40px;
 }
-[data-dpr="2.75"] .register-container label {
+[data-dpr="2.75"] .retrieve-password-container label {
   font-size: 44px;
 }
-[data-dpr="3"] .register-container label {
+[data-dpr="3"] .retrieve-password-container label {
   font-size: 48px;
 }
-[data-dpr="4"] .register-container label {
+[data-dpr="4"] .retrieve-password-container label {
   font-size: 64px;
 }
-.register-container label.active {
+.retrieve-password-container label.active {
   position: absolute;
   font-size: 12px;
   top: -0.625rem;
@@ -159,22 +159,22 @@
   animation: labelAnimation 0.5s;
   -webkit-animation: labelAnimation 0.5s;
 }
-[data-dpr="2"] .register-container label.active {
+[data-dpr="2"] .retrieve-password-container label.active {
   font-size: 24px;
 }
-[data-dpr="2.5"] .register-container label.active {
+[data-dpr="2.5"] .retrieve-password-container label.active {
   font-size: 30px;
 }
-[data-dpr="2.75"] .register-container label.active {
+[data-dpr="2.75"] .retrieve-password-container label.active {
   font-size: 33px;
 }
-[data-dpr="3"] .register-container label.active {
+[data-dpr="3"] .retrieve-password-container label.active {
   font-size: 36px;
 }
-[data-dpr="4"] .register-container label.active {
+[data-dpr="4"] .retrieve-password-container label.active {
   font-size: 48px;
 }
-.register-container label.blur-label {
+.retrieve-password-container label.blur-label {
   position: absolute;
   top: 0;
   left: 0;
@@ -185,48 +185,77 @@
   animation: labelAnimationX 0.5s;
   -webkit-animation: labelAnimationX 0.5s;
 }
-[data-dpr="2"] .register-container label.blur-label {
+[data-dpr="2"] .retrieve-password-container label.blur-label {
   font-size: 32px;
 }
-[data-dpr="2.5"] .register-container label.blur-label {
+[data-dpr="2.5"] .retrieve-password-container label.blur-label {
   font-size: 40px;
 }
-[data-dpr="2.75"] .register-container label.blur-label {
+[data-dpr="2.75"] .retrieve-password-container label.blur-label {
   font-size: 44px;
 }
-[data-dpr="3"] .register-container label.blur-label {
+[data-dpr="3"] .retrieve-password-container label.blur-label {
   font-size: 48px;
 }
-[data-dpr="4"] .register-container label.blur-label {
+[data-dpr="4"] .retrieve-password-container label.blur-label {
   font-size: 64px;
 }
-.register-container button {
+.retrieve-password-container .retrieve-password-others {
+  text-align: center;
+  margin-top: 0.625rem;
+}
+.retrieve-password-container .retrieve-password-others span {
+  font-size: 12px;
+  color: rgba(86, 119, 251, 0.87);
+}
+[data-dpr="2"] .retrieve-password-container .retrieve-password-others span {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .retrieve-password-container .retrieve-password-others span {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .retrieve-password-container .retrieve-password-others span {
+  font-size: 33px;
+}
+[data-dpr="3"] .retrieve-password-container .retrieve-password-others span {
+  font-size: 36px;
+}
+[data-dpr="4"] .retrieve-password-container .retrieve-password-others span {
+  font-size: 48px;
+}
+.retrieve-password-container .retrieve-password-others span#retrieve-password-register {
+  margin-right: 1.58333333rem;
+}
+.retrieve-password-container .retrieve-password-others span#retrieve-password-misspwd {
+  margin-left: 1.58333333rem;
+}
+.retrieve-password-container button {
   width: 8.44444444rem;
   height: 1.22222222rem;
   border-radius: 0.11111111rem;
-  margin-top: 0.69444444rem;
+  margin-top: 2.73611111rem;
   background-color: #5677fc;
   font-size: 16px;
   opacity: 0.87;
   font-family: PingFangSC-Regular;
   color: #ffffff;
 }
-[data-dpr="2"] .register-container button {
+[data-dpr="2"] .retrieve-password-container button {
   font-size: 32px;
 }
-[data-dpr="2.5"] .register-container button {
+[data-dpr="2.5"] .retrieve-password-container button {
   font-size: 40px;
 }
-[data-dpr="2.75"] .register-container button {
+[data-dpr="2.75"] .retrieve-password-container button {
   font-size: 44px;
 }
-[data-dpr="3"] .register-container button {
+[data-dpr="3"] .retrieve-password-container button {
   font-size: 48px;
 }
-[data-dpr="4"] .register-container button {
+[data-dpr="4"] .retrieve-password-container button {
   font-size: 64px;
 }
-.register-container .foot-line {
+.retrieve-password-container .foot-line {
   position: absolute;
   top: 0.83333333rem;
   left: 0;
@@ -236,33 +265,33 @@
   height: 0rem;
   border-width: 0.02083333rem;
 }
-.register-container .foot-line::before,
-.register-container .foot-line::after {
+.retrieve-password-container .foot-line::before,
+.retrieve-password-container .foot-line::after {
   content: '';
   position: absolute;
-  width: 0;
-  height: 0.02777778rem;
+  width: 0%;
+  height: 0.04166667rem;
 }
-.register-container .foot-line.highlight::before,
-.register-container .foot-line.highlight::after {
+.retrieve-password-container .foot-line.highlight::before,
+.retrieve-password-container .foot-line.highlight::after {
   animation: footline-Animation 0.5s;
   -webkit-animation: footline-Animation 0.5s;
   width: 50%;
   background-color: rgba(86, 118, 252, 0.87);
   height: 0.08333333rem;
 }
-.register-container .foot-line.blur-line::before,
-.register-container .foot-line.blur-line::after {
+.retrieve-password-container .foot-line.blur-line::before,
+.retrieve-password-container .foot-line.blur-line::after {
   animation: footline-AnimationX 0.5s;
   -webkit-animation: footline-AnimationX 0.5s;
   width: 0%;
   background-color: #5677fc;
   height: 0.08333333rem;
 }
-.register-container .foot-line::before {
+.retrieve-password-container .foot-line::before {
   left: 50%;
 }
-.register-container .foot-line::after {
+.retrieve-password-container .foot-line::after {
   right: 50%;
 }
 @keyframes footline-Animation {
