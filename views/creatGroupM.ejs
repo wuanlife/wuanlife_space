@@ -1,0 +1,44 @@
+<%- include base/headerMobile.ejs %>
+<nav class="personal-navbar">
+                    <button class="personal-icon-back" type="button">
+                        <svg aria-hidden="true" class="icon">
+                            <use xlink:href="#icon-goback">
+                            </use>
+                        </svg>
+                    </button>
+                    <div class="personal-navbar-brand">
+                        <h1>
+                            创建星球
+                        </h1>
+                    </div>
+        </nav>
+       <div class="setgroup-content">
+           <span class="creatGroup-name">星球名称</span>
+           <div class="setgroup-img">
+             <span>星球头像（选填）：</span>
+             <button type="button" style="background-image:url(../public/images/sadface_mobile.png);">
+                  <svg aria-hidden="true" class="icon">
+                      <use xlink:href="#icon-goback">
+                      </use>
+                  </svg>
+             </button>
+           </div>
+           <div class="setgroup-intro">
+           星球介绍，down down
+           </div>
+           <div class="setgroup-join">
+                <button type="button">加入星球的方式
+                   <svg aria-hidden="true" class="icon">
+                      <use xlink:href="#icon-right_black">
+                      </use>
+                  </svg>
+                </button>
+           </div>
+           <div class="setgroup-save">
+             <button>
+               创建星球
+             </button>
+           </div>
+       </div>
+<%- include base/baseJSMobile.ejs %>
+<%- include base/footerMobile.ejs %>
