@@ -133,6 +133,8 @@ app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
+
+
 app.use('/mycollections',myCollections);
 app.use('/myself',myself);
 app.use('/inviteCode',inviteCode);
