@@ -111,13 +111,13 @@ select {
 .personal-content {
   margin-top: 0.16666667rem;
   width: 100%;
-  height: 100%;
+  height: 15.52777778rem;
+  background-color: #ffffff;
 }
 .personal-content .personal-image {
   width: 1.94444444rem;
   height: 1.94444444rem;
   margin-left: 2.91666667rem;
-  margin-top: 0.72222222rem;
 }
 .personal-content .personal-image .img-upload-progress {
   width: 100%;
@@ -417,13 +417,14 @@ select {
 /*修改密码部分*/
 /**/
 .password-content {
+  background-color: #ffffff;
   margin-top: 0.16666667rem;
   width: 100%;
-  height: 100%;
+  height: 15.52777778rem;
 }
 .password-content .password-part {
-  margin-top: 1.36111111rem;
   margin-left: 0.75rem;
+  padding-top: 1.36111111rem;
 }
 .password-content .password-part label {
   display: block;
@@ -503,4 +504,490 @@ select {
 }
 [data-dpr="4"] .password-content .password-part button {
   font-size: 64px;
+}
+/**/
+/*星球设置*/
+/**/
+.allgroup-content {
+  margin-top: 0.16666667rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 16.66666667rem;
+}
+.allgroup-content .allgroup-group {
+  width: 9.44444444rem;
+  height: 1.94444444rem;
+  margin: 0 auto;
+  border-bottom: solid 2px #eff2f4;
+  position: relative;
+}
+.allgroup-content .allgroup-group button {
+  position: absolute;
+  top: 0.27777778rem;
+  left: 0.27777778rem;
+  width: 1.38888889rem;
+  height: 1.38888889rem;
+  border-radius: 100%;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.allgroup-content .allgroup-group h2 {
+  height: 0.58333333rem;
+  width: 100%;
+  color: #292929;
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  margin-left: 1.88888889rem;
+  padding-top: 0.5rem;
+}
+[data-dpr="2"] .allgroup-content .allgroup-group h2 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .allgroup-content .allgroup-group h2 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .allgroup-content .allgroup-group h2 {
+  font-size: 41px;
+}
+[data-dpr="3"] .allgroup-content .allgroup-group h2 {
+  font-size: 45px;
+}
+[data-dpr="4"] .allgroup-content .allgroup-group h2 {
+  font-size: 60px;
+}
+.allgroup-content .allgroup-group span {
+  margin-left: 1.88888889rem;
+  height: 0.41666667rem;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.36);
+  font-family: PingFangHK-Regular;
+  font-size: 11px;
+}
+[data-dpr="2"] .allgroup-content .allgroup-group span {
+  font-size: 22px;
+}
+[data-dpr="2.5"] .allgroup-content .allgroup-group span {
+  font-size: 28px;
+}
+[data-dpr="2.75"] .allgroup-content .allgroup-group span {
+  font-size: 30px;
+}
+[data-dpr="3"] .allgroup-content .allgroup-group span {
+  font-size: 33px;
+}
+[data-dpr="4"] .allgroup-content .allgroup-group span {
+  font-size: 44px;
+}
+/**/
+/*设置星球*/
+/**/
+.setgroup-content {
+  margin-top: 0.16666667rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 16.66666667rem;
+  position: relative;
+}
+.setgroup-content span {
+  display: block;
+  width: 8.44444444rem;
+  height: 0.625rem;
+  margin: 0 auto;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.38);
+  padding-left: 0.52777778rem;
+  padding-top: 0.91666667rem;
+  padding-bottom: 0.22222222rem;
+}
+[data-dpr="2"] .setgroup-content span {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .setgroup-content span {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .setgroup-content span {
+  font-size: 44px;
+}
+[data-dpr="3"] .setgroup-content span {
+  font-size: 48px;
+}
+[data-dpr="4"] .setgroup-content span {
+  font-size: 64px;
+}
+.setgroup-content .setgroup-img {
+  height: 4.93055556rem;
+  width: 8.44444444rem;
+  margin: 0 auto;
+}
+.setgroup-content .setgroup-img span {
+  display: block;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.38);
+  padding-left: 0.38888889rem;
+  padding-top: 0.95833333rem;
+}
+[data-dpr="2"] .setgroup-content .setgroup-img span {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-img span {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-img span {
+  font-size: 39px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-img span {
+  font-size: 42px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-img span {
+  font-size: 56px;
+}
+.setgroup-content .setgroup-img button {
+  height: 1.94444444rem;
+  width: 1.94444444rem;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: #282828;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-left: 3.25rem;
+  margin-top: 0.41666667rem;
+  text-align: center;
+}
+.setgroup-content .setgroup-img button svg {
+  font-size: 14px;
+}
+[data-dpr="2"] .setgroup-content .setgroup-img button svg {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-img button svg {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-img button svg {
+  font-size: 39px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-img button svg {
+  font-size: 42px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-img button svg {
+  font-size: 56px;
+}
+.setgroup-content .setgroup-intro {
+  height: 3.22222222rem;
+  width: 7.66666667rem;
+  margin: 0 auto;
+  background: #fafafa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.38);
+  padding: 0.38888889rem;
+}
+[data-dpr="2"] .setgroup-content .setgroup-intro {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-intro {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-intro {
+  font-size: 39px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-intro {
+  font-size: 42px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-intro {
+  font-size: 56px;
+}
+.setgroup-content .setgroup-join {
+  height: 1.33333333rem;
+  width: 8.44444444rem;
+  margin: 0 auto;
+  background: #fafafa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.38);
+  margin-top: 0.83333333rem;
+}
+[data-dpr="2"] .setgroup-content .setgroup-join {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-join {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-join {
+  font-size: 39px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-join {
+  font-size: 42px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-join {
+  font-size: 56px;
+}
+.setgroup-content .setgroup-join button {
+  width: 100%;
+  height: 100%;
+  background: #fafafa;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.38);
+}
+[data-dpr="2"] .setgroup-content .setgroup-join button {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-join button {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-join button {
+  font-size: 39px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-join button {
+  font-size: 42px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-join button {
+  font-size: 56px;
+}
+.setgroup-content .setgroup-join button svg {
+  padding-left: 4.52777778rem;
+}
+.setgroup-content .setgroup-save {
+  height: 1.33333333rem;
+  width: 8.44444444rem;
+  margin: 0 auto;
+  background: #ffffff;
+  margin-top: 0.91666667rem;
+}
+.setgroup-content .setgroup-save button {
+  background: #5677fc;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+}
+[data-dpr="2"] .setgroup-content .setgroup-save button {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .setgroup-content .setgroup-save button {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .setgroup-content .setgroup-save button {
+  font-size: 44px;
+}
+[data-dpr="3"] .setgroup-content .setgroup-save button {
+  font-size: 48px;
+}
+[data-dpr="4"] .setgroup-content .setgroup-save button {
+  font-size: 64px;
+}
+/**/
+/*创建星球*/
+/**/
+.creatGroup-name {
+  border-bottom: 1px solid rgba(86, 118, 252, 0.54);
+}
+/**/
+/*申请加入私密星球*/
+/**/
+.joinPensonalG-content {
+  margin-top: 0.16666667rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 16.66666667rem;
+  position: relative;
+}
+.joinPensonalG-content .joinPensonalG-msg {
+  height: 1.38888889rem;
+  width: 8.5rem;
+  margin: 0 auto;
+  padding-top: 1.36111111rem;
+  border-bottom: 4px solid rgba(86, 118, 252, 0.87);
+}
+.joinPensonalG-content .joinPensonalG-msg span {
+  padding-left: 0.41666667rem;
+  display: block;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  color: rgba(86, 119, 251, 0.87);
+}
+[data-dpr="2"] .joinPensonalG-content .joinPensonalG-msg span {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .joinPensonalG-content .joinPensonalG-msg span {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .joinPensonalG-content .joinPensonalG-msg span {
+  font-size: 33px;
+}
+[data-dpr="3"] .joinPensonalG-content .joinPensonalG-msg span {
+  font-size: 36px;
+}
+[data-dpr="4"] .joinPensonalG-content .joinPensonalG-msg span {
+  font-size: 48px;
+}
+.joinPensonalG-content .joinPensonalG-msg input {
+  padding-left: 0.41666667rem;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.87);
+  padding-top: 0.27777778rem;
+  width: 100%;
+}
+[data-dpr="2"] .joinPensonalG-content .joinPensonalG-msg input {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .joinPensonalG-content .joinPensonalG-msg input {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .joinPensonalG-content .joinPensonalG-msg input {
+  font-size: 44px;
+}
+[data-dpr="3"] .joinPensonalG-content .joinPensonalG-msg input {
+  font-size: 48px;
+}
+[data-dpr="4"] .joinPensonalG-content .joinPensonalG-msg input {
+  font-size: 64px;
+}
+.joinPensonalG-content button {
+  width: 8.44444444rem;
+  height: 1.22222222rem;
+  background: #5677fc;
+  border-radius: 8px;
+  margin-left: 0.77777778rem;
+  margin-top: 3.81944444rem;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #ffffff;
+}
+[data-dpr="2"] .joinPensonalG-content button {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .joinPensonalG-content button {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .joinPensonalG-content button {
+  font-size: 44px;
+}
+[data-dpr="3"] .joinPensonalG-content button {
+  font-size: 48px;
+}
+[data-dpr="4"] .joinPensonalG-content button {
+  font-size: 64px;
+}
+/**/
+/*发表帖子*/
+/**/
+.publishPost-btn {
+  position: absolute;
+  right: 0.44444444rem;
+  top: 0.31944444rem;
+  opacity: 0.87;
+  font-family: PingFangSC-Medium;
+  font-size: 20px;
+  color: #ffffff;
+  background: #5677fc;
+}
+[data-dpr="2"] .publishPost-btn {
+  font-size: 40px;
+}
+[data-dpr="2.5"] .publishPost-btn {
+  font-size: 50px;
+}
+[data-dpr="2.75"] .publishPost-btn {
+  font-size: 55px;
+}
+[data-dpr="3"] .publishPost-btn {
+  font-size: 60px;
+}
+[data-dpr="4"] .publishPost-btn {
+  font-size: 80px;
+}
+.publishPost-content {
+  margin-top: 0.16666667rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 16.66666667rem;
+  position: relative;
+}
+.publishPost-content input {
+  display: block;
+  margin: 0 auto;
+  height: 0.83333333rem;
+  width: 8.45833333rem;
+  padding-top: 0.91666667rem;
+  padding-left: 0.41666667rem;
+  border-bottom: 1px solid rgba(86, 118, 252, 0.54);
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.38);
+}
+[data-dpr="2"] .publishPost-content input {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .publishPost-content input {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .publishPost-content input {
+  font-size: 44px;
+}
+[data-dpr="3"] .publishPost-content input {
+  font-size: 48px;
+}
+[data-dpr="4"] .publishPost-content input {
+  font-size: 64px;
+}
+.publishPost-content textarea {
+  height: 11.13888889rem;
+  width: 7.91666667rem;
+  background: #fafafa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  margin-left: 0.63888889rem;
+  margin-top: 0.90277778rem;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.38);
+  padding: 0.38888889rem;
+}
+[data-dpr="2"] .publishPost-content textarea {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .publishPost-content textarea {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .publishPost-content textarea {
+  font-size: 39px;
+}
+[data-dpr="3"] .publishPost-content textarea {
+  font-size: 42px;
+}
+[data-dpr="4"] .publishPost-content textarea {
+  font-size: 56px;
+}
+.publishPost-content svg {
+  display: block;
+  font-size: 21px;
+  margin-left: 1.16666667rem;
+  margin-top: 0.33333333rem;
+}
+[data-dpr="2"] .publishPost-content svg {
+  font-size: 41px;
+}
+[data-dpr="2.5"] .publishPost-content svg {
+  font-size: 51px;
+}
+[data-dpr="2.75"] .publishPost-content svg {
+  font-size: 56px;
+}
+[data-dpr="3"] .publishPost-content svg {
+  font-size: 62px;
+}
+[data-dpr="4"] .publishPost-content svg {
+  font-size: 82px;
 }
