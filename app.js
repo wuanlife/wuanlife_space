@@ -34,6 +34,11 @@ var userManage=require('./routes/userManage');
 var myCollections=require('./routes/myCollections');
 var myself = require('./routes/personal');
 var myPlanet = require('./routes/myPlanet');
+
+//消息
+var myMessage = require('./routes/myMessage');
+
+
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
 
@@ -124,7 +129,6 @@ app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/verifyEmail',verifyEmail);
 app.use('/news',news);
-app.use('/message',message);
 app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
@@ -134,6 +138,7 @@ app.use('/myself',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
+app.use('/mymessage',myMessage);
 
 
 // catch 404 and forward to error handler

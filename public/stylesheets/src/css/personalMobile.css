@@ -14,6 +14,11 @@
   justify-content: center;
   display: flex;
 }
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .tab-container {
   margin-top: 0.15277778rem;
   position: fixed;

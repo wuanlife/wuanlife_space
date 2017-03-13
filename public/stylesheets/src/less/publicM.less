@@ -72,3 +72,10 @@
 .bottom-shadow(@hshadow: 8px) {
     box-shadow: 0 0 @hshadow 0;
 }
+
+//单行超出省略号需要结合width
+.oneline-text-overflow {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
