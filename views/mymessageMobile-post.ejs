@@ -55,7 +55,19 @@
 				
 			},
 			bindEvent: function() {
-
+                $('.message-board').dropload({
+                    scrollArea : window,
+                    loadDownFn : function(me){
+                        global.getData("/api/show_message-post", {}, function(data) {
+                                //留出空间进行性能优化2333
+                                setTimeout(function(){
+                                    alert(data);
+                                    // 每次数据加载完，必须重置
+                                    me.resetload();
+                                },1000);
+                        })
+                    }
+                });
 			},
 			init: function() {
 				this.bindEvent();
