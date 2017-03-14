@@ -33,12 +33,20 @@
   visibility: hidden;
 }
 .message-board .message-line {
+  margin: 0 auto;
+  min-height: 1px;
+  zoom: 1;
   width: 8.88888889rem;
-  margin-left: 0.55555556rem;
-  margin-right: 0.55555556rem;
   padding-top: 0.27777778rem;
   padding-bottom: 0.27777778rem;
   border-bottom: 2px solid #eff2f4;
+}
+.message-board .message-line:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
 }
 .message-board .message-line img {
   width: 1.38888889rem;
@@ -130,4 +138,136 @@
 }
 [data-dpr="4"] .message-board .message-line .message-line-short p {
   font-size: 56px;
+}
+.message-board .message-line .message-line-verifyHeader {
+  width: 7.5rem;
+  display: inline-block;
+}
+.message-board .message-line .message-line-verifyInfo {
+  width: 6.11111111rem;
+  display: inline-block;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(40, 40, 40, 0.87);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyInfo h1 {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  color: #292929;
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 41px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 45px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 60px;
+}
+.message-board .message-line .message-line-verifyInfo p {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(40, 40, 40, 0.87);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyButtons {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.message-board .message-line .message-line-verifyButtons button {
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  background: #5677fc;
+  border-radius: 8px;
+  width: 2.77777778rem;
+  height: 0.69444444rem;
+  margin-left: 0.61111111rem;
+  margin-right: 0.30555556rem;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyButtons p {
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.38);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 48px;
 }

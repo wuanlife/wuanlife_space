@@ -4,9 +4,9 @@
 	background-color: #fff;
 	.clearfix;
 	.message-line {
+		margin:0 auto;
+		.clearfix;
 		.px2rem(width, 640);
-		.px2rem(margin-left, 40);
-		.px2rem(margin-right, 40);
 		.px2rem(padding-top, 20);
 		.px2rem(padding-bottom, 20);
 		border-bottom: 2px solid #eff2f4;
@@ -18,6 +18,7 @@
 			overflow:hidden;
 			float: left;
 		};
+		//星球和帖子通知部分
 		.message-line-header, .message-line-short {
 			display: inline-block;
 		}
@@ -55,6 +56,69 @@
 				font-family:PingFangSC-Regular;
 				.px2px(font-size, 28);
 				color:rgba(0,0,0,0.54);
+			}
+		}
+
+
+
+		//验证部分
+		.message-line-verifyHeader {
+			.px2rem(width, 540);
+			display: inline-block;
+		}
+		//
+		.message-line-verifyInfo {
+			.px2rem(width, 440);
+			display: inline-block;
+			font-family:PingFangHK-Regular;
+			.px2px(font-size, 24);
+			color:rgba(40,40,40,0.87);
+			text-align:left;
+
+			h1 {
+				width: 100%;
+				display: inline-block;
+				.oneline-text-overflow;
+
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 30);
+				color:#292929;
+				text-align:left;
+			}
+			p {
+				width: 100%;
+				display: inline-block;
+				.oneline-text-overflow;
+
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24);
+				color:rgba(40,40,40,0.87);
+				text-align:left;
+			}
+		}
+		.message-line-verifyButtons {
+			.center;
+			button {
+				//字体部分
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24);
+				color:#ffffff;
+				text-align:center;
+
+				//按钮部分
+				background:#5677fc;
+				border-radius:8px;
+				.px2rem(width, 200);
+				.px2rem(height, 50);
+
+				.px2rem(margin-left, 44);
+				.px2rem(margin-right, 22);
+			}
+			p {
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24);
+				color:rgba(0,0,0,0.38);
+				text-align:left;
 			}
 		}
 	}

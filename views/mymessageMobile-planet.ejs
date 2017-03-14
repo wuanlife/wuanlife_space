@@ -11,7 +11,7 @@
                                 </svg>
                             </span>
                             <span>
-                            　　　　帖子通知
+                            　　　　<p>星球通知</p>
                             </span>
                         </h1>
                     </div>
@@ -24,7 +24,6 @@
             		<img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
             		<div class="message-line-header">
             			<h1>格子</h1>
-            			<button>查看</button>
             		</div>
             		<div class="message-line-short">
             			<p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -34,7 +33,6 @@
             		<img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
             		<div class="message-line-header">
             			<h1>格子</h1>
-            			<button>查看</button>
             		</div>
             		<div class="message-line-short">
             			<p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -44,7 +42,6 @@
                     <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
                     <div class="message-line-header">
                         <h1>格子</h1>
-                        <button>查看</button>
                     </div>
                     <div class="message-line-short">
                         <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -54,7 +51,6 @@
                     <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
                     <div class="message-line-header">
                         <h1>格子</h1>
-                        <button>查看</button>
                     </div>
                     <div class="message-line-short">
                         <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -64,7 +60,6 @@
                     <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
                     <div class="message-line-header">
                         <h1>格子</h1>
-                        <button>查看</button>
                     </div>
                     <div class="message-line-short">
                         <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -74,7 +69,6 @@
                     <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
                     <div class="message-line-header">
                         <h1>格子</h1>
-                        <button>查看</button>
                     </div>
                     <div class="message-line-short">
                         <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -84,7 +78,6 @@
                     <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
                     <div class="message-line-header">
                         <h1>格子</h1>
-                        <button>查看</button>
                     </div>
                     <div class="message-line-short">
                         <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
@@ -105,19 +98,7 @@
 				
 			},
 			bindEvent: function() {
-                $('.message-board').dropload({
-                    scrollArea : window,
-                    loadDownFn : function(me){
-                        global.getData("/api/show_message-post", {}, function(data) {
-                                //留出空间进行性能优化2333
-                                setTimeout(function(){
-                                    alert(data);
-                                    // 每次数据加载完，必须重置
-                                    me.resetload();
-                                },1000);
-                        })
-                    }
-                });
+
 			},
 			init: function() {
 				this.bindEvent();
