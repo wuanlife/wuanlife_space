@@ -14,6 +14,11 @@
   justify-content: center;
   display: flex;
 }
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .register-body {
   margin-top: 0.16666667rem;
   height: 15.66666667rem;
