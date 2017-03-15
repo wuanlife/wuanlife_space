@@ -34,6 +34,11 @@ var userManage=require('./routes/userManage');
 var myCollections=require('./routes/myCollections');
 var myself = require('./routes/personal');
 var myPlanet = require('./routes/myPlanet');
+
+//消息
+var myMessage = require('./routes/myMessage');
+
+
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
 var loginNew = require('./routes/loginNew');
@@ -129,11 +134,17 @@ app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/verifyEmail',verifyEmail);
 app.use('/news',news);
-app.use('/message',message);
 app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
+
+app.use('/loginNew',loginNew);
+app.use('/retrievepassword',retrievePwd);
+app.use('/modifypassword',modifyPwd);
+app.use('/addPlanet',addPlanet);
+
+
 app.use('/mycollections',myCollections);
 app.use('/myself',myself);
 app.use('/inviteCode',inviteCode);
@@ -144,6 +155,7 @@ app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanet',addPlanet);
 app.use('/addPlanetPrivate',addPlanetPrivate);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

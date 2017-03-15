@@ -79,6 +79,7 @@ h1 {
     .px2rem(height, @navbar-header-height);
     width: 100%;
     z-index: 100;
+
     .nav-container {
         margin-right: auto;
         margin-left: auto;
@@ -149,6 +150,9 @@ h1 {
     left: 0;
     top: 0;
     bottom: 0;
+    p {
+        display: inline-block;
+    }
 }
 
 //this should be modified later
@@ -274,4 +278,5 @@ input::search-decoration, input::search-cancel-button {
 .default-container {
     position: relative;
     .px2rem(top, 102);
+    .px2rem(margin-top, 10);
 }
