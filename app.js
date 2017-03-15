@@ -39,6 +39,7 @@ var registerNew = require('./routes/registerNew');
 var loginNew = require('./routes/loginNew');
 var retrievePwd = require('./routes/retrievePwd');
 var modifyPwd = require('./routes/modifyPwd');
+var addPlanet = require('./routes/addPlanet');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -140,6 +141,7 @@ app.use('/myplanet',myPlanet);
 app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
+app.use('/addPlanet',addPlanet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
