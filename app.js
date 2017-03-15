@@ -156,6 +156,8 @@ app.use('/modifypassword',modifyPwd);
 app.use('/addPlanet',addPlanet);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 
+app.use('/mymessage',myMessage);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
