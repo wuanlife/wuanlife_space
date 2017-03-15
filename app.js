@@ -41,6 +41,10 @@ var myMessage = require('./routes/myMessage');
 
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
+var loginNew = require('./routes/loginNew');
+var retrievePwd = require('./routes/retrievePwd');
+var modifyPwd = require('./routes/modifyPwd');
+var addPlanet = require('./routes/addPlanet');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -134,14 +138,19 @@ app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
+app.use('/loginNew',loginNew);
+app.use('/retrievepassword',retrievePwd);
+app.use('/modifypassword',modifyPwd);
+app.use('/addPlanet',addPlanet);
+
 
 app.use('/mycollections',myCollections);
 app.use('/myself',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
-app.use('/mymessage',myMessage);
 
+app.use('/mymessage',myMessage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

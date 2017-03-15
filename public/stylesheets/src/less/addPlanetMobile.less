@@ -1,0 +1,79 @@
+@import "publicM";//publicM.less
+
+.add-planet-header{
+	width: 100%;
+	background-color: @bgWhite;
+	.px2rem(height,458);
+	.add-planet-headItem{
+		position: relative;
+
+	}
+	.add-planet-headItem{
+		font-family:PingFangHK-Regular;
+	}
+	.add-planet-headItem.add-planet-head-goback{
+		.px2rem(height,48);
+		width:100%;
+		background-color:blue;
+
+		span{
+			position: relative;
+			.px2rem(width,33px);
+			.px2rem(top,34);
+			.px2rem(left,31);
+		}
+	}
+
+	.add-planet-headItem.add-planet-headIcon{
+		.px2rem(height,161);
+		background-color:orange;
+		.horizontalCenter;
+		img{
+			.px2rem(width,159);
+			.px2rem(height,161);
+			background-color:red;
+
+		}
+	}
+
+	.add-planet-headPlanet{
+		.px2rem(margin-top,22);
+		.px2rem(margin-bottom,8);
+		background-color:green;
+		text-align: center;
+		.px2rem(height,48);
+		.px2rem(line-height,48);
+		.px2px(font-size,34);
+		color:#292929;
+		font-family:PingFangHK-Medium;
+	}
+
+	.add-planet-headAbout{
+		.px2rem(height,38);
+		.px2px(font-size,26);
+		color:#7b7b7b;
+		.horizontalCenter;
+		background-color:black;
+		.px2rem(line-height,38);
+		.dot{
+			.px2rem(margin-left,20);
+			.px2rem(margin-right,20);
+		}
+	}
+
+	.add-planet-headJoin{
+		.px2rem(height,60);
+		background-color:rgb(133,123,54);
+		.center;
+		.px2rem(margin-top,38);
+		.px2rem(margin-bottom,46);
+		button{
+			background:#5677fc;
+			.px2rem(border-radiu,8);
+			.px2rem(width,141);
+			.px2rem(height,60);
+			.px2px(font-size,24);
+			color:#ffffff;
+		}
+	}
+}

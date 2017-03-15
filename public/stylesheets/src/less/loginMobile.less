@@ -1,11 +1,12 @@
 @import "publicM";//publicM.less
 
-.register-body{
+
+.login-body{
 	.px2rem(margin-top,12);
 	.px2rem(height,1128);
 	width:100%;
 	position:relative;
-	background-color:@bgWhite;
+	background-color: @bgWhite;
 	form{
 		margin:0px auto;
 		.px2rem(margin-top,97);
@@ -14,7 +15,6 @@
 		.px2rem(margin-left,-304);
 	}
 }
-
 
 .input-margin-left{
 	.px2rem(margin-left,30);
@@ -54,7 +54,7 @@
 }
 
 
-.register-container{
+.login-container{
 	position:relative;
 	margin: 0 auto;
 	.px2rem(margin-top,0);
@@ -91,6 +91,24 @@
 		-webkit-animation: labelAnimationX 0.5s;
 	}
 
+	.login-others{
+		text-align: center;
+		.px2rem(margin-top,45);
+		span{
+			.px2px(font-size,24);
+			color:rgba(86,119,251,0.87);
+		}
+
+		span#login-register{
+			.px2rem(margin-right,114);
+		}
+
+		span#login-misspwd{
+			.px2rem(margin-left,114);
+		}
+	}
+
+
 	button{
 		.px2rem(width,608);
 		.px2rem(height,88);
@@ -115,8 +133,8 @@
 	.foot-line::before, .foot-line::after{
 		content: '';
    	 	position: absolute;
-    	width: 0;
-    	.px2rem(height,2);
+    	width: 0%;
+    	.px2rem(height,3);
 	}
 
 	.foot-line.highlight::before, .foot-line.highlight::after{
@@ -126,6 +144,7 @@
 		background-color:rgba(86,118,252,0.87);
 		.px2rem(height,6);
 	}
+
 
 	.foot-line.blur-line::before, .foot-line.blur-line::after{
 		animation: footline-AnimationX 0.5s;
@@ -143,6 +162,7 @@
 		right:50%;
 	}
 }
+
 
 @keyframes footline-Animation{
 	0% {width:0}

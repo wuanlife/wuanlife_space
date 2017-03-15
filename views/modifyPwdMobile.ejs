@@ -11,7 +11,7 @@
                                 </svg>
                             </span>
                             <span>
-                                注册
+                                找回密码
                             </span>
                         </h1>
                     </div>
@@ -19,46 +19,37 @@
             </div>
         </nav>
         <div class="default-container">
-            <div class="register-body">
+            <div class="modify-password-body">
                 <form>
-                    <div class="register-container">
-                        <input id="email" type="email" class=" register-input">
-                        <label for="email">邮箱</label>
+                    <div class="modify-password-container">
+                        <input id="modify-password" required="required" type="email" class=" modify-password-input">
+                        <label for="modify-password">新密码</label>
                         <div class="foot-line"></div>
                     </div>
-                    <div class="register-container">
-                        <input id="nickname" class=" register-input" type="text">
-                        <label>昵称</label>
+                    <div class="modify-password-container">
+                        <input id="modify-password-ack" required="required" type="email" class=" modify-password-input">
+                        <label for="modify-password-ack">确认密码</label>
                         <div class="foot-line"></div>
                     </div>
-                    <div class="register-container">
-                        <input id="pwd" class="register-input" type="password">
-                        <label>密码</label>
-                        <div class="foot-line"></div>
-                    </div>
-                    <div class="register-container">
-                        <input id="inviteCode" class=" register-input" type="text">
-                        <label>邀请码</label>
-                        <div class="foot-line"></div>
-                    </div>
-                    <div class="register-container">
-                        <button class="registerBtn">注册</button>
+                    <div class="modify-password-container">
+                        <button class="registerBtn">找回密码</button>
                     </div>
                 </form>
+ 
             </div>
  
         </div>
 <%- include base/baseJSMobile.ejs %>
 
 <script>
-    $('.register-input').on('click',function(e){
-
+    $('.modify-password-input').on('click',function(e){
         $(this).siblings('label').removeClass('blur-label').addClass('active');
         $(this).siblings('.foot-line').removeClass('blur-line').addClass('highlight');
     });
 
-    $('.register-input').on('blur',function(e){
-        if(this.value === ""){
+    $('.modify-password-input').on('blur',function(e){
+        if(this.value === '')
+        {
             $(this).siblings('label').removeClass('active').addClass('blur-label');
         }
         
