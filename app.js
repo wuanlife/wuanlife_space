@@ -37,7 +37,8 @@ var myPlanet = require('./routes/myPlanet');
 
 //消息
 var myMessage = require('./routes/myMessage');
-
+//帖子详情
+var postdetails = require('./routes/postdetails')
 
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
@@ -151,6 +152,7 @@ app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
 
 app.use('/mymessage',myMessage);
+app.use('/post',postdetails);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
