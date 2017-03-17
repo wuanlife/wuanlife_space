@@ -10,12 +10,22 @@ router.get('/', function(req, res, next) {
     if (!req.session.user) {
         var agent = ua(req.headers['user-agent']);
         //var userid = req.session.user.userID;
-        var page = agent.Mobile ? 'personalInforMobile' : 'personalInforMobile';
-        request(config.server + "user/get_user_info?user_id=1",
+        var page = agent.Mobile ? 'changepasswordM' : 'changepasswordM';
+        request(config.server + "User/Changepwd?user_id=1&pwd=1&newpwd=1&checkNewpwd=1",
             function(error, response, body) {
-                if (!error && response.statusCode == 200) {
+                console.log("hello");
+                //var result = JSON.parse(body);
+                //console.log(result);
+                    
+                        res.render(page, {
+                            'result': 'result.data',
+                            'title': '个人中心',
+                            'user': 'req.session.user'
+                        });
+
+                /*if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
-                    //console.log(result);
+                    console.log(result);
                     if (result.ret == 200 && result.data) {
                         res.render(page, {
                             'result': result.data,
@@ -23,6 +33,7 @@ router.get('/', function(req, res, next) {
                             'user': req.session.user
                         });
                     } else {
+                        console.log("one");
                         res.render('error', {
                             'message': result.msg,
                             error: {
@@ -34,7 +45,7 @@ router.get('/', function(req, res, next) {
                 } else {
                     console.error('user failed:', error);
                     next(error);
-                }
+                }*/
             });
     } else {
         res.redirect('/login');
