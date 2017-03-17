@@ -39,7 +39,8 @@ var joinPensonalGroup = require('./routes/joinPensonalGroup');
 
 //消息
 var myMessage = require('./routes/myMessage');
-
+//帖子详情
+var postdetails = require('./routes/postdetails')
 
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
@@ -161,6 +162,8 @@ app.use('/addPlanetPrivate',addPlanetPrivate);
 app.use('/mymessage',myMessage);
 app.use('/changepassword',changepassword);
 app.use('/joinPensonalGroup',joinPensonalGroup);
+app.use('/post',postdetails);
+
 
 
 // catch 404 and forward to error handler
