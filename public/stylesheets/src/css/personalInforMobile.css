@@ -19,6 +19,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.auto-textbreak {
+  word-wrap: break-word;
+}
 input,
 button {
   border: none;
@@ -56,10 +59,10 @@ select {
 /**/
 .personal-navbar {
   background-color: #5677fc;
-  height: 1.41666667rem;
+  height: 1.36rem;
   width: 100%;
   background: #5677fc;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 8px 0;
 }
 .personal-navbar .personal-navbar-brand {
   font-size: 20px;
@@ -67,9 +70,9 @@ select {
   opacity: 0.87;
   color: #ffffff;
   float: left;
-  height: 0.77777778rem;
-  margin-top: 0.38888889rem;
-  margin-left: 0.44444444rem;
+  height: 0.74666667rem;
+  margin-top: 0.37333333rem;
+  margin-left: 0.42666667rem;
 }
 [data-dpr="2"] .personal-navbar .personal-navbar-brand {
   font-size: 40px;
@@ -87,10 +90,10 @@ select {
   font-size: 80px;
 }
 .personal-navbar .personal-icon-back {
-  height: 0.5rem;
-  margin-top: 0.45833333rem;
-  margin-bottom: 0.45833333rem;
-  margin-left: 0.44444444rem;
+  height: 0.48rem;
+  margin-top: 0.44rem;
+  margin-bottom: 0.44rem;
+  margin-left: 0.42666667rem;
   border: 0;
   float: left;
   background: transparent;
@@ -114,20 +117,20 @@ select {
   font-size: 72px;
 }
 .personal-content {
-  margin-top: 0.16666667rem;
+  margin-top: 0.16rem;
   width: 100%;
-  height: 15.52777778rem;
+  height: 14.90666667rem;
   background-color: #ffffff;
 }
 .personal-content .personal-image {
-  width: 1.94444444rem;
-  height: 1.94444444rem;
-  margin-left: 2.91666667rem;
+  width: 1.86666667rem;
+  height: 1.86666667rem;
+  margin-left: 2.8rem;
 }
 .personal-content .personal-image .img-upload-progress {
   width: 100%;
-  height: 0.02777778rem;
-  margin-bottom: 0.11111111rem;
+  height: 0.02666667rem;
+  margin-bottom: 0.10666667rem;
   background-color: #1e88e5;
   visibility: hidden;
 }
@@ -141,10 +144,10 @@ select {
   background-size: 100% 100%;
 }
 .personal-content .personal-email {
-  width: 8.43055556rem;
-  height: 1.25rem;
-  margin-left: 0.77777778rem;
-  margin-top: 1.15277778rem;
+  width: 8.09333333rem;
+  height: 1.2rem;
+  margin-left: 0.74666667rem;
+  margin-top: 1.10666667rem;
   position: relative;
   border-bottom: 1px solid rgba(0, 0, 0, 0.38);
 }
@@ -153,7 +156,7 @@ select {
   display: block;
   font-family: PingFangSC-Regular;
   color: rgba(0, 0, 0, 0.38);
-  margin-left: 0.41666667rem;
+  margin-left: 0.4rem;
 }
 [data-dpr="2"] .personal-content .personal-email label {
   font-size: 24px;
@@ -171,11 +174,11 @@ select {
   font-size: 48px;
 }
 .personal-content .personal-email input {
-  width: 4.08333333rem;
-  height: 0.625rem;
+  width: 3.92rem;
+  height: 0.6rem;
   font-size: 16px;
-  margin-left: 0.38888889rem;
-  margin-top: 0.16666667rem;
+  margin-left: 0.37333333rem;
+  margin-top: 0.16rem;
   font-family: PingFangSC-Regular;
   color: rgba(0, 0, 0, 0.56);
   background-color: none;
@@ -203,12 +206,12 @@ select {
   border: none;
   background: #5677fc;
   border-radius: 8px;
-  width: 1.75rem;
-  height: 0.69444444rem;
+  width: 1.68rem;
+  height: 0.66666667rem;
   font-family: PingFangHK-Regular;
   color: #ffffff;
   text-align: center;
-  top: -0.41666667rem;
+  top: -0.4rem;
   right: 0rem;
 }
 [data-dpr="2"] .personal-content .personal-email button {
@@ -227,14 +230,14 @@ select {
   font-size: 48px;
 }
 .personal-content .personal-sex {
-  width: 8.43055556rem;
-  height: 1.25rem;
-  margin-left: 0.77777778rem;
-  margin-top: 0.59722222rem;
+  width: 8.09333333rem;
+  height: 1.2rem;
+  margin-left: 0.74666667rem;
+  margin-top: 0.57333333rem;
 }
 .personal-content .personal-sex .label-1 {
   display: block;
-  margin-left: 0.41666667rem;
+  margin-left: 0.4rem;
   font-size: 12px;
   font-family: PingFangSC-Regular;
   color: rgba(86, 119, 251, 0.87);
@@ -255,11 +258,11 @@ select {
   font-size: 48px;
 }
 .personal-content .personal-sex input {
-  margin-left: 0.48611111rem;
-  margin-top: 0.41666667rem;
+  margin-left: 0.46666667rem;
+  margin-top: 0.4rem;
   font-size: 20px;
-  width: 0.27777778rem;
-  height: 0.27777778rem;
+  width: 0.26666667rem;
+  height: 0.26666667rem;
 }
 [data-dpr="2"] .personal-content .personal-sex input {
   font-size: 40px;
@@ -297,13 +300,13 @@ select {
   font-size: 64px;
 }
 .personal-content .personal-birthday {
-  width: 8.43055556rem;
-  height: 1.25rem;
-  margin-left: 0.77777778rem;
-  margin-top: 0.41666667rem;
+  width: 8.09333333rem;
+  height: 1.2rem;
+  margin-left: 0.74666667rem;
+  margin-top: 0.4rem;
 }
 .personal-content .personal-birthday .label-year {
-  margin-left: 0.41666667rem;
+  margin-left: 0.4rem;
   display: block;
   font-size: 12px;
   font-family: PingFangSC-Regular;
@@ -326,11 +329,11 @@ select {
 }
 .personal-content .personal-birthday #year {
   width: 60px;
-  width: 2.51388889rem;
-  height: 0.69444444rem;
-  margin-left: 0.41666667rem;
-  margin-top: 0.41666667rem;
-  margin-bottom: 0.41666667rem;
+  width: 2.41333333rem;
+  height: 0.66666667rem;
+  margin-left: 0.4rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
   font-size: 16px;
   border-bottom: 3px solid rgba(86, 118, 252, 0.87);
 }
@@ -350,8 +353,8 @@ select {
   font-size: 64px;
 }
 .personal-content .personal-birthday #month {
-  width: 1.68055556rem;
-  height: 0.69444444rem;
+  width: 1.61333333rem;
+  height: 0.66666667rem;
   font-size: 16px;
   border-bottom: 3px solid rgba(86, 118, 252, 0.87);
 }
@@ -371,8 +374,8 @@ select {
   font-size: 64px;
 }
 .personal-content .personal-birthday #day {
-  width: 1.68055556rem;
-  height: 0.69444444rem;
+  width: 1.61333333rem;
+  height: 0.66666667rem;
   font-size: 16px;
   border-bottom: 3px solid rgba(86, 118, 252, 0.87);
 }
@@ -392,12 +395,12 @@ select {
   font-size: 64px;
 }
 .personal-content button {
-  margin-top: 0.83333333rem;
-  margin-left: 0.77777778rem;
+  margin-top: 0.8rem;
+  margin-left: 0.74666667rem;
   background: #5677fc;
   border-radius: 8px;
-  width: 8.44444444rem;
-  height: 1.22222222rem;
+  width: 8.10666667rem;
+  height: 1.17333333rem;
   font-size: 16px;
   opacity: 0.87;
   font-family: PingFangSC-Regular;

@@ -19,6 +19,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.auto-textbreak {
+  word-wrap: break-word;
+}
 input,
 button {
   border: none;
@@ -55,23 +58,23 @@ select {
 /*设置星球*/
 /**/
 .setgroup-content {
-  margin-top: 0.16666667rem;
+  margin-top: 0.16rem;
   background-color: #ffffff;
   width: 100%;
-  height: 16.66666667rem;
+  height: 16rem;
   position: relative;
 }
 .setgroup-content span {
   display: block;
-  width: 8.44444444rem;
-  height: 0.625rem;
+  width: 8.10666667rem;
+  height: 0.6rem;
   margin: 0 auto;
   font-family: PingFangSC-Regular;
   font-size: 16px;
   color: rgba(0, 0, 0, 0.38);
-  padding-left: 0.52777778rem;
-  padding-top: 0.91666667rem;
-  padding-bottom: 0.22222222rem;
+  padding-left: 0.50666667rem;
+  padding-top: 0.88rem;
+  padding-bottom: 0.21333333rem;
 }
 [data-dpr="2"] .setgroup-content span {
   font-size: 32px;
@@ -89,8 +92,8 @@ select {
   font-size: 64px;
 }
 .setgroup-content .setgroup-img {
-  height: 4.93055556rem;
-  width: 8.44444444rem;
+  height: 4.73333333rem;
+  width: 8.10666667rem;
   margin: 0 auto;
 }
 .setgroup-content .setgroup-img span {
@@ -98,8 +101,8 @@ select {
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.38);
-  padding-left: 0.38888889rem;
-  padding-top: 0.95833333rem;
+  padding-left: 0.37333333rem;
+  padding-top: 0.92rem;
 }
 [data-dpr="2"] .setgroup-content .setgroup-img span {
   font-size: 28px;
@@ -117,15 +120,16 @@ select {
   font-size: 56px;
 }
 .setgroup-content .setgroup-img button {
-  height: 1.94444444rem;
-  width: 1.94444444rem;
+  height: 1.86666667rem;
+  width: 1.86666667rem;
   cursor: pointer;
   border-radius: 100%;
-  background-color: #282828;
+  background: #fafafa;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  margin-left: 3.25rem;
-  margin-top: 0.41666667rem;
+  margin-left: 3.12rem;
+  margin-top: 0.4rem;
   text-align: center;
 }
 .setgroup-content .setgroup-img button svg {
@@ -147,8 +151,8 @@ select {
   font-size: 56px;
 }
 .setgroup-content .setgroup-intro {
-  height: 3.22222222rem;
-  width: 7.66666667rem;
+  height: 3.09333333rem;
+  width: 7.36rem;
   margin: 0 auto;
   background: #fafafa;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
@@ -156,7 +160,7 @@ select {
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.38);
-  padding: 0.38888889rem;
+  padding: 0.37333333rem;
 }
 [data-dpr="2"] .setgroup-content .setgroup-intro {
   font-size: 28px;
@@ -174,8 +178,8 @@ select {
   font-size: 56px;
 }
 .setgroup-content .setgroup-join {
-  height: 1.33333333rem;
-  width: 8.44444444rem;
+  height: 1.28rem;
+  width: 8.10666667rem;
   margin: 0 auto;
   background: #fafafa;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
@@ -183,7 +187,7 @@ select {
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.38);
-  margin-top: 0.83333333rem;
+  margin-top: 0.8rem;
 }
 [data-dpr="2"] .setgroup-content .setgroup-join {
   font-size: 28px;
@@ -224,14 +228,14 @@ select {
   font-size: 56px;
 }
 .setgroup-content .setgroup-join button svg {
-  padding-left: 4.52777778rem;
+  padding-left: 4.34666667rem;
 }
 .setgroup-content .setgroup-save {
-  height: 1.33333333rem;
-  width: 8.44444444rem;
+  height: 1.28rem;
+  width: 8.10666667rem;
   margin: 0 auto;
   background: #ffffff;
-  margin-top: 0.91666667rem;
+  margin-top: 0.88rem;
 }
 .setgroup-content .setgroup-save button {
   background: #5677fc;
