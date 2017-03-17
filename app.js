@@ -34,6 +34,8 @@ var userManage=require('./routes/userManage');
 var myCollections=require('./routes/myCollections');
 var myself = require('./routes/personal');
 var myPlanet = require('./routes/myPlanet');
+var changepassword = require('./routes/changepassword');
+var joinPensonalGroup = require('./routes/joinPensonalGroup');
 
 //消息
 var myMessage = require('./routes/myMessage');
@@ -158,7 +160,10 @@ app.use('/addPlanet',addPlanet);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 
 app.use('/mymessage',myMessage);
+app.use('/changepassword',changepassword);
+app.use('/joinPensonalGroup',joinPensonalGroup);
 app.use('/post',postdetails);
+
 
 
 // catch 404 and forward to error handler

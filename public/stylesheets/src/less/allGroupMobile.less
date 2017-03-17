@@ -1,0 +1,59 @@
+@import "publicM";
+input,button{
+	border:none;
+}
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+    margin: 0;
+    padding: 0
+}
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+/**/
+/*全部星球*/
+/**/
+
+.allgroup-content{
+	.px2rem(margin-top,12);
+	background-color: #ffffff;
+	width: 100%;
+	.px2rem(height,1200);
+	.allgroup-group{
+		.px2rem(width,680);
+		.px2rem(height,140);
+		margin: 0 auto;
+		border-bottom: solid 2px #eff2f4;
+		position: relative;
+		button{
+			position: absolute;
+			.px2rem(top,20);
+			.px2rem(left,20);
+			.px2rem(width,100);
+		    .px2rem(height,100);
+		    .border-radius(100%);
+		    cursor: pointer;
+		    background-repeat: no-repeat;
+            background-size: 100% 100%;
+		}
+		h2{
+			.px2rem(height,42);
+			width: 100%;
+			color: #292929;
+			font-family:PingFangHK-Regular;
+			.px2px(font-size,30);
+			.px2rem(margin-left,136);
+			.px2rem(padding-top,36);
+		}
+		span{
+			.px2rem(margin-left,136);
+			.px2rem(height,30);
+			width: 100%;
+			color:rgba(0,0,0,0.36);
+			font-family:PingFangHK-Regular;
+			.px2px(font-size,22);
+		}
+	}
+}
