@@ -94,7 +94,7 @@
 	.px2rem(padding-right, 32);
 	.px2rem(padding-bottom, 22);
 	.px2rem(padding-left, 32);
-	.px2rem(margin-bottom, 12);
+	.px2rem(margin-bottom, 202);
 	.postreplies-count {
 		border-bottom: 2px solid rgba(86,119,252,0.36);
 		.px2rem(padding-bottom, 12);
@@ -107,6 +107,8 @@
 	}
 	.postreply-entry {
 		.px2rem(padding-top, 12);
+		.px2rem(padding-bottom, 12);
+		border-bottom: 1px solid rgba(86,119,252,0.26);
 		.postreply-entry-header {
 			.px2rem(margin-bottom, 18);
 			.clearfix;
@@ -137,7 +139,52 @@
 				text-align:left;
 			}
 		}
-	}
+		.postreply-entry-footer {
+			.px2rem(margin-top, 28);
+			.clearfix;
+			.postreply-operations {
+				p {
+					.px2rem(margin-right, 32);
+					display: inline-block;
+					float: left;
 
+					//字体
+					font-family:PingFangHK-Regular;
+					.px2px(font-size, 28px);
+					color:rgba(86,119,251,0.87);
+					letter-spacing:0.5px;
+					text-align:left;
+				}
+			}
+		}
+	}
+}
+
+.reply-footer {
+	.px2rem(height, 58);
+	.px2rem(padding-top, 22);
+	.px2rem(padding-bottom, 22);
+
+	.alignCenter;
+	p {
+		order:-1;/* 让left居于左侧 */
+		line-height: 30px;
+		.px2rem(margin-left, 32);
+
+		font-family:PingFangHK-Regular;
+		.px2px(font-size, 32);
+		color:rgba(255,255,255,0.54);
+		letter-spacing:0.57px;
+		text-align:left;
+	}
+	div {
+		height: 100%;
+		flex:1;
+	}
+	button {
+		.px2rem(margin-right, 32);
+		flex:0 0 40px;/* 左右两列固定宽 */
+		line-height: 30px;
+	}
 }
 
