@@ -1,0 +1,203 @@
+@import "searchInputMobile";
+
+.search-content-all{
+	.px2rem(margin-top,10);
+	font-family:PingFangSC-Medium;
+	.px2px(font-size,24);
+}
+
+.search-content-planets{
+	width:100%;
+    background-color:@bgWhite;
+	.px2rem(padding-top,12);
+	.px2rem(padding-bottom,12);
+	.content-planets-tag,.content-planets-planetContainers,.content-planets-more{
+		.px2rem(margin-left,40);
+		.px2rem(margin-right,40);
+	}
+
+
+	.content-planets-tag{
+		.px2rem(height,57);
+		span{
+			.px2px(font-size,40);
+			opacity:0.87;
+			color:#5677fc;
+		}
+	}
+
+	.content-planets-planetContainers{
+		.px2rem(height,150);
+		.px2rem(margin-top,22);
+		.px2rem(margin-bottom,24);
+		.horizontalCenter;
+		justify-content: flex-start;
+		.content-planets-planetContainer{
+			.px2rem(width,168);
+			.px2rem(margin-right,32);
+			.planets-planetContainer-img{
+				.px2rem(width,168);
+				.center;
+				.px2rem(height,99);
+				div{
+					.px2rem(width,99);
+					.px2rem(height,99);
+					background:#d8d8d8;
+					border-radius:50%;
+				}
+			}
+			.planets-planetContainer-exp{
+				.px2rem(margin-top,17);
+				.px2px(font-size,20);
+				.px2rem(width,168);
+				.horizontalCenter;
+			}
+		}
+
+
+
+	}
+
+	.content-planets-more{
+		.px2rem(height,33);
+		position: relative;
+		.alignCenter;
+		.more-label{
+			span{
+				color:rgba(86,119,251,0.54);
+			}
+		}
+
+		.more-next{
+			.px2rem(width,20);
+			.px2rem(height,32);
+			position:absolute;
+			right:0;
+			.more-next-pre,.more-next-last{
+				.onlyBorder;
+				.px2rem(border-top-width,16);
+				.px2rem(border-bottom-width,16);
+				.px2rem(border-left-width,18);
+				.px2rem(border-right-width,18);
+			}
+
+			.more-next-pre{
+				border-color:transparent transparent transparent rgba(0,0,0,0.26);			
+			}
+
+			.more-next-last{
+				position:relative;
+				.px2rem(top,-32);
+				.px2rem(right,6);
+				border-color:transparent transparent transparent @bgWhite;
+			}
+		}
+	}
+
+}
+
+.onlyBorder{
+	.px2rem(width,0);
+	.px2rem(height,0);
+	line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-style:solid;
+}
+
+.search-content-details{
+	.px2rem(margin-top,12);
+	background-color:@bgWhite;
+	.px2rem(padding-top,12);
+	.px2rem(padding-left,40);
+	.px2rem(padding-right,40);
+	.px2rem(height,500);
+	.content-details-content-label{
+		.px2rem(height,57);
+		.alignCenter;
+		.px2px(font-size,40);
+		color:#5677fc;
+	}
+	.search-content-detail{
+		background-color:white;
+		//阴影
+		.content-detail-header{
+			.px2rem(heigth,90);
+			width:100%;
+			.alignCenter;
+			.content-detail-header-content{
+				.alignCenter;
+				width:100%;
+				position:relative;
+
+				span{
+					.px2px(font-size,24);
+					opacity:0.25;
+					color:#000000;
+				}
+
+				img{
+					.px2rem(width,60);
+					.px2rem(height,60);
+					border-radius:50%;
+					background-color:red;
+				}
+
+
+				.search-content-header-user{
+					.px2rem(margin-left,12);
+				}
+
+				.search-content-header-date{
+					position:absolute;
+					.px2rem(right,0);
+				}
+			}
+		}
+		
+		.content-detail-content{
+			.px2rem(margin-bottom,13);
+			.content-detail-content-title{
+
+				p{
+					opacity:0.87;
+					font-family:PingFangHK-Medium;
+					.px2px(font-size,32);
+					color:#2f2f2f;
+				}
+			}
+
+			.content-detail-content-brief{
+				width:100%;
+				.content-detail-content-exact{
+					.px2rem(height,120);
+					width:100%;
+					.px2px(font-size,28);
+					color:black;
+					letter-spacing:0;
+					opacity:0.54;
+				}
+			}
+
+			.content-detail-content-img{
+				.horizontalCenter;
+				.px2rem(margin-top,18);
+				justify-content:flex-start;
+				img{
+					.px2rem(margin-right,13);
+					.px2rem(width,204);
+					.px2rem(height,204);
+					background-color:yellow;
+				}
+
+			}
+		}
+
+		.content-detail-footer{
+
+
+		}
+
+
+	}
+}

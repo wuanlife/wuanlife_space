@@ -1,0 +1,103 @@
+<%- include searchInputMobile.ejs %>
+
+<div class="search-content-all">
+	<div class="search-content-planets">
+		<div class="content-planets-tag">
+			<span>星球</span>
+		</div>
+		<div class="content-planets-planetContainers">
+			<div class="content-planets-planetContainer first-container">
+				<div class="planets-planetContainer-img">
+					<div><img></img></div>
+				</div>
+				<div class="planets-planetContainer-exp">
+					<span>我们都是技术宅</span>
+				</div>
+			</div>
+			<div class="content-planets-planetContainer">
+				<div class="planets-planetContainer-img">
+					<div><img></img></div>
+				</div>
+				<div class="planets-planetContainer-exp">
+					<span>UI 周报回复组</span>
+				</div>
+			</div>
+			<div class="content-planets-planetContainer last-container">
+				<div class="planets-planetContainer-img">
+					<div><img></img></div>
+				</div>
+				<div class="planets-planetContainer-exp">
+					<span>我们都是技术宅号</span>
+				</div>
+			</div>
+		</div>
+		<div class="content-planets-more">
+			<div class="more-label">
+				<span>查看更多星球</span>
+			</div>
+			<div class="more-next">
+				<div class="more-next-pre"></div>
+				<div class="more-next-last"></div>
+			</div>
+		</div>
+	</div>
+	<div class="search-content-details">
+		<div class="content-details-content-label">
+			<span>帖子</span>
+		</div>
+		<div class="search-content-detail">
+			<div class="content-detail-header">
+				<div class="content-detail-header-content">
+					<img></img>
+					<span class="search-content-header-user">淘淘发表于鬼扯天地</span>
+                    <span class="search-content-header-date">2017-01-28 22:41</span>
+				</div>
+			</div>
+			<div class="content-detail-content">
+				<div class="content-detail-content-title">
+                    <p>Ubuntu开荒笔记</p>
+                </div>
+                <div class="content-detail-content-brief">
+                    <div class="content-detail-content-exact">
+                        <p>安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
+                        </p>
+                    </div>
+                    <div class="content-detail-content-img">
+                        <img class="detail-content-img-start"></img>
+                        <img></img>
+                        <img class="detail-content-img-end"></img>
+                    </div>
+                </div>
+			</div>
+			<div class="content-detail-footer">
+			</div>
+		</div>
+
+	</div>
+<div>
+
+
+
+
+<%- include base/baseJSMobile.ejs %>
+
+
+<script>
+	(function() {
+		var index = {
+
+
+			getServerData: function(param, cb) {
+				
+			},
+			bindEvent: function() {
+
+			},
+			init: function() {
+				this.bindEvent();
+			}
+		}
+		index.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>

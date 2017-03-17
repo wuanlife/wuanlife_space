@@ -1,0 +1,59 @@
+@import "searchInputMobile";
+
+.searchPlanet-search-content-all{
+	.px2rem(margin-top,12);
+}
+.searchPlanet-search-content-planets{
+
+	background-color:@bgWhite;
+	.content-planets-tag{
+		.alignCenter;
+		.px2rem(height,57);
+		.px2px(font-size,40);
+		.px2rem(margin-left,40);
+		.px2rem(margin-top,12);
+		opacity:0.87;
+		font-family:PingFangSC-Medium;
+		color:#5677fc;
+	}
+
+	.content-planets-total{
+		display:flex;
+		justify-content:center;
+		flex-wrap:wrap;
+		align-content: flex-start;
+		position:relative;
+		.px2rem(top,-26);
+		.content-planets-single{
+			box-sizing: border-box;
+			background-color:@bgWhite;
+			.px2rem(height,150);
+			.px2rem(width,168);
+			.px2rem(margin-right,60);
+			.px2rem(margin-top,48);
+			.content-planets-single-img{
+				.px2rem(width,168);
+				.center;
+				.px2rem(height,99);
+				div{
+					.px2rem(width,99);
+					.px2rem(height,99);
+					background:red;
+					border-radius:50%;
+				}
+			}
+
+
+
+			.content-planets-single-exp{		
+				.px2rem(margin-top,17);
+				.px2px(font-size,22);
+				.px2rem(width,168);
+				.horizontalCenter;
+				color:rgba(40,40,40,0.87);
+			}	
+		}
+	}
+	
+}
+
