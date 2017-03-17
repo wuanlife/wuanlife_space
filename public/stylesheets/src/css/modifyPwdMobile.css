@@ -1,0 +1,529 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.modify-password-body {
+  margin-top: 0.16666667rem;
+  height: 15.66666667rem;
+  width: 100%;
+  position: relative;
+  background-color: #ffffff;
+}
+.modify-password-body form {
+  margin: 0px auto;
+  margin-top: 1.34722222rem;
+  position: absolute;
+  left: 50%;
+  margin-left: -4.22222222rem;
+}
+.input-margin-left {
+  margin-left: 0.41666667rem;
+}
+.translatedLabel {
+  position: absolute;
+  font-size: 12px;
+  top: -0.625rem;
+  color: rgba(86, 119, 251, 0.87);
+  font-family: PingFangSC-Regular;
+  margin-left: 0.41666667rem;
+}
+[data-dpr="2"] .translatedLabel {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .translatedLabel {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .translatedLabel {
+  font-size: 33px;
+}
+[data-dpr="3"] .translatedLabel {
+  font-size: 36px;
+}
+[data-dpr="4"] .translatedLabel {
+  font-size: 48px;
+}
+.intranslateLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.38);
+  font-size: 16px;
+  font-heigth: 0.625rem;
+  margin-left: 0.41666667rem;
+}
+[data-dpr="2"] .intranslateLabel {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .intranslateLabel {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .intranslateLabel {
+  font-size: 44px;
+}
+[data-dpr="3"] .intranslateLabel {
+  font-size: 48px;
+}
+[data-dpr="4"] .intranslateLabel {
+  font-size: 64px;
+}
+.hightlightLine {
+  border: solid rgba(86, 118, 252, 0.87);
+  border-width: 0.05555556rem;
+  width: 8.38888889rem;
+  height: 0px;
+}
+.orginalLine {
+  border: solid rgba(86, 118, 252, 0.54);
+  width: 8.43055556rem;
+  height: 0rem;
+  border-width: 0.02083333rem;
+}
+.modify-password-container {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 0rem;
+  width: 8.44444444rem;
+  margin-bottom: 1.125rem;
+}
+.modify-password-container input {
+  outline: none;
+  z-index: 1;
+  position: relative;
+  background: none;
+  width: 100%;
+  height: 0.625rem;
+  border: 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  font-family: PingFangSC-Regular;
+  margin-left: 0.41666667rem;
+}
+[data-dpr="2"] .modify-password-container input {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .modify-password-container input {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .modify-password-container input {
+  font-size: 44px;
+}
+[data-dpr="3"] .modify-password-container input {
+  font-size: 48px;
+}
+[data-dpr="4"] .modify-password-container input {
+  font-size: 64px;
+}
+.modify-password-container label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.38);
+  font-size: 16px;
+  font-heigth: 0.625rem;
+  margin-left: 0.41666667rem;
+}
+[data-dpr="2"] .modify-password-container label {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .modify-password-container label {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .modify-password-container label {
+  font-size: 44px;
+}
+[data-dpr="3"] .modify-password-container label {
+  font-size: 48px;
+}
+[data-dpr="4"] .modify-password-container label {
+  font-size: 64px;
+}
+.modify-password-container label.active {
+  position: absolute;
+  font-size: 12px;
+  top: -0.625rem;
+  color: rgba(86, 119, 251, 0.87);
+  font-family: PingFangSC-Regular;
+  margin-left: 0.41666667rem;
+  animation: labelAnimation 0.5s;
+  -webkit-animation: labelAnimation 0.5s;
+}
+[data-dpr="2"] .modify-password-container label.active {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .modify-password-container label.active {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .modify-password-container label.active {
+  font-size: 33px;
+}
+[data-dpr="3"] .modify-password-container label.active {
+  font-size: 36px;
+}
+[data-dpr="4"] .modify-password-container label.active {
+  font-size: 48px;
+}
+.modify-password-container label.blur-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(0, 0, 0, 0.38);
+  font-size: 16px;
+  font-heigth: 0.625rem;
+  margin-left: 0.41666667rem;
+  animation: labelAnimationX 0.5s;
+  -webkit-animation: labelAnimationX 0.5s;
+}
+[data-dpr="2"] .modify-password-container label.blur-label {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .modify-password-container label.blur-label {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .modify-password-container label.blur-label {
+  font-size: 44px;
+}
+[data-dpr="3"] .modify-password-container label.blur-label {
+  font-size: 48px;
+}
+[data-dpr="4"] .modify-password-container label.blur-label {
+  font-size: 64px;
+}
+.modify-password-container .modify-password-others {
+  text-align: center;
+  margin-top: 0.625rem;
+}
+.modify-password-container .modify-password-others span {
+  font-size: 12px;
+  color: rgba(86, 119, 251, 0.87);
+}
+[data-dpr="2"] .modify-password-container .modify-password-others span {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .modify-password-container .modify-password-others span {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .modify-password-container .modify-password-others span {
+  font-size: 33px;
+}
+[data-dpr="3"] .modify-password-container .modify-password-others span {
+  font-size: 36px;
+}
+[data-dpr="4"] .modify-password-container .modify-password-others span {
+  font-size: 48px;
+}
+.modify-password-container .modify-password-others span#modify-password-register {
+  margin-right: 1.58333333rem;
+}
+.modify-password-container .modify-password-others span#modify-password-misspwd {
+  margin-left: 1.58333333rem;
+}
+.modify-password-container button {
+  width: 8.44444444rem;
+  height: 1.22222222rem;
+  border-radius: 0.11111111rem;
+  margin-top: 0.69444444rem;
+  background-color: #5677fc;
+  font-size: 16px;
+  opacity: 0.87;
+  font-family: PingFangSC-Regular;
+  color: #ffffff;
+}
+[data-dpr="2"] .modify-password-container button {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .modify-password-container button {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .modify-password-container button {
+  font-size: 44px;
+}
+[data-dpr="3"] .modify-password-container button {
+  font-size: 48px;
+}
+[data-dpr="4"] .modify-password-container button {
+  font-size: 64px;
+}
+.modify-password-container .foot-line {
+  position: absolute;
+  top: 0.83333333rem;
+  left: 0;
+  bottom: 0;
+  border: solid rgba(86, 118, 252, 0.54);
+  width: 8.43055556rem;
+  height: 0rem;
+  border-width: 0.02083333rem;
+}
+.modify-password-container .foot-line::before,
+.modify-password-container .foot-line::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 0.04166667rem;
+}
+.modify-password-container .foot-line.highlight::before,
+.modify-password-container .foot-line.highlight::after {
+  animation: footline-Animation 0.5s;
+  -webkit-animation: footline-Animation 0.5s;
+  width: 50%;
+  background-color: rgba(86, 118, 252, 0.87);
+  height: 0.08333333rem;
+}
+.modify-password-container .foot-line.blur-line::before,
+.modify-password-container .foot-line.blur-line::after {
+  animation: footline-AnimationX 0.5s;
+  -webkit-animation: footline-AnimationX 0.5s;
+  width: 0%;
+  background-color: #5677fc;
+  height: 0.08333333rem;
+}
+.modify-password-container .foot-line::before {
+  left: 50%;
+}
+.modify-password-container .foot-line::after {
+  right: 50%;
+}
+@keyframes footline-Animation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50%;
+  }
+}
+@-webkit-keyframes footline-Animation {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50%;
+  }
+}
+@keyframes footline-AnimationX {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 0;
+  }
+}
+@-webkit-keyframes footline-AnimationX {
+  0% {
+    width: 50%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+@keyframes labelAnimation {
+  0% {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 16px;
+    font-heigth: 0.625rem;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 0% {
+    font-size: 32px;
+  }
+  [data-dpr="2.5"] 0% {
+    font-size: 40px;
+  }
+  [data-dpr="2.75"] 0% {
+    font-size: 44px;
+  }
+  [data-dpr="3"] 0% {
+    font-size: 48px;
+  }
+  [data-dpr="4"] 0% {
+    font-size: 64px;
+  }
+  100% {
+    position: absolute;
+    font-size: 12px;
+    top: -0.625rem;
+    color: rgba(86, 119, 251, 0.87);
+    font-family: PingFangSC-Regular;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 100% {
+    font-size: 24px;
+  }
+  [data-dpr="2.5"] 100% {
+    font-size: 30px;
+  }
+  [data-dpr="2.75"] 100% {
+    font-size: 33px;
+  }
+  [data-dpr="3"] 100% {
+    font-size: 36px;
+  }
+  [data-dpr="4"] 100% {
+    font-size: 48px;
+  }
+}
+@-webkit-keyframes labelAnimation {
+  0% {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 16px;
+    font-heigth: 0.625rem;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 0% {
+    font-size: 32px;
+  }
+  [data-dpr="2.5"] 0% {
+    font-size: 40px;
+  }
+  [data-dpr="2.75"] 0% {
+    font-size: 44px;
+  }
+  [data-dpr="3"] 0% {
+    font-size: 48px;
+  }
+  [data-dpr="4"] 0% {
+    font-size: 64px;
+  }
+  100% {
+    position: absolute;
+    font-size: 12px;
+    top: -0.625rem;
+    color: rgba(86, 119, 251, 0.87);
+    font-family: PingFangSC-Regular;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 100% {
+    font-size: 24px;
+  }
+  [data-dpr="2.5"] 100% {
+    font-size: 30px;
+  }
+  [data-dpr="2.75"] 100% {
+    font-size: 33px;
+  }
+  [data-dpr="3"] 100% {
+    font-size: 36px;
+  }
+  [data-dpr="4"] 100% {
+    font-size: 48px;
+  }
+}
+@keyframes labelAnimationX {
+  0% {
+    position: absolute;
+    font-size: 12px;
+    top: -0.625rem;
+    color: rgba(86, 119, 251, 0.87);
+    font-family: PingFangSC-Regular;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 0% {
+    font-size: 24px;
+  }
+  [data-dpr="2.5"] 0% {
+    font-size: 30px;
+  }
+  [data-dpr="2.75"] 0% {
+    font-size: 33px;
+  }
+  [data-dpr="3"] 0% {
+    font-size: 36px;
+  }
+  [data-dpr="4"] 0% {
+    font-size: 48px;
+  }
+  100% {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 16px;
+    font-heigth: 0.625rem;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 100% {
+    font-size: 32px;
+  }
+  [data-dpr="2.5"] 100% {
+    font-size: 40px;
+  }
+  [data-dpr="2.75"] 100% {
+    font-size: 44px;
+  }
+  [data-dpr="3"] 100% {
+    font-size: 48px;
+  }
+  [data-dpr="4"] 100% {
+    font-size: 64px;
+  }
+}
+@-webkit-keyframes labelAnimationX {
+  0% {
+    position: absolute;
+    font-size: 12px;
+    top: -0.625rem;
+    color: rgba(86, 119, 251, 0.87);
+    font-family: PingFangSC-Regular;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 0% {
+    font-size: 24px;
+  }
+  [data-dpr="2.5"] 0% {
+    font-size: 30px;
+  }
+  [data-dpr="2.75"] 0% {
+    font-size: 33px;
+  }
+  [data-dpr="3"] 0% {
+    font-size: 36px;
+  }
+  [data-dpr="4"] 0% {
+    font-size: 48px;
+  }
+  100% {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0, 0, 0, 0.38);
+    font-size: 16px;
+    font-heigth: 0.625rem;
+    margin-left: 0.41666667rem;
+  }
+  [data-dpr="2"] 100% {
+    font-size: 32px;
+  }
+  [data-dpr="2.5"] 100% {
+    font-size: 40px;
+  }
+  [data-dpr="2.75"] 100% {
+    font-size: 44px;
+  }
+  [data-dpr="3"] 100% {
+    font-size: 48px;
+  }
+  [data-dpr="4"] 100% {
+    font-size: 64px;
+  }
+}

@@ -1,0 +1,127 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+input,
+button {
+  border: none;
+}
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+/**/
+/*全部星球*/
+/**/
+.allgroup-content {
+  margin-top: 0.16666667rem;
+  background-color: #ffffff;
+  width: 100%;
+  height: 16.66666667rem;
+}
+.allgroup-content .allgroup-group {
+  width: 9.44444444rem;
+  height: 1.94444444rem;
+  margin: 0 auto;
+  border-bottom: solid 2px #eff2f4;
+  position: relative;
+}
+.allgroup-content .allgroup-group button {
+  position: absolute;
+  top: 0.27777778rem;
+  left: 0.27777778rem;
+  width: 1.38888889rem;
+  height: 1.38888889rem;
+  border-radius: 100%;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.allgroup-content .allgroup-group h2 {
+  height: 0.58333333rem;
+  width: 100%;
+  color: #292929;
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  margin-left: 1.88888889rem;
+  padding-top: 0.5rem;
+}
+[data-dpr="2"] .allgroup-content .allgroup-group h2 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .allgroup-content .allgroup-group h2 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .allgroup-content .allgroup-group h2 {
+  font-size: 41px;
+}
+[data-dpr="3"] .allgroup-content .allgroup-group h2 {
+  font-size: 45px;
+}
+[data-dpr="4"] .allgroup-content .allgroup-group h2 {
+  font-size: 60px;
+}
+.allgroup-content .allgroup-group span {
+  margin-left: 1.88888889rem;
+  height: 0.41666667rem;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.36);
+  font-family: PingFangHK-Regular;
+  font-size: 11px;
+}
+[data-dpr="2"] .allgroup-content .allgroup-group span {
+  font-size: 22px;
+}
+[data-dpr="2.5"] .allgroup-content .allgroup-group span {
+  font-size: 28px;
+}
+[data-dpr="2.75"] .allgroup-content .allgroup-group span {
+  font-size: 30px;
+}
+[data-dpr="3"] .allgroup-content .allgroup-group span {
+  font-size: 33px;
+}
+[data-dpr="4"] .allgroup-content .allgroup-group span {
+  font-size: 44px;
+}

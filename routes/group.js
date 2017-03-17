@@ -51,13 +51,18 @@ router.get('/:groupid', function(req, res, next) {
 router.get('/:groupid/post', function(req, res, next) {
 	    console.log("uehfu");
 		var agent = ua(req.headers['user-agent']);
-		var userid = req.session.user.userID;
+		//var userid = req.session.user.userID;
 		var page = agent.Mobile ? 'publishPostM' : 'publishPostM';
-		var tip = agent.Mobile ? 'tipMobile' : 'tip';
+		var tip = agent.Mobile ? 'publishPostM' : 'publishPostM';
 		//http://dev.wuanlife.com:800/group/posts?group_id=1&user_id=2&p_title=1&p_text=1
 		request(config.server+"group/posts?group_id=1&user_id=2&p_title=1&p_text=1",
 			function(error, response, body) {
-				console.log("jg");
+				res.render(page, {
+								'groupID': 'req.params.groupid',
+								'title': '发表帖子',
+								'user': 'req.session.user'
+							});
+				/*console.log("jg");
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
 					console.log(result);
@@ -79,13 +84,14 @@ router.get('/:groupid/post', function(req, res, next) {
 				} else {
 					console.error('group failed:', error);
 					next(error);
-				}
+				}*/
 			});
 
 });
 
 router.post('/:groupid/post', function(req, res, next) {
 	var userid = (req.session.user) ? req.session.user.userID : null;
+	console.log("can post be used?");
 	var html = xss(req.body.text, {
 		onTag: function(tag, html, options) {
 			if (tag == "strike") {

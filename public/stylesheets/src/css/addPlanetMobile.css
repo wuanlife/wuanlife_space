@@ -1,0 +1,376 @@
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.add-planet-header {
+  width: 100%;
+  background-color: #ffffff;
+  height: 6.36111111rem;
+  box-shadow: 0 2px 10px 0 black;
+  margin-bottom: 0.16666667rem;
+}
+.add-planet-header .add-planet-headItem {
+  position: relative;
+}
+.add-planet-header .add-planet-headItem {
+  font-family: PingFangHK-Regular;
+}
+.add-planet-header .add-planet-headItem.add-planet-head-goback {
+  height: 0.66666667rem;
+  width: 100%;
+}
+.add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  width: 0.45833333rem;
+  height: 0.45833333rem;
+  font-size: 17px;
+  position: relative;
+  top: 0.41666667rem;
+  left: 0.43055556rem;
+}
+[data-dpr="2"] .add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  font-size: 33px;
+}
+[data-dpr="2.5"] .add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  font-size: 41px;
+}
+[data-dpr="2.75"] .add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  font-size: 45px;
+}
+[data-dpr="3"] .add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  font-size: 50px;
+}
+[data-dpr="4"] .add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label {
+  font-size: 66px;
+}
+.add-planet-header .add-planet-headItem.add-planet-head-goback .goback-label svg {
+  color: rgba(86, 118, 252, 0.87);
+}
+.add-planet-header .add-planet-headItem.add-planet-headIcon {
+  height: 2.23611111rem;
+  justify-content: center;
+  display: flex;
+}
+.add-planet-header .add-planet-headItem.add-planet-headIcon img {
+  border-radius: 50%;
+  width: 2.20833333rem;
+  height: 2.23611111rem;
+  background-color: blue;
+}
+.add-planet-header .add-planet-headPlanet {
+  margin-top: 0.30555556rem;
+  margin-bottom: 0.11111111rem;
+  text-align: center;
+  height: 0.66666667rem;
+  line-height: 0.66666667rem;
+  font-size: 17px;
+  color: #292929;
+  font-family: PingFangHK-Medium;
+}
+[data-dpr="2"] .add-planet-header .add-planet-headPlanet {
+  font-size: 34px;
+}
+[data-dpr="2.5"] .add-planet-header .add-planet-headPlanet {
+  font-size: 43px;
+}
+[data-dpr="2.75"] .add-planet-header .add-planet-headPlanet {
+  font-size: 47px;
+}
+[data-dpr="3"] .add-planet-header .add-planet-headPlanet {
+  font-size: 51px;
+}
+[data-dpr="4"] .add-planet-header .add-planet-headPlanet {
+  font-size: 68px;
+}
+.add-planet-header .add-planet-headAbout {
+  height: 0.52777778rem;
+  font-size: 13px;
+  color: #7b7b7b;
+  justify-content: center;
+  display: flex;
+  line-height: 0.52777778rem;
+}
+[data-dpr="2"] .add-planet-header .add-planet-headAbout {
+  font-size: 26px;
+}
+[data-dpr="2.5"] .add-planet-header .add-planet-headAbout {
+  font-size: 33px;
+}
+[data-dpr="2.75"] .add-planet-header .add-planet-headAbout {
+  font-size: 36px;
+}
+[data-dpr="3"] .add-planet-header .add-planet-headAbout {
+  font-size: 39px;
+}
+[data-dpr="4"] .add-planet-header .add-planet-headAbout {
+  font-size: 52px;
+}
+.add-planet-header .add-planet-headAbout .dot {
+  margin-left: 0.27777778rem;
+  margin-right: 0.27777778rem;
+  line-height: 0.52777778rem;
+  position: relative;
+  top: -0.11111111rem;
+}
+.add-planet-header .add-planet-headJoin {
+  height: 0.83333333rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-top: 0.52777778rem;
+  margin-bottom: 0.63888889rem;
+}
+.add-planet-header .add-planet-headJoin button {
+  background: #5677fc;
+  border-radius: 0.11111111rem;
+  width: 1.95833333rem;
+  height: 0.83333333rem;
+  font-size: 12px;
+  color: #ffffff;
+  box-shadow: 0 2px 10px 0 black;
+}
+[data-dpr="2"] .add-planet-header .add-planet-headJoin button {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .add-planet-header .add-planet-headJoin button {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .add-planet-header .add-planet-headJoin button {
+  font-size: 33px;
+}
+[data-dpr="3"] .add-planet-header .add-planet-headJoin button {
+  font-size: 36px;
+}
+[data-dpr="4"] .add-planet-header .add-planet-headJoin button {
+  font-size: 48px;
+}
+.add-planet-body {
+  font-family: PingFangHK-Regular;
+  background-color: #ffffff;
+}
+.add-planet-body .add-planet-bodyItems {
+  width: 100%;
+  position: relative;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem {
+  box-shadow: 0 1px 5px 0 black;
+  height: 7.75rem;
+  margin-bottom: 0.13888889rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header {
+  height: 1.25rem;
+  width: 100%;
+  align-items: center;
+  display: flex;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content {
+  align-items: center;
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 12px;
+  opacity: 0.25;
+  color: #000000;
+}
+[data-dpr="2"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 33px;
+}
+[data-dpr="3"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 36px;
+}
+[data-dpr="4"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content span {
+  font-size: 48px;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content img {
+  width: 0.83333333rem;
+  height: 0.83333333rem;
+  border-radius: 50%;
+  background-color: red;
+  margin-left: 0.55555556rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content .bodyItem-header-user {
+  margin-left: 0.16666667rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-header .bodyItem-header-content .bodyItem-header-date {
+  position: absolute;
+  right: 0.54166667rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content {
+  margin-bottom: 0.18055556rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title {
+  margin-left: 0.55555556rem;
+  width: 100%;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  opacity: 0.87;
+  font-family: PingFangHK-Medium;
+  font-size: 16px;
+  color: #2f2f2f;
+}
+[data-dpr="2"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  font-size: 32px;
+}
+[data-dpr="2.5"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  font-size: 40px;
+}
+[data-dpr="2.75"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  font-size: 44px;
+}
+[data-dpr="3"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  font-size: 48px;
+}
+[data-dpr="4"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-title p {
+  font-size: 64px;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  height: 1.66666667rem;
+  width: 8.88888889rem;
+  font-size: 14px;
+  color: #000000;
+  letter-spacing: 0;
+  opacity: 0.54;
+}
+[data-dpr="2"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  font-size: 39px;
+}
+[data-dpr="3"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  font-size: 42px;
+}
+[data-dpr="4"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .add-planet-bodyItem-brief .bodyItem-brief-content {
+  font-size: 56px;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .bodyItem-brief-img {
+  justify-content: center;
+  display: flex;
+  margin-top: 0.25rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-content .bodyItem-brief-img img {
+  margin-right: 0.18055556rem;
+  width: 2.83333333rem;
+  height: 2.83333333rem;
+  background-color: yellow;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer {
+  position: relative;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: 0.55555556rem;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail {
+  width: 3.33333333rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+  font-size: 12px;
+  color: #5677fc;
+  opacity: 0.54;
+}
+[data-dpr="2"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  font-size: 33px;
+}
+[data-dpr="3"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  font-size: 36px;
+}
+[data-dpr="4"] .add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-detail div span {
+  font-size: 48px;
+}
+.add-planet-body .add-planet-bodyItems .add-planet-bodyItem .add-planet-bodyItem-footer .bodyItem-footer-comment .bodyItem-footer-comment-fence {
+  height: 0rem;
+  width: 0rem;
+  border-left-width: 0.01388889rem;
+  border-right-width: 0.01388889rem;
+  border-top-width: 0.27777778rem;
+  border-bottom-width: 0.27777778rem;
+  border-style: solid;
+  border-color: black;
+  opacity: 0.25;
+}
+.add-planet-additional {
+  position: absolute;
+  left: 7.48611111rem;
+  top: 14.44444444rem;
+  width: 1.55555556rem;
+  height: 1.55555556rem;
+  border-radius: 50%;
+  background: #5677fc;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.12), 0 12px 12px 0 rgba(0, 0, 0, 0.24);
+}
+.add-planet-additional .additional-container {
+  width: 0.38888889rem;
+  height: 0.38888889rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.add-planet-additional .additional-container .additional-add {
+  border-color: #ffffff;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+}
+.add-planet-additional .additional-container .pre {
+  border-left-width: 0.01388889rem;
+  border-right-width: 0.01388889rem;
+  border-top-width: 0.19444444rem;
+  border-bottom-width: 0.19444444rem;
+}
+.add-planet-additional .additional-container .last {
+  border-left-width: 0.19444444rem;
+  border-right-width: 0.19444444rem;
+  border-top-width: 0.01388889rem;
+  border-bottom-width: 0.01388889rem;
+}

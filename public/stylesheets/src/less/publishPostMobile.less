@@ -1,0 +1,65 @@
+@import "publicM";
+input,button{
+	border:none;
+}
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+    margin: 0;
+    padding: 0
+}
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+/**/
+/*发表帖子*/
+/**/
+.publishPost-btn{
+	position: absolute;
+	.px2rem(right,32);
+    .px2rem(top,23);
+    opacity:0.87;
+	font-family:PingFangSC-Medium;
+	.px2px(font-size,40);
+	color:#ffffff;
+	background:#5677fc;
+}
+.publishPost-content{
+	.px2rem(margin-top,12);
+	background-color: #ffffff;
+	width: 100%;
+	.px2rem(height,1200);
+	position: relative;
+	input{
+		display: block;
+		margin: 0 auto;
+		.px2rem(height,60);
+		.px2rem(width,609);
+		.px2rem(padding-top,66);
+		.px2rem(padding-left,30);
+		border-bottom:1px solid rgba(86,118,252,0.54);
+		font-family:PingFangSC-Regular;
+		.px2px(font-size,32);
+		color:rgba(0,0,0,0.38);
+	}
+	textarea{
+		.px2rem(height,802);
+		.px2rem(width,570);
+		background:#fafafa;
+		box-shadow:0 0 2px 0 rgba(0,0,0,0.12), 0 2px 2px 0 rgba(0,0,0,0.24);
+		border-radius:4px;
+		.px2rem(margin-left,46);
+		.px2rem(margin-top,65);
+		font-family:PingFangSC-Regular;
+		.px2px(font-size,28);
+		color:rgba(0,0,0,0.38);
+		.px2rem(padding,28);
+	}
+	svg{
+		display: block;
+		.px2px(font-size,41);
+		.px2rem(margin-left,84);
+		.px2rem(margin-top,24);
+	}
+}
