@@ -92,7 +92,7 @@ var sessionMiddleware = session({
     secret: config.db.cookieSecret,
     key: config.db.db, //cookie name
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 30
+        maxAge: 1000 * 60 * 60 * 24 * 30,
     }, //30 days
     store: new MongoStore({
         url: 'mongodb://localhost/wuanDB'

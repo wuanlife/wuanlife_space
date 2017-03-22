@@ -43,6 +43,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
+	var userID = (req.session.user) ? req.session.user.user_id : null;
 	try{
 		var page = agent.Mobile ? 'indexMobile' : 'index';
 		res.render(page, {
