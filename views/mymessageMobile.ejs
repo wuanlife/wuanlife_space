@@ -46,7 +46,7 @@
         </div>
         <div class="tab-container">
             <div class="message-tab-board">
-            	<div class="message-board-entry ">
+            	<div id="message-privateGroupApply" class="message-board-entry ">
 	                <svg aria-hidden="true" class="icon">
 	                    <use xlink:href="#icon-privatenotice"></use>
 	                </svg>
@@ -55,33 +55,33 @@
             				<h1>私密星球申请</h1>
             			</div>
             			<div class="message-short">
-            				<p>梁王　申请加入　咳咳</p>
+            				<p加载中...</p>
             			</div>
             		</div>
             	</div>
-            	<div class="message-board-entry ">
+            	<div id="message-postNotice" class="message-board-entry ">
 	                <svg aria-hidden="true" class="icon">
 	                    <use xlink:href="#icon-planetnotice"></use>
 	                </svg>
             		<div class="message-board-info">
             			<div class="message-header">
-            				<h1>私密星球申请</h1>
+            				<h1>贴子通知</h1>
             			</div>
             			<div class="message-short">
-            				<p>梁王　申请加入　咳咳</p>
+            				<p>加载中...</p>
             			</div>
             		</div>
             	</div>
-            	<div class="message-board-entry ">
+            	<div id="message-groupNotice" class="message-board-entry ">
 	                <svg aria-hidden="true" class="icon">
 	                    <use xlink:href="#icon-planetnotice"></use>
 	                </svg>
             		<div class="message-board-info">
             			<div class="message-header">
-            				<h1>私密星球申请</h1>
+            				<h1>星球通知</h1>
             			</div>
             			<div class="message-short">
-            				<p>梁王　申请加入　咳咳</p>
+            				<p>加载中...</p>
             			</div>
             		</div>
             	</div>            
@@ -92,8 +92,10 @@
 
 <script>
 	(function() {
-		var index = {
-
+		var mymessage = {
+            message_privateGroupApply_content: $("#message-privateGroupApply.message-short p"),
+            message_postNotice_content: $("#message-postNotice.message-short p"),
+            message_groupNotice_content: $("#message-groupNotice.message-short p"),
 
 			getServerData: function(param, cb) {
 				
@@ -103,9 +105,14 @@
 			},
 			init: function() {
 				this.bindEvent();
+
+                //请求初始数据
+                global.subData("/mymessage", {user_id: 46}, function(data) {
+                    alert(data);
+                });
 			}
 		}
-		index.init();
+		mymessage.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

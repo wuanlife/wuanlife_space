@@ -55,5 +55,35 @@ router.get('/verify', function(req, res, next) {
 });
 
 
+router.post('/', function(req, res, next) {
+    request.post({
+        url: config.server + 'user/show_message',
+        formData: {
+            user_id: req.body.user_id,
+            m_type: 4,
+        }
+    }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        if (!err && httpResponse.statusCode == 200) {
+            //console.log('CreatePlanet successful!  Server responded with:', body);
+             return res.send(JSON.parse(body));
+        } else {
+            try {
+                console.error('CreatePlant failed:', err.toString());
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            } catch(err) {
+                console.error('CreatePlant catch exception:', err.toString());
+            }
+
+        }
+
+    });
+});
+
+
 
 module.exports = router;
