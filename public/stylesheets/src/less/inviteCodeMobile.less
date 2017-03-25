@@ -1,9 +1,16 @@
 @import "publicM";//publicM.less
 
+.inviteCode-default-container{
+	position: absolute;
+    bottom: 0;
+    width:100%;
+    .px2rem(top,115);
+}
+
 .code-producer{
 	background-color:@bgWhite;
 	width:100%;
-	.px2rem(height,1124);
+	height:100%;
 	position:relative;
 	.code-tip{
 		color:@wuanBlue;
@@ -29,8 +36,7 @@
   		margin: auto;
   		position: absolute;
   		.px2rem(top,405);
-  		.px2rem(bottom,624);
-  		left: 0; 
+   		left: 0; 
   		right: 0;
 	}
 }
