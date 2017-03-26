@@ -70,13 +70,13 @@ router.post('/', function(req, res, next) {
              return res.send(JSON.parse(body));
         } else {
             try {
-                console.error('CreatePlant failed:', err.toString());
+                console.error('get mymessage failed:', err.toString());
                 res.send({
                     ret: 500,
                     msg:'服务器异常'
                 });
             } catch(err) {
-                console.error('CreatePlant catch exception:', err.toString());
+                console.error('get mymessage catch exception:', err.toString());
             }
 
         }

@@ -55,7 +55,7 @@
             				<h1>私密星球申请</h1>
             			</div>
             			<div class="message-short">
-            				<p加载中...</p>
+            				<p>加载中...</p>
             			</div>
             		</div>
             	</div>
@@ -93,9 +93,9 @@
 <script>
 	(function() {
 		var mymessage = {
-            message_privateGroupApply_content: $("#message-privateGroupApply.message-short p"),
-            message_postNotice_content: $("#message-postNotice.message-short p"),
-            message_groupNotice_content: $("#message-groupNotice.message-short p"),
+            message_privateGroupApply_content: $("#message-privateGroupApply .message-short p"),
+            message_postNotice_content: $("#message-postNotice .message-short p"),
+            message_groupNotice_content: $("#message-groupNotice .message-short p"),
 
 			getServerData: function(param, cb) {
 				
@@ -104,11 +104,30 @@
 
 			},
 			init: function() {
+                var self = this;
 				this.bindEvent();
 
                 //请求初始数据
                 global.subData("/mymessage", {user_id: 46}, function(data) {
-                    alert(data);
+                    var message = data.data.info;
+                    //私密星球申请消息
+                    if(message.apply !== null) {
+                        self.message_privateGroupApply_content.html(message.apply.users.user_name + " 申请加入 " + message.apply.groups.g_name)
+                    } else {
+                        self.message_privateGroupApply_content.html("无")
+                    }
+                    //贴子通知
+                    if(message.reply !== null) {
+                        self.message_postNotice_content.html(message.reply.users.user_name + " 回复了你")
+                    } else {
+                        self.message_postNotice_content.html("无")
+                    }
+                    //星球通知
+                    if(message.notice !== null) {
+                        self.message_groupNotice_content.html(message.notice.content)
+                    } else {
+                        self.message_groupNotice_content.html("无")
+                    }
                 });
 			}
 		}
