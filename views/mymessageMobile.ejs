@@ -1,49 +1,4 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <button class="search-toggle" type="button">
-                        <svg aria-hidden="true" class="icon">
-                            <use xlink:href="#icon-search">
-                            </use>
-                        </svg>
-                    </button>
-                    <div class="navbar-brand">
-                        <h1>
-                            首页
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="tab-head">
-            <ul class="tab-head-bar">
-                <li class="selected">                    
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-home">
-                        </use>
-                    </svg>
-                </li>
-                <li>                        
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-lightPlanet_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-message_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-me_blue">
-                        </use>
-                    </svg>
-                </li>
-            </ul>
-        </div>
+<%- include base/headerMobile-index.ejs %>
         <div class="tab-container">
             <div class="message-tab-board">
             	<div id="message-privateGroupApply" class="message-board-entry ">
@@ -61,7 +16,7 @@
             	</div>
             	<div id="message-postNotice" class="message-board-entry ">
 	                <svg aria-hidden="true" class="icon">
-	                    <use xlink:href="#icon-planetnotice"></use>
+	                    <use xlink:href="#icon-postnotice"></use>
 	                </svg>
             		<div class="message-board-info">
             			<div class="message-header">
@@ -87,21 +42,36 @@
             	</div>            
             </div>
         </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-index.ejs %>
 
 
 <script>
 	(function() {
 		var mymessage = {
+            message_privateGroupApply: $("#message-privateGroupApply"),
             message_privateGroupApply_content: $("#message-privateGroupApply .message-short p"),
+
+            message_postNotice: $("#message-postNotice"),
             message_postNotice_content: $("#message-postNotice .message-short p"),
+            
+            message_groupNotice: $("#message-groupNotice"),
             message_groupNotice_content: $("#message-groupNotice .message-short p"),
 
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
-
+                var self = this;
+                //这里应该可以封装一下
+                self.message_privateGroupApply.on('touchend', function(e) {
+                    window.location.href = window.location.pathname + "/verify";
+                });
+                self.message_postNotice.on('touchend', function(e) {
+                    window.location.href = window.location.pathname + "/post";
+                });
+                self.message_groupNotice.on('touchend', function(e) {
+                    window.location.href = window.location.pathname + "/planet";
+                });
 			},
 			init: function() {
                 var self = this;
