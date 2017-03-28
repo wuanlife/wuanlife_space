@@ -24,62 +24,39 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-/*
-	request.get({
-		url: config.server + 'user/login',
-		formData: {
-			email: req.body.email,
-			password: req.body.password
-		}
-	}, function optionalCallback(err, httpResponse, body) {
-		res.header('Content-type', 'application/json');
-		res.header('Charset', 'utf8');
-		if (!err && httpResponse.statusCode == 200) {
-			var data = JSON.parse(body).data
-			if(data.code == 1) {
-				req.session.regenerate(function() {
+	request.post({
+		url:config.server + 'user/reg',
+		formData:{
+			user_name:  req.body.nickname,
+			user_email: req.body.email,
+			password:   req.body.password,
+			i_code:     req.body.inviteCode
+		},
+	},function(err,response,body){
+		
+		res.header('Content-type','application/json');
+		res.header('Charset','utf8');
+		if(!err && response.statusCode === 200){
+			var data = JSON.parse(body).data;
+			if(data.code === 1){
+				req.session.regenerate(function(){
 					req.session.user = data.info;
-					req.session.save(); //保存一下修改后的Session
-					console.log('Login successful!  Server responded with:', body);
+					req.session.save();
+					console.log('register successful! responded ' ,body);
 				});
-			} else {
-				console.error('Login failed:', body);
+			}else{
+				console.error('register failed!',body);
 			}
+
 			res.send(JSON.parse(body));
-		} else{
-			console.error('Login failed:', err.toString());
+		}else{
+			console.error('Register failed!',err.toString());
 			res.send({
 				ret:500,
-				msg:'服务器异常'
+				msg:'服务器异常，注册一场',
 			});
 		}
 	});
-*/
 
-	request(config.server + "user/reg?" + "user_name=" + req.body.username + "&user_email" + req.body.email + "&password=" + req.body.password,
-		function(err, httpResponse, body) {
-			res.header('Content-type', 'application/json');
-			res.header('Charset', 'utf8');
-			if (!err && httpResponse.statusCode == 200) {
-				var data = JSON.parse(body).data
-				if(data.code == 1) {
-					req.session.user = data.info;
-					req.session.save(); //保存一下修改后的Session
-					console.log('Login successful!', req.session);
-				} else {
-					console.error('Login failed:', body);
-				}
-				res.send(JSON.parse(body));
-			} else{
-				console.error('Login failed:', err.toString());
-				res.send({
-					ret:500,
-					msg:'服务器异常'
-				});
-			}
-
-			console.log(req.session.user);
-		}
-	);
 });
 module.exports = router;
