@@ -20,80 +20,30 @@
         </nav>
         <div class="default-container">
             <div class="message-board">
-            	<div class="message-line">
-            		<img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-            		<div class="message-line-header">
-            			<h1>格子</h1>
-            		</div>
-            		<div class="message-line-short">
-            			<p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-            		</div>
-            	</div>
-            	<div class="message-line">
-            		<img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-            		<div class="message-line-header">
-            			<h1>格子</h1>
-            		</div>
-            		<div class="message-line-short">
-            			<p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-            		</div>
-            	</div>
-                <div class="message-line">
-                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                    <div class="message-line-header">
-                        <h1>格子</h1>
-                    </div>
-                    <div class="message-line-short">
-                        <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-                    </div>
-                </div>
-                <div class="message-line">
-                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                    <div class="message-line-header">
-                        <h1>格子</h1>
-                    </div>
-                    <div class="message-line-short">
-                        <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-                    </div>
-                </div>
-                <div class="message-line">
-                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                    <div class="message-line-header">
-                        <h1>格子</h1>
-                    </div>
-                    <div class="message-line-short">
-                        <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-                    </div>
-                </div>
-                <div class="message-line">
-                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                    <div class="message-line-header">
-                        <h1>格子</h1>
-                    </div>
-                    <div class="message-line-short">
-                        <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-                    </div>
-                </div>
-                <div class="message-line">
-                    <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                    <div class="message-line-header">
-                        <h1>格子</h1>
-                    </div>
-                    <div class="message-line-short">
-                        <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqd</p>
-                    </div>
-                </div>
+
             </div>
- 
         </div>
 <%- include base/baseJSMobile.ejs %>
 
+<script type="text/html" id="message-line-planet-tpl">
+
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-line">
+        <img src="{{item.messages.image}}">
+        <div class="message-line-header">
+            <h1>{{item.users.user_name}}</h1>
+        </div>
+        <div class="message-line-short">
+            <p>{{item.content}}</p>
+        </div>
+    </div>
+    {{/each}}
+</script>
 
 <script>
 	(function() {
-		var index = {
-
-
+		var messagePlanet = {
+            messageBoard: $(".message-board"),
 			getServerData: function(param, cb) {
 				
 			},
@@ -101,10 +51,24 @@
 
 			},
 			init: function() {
-				this.bindEvent();
+                var self = this;
+                this.bindEvent();
+
+                //请求初始数据
+                global.subData("/mymessage/planet", {user_id: 1}, function(data) {
+                    var message = data.data.info;
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
+
+                        var compiled = template("message-line-planet-tpl", data.data);
+                        self.messageBoard.html(compiled);
+
+                    } else {
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
 			}
 		}
-		index.init();
+		messagePlanet.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

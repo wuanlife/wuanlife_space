@@ -98,13 +98,73 @@ router.post('/post', function(req, res, next) {
              return res.send(JSON.parse(body));
         } else {
             try {
-                console.error('get mymessage failed:', err.toString());
+                console.error('get mymessage-post failed:', err.toString());
                 res.send({
                     ret: 500,
                     msg:'服务器异常'
                 });
             } catch(err) {
-                console.error('get mymessage catch exception:', err.toString());
+                console.error('get mymessage-post catch exception:', err.toString());
+            }
+
+        }
+
+    });
+});
+
+//获取星球通知相关
+router.post('/planet', function(req, res, next) {
+    request.post({
+        url: config.server + 'user/show_message',
+        formData: {
+            user_id: 1,
+            m_type: 2,
+        }
+    }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        if (!err && httpResponse.statusCode == 200) {
+            //console.log('CreatePlanet successful!  Server responded with:', body);
+             return res.send(JSON.parse(body));
+        } else {
+            try {
+                console.error('get mymessage-planet failed:', err.toString());
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            } catch(err) {
+                console.error('get mymessage-planet catch exception:', err.toString());
+            }
+
+        }
+
+    });
+});
+
+//获取星球通知相关
+router.post('/apply', function(req, res, next) {
+    request.post({
+        url: config.server + 'user/show_message',
+        formData: {
+            user_id: 1,
+            m_type: 3,
+        }
+    }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        if (!err && httpResponse.statusCode == 200) {
+            //console.log('CreatePlanet successful!  Server responded with:', body);
+             return res.send(JSON.parse(body));
+        } else {
+            try {
+                console.error('get mymessage-apply failed:', err.toString());
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            } catch(err) {
+                console.error('get mymessage-apply catch exception:', err.toString());
             }
 
         }

@@ -35,7 +35,7 @@
         </div>
 <%- include base/baseJSMobile.ejs %>
 
-<script type="text/html" id="mtype3">
+<script type="text/html" id="message-line-post-tpl">
 
     {{each info as item i}}
     <div id="msg-{{item.messages.m_id}}" class="message-line">
@@ -83,7 +83,7 @@
                     var message = data.data.info;
                     if (data.ret == 200 && data.data && data.data.code === 1) {
 
-                        var compiled = template("mtype3", data.data);
+                        var compiled = template("message-line-post-tpl", data.data);
                         self.messageBoard.html(compiled);
 
                     } else {

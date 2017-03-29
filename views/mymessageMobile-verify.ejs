@@ -50,12 +50,28 @@
         </div>
 <%- include base/baseJSMobile.ejs %>
 
+<script type="text/html" id="message-line-apply-tpl">            
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-line">
+        <div class="message-line-verifyHeader">
+            <img src="{{item.messages.image}}"> 
+            <div class="message-line-verifyInfo">
+                <h1>{{item.users.user_name}} 申请加入 {{item.groups.g_name}}</h1>
+                <p>{{item.messages.text}}</p>
+            </div>
+        </div>
+        <div class="message-line-verifyButtons">
+            <p>已拒绝</p>
+        </div>
+    </div>
+    {{/each}}
+</script>
 
 <script>
     (function() {
-        var index = {
+        var messageApply = {
 
-
+            messageBoard: $(".message-board"),
             getServerData: function(param, cb) {
                 
             },
@@ -63,10 +79,24 @@
 
             },
             init: function() {
+                var self = this;
                 this.bindEvent();
+
+                //请求初始数据
+                global.subData("/mymessage/apply", {user_id: 1}, function(data) {
+                    var message = data.data.info;
+                    if (data.ret == 200 && data.data && data.data.code === 1) {
+
+                        var compiled = template("message-line-apply-tpl", data.data);
+                        self.messageBoard.html(compiled);
+
+                    } else {
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
             }
         }
-        index.init();
+        messageApply.init();
     })();
 </script>
 <%- include base/footerMobile.ejs %>
