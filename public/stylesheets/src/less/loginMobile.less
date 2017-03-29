@@ -1,16 +1,22 @@
 @import "publicM";//publicM.less
 
+.login-default-container{
+	width:100%;
+	position:absolute;
+	.px2rem(top,115);
+	bottom:0;
+}
 
 .login-body{
-	.px2rem(margin-top,12);
-	.px2rem(height,1128);
+	height:100%;
 	width:100%;
 	position:relative;
 	background-color: @bgWhite;
+	.center;
 	form{
 		margin:0px auto;
-		.px2rem(margin-top,97);
 		position:absolute;
+		.px2rem(margin-top,-100);
 		left:50%;
 		.px2rem(margin-left,-304);
 	}

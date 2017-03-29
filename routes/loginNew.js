@@ -22,18 +22,19 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-/*
-	request.get({
+
+	request.post({
 		url: config.server + 'user/login',
 		formData: {
-			email: req.body.email,
+			user_email: req.body.email,
 			password: req.body.password
 		}
 	}, function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
 		if (!err && httpResponse.statusCode == 200) {
-			var data = JSON.parse(body).data
+			var data = JSON.parse(body).data;
+			console.log('mdzz',data);
 			if(data.code == 1) {
 				req.session.regenerate(function() {
 					req.session.user = data.info;
@@ -52,9 +53,9 @@ router.post('/', function(req, res, next) {
 			});
 		}
 	});
-*/
 
-	request(config.server + "user/login?email=" + req.body.email + "&password=" + req.body.password,
+
+/*	request(config.server + "user/login?email=" + req.body.email + "&password=" + req.body.password,
 		function(err, httpResponse, body) {
 			res.header('Content-type', 'application/json');
 			res.header('Charset', 'utf8');
@@ -78,6 +79,6 @@ router.post('/', function(req, res, next) {
 
 			console.log(req.session.user);
 		}
-	);
+	);*/
 });
 module.exports = router

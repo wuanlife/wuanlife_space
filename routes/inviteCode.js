@@ -19,4 +19,18 @@ router.get('/', function(req, res, next) {
 	
 
 });
+
+
+
+router.post('/',function(req,res,next){
+	
+	request.post({
+		url:config.server + 'user/show_code',
+		formData:{
+			user_id: req.body.userId
+		}
+	},function(){
+		
+	});
+});
 module.exports = router;
