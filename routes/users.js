@@ -6,12 +6,16 @@ var ua = require('mobile-agent');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-    //
-    if (!req.session.user) {
+    req.session.user={
+            "user_id": "3",
+            "user_name": "午安网",
+            "user_email": "wuanwang@163.com"
+        };
+    if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
-        //var userid = req.session.user.userID;
-        var page = agent.Mobile ? 'personalInforMobile' : 'personalInforMobile';
-        request(config.server + "user/get_user_info?user_id=1",
+        var userid = req.session.user.user_id;
+        var page = agent.Mobile ? 'personalInforMobile' : 'personalInfor';
+        request(config.server + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -42,18 +46,25 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+    req.session.user={
+            "user_id": "3",
+            "user_name": "午安网",
+            "user_email": "wuanwang@163.com"
+        };
+    console.log("what's matter?");
     request.post({
-        url: config.server + '?service=User.alterUserInfo',
+        url: config.server + 'user/alter_user_info',
         formData: {
-            user_id: req.session.user.userID,
-            sex: req.body.sex,
+            user_id: req.session.user.user_id,
+            user_name:req.body.user_name,
+            profile_picture:req.body.profile_picture,
+            sex:req.body.sex,
             year:req.body.year,
             month:req.body.month,
-            day:req.body.day,
-            user_name:req.body.user_name,
-            profile_picture:req.body.profile_picture
+            day:req.body.day
         }
     }, function optionalCallback(err, httpResponse, body) {
+        console.log(body+"卧槽");
         res.header('Content-type', 'application/json');
         res.header('Charset', 'utf8');
         if (err) {
@@ -63,8 +74,8 @@ router.post('/', function(req, res, next) {
                 msg:'服务器异常'
             });
         }
-        req.session.user.nickname = req.body.user_name;
-        res.send(JSON.parse(body));
+        req.session.user.user_name = req.body.user_name;
+        //res.send(JSON.parse(body));
     });
 });
 

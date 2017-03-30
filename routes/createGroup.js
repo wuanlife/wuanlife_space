@@ -9,7 +9,7 @@ var xss = require('xss');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	//
-	if (!req.session.user) {
+	if (req.session.user) {
 		var agent = ua(req.headers['user-agent']);
 		var page = agent.Mobile ? 'creatGroupM' : 'createGroup';
 		res.render(page, {
