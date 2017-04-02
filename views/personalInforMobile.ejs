@@ -25,7 +25,7 @@
                     <% if(result.mail_checked >0){%>
                     <button type="button" id="verifibtn">已验证</button>
                     <%}else{%>
-                    <button type="button" id="verifibtn">验证</button>
+                    <button type="button" id="verifibtn-on">验证</button>
                     <%}%>
                </div>
                <div class="personal-email personal-name">
@@ -120,7 +120,6 @@
       //验证填入表单的字符
       verificate:function(){
         //正则匹配数字字母汉字下划线
-        console.log("断点1");
         var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
         var name=$("#name").val();
         if(name.length==0||name.length>18){
@@ -144,7 +143,6 @@
         //验证日期
         if(!($("#year").val()) && !($("#month").val()) && !($("#day").val())){
           this.year=this.month=this.day=null;
-          console.log("断点2");
           return true;
         }
         var d=new Date();
@@ -152,7 +150,6 @@
         var month=$("#month").val();
         if(!myregMonth.test(month)||month.length!=2){
           sweetAlert('格式错误', '请填写正确格式的月份！', 'warning');
-          console.log("断点3");
           return false;
         }
         this.month=month;
@@ -160,7 +157,6 @@
         var day=$("#day").val();
         if(!myregDay.test(day)||day.length!=2){
           sweetAlert('格式错误', '请填写正确格式的日期！', 'warning');
-          console.log("断点4");
           return false;
         }
         this.day=day;
@@ -168,15 +164,14 @@
         var year=$("#year").val();
         if(!myregYear.test(year)){
           sweetAlert('格式错误', '请填写正确格式的年份！', 'warning');
-          console.log("断点5");
           return false;
         }
         if(year<1900||year>d.getFullYear()){
           sweetAlert('格式错误', '请填写正确的年份！', 'warning');
-          console.log("断点6");
           return false;
         }
         this.year=year;
+        return true;
       },
       bindEvent:function(){
         var self=this;
@@ -185,37 +180,88 @@
           event.preventDefault();
           if(self.verificate()){
             //self.loading.show();
-            console.log(self.user_name);
-            console.log($("#g_img").val());
-            console.log(self.sex);
-            console.log(self.year);
-            console.log(self.month);
-            console.log(self.day);
-            global.subData('/users',{
+            var subdata={
               user_name:self.user_name,
               profile_picture:$("#g_img").val(),
               sex:self.sex,
               year:self.year,
               month:self.month,
               day:self.day
-            },function(data){
+              };
+            global.getData('/users/sub/?user_name='+self.user_name+'&profile_picture='+$("#g_img").val()+'&sex='+self.sex+'&year='+self.year+'&month='+self.month+'&day='+self.day,function(data){
               //self.loading.hide();
               if(data.ret==200){
                 if(data.data==1){
-                  sweetAlert('提示',data.msg,'success');
+                  sweetAlert('成功',data.msg,'success');
                 }else{
                   sweetAlert('提示', data.msg, 'warning');
-                  self.name.val(self.oldname);
                 }
+              }else{
+                sweetAlert('错误', data.msg, 'error');
               }
             });
           }
+        });
+      },
+      verifimail:function(){
+        function countfu(){
+          $("#verifibtn-on").css("background-color","#C0C0C0");
+          $("#verifibtn-on").off("touchend");
+          $("#verifibtn-on").text(time+'s');
+          if(time>0){
+            time=time-1;
+            var y=setTimeout(function(){
+              countfu();
+            },1000);
+          }else{
+            $("#verifibtn-on").css("background-color","#5677fc");
+            $("#verifibtn-on").text("验证");
+            $("#verifibtn-on").on("touchend",function(){
+              time=60;
+              global.getData('/users/verifycomfirm',function(data){
+                if(data.ret==200){
+                  if(data.data.mail_check==1){
+                    sweetAlert('成功','邮箱已验证成功！请刷新页面更新信息！', 'error');
+                  }else{
+                    global.getData('/users/verify',function(data){
+                      if(data.ret==200){
+                        if(data.data.code==1){
+                          sweetAlert('成功',data.msg+'！请马上到邮箱完成验证~','success');
+                         }else{
+                          sweetAlert('提示','验证邮件发送失败，请稍后再试','success');
+                          }
+                        }else{
+                          sweetAlert('错误', data.msg, 'error');
+                        }
+                      });
+                  }
+                }
+              });
+              countfu();
+            });
+          }
+        }
+        var time=60;
+        $("#verifibtn-on").on("touchend",function(){
+          global.getData('/users/verify',function(data){
+            if(data.ret==200){
+              if(data.data.code==1){
+                sweetAlert('成功',data.msg+'！请马上到邮箱完成验证~','success');
+              }else{
+                sweetAlert('提示','验证邮件发送失败，请稍后再试','success');
+              }
+            }else{
+              sweetAlert('错误', data.msg, 'error');
+            }
+          });
+          countfu();
         });
       },
       init:function(){
         this.bindEvent();
         this.bindTagEvent();
         this.ClientData();
+        this.verifimail();
       }
     };
     users.uploader = Qiniu.uploader({
