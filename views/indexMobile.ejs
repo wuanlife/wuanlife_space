@@ -1,49 +1,4 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <button class="search-toggle" type="button">
-                        <svg aria-hidden="true" class="icon">
-                            <use xlink:href="#icon-search">
-                            </use>
-                        </svg>
-                    </button>
-                    <div class="navbar-brand">
-                        <h1>
-                            首页
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="tab-head">
-            <ul class="tab-head-bar">
-                <li class="selected">                    
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-home">
-                        </use>
-                    </svg>
-                </li>
-                <li>                        
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-lightPlanet_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-message_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-me_blue">
-                        </use>
-                    </svg>
-                </li>
-            </ul>
-        </div>
+<%- include base/headerMobile-index.ejs %>
         <div class="tab-container">
             <div class="index-entries">
                 <div class="index-entry">
@@ -92,7 +47,7 @@
                 </div>
             </div>
         </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-index.ejs %>
 
 
 <script>
@@ -108,6 +63,9 @@
 			},
 			init: function() {
 				this.bindEvent();
+
+                wuanTabfun.tabHighlight("tab-head-myindex");
+                wuanTabfun.title("首页");
 			}
 		}
 		index.init();
