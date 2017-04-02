@@ -32,7 +32,7 @@
                         <div class="foot-line"></div>
                     </div>
                     <div class="login-container">
-                        <button class="registerBtn">登录</button>
+                        <button class="registerBtn" type="button">登录</button>
                         <div class="login-others">
                             <span id="login-register">注册账号</span>
                             <span id="login-misspwd">忘记密码</span>
@@ -61,20 +61,111 @@
 
 <script>
 	(function() {
-		var index = {
+		var loginobj = {
+            loginform : $('form')[0],
 
+            loginemail : $('.login-container #email'),
+
+            loginpwd : $('.login-container #pwd'),
+
+            loginbtn : $('.login-container .registerBtn'),
+
+            loginregister : $('#login-register'),
+
+            loginforget : $('#login-misspwd'),
 
 			getServerData: function(param, cb) {
 				
 			},
+
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.loginemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                },{
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.loginpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
+
 			bindEvent: function() {
+                var self = this;
+                self.loginregister.on('touchend',function(){
+                    window.location.href = '/registerNew';
+                });
+
+                self.loginforget.on('touchend',function(){
+                    window.location.href = '/retrievepassword';
+                });
+
+                self.loginbtn.on('touchend',function(e){
+                    e.preventDefault();
+
+
+                    var loading = new HJLoading('/stylesheets/HJLoadingCSS');
+                    loading.init();
+
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        loading.start();
+
+                        global.subData('/loginNew',{
+                            email : self.loginemail.val(),
+                            password : self.loginpwd.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    setTimeout(function(){
+                                        loading.stop();
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    loading.stop();
+                                    alert(data.msg);
+                                }
+                            }else{
+                                loading.stop();
+                                alert(data.msg);
+                            }
+                        });
+                    }else{
+                        alert(errorMsg);
+                    }
+                    
+                });
 
 			},
 			init: function() {
-				this.bindEvent();
-			}
+                var self = this;
+				this.bindEvent();                
+			},
 		}
-		index.init();
+
+
+		loginobj.init();
+
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

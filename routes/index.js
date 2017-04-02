@@ -42,6 +42,7 @@ router.get('/', function(req, res, next) {
 */
 
 router.get('/', function(req, res, next) {
+	console.log("session: ",req.session.user);
 	var agent = ua(req.headers['user-agent']);
 	var userID = (req.session.user) ? req.session.user.user_id : null;
 	try{

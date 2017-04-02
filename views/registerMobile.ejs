@@ -42,7 +42,7 @@
                         <div class="foot-line"></div>
                     </div>
                     <div class="register-container">
-                        <button class="registerBtn">注册</button>
+                        <button class="registerBtn" type="button">注册</button>
                     </div>
                 </form>
             </div>
@@ -68,20 +68,135 @@
 
 <script>
 	(function() {
-		var index = {
+		var register = {
 
+            regform : $('form')[0],
+
+            regpwd : $('#pwd'),
+
+            regemail : $('#email'),
+
+            regnickname : $('#nickname'),
+
+            reginviteCode : $('#inviteCode'),
+
+            regbtn : $('.register-container>.registerBtn'),
 
 			getServerData: function(param, cb) {
 				
 			},
-			bindEvent: function() {
 
+            validataFunc : function(){
+                var validator = new HJformcheck();
+                var self = this;
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('maxLength',function(value,length,errorMsg){
+                    if(value.length>length){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('isNickName',function(value,errorMsg){
+                    if(!/^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.regemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                }, {
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.regnickname,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '昵称不能为空'
+                },{
+                strategy: 'maxLength:18',
+                errorMsg: '请输入1-18位字符作为昵称'
+                },{
+                strategy: 'isNickName',
+                errorMsg: '只允许中文、数字、字母和下划线'
+                }]);
+
+                validator.add(self.regpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }, {
+                strategy: 'minLength:6',
+                errorMsg: '密码长度不能小于6位'
+                },{
+                strategy: 'maxLength:20',
+                errorMsg: '密码长度不能超过20位'
+                }]);
+
+                validator.add(self.reginviteCode,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '邀请码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
+			bindEvent: function() {
+                var self = this;
+                self.regbtn.on('touchend',function(e){
+                    e.preventDefault();
+
+                    var loading = new HJLoading('/stylesheets/HJLoadingCSS');
+                    loading.init();
+
+                    var errorMsg = self.validataFunc();
+                    if(!errorMsg){
+
+                        loading.start();
+
+                        global.subData('/registerNew',{
+                            nickname : self.regnickname.val(),
+                            email : self.regemail.val(),
+                            password : self.regpwd.val(),
+                            inviteCode : self.reginviteCode.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                
+                                    setTimeout(function(){
+                                        laoding.stop();
+                                        window.location.href = '/';
+                                    },3000);
+
+                                }else{
+                                    loading.stop();
+                                    alert(data.msg);
+                                }
+                            }else{
+                                loading.stop();
+                                alert(data.msg);
+                            }
+                        });
+                    }else{
+                        alert(errorMsg);
+                    }
+                });
 			},
 			init: function() {
-				this.bindEvent();
-			}
+                var self = this;
+				self.bindEvent();
+
+
+			},
 		}
-		index.init();
+		register.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

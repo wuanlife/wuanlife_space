@@ -36,21 +36,20 @@ router.post('/', function(req, res, next) {
 		
 		res.header('Content-type','application/json');
 		res.header('Charset','utf8');
+		console.log('err',err);
+		console.log('code',response.statusCode);
 		if(!err && response.statusCode === 200){
 			var data = JSON.parse(body).data;
+			console.log('data',data);
 			if(data.code === 1){
-				req.session.regenerate(function(){
-					req.session.user = data.info;
-					req.session.save();
-					console.log('register successful! responded ' ,body);
-				});
+				console.log('register successful! responded ' ,body);
 			}else{
 				console.error('register failed!',body);
 			}
 
 			res.send(JSON.parse(body));
 		}else{
-			console.error('Register failed!',err.toString());
+			err && console.error('Register failed!',err.toString());
 			res.send({
 				ret:500,
 				msg:'服务器异常，注册一场',
