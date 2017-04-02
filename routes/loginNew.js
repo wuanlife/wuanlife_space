@@ -32,21 +32,22 @@ router.post('/', function(req, res, next) {
 	}, function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
+		console.log('err',err);
+		console.log('status',httpResponse.statusCode);
 		if (!err && httpResponse.statusCode == 200) {
 			var data = JSON.parse(body).data;
 			console.log('mdzz',data);
 			if(data.code == 1) {
-				req.session.regenerate(function() {
-					req.session.user = data.info;
-					req.session.save(); //保存一下修改后的Session
-					console.log('Login successful!  Server responded with:', body);
-				});
+				req.session.user = data.info;
+				req.session.save(); //保存一下修改后的Session
+				console.log('Login successful!  Server responded with:', body);
 			} else {
 				console.error('Login failed:', body);
 			}
+			console.log('body',JSON.parse(body));
 			res.send(JSON.parse(body));
 		} else{
-			console.error('Login failed:', err.toString());
+			err && console.error('Login failed:', err.toString());
 			res.send({
 				ret:500,
 				msg:'服务器异常'
