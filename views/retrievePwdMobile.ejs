@@ -54,20 +54,77 @@
 
 <script>
 	(function() {
-		var index = {
+		var retrievePwd = {
+            retPwdemail : $('.retrieve-password-container #email'),
+            retPwdbtn : $('.registerBtn'),
 
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
 
-			getServerData: function(param, cb) {
-				
-			},
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.retPwdemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                },{
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
 			bindEvent: function() {
+                var self = this;
+                self.retPwdbtn.on('touchend',function(e){
+                    e.preventDefault();
 
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                            loadingId : 'retPwdLoading',
+                        });
+
+                        global.subData('/retrievepassword',{
+                            email: self.retPwdemail.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    //延迟3秒跳转
+                                    setTimeout(function(){
+                                        HJLoading.stop('retPwdLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    HJLoading.stop('retPwdLoading');
+                                    alert(data.msg);
+                                }
+                            }else{
+                                HJLoading.stop('retPwdLoading');
+                                alert(data.msg);
+                            }
+                        });
+                    }else{
+                        alert(errorMsg);
+                    }
+                    
+                });
 			},
 			init: function() {
 				this.bindEvent();
 			}
 		}
-		index.init();
+		retrievePwd.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>
