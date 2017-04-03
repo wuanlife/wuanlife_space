@@ -153,13 +153,12 @@
                 self.regbtn.on('touchend',function(e){
                     e.preventDefault();
 
-                    var loading = new HJLoading('/stylesheets/HJLoadingCSS');
-                    loading.init();
-
                     var errorMsg = self.validataFunc();
                     if(!errorMsg){
 
-                        loading.start();
+                        HJLoading.start({
+                        loadingId : 'registerLoading'
+                        });
 
                         global.subData('/registerNew',{
                             nickname : self.regnickname.val(),
@@ -171,16 +170,16 @@
                                 if(data.data.code == 1){
                                 
                                     setTimeout(function(){
-                                        laoding.stop();
+                                        HJLoading.stop('registerLoading');
                                         window.location.href = '/';
                                     },3000);
 
                                 }else{
-                                    loading.stop();
+                                    HJLoading.stop('registerLoading');
                                     alert(data.msg);
                                 }
                             }else{
-                                loading.stop();
+                                HJLoading.stop('registerLoading');
                                 alert(data.msg);
                             }
                         });
