@@ -20,6 +20,31 @@
                 var $brandContent = $(".navbar-brand > h1");
                 $brandContent.html(title);
             }
+
+            //tab 列表 ['tab-head-myindex', 'tab-head-myplanet','tab-head-mymessage', 'tab-head-myself'];
+            //绑定tab头事件 使用事件委托简化代码
+            var $tabHead = $(".tab-head-bar");
+            $tabHead.on("touchend", function(event) {
+                var target = event.target;
+                if(target.nodeName.toLocaleLowerCase() == 'li') {
+                    switch(target.id) {
+                        case 'tab-head-myindex':
+                            window.location.href = '/';
+                            break;
+                        case 'tab-head-myplanet':
+                            window.location.href = '/planet';
+                            break;
+                        case 'tab-head-mymessage':
+                            window.location.href = '/mymessage';
+                            break;
+                        case 'tab-head-myself':
+                            window.location.href = '/myself';     
+                            break;                       
+                    }
+                } else if(target && (target.nodeName.toLocaleLowerCase() == 'use' || target.nodeName.toLocaleLowerCase() == 'svg')) {
+                    arguments.callee({target:target.parentNode})
+                }
+            });
             return {
                 tabHighlight: tabHighlight,
                 title: title,
