@@ -21,6 +21,7 @@
 	var HJLoading = function(cssPath) {
 		this.relativeCssPath = cssPath;
 		//加载默认样式文件
+		this.linkCSS(cssPath,'HJLoading-default');
 	};
 
 	//HJLoadingTPL
