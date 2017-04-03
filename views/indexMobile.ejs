@@ -1,59 +1,64 @@
 <%- include base/headerMobile-index.ejs %>
         <div class="tab-container">
             <div class="index-entries">
-                <div class="index-entry">
-                    <div class="index-entry-header">
-                        <div class="index-entry-info">
-                            <img src="./images/authcode.png">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="index-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                    <div class="index-entry-content">
-                        <div class="index-entry-title">
-                            <h1>Ubuntu安装</h1>
-                        </div>
-                        <div class="index-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="index-entry-footer">
-                        <ul>
-                            <li>                        
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-lightPlanet_blue">
-                                    </use>
-                                </svg>
-                                <p>999+</p>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-message_blue">
-                                    </use>
-                                </svg>
-                                <p>999+</p>
-                            </li>
-                            <li>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-me_blue">
-                                    </use>
-                                </svg>
-                                <p>999+</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
 <%- include base/baseJSMobile-index.ejs %>
 
 
+
+<script type="text/html" id="index-entry-tpl">
+    {{each posts as item i}}
+    <div id="post-{{item.post_id}}" class="index-entry">
+        <div class="index-entry-header">
+            <div class="index-entry-info">
+                <img src="./images/authcode.png">
+                <p>{{item.user_name}}　发表于　{{item.groupName}}</p>
+            </div>
+            <div class="index-entry-date">
+                <p>{{item.create_time}}</p>
+            </div>
+        </div>
+        <div class="index-entry-content">
+            <div class="index-entry-title">
+                <h1>{{item.p_title}}</h1>
+            </div>
+            <div class="index-entry-brief">
+                <p>{{item.p_text}}</p>
+            </div>
+        </div>
+        <div class="index-entry-footer">
+            <ul>
+                <li>                        
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-lightPlanet_blue">
+                        </use>
+                    </svg>
+                    <p>999+</p>
+                </li>
+                <li>
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-message_blue">
+                        </use>
+                    </svg>
+                    <p>999+</p>
+                </li>
+                <li>
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-me_blue">
+                        </use>
+                    </svg>
+                    <p>999+</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{/each}}
+</script>
 <script>
 	(function() {
 		var index = {
-
+            indexEntries: $(".index-entries"),
 
 			getServerData: function(param, cb) {
 				
@@ -62,10 +67,25 @@
 
 			},
 			init: function() {
+                var self = this;
 				this.bindEvent();
 
                 wuanTabfun.tabHighlight("tab-head-myindex");
                 wuanTabfun.title("首页");
+
+                //请求初始数据
+                global.subData("/", {pn: 1}, function(data) {
+                    var posts = data.data.info;
+                    if (data.ret == 200 && data.data) {
+
+                        var compiled = template("index-entry-tpl", data.data);
+                        self.indexEntries.html(compiled);
+
+                    } else {
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
+
 			}
 		}
 		index.init();
