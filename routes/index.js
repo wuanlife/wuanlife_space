@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var ua = require('mobile-agent');
-//var config = require('../config/config');
+var config = require('../config/config');
 
 /* GET home page. */
 /*
@@ -56,5 +56,34 @@ router.get('/', function(req, res, next) {
 	}
 	
 
+});
+
+router.post('/', function(req, res, next) {
+    request.get({
+        url: config.server + 'post/get_index_post',
+        formData: {
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
+        }
+    }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        if (!err && httpResponse.statusCode == 200) {
+            //console.log('CreatePlanet successful!  Server responded with:', body);
+            return res.send(JSON.parse(body));
+        } else {
+            try {
+                console.error('get index posts failed:', err.toString());
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            } catch(err) {
+                console.error('get index posts exception:', err.toString());
+            }
+
+        }
+
+    });
 });
 module.exports = router;

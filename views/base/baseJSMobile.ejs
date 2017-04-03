@@ -9,8 +9,10 @@
     <script type="text/javascript" src="/javascripts/plupload/i18n/zh_CN.js"></script>
     <script type="text/javascript" src="/javascripts/qiniu.js"></script>
     <script type="text/javascript" src="/javascripts/HJformcheck.js"></script>
-    <script type="text/javascript" src="/javascripts/HJLoading.js"></script>
+    <script type="text/javascript" src="/javascripts/HJLoadingX.js"></script>
     <script type = "text/javascript">
+        var HJLoading = new HJLoading('/stylesheets/HJLoadingCSS');
+
         var global = (function() {
             //ajax获取数据
             var getData =  function(url,param,cb){

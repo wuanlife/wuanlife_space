@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var ua = require('mobile-agent');
-//var config = require('../config/config');
+var config = require('../config/config');
 
 
 router.get('/', function(req, res, next) {
@@ -29,8 +29,30 @@ router.post('/',function(req,res,next){
 		formData:{
 			user_id: req.body.userId
 		}
-	},function(){
-		
+	},function(err,httpResponse,body){
+		res.header('Content-type', 'application/json');
+		res.header('Charset', 'utf8');
+		console.log('err',err);
+		console.log('status',httpResponse.statusCode);
+
+		if(!err && httpResponse.statusCode === 200){
+			var data = JSON.parse(body).data;
+			console.log('data',data);
+			console.log('body',body);
+			if(data.code === 1){
+
+			}else{
+
+			}
+
+			res.send(JSON.parse(body));
+		}else{
+			err && console.log('Get inviteCode Failed:',err.toString());
+			res.send({
+				ret: 500,
+				msg: '服务器异常'
+			});
+		}
 	});
 });
 module.exports = router;

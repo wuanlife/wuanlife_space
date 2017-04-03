@@ -34,20 +34,34 @@
 
 <script>
 	(function() {
-		var index = {
+		var inviteCode = {
 
+            inviteCode: $('.code-producer>.code-genetate >span'),
 
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
-
+                var self = this;
 			},
 			init: function() {
-				this.bindEvent();
+                var that = this;
+				that.bindEvent();
+
+                global.subData('/inviteCode',{
+                    userId : 78,
+                },function(data){
+                    if(data.ret === 200 && data.data){
+                        that.inviteCode.html(data.data.i_code);
+                        //alert(data.msg);
+                    }else{
+                        alert('请求错误');
+                    }
+                })
 			}
 		}
-		index.init();
+
+		inviteCode.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

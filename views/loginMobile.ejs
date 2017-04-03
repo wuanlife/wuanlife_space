@@ -120,15 +120,13 @@
                 self.loginbtn.on('touchend',function(e){
                     e.preventDefault();
 
-
-                    var loading = new HJLoading('/stylesheets/HJLoadingCSS');
-                    loading.init();
-
                     var errorMsg = self.validataFunc();
 
                     if(!errorMsg){
 
-                        loading.start();
+                        HJLoading.start({
+                        loadingId : 'loginLoading',
+                        });
 
                         global.subData('/loginNew',{
                             email : self.loginemail.val(),
@@ -136,17 +134,18 @@
                         },function(data){
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){
+                                    //延迟3秒跳转
                                     setTimeout(function(){
-                                        loading.stop();
+                                        HJLoading.stop('loginLoading');
                                         window.location.href = '/';
                                     },3000);
                                     
                                 }else{
-                                    loading.stop();
+                                    HJLoading.stop('loginLoading');
                                     alert(data.msg);
                                 }
                             }else{
-                                loading.stop();
+                                HJLoading.stop('loginLoading');
                                 alert(data.msg);
                             }
                         });
