@@ -9,46 +9,58 @@
 
 <script type="text/html" id="index-entry-tpl">
     {{each posts as item i}}
-    <div id="post-{{item.post_id}}" class="index-entry">
+    <div id="post-{{item.posts.post_id}}" class="index-entry">
         <div class="index-entry-header">
             <div class="index-entry-info">
                 <img src="./images/authcode.png">
-                <p>{{item.user_name}}　发表于　{{item.groupName}}</p>
+                <p>{{item.users.user_name}}　发表于　{{item.groups.g_name}}</p>
             </div>
             <div class="index-entry-date">
-                <p>{{item.create_time}}</p>
+                <p>{{item.posts.create_time}}</p>
             </div>
         </div>
         <div class="index-entry-content">
             <div class="index-entry-title">
-                <h1>{{item.p_title}}</h1>
+                <h1>{{item.posts.p_title}}</h1>
             </div>
             <div class="index-entry-brief">
-                <p>{{item.p_text}}</p>
+                <p>{{item.posts.p_text}}</p>
             </div>
         </div>
         <div class="index-entry-footer">
             <ul>
                 <li>                        
                     <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-lightPlanet_blue">
-                        </use>
-                    </svg>
-                    <p>999+</p>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
+                        {{if item.posts.replied == 1}}
                         <use xlink:href="#icon-message_blue">
+                        {{else}}
+                        <use xlink:href="#icon-message">   
+                        {{/if}}
                         </use>
                     </svg>
-                    <p>999+</p>
+                    <p>{{item.posts.replied_num}}</p>
                 </li>
                 <li>
                     <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-me_blue">
+                        {{if item.posts.approved == 1}}
+                        <use xlink:href="#icon-good_blue">
+                        {{else}}
+                        <use xlink:href="#icon-good">   
+                        {{/if}}
                         </use>
                     </svg>
-                    <p>999+</p>
+                    <p>{{item.posts.approved_num}}</p>
+                </li>
+                <li>
+                    <svg aria-hidden="true" class="icon">
+                        {{if item.posts.collected == 1}}
+                        <use xlink:href="#icon-me_blue">
+                        {{else}}
+                        <use xlink:href="#icon-me">   
+                        {{/if}}
+                        </use>
+                    </svg>
+                    <p>{{item.posts.collected_num}}</p>
                 </li>
             </ul>
         </div>
@@ -73,9 +85,14 @@
                 wuanTabfun.tabHighlight("tab-head-myindex");
                 wuanTabfun.title("首页");
 
+                //加载动画
+                HJLoading.start({
+                    loadingId : 'loginLoading',
+                });
                 //请求初始数据
                 global.subData("/", {pn: 1}, function(data) {
                     var posts = data.data.info;
+                    HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
 
                         var compiled = template("index-entry-tpl", data.data);
