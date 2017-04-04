@@ -40,7 +40,7 @@
  
         </div>
 <%- include base/baseJSMobile.ejs %>
-
+<script type="text/javascript" src="/javascripts/jsrsasign-latest-jwths-min.js"></script>
 <script>
     $('.modify-password-input').on('click',function(e){
         $(this).siblings('label').removeClass('blur-label').addClass('active');
@@ -59,20 +59,76 @@
 
 <script>
 	(function() {
-		var index = {
+		var retrievePwdreset = {
+
+            retPwdpwd : $('.modify-password-body #modify-password'),
+            retPwdpwdack : $('.modify-password-body #modify-password-ack'),
+            retPwdbtn : $('.registerBtn'),
+
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
 
 
-			getServerData: function(param, cb) {
-				
-			},
+                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isNonEmpty',
+                        errorMsg: '密码不能为空'
+                    },
+                ]);
+                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isSame:' + self.retPwdpwd.val(),
+                        errorMsg: '两次密码不相同'
+                    },
+                ]);
+
+                var errorMsg = validator.start();
+                return errorMsg;
+            },
 			bindEvent: function() {
+                var self = this;
+                self.retPwdbtn.on('touchend',function(e){
+                    e.preventDefault();
 
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                            loadingId : 'retPwdresetLoading',
+                        });
+
+                        global.subData('/retrievepassword/reset',{
+                            email: encodeURIComponent(self.retPwdemail.val()),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    //延迟3秒跳转
+                                    setTimeout(function(){
+                                        HJLoading.stop('retPwdresetLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    HJLoading.stop('retPwdresetLoading');
+                                    alert(data.msg);
+                                }
+                            }else{
+                                HJLoading.stop('retPwdresetLoading');
+                                alert(data.msg);
+                            }
+                        });
+                    }else{
+                        alert(errorMsg);
+                    } 
+                });
 			},
 			init: function() {
 				this.bindEvent();
 			}
 		}
-		index.init();
+		retrievePwdreset.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>
