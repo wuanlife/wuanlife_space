@@ -22,35 +22,31 @@ router.get('/', function(req, res, next) {
 
 //发送邮箱验证，用于更改密码
 router.post('/',function(req, res, next) {
-	request.get({
-        url: config.server + 'user/send_mail',
-        formData: {
-            user_email: req.body.email,
-            fuck: "fuck",
-        }
-    }, function optionalCallback(err, httpResponse, body) {
-        res.header('Content-type', 'application/json');
-        res.header('Charset', 'utf8');
-        if (!err && httpResponse.statusCode == 200) {
-            return res.send(JSON.parse(body));
-        } else {
-            console.log('CreatePlanet error!  Server responded with:', body);
-            try {
-                console.error('get index posts failed:', err.toString());
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
-            } catch(err) {
-                console.error('get index posts exception:', err.toString());
-                res.send({
-                    ret: 500,
-                    msg:'服务器异常'
-                });
+    console.log(config.server + "user/send_mail?user_email=" + req.body.email);
+    request(config.server + "user/send_mail?user_email=" + req.body.email,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('sendemail success!  Server responded with:', body);
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('sendemail error!  Server responded with:', body);
+                try {
+                    console.error('sendemail failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('get sendemail exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
             }
-
         }
-	});
+    )
+
 });
 
 

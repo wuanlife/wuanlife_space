@@ -95,7 +95,7 @@
                         });
 
                         global.subData('/retrievepassword',{
-                            email: self.retPwdemail.val(),
+                            email: encodeURIComponent(self.retPwdemail.val()),
                         },function(data){
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){
