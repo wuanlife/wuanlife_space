@@ -6,7 +6,6 @@ var config = require('../config/config');
 
 
 router.get('/', function(req, res, next) {
-	console.log('start bug');
     var agent = ua(req.headers['user-agent']);
     var page = agent.Mobile ? 'retrievePwdMobile' :'retrievePwd';
     try{
@@ -51,8 +50,18 @@ router.post('/',function(req, res, next) {
 
 
 //更改密码
-router.post('/reset', function(req, res, next) {
-
+router.get('/reset', function(req, res, next) {
+    console.log('get请求参数对象 :',req.query); 
+    var agent = ua(req.headers['user-agent']);
+    var page = agent.Mobile ? 'retrievePwdMobile-reset' :'retrievePwd-reset';
+    try{
+        res.render(page, {
+            'title':'重置密码',
+            'user' : req.session.user,
+        });
+    } catch(e){
+        next(e);
+    }  
 });
 
 module.exports = router;
