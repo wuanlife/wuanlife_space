@@ -30,42 +30,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="collection-entry">
-                    <div class="collection-entry-content">
-                        <div class="collection-entry-title">
-                            <h1>Ubuntu开荒笔记</h1>
-                        </div>
-                        <div class="collection-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="collection-entry-footer">
-                        <div class="collection-entry-where">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="collection-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="collection-entry">
-                    <div class="collection-entry-content">
-                        <div class="collection-entry-title">
-                            <h1>Ubuntu开荒笔记</h1>
-                        </div>
-                        <div class="collection-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="collection-entry-footer">
-                        <div class="collection-entry-where">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="collection-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 <%- include base/baseJSMobile.ejs %>
@@ -74,7 +38,14 @@
 <script>
 	(function() {
 		var index = {
+            title : $('.collection-entry h1'),
+            content: $('.collection-entry .collection-entry-brief p');
+            planetname : $('.collection-entry .collection-entry-where >p'),
+            date:$('.collection-entry .collection-entry-date>p'),
+            //构建元素
+            creatVissel:function(){
 
+            },
 
 			getServerData: function(param, cb) {
 				
@@ -83,7 +54,17 @@
 
 			},
 			init: function() {
-				this.bindEvent();
+                var that = this;
+				that.bindEvent();
+                global.subData('/mycollection',{
+                    user_id : 1,
+                },function(data){
+                    if(data.ret === 200 && data.data){
+                        //显示返回至
+                    }else{
+                        alert('请求错误');
+                    }                    
+                });
 			}
 		}
 		index.init();

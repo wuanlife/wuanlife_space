@@ -151,14 +151,13 @@ app.use('/addPlanet',addPlanet);
 
 
 app.use('/mycollections',myCollections);
-app.use('/myself',myself);
+app.use('/personal',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
 app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
-app.use('/addPlanet',addPlanet);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 app.use('/searchContent',searchContent);
 app.use('/searchPlanet',searchPlanet);
