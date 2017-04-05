@@ -7,12 +7,12 @@ var config = require('../config/config');
 
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
+	console.log('user',req.session.user);
 	try{
 		var page = agent.Mobile ? 'personalMobile' : 'personal';
 		res.render(page, {
 			'result': null,
-			'user': null,
-			'user_id':176,
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);
@@ -21,12 +21,16 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/personalInfo', function(req, res, next) {
+	if(!req.session.user){
+		res.redirect('/loginNew');
+		return;
+	}
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'personalInforMobile' : 'personalInfor';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);
@@ -34,12 +38,16 @@ router.get('/personalInfo', function(req, res, next) {
 });
 
 router.get('/invite', function(req, res, next) {
+	if(!req.session.user){
+		res.redirect('/loginNew');
+		return;
+	}
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'inviteCodeMobile' : 'inviteCode';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);
@@ -48,12 +56,16 @@ router.get('/invite', function(req, res, next) {
 
 
 router.get('/myCollection', function(req, res, next) {
+	if(!req.session.user){
+		res.redirect('/loginNew');
+		return;
+	}
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'mycollectionsMobile' : 'mycollections';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);
@@ -62,16 +74,37 @@ router.get('/myCollection', function(req, res, next) {
 
 
 router.get('/changepassword', function(req, res, next) {
+	if(!req.session.user){
+		res.redirect('/loginNew');
+		return;
+	}
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'changepasswordM' : 'changepassword';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);
 	}
+});
+
+router.get('/logout', function(req, res, next) {
+
+	console.log('logout-req',req);
+	req.session.destroy(function(err){
+		if(err){
+			res.send({
+				ret: 500,//尝试
+				msg: '退出登录失败',
+			});
+			return;
+		}
+
+		//res.clearCookie(req.session.user.user_name);
+		res.redirect('/loginNew');
+	});
 });
 
 
@@ -147,7 +180,7 @@ router.post('/invite', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_code',
         formData: {
-            user_id: req.body.user_id,
+            user_id: req.body.userId,
         }
     }, function optionalCallback(err, httpResponse, body) {
         res.header('Content-type', 'application/json');
@@ -172,17 +205,13 @@ router.post('/invite', function(req, res, next) {
 });
 
 router.post('/myCollection', function(req, res, next) {
-    request.post({
-        url: config.server + 'user/get_collect_post',
-        formData: {
-            user_id: req.body.user_id,
-            pn : req.body.page,
-        }
-    }, function optionalCallback(err, httpResponse, body) {
+
+    request(config.server + 'post/get_collect_post?user_id=' + req.body.userId + '&pn=' + (req.body.page?req.body.page:1), 
+    	function optionalCallback(err, httpResponse, body) {
         res.header('Content-type', 'application/json');
         res.header('Charset', 'utf8');
-        if (!err && httpResponse.statusCode == 200) {
-            //console.log('CreatePlanet successful!  Server responded with:', body);
+        if (!err && httpResponse.statusCode== 200) {
+            console.log('body-->Server responded with:', body);
              return res.send(JSON.parse(body));
         } else {
             try {

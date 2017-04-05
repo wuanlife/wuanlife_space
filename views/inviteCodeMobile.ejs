@@ -48,8 +48,11 @@
                 var that = this;
 				that.bindEvent();
 
-                global.subData('/inviteCode',{
-                    userId : 78,
+                global.subData('/personal/invite',{
+                    <% if(user){%>
+                        userId : <%= user.user_id%>,
+                    <%}%>
+                    
                 },function(data){
                     if(data.ret === 200 && data.data){
                         that.inviteCode.html(data.data.i_code);

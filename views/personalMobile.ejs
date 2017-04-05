@@ -47,16 +47,17 @@
                         </div>
                     </div>
                 </div>
+                <% if (user) { %>
                 <div class="personal-item personal-signBtn">
-                    <button id="exit">退出登录</button>
+                    <button id="exit" type="button">退出登录</button>
                 </div>
+                <% }%>
             </div>
         </div>
 <%- include base/baseJSMobile-index.ejs %>
 
 
 <script>
-    console.log(<%=user_id%>);
     (function() {
         var personal = {
             name:$('.personal-state.personal-logfont'),
@@ -65,7 +66,7 @@
             changepwd : $('.personal-changepwd'),
             collection : $('.personal-collection'),
             invite : $('.personal-invitefriend'),
-            exit: $('.personal-item.personal-signBtn'),
+            exit: $('#exit'),
             getServerData: function(param, cb) {
                 
             },
@@ -92,30 +93,19 @@
 
                 that.exit.on('touchend',function(e){
                     //退出登录
+                    window.location.href = window.location.pathname +"/logout";
                 });
             },
             init: function() {
                 var that = this;
                 wuanTabfun.tabHighlight("tab-head-myself");
                 wuanTabfun.title('我的');
+                <% if(user) {%>
+                    that.name.html('<%= user.user_name %>');
+                <% }else{ %>
+                    that.name.html('未登录');
+                <% } %>
                 that.bindEvent();
-
-                global.subData('/personal',{
-                    userId : <%=user_id%>,
-                },function(data){
-                    if(data.ret === 200 && data.data){
-                        var person = data.data.info;
-                        if(person.user_id){
-                            name.html(person.user_name);
-                        }else{
-                            exit.remove();
-                        }
-                        
-                    }else{
-                        alert('请求错误');
-                    }
-                });
-
             }
         }
         personal.init();
