@@ -11,28 +11,78 @@
                             全部星球
                         </h1>
                     </div>
-        </nav>
-       <div class="allgroup-content">
-           <div class="allgroup-group">
-              <button type="button" style="background-image:url(../public/images/sadface_mobile.png);"></button>
-              <h2>我们都是技术宅</h2>
-              <span>介绍介绍介绍介绍介绍介绍介绍</span>
-           </div>
-           <div class="allgroup-group">
-              <button type="button" style="background-image:url(../public/images/sadface_mobile.png);"></button>
-              <h2>我们都是技术宅</h2>
-              <span>介绍介绍介绍介绍介绍介绍介绍</span>
-           </div>
-           <div class="allgroup-group">
-              <button type="button" style="background-image:url(../public/images/sadface_mobile.png);"></button>
-              <h2>我们都是技术宅</h2>
-              <span>介绍介绍介绍介绍介绍介绍介绍</span>
-           </div>
-           <div class="allgroup-group">
-              <button type="button" style="background-image:url(../public/images/sadface_mobile.png);"></button>
-              <h2>我们都是技术宅</h2>
-              <span>介绍介绍介绍介绍介绍介绍介绍</span>
-           </div>
-       </div>
+</nav>
+<div class="allgroup-content">
+  <%for(var i in data.groups){%>
+   <div class="allgroup-group">
+      <a href="#">
+      <button type="button" style="background-image:url(<%=data.groups[i].g_image%>);"></button>
+      </a>
+      <h2><%=data.groups[i].g_name%></h2>
+      <span><%=data.groups[i].g_introduction%></span>
+   </div>
+  <%}%>
+</div>
+<div class="download-part"></div>
+<script id="group-list" type="text/html">
+  {{each groups as value i}}
+  <div class="allgroup-group">
+      <a href="#">
+      <button type="button" style="background-image:url({{value.g_image}});"></button>
+      </a>
+      <h2>{{value.g_name}}</h2>
+      <span>{{value.g_introduction}}</span>
+   </div>
+  {{/each}}
+</script>
 <%- include base/baseJSMobile.ejs %>
+<script>
+  (function(){
+    var users={
+      loading:HJLoading,
+      pagecount:1,
+      pageallnum:<%=data.page_count%>,
+      download:function(){
+        var self=this;
+        $(document).scroll(function(){
+          var scrolltop=$("body").scrollTop(),contentheight=$("body").outerHeight(),windowheight=$(window).height();
+          console.log(self.pagecount);
+          console.log($("body").outerHeight());
+          console.log(scrolltop + windowheight);
+          if(scrolltop + windowheight == contentheight){
+            self.loading.start({
+                loadingTPLId : 0,
+                target : $(".download-part"),
+                loadingId : 'self'
+              });
+            self.pagecount+=1;
+            if(self.pagecount<=self.pageallnum){
+              global.getData('/allGroup/more?pagecount='+self.pagecount,function(data){
+                console.log(self.pagecount);
+                console.log(data);
+                self.loading.stop('self');
+                if(data.ret==200){
+                  var compiled=template('group-list',data.data);
+                  var temp=$(".allgroup-content").html()
+                  $(".allgroup-content").html(temp+compiled);
+                  self.pagecount=data.data.current_page;
+                }else{
+                  self.pagecount-=1;
+                }
+              });
+          }else{
+            self.loading.stop('self');
+            $(".download-part").text("没有更多了~");
+            self.pagecount=self.pagecount-1;
+          }
+          }
+        });
+      },
+      init:function(){
+        this.download();
+      }
+    }
+    users.init();
+  })()
+</script>
 <%- include base/footerMobile.ejs %>

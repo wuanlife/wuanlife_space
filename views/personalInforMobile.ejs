@@ -94,6 +94,7 @@
 <script type="text/javascript">
   (function(){
     var users={
+      loading:HJLoading,
       personalForm:$(".personal-form"),
       verifibtn:$("#verifibtn"),
       year: null,
@@ -175,11 +176,15 @@
       },
       bindEvent:function(){
         var self=this;
-        console.log(self.verificate());
         self.personalForm.submit(function(event){
           event.preventDefault();
           if(self.verificate()){
             //self.loading.show();
+            self.loading.start({
+                loadingTPLId : 0,
+                target : $(".personal-content"),
+                loadingId : 'self'
+              });
             var subdata={
               user_name:self.user_name,
               profile_picture:$("#g_img").val(),
@@ -190,6 +195,7 @@
               };
             global.getData('/users/sub/?user_name='+self.user_name+'&profile_picture='+$("#g_img").val()+'&sex='+self.sex+'&year='+self.year+'&month='+self.month+'&day='+self.day,function(data){
               //self.loading.hide();
+              self.loading.stop('self');
               if(data.ret==200){
                 if(data.data==1){
                   sweetAlert('成功',data.msg,'success');
@@ -204,6 +210,7 @@
         });
       },
       verifimail:function(){
+        var self=this;
         function countfu(){
           $("#verifibtn-on").css("background-color","#C0C0C0");
           $("#verifibtn-on").off("touchend");
@@ -217,8 +224,14 @@
             $("#verifibtn-on").css("background-color","#5677fc");
             $("#verifibtn-on").text("验证");
             $("#verifibtn-on").on("touchend",function(){
+              self.loading.start({
+                loadingTPLId : 0,
+                target : $(".personal-content"),
+                loadingId : 'self'
+              });
               time=60;
               global.getData('/users/verifycomfirm',function(data){
+                self.loading.stop('self');
                 if(data.ret==200){
                   if(data.data.mail_check==1){
                     sweetAlert('成功','邮箱已验证成功！请刷新页面更新信息！', 'error');
@@ -243,7 +256,13 @@
         }
         var time=60;
         $("#verifibtn-on").on("touchend",function(){
+          self.loading.start({
+                loadingTPLId : 0,
+                target : $(".personal-content"),
+                loadingId : 'self'
+          });
           global.getData('/users/verify',function(data){
+            self.loading.stop('self');
             if(data.ret==200){
               if(data.data.code==1){
                 sweetAlert('成功',data.msg+'！请马上到邮箱完成验证~','success');

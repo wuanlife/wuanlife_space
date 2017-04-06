@@ -118,6 +118,39 @@ router.get('/verify', function(req, res, next) {
         res.redirect('/login');
     }
 });
+//验证邮箱页面
+router.get('/verifyusermail',function(req,res,next){
+    var agent = ua(req.headers['user-agent']);
+    var page = agent.Mobile ? 'verifymailMobile' : 'verifymailMobile';
+    res.render(page, {
+                'result': 'result',
+                'title': '个人中心'
+            })
+    /*request(config.server + "user/check_mail_2?user_id",
+        function(error,response,body){
+            if (!error && response.statusCode == 200) {
+                    var result = JSON.parse(body);
+                    //console.log(result);
+                    if (result.ret == 200) {
+                        res.render(page, {
+                            'result': result,
+                            'title': '个人中心',
+                        });
+                    } else {
+                        res.render('error', {
+                            'message': result.msg,
+                            error: {
+                                'status': result.ret,
+                                'stack': ''
+                            }
+                        });
+                    }
+                } else {
+                    console.error('user failed:', error);
+                    next(error);
+                }
+            });*/
+});
 //确认是否验证邮箱
 router.get('/verifycomfirm', function(req, res, next) {
     req.session.user={
