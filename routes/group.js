@@ -135,17 +135,22 @@ router.post('/:groupid/post', function(req, res, next) {
 
 });
 
-//设置星球
+//设置星球,进入页面路由
 router.get('/:groupid/set', function(req, res, next) {
+	req.session.user={
+            "user_id": "2",
+            "user_name": "午安网",
+            "user_email": "wuanwang@163.com"
+        };
 	var agent = ua(req.headers['user-agent']);
-	var userid = (req.session.user) ? req.session.user.userID : null;
+	var userid = (req.session.user) ? req.session.user.user_id : null;
 	var page = agent.Mobile ? 'setGroupM' : 'setGroupM';
-	var tip = agent.Mobile ? 'tipMobile' : 'tip'
-	request(config.server +"group/alter_group_info"+"?group_id=" + 1 + "&user_id=" + 2,
+	var groupid = req.params.groupid;
+	if(req.session.user){
+	request("http://104.194.79.57:800/" +"group/get_group_info?group_id=" + groupid + "&user_id=" + userid,
 		function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var result = JSON.parse(body);
-				console.log(result);
 				if (result.ret == 200) {
 					res.render(page, {
 							'result': result.data,
@@ -166,39 +171,43 @@ router.get('/:groupid/set', function(req, res, next) {
 				next(error);
 			}
 		});
+    }else{
+    	res.redirect('/login');
+    }
 });
-
-router.post('/:groupid/set', function(req, res, next) {
-	var userid = (req.session.user) ? req.session.user.userID : null;
-	request.post({
-		url: config.server + '?service=Group.alterGroupInfo',
-		formData: {
-			user_id: userid,
-			group_id: req.params.groupid,
-			g_introduction: xss(req.body.g_introduction),
-			g_image: xss(req.body.g_image)
-		}
-	}, function optionalCallback(err, httpResponse, body) {
-		if (!err && httpResponse.statusCode == 200) {
-			var result = JSON.parse(body);
-			//console.log(result);
-			if (result.ret == 200 && result.data.data == 1) {
-				res.redirect('/group/' + req.params.groupid);
+//修改信息的提交
+router.get('/:groupid/sub',function(req,res,body){
+	if(req.session.user){
+	var introduction=encodeURIComponent(req.query.introduction),
+	    image=req.query.image,
+	    private=req.query.private,
+	    userid=req.session.user.user_id,
+	    groupid=req.params.groupid;
+	console.log(introduction+'  '+image+'   '+private);
+	request("http://104.194.79.57:800/"+"group/alter_group_info?group_id="+groupid+"&user_id="+userid+"&g_introduction="+introduction+"&g_image="+image+"&private="+private,
+		function(error, response, body) {
+			if (!error && response.statusCode == 200) {
+				var result = JSON.parse(body);
+				if (result.ret == 200) {
+					res.send(result);
+				} else {
+					res.render('error', {
+						'message': result.msg,
+						error: {
+							'status': result.ret,
+							'stack': ''
+						}
+					});
+				}
 			} else {
-				res.render('error', {
-					'message': result.msg,
-					error: {
-						'status': result.ret,
-						'stack': result.data.msg
-					}
-				});
+				console.error('group failed:', error);
+				next(error);
 			}
-		} else {
-			next(err);
-		}
-	});
-
-});
+		});
+    }else{
+    	res.redirect('/login');
+    }
+})
 
 
 //退出星球
