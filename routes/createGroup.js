@@ -21,28 +21,39 @@ router.get('/', function(req, res, next) {
 		res.redirect('/login');
 	}
 });
-router.post('/', function(req, res, next) {
-	request.post({
-		url: config.server + '?service=Group.Create',
-		formData: {
-			name: req.param('name'),
-			user_id: req.session.user.userID,
-			g_image: xss(req.param('g_image')),
-			g_introduction:xss(req.param('g_introduction')),
-			private:req.body.private || 0
-		}
-	}, function optionalCallback(err, httpResponse, body) {
-		res.header('Content-type', 'application/json');
-		res.header('Charset', 'utf8');
-		if (!err && httpResponse.statusCode == 200) {
-			//console.log('CreatePlanet successful!  Server responded with:', body);
-			 return res.send(JSON.parse(body));
-		}
-		console.error('CreatePlant failed:', err.toString());
-		res.send({
-			ret: 500,
-			msg:'服务器异常'
-		});
-	});
-})
+//创建星球提交的数据
+router.get('/sub',function(req,res,next){
+	req.session.user={
+            "user_id": "174",
+            "user_name": "午安网",
+            "user_email": "wuanwang@163.com"
+        };
+	if(req.session.user){
+		var userid=req.session.user.user_id,
+		    g_name=encodeURIComponent(req.query.g_name),
+		    g_image=req.query.g_image,
+		    g_introduction=encodeURIComponent(req.query.g_introduction),
+		    private=req.query.private;
+		request('http://104.194.79.57:800/'+'group/create?user_id='+userid+'&g_name='+g_name+'&g_image='+g_image+'&g_introduction='+g_introduction+'&private='+private,
+			function(error, response, body){
+				if (!error && response.statusCode == 200) {
+					var result = JSON.parse(body);
+					if (result.ret == 200) {
+						res.send(result);
+					} else {
+						res.render('error', {
+							'message': result.msg,
+							error: {
+								'status': result.ret,
+								'stack': ''
+							}
+						});
+					}
+			} else {
+				console.error('group failed:', error);
+				next(error);
+			}
+			});
+	}else{}
+});
 module.exports = router;

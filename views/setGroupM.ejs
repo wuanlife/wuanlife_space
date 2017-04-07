@@ -78,12 +78,14 @@
               $("#choose-btn").data("private",0);
               $("#choose-btn").find("span").text("允许任何人加入");
               $(".setgroup-choose").css("visibility","hidden");
+              $("#choose-btn").find("use").attr("xlink:href","#icon-right_black");
               return false;
             });
             $("#private").on('touchend',function(e){
               $("#choose-btn").data("private",1);
               $("#choose-btn").find("span").text("需申请方可加入");
               $(".setgroup-choose").css("visibility","hidden");
+              $("#choose-btn").find("use").attr("xlink:href","#icon-right_black");
               return false;
             });
           }
