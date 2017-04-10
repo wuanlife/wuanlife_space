@@ -193,7 +193,15 @@
               month:self.month,
               day:self.day
               };
-            global.getData('/users/sub/?user_name='+self.user_name+'&profile_picture='+$("#g_img").val()+'&sex='+self.sex+'&year='+self.year+'&month='+self.month+'&day='+self.day,function(data){
+            global.getData('/users/sub/',
+              {
+                user_name:self.user_name,
+                profile_picture:$("#g_img").val(),
+                sex:self.sex,
+                year:self.year,
+                month:self.month,
+                day:self.day
+              },function(data){
               //self.loading.hide();
               self.loading.stop('self');
               if(data.ret==200){
@@ -206,6 +214,8 @@
                 sweetAlert('错误', data.msg, 'error');
               }
             });
+
+
           }
         });
       },

@@ -14,12 +14,54 @@
                     </div>
 </nav>
 <div class="publishPost-content">
-  <input type="text" name="" value="帖子标题">
-  <textarea>在这里写下你的故事</textarea>
+  <input type="text" id="post-title" placeholder="帖子标题"/>
+  <span class="text-title">在这里写下你的故事</span>
+  <textarea id="post-content"></textarea>
   <svg aria-hidden="true" class="icon">
         <use xlink:href="#icon-picture">
         </use>
   </svg>
 </div>
 <%- include base/baseJSMobile.ejs %>
+<script type="text/javascript">
+  (function(){
+    var users={
+      postContent:$("#post-content").text(),
+      groupid:1,
+      loading:HJLoading,
+      verifi:function(){
+        if($("#post-title").val().length > 60){
+          sweetAlert('格式错误','帖子标题不能超过60个字','warning');
+          return false;
+        }
+        if($("#post-title").val().length == 0){
+          sweetAlert('格式错误','帖子标题不能为空!','warning');
+          return false;
+        }
+      },
+      bindEvent:function(){
+        var self=this;
+        if(self.verifi()){
+          $(".publishPost-btn").on('touchend',function(){
+          self.loading.start({
+                loadingTPLId : 0,
+                target : $("body"),
+                loadingId : 'self'
+              });
+          global.subData('/group/'+self.groupid+'/post',{
+            p_title:'',
+            p_text:''
+          },function(data){
+            self.loading.stop('self');
+          });
+        });
+        }
+      },
+      init:function(){
+        this.bindEvent();
+      }
+    }
+    users.init();
+  })()
+</script>
 <%- include base/footerMobile.ejs %>

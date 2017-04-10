@@ -19,7 +19,7 @@
    <div class="setgroup-img">
      <span>星球头像（选填）：</span>
      <div class="img-upload-progress"></div>
-     <button type="button" style="background-image:url(../public/images/sadface_mobile.png);" id="user-image-upload">
+     <button type="button" style="background-image:url();" id="user-image-upload">
           <svg aria-hidden="true" class="icon">
               <use xlink:href="#icon-pitchon_not">
               </use>
@@ -54,6 +54,7 @@
 <script type="text/javascript">
   (function(){
     var users={
+      loading:HJLoading,
       g_name:null,
       g_image:null,
       g_introduction:null,
@@ -79,11 +80,22 @@
         $("#group-infor").submit(function(e){
           e.preventDefault();
           if(self.verifi()){
+            self.loading.start({
+                loadingTPLId : 0,
+                target : $(".setgroup-content"),
+                loadingId : 'self'
+              });
             self.g_name=$(".name-input").val();
             self.g_image=$("#g_img").val();
             self.g_introduction=$(".setgroup-intro").val();
             self.private=$("#choose-btn").data('private');
-            global.getData('/createGroup/sub?g_name='+self.g_name+'&g_image='+self.g_image+'&g_introduction='+self.g_introduction+'&private='+self.private,function(data){
+            global.getData('/createGroup/sub',{
+              g_name:self.g_name,
+              g_image:self.g_image,
+              g_introduction:self.g_introduction,
+              private:self.private
+              },function(data){
+              self.loading.stop('self');
               if(data.data.code==1){
                 sweetAlert('成功',data.msg,'success');
                 console.log(data.data.info.group_id);

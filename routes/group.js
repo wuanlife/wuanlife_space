@@ -55,7 +55,7 @@ router.get('/:groupid/post', function(req, res, next) {
 		var page = agent.Mobile ? 'publishPostM' : 'publishPostM';
 		var tip = agent.Mobile ? 'publishPostM' : 'publishPostM';
 		//http://dev.wuanlife.com:800/group/posts?group_id=1&user_id=2&p_title=1&p_text=1
-		request(config.server+"group/posts?group_id=1&user_id=2&p_title=1&p_text=1",
+		request("http://104.194.79.57:800/"+"group/posts?group_id=1&user_id=2&p_title=1&p_text=1",
 			function(error, response, body) {
 				res.render(page, {
 								'groupID': 'req.params.groupid',
@@ -88,7 +88,7 @@ router.get('/:groupid/post', function(req, res, next) {
 			});
 
 });
-
+//发表帖子
 router.post('/:groupid/post', function(req, res, next) {
 	var userid = (req.session.user) ? req.session.user.userID : null;
 	console.log("can post be used?");

@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
         var page = agent.Mobile ? 'changepasswordM' : 'changepasswordM';
-        request(config.server + "user/get_user_info?user_id="+userid,
+        request("http://104.194.79.57:800/" + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -47,7 +47,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     request.post({
-        url: config.server + 'user/change_pwd',
+        url: "http://104.194.79.57:800/" + 'user/change_pwd',
         formData: {
             user_id: req.session.user.user_id,
             password: req.body.password,
@@ -69,48 +69,5 @@ router.post('/', function(req, res, next) {
         }
         res.send(JSON.parse(body));
     });
-});
-
-router.get('/verify', function(req, res, next) {
-    if (req.session.user) {
-        var agent = ua(req.headers['user-agent']);
-        var userid = req.session.user.userID;
-        var page = agent.Mobile ? 'verifyEmailMobile' : 'verifyEmail';
-        var tip = agent.Mobile ? 'tipMobile' : 'tip';
-        request(config.server + "?service=User.GetMailChecked&user_id=" + userid,
-            function(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var result = JSON.parse(body);
-                    //console.log(result);
-                    if (result.ret == 200 && result.data) {
-                        if (result.data.mailChecked == 1) {
-                            res.render(tip,{
-                                'tip': '您的邮箱已通过验证',
-                                'title': '验证邮箱',
-                                'user': req.session.user
-                            });
-                        } else{
-                            res.render(page,{
-                                'title':'验证邮箱',
-                                'user': req.session.user
-                            });
-                        }
-                    } else {
-                        res.render('error', {
-                            'message': result.msg,
-                            error: {
-                                'status': result.ret,
-                                'stack': ''
-                            }
-                        });
-                    }
-                } else {
-                    console.error('user failed:', error);
-                    next(error);
-                }
-            });
-    } else {
-        res.redirect('/login');
-    }
 });
 module.exports = router;

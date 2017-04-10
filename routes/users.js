@@ -4,7 +4,7 @@ var request = require('request');
 var config = require('../config/config');
 var ua = require('mobile-agent');
 
-/* GET users listing. */
+/* 获取用户个人资料页面 */
 router.get('/', function(req, res, next) {
     req.session.user={
             "user_id": "174",
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
         var page = agent.Mobile ? 'personalInforMobile' : 'personalInfor';
-        request(config.server + "user/get_user_info?user_id="+userid,
+        request("http://104.194.79.57:800/" + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -59,7 +59,7 @@ router.get('/sub', function(req, res, next) {
         var year=req.query.year;
         var month=req.query.month;
         var day=req.query.day;
-        request(config.server + "user/alter_user_info?user_id=" + userid +'&user_name=' + username + '&profile_picture=' +profile_picture + '&sex=' + sex + '&year=' + year + '&month=' + month + '&day=' + day,
+        request("http://104.194.79.57:800/" + "user/alter_user_info?user_id=" + userid +'&user_name=' + username + '&profile_picture=' +profile_picture + '&sex=' + sex + '&year=' + year + '&month=' + month + '&day=' + day,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);

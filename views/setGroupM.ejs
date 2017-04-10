@@ -105,18 +105,22 @@
             self.introduction=$(".setgroup-intro").val();
             self.image=$("#g_img").val();
             self.private=$("#choose-btn").data('private');
-            global.getData('/group/<%=result.group_id%>/sub?introduction='+self.introduction+'&image='+self.image+'&private='+self.private,function(data){
-              self.loading.stop('self');
-              if(data.ret==200){
-                if(data.data.code==1){
-                  sweetAlert('成功',data.msg,'success');
-                }else{
-                  sweetAlert('提示', data.msg, 'warning');
-                }
-              }else{
-                sweetAlert('错误', data.msg, 'error');
-              }
-            });
+            global.getData('/group/<%=result.group_id%>/sub',{
+              introduction:self.introduction,
+              image:self.image,
+              private:self.private
+              },function(data){
+                  self.loading.stop('self');
+                  if(data.ret==200){
+                    if(data.data.code==1){
+                      sweetAlert('成功',data.msg,'success');
+                    }else{
+                      sweetAlert('提示', data.msg, 'warning');
+                    }
+                  }else{
+                    sweetAlert('错误', data.msg, 'error');
+                  }
+                });
            }
         });
       },
