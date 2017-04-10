@@ -17,6 +17,7 @@
     "express": "~4.13.1",
     "express-session": "^1.14.0",
     "formidable": "~1.0.17",
+    "jsonwebtoken": "^7.3.0",
     "mobile-agent": "~0.0.8",
     "mongodb": "^2.2.4",
     "morgan": "~1.6.1",

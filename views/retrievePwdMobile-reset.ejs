@@ -18,16 +18,21 @@
                 </div>
             </div>
         </nav>
-        <div class="retrievepassword-default-container">
-            <div class="retrieve-password-body">
+        <div class="modifypassword-default-container">
+            <div class="modify-password-body">
                 <form>
-                    <div class="retrieve-password-container">
-                        <input id="email" required="required" type="email" class=" retrieve-password-input">
-                        <label for="email">邮箱</label>
+                    <div class="modify-password-container">
+                        <input id="modify-password" required="required" type="password" class=" modify-password-input">
+                        <label for="modify-password">新密码</label>
                         <div class="foot-line"></div>
                     </div>
-                    <div class="retrieve-password-container">
-                        <button class="registerBtn">找回密码</button>
+                    <div class="modify-password-container">
+                        <input id="modify-password-ack" required="required" type="password" class=" modify-password-input">
+                        <label for="modify-password-ack">确认密码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="modify-password-container">
+                        <button type="button" class="registerBtn">找回密码</button>
                     </div>
                 </form>
  
@@ -35,14 +40,13 @@
  
         </div>
 <%- include base/baseJSMobile.ejs %>
-
 <script>
-    $('.retrieve-password-input').on('click',function(e){
+    $('.modify-password-input').on('click',function(e){
         $(this).siblings('label').removeClass('blur-label').addClass('active');
         $(this).siblings('.foot-line').removeClass('blur-line').addClass('highlight');
     });
 
-    $('.retrieve-password-input').on('blur',function(e){
+    $('.modify-password-input').on('blur',function(e){
         if(this.value === '')
         {
             $(this).siblings('label').removeClass('active').addClass('blur-label');
@@ -54,33 +58,33 @@
 
 <script>
 	(function() {
-		var retrievePwd = {
-            retPwdemail : $('.retrieve-password-container #email'),
+		var retrievePwdreset = {
+
+            retPwdpwd : $('.modify-password-body #modify-password'),
+            retPwdpwdack : $('.modify-password-body #modify-password-ack'),
             retPwdbtn : $('.registerBtn'),
 
             validataFunc : function(){
                 var self = this;
                 var validator = new HJformcheck();
 
-                validator.extend('isEmail',function(value,errorMsg){
-                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
-                        return errorMsg;
-                    }
-                });
 
-                validator.add(self.retPwdemail, [{
-                strategy: 'isNonEmpty',
-                errorMsg: '邮箱不能为空'
-                },{
-                strategy: 'isEmail',
-                errorMsg: '邮箱格式有误，请重试'
-                }]);
+                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isNonEmpty',
+                        errorMsg: '密码不能为空'
+                    },
+                ]);
+                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isSame:' + self.retPwdpwd.val(),
+                        errorMsg: '两次密码不相同'
+                    },
+                ]);
 
                 var errorMsg = validator.start();
-
                 return errorMsg;
             },
-
 			bindEvent: function() {
                 var self = this;
                 self.retPwdbtn.on('touchend',function(e){
@@ -91,39 +95,39 @@
                     if(!errorMsg){
 
                         HJLoading.start({
-                            loadingId : 'retPwdLoading',
+                            loadingId : 'retPwdresetLoading',
                         });
 
-                        global.subData('/retrievepassword',{
+                        global.subData('/retrievepassword/reset',{
                             email: encodeURIComponent(self.retPwdemail.val()),
                         },function(data){
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){
                                     //延迟3秒跳转
                                     setTimeout(function(){
-                                        HJLoading.stop('retPwdLoading');
+                                        HJLoading.stop('retPwdresetLoading');
                                         window.location.href = '/';
                                     },3000);
                                     
                                 }else{
-                                    HJLoading.stop('retPwdLoading');
+                                    HJLoading.stop('retPwdresetLoading');
                                     alert(data.msg);
                                 }
                             }else{
-                                HJLoading.stop('retPwdLoading');
+                                HJLoading.stop('retPwdresetLoading');
                                 alert(data.msg);
                             }
                         });
                     }else{
                         alert(errorMsg);
-                    }
+                    } 
                 });
 			},
 			init: function() {
 				this.bindEvent();
 			}
 		}
-		retrievePwd.init();
+		retrievePwdreset.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>
