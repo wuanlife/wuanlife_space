@@ -30,11 +30,11 @@
                </div>
                <div class="personal-email personal-name">
                     <label for="name" class="label-e">昵称</label>
-                    <input type="text" value="<%=result.user_name%>" id="name">
+                    <input type="text" value="<%=result.user_name%>" id="name" autocomplete="off">
                </div>
                <div class="personal-sex">
                     <label for="male" class="label-1">性别</label>
-                    <input type="radio" name="sex" value="male" id="male">
+                    <input type="radio" name="sex" value="male" id="male" autocomplete="off">
                     <span>
                         <%if(result.sex==1){%>
                         <svg aria-hidden="true" class="icon">
@@ -81,11 +81,11 @@
                </div>
                <div class="personal-birthday">
                     <label for="year" class="label-year">生日</label>
-                    <input type="text" name="sex" placeholder="如1990" value="<%=result.year%>" id="year">
+                    <input type="text" name="sex" placeholder="如1990" value="<%=result.year%>" id="year" autocomplete="off">
                     <label for="month" class="label-month"></label>
-                    <input type="text" name="sex" placeholder="如01" value="<%=result.month%>" id="month">
+                    <input type="text" name="sex" placeholder="如01" value="<%=result.month%>" id="month" autocomplete="off">
                     <label for="day" class="label-day"></label>
-                    <input type="text" name="sex" placeholder="如01" value="<%=result.day%>" id="day">
+                    <input type="text" name="sex" placeholder="如01" value="<%=result.day%>" id="day" autocomplete="off">
                </div>
                <button type="submit">保存</button>
            </form>
