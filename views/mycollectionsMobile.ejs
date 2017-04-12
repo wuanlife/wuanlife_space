@@ -12,78 +12,80 @@
         </nav>
         <div class="default-container">
             <div class="collection-entries">
-                <div class="collection-entry">
-                    <div class="collection-entry-content">
-                        <div class="collection-entry-title">
-                            <h1>Ubuntu开荒笔记</h1>
-                        </div>
-                        <div class="collection-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="collection-entry-footer">
-                        <div class="collection-entry-where">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="collection-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="collection-entry">
-                    <div class="collection-entry-content">
-                        <div class="collection-entry-title">
-                            <h1>Ubuntu开荒笔记</h1>
-                        </div>
-                        <div class="collection-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="collection-entry-footer">
-                        <div class="collection-entry-where">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="collection-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="collection-entry">
-                    <div class="collection-entry-content">
-                        <div class="collection-entry-title">
-                            <h1>Ubuntu开荒笔记</h1>
-                        </div>
-                        <div class="collection-entry-brief">
-                            <p>asdfasidhfoaiewhfoiawehfoiawhefoihawoeighaowighaowrghaiorghaoirghoairhgoairhgoiarhgoirahgoiarhgoiarehgaoirgh</p>
-                        </div>
-                    </div>
-                    <div class="collection-entry-footer">
-                        <div class="collection-entry-where">
-                            <p>陶陶　发表于　鬼扯天地</p>
-                        </div>
-                        <div class="collection-entry-date">
-                            <p>2017-12-20 22:44</p>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
 <%- include base/baseJSMobile.ejs %>
 
+<script type="text/html" id="mycollection-entry-tpl">    
+
+    {{each posts as item i}}
+        <div class="collection-entry" id="{{item.post_id}}">
+            <div class="collection-entry-content">
+                <div class="collection-entry-title">
+                    <h1>{{item.p_title}}</h1>
+                </div>
+                <div class="collection-entry-brief">
+                    <p>{{item.p_text}}</p>
+                </div>
+            </div>
+            <div class="collection-entry-footer">
+                <div class="collection-entry-where">
+                    <p>{{item.user_name}}  发表于  {{item.g_name}}</p>
+                </div>
+                <div class="collection-entry-date">
+                    <p>{{item.create_time}}</p>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</script>
 
 <script>
 	(function() {
 		var index = {
-
+            container:$('.collection-entries'),
+            title : $('.collection-entry h1'),
+            content: $('.collection-entry .collection-entry-brief p'),
+            planetname : $('.collection-entry .collection-entry-where >p'),
+            date:$('.collection-entry .collection-entry-date>p'),
 
 			getServerData: function(param, cb) {
 				
 			},
-			bindEvent: function() {
 
+			bindEvent: function() {
+                var that = this;
+                that.container.dropload({
+                    scrollArea:window,
+                    loadDownFn: function(me){
+                        global.getData('',{},function(data){
+                            setTimeout(function(){
+                                alert(data);
+                                me.resetload();
+                            },1000);
+                        });
+                    }
+                });
 			},
+
+
 			init: function() {
-				this.bindEvent();
+                var that = this;
+				that.bindEvent();
+                global.subData('/personal/mycollection',{
+
+                    userId:1,
+                },function(data){
+                    if(data.ret === 200 && data.data){
+                        //显示返回至
+                        var com = template("mycollection-entry-tpl",data.data);
+
+                        that.container.html(com);
+                    }else{
+                        sweetAlert('错误','数据获取失败','error');
+                    }                    
+                });
 			}
 		}
 		index.init();

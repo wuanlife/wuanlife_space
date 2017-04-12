@@ -10,8 +10,8 @@
   width: 30%;
   height: 30%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 15%;
+  left: 15%;
    
   -webkit-animation: cubemove 1.8s infinite ease-in-out;
   animation: cubemove 1.8s infinite ease-in-out;

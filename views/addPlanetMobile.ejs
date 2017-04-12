@@ -21,7 +21,7 @@
                     <span>话题 9996</span>
                 </div>
                 <div class="add-planet-headItem add-planet-headJoin">
-                    <button>
+                    <button id="joinBtn" type="button">
                         加入
                     </button>
                 </div>
@@ -171,16 +171,31 @@
 <script>
 	(function() {
 		var index = {
-
+            joinbtn : $('#joinBtn'),
 
 			getServerData: function(param, cb) {
 				
 			},
-			bindEvent: function() {
 
-			},
+            bindEvent: function() {
+                var that = this;
+                that.joinbtn.on('touchend',function(e){
+                    e.preventDefault();
+                    global.subData('/addPlanet',{
+                        userId : 17,
+                        groupId : 11,
+                    },function(data){
+                        if(data.data){
+                            alert(data.msg);
+                        }else{
+                            alert('加入失败，请重试');
+                        }
+                    });
+                });
+            },
 			init: function() {
-				this.bindEvent();
+                var that = this;
+				that.bindEvent();
 			}
 		}
 		index.init();

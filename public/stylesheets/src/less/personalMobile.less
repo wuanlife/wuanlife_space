@@ -6,10 +6,18 @@
 	bottom:0;
 	.px2rem(top,210);
 	width:100%;
+	background-color: #ffffff;
+	.personal-items{
+	    height: 100%;
+    	position: absolute;
+    	bottom: 0;
+    	width: 100%;
+    	display:flex;
+    	flex-direction:column;
+	}
 }
 
 .personal-item{
-	background-color: #ffffff;
 	.px2rem(margin-bottom,12);
 }
 
@@ -49,6 +57,7 @@
 		.px2rem(margin-top,1);
 		width:100%;
 		.alignCenter;
+		justify-content: space-around;
 		.personal-item-icon{
 			.px2rem(margin-left,40);
 			.px2rem(width,42);
@@ -56,14 +65,10 @@
 			background-color:blue;
 		}
 		.personal-item-text{
-			.px2rem(margin-left,16);
-			.px2rem(width,105);
-			.px2rem(height,33);
 			opacity:0.87;
 			font-family:PingFangHK-Regular;
 			.px2px(font-size,24);
 			color:#000000;
-			text-align:left;
 		}
 		.personal-next{
 			.nextLabel;
@@ -77,6 +82,7 @@
 .personal-logstate{
 	.px2rem(height,140);
 	.alignCenter;
+	justify-content: space-around;
 	.personal-personIcon{
 		.px2rem(width,75);
 		.px2rem(height,77);
@@ -115,9 +121,6 @@
 		}
 	}
 	.personal-logfont{
-		.px2rem(width,90);
-		.px2rem(height,41);
-		.px2rem(margin-left,33);
 		opacity:0.87;
 		font-family:PingFangHK-Medium;
 		font-weight:bold;
@@ -134,8 +137,8 @@
 
 .personal-signBtn{
 	.center;
+	flex-basis: auto;
 	background-color: rgba(255, 0, 0, 0);
-	.px2rem(margin-top,214);
 	button{
 		.px2rem(width,608);
 		.px2rem(height,89);

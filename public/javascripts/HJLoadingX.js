@@ -72,8 +72,8 @@
 		//loading 目标
 		
 		var loading = {};
-	
-
+		
+		loading.loadingScale = config.loadingScale || that.loadingScale;
 		loading.target = config.target || 'html';
 		//当前loading id
 		loading.id = config.loadingId || 'HJLoading' + that.loadingCount++;
@@ -166,7 +166,7 @@
 			height:height,
 		});
 		var eleAttr = Math.min(width,height);
-		eleAttr = eleAttr * 0.5;
+		eleAttr = eleAttr * that.loadingScale;
 		
 		if(that.loadingCSS){
 			ele.css(that.loadingCSS);
@@ -212,7 +212,7 @@
 		loadingCount: 0,
 		//管理loading对象
 		loadings:[],
-
+		loadingScale : 0.5,
 		csspath:'',
 		//读取html文件
 		readHTML:function(href,name){

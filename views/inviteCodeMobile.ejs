@@ -24,7 +24,7 @@
                     <span>您的邀请码是：</span>
                 </div>
                 <div class="code-genetate">
-                    <span>d2Yx4i</span>
+                    <span></span>
                 </div>
             </div>
  
@@ -48,8 +48,11 @@
                 var that = this;
 				that.bindEvent();
 
-                global.subData('/inviteCode',{
-                    userId : 78,
+                global.subData('/personal/invite',{
+                    <% if(user){%>
+                        userId : <%= user.user_id%>,
+                    <%}%>
+                    
                 },function(data){
                     if(data.ret === 200 && data.data){
                         that.inviteCode.html(data.data.i_code);
@@ -57,7 +60,7 @@
                     }else{
                         alert('请求错误');
                     }
-                })
+                });
 			}
 		}
 

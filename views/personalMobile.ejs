@@ -1,121 +1,114 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <button class="search-toggle" type="button">
-                        <svg aria-hidden="true" class="icon">
-                            <use xlink:href="#icon-search">
-                            </use>
-                        </svg>
-                    </button>
-                    <div class="navbar-brand">
-                        <h1>
-                            我的
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="tab-head">
-            <ul class="tab-head-bar">
-                <li class="selected">                    
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-home">
-                        </use>
-                    </svg>
-                </li>
-                <li>                        
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-lightPlanet_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-message_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-me_blue">
-                        </use>
-                    </svg>
-                </li>
-            </ul>
-        </div>
+<%- include base/headerMobile-index.ejs %>
         <div class="personal-tab-container">
             <div class="personal-items">
                 <div class="personal-item personal-logstate">
-                    <div class="personal-personIcon">
+                    <div class="personal-personIcon personal-state">
                         <div class="personal-personIcon3"></div>
                         <div class="personal-personIcon1"></div>
                         <div class="personal-personIcon2"></div>
                     </div>
-                    <span class="personal-logfont">未登录</span>
-                    <div class="personal-next"> 
+                    <span class="personal-logfont personal-state">未登录</span>
+                    <div class="personal-next personal-state"> 
                         <div class="personal-next1"></div> 
                         <div class="personal-next2"></div> 
                     </div>
                 </div>
                 <div class="personal-item personal-details">
                     <div class="personal-detail persoanl-info">
-                        <div class="personal-item-icon"></div>
-                        <span class="personal-item-text">个人资料</span>
-                        <div class="personal-next"> 
+                        <div class="personal-item-icon personal-information"></div>
+                        <span class="personal-item-text personal-information">个人资料</span>
+                        <div class="personal-next personal-information"> 
                             <div class="personal-next1"></div> 
                             <div class="personal-next2"></div> 
                         </div>
                     </div>
                     <div class="personal-detail personal-pwd">
-                        <div class="personal-item-icon"></div>
-                        <span class="personal-item-text">修改密码</span>
-                        <div class="personal-next"> 
+                        <div class="personal-item-icon personal-changepwd"></div>
+                        <span class="personal-item-text personal-changepwd">修改密码</span>
+                        <div class="personal-next personal-changepwd"> 
                             <div class="personal-next1"></div> 
                             <div class="personal-next2"></div> 
                         </div>
                     </div>
                     <div class="personal-detail personal-collections">
-                        <div class="personal-item-icon"></div>
-                        <span class="personal-item-text">我的收藏</span>
-                        <div class="personal-next"> 
+                        <div class="personal-item-icon personal-collection"></div>
+                        <span class="personal-item-text personal-collection">我的收藏</span>
+                        <div class="personal-next personal-collection"> 
                             <div class="personal-next1"></div> 
                             <div class="personal-next2"></div> 
                         </div>
                     </div>
                     <div class="personal-detail personal-friend">
-                        <div class="personal-item-icon"></div>
-                        <span class="personal-item-text">邀请好友</span>
-                        <div class="personal-next"> 
+                        <div class="personal-item-icon personal-invitefriend"></div>
+                        <span class="personal-item-text personal-invitefriend">邀请好友</span>
+                        <div class="personal-next personal-invitefriend"> 
                             <div class="personal-next1"></div> 
                             <div class="personal-next2"></div> 
                         </div>
                     </div>
                 </div>
+                <% if (user) { %>
                 <div class="personal-item personal-signBtn">
-                    <button id="exit">退出登录</button>
+                    <button id="exit" type="button">退出登录</button>
                 </div>
+                <% }%>
             </div>
         </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-index.ejs %>
 
 
 <script>
     (function() {
-        var index = {
-
-
+        var personal = {
+            name:$('.personal-state.personal-logfont'),
+            state : $('.personal-state'),
+            info : $('.personal-information'),
+            changepwd : $('.personal-changepwd'),
+            collection : $('.personal-collection'),
+            invite : $('.personal-invitefriend'),
+            exit: $('#exit'),
             getServerData: function(param, cb) {
                 
             },
             bindEvent: function() {
+                var that = this;
 
+                that.state.on('touchend',function(e){
+                    //e.preventDefault();
+                    window.location.href = window.location.pathname +'/login';
+                });
+
+                that.info.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/personalInfo";
+                });
+                that.changepwd.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/changepassword";
+                });
+                that.collection.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/myCollection";
+                });
+                that.invite.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/invite";
+                });
+
+                that.exit.on('touchend',function(e){
+                    //退出登录
+                    window.location.href = window.location.pathname +"/logout";
+                });
             },
             init: function() {
-                this.bindEvent();
+                var that = this;
+                wuanTabfun.tabHighlight("tab-head-myself");
+                wuanTabfun.title('我的');
+                <% if(user) {%>
+                    that.name.html('<%= user.user_name %>');
+                <% }else{ %>
+                    that.name.html('未登录');
+                <% } %>
+                that.bindEvent();
             }
         }
-        index.init();
+        personal.init();
     })();
 </script>
 <%- include base/footerMobile.ejs %>
