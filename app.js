@@ -144,7 +144,6 @@ app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
-app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanet',addPlanet);
@@ -155,7 +154,6 @@ app.use('/personal',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
-app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanetPrivate',addPlanetPrivate);
