@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next){
-	request(config.server + 'group/search?text=' + req.body.text + '&gnum=2&pnum=2&gn=1&pn=1',
+	request(config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=1&pn=1',
 	function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');

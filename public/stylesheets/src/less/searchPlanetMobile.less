@@ -1,8 +1,5 @@
 @import "searchInputMobile";
 
-.searchPlanet-search-content-all{
-	.px2rem(margin-top,12);
-}
 .searchPlanet-search-content-planets{
 
 	background-color:@bgWhite;
@@ -19,20 +16,18 @@
 
 	.content-planets-total{
 		display:flex;
-		justify-content:center;
+		justify-content: flex-start;
 		flex-wrap:wrap;
 		align-content: flex-start;
-		position:relative;
-		.px2rem(top,-26);
+		.px2rem(margin-top,24);
 		.content-planets-single{
 			box-sizing: border-box;
 			background-color:@bgWhite;
 			.px2rem(height,150);
-			.px2rem(width,168);
-			.px2rem(margin-right,60);
-			.px2rem(margin-top,48);
+			.px2rem(width,170);
+			margin: 0.05rem 0.5rem 1.125rem;
 			.content-planets-single-img{
-				.px2rem(width,168);
+				.px2rem(width,170);
 				.center;
 				.px2rem(height,99);
 				div{
@@ -40,6 +35,10 @@
 					.px2rem(height,99);
 					background:red;
 					border-radius:50%;
+					img{
+						width: 100%;
+						height: 100%;
+					}
 				}
 			}
 
@@ -50,7 +49,17 @@
 				.px2px(font-size,22);
 				.px2rem(width,168);
 				.horizontalCenter;
+				text-align: center;
 				color:rgba(40,40,40,0.87);
+				span{
+					display: inline-block;
+					overflow: hidden;
+    				text-overflow: ellipsis;
+    				width: 100%;
+    				height: 100%;
+    				white-space: nowrap;
+    				word-break: break-all;
+				}
 			}	
 		}
 	}

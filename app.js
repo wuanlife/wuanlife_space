@@ -50,7 +50,6 @@ var modifyPwd = require('./routes/modifyPwd');
 var addPlanet = require('./routes/addPlanet');
 var addPlanetPrivate = require('./routes/addPlanetPrivate');
 var searchContent = require('./routes/searchContent');
-var searchPlanet = require('./routes/searchPlanet');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -158,7 +157,6 @@ app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 app.use('/searchContent',searchContent);
-app.use('/searchPlanet',searchPlanet);
 
 app.use('/mymessage',myMessage);
 app.use('/changepassword',changepassword);
