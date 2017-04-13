@@ -4,3 +4,4 @@ public/stylesheets/dist/
 public/stylesheets/src/css/
 startwuanlife.bat
 mongodb.bat
+*.sublime*
