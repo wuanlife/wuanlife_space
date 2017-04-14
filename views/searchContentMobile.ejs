@@ -93,8 +93,6 @@
 <script>
 	(function() {
 		var search = {
-			planetsCon: $('.content-planets-planetContainers'),
-			postsCon: $('.search-content-details'),
 			searchAction:$('.search-action'),
 			searchInput : $('#searchInput'),			
 			searchValid: $('.search-action-valid'),
@@ -109,6 +107,7 @@
 			},
 			bindEvent: function() {
 				var that = this;
+				
 				//根据屏幕显示
 				var width = $(window).width();
 
@@ -124,7 +123,7 @@
 					e.preventDefault();
 					var inputtext = that.searchInput.val();
 					global.subData('/searchContent',{
-						text : that.searchInput.val(),
+						text : inputtext,
 						gnum : 5,
 						pnum : 2 + pnum,
 					},function(data){
@@ -141,6 +140,59 @@
 								that.searchContainer.empty();
 								that.searchContainer.append(planetsTPL);
 								that.searchContainer.append(postsTPL);
+								//对返回的数据进行事件绑定
+								$('.search-content-details').dropload({
+									scrollArea : this,
+									domUp: {
+
+									},
+									domDown : {
+										domClass : 'dropload-down',
+										domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+            							domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+            							domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+									},
+
+									loadDownFn : function(me){
+										posts_page ++;
+										var result = '';
+										$.ajax({
+											type : 'GET',
+											url : '/searchContent',
+											data: {
+												text:inputtext,
+												gnum:0,
+												pnum:
+											},
+											dataType : 'json',
+											success : function(data){
+												var arrLen = data.data.length;
+												if(arrLen >0){
+													for(var i=0;i<arrLen;i++){
+														result += '';
+													}
+												}else{
+													me.lock();
+													me.noData();
+												}
+
+												//插入数据
+												this.append(result);
+												me.resetload();
+											},
+											error: function(){
+												alert('Ajax error!');
+												me.resetload();
+											},
+										});
+									},
+
+									threshold : 50,
+								});
+
+
+
+
 								$('.get-more-planets').on('touchend',
 								function(e){
 										e.preventDefault();
