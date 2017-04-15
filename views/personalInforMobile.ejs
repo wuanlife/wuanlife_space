@@ -244,7 +244,7 @@
                 self.loading.stop('self');
                 if(data.ret==200){
                   if(data.data.mail_check==1){
-                    sweetAlert('成功','邮箱已验证成功！请刷新页面更新信息！', 'error');
+                    sweetAlert('成功','邮箱已验证成功！请刷新页面更新信息！', 'success');
                   }else{
                     global.getData('/users/verify',function(data){
                       if(data.ret==200){

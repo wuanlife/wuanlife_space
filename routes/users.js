@@ -93,7 +93,7 @@ router.get('/verify', function(req, res, next) {
         };
     if (req.session.user) {
         var usermail = req.session.user.user_email;
-        request(config.server + "user/check_mail_1?user_email=" + usermail,
+        request("http://104.194.79.57:800/" + "user/check_mail_1?user_email=" + usermail,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -121,21 +121,25 @@ router.get('/verify', function(req, res, next) {
 //验证邮箱页面
 router.get('/verifyusermail',function(req,res,next){
     var agent = ua(req.headers['user-agent']);
+    var token=req.query.token;
     var page = agent.Mobile ? 'verifymailMobile' : 'verifymailMobile';
-    res.render(page, {
-                'result': 'result',
-                'title': '个人中心'
-            })
-    /*request(config.server + "user/check_mail_2?user_id",
-        function(error,response,body){
+    res.render(page,{
+        'token':token,
+        'title':'验证邮箱',
+        'user':'no-One'
+    });
+
+});
+//发送token
+router.get('/verifyusermail/sub',function(req,res,next){
+    var token=req.query.token;
+    request("http://104.194.79.57:800/"+"user/check_mail_2?token="+token,
+        function(error, response, body) {
             if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
                     //console.log(result);
-                    if (result.ret == 200) {
-                        res.render(page, {
-                            'result': result,
-                            'title': '个人中心',
-                        });
+                    if (result.ret == 200 && result.data) {
+                        res.send(result);
                     } else {
                         res.render('error', {
                             'message': result.msg,
@@ -149,8 +153,8 @@ router.get('/verifyusermail',function(req,res,next){
                     console.error('user failed:', error);
                     next(error);
                 }
-            });*/
-});
+        });
+})
 //确认是否验证邮箱
 router.get('/verifycomfirm', function(req, res, next) {
     req.session.user={
@@ -160,7 +164,7 @@ router.get('/verifycomfirm', function(req, res, next) {
         };
     if (req.session.user) {
         var userid = req.session.user.user_id;
-        request(config.server + "user/get_mail_checked?user_id=" + userid,
+        request("http://104.194.79.57:800/" + "user/get_mail_checked?user_id=" + userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
