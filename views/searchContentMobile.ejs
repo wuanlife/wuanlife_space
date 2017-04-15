@@ -1,103 +1,231 @@
 <%- include searchInputMobile.ejs %>
 
 <div class="search-content-all">
+	
+</div>
+
+<%- include base/baseJSMobile.ejs %>
+
+<script type="text/html" id="showallplanets-tpl">
+	<div class="searchPlanet-search-content-planets">
+		<div class="content-planets-tag">
+			<span>星球</span>
+		</div>
+		<div class="content-planets-total">
+			{{each group as item i}}
+				<div class="content-planets-single" id="{{item.group_id}}">
+					<div class="content-planets-single-img">
+						<div><img src={{item.g_image}}></img></div>
+					</div>
+					<div class="content-planets-single-exp">
+						<span>{{item.g_name}}</span>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</script>
+
+
+<script type="text/html" id="planets-tpl">    
+	<!--需要鼠标悬挂时显示星球简介-->
 	<div class="search-content-planets">
 		<div class="content-planets-tag">
 			<span>星球</span>
 		</div>
 		<div class="content-planets-planetContainers">
-			<div class="content-planets-planetContainer first-container">
-				<div class="planets-planetContainer-img">
-					<div><img></img></div>
+			{{each group as item i}}
+    			<div class="content-planets-planetContainer" id="{{item.group_id}}">
+					<div class="planets-planetContainer-img">
+						<div><img src={{item.g_image}}></img></div>
+					</div>
+					<div class="planets-planetContainer-exp">
+						<span>{{item.g_name}}</span>
+					</div>
 				</div>
-				<div class="planets-planetContainer-exp">
-					<span>我们都是技术宅</span>
-				</div>
-			</div>
-			<div class="content-planets-planetContainer">
-				<div class="planets-planetContainer-img">
-					<div><img></img></div>
-				</div>
-				<div class="planets-planetContainer-exp">
-					<span>UI 周报回复组</span>
-				</div>
-			</div>
-			<div class="content-planets-planetContainer last-container">
-				<div class="planets-planetContainer-img">
-					<div><img></img></div>
-				</div>
-				<div class="planets-planetContainer-exp">
-					<span>我们都是技术宅号</span>
-				</div>
-			</div>
+    		{{/each}}
 		</div>
 		<div class="content-planets-more">
-			<div class="more-label">
+			<div class="more-label get-more-planets">
 				<span>查看更多星球</span>
 			</div>
-			<div class="more-next">
+			<div class="more-next get-more-planets">
 				<div class="more-next-pre"></div>
 				<div class="more-next-last"></div>
 			</div>
 		</div>
 	</div>
-	<div class="search-content-details">
-		<div class="content-details-content-label">
-			<span>帖子</span>
-		</div>
-		<div class="search-content-detail">
+</script>
+
+
+<script type="text/html" id="posts-tpl">    
+<div class="search-content-details">
+	<div class="content-details-content-label ">
+		<span>帖子</span>
+	</div>
+
+    {{each posts as item i}}
+
+		<div class="search-content-detail" id="{{item.post_id}}">
 			<div class="content-detail-header">
 				<div class="content-detail-header-content">
-					<img></img>
-					<span class="search-content-header-user">淘淘发表于鬼扯天地</span>
-                    <span class="search-content-header-date">2017-01-28 22:41</span>
+					<div>
+						<img></img>
+						<span class="search-content-header-user">{{item.user_name}}发表于{{item.g_name}}</span>
+					</div>
+                    <span class="search-content-header-date">{{item.create_time}}</span>
 				</div>
 			</div>
 			<div class="content-detail-content">
 				<div class="content-detail-content-title">
-                    <p>Ubuntu开荒笔记</p>
+                    <p>{{item.p_title}}</p>
                 </div>
                 <div class="content-detail-content-brief">
                     <div class="content-detail-content-exact">
-                        <p>安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
-                        </p>
-                    </div>
-                    <div class="content-detail-content-img">
-                        <img class="detail-content-img-start"></img>
-                        <img></img>
-                        <img class="detail-content-img-end"></img>
+                        {{item.p_text}}   
                     </div>
                 </div>
 			</div>
-			<div class="content-detail-footer">
-			</div>
 		</div>
-
-	</div>
-<div>
-
-
-
-
-<%- include base/baseJSMobile.ejs %>
-
-
+    {{/each}}
+</div>
+</script>
 <script>
 	(function() {
-		var index = {
-
-
+		var search = {
+			searchAction:$('.search-action'),
+			searchInput : $('#searchInput'),			
+			searchValid: $('.search-action-valid'),
+			searchContainer: $('.search-content-all'),
+			headerHeight : 140,
+			headerAccupt : 310,
+			postsHeight : 280,
+			planetsHeight : 195,
+			planetsWidth : 210,
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
+				var that = this;
+				
+				//根据屏幕显示
+				var width = $(window).width();
 
+				var height = $(window).height();
+
+				var totalHeight = that.headerHeight + that.headerAccupt + 105;
+
+				var pnum = Math.ceil((height - totalHeight) / that.postsHeight);
+				var gnum = Math.ceil((height - that.headerHeight - 105) / that.planetsHeight);
+				var time = Math.floor(width / that.planetsWidth);
+				alert(time);
+				that.searchAction.on('touchend',function(e){
+					e.preventDefault();
+					var inputtext = that.searchInput.val();
+					global.subData('/searchContent',{
+						text : inputtext,
+						gnum : 5,
+						pnum : 2 + pnum,
+					},function(data){
+						if(data.ret === 200){
+							if(data.data){
+								var groups = data.group;
+								var posts = data.posts;
+								var group_page = data.group_page;
+								var posts_page = data.posts_page;
+								var curr_page = data.g_current_page;
+
+								var planetsTPL = template("planets-tpl",data.data);
+								var postsTPL = template("posts-tpl",data.data);
+								that.searchContainer.empty();
+								that.searchContainer.append(planetsTPL);
+								that.searchContainer.append(postsTPL);
+								//对返回的数据进行事件绑定
+								$('.search-content-details').dropload({
+									scrollArea : this,
+									domUp: {
+
+									},
+									domDown : {
+										domClass : 'dropload-down',
+										domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+            							domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+            							domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+									},
+
+									loadDownFn : function(me){
+										posts_page ++;
+										var result = '';
+										$.ajax({
+											type : 'GET',
+											url : '/searchContent',
+											data: {
+												text:inputtext,
+												gnum:0,
+												pnum:
+											},
+											dataType : 'json',
+											success : function(data){
+												var arrLen = data.data.length;
+												if(arrLen >0){
+													for(var i=0;i<arrLen;i++){
+														result += '';
+													}
+												}else{
+													me.lock();
+													me.noData();
+												}
+
+												//插入数据
+												this.append(result);
+												me.resetload();
+											},
+											error: function(){
+												alert('Ajax error!');
+												me.resetload();
+											},
+										});
+									},
+
+									threshold : 50,
+								});
+
+
+
+
+								$('.get-more-planets').on('touchend',
+								function(e){
+										e.preventDefault();
+									global.subData('/searchContent',{
+										text : inputtext,
+										gnum : (2 + gnum)*time,
+										pnum : 0,
+									},function(data){
+										if(data.ret===200){
+											if(data.data){
+												that.searchContainer.empty();
+												var allPlanetsTPL = template("showallplanets-tpl",data.data);
+												that.searchContainer.append(allPlanetsTPL);
+											}
+										}else{
+											alert('错误');
+										}
+									});
+									
+								});
+							}
+						}else{
+							alert("搜索错误！");
+						}
+					});
+				});
 			},
 			init: function() {
-				this.bindEvent();
+				var that = this;
+				that.bindEvent();
 			}
 		}
-		index.init();
+		search.init();
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

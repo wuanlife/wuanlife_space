@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/javascripts/plupload/plupload.full.min.js"></script>
     <script type="text/javascript" src="/javascripts/plupload/i18n/zh_CN.js"></script>
     <script type="text/javascript" src="/javascripts/qiniu.js"></script>
+    <script type="text/javascript" src="/javascripts/quill-wuan.js"></script>
     <script type="text/javascript" src="/javascripts/HJformcheck.js"></script>
     <script type="text/javascript" src="/javascripts/HJLoadingX.js"></script>
     <script type = "text/javascript">
@@ -50,10 +51,10 @@
                 getData:getData,
                 subData:subData,
                 getUrlParam: getUrlParam,
-            }
+            };
         }());
     </script>
-    <% if (user) { %>
+    <% if (typeof user !== 'undefined') { %>
     <script>
         /*
         (function(){
@@ -70,5 +71,14 @@
             });
         }());
         */
+    </script>
+    <% } %>
+    <% if (typeof enterMsg !== 'undefined' ) { %>
+    <script>
+
+        (function(){
+            swal('已经成功登出')
+        }());
+
     </script>
     <% } %>

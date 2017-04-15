@@ -32,8 +32,6 @@ router.post('/',function(req,res,next){
 	},function(err,httpResponse,body){
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
-		console.log('err',err);
-		console.log('status',httpResponse.statusCode);
 
 		if(!err && httpResponse.statusCode === 200){
 			var data = JSON.parse(body).data;

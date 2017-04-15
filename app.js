@@ -50,7 +50,6 @@ var modifyPwd = require('./routes/modifyPwd');
 var addPlanet = require('./routes/addPlanet');
 var addPlanetPrivate = require('./routes/addPlanetPrivate');
 var searchContent = require('./routes/searchContent');
-var searchPlanet = require('./routes/searchPlanet');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -144,24 +143,20 @@ app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
-app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanet',addPlanet);
 
 
 app.use('/mycollections',myCollections);
-app.use('/myself',myself);
+app.use('/personal',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
 app.use('/myplanet',myPlanet);
-app.use('/loginNew',loginNew);
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
-app.use('/addPlanet',addPlanet);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 app.use('/searchContent',searchContent);
-app.use('/searchPlanet',searchPlanet);
 
 app.use('/mymessage',myMessage);
 app.use('/changepassword',changepassword);
