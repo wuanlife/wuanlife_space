@@ -6,6 +6,9 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
     margin: 0;
     padding: 0
 }
+body{
+	overflow: hidden;
+}
 //水平垂直居中
 .center {
     justify-content: center; //子元素水平居中
@@ -20,7 +23,7 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 	.px2rem(margin-top,12);
 	background-color: #ffffff;
 	width: 100%;
-	.px2rem(height,1200);
+	.px2rem(height,100%);
 	.allgroup-group{
 		.px2rem(width,680);
 		.px2rem(height,140);
@@ -40,7 +43,8 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 		}
 		h2{
 			.px2rem(height,42);
-			width: 100%;
+			.px2rem(width,100);
+			.oneline-text-overflow;
 			color: #292929;
 			font-family:PingFangHK-Regular;
 			.px2px(font-size,30);
@@ -56,4 +60,15 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 			.px2px(font-size,22);
 		}
 	}
+}
+.download-part{
+	margin: 0 auto;
+	background-color: #ffffff;
+	.px2rem(height,100);
+	width: 100%;
+	text-align: center;
+	color: #292929;
+	font-family:PingFangHK-Regular;
+	.px2px(font-size,30);
+	.px2rem(padding-top,30);
 }

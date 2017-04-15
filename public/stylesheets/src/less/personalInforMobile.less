@@ -48,12 +48,12 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 .personal-content{
 	    .px2rem(margin-top,12);
 	    width: 100%;
-	    .px2rem(height,1118);
+	    .px2rem(height,1218);
 	    background-color: #ffffff;
 	    .personal-image{
             .px2rem(width,140);
             .px2rem(height,140);
-			.px2rem(margin-left,210);
+			.px2rem(margin-left,240);
 			.img-upload-progress{
 				width: 100%;
 				.px2rem(height, 2);
@@ -78,6 +78,10 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
         .px2rem(margin-top,83);
         position: relative;
 	 	border-bottom: 1px solid rgba(0,0,0,0.38);
+	 	transition: border-bottom 0.5s;
+		-moz-transition: border-bottom 0.5s;	/* Firefox 4 */
+		-webkit-transition: border-bottom 0.5s;	/* Safari 和 Chrome */
+		-o-transition: border-bottom 0.5s;	/* Opera */
 	 	 label{
 	 	 	.px2px(font-size, 24);
 	 	 	display: block;
@@ -86,7 +90,7 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 			.px2rem(margin-left,30);
 	 	 }
 	 	 input{
-	 	 	.px2rem(width,294);
+	 	 	.px2rem(width,600);
             .px2rem(height,45);
 	 	 	.px2px(font-size, 32);
 	 	 	.px2rem(margin-left,28);
@@ -96,12 +100,16 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 	 	 	background-color: none;
 	 	 	background-color: #ffffff;
             border:none;
+            transition: color 1s;
+			-moz-transition: color 1s;	/* Firefox 4 */
+			-webkit-transition: color 1s;	/* Safari 和 Chrome */
+			-o-transition: color 1s;	/* Opera */
 	 	 }
 	 	 button{
 	 	 	position: absolute;
 	 	 	.px2px(font-size, 24);
 	 	 	border: none;
-	 	 	background:#5677fc;
+	 	 	background-color:#5677fc;
 			border-radius:8px;
 			.px2rem(width,126);
             .px2rem(height,50);
@@ -110,6 +118,13 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 			text-align:center;
 			.px2rem(top,-30);
 			.px2rem(right,0);
+	 	 }
+	 }
+	 .personal-name:hover{
+        border-bottom:2px solid rgba(86,118,252,0.87);
+    	input:hover{
+ 	 	.px2px(font-size, 40);
+ 	 	color:rgba(0,0,0,0.86);
 	 	 }
 	 }
 	 .personal-sex{
@@ -125,16 +140,21 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 	 		color:rgba(86,119,251,0.87);
 	 	}
 	 	input{
-	 		.px2rem(margin-left,35);
+	 		.px2rem(margin-left,0);
             .px2rem(margin-top,30);
 	 		.px2px(font-size, 40);
 	 		.px2rem(width,20);
             .px2rem(height,20);
+            opacity: 0;
 	 	}
 	 	span{
 	 		font-family:PingFangSC-Regular;
             .px2px(font-size, 32);
             color:rgba(0,0,0,0.87);
+            svg{
+            	.px2px(font-size, 26);
+            	.px2rem(margin-right,10);
+            }
 	 	}
 	 }
 	 .personal-birthday{
@@ -157,19 +177,23 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
             .px2rem(margin-top,30);
             .px2rem(margin-bottom,30);
             .px2px(font-size,32);
-	 		border-bottom: 3px solid rgba(86,118,252,0.87);
+	 		border-bottom: 1px solid rgba(86,118,252,0.87);
+	 		text-align: center;
+	 		
 	 	}
 	 	#month{
 	 		.px2rem(width,121);
             .px2rem(height,50);
             .px2px(font-size,32);
-	 		border-bottom: 3px solid rgba(86,118,252,0.87);
+	 		border-bottom: 1px solid rgba(86,118,252,0.87);
+	 		text-align: center;
 	 	}
 	 	#day{
 	 		.px2rem(width,121);
             .px2rem(height,50);
             .px2px(font-size,32);
-	 		border-bottom: 3px solid rgba(86,118,252,0.87);
+	 		border-bottom: 1px solid rgba(86,118,252,0.87);
+	 		text-align: center;
 	 	}
 	 }
 	 button{
