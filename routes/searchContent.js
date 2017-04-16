@@ -21,7 +21,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next){
-	request(config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=1&pn=1',
+	//console.log('mdzz','text:'+req.body.text + 'gnum:'+req.body.gnum+'pnum'+req.body.pnum+'pn:'+req.body.pn+'gn:'+req.body.gn);
+	request(config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=' + req.body.gn + '&pn=' + req.body.pn,
 	function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');

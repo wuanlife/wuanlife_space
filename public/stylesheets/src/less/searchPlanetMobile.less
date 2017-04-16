@@ -1,68 +1,65 @@
 @import "searchInputMobile";
 
-.searchPlanet-search-content-planets{
 
-	background-color:@bgWhite;
-	.content-planets-tag{
-		.alignCenter;
-		.px2rem(height,57);
-		.px2px(font-size,40);
-		.px2rem(margin-left,40);
-		.px2rem(margin-top,12);
-		opacity:0.87;
-		font-family:PingFangSC-Medium;
-		color:#5677fc;
-	}
+.search-content-all{
+	.showallplanets{
+		.planets-tag{
+			.px2rem(height,57);
+			.px2rem(margin-left,40);
+    		display: flex;
+   			align-items: center;
+   			span{
+				.px2px(font-size,40);
+				opacity:0.87;
+				color:#5677fc;
+			}
+		}
+		.showallplanets-planetContainers{
+			display: flex;
+    		flex-flow: row wrap;
+    		justify-content: space-around;
+    		align-items: center;
+    		align-content: space-around;
+    		.px2rem(margin-top,22);
 
-	.content-planets-total{
-		display:flex;
-		justify-content: flex-start;
-		flex-wrap:wrap;
-		align-content: flex-start;
-		.px2rem(margin-top,24);
-		.content-planets-single{
-			box-sizing: border-box;
-			background-color:@bgWhite;
-			.px2rem(height,150);
-			.px2rem(width,170);
-			margin: 0.05rem 0.5rem 1.125rem;
-			.content-planets-single-img{
-				.px2rem(width,170);
-				.center;
-				.px2rem(height,99);
-				div{
-					.px2rem(width,99);
+    		.content-planets-planetContainer{
+				.px2rem(width,168);
+				.px2rem(margin-bottom,45);
+				.px2rem(margin-left,30);
+				.px2rem(margin-right,30);
+
+				.planets-planetContainer-img{
+					.px2rem(width,168);
+					.center;
 					.px2rem(height,99);
-					background:red;
-					border-radius:50%;
-					img{
-						width: 100%;
-						height: 100%;
+					div{
+						.px2rem(width,99);
+						.px2rem(height,99);
+						border-radius:50%;
+						img{
+							width: 100%;
+    						height: 100%;
+						}
+					}
+				}
+				.planets-planetContainer-exp{
+					text-align: center;
+					.px2rem(margin-top,17);
+					.px2px(font-size,20);
+					.px2rem(width,168);
+					.px2rem(height,33);
+					.horizontalCenter;
+					span{
+						display: inline-block;
+						overflow: hidden;
+    					text-overflow: ellipsis;
+    					width: 100%;
+    					height: 100%;
+    					white-space: nowrap;
+    					word-break: break-all;
 					}
 				}
 			}
-
-
-
-			.content-planets-single-exp{		
-				.px2rem(margin-top,17);
-				.px2px(font-size,22);
-				.px2rem(width,168);
-				.horizontalCenter;
-				text-align: center;
-				color:rgba(40,40,40,0.87);
-				span{
-					display: inline-block;
-					overflow: hidden;
-    				text-overflow: ellipsis;
-    				width: 100%;
-    				height: 100%;
-    				white-space: nowrap;
-    				word-break: break-all;
-				}
-			}	
 		}
-	}
-	
+	}	
 }
-
