@@ -30,8 +30,8 @@ var test = require('./routes/test');
 var news = require('./routes/news').router;
 var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
-var userManage=require('./routes/userManage');
-var myCollections=require('./routes/myCollections');
+var userManage = require('./routes/userManage');
+var myCollections = require('./routes/myCollections');
 var myself = require('./routes/personal');
 var myPlanet = require('./routes/myPlanet');
 var changepassword = require('./routes/changepassword');
@@ -144,7 +144,6 @@ app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
 app.use('/retrievepassword',retrievePwd);
-app.use('/modifypassword',modifyPwd);
 app.use('/addPlanet',addPlanet);
 
 
