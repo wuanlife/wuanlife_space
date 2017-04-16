@@ -71,16 +71,34 @@
 	(function() {
 		var index = {
             indexEntries: $(".index-entries"),
+            pn: 1,
 
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
+                var self = this;
+                self.indexEntries.dropload({
+                    scrollArea : window,
+                    loadDownFn : function(me){
+                        global.subData("/", {pn: self.pn}, function(data) {
+                            var posts = data.data.info;
+                            if (data.ret == 200 && data.data) {
+                                swal("fuck");
+                                var compiled = template("index-entry-tpl", data.data);
+                                self.indexEntries.html(compiled);
 
+                            } else {
+                                swal("fuck");
+                                sweetAlert('错误', '数据获取失败', 'error');
+                            }
+                        });
+                    }
+                });
 			},
 			init: function() {
                 var self = this;
-				this.bindEvent();
+				self.bindEvent();
 
                 wuanTabfun.tabHighlight("tab-head-myindex");
                 wuanTabfun.title("首页");
@@ -94,7 +112,7 @@
                     var posts = data.data.info;
                     HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
-
+                        self.pn++;
                         var compiled = template("index-entry-tpl", data.data);
                         self.indexEntries.html(compiled);
 
