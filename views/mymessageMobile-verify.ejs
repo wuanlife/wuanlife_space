@@ -75,8 +75,41 @@
             getServerData: function(param, cb) {
                 
             },
+
             bindEvent: function() {
 
+            },
+            bindEventEnd: function() {
+                var self = this;
+                //这一块是下滑加载的事件绑定            
+                //提前加载距离
+                var pre_destance =  $('.index-entries')?Math.ceil($('.index-entries').outerHeight()*2/3) : 180;
+                //对返回的数据进行事件绑定
+                $('.index-entries').dropload({
+                    scrollArea : window,
+                    domUp: {
+
+                    },
+                    domDown : {
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+                    },
+
+                    loadDownFn : function(me){
+                        self.loadedpn++;
+                        var result = '';
+                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                            result += template("index-entry-tpl",data.data);
+                            //插入数据
+                            $('.index-entries').append(result);
+                            me.resetload();                                         
+                        });
+                    },
+
+                    threshold :pre_destance,
+                });
             },
             init: function() {
                 var self = this;
@@ -94,6 +127,8 @@
                         sweetAlert('错误', '数据获取失败', 'error');
                     }
                 });
+
+                this.bindEventEnd();
             }
         }
         messageApply.init();
