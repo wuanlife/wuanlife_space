@@ -71,17 +71,47 @@
 	(function() {
 		var index = {
             indexEntries: $(".index-entries"),
+            loadedpn: 1,
 
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
+                var self = this;
+                            
+                //这一块是下滑加载的事件绑定            
+                //提前加载距离
+                var pre_destance =  $('.index-entries')?Math.ceil($('.index-entries').outerHeight()*2/3) : 180;
+                //对返回的数据进行事件绑定
+                $('.index-entries').dropload({
+                    scrollArea : window,
+                    domUp: {
 
+                    },
+                    domDown : {
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+                    },
+
+                    loadDownFn : function(me){
+                        self.loadedpn++;
+                        var result = '';
+                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                            result += template("index-entry-tpl",data.data);
+                            //插入数据
+                            $('.index-entries').append(result);
+                            me.resetload();                                         
+                        });
+                    },
+
+                    threshold :pre_destance,
+                });
 			},
 			init: function() {
                 var self = this;
-				this.bindEvent();
-
+				
                 wuanTabfun.tabHighlight("tab-head-myindex");
                 wuanTabfun.title("首页");
 
@@ -94,7 +124,7 @@
                     var posts = data.data.info;
                     HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
-
+                        self.pn++;
                         var compiled = template("index-entry-tpl", data.data);
                         self.indexEntries.html(compiled);
 
@@ -103,6 +133,7 @@
                     }
                 });
 
+                self.bindEvent();    
 			}
 		}
 		index.init();
