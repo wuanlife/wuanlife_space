@@ -1,5 +1,12 @@
 <%- include baseJSMobile.ejs %>
     <script>
+        <% if (typeof user !== 'undefined' && user) { %>
+        ;(function() {
+            $("#tab-head-myplanet").after('<li id="tab-head-discovery"><svg aria-hidden="true" class="icon"><use xlink:href="#icon-home_blue"></use></svg></li>');
+        })();
+        <% } %>
+    </script>
+    <script>
         var wuanTabfun = function() {
             /**
              * 高亮tab

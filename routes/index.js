@@ -7,14 +7,13 @@ var config = require('../config/config');
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-	console.log("session: ",req.session.user);
 	var agent = ua(req.headers['user-agent']);
 	var userID = (req.session.user) ? req.session.user.user_id : null;
 	try{
 		var page = agent.Mobile ? 'indexMobile' : 'index';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user
 		});
 	} catch(e){
 		next(e);
