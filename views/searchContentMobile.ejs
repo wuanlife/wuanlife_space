@@ -118,7 +118,7 @@
 
 				//输入框改变时--框架已经打好
 				that.searchInput.on('input propertychange',function(e){
-					if(e.type === 'input'){
+					if(e.type === 'input' && that.searchInput.val() !== ''){
 						//星球容器
 						var planetContainer = 	"<div class='search-content-planets'><div class='content-planets-tag'><span>星球</span></div><div class='content-planets-planetContainers'></div><div class='content-planets-more'><div class='more-label get-more-planets'><span>查看更多星球</span></div><div class='more-next get-more-planets'><div class='more-next-pre'></div><div class='more-next-last'></div></div></div></div>";
 						//清空数据
@@ -228,7 +228,7 @@
 												pn : cur_post_page,
 												gn : 1,
 											},function(data){
-												var arrLen = typeof data.data.posts==='undefined'?0:data.data.posts.length;
+												var arrLen =  data.data.posts?data.data.posts.length:0;
 												if(arrLen >0 && cur_post_page<=posts_page){
 													result += template("posts-tpl",data.data);
 												}else{
@@ -302,7 +302,7 @@
 														pn : cur_planet_page,
 														gn : 1,
 														},function(data){
-															var arrLen = data.data.group.length;
+															var arrLen = data.data.group?data.data.group.length:0;
 															if(arrLen >0 && cur_planet_page<=group_page){
 																result += template("showallplanets-tpl",data.data);
 															}else{
