@@ -75,25 +75,25 @@
 
                 that.state.on('touchend',function(e){
                     //e.preventDefault();
-                    window.location.href = window.location.pathname +'/login';
+                    window.location.href = window.location.pathname.slice(0,-1) +'/login';
                 });
 
                 that.info.on('touchend',function(e){
-                    window.location.href = window.location.pathname + "/personalInfo";
+                    window.location.href = window.location.pathname.slice(0,-1) + "/personalInfo";
                 });
                 that.changepwd.on('touchend',function(e){
-                    window.location.href = window.location.pathname + "/changepassword";
+                    window.location.href = window.location.pathname.slice(0,-1) + "/changepassword";
                 });
                 that.collection.on('touchend',function(e){
-                    window.location.href = window.location.pathname + "/myCollection";
+                    window.location.href = window.location.pathname.slice(0,-1) + "/myCollection";
                 });
                 that.invite.on('touchend',function(e){
-                    window.location.href = window.location.pathname + "/invite";
+                    window.location.href = window.location.pathname.slice(0,-1) + "/invite";
                 });
 
                 that.exit.on('touchend',function(e){
                     //退出登录
-                    window.location.href = window.location.pathname +"/logout";
+                    window.location.href = window.location.pathname.slice(0,-1) +"/logout";
                 });
             },
             init: function() {
