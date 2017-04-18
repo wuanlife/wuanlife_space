@@ -37,7 +37,7 @@ router.get('/login', function(req, res, next) {
 
 router.get('/personalInfo', function(req, res, next) {
 	if(!req.session.user){
-		res.redirect('/loginNew');
+		res.redirect('/personal/login');
 		return;
 	}
 	var agent = ua(req.headers['user-agent']);
@@ -54,7 +54,7 @@ router.get('/personalInfo', function(req, res, next) {
 
 router.get('/invite', function(req, res, next) {
 	if(!req.session.user){
-		res.redirect('/loginNew');
+		res.redirect('/personal/login');
 		return;
 	}
 	var agent = ua(req.headers['user-agent']);
@@ -72,7 +72,7 @@ router.get('/invite', function(req, res, next) {
 
 router.get('/myCollection', function(req, res, next) {
 	if(!req.session.user){
-		res.redirect('/loginNew');
+		res.redirect('/personal/login');
 		return;
 	}
 	var agent = ua(req.headers['user-agent']);
@@ -90,7 +90,7 @@ router.get('/myCollection', function(req, res, next) {
 
 router.get('/changepassword', function(req, res, next) {
 	if(!req.session.user){
-		res.redirect('/loginNew');
+		res.redirect('/personal/login');
 		return;
 	}
 	var agent = ua(req.headers['user-agent']);
@@ -118,7 +118,7 @@ router.get('/logout', function(req, res, next) {
 		}
 
 		//res.clearCookie(req.session.user.user_name);
-		res.redirect('/loginNew');
+		res.redirect('/personal');
 	});
 });
 
@@ -265,8 +265,8 @@ router.post('/myCollection', function(req, res, next) {
         res.header('Content-type', 'application/json');
         res.header('Charset', 'utf8');
         if (!err && httpResponse.statusCode== 200) {
-            console.log('body-->Server responded with:', body);
-             return res.send(JSON.parse(body));
+        	console.log('mdzz',config.server + 'post/get_collect_post?user_id=' + req.body.userId + '&pn=' + (req.body.page?req.body.page:1));
+            return res.send(JSON.parse(body));
         } else {
             try {
                 console.error('get mymessage failed:', err.toString());

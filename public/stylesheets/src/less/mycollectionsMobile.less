@@ -4,9 +4,88 @@
 	.bottom-shadow;
 }
 
+.mycollection-default-container{
+
+	box-sizing: border-box;
+	width: 100%;
+	.px2rem(padding-top,115);
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	.collection-entries{
+		width: 100%;
+		.default{
+			text-align: center;
+			.px2px(font-size,36);
+			color:@wuanBlue;
+			font-weight: bold;
+			position: absolute;
+   			top: 50%;
+    		width: 100%;
+		}
+	}
+
+	.dropload-up,.dropload-down{
+    	position: relative;
+    	height: 0;
+    	overflow: hidden;	
+    	font-size: 12px;
+    	/* 开启硬件加速 */
+    	-webkit-transform:translateZ(0);
+    	transform:translateZ(0);
+	}
+	.dropload-down{
+    	height: 50px;
+	}
+	.dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
+    	height: 50px;
+    	line-height: 50px;
+    	text-align: center;
+    	background-color: white;
+    	color: @wuanBlue;
+    	.px2px(font-size,24);
+	}
+
+	.dropload-load .loading{
+    	display: inline-block;
+    	height: 15px;
+    	width: 15px;
+    	border-radius: 100%;
+    	margin: 6px;
+    	border: 2px solid #666;
+    	border-bottom-color: transparent;
+    	vertical-align: middle;
+    	-webkit-animation: rotate 0.75s linear infinite;
+    	animation: rotate 0.75s linear infinite;
+	}
+
+	@-webkit-keyframes rotate {
+    	0% {
+        	-webkit-transform: rotate(0deg);
+   	 	}
+    	50% {
+        	-webkit-transform: rotate(180deg);
+    	}
+    	100% {
+        	-webkit-transform: rotate(360deg);
+    	}
+	}
+	@keyframes rotate {
+    	0% {
+        	transform: rotate(0deg);
+    	}
+    	50% {
+        	transform: rotate(180deg);
+    	}
+    	100% {
+        	transform: rotate(360deg);
+    	}
+	}
+}
+
 .collection-entry {
 	background-color: #ffffff;
-	.px2rem(margin-top, 12);
+	.px2rem(margin-bottom, 12);
 	.collection-entry-header, .collection-entry-content, .collection-entry-footer {
 		margin: 0 40px;
 	}
@@ -40,6 +119,15 @@
 		.collection-entry-where {
 			.px2rem(height, 60);
 			float: left;
+			p{
+				.planet{
+					text-overflow: ellipsis;
+    				.px2rem(width,120);
+    				overflow: hidden;
+    				white-space: nowrap;
+    				display: inline-block;
+				}
+			}
 		};
 		.collection-entry-date {
 			.px2rem(height, 60);

@@ -10,7 +10,7 @@
                 </div>
             </div>
         </nav>
-        <div class="default-container">
+        <div class="mycollection-default-container">
             <div class="collection-entries">
                 
             </div>
@@ -31,10 +31,10 @@
             </div>
             <div class="collection-entry-footer">
                 <div class="collection-entry-where">
-                    <p>{{item.user_name}}  发表于  {{item.g_name}}</p>
+                    <p><span class="planet">{{item.g_name}}</span></p>
                 </div>
                 <div class="collection-entry-date">
-                    <p>{{item.create_time}}</p>
+                    <p>收藏于{{item.create_time}}</p>
                 </div>
             </div>
         </div>
@@ -44,6 +44,7 @@
 <script>
 	(function() {
 		var index = {
+            wrapper:$('.mycollection-default-container'),
             container:$('.collection-entries'),
             title : $('.collection-entry h1'),
             content: $('.collection-entry .collection-entry-brief p'),
@@ -73,15 +74,59 @@
 			init: function() {
                 var that = this;
 				that.bindEvent();
-                global.subData('/personal/mycollection',{
+                var user_id = <%= user.user_id%>;
 
-                    userId:1,
+                global.subData('/personal/mycollection',{
+                    <% if(user){%>
+                        userId : user_id,
+                    <%}%>
+                    pn:1,
                 },function(data){
                     if(data.ret === 200 && data.data){
                         //显示返回至
-                        var com = template("mycollection-entry-tpl",data.data);
 
+                        that.container.empty();
+                        var cur_post_page = data.data.current_page;
+                        var total_page = data.data.page_count;
+                        var post_length = data.data.posts.length;
+
+                        if(post_length<=0){
+                            var defaultHTML = "<div class='default'>你还没有收藏喔。。。</div>";
+                            that.wrapper.css('background-color','white');
+                            that.container.html(defaultHTML);
+                            return;
+                        }
+                        var com = template("mycollection-entry-tpl",data.data);
                         that.container.html(com);
+                        //绑定下拉加载
+                        that.wrapper.dropload({
+                            scrollArea: this,
+                            domDown:{
+                                domClass : 'dropload-down',
+                                domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                                domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                                domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                            },
+
+                            loadDownFn:function(me){
+                                cur_post_page++;
+                                var result = '';
+                                global.subData('/personal/mycollection',{
+                                    userId:user_id,
+                                    pn : cur_post_page,
+                                },function(data){
+                                    if(cur_post_page<=total_page){
+                                        result += template("mycollection-entry-tpl",data.data);
+                                    }else{
+                                        me.lock();
+                                        me.noData();
+                                    }
+
+                                    that.container.append(result);
+                                    me.resetload();
+                                });
+                            }
+                        }); 
                     }else{
                         sweetAlert('错误','数据获取失败','error');
                     }                    

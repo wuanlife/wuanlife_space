@@ -126,7 +126,6 @@ app.use('/api/', api);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/pages', page);
-app.use('/login', login);
 app.use('/register',register);
 app.use('/createGroup', createGroup);
 app.use('/uGroup', uGroup);
