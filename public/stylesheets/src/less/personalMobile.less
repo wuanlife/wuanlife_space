@@ -84,17 +84,18 @@
 .personal-logstate{
 	.px2rem(height,140);
 	.alignCenter;
-	justify-content: space-between;
+	justify-content: space-around;
 	.personal-personIcon{
 		.px2rem(width,75);
 		.px2rem(height,77);
 		position:relative;
 		background-color:@bgWhite;
 		float:left;
-		.px2rem(margin-left,80);
+		.px2rem(margin-left,50);
 		.personal-personIcon1, .personal-personIcon2, .personal-personIcon3{
 			background-color: rgba(0,0,0,0.26);
 			border-radius: 50%;
+
 		}
 		.personal-personIcon1{
 			.px2rem(width,26);
@@ -129,14 +130,10 @@
 		font-size:28px;
 		color:#000000;
 		text-align:left;
-		position: relative;
-		.px2rem(right,200);
+		width: 100%;
+		.px2rem(margin-left,80);
 	}
 
-	.personal-next{
-		.nextLabel;
-		.px2rem(margin-right,40);
-	}
 }
 
 .personal-signBtn{
