@@ -21,11 +21,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next){
-	//console.log('mdzz','text:'+req.body.text + 'gnum:'+req.body.gnum+'pnum'+req.body.pnum+'pn:'+req.body.pn+'gn:'+req.body.gn);
-	request(config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=' + req.body.gn + '&pn=' + req.body.pn,
+	//console.log('mdzz',config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=' + req.body.gn + '&pn=' + req.body.pn);
+	request(encodeURI(config.server + 'group/search?text=' + req.body.text + '&gnum='+ req.body.gnum +'&pnum=' + req.body.pnum + '&gn=' + req.body.gn + '&pn=' + req.body.pn),
 	function optionalCallback(err, httpResponse, body) {
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
+		//console.log('body',body);
 		if (!err && httpResponse.statusCode == 200) {
 			var data = JSON.parse(body).data;
 			res.send(JSON.parse(body));

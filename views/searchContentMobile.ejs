@@ -9,7 +9,7 @@
 <script type="text/html" id="showallplanets-tpl">
 
 			{{each group as item i}}
-    			<div class="content-planets-planetContainer" id="{{item.group_id}}">
+    			<div class="content-planets-planetContainer" id="planet_{{item.group_id}}">
 					<div class="planets-planetContainer-img">
 						<div><img src={{item.g_image}}></img></div>
 					</div>
@@ -65,7 +65,7 @@
 
     {{each posts as item i}}
 
-		<div class="search-content-detail" id="{{item.post_id}}">
+		<div class="search-content-detail" id="post_{{item.post_id}}">
 			<div class="content-detail-header">
 				<div class="content-detail-header-content">
 					<div>
@@ -173,6 +173,7 @@
 
 				function handleEve(e){
 					e.preventDefault();
+					//
 					var inputtext = that.searchInput.val();
 					global.subData('/searchContent',{
 						text : inputtext,
