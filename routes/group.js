@@ -5,22 +5,22 @@ var config = require('../config/config');
 var ua = require('mobile-agent');
 var xss = require('xss');
 
-/* GET users listing. */
+/* 获取星球主页 */
 router.get('/:groupid', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 		pn = req.query.page || 1;
-	var userid = (req.session.user) ? req.session.user.userID : null;
-	request(config.server + "?service=Post.GetGroupPost&group_id=" + req.params.groupid + "&user_id=" + userid + "&pn=" + pn,
+	var userid = (req.session.user) ? req.session.user.user_id : null;
+	request("http://104.194.79.57:800/" + "post/get_group_post?group_id=" + req.params.groupid + "&user_id=" + userid +"&pn=1",
 		function(error, response, body) {
 			try {
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);
 					//console.log(result);
-					if (result.ret == 200 && result.msg == "") {
-						var page = agent.Mobile ? 'groupMobile' : 'group';
+					if (result.ret == 200) {
+						var page = agent.Mobile ? 'groupM' : 'group';
 						res.render(page, {
 							result: result.data,
-							'title': result.data.groupName,
+							'title': result.data.g_name,
 							'user': req.session.user
 						});
 					} else {

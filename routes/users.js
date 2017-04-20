@@ -6,11 +6,6 @@ var ua = require('mobile-agent');
 
 /* 获取用户个人资料页面 */
 router.get('/', function(req, res, next) {
-    req.session.user={
-            "user_id": "174",
-            "user_name": "午安网",
-            "user_email": "wuanwang@163.com"
-        };
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
