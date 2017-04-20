@@ -3,15 +3,21 @@
             <div class="personal-items">
                 <div class="personal-item personal-logstate">
                     <div class="personal-personIcon personal-state">
-                        <div class="personal-personIcon3"></div>
-                        <div class="personal-personIcon1"></div>
-                        <div class="personal-personIcon2"></div>
+                        <div class="personal-Icon">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-people"></use>
+                            </svg>
+                        </div>
                     </div>
                     <span class="personal-logfont personal-state">未登录</span>
                 </div>
                 <div class="personal-item personal-details">
                     <div class="personal-detail persoanl-info">
-                        <div class="personal-item-icon personal-information"></div>
+                        <div class="personal-item-icon personal-information">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-profile"></use>
+                            </svg>
+                        </div>
                         <span class="personal-item-text personal-information">个人资料</span>
                         <div class="personal-next personal-information"> 
                             <div class="personal-next1"></div> 
@@ -19,7 +25,11 @@
                         </div>
                     </div>
                     <div class="personal-detail personal-pwd">
-                        <div class="personal-item-icon personal-changepwd"></div>
+                        <div class="personal-item-icon personal-changepwd">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-lock"></use>
+                            </svg>
+                        </div>
                         <span class="personal-item-text personal-changepwd">修改密码</span>
                         <div class="personal-next personal-changepwd"> 
                             <div class="personal-next1"></div> 
@@ -27,7 +37,11 @@
                         </div>
                     </div>
                     <div class="personal-detail personal-collections">
-                        <div class="personal-item-icon personal-collection"></div>
+                        <div class="personal-item-icon personal-collection">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-star_grey"></use>
+                            </svg>
+                        </div>
                         <span class="personal-item-text personal-collection">我的收藏</span>
                         <div class="personal-next personal-collection"> 
                             <div class="personal-next1"></div> 
@@ -35,7 +49,11 @@
                         </div>
                     </div>
                     <div class="personal-detail personal-friend">
-                        <div class="personal-item-icon personal-invitefriend"></div>
+                        <div class="personal-item-icon personal-invitefriend">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-inviteFriend"></use>
+                            </svg>
+                        </div>
                         <span class="personal-item-text personal-invitefriend">邀请好友</span>
                         <div class="personal-next personal-invitefriend"> 
                             <div class="personal-next1"></div> 
@@ -68,6 +86,12 @@
             },
             bindEvent: function() {
                 var that = this;
+
+                that.state.on('touchend',function(e){
+                    <%if(!user){%>
+                    window.location.href = window.location.pathname + "/personalInfo";
+                    <%}%>
+                });
 
                 that.info.on('touchend',function(e){
                     window.location.href = window.location.pathname + "/personalInfo";
