@@ -29,7 +29,7 @@
         </div>
         <div class="index-entry-footer">
             <ul>
-                <li>                        
+                <li id="index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.replied == 1}}
                         <use xlink:href="#icon-talk_blue">
@@ -40,7 +40,7 @@
                     </svg>
                     <p>{{item.posts.replied_num}}</p>
                 </li>
-                <li>
+                <li id="index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.approved == 1}}
                         <use xlink:href="#icon-good_blue">
@@ -51,7 +51,7 @@
                     </svg>
                     <p>{{item.posts.approved_num}}</p>
                 </li>
-                <li>
+                <li id="index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.collected == 1}}
                         <use xlink:href="#icon-star_blue">
@@ -69,6 +69,37 @@
 </script>
 <script>
 	(function() {
+        //在绑定每个单项的按钮时使用,获取其操作的帖子的id
+        var getEntryId = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "div" || domNode.className != 'index-entry') {
+                return getEntryId(domNode.parentNode);
+            } else {
+                return parseInt(domNode.id.slice(5));
+            }
+        };
+        var isCollected = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-reply-btn') {
+                return isCollected(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var collect = function(id) {
+            global.subData('/collect',{postid : id}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    swal('收藏成功')
+
+                } else {
+                    sweetAlert('错误', '收藏失败', 'error');
+                }                                   
+            });            
+        }
+
 		var index = {
             indexEntries: $(".index-entries"),
             loadedpn: 1,
@@ -102,12 +133,21 @@
                             result += template("index-entry-tpl",data.data);
                             //插入数据
                             $('.index-entries').append(result);
+
+                            $(".index-entry").off("touchend");
+                            //绑定每个index-entry的回复操作
+                            $(".index-entry").on("touchend","#index-collect-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                collect(indexid);
+                            });
+
                             me.resetload();                                         
                         });
                     },
 
                     threshold :pre_destance,
                 });
+
 			},
 			init: function() {
                 var self = this;

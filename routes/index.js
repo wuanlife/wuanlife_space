@@ -48,6 +48,38 @@ router.post('/', function(req, res, next) {
             }
         }
     )
+});
 
+router.post('/collect', function(req, res, next) {
+    if(!req.session.user) {
+        res.send({
+            ret: 403,
+            msg: '未登录'
+        });
+        return;
+    }
+    request(config.server + "Post/collect_post?post_id=" + req.body.id + "&user_id=" + req.session.user.user_id,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('collect a post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('collect a post error!  Server responded with:', body);
+                try {
+                    console.error('collect a post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch collect a post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    )
 });
 module.exports = router;

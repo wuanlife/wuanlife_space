@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile' : 'mymessage';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -23,7 +23,7 @@ router.get('/post', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-post' : 'mymessage-post';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -35,7 +35,7 @@ router.get('/planet', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-planet' : 'mymessage-planet';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -47,7 +47,7 @@ router.get('/verify', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-verify' : 'mymessage-verify';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
