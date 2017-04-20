@@ -130,7 +130,6 @@ app.use('/topic', topic);
 app.use('/group', group);
 app.use('/allGroup', allGroup);
 app.use('/logout',logout);
-app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/verifyEmail',verifyEmail);
 app.use('/news',news);
