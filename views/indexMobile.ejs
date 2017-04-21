@@ -69,6 +69,9 @@
 </script>
 <script>
 	(function() {
+        //TODO: 改成面向对象的方式,这里需要重构
+        //TODO: 收藏和取消收藏即使显示
+        //TODO: 添加取消收藏
         //在绑定每个单项的按钮时使用,获取其操作的帖子的id
         var getEntryId = function(domNode) {
             if(domNode.tagName.toLowerCase() != "div" || domNode.className != 'index-entry') {
@@ -77,8 +80,45 @@
                 return parseInt(domNode.id.slice(5));
             }
         };
-        var isCollected = function(domNode) {
+        var isReplied = function(domNode) {
             if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-reply-btn') {
+                return isReplied(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var reply = function(id) {
+            //TODO: 跳转到对应贴子        
+        }
+        var isApproved = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-approve-btn') {
+                return isCollected(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var approve = function(id) {
+            if(isApproved())
+            global.subData('/approve',{postid : id}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    swal('点赞成功')
+
+                } else {
+                    sweetAlert('错误', '点赞失败', 'error');
+                }                                   
+            });            
+        }
+        var isCollected = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-collect-btn') {
                 return isCollected(domNode.parentNode);
             } else {
                 if(domNode.className == 'done') {
@@ -99,6 +139,7 @@
                 }                                   
             });            
         }
+
 
 		var index = {
             indexEntries: $(".index-entries"),
@@ -135,10 +176,20 @@
                             $('.index-entries').append(result);
 
                             $(".index-entry").off("touchend");
-                            //绑定每个index-entry的回复操作
+                            //绑定每个index-entry的收藏操作
                             $(".index-entry").on("touchend","#index-collect-btn",function(e){
                                 var indexid = getEntryId(e.target);
                                 collect(indexid);
+                            });
+                            //绑定每个index-entry的回复操作
+                            $(".index-entry").on("touchend","#index-reply-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                reply(indexid);
+                            });
+                            //绑定每个index-entry的点赞操作
+                            $(".index-entry").on("touchend","#index-approve-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                approve(indexid);
                             });
 
                             me.resetload();                                         
