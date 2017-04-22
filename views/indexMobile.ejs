@@ -215,7 +215,6 @@
                     var posts = data.data.info;
                     HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
-                        self.pn++;
                         var compiled = template("index-entry-tpl", data.data);
                         self.indexEntries.html(compiled);
 

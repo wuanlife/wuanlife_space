@@ -7,51 +7,87 @@ var Promise = require('bluebird');
 Promise.promisifyAll(request);
 
 /* GET users listing. */
+router.post('/:postid/reply', function(req, res, next) {
+    if(!req.session.user) {
+        res.send({
+            ret: 403,
+            msg: '未登录'
+        });
+        return;
+    }
+    request(`${config.server}post/get_post_reply?user_id=${req.session.user.user_id}&post_id=${req.params.postid}&pn=${req.body.replypn}`,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('get_index_post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('get_index_post error!  Server responded with:', body);
+                try {
+                    console.error('get_index_post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch get_index_post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    )
+});
 
-router.get('/:userid', function(req, res, next) {
+router.get('/:postid', function(req, res, next) {
 	/*
-	var agent = ua(req.headers['user-agent']),
-        pn = req.query.page || 1;
-	request(config.server + '?service=Post.GetMyGroupPost&id=' + req.param("userid") + '&pn=' + pn,
-		function(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-				var data = JSON.parse(body);
-				if (data.ret == 200 && data.msg == '') {
-					var page = agent.Mobile ? 'uGroupMobile' : 'uGroup';
-					res.render(page, {
-						'path': '../',
-						'result': data.data,
-						'title': data.data.user_name + '的星球',
-						'userid': req.param("userid"),
-                        'ownerName':data.data.user_name,
-						'user': req.session.user
-					});
-				} else {
-					res.render('error', {
-						'message': data.msg,
-						error: {
-							'status': data.ret,
-							'stack': ''
-						}
-					});
-				}
-			} else {
-				next(error);
-			}
-		})
+    if(!req.session.user) {
+        res.send({
+            ret: 403,
+            msg: '未登录'
+        });
+        return;
+    }
+    console.log(`${config.server}post/get_post_base?user_id=${req.session.user.user_id}`);
+    request(`${config.server}post/get_post_base?user_id=${req.session.user.user_id}&post_id=${req.body.postid}`,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('get_index_post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('get_index_post error!  Server responded with:', body);
+                try {
+                    console.error('get_index_post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch get_index_post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    )
 
 	*/
+	console.log("userid:" + req.param("postid"));
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'postMobile' : 'post';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
+			'postid': req.param("postid"),
 		});
 	} catch(e){
 		next(e);
 	}
-	
 });
+
+
 module.exports = router;
