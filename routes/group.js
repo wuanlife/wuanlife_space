@@ -7,10 +7,16 @@ var xss = require('xss');
 
 /* 获取星球主页 */
 router.get('/:groupid', function(req, res, next) {
+	//..
+	req.session.user={
+            "user_id": "2",
+            "user_name": "午安网",
+            "user_email": "wuanwang@163.com"
+        };
 	var agent = ua(req.headers['user-agent']),
 		pn = req.query.page || 1;
 	var userid = (req.session.user) ? req.session.user.user_id : null;
-	request("http://104.194.79.57:800/" + "post/get_group_post?group_id=" + req.params.groupid + "&user_id=" + userid +"&pn=1",
+	request(config.server + "post/get_group_post?group_id=" + req.params.groupid + "&user_id=" + userid +"&pn=1",
 		function(error, response, body) {
 			try {
 				if (!error && response.statusCode == 200) {
