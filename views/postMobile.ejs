@@ -1,140 +1,8 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            <span>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-goback">
-                                    </use>
-                                </svg>
-                            </span>
-                            <span>
-                                鬼扯天地
-                            </span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
+
         <div class="default-container">
-            <div class="postdetails">
-                <div class="postdetails-header">
-                    <h1>asdasfwqefoqweuhfoiqwhefoiwqheoifhqwoeifhoiqwehfoiqwhefoiqhweoifhqwoiefhqowifheoiqhfoi</h1>
-                    <div class="postdetails-info">
-                        <p>爱仕达所多</p>
-                    </div>
-                    <div class="postdetails-date">
-                        <p>2017-03-15</p>
-                    </div>
-                </div>
-                <div class="postdetails-body">
-                    <p> asdfiaohewfoihfowifhowqifhoqiwefhoiwefhoiqwe</p>
-                </div>
-                <div class="postdetails-footer">
-                    <div class="postdetails-buttons">
-                        <button>                    
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-home">
-                                </use>
-                            </svg>
-                            999+
-                        </button>
-                        <button>
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-home">
-                                </use>
-                            </svg>   
-                            999+                     
-                        </button>
-                    </div>
-                    <div class="postdetails-operations">
-                        <p id="op-setTop">置顶</p>
-                        <p id="op-lock">锁定</p>
-                        <p id="op-edit">编辑</p>
-                        <p id="op-delete">删除</p>
-                    </div>
-                </div>                
-            </div>
             <div class="postreplies">
-                <p class="postreplies-count">999+回复</p>
-                <div class="postreply-entry">
-                    <div class="postreply-entry-header">
-                        <div class="postreply-name">
-                            <p>梁王</p>
-                        </div>
-                        <div class="postreply-date">
-                            <p>2017-03-17</p>
-                        </div>
-                    </div>
-                    <div class="postreply-entry-body">
-                        <p> asdfiaohewfoihfowifhowqifhoqiwefhoiwefhoiqwe</p>
-                    </div>
-                    <div class="postreply-entry-footer">
-                        <div class="postreply-operations">
-                            <p id="op-reply-delete">删除</p>
-                            <p id="op-reply-reply">回复</p>
-                        </div>
-                    </div>
-                </div>  
-                <div class="postreply-entry">
-                    <div class="postreply-entry-header">
-                        <div class="postreply-name">
-                            <p>梁王</p>
-                        </div>
-                        <div class="postreply-date">
-                            <p>2017-03-17</p>
-                        </div>
-                    </div>
-                    <div class="postreply-entry-body">
-                        <p> asdfiaohewfoihfowifhowqifhoqiwefhoiwefhoiqwe</p>
-                    </div>
-                    <div class="postreply-entry-footer">
-                        <div class="postreply-operations">
-                            <p id="op-reply-delete">删除</p>
-                            <p id="op-reply-reply">回复</p>
-                        </div>
-                    </div>
-                </div>  
-                <div class="postreply-entry">
-                    <div class="postreply-entry-header">
-                        <div class="postreply-name">
-                            <p>梁王</p>
-                        </div>
-                        <div class="postreply-date">
-                            <p>2017-03-17</p>
-                        </div>
-                    </div>
-                    <div class="postreply-entry-body">
-                        <p> asdfiaohewfoihfowifhowqifhoqiwefhoiwefhoiqwe</p>
-                    </div>
-                    <div class="postreply-entry-footer">
-                        <div class="postreply-operations">
-                            <p id="op-reply-delete">删除</p>
-                            <p id="op-reply-reply">回复</p>
-                        </div>
-                    </div>
-                </div>  
-                <div class="postreply-entry">
-                    <div class="postreply-entry-header">
-                        <div class="postreply-name">
-                            <p>梁王</p>
-                        </div>
-                        <div class="postreply-date">
-                            <p>2017-03-17</p>
-                        </div>
-                    </div>
-                    <div class="postreply-entry-body">
-                        <p> asdfiaohewfoihfowifhowqifhoqiwefhoiwefhoiqwe</p>
-                    </div>
-                    <div class="postreply-entry-footer">
-                        <div class="postreply-operations">
-                            <p id="op-reply-delete">删除</p>
-                            <p id="op-reply-reply">回复</p>
-                        </div>
-                    </div>
-                </div>             
+        
             </div>
         </div>
         <div class="fixed-footer reply-footer">
@@ -147,21 +15,152 @@
             </button>
         </div> 
 
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 
-<script>
-
+<script type="text/html" id="postdetails-tpl">
+    <div class="postdetails">
+        <div class="postdetails-header">
+            <h1>{{posts.p_title}}</h1>
+            <div class="postdetails-info">
+                <p>{{users.user_name}}发表于{{groups.g_name}}</p>
+            </div>
+            <div class="postdetails-date">
+                <p>{{posts.create_time}}</p>
+            </div>
+        </div>
+        <div class="postdetails-body">
+            <p>{{posts.p_text}}</p>
+        </div>
+        <div class="postdetails-footer">
+            <div class="postdetails-buttons">
+                <button>                    
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-good">
+                        </use>
+                    </svg>
+                    {{posts.approved_num}}
+                </button>
+                <button>
+                    <svg aria-hidden="true" class="icon">
+                        <use xlink:href="#icon-home">
+                        </use>
+                    </svg>   
+                    {{posts.collected_num}}                    
+                </button>
+            </div>
+            <div class="postdetails-operations">
+                {{if rights.sticky_right == 1}} <p id="op-setTop">置顶</p> {{/if}}
+                {{if rights.lock_right == 1}} <p id="op-lock">锁定</p> {{/if}}
+                {{if rights.edit_right == 1}} <p id="op-edit">编辑</p> {{/if}}
+                {{if rights.delete_right == 1}} <p id="op-delete">删除</p> {{/if}}
+            </div>
+        </div>                
+    </div>
 </script>
+<script type="text/html" id="reply-initial-tpl">
+    <p class="postreplies-count">{{reply_count}}回复</p>
+    {{each reply as item i}}
+    <div class="postreply-entry">
+        <div class="postreply-entry-header">
+            <div class="postreply-name">
+                <p>{{item.user_name}}</p>
+            </div>
+            <div class="postreply-date">
+                <p>{{item.create_time}}</p>
+            </div>
+        </div>
+        <div class="postreply-entry-body">
+            <p>{{item.p_text}}</p>
+        </div>
+        <div class="postreply-entry-footer">
+            <div class="postreply-operations">
+                {{if item.delete_right == 1}} <p id="op-reply-delete">删除</p> {{/if}}
+                <p id="op-reply-reply">回复</p>
+            </div>
+        </div>
+    </div>  
+    {{/each}}  
+</script>
+<script type="text/html" id="reply-tpl">
+    {{each reply as item i}}
+    <div class="postreply-entry">
+        <div class="postreply-entry-header">
+            <div class="postreply-name">
+                <p>{{item.user_name}}</p>
+            </div>
+            <div class="postreply-date">
+                <p>{{item.create_time}}</p>
+            </div>
+        </div>
+        <div class="postreply-entry-body">
+            <p>{{item.p_text}}</p>
+        </div>
+        <div class="postreply-entry-footer">
+            <div class="postreply-operations">
+                {{if item.delete_right == 1}} <p id="op-reply-delete">删除</p> {{/if}}
+                <p id="op-reply-reply">回复</p>
+            </div>
+        </div>
+    </div>  
+    {{/each}}  
+</script>
+
+
 
 <script>
 	(function() {
 		var post = {
             loadedreplypn: 1,
-
+            postContainer: $('.default-container'),
+            postReplies: $('.postreplies'),
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
+                var self = this;
+                            
+                //这一块是下滑加载的事件绑定            
+                //提前加载距离
+                var pre_destance =  $('.postreplies')?Math.ceil($('.postreplies').outerHeight()*2/3) : 180;
+                //对返回的数据进行事件绑定
+                $('.postreplies').dropload({
+                    scrollArea : window,
+                    domUp: {
+
+                    },
+                    domDown : {
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
+                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+                    },
+
+                    loadDownFn : function(me){
+                        self.loadedreplypn++;
+                        var result = '';
+                        global.subData("./<%= postid%>/reply", {replypn: self.loadedreplypn}, function(data) {
+                            result += template("reply-tpl",data.data);
+                            //插入数据
+                            $('.postreplies').append(result);
+
+                            $(".postreplies").off("touchend");
+                            //绑定每个回复的回复操作
+                            $(".postreplies").on("touchend","#index-collect-btn",function(e){
+                                //var indexid = getEntryId(e.target);
+                                //collect(indexid);
+                            });
+                            //绑定每个回复的删除操作
+                            $(".postreplies").on("touchend","#index-approve-btn",function(e){
+                                //var indexid = getEntryId(e.target);
+                                //approve(indexid);
+                            });
+
+                            me.resetload();                                         
+                        });
+                    },
+
+                    threshold :pre_destance,
+                });
 
 			},
 			init: function() {
@@ -174,17 +173,30 @@
                     loadingId : 'loginLoading',
                 });
                 //请求初始数据
-                global.subData("./<%= postid%>/reply", {replypn: 1}, function(data) {
-                    var posts = data.data.info;
+                //TODO: 使用某些方法规定异步请求顺序
+                //TODO: 加载到头后解除dropload绑定
+                global.subData("./<%= postid%>", {}, function(data) {
                     HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
-                        //var compiled = template("index-entry-tpl", data.data);
-                        //self.indexEntries.html(compiled);
+                        var compiled = template("postdetails-tpl", data.data);
+                        self.postContainer.html(compiled + self.postContainer.html());
 
                     } else {
                         sweetAlert('错误', '数据获取失败', 'error');
                     }
                 });
+                global.subData("./<%= postid%>/reply", {replypn: 1}, function(data) {
+                    if (data.ret == 200 && data.data) {
+                        var compiled = template("reply-initial-tpl", data.data);
+                        self.postReplies.html(compiled);
+
+                    } else {
+                        sweetAlert('错误', '回复数据获取失败', 'error');
+                    }
+                    self.bindEvent();
+                });
+
+
 			}
 		}
 		post.init();
