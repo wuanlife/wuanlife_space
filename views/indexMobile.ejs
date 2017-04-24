@@ -106,7 +106,7 @@
             }            
         }
         var approve = function(id) {
-            if(isApproved())
+            // if(isApproved())
             global.subData('/approve',{postid : id}, function(data) {
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
@@ -149,31 +149,53 @@
 				
 			},
 			bindEvent: function() {
+                var self = this;   
+
+			},
+			init: function() {
                 var self = this;
-                            
-                //这一块是下滑加载的事件绑定            
-                //提前加载距离
-                var pre_destance =  $('.index-entries')?Math.ceil($('.index-entries').outerHeight()*2/3) : 180;
-                //对返回的数据进行事件绑定
-                $('.index-entries').dropload({
-                    scrollArea : window,
-                    domUp: {
+				
+                wuanTabfun.tabHighlight("tab-head-myindex");
+                wuanTabfun.title("首页");
 
-                    },
-                    domDown : {
+                //请求初始数据
+                /*
+                global.subData("/", {pn: 1}, function(data) {
+                    var posts = data.data.info;
+                    HJLoading.stop('loginLoading');
+                    if (data.ret == 200 && data.data) {
+                        var compiled = template("index-entry-tpl", data.data);
+                        self.indexEntries.html(compiled);
+
+                    } else {
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
+                */
+               
+                //绑定下拉加载
+                $('.tab-container').dropload({
+                    scrollArea: window,
+                    domDown:{
                         domClass : 'dropload-down',
-                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
                     },
 
-                    loadDownFn : function(me){
-                        self.loadedpn++;
+                    loadDownFn:function(me){
                         var result = '';
                         global.subData('/',{pn : self.loadedpn}, function(data) {
-                            result += template("index-entry-tpl",data.data);
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("index-entry-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
                             //插入数据
                             $('.index-entries').append(result);
+                            me.resetload();    
 
                             $(".index-entry").off("touchend");
                             //绑定每个index-entry的收藏操作
@@ -191,39 +213,10 @@
                                 var indexid = getEntryId(e.target);
                                 approve(indexid);
                             });
-
-                            me.resetload();                                         
                         });
-                    },
-
-                    threshold :pre_destance,
-                });
-
-			},
-			init: function() {
-                var self = this;
-				
-                wuanTabfun.tabHighlight("tab-head-myindex");
-                wuanTabfun.title("首页");
-
-                //加载动画
-                HJLoading.start({
-                    loadingId : 'loginLoading',
-                });
-                //请求初始数据
-                global.subData("/", {pn: 1}, function(data) {
-                    var posts = data.data.info;
-                    HJLoading.stop('loginLoading');
-                    if (data.ret == 200 && data.data) {
-                        var compiled = template("index-entry-tpl", data.data);
-                        self.indexEntries.html(compiled);
-
-                    } else {
-                        sweetAlert('错误', '数据获取失败', 'error');
                     }
-                });
-
-                self.bindEvent();    
+                }); 
+                //self.bindEvent();    
 			}
 		}
 		index.init();
