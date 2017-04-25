@@ -44,6 +44,7 @@
 	(function() {
 		var messagePlanet = {
             messageBoard: $(".message-board"),
+            loadedpn: 1,
 			getServerData: function(param, cb) {
 				
 			},
@@ -54,18 +55,33 @@
                 var self = this;
                 this.bindEvent();
 
-                //请求初始数据
-                global.subData("/mymessage/planet", {user_id: 1}, function(data) {
-                    var message = data.data.info;
-                    if (data.ret == 200 && data.data && data.data.code === 1) {
+                //绑定下拉加载
+                $('.default-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
 
-                        var compiled = template("message-line-planet-tpl", data.data);
-                        self.messageBoard.html(compiled);
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('./planet',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("message-line-planet-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
+                            //插入数据
+                            $('.message-board').append(result);
+                            me.resetload();    
 
-                    } else {
-                        sweetAlert('错误', '数据获取失败', 'error');
+                        });
                     }
-                });
+                }); 
 			}
 		}
 		messagePlanet.init();

@@ -87,7 +87,8 @@ router.post('/post', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 1,
         }
     }, function optionalCallback(err, httpResponse, body) {
@@ -117,7 +118,8 @@ router.post('/planet', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 2,
         }
     }, function optionalCallback(err, httpResponse, body) {
@@ -147,7 +149,8 @@ router.post('/apply', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 3,
         }
     }, function optionalCallback(err, httpResponse, body) {
