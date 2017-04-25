@@ -113,8 +113,8 @@
             },
             init: function() {
                 var that = this;
-                wuanTabfun.tabHighlight("tab-head-myself");
-                wuanTabfun.title('我的');
+                wuanHeadFun.tabHighlight("tab-head-myself");
+                wuanHeadFun.title('我的');
                 <% if(user) {%>
                     that.name.html('<%= user.user_name %>');
                 <% }else{ %>

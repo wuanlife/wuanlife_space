@@ -132,7 +132,7 @@
             global.subData('/collect',{postid : id}, function(data) {
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
-                    swal('收藏成功')
+                    swal('收藏成功');
 
                 } else {
                     sweetAlert('错误', '收藏失败', 'error');
@@ -155,8 +155,8 @@
 			init: function() {
                 var self = this;
 				
-                wuanTabfun.tabHighlight("tab-head-myindex");
-                wuanTabfun.title("首页");
+                wuanHeadFun.tabHighlight("tab-head-myindex");
+                wuanHeadFun.title("首页");
 
                 //请求初始数据
                 /*

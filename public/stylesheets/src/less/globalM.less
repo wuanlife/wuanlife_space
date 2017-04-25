@@ -141,16 +141,16 @@ h1 {
 
 
 .navbar-brand {
-    display: inline-block;
-    order: -1;
+    display: flex;
+    align-items: center;
     .px2px(font-size, 40);
     font-family: PingFangSC-Medium;
     opacity: 0.87;
     color: #ffffff;
-
-    height: 100% - 46px;
-    p {
-        display: inline-block;
+    span {
+        &:nth-child(2) {
+            .px2px(padding-left, 40);
+        }
     }
 }
 

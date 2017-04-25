@@ -7,7 +7,7 @@
         <% } %>
     </script>
     <script>
-        var wuanTabfun = function() {
+        var wuanHeadFun = function() {
             /**
              * 高亮tab
              * @param  {String}  elemid tab头的id
@@ -53,6 +53,11 @@
                 } else if(target && (target.nodeName.toLocaleLowerCase() == 'use' || target.nodeName.toLocaleLowerCase() == 'svg')) {
                     arguments.callee({target:target.parentNode})
                 }
+            });
+
+            var $searchBtn = $(".search-toggle");
+            $searchBtn.on("touchend", function() {
+                window.location.href = '/searchContent';
             });
             return {
                 tabHighlight: tabHighlight,

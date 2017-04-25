@@ -5,7 +5,7 @@
         <% } %>
     </script>
     <script>
-        var wuanTabfun = function() {
+        var wuanHeadFun = function() {
             /**
              * 高亮tab
              * @param  {String}  elemid tab头的id
@@ -31,6 +31,8 @@
             }
         }();
 
-        //绑定search事件
-        
+        //绑定back事件
+        $('.navbar-brand > span').on('touchend', function() {
+            window.history.back(-1); 
+        });
     </script>
