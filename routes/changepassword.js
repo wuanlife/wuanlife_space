@@ -6,16 +6,11 @@ var ua = require('mobile-agent');
 
 /*修改用户密码*/
 router.get('/', function(req, res, next) {
-    req.session.user={
-            "user_id": "3",
-            "user_name": "午安网",
-            "user_email": "wuanwang@163.com"
-        };
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
         var page = agent.Mobile ? 'changepasswordM' : 'changepasswordM';
-        request("http://104.194.79.57:800/" + "user/get_user_info?user_id="+userid,
+        request(config.server + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -41,13 +36,13 @@ router.get('/', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 
 router.post('/', function(req, res, next) {
     request.post({
-        url: "http://104.194.79.57:800/" + 'user/change_pwd',
+        url: config.server + 'user/change_pwd',
         formData: {
             user_id: req.session.user.user_id,
             password: req.body.password,

@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 //提交修改个人信息的数据

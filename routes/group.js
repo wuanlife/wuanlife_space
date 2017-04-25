@@ -75,7 +75,7 @@ router.get('/:groupid/post', function(req, res, next) {
 				res.render(page, {
 								'groupID': 'req.params.groupid',
 								'title': '发表帖子',
-								'user': 'req.session.user'
+								'user': req.session.user
 							});
 				/*console.log("jg");
 				if (!error && response.statusCode == 200) {
