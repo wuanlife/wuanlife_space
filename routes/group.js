@@ -182,7 +182,7 @@ router.get('/:groupid/set', function(req, res, next) {
 			}
 		});
     }else{
-    	res.redirect('/login');
+    	res.redirect('/personal/login');
     }
 });
 //修改信息的提交
@@ -215,7 +215,7 @@ router.get('/:groupid/sub',function(req,res,body){
 			}
 		});
     }else{
-    	res.redirect('/login');
+    	res.redirect('/personal/login');
     }
 })
 

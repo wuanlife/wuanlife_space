@@ -76,7 +76,7 @@ router.get('/sub', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 
@@ -106,7 +106,7 @@ router.get('/verify', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 //验证邮箱页面
@@ -172,7 +172,7 @@ router.get('/verifycomfirm', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 module.exports = router;
