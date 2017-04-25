@@ -53,7 +53,7 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 		color:#292929;
 	}
 	.group-number{
-		.px2rem(margin-left,250);
+		.px2rem(margin-left,280);
 		.px2rem(margin-top,10);
 		font-family:PingFangHK-Regular;
 		.px2px(font-size,26);
@@ -62,9 +62,9 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 }
 .group-content{
 	width: 100%;
-	.px2rem(height,980);
 	background:#ffffff;
 	.group-post{
+		border-top: 5px solid rgba(240,248,255,0.88);
 		width: 100%;
 		.group-postmsg{
 			.px2rem(padding-top,18);
@@ -73,11 +73,13 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 			.px2rem(height,60);
 			position: relative;
 			button{
-				background:#d8d8d8;
+				background-color:#C0C0C0;
 				.px2rem(height,60);
 			    .px2rem(width,60);
 				border-radius:100%;
 				position: absolute;
+				background-repeat: no-repeat;
+		        background-size: 100% 100%;
 		      }
 		    div{
 		    	position: absolute;
@@ -96,7 +98,21 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 				.px2rem(left,479);
 			}
 		}
+		.group-sign{
+			display: inline-block;
+			.px2rem(height,45);
+			.px2rem(width,90);
+			background-color: #5677fc;
+			color: #ffffff;
+			text-align: center;
+			.px2rem(line-height,45);
+			border-radius: 10%;
+			.px2rem(margin-left,20);
+			font-family:PingFangHK-Medium;
+			.px2px(font-size,28);
+		}
 		h3{
+			display: inline-block;
 			.px2rem(padding-top,18);
 			.px2rem(padding-left,40);
 			.px2rem(width,400);
@@ -136,7 +152,7 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 			display: flex;
 			.px2rem(margin-top,18);
 			.px2rem(padding-left,40);
-			width: 100%;
+			.px2rem(width,720);
 			.px2rem(height,50);
 			border-top: 1px solid rgba(86,119,251,0.33);
 			button{
@@ -152,5 +168,36 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 				text-align: center;
 			}
 		}
+	}
+	.group-nopost{
+		border-top: 5px solid rgba(240,248,255,0.88);
+		width: 100%;
+		.px2rem(height,1100);
+		.px2rem(padding-top,100);
+		background-color:#ffffff;
+		text-align: center;
+		font-family:PingFangHK-Regular;
+		.px2px(font-size,42);
+		color:#7b7b7b;
+		overflow: hidden;
+	}
+}
+.group-publish-post{
+	display: block;
+	position: fixed;
+	.px2rem(height,112);
+	.px2rem(width,112);
+	.px2rem(right,69);
+	.px2rem(bottom,80);
+	background-color:#5677fc;
+	box-shadow:0 0 12px 0 rgba(0,0,0,0.12), 0 12px 12px 0 rgba(0,0,0,0.24);
+	border-radius:100%;
+	text-align: center;
+	color: #ffffff;
+	.px2px(font-size,60);
+	text-decoration:none;
+	span{
+		display: block;
+		.px2rem(margin-top,15);
 	}
 }
