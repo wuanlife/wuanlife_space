@@ -2,7 +2,7 @@
     <script>
         <% if (typeof user !== 'undefined' && user) { %>
         ;(function() {
-            $("#tab-head-myplanet").after('<li id="tab-head-discovery"><svg aria-hidden="true" class="icon"><use xlink:href="#icon-home_blue"></use></svg></li>');
+            $("#tab-head-myplanet").after('<li id="tab-head-discovery"><svg aria-hidden="true" class="icon"><use xlink:href="#icon-discovery_blue"></use></svg></li>');
         })();
         <% } %>
     </script>
@@ -28,7 +28,7 @@
                 $brandContent.html(title);
             }
 
-            //tab 列表 ['tab-head-myindex', 'tab-head-myplanet','tab-head-mymessage', 'tab-head-myself'];
+            //tab 列表 ['tab-head-myindex', 'tab-head-myplanet','tab-head-mymessage', 'tab-head-myself', 'tab-head-discovery'];
             //绑定tab头事件 使用事件委托简化代码
             var $tabHead = $(".tab-head-bar");
             $tabHead.on("touchend", function(event) {
@@ -46,7 +46,9 @@
                             break;
                         case 'tab-head-myself':
                             window.location.href = '/personal';     
-                            break;                       
+                            break;
+                        case 'tab-head-discovery':
+                            window.location.href = '/discovery';                       
                     }
                 } else if(target && (target.nodeName.toLocaleLowerCase() == 'use' || target.nodeName.toLocaleLowerCase() == 'svg')) {
                     arguments.callee({target:target.parentNode})

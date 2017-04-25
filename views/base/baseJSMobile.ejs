@@ -53,6 +53,17 @@
                 getUrlParam: getUrlParam,
             };
         }());
+
+        var wuanfun = function() {
+            var title = function(title) {
+                var $brandContent = $(".navbar-brand > h1");
+                $brandContent.html(title);
+            }
+
+            return {
+                title: title
+            }
+        }()
     </script>
     <% if (typeof user !== 'undefined') { %>
     <script>

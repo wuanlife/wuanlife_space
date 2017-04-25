@@ -29,7 +29,7 @@
         </div>
         <div class="index-entry-footer">
             <ul>
-                <li>                        
+                <li id="index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.replied == 1}}
                         <use xlink:href="#icon-talk_blue">
@@ -40,7 +40,7 @@
                     </svg>
                     <p>{{item.posts.replied_num}}</p>
                 </li>
-                <li>
+                <li id="index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.approved == 1}}
                         <use xlink:href="#icon-good_blue">
@@ -51,7 +51,7 @@
                     </svg>
                     <p>{{item.posts.approved_num}}</p>
                 </li>
-                <li>
+                <li id="index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
                     <svg aria-hidden="true" class="icon">
                         {{if item.posts.collected == 1}}
                         <use xlink:href="#icon-star_blue">
@@ -69,6 +69,78 @@
 </script>
 <script>
 	(function() {
+        //TODO: 改成面向对象的方式,这里需要重构
+        //TODO: 收藏和取消收藏即使显示
+        //TODO: 添加取消收藏
+        //在绑定每个单项的按钮时使用,获取其操作的帖子的id
+        var getEntryId = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "div" || domNode.className != 'index-entry') {
+                return getEntryId(domNode.parentNode);
+            } else {
+                return parseInt(domNode.id.slice(5));
+            }
+        };
+        var isReplied = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-reply-btn') {
+                return isReplied(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var reply = function(id) {
+            //TODO: 跳转到对应贴子        
+        }
+        var isApproved = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-approve-btn') {
+                return isCollected(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var approve = function(id) {
+            // if(isApproved())
+            global.subData('/approve',{postid : id}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    swal('点赞成功')
+
+                } else {
+                    sweetAlert('错误', '点赞失败', 'error');
+                }                                   
+            });            
+        }
+        var isCollected = function(domNode) {
+            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-collect-btn') {
+                return isCollected(domNode.parentNode);
+            } else {
+                if(domNode.className == 'done') {
+                    return true;
+                } else {
+                    return false
+                }
+            }            
+        }
+        var collect = function(id) {
+            global.subData('/collect',{postid : id}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    swal('收藏成功')
+
+                } else {
+                    sweetAlert('错误', '收藏失败', 'error');
+                }                                   
+            });            
+        }
+
+
 		var index = {
             indexEntries: $(".index-entries"),
             loadedpn: 1,
@@ -77,37 +149,8 @@
 				
 			},
 			bindEvent: function() {
-                var self = this;
-                            
-                //这一块是下滑加载的事件绑定            
-                //提前加载距离
-                var pre_destance =  $('.index-entries')?Math.ceil($('.index-entries').outerHeight()*2/3) : 180;
-                //对返回的数据进行事件绑定
-                $('.index-entries').dropload({
-                    scrollArea : window,
-                    domUp: {
+                var self = this;   
 
-                    },
-                    domDown : {
-                        domClass : 'dropload-down',
-                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
-                    },
-
-                    loadDownFn : function(me){
-                        self.loadedpn++;
-                        var result = '';
-                        global.subData('/',{pn : self.loadedpn}, function(data) {
-                            result += template("index-entry-tpl",data.data);
-                            //插入数据
-                            $('.index-entries').append(result);
-                            me.resetload();                                         
-                        });
-                    },
-
-                    threshold :pre_destance,
-                });
 			},
 			init: function() {
                 var self = this;
@@ -115,16 +158,12 @@
                 wuanTabfun.tabHighlight("tab-head-myindex");
                 wuanTabfun.title("首页");
 
-                //加载动画
-                HJLoading.start({
-                    loadingId : 'loginLoading',
-                });
                 //请求初始数据
+                /*
                 global.subData("/", {pn: 1}, function(data) {
                     var posts = data.data.info;
                     HJLoading.stop('loginLoading');
                     if (data.ret == 200 && data.data) {
-                        self.pn++;
                         var compiled = template("index-entry-tpl", data.data);
                         self.indexEntries.html(compiled);
 
@@ -132,8 +171,52 @@
                         sweetAlert('错误', '数据获取失败', 'error');
                     }
                 });
+                */
+               
+                //绑定下拉加载
+                $('.tab-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
 
-                self.bindEvent();    
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("index-entry-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
+                            //插入数据
+                            $('.index-entries').append(result);
+                            me.resetload();    
+
+                            $(".index-entry").off("touchend");
+                            //绑定每个index-entry的收藏操作
+                            $(".index-entry").on("touchend","#index-collect-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                collect(indexid);
+                            });
+                            //绑定每个index-entry的回复操作
+                            $(".index-entry").on("touchend","#index-reply-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                reply(indexid);
+                            });
+                            //绑定每个index-entry的点赞操作
+                            $(".index-entry").on("touchend","#index-approve-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                approve(indexid);
+                            });
+                        });
+                    }
+                }); 
+                //self.bindEvent();    
 			}
 		}
 		index.init();

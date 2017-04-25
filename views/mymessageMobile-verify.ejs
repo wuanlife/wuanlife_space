@@ -20,33 +20,7 @@
         </nav>
         <div class="default-container">
             <div class="message-board">
-                <div class="message-line">
-                    <div class="message-line-verifyHeader">
-                        <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                        <div class="message-line-verifyInfo">
-                            <h1>格子</h1>
-                            <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqasdasdasdasdd</p>
-                        </div>
-                    </div>
-                    <div class="message-line-verifyButtons">
-                        <button>同意</button>
-                        <button>拒绝</button>
-                    </div>
-                </div>
-                <div class="message-line">
-                    <div class="message-line-verifyHeader">
-                        <img src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1489392416&di=55b815450b09e849e0e953d4021138bd&src=http://pic38.nipic.com/20140214/4515680_112424512130_2.jpg">
-                        <div class="message-line-verifyInfo">
-                            <h1>格子</h1>
-                            <p>asdihoawihdoqihdoiqwhdoiqwhdoiqwhdoiqhdwqasdasdasdasdd</p>
-                        </div>
-                    </div>
-                    <div class="message-line-verifyButtons">
-                        <p>已拒绝</p>
-                    </div>
-                </div>
             </div>
- 
         </div>
 <%- include base/baseJSMobile.ejs %>
 
@@ -72,6 +46,7 @@
         var messageApply = {
 
             messageBoard: $(".message-board"),
+            loadedpn: 1,
             getServerData: function(param, cb) {
                 
             },
@@ -79,56 +54,38 @@
             bindEvent: function() {
 
             },
-            bindEventEnd: function() {
-                var self = this;
-                //这一块是下滑加载的事件绑定            
-                //提前加载距离
-                var pre_destance =  $('.index-entries')?Math.ceil($('.index-entries').outerHeight()*2/3) : 180;
-                //对返回的数据进行事件绑定
-                $('.index-entries').dropload({
-                    scrollArea : window,
-                    domUp: {
 
-                    },
-                    domDown : {
-                        domClass : 'dropload-down',
-                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
-                    },
-
-                    loadDownFn : function(me){
-                        self.loadedpn++;
-                        var result = '';
-                        global.subData('/',{pn : self.loadedpn}, function(data) {
-                            result += template("index-entry-tpl",data.data);
-                            //插入数据
-                            $('.index-entries').append(result);
-                            me.resetload();                                         
-                        });
-                    },
-
-                    threshold :pre_destance,
-                });
-            },
             init: function() {
                 var self = this;
                 this.bindEvent();
 
-                //请求初始数据
-                global.subData("/mymessage/apply", {user_id: 1}, function(data) {
-                    var message = data.data.info;
-                    if (data.ret == 200 && data.data && data.data.code === 1) {
+                //绑定下拉加载
+                $('.default-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
 
-                        var compiled = template("message-line-apply-tpl", data.data);
-                        self.messageBoard.html(compiled);
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('./apply',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("message-line-apply-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
+                            //插入数据
+                            $('.message-board').append(result);
+                            me.resetload();    
 
-                    } else {
-                        sweetAlert('错误', '数据获取失败', 'error');
+                        });
                     }
-                });
-
-                this.bindEventEnd();
+                }); 
             }
         }
         messageApply.init();

@@ -192,17 +192,31 @@
 								
 
 								var planetsTPL = template("showallplanets-tpl",data.data);
+								//插入内容并绑定事件
 								//插入星球
 								if(data.data.group){
 									planetdefault.empty();
 									planetdefault.append(planetsTPL);
+
+									/*
+									var EPlanetsContainer = $('.content-planets-planetContainer');
+
+									EPlanetsContainer.on('touchend',function(e){
+										var id = $(this).attr('id');
+										if(id == 'showallplanets-default-tpl'){
+											return;
+										}else{
+											//directToPlanet(id);
+										}
+									});
+									*/
 								}
 								
 								//插入帖子
 								if(data.data.posts){
 									postsdefault.empty();
 									postsdefault.append(postsTPL);
-								
+									
 								
 									//提前加载距离
 									var pre_destance = 	$('.search-content-detail')?Math.ceil($('.search-content-detail').outerHeight()*2/3) : 180;

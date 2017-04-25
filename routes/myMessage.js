@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile' : 'mymessage';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -23,7 +23,7 @@ router.get('/post', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-post' : 'mymessage-post';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -35,7 +35,7 @@ router.get('/planet', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-planet' : 'mymessage-planet';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -47,7 +47,7 @@ router.get('/verify', function(req, res, next) {
         var page = agent.Mobile ? 'mymessageMobile-verify' : 'mymessage-verify';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user
         });
     } catch(e){
         next(e);
@@ -87,7 +87,8 @@ router.post('/post', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 1,
         }
     }, function optionalCallback(err, httpResponse, body) {
@@ -117,7 +118,8 @@ router.post('/planet', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 2,
         }
     }, function optionalCallback(err, httpResponse, body) {
@@ -147,7 +149,8 @@ router.post('/apply', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: 1,
+            user_id: req.session.user.user_id,
+            pn: req.body.pn,
             m_type: 3,
         }
     }, function optionalCallback(err, httpResponse, body) {
