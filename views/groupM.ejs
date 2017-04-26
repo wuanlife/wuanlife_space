@@ -1,0 +1,220 @@
+<%- include base/headerMobile.ejs %>
+<nav class="group-nav">
+	<button class="personal-icon-back" type="button">
+        <svg aria-hidden="true" class="icon">
+            <use xlink:href="#icon-goback_blue">
+            </use>
+        </svg>
+    </button>
+    <%if(result.identity=='01'){%>
+    <a href="/group/<%=result.group_id%>/set">星球设置</a>
+    <%}%>
+    <div class="group-img">
+    	<button style="background-image:url(<%=result.g_image%>);"></button>
+    </div>
+    <h2><%=result.g_name%></h2>
+    <div class="group-number">
+    <span>成员 <%=result.user_num%></span>.
+    <span>话题 <%=result.post_num%></span>
+    </div>
+</nav>
+<div class="group-content">
+ <%if(result.posts.length==0){%>
+    <div class="group-nopost">还没有帖子~</div>
+ <%}else{%>
+  <%for(var i in result.posts){%>
+	<div class="group-post">
+		<div class="group-postmsg">
+			<button style="background-image:url(<%=result.posts[i].users.profile_picture%>);"></button>
+			<div class="group-name"><%=result.posts[i].users.user_name%></div>
+			<div class="group-time"><%=result.posts[i].posts.create_time%></div>
+		</div>
+		<a href="/post/<%=result.posts[i].posts.post_id%>">
+		<%if(result.posts[i].posts.sticky==1){%>
+		<span class="group-sign">置顶</span>
+		<%}%>
+		<%if(result.posts[i].posts.digest==1){%>
+		<span class="group-sign">加精</span>
+		<%}%>
+		<%if(result.posts[i].posts.lock==1){%>
+		<span class="group-sign">锁定</span>
+		<%}%>
+		<h3><%=result.posts[i].posts.p_title%></h3>
+		<div class="group-postcontent"><%=result.posts[i].posts.p_text%></div>
+		<%if(result.posts[i].posts.image.length>0){%>
+		<ul class="group-image">
+			<li><button style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button></li>
+			<li><button style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button></li>
+			<li><button style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button></li>
+		</ul>
+		<%}%>
+		<div class="group-btn">
+			<button class="btn-comment">
+				<svg aria-hidden="true" class="icon">
+				    <%if(result.posts[i].posts.replied==1){%>
+		            <use xlink:href="#icon-talk_blue">
+		            </use>
+		            <%}else{%>
+		            <use xlink:href="#icon-talk">
+		            </use>
+		            <%}%>
+                </svg>  
+                <span><%=result.posts[i].posts.replied_num%></span>
+			</button>
+			<button class="btn-praise">
+				<svg aria-hidden="true" class="icon">
+				    <%if(result.posts[i].posts.approved==1){%>
+		            <use xlink:href="#icon-good_blue">
+		            </use>
+		            <%}else{%>
+		            <use xlink:href="#icon-good">
+		            </use>
+		            <%}%>
+                </svg>  
+                <span><%=result.posts[i].posts.approved_num%></span>
+			</button>
+			<button class="btn-collect">
+				<svg aria-hidden="true" class="icon">
+				    <%if(result.posts[i].posts.collected==1){%>
+		            <use xlink:href="#icon-star_blue">
+		            </use>
+		            <%}else{%>
+		            <use xlink:href="#icon-star">
+		            </use>
+		            <%}%>
+                </svg>  
+                <span><%=result.posts[i].posts.collected_num%></span>
+			</button>
+		</div>
+		</a>
+	</div>
+  <%}%>
+ <%}%>
+</div>
+<div class="download-part"></div>
+<%if(result.identity=='01'||result.identity=='02'){%>
+<a href="/group/<%=result.group_id%>/post" class="group-publish-post"><span>+</span></a>
+<%}%>
+<%if(result.posts.length>0){%>
+<script id="post-list" type="text/html">
+  {{each posts as value i}}
+    <div class="group-post">
+      <div class="group-postmsg">
+        <button style="background-image:url({{value.users.profile_picture}});"></button>
+        <div class="group-name">{{value.users.user_name}}</div>
+        <div class="group-time">{{value.posts.create_time}}</div>
+      </div>
+      <a href="/post/{{value.posts.post_id}}">
+      {{if value.posts.sticky==1}}
+		<span class="group-sign">置顶</span>
+	  {{/if}}
+	  {{if value.posts.digest==1}}
+		<span class="group-sign">加精</span>
+	  {{/if}}
+	  {{if value.posts.lock==1}}
+		<span class="group-sign">锁定</span>
+	  {{/if}}
+      <h3>{{value.posts.p_title}}</h3>
+      <div class="group-postcontent">{{value.posts.p_text}}</div>
+      {{if value.posts.image.length>0}}
+      <ul class="group-image">
+        <li><button style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button></li>
+        <li><button style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button></li>
+        <li><button style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button></li>
+      </ul>
+      {{/if}}
+      <div class="group-btn">
+        <button class="btn-comment">
+          <svg aria-hidden="true" class="icon">
+              {{if value.posts.replied==1}}
+                  <use xlink:href="#icon-talk_blue">
+                  </use>
+                  {{else}}
+                  <use xlink:href="#icon-talk">
+                  </use>
+                  {{/if}}
+                  </svg>  
+                  <span>{{value.posts.replied_num}}</span>
+        </button>
+        <button class="btn-praise">
+          <svg aria-hidden="true" class="icon">
+              {{if value.posts.approved==1}}
+                  <use xlink:href="#icon-good_blue">
+                  </use>
+                  {{else}}
+                  <use xlink:href="#icon-good">
+                  </use>
+                  {{/if}}
+                  </svg>  
+                  <span>{{value.posts.approved_num}}</span>
+        </button>
+        <button class="btn-collect">
+          <svg aria-hidden="true" class="icon">
+              {{if value.posts.collected==1}}
+                  <use xlink:href="#icon-star_blue">
+                  </use>
+                  {{else}}
+                  <use xlink:href="#icon-star">
+                  </use>
+                  {{/if}}
+                  </svg>  
+                  <span>{{value.posts.collected_num}}</span>
+        </button>
+      </div>
+      </a>
+    </div>
+  {{/each}}
+</script>
+<%}%>
+<%- include base/baseJSMobile.ejs %>
+<script type="text/javascript">
+	(function(){
+		var users={
+			loading:HJLoading,
+            pagecount:1,
+            pageallnum:<%=result.page_count%>,
+            download:function(){
+		        var self=this;
+		        $(document).scroll(function(){
+		          var scrolltop=$("body").scrollTop(),contentheight=Math.floor($("body").outerHeight()),windowheight=$(window).height();
+		          /*console.log(self.pagecount);
+		          console.log($("body").outerHeight());
+		          console.log(scrolltop + windowheight);
+		          console.log(self.pageallnum);*/
+		          //
+		          if(scrolltop + windowheight == contentheight){
+		            self.loading.start({
+		                loadingTPLId : 0,
+		                target : $(".download-part"),
+		                loadingId : 'self'
+		              });
+		            //
+		            self.pagecount++;
+		            if(self.pagecount<=self.pageallnum){
+		              global.getData('/group/<%=result.group_id%>/more?pagecount='+self.pagecount,function(data){
+		                self.loading.stop('self');
+		                if(data.ret==200){
+		                  var compiled=template('post-list',data.data);
+		                  var temp=$(".group-content").html()
+		                  $(".group-content").html(temp+compiled);
+		                  self.pagecount=data.data.current_page;
+		                }else{
+		                  self.pagecount--;
+		                }
+		              });
+		          }else{
+		            self.loading.stop('self');
+		            $(".download-part").text("没有更多了~");
+		            self.pagecount-=1;
+		          }
+		         }
+		        });
+            },
+			init:function(){
+				this.download();
+			}
+		};
+		users.init();
+	})()
+</script>
+<%- include base/footerMobile.ejs %>

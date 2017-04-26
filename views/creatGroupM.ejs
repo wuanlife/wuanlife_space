@@ -27,7 +27,7 @@
      </button>
      <input type="hidden" name="g_image" value="" id="g_img" autocomplete="off">
    </div>
-   <textarea class="setgroup-intro">午安网，过更好的生活</textarea>
+   <textarea class="setgroup-intro"></textarea>
    <div class="setgroup-join" id="set-private">
         <button type="button" data-private="0" id="choose-btn">
            <span>
@@ -101,7 +101,7 @@
                 console.log(data.data.info.group_id);
                 //成功后转到星球详情页面，现在是转到暂时页面
                 var t=setTimeout(function(){
-                  window.location.href="/group/1/set";
+                  window.location.href="/group/"+data.data.info.group_id;
                 },5000);
                 
               }else{

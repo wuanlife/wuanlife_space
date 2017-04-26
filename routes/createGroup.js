@@ -23,18 +23,13 @@ router.get('/', function(req, res, next) {
 });
 //创建星球提交的数据
 router.get('/sub',function(req,res,next){
-	req.session.user={
-            "user_id": "174",
-            "user_name": "午安网",
-            "user_email": "wuanwang@163.com"
-        };
 	if(req.session.user){
 		var userid=req.session.user.user_id,
 		    g_name=encodeURIComponent(req.query.g_name),
 		    g_image=req.query.g_image,
 		    g_introduction=encodeURIComponent(req.query.g_introduction),
 		    private=req.query.private;
-		request('http://104.194.79.57:800/'+'group/create?user_id='+userid+'&g_name='+g_name+'&g_image='+g_image+'&g_introduction='+g_introduction+'&private='+private,
+		request(config.server+'group/create?user_id='+userid+'&g_name='+g_name+'&g_image='+g_image+'&g_introduction='+g_introduction+'&private='+private,
 			function(error, response, body){
 				if (!error && response.statusCode == 200) {
 					var result = JSON.parse(body);

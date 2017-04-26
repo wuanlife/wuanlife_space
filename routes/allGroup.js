@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 	pn = req.query.page || 1;
 	var page = agent.Mobile ? 'allGroupM' : 'allGroupM';
-	request("http://104.194.79.57:800/" +"group/lists", function(error, response, body) {
+	request(config.server +"group/lists", function(error, response, body) {
 		if (!error) {
 			var result = JSON.parse(body);
 			//console.log(result);
@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
 });
 router.get('/more',function(req,res,next){
 	var pn=req.query.pagecount;
-	request("http://104.194.79.57:800/" + 'group/lists?pn=' + pn,function(error, response, body){
+	request(config.server + 'group/lists?pn=' + pn,function(error, response, body){
 		if(!error){
 			var result = JSON.parse(body);
 			if(result.ret==200){

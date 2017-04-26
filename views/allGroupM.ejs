@@ -15,7 +15,7 @@
 <div class="allgroup-content">
   <%for(var i in data.groups){%>
    <div class="allgroup-group">
-      <a href="#">
+      <a href="group/<%=data.groups[i].group_id%>">
       <button type="button" style="background-image:url(<%=data.groups[i].g_image%>);"></button>
       </a>
       <h2><%=data.groups[i].g_name%></h2>
@@ -27,7 +27,7 @@
 <script id="group-list" type="text/html">
   {{each groups as value i}}
   <div class="allgroup-group">
-      <a href="#">
+      <a href="group/{{value.group_id}}">
       <button type="button" style="background-image:url({{value.g_image}});"></button>
       </a>
       <h2>{{value.g_name}}</h2>
@@ -46,16 +46,16 @@
         var self=this;
         $(document).scroll(function(){
           var scrolltop=$("body").scrollTop(),contentheight=$("body").outerHeight(),windowheight=$(window).height();
-          console.log(self.pagecount);
+          /*console.log(self.pagecount);
           console.log($("body").outerHeight());
-          console.log(scrolltop + windowheight);
+          console.log(scrolltop + windowheight);*/
           if(scrolltop + windowheight == contentheight){
             self.loading.start({
                 loadingTPLId : 0,
                 target : $(".download-part"),
                 loadingId : 'self'
               });
-            self.pagecount+=1;
+            self.pagecount++;
             if(self.pagecount<=self.pageallnum){
               global.getData('/allGroup/more?pagecount='+self.pagecount,function(data){
                 self.loading.stop('self');
@@ -65,7 +65,7 @@
                   $(".allgroup-content").html(temp+compiled);
                   self.pagecount=data.data.current_page;
                 }else{
-                  self.pagecount-=1;
+                  self.pagecount--;
                 }
               });
           }else{

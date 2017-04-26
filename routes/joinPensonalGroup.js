@@ -7,11 +7,6 @@ var ua = require('mobile-agent');
 /* 获取页面 */
 //应该是从星球详情页面渲染来的
 router.get('/', function(req, res, next) {
-    req.session.user={
-            "user_id": "2",
-            "user_name": "午安网",
-            "user_email": "wuanwang@163.com"
-        };
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var page = agent.Mobile ? 'joinPensonalGroupM' : 'joinPensonalGroupM';
@@ -20,7 +15,7 @@ router.get('/', function(req, res, next) {
                             'user': req.session.user
                         });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 router.get('/sub',function(req,res,next){
@@ -28,7 +23,7 @@ router.get('/sub',function(req,res,next){
         group_id=req.query.group_id,
         text=encodeURIComponent(req.query.text);
     if(req.session.user){
-        request('http://104.194.79.57:800/'+'group/private_group?user_id='+user_id+'&group_id='+group_id+'$text='+text,function(error, response, body){
+        request(config.server+'group/private_group?user_id='+user_id+'&group_id='+group_id+'$text='+text,function(error, response, body){
             if(!error && response.statusCode == 200){
                 var result=JSON.parse(body);
                 if(result.ret == 200){
@@ -48,7 +43,7 @@ router.get('/sub',function(req,res,next){
             }
         })
     }else{
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 module.exports = router;

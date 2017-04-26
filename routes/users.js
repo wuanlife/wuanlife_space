@@ -6,16 +6,11 @@ var ua = require('mobile-agent');
 
 /* 获取用户个人资料页面 */
 router.get('/', function(req, res, next) {
-    req.session.user={
-            "user_id": "174",
-            "user_name": "午安网",
-            "user_email": "wuanwang@163.com"
-        };
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
         var page = agent.Mobile ? 'personalInforMobile' : 'personalInfor';
-        request("http://104.194.79.57:800/" + "user/get_user_info?user_id="+userid,
+        request(config.server + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -41,16 +36,16 @@ router.get('/', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 //提交修改个人信息的数据
 router.get('/sub', function(req, res, next) {
-    req.session.user={
+/*    req.session.user={
             "user_id": "174",
             "user_name": "三名哈哈呵呵",
             "user_email": "2660591904@qq.com"
-        };
+        };*/
     if (req.session.user) {
         var userid = req.session.user.user_id;
         var username=encodeURIComponent(req.query.user_name);
@@ -59,12 +54,13 @@ router.get('/sub', function(req, res, next) {
         var year=req.query.year;
         var month=req.query.month;
         var day=req.query.day;
-        request("http://104.194.79.57:800/" + "user/alter_user_info?user_id=" + userid +'&user_name=' + username + '&profile_picture=' +profile_picture + '&sex=' + sex + '&year=' + year + '&month=' + month + '&day=' + day,
+        request(config.server + "user/alter_user_info?user_id=" + userid +'&user_name=' + username + '&profile_picture=' +profile_picture + '&sex=' + sex + '&year=' + year + '&month=' + month + '&day=' + day,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
                     if (result.ret == 200) {
                         res.send(result);
+                        req.session.user.user_name=username;
                     } else {
                         res.render('error', {
                             'message': result.msg,
@@ -80,20 +76,15 @@ router.get('/sub', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 
 //发送验证邮箱
 router.get('/verify', function(req, res, next) {
-    req.session.user={
-            "user_id": "174",
-            "user_name": "三名哈哈呵呵",
-            "user_email": "2660591904@qq.com"
-        };
     if (req.session.user) {
         var usermail = req.session.user.user_email;
-        request("http://104.194.79.57:800/" + "user/check_mail_1?user_email=" + usermail,
+        request(config.server + "user/check_mail_1?user_email=" + usermail,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -115,7 +106,7 @@ router.get('/verify', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 //验证邮箱页面
@@ -133,7 +124,7 @@ router.get('/verifyusermail',function(req,res,next){
 //发送token
 router.get('/verifyusermail/sub',function(req,res,next){
     var token=req.query.token;
-    request("http://104.194.79.57:800/"+"user/check_mail_2?token="+token,
+    request(config.server+"user/check_mail_2?token="+token,
         function(error, response, body) {
             if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -157,14 +148,9 @@ router.get('/verifyusermail/sub',function(req,res,next){
 })
 //确认是否验证邮箱
 router.get('/verifycomfirm', function(req, res, next) {
-    req.session.user={
-            "user_id": "174",
-            "user_name": "三名哈哈呵呵",
-            "user_email": "2660591904@qq.com"
-        };
     if (req.session.user) {
         var userid = req.session.user.user_id;
-        request("http://104.194.79.57:800/" + "user/get_mail_checked?user_id=" + userid,
+        request(config.server + "user/get_mail_checked?user_id=" + userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var result = JSON.parse(body);
@@ -186,7 +172,7 @@ router.get('/verifycomfirm', function(req, res, next) {
                 }
             });
     } else {
-        res.redirect('/login');
+        res.redirect('/personal/login');
     }
 });
 module.exports = router;
