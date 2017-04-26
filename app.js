@@ -141,7 +141,6 @@ app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
-app.use('/retrievepassword',retrievePwd);
 app.use('/addPlanet',addPlanet);
 
 
