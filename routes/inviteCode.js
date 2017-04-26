@@ -32,16 +32,11 @@ router.post('/',function(req,res,next){
 	},function(err,httpResponse,body){
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
-
+		console.log('err'+err+'code:'+httpResponse.statusCode);
 		if(!err && httpResponse.statusCode === 200){
 			var data = JSON.parse(body).data;
 			console.log('data',data);
 			console.log('body',body);
-			if(data.code === 1){
-
-			}else{
-
-			}
 
 			res.send(JSON.parse(body));
 		}else{
