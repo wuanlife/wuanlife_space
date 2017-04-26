@@ -1,49 +1,4 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <button class="search-toggle" type="button">
-	                	<svg aria-hidden="true" class="icon">
-	                        <use xlink:href="#icon-search">
-	                        </use>
-	                    </svg>
-                    </button>
-                    <div class="navbar-brand">
-                        <h1>
-                            首页
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="tab-head">
-            <ul class="tab-head-bar">
-                <li class="selected">                    
-                	<svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-home">
-                        </use>
-                    </svg>
-                </li>
-                <li>                        
-                    <svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-lightPlanet_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                	<svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-message_blue">
-                        </use>
-                    </svg>
-                </li>
-                <li>
-                	<svg aria-hidden="true" class="icon">
-                        <use xlink:href="#icon-me_blue">
-                        </use>
-                    </svg>
-                </li>
-            </ul>
-        </div>
+<%- include base/headerMobile-index.ejs %>
         <div class="tab-container">
             <div class="myplanet-board">
                 <div class="myplanet-item">
@@ -64,13 +19,21 @@
                 </div>
             </div>
         </div>       
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-index.ejs %>
 
+<script type="text/html" id="index-entry-tpl">
+    {{each groups as item i}}
+    <div class="myplanet-item">
+        <img src="{{item.g_image}}">
+        <p>{{item.g_name}}</p>
+    </div>
+    {{/each}}
+</script>
 
 <script>
 	(function() {
 		var index = {
-
+            loadedpn: 1,
 
 			getServerData: function(param, cb) {
 				
@@ -80,6 +43,43 @@
 			},
 			init: function() {
 				this.bindEvent();
+
+                wuanHeadFun.tabHighlight("tab-head-myplanet");
+                wuanHeadFun.title("星球");
+
+                //绑定下拉加载
+                $('.tab-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("index-entry-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
+                            //插入数据
+                            $('.myplanet-board').append(result);
+                            me.resetload();    
+
+                            $(".myplanet-item").off("touchend");
+                            //绑定每个index-entry的收藏操作
+                            $(".myplanet-item").on("touchend","#index-collect-btn",function(e){
+                                var indexid = getEntryId(e.target);
+                                collect(indexid);
+                            });
+                        });
+                    }
+                }); 
 			}
 		}
 		index.init();

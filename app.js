@@ -11,13 +11,12 @@ var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使�
 var flash = require('connect-flash');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+
 var page = require('./routes/page');
 var api = require('./routes/api');
 var register = require('./routes/register');
 var createGroup = require('./routes/createGroup');
 var topic = require('./routes/topic');
-var group = require('./routes/group');
 var allGroup = require('./routes/allGroup');
 var uGroup = require('./routes/uGroup');
 var logout = require('./routes/logout');
@@ -31,10 +30,12 @@ var uptoken = require('./routes/uptoken');
 var userManage = require('./routes/userManage');
 var myCollections = require('./routes/myCollections');
 var myself = require('./routes/personal');
-var myPlanet = require('./routes/myPlanet');
+
 var changepassword = require('./routes/changepassword');
 var joinPensonalGroup = require('./routes/joinPensonalGroup');
 
+
+var myPlanet = require('./routes/myPlanet');
 //消息
 var myMessage = require('./routes/myMessage');
 //帖子详情
@@ -47,6 +48,9 @@ var modifyPwd = require('./routes/modifyPwd');
 var addPlanet = require('./routes/addPlanet');
 var addPlanetPrivate = require('./routes/addPlanetPrivate');
 var searchContent = require('./routes/searchContent');
+
+var users = require('./routes/users');
+var groups = require('./routes/groups');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -121,13 +125,12 @@ app.use('/api/', api);
 
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/pages', page);
 app.use('/register',register);
 app.use('/createGroup', createGroup);
 app.use('/uGroup', uGroup);
 app.use('/topic', topic);
-app.use('/group', group);
+
 app.use('/allGroup', allGroup);
 app.use('/logout',logout);
 app.use('/resetPassword',resetPassword);
@@ -146,16 +149,20 @@ app.use('/mycollections',myCollections);
 app.use('/personal',myself);
 app.use('/inviteCode',inviteCode);
 app.use('/registerNew',registerNew);
-app.use('/myplanet',myPlanet);
+
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
 app.use('/addPlanetPrivate',addPlanetPrivate);
 app.use('/searchContent',searchContent);
 
+app.use('/myplanet',myPlanet);
 app.use('/mymessage',myMessage);
 app.use('/changepassword',changepassword);
 app.use('/joinPensonalGroup',joinPensonalGroup);
 app.use('/post',postdetails);
+
+app.use('/users', users);
+app.use('/groups', groups);
 
 
 
