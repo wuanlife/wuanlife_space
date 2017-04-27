@@ -1,23 +1,5 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            <span>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-goback">
-                                    </use>
-                                </svg>
-                            </span>
-                            <span>
-                                找回密码
-                            </span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
+
         <div class="retrievepassword-default-container">
             <div class="retrieve-password-body">
                 <form>
@@ -30,11 +12,9 @@
                         <button class="registerBtn">找回密码</button>
                     </div>
                 </form>
- 
             </div>
- 
         </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 
 <script>
     $('.retrieve-password-input').on('click',function(e){
@@ -120,7 +100,9 @@
                 });
 			},
 			init: function() {
-				this.bindEvent();
+                var that = this;
+                 wuanHeadFun.title("找回密码");
+				that.bindEvent();
 			}
 		}
 		retrievePwd.init();

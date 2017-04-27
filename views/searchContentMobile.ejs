@@ -1,11 +1,8 @@
-<%- include searchInputMobile.ejs %>
+<%- include base/headerSearchMobile.ejs %>
 
 <div class="search-content-all">
 	
 </div>
-
-<%- include base/baseJSMobile.ejs %>
-
 <script type="text/html" id="showallplanets-tpl">
 
 			{{each group as item i}}
@@ -53,7 +50,7 @@
                 </div>
                 <div class="content-detail-content-brief">
                     <div class="content-detail-content-exact">
-                        帖子内容   
+                        <span>帖子内容</span>   
                     </div>
                 </div>
 			</div>
@@ -81,7 +78,7 @@
                 </div>
                 <div class="content-detail-content-brief">
                     <div class="content-detail-content-exact">
-                        {{item.p_text}}   
+                        <span>{{item.p_text}}</span>
                     </div>
                 </div>
 			</div>

@@ -1,23 +1,4 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            <span>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-goback">
-                                    </use>
-                                </svg>
-                            </span>
-                            <span>
-                                邀请好友
-                            </span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
         <div class="inviteCode-default-container">
             <div class="code-producer">
                 <div class="code-tip">
@@ -27,10 +8,8 @@
                     <span></span>
                 </div>
             </div>
- 
         </div>
-<%- include base/baseJSMobile.ejs %>
-
+<%- include base/baseJSMobile-default.ejs %>
 
 <script>
 	(function() {
@@ -46,6 +25,8 @@
 			},
 			init: function() {
                 var that = this;
+
+                wuanHeadFun.title("邀请好友");
 				that.bindEvent();
 
                 global.subData('/personal/invite',{

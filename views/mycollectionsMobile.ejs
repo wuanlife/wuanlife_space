@@ -1,21 +1,12 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            我的收藏
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
+
         <div class="mycollection-default-container">
             <div class="collection-entries">
                 
             </div>
         </div>
-<%- include base/baseJSMobile.ejs %>
+
+<%- include base/baseJSMobile-default.ejs %>
 
 <script type="text/html" id="mycollection-entry-tpl">    
 
@@ -73,6 +64,8 @@
 
 			init: function() {
                 var that = this;
+                 wuanHeadFun.title("我的收藏");
+
 				that.bindEvent();
                 var user_id = <%= user.user_id%>;
 
