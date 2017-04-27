@@ -75,12 +75,12 @@
                         errorMsg: '密码不能为空'
                     },
                 ]);
-                validator.add(self.retPwdpwd, [
+/*                validator.add(self.retPwdpwd, [
                     {
                         strategy: 'isSame:' + self.retPwdpwd.val(),
                         errorMsg: '两次密码不相同'
                     },
-                ]);
+                ]);*/
 
                 var errorMsg = validator.start();
                 return errorMsg;
@@ -97,9 +97,13 @@
                         HJLoading.start({
                             loadingId : 'retPwdresetLoading',
                         });
+                        //TODO: 把封装成token的放到node里面
+                        var sJWT = global.getUrlParam('token');
+                        var token1 = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(sJWT.split(".")[1]));
 
                         global.subData('/retrievepassword/reset',{
-                            email: encodeURIComponent(self.retPwdemail.val()),
+                            user_id: token1.user_id,
+                            exp: token1.exp,
                         },function(data){
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){

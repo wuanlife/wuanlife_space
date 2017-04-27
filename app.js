@@ -50,7 +50,7 @@ var addPlanetPrivate = require('./routes/addPlanetPrivate');
 var searchContent = require('./routes/searchContent');
 
 var users = require('./routes/users');
-var groups = require('./routes/groups');
+//var groups = require('./routes/groups');
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
@@ -141,7 +141,6 @@ app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
 
-app.use('/retrievepassword',retrievePwd);
 app.use('/addPlanet',addPlanet);
 
 
@@ -162,7 +161,7 @@ app.use('/joinPensonalGroup',joinPensonalGroup);
 app.use('/post',postdetails);
 
 app.use('/users', users);
-app.use('/groups', groups);
+//app.use('/groups', groups);
 
 
 
