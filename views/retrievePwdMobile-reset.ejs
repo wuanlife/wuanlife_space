@@ -80,10 +80,23 @@
                         //TODO: 把封装成token的放到node里面
                         var sJWT = global.getUrlParam('token');
                         var token1 = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(sJWT.split(".")[1]));
+                        // Header
+                        var oHeader = {alg: 'HS256', typ: 'JWT'};
+                        // Payload
+                        var oPayload = {};
+                        var tNow = KJUR.jws.IntDate.get('now');
+                        var tEnd = KJUR.jws.IntDate.get('now + 1day');
+                        oPayload.exp = token1.exp;
+                        oPayload.user_id = token1.user_id;
+                        oPayload.password = self.retPwdpwd.val();
+                        // Sign JWT, password=616161
+                        var sHeader = JSON.stringify(oHeader);
+                        var sPayload = JSON.stringify(oPayload);
+                        var token2 = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "example_key");
+
 
                         global.subData('/retrievepassword/reset',{
-                            user_id: token1.user_id,
-                            exp: token1.exp,
+                            token: token2,
                         },function(data){
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){

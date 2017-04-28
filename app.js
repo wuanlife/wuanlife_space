@@ -11,6 +11,7 @@ var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使�
 var flash = require('connect-flash');
 
 var routes = require('./routes/index');
+var discovery = require('/routes/discovery');
 
 var page = require('./routes/page');
 var api = require('./routes/api');
@@ -125,6 +126,7 @@ app.use('/api/', api);
 
 
 app.use('/', routes);
+app.use('/discovery', routes);
 app.use('/pages', page);
 app.use('/register',register);
 app.use('/createGroup', createGroup);

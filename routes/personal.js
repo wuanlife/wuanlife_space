@@ -36,6 +36,7 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/personalInfo', function(req, res, next) {
+    var result = {};
 	if(!req.session.user){
 		res.redirect('/personal/login');
 		return;
@@ -43,10 +44,21 @@ router.get('/personalInfo', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'personalInforMobile' : 'personalInfor';
-		res.render(page, {
-			'result': null,
-			'user': req.session.user,
-		});
+        request(config.server + "user/get_user_info?user_id=" + req.session.user.user_id,
+            function(error, httpResponse, body) {
+                if (!error && httpResponse.statusCode == 200) {
+                    console.log('get_user_info success!');
+                    result = JSON.parse(body).data;
+                    console.log(result.user_name);
+                    res.render(page, {
+                        'result': result,
+                        'user': req.session.user,
+                    });
+                } else {
+
+                }
+            }
+        );
 	} catch(e){
 		next(e);
 	}
