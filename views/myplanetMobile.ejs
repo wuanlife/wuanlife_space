@@ -9,7 +9,7 @@
         </div>       
 <%- include base/baseJSMobile-index.ejs %>
 
-<script type="text/html" id="index-entry-tpl">
+<script type="text/html" id="myplanet-item-tpl">
     {{each groups as item i}}
     <div class="myplanet-item">
         <img src="{{item.g_image}}">
@@ -30,6 +30,7 @@
 
 			},
 			init: function() {
+                var self = this;
 				this.bindEvent();
 
                 wuanHeadFun.tabHighlight("tab-head-myplanet");
@@ -47,9 +48,9 @@
 
                     loadDownFn:function(me){
                         var result = '';
-                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                        global.subData('/myplanet',{pn : self.loadedpn}, function(data) {
                             if(self.loadedpn<=data.data.page_count){
-                                result += template("index-entry-tpl",data.data);
+                                result += template("myplanet-item-tpl",data.data);
                                 self.loadedpn++;
                             }else{
                                 me.lock();

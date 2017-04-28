@@ -19,21 +19,22 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
+    console.log(config.server + "group/get_user_group?user_id=" + req.session.user.user_id + "&pn=" + req.body.pn);
     request(config.server + "group/get_user_group?user_id=" + req.session.user.user_id + "&pn=" + req.body.pn,
         function(error, httpResponse, body) {
             if (!error && httpResponse.statusCode == 200) {
-                console.log('get_index_post success!');
+                console.log('get_user_group success!');
                 return res.send(JSON.parse(body));
             } else {
-                console.log('get_index_post error!  Server responded with:', body);
+                console.log('get_user_group error!  Server responded with:', body);
                 try {
-                    console.error('get_index_post failed:', error.toString());
+                    console.error('get_user_group failed:', error.toString());
                     res.send({
                         ret: 500,
                         msg:'服务器异常'
                     });
                 } catch(error) {
-                    console.error('catch get_index_post exception:', error.toString());
+                    console.error('catch get_user_group exception:', error.toString());
                     res.send({
                         ret: 500,
                         msg:'服务器异常'
