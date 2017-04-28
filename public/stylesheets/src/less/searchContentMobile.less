@@ -244,12 +244,19 @@
 			.content-detail-content-brief{
 				width:100%;
 				.content-detail-content-exact{
+					overflow: hidden;
 					.px2rem(height,120);
 					width:100%;
 					.px2px(font-size,28);
 					color:black;
 					letter-spacing:0;
 					opacity:0.54;
+					span{
+						overflow: hidden;
+    					display: -webkit-box;
+    					-webkit-box-orient: vertical;
+    					-webkit-line-clamp: 3;
+					}
 				}
 			}
 

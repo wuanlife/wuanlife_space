@@ -1,23 +1,5 @@
-<%- include base/headerMobile.ejs %>
-        <nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            <span>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-goback">
-                                    </use>
-                                </svg>
-                            </span>
-                            <span>
-                                登录
-                            </span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
+
         <div class="login-default-container">
             <div class="login-body">
                 <form>
@@ -39,11 +21,10 @@
                         </div>
                     </div>
                 </form>
- 
             </div>
- 
         </div>
-<%- include base/baseJSMobile.ejs %>
+
+<%- include base/baseJSMobile-default.ejs %>
 
 <script>
     $('.login-input').on('click',function(e){
@@ -158,6 +139,8 @@
 			},
 			init: function() {
                 var self = this;
+                 wuanHeadFun.title("登陆");
+
 				this.bindEvent();                
 			},
 		}
