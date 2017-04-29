@@ -18,46 +18,6 @@
 </script>
 
 
-<script type="text/html" id="showallplanets-default-tpl">
-
-			
-<div class="content-planets-planetContainer" id="showallplanets-default-tpl">
-	<div class="planets-planetContainer-img">
-		<div><img style="background:red"></img></div>
-	</div>
-	<div class="planets-planetContainer-exp">
-		<span>星球名字</span>
-	</div>
-</div>
- 
-</script>
-
-
-<script type="text/html" id="posts-default-tpl">
-		<div class="search-content-detail" id="post-default">
-			<div class="content-detail-header">
-				<div class="content-detail-header-content">
-					<div>
-						<img></img>
-						<span class="search-content-header-user">这里显示发帖人</span>
-					</div>
-                    <span class="search-content-header-date">这里显示发帖时间</span>
-				</div>
-			</div>
-			<div class="content-detail-content">
-				<div class="content-detail-content-title">
-                    <p>发帖标题</p>
-                </div>
-                <div class="content-detail-content-brief">
-                    <div class="content-detail-content-exact">
-                        <span>帖子内容</span>   
-                    </div>
-                </div>
-			</div>
-		</div>
-
-</script>
-
 <script type="text/html" id="posts-tpl">    
 
     {{each posts as item i}}
@@ -66,7 +26,7 @@
 			<div class="content-detail-header">
 				<div class="content-detail-header-content">
 					<div>
-						<img src={{item.g_image}}></img>
+						<img src="{{item.profile_picture}}"></img>
 						<span class="search-content-header-user">{{item.user_name}}发表于{{item.g_name}}</span>
 					</div>
                     <span class="search-content-header-date">{{item.create_time}}</span>
@@ -98,9 +58,12 @@
 			},
 			bindEvent: function() {
 				var that = this;
-				var pageWidth,pageHeight,postWidth,postHeight,planetWidth,planetHeight,pnum,row,col;
+				//var pageWidth,pageHeight,postWidth,postHeight,planetWidth,planetHeight,pnum,row,col;
 
 				var planetdefault,postsdefault;
+
+				//星球容器
+				var planetContainer = 	"<div class='search-content-planets'><div class='content-planets-tag'><span>星球</span></div><div class='content-planets-planetContainers'></div><div class='content-planets-more'><div class='more-label get-more-planets'><span>查看更多星球</span></div><div class='more-next get-more-planets'><div class='more-next-pre'></div><div class='more-next-last'></div></div></div></div>";
 
 				//posts和planets的外包装，不然插入有点不方便
 				var postsContainerHeader = "<div class='search-content-details'><div class='content-details-content-label'><span>帖子</span></div>";
@@ -112,9 +75,9 @@
 				var allPlanetsContainerFooter = "</div></div>";
 				
 				var postsContainerFooter = '</div>';
-
+				//这里废弃---从我开始--------------------->>>>>>>>>>>>>
 				//输入框改变时--框架已经打好
-				that.searchInput.on('input propertychange',function(e){
+				/*that.searchInput.on('input propertychange',function(e){
 					if(e.type === 'input' && that.searchInput.val() !== ''){
 						//星球容器
 						var planetContainer = 	"<div class='search-content-planets'><div class='content-planets-tag'><span>星球</span></div><div class='content-planets-planetContainers'></div><div class='content-planets-more'><div class='more-label get-more-planets'><span>查看更多星球</span></div><div class='more-next get-more-planets'><div class='more-next-pre'></div><div class='more-next-last'></div></div></div></div>";
@@ -151,17 +114,16 @@
 						row = Math.ceil(planetContainerHeight / planetHeight);
 						col = Math.floor(planetContainerWidth / planetWidth);
 
-
+						//处理事件
 						handleEve(e);
 					}
-				});
-
-				//处理宽高以自适应
+				});*/
+				//到我结束------------------------->>>>>>>>>>>>>>>>>>>>>>
 
 				//执行搜索操作
 				that.searchAction.on('touchend',function(e){
 					if(that.searchInput.val()===''){
-						alert('请输入搜索内容。。');
+						swal('提示','请输入搜索内容','warning');
 					}else{
 						handleEve(e);
 					}
@@ -170,50 +132,49 @@
 
 				function handleEve(e){
 					e.preventDefault();
-					//
 					var inputtext = that.searchInput.val();
 					global.subData('/searchContent',{
 						text : inputtext,
-						gnum : row * col,
-						pnum : 2 + pnum,
+						gnum : 3,
+						pnum : 5,
 						pn : 1,
 						gn : 1,
 					},function(data){
 						if(data.ret === 200){
 							if(data.data){
 								var posts_page = data.data.posts_page;
-								
 								var cur_post_page = data.data.p_current_page;
 
 								var postsTPL = template("posts-tpl",data.data);
-								
-
 								var planetsTPL = template("showallplanets-tpl",data.data);
+								//清空元素
+								that.searchContainer.empty();
+
 								//插入内容并绑定事件
 								//插入星球
 								if(data.data.group){
-									planetdefault.empty();
+									//插入dom
+									that.searchContainer.append(planetContainer);
+
+									planetdefault = $('.content-planets-planetContainers');
+									//插入星球
 									planetdefault.append(planetsTPL);
 									//绑定事件
-									
 									var EPlanetsContainer = $('.content-planets-planetContainer');
-
 									EPlanetsContainer.on('touchend',function(e){
 										var id = $(this).attr('id');
-										if(id == 'showallplanets-default-tpl'){
-											return;
-										}else{
-											//directToPlanet(id);
-											//链接跳转
-											window.location.href = '/groups/' + id.slice(id.lastIndexOf('_'));
-										}
+										window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
 									});
 									
+								}else{
+									//swal('提示','没找到任何星球','warning');
 								}
 								
 								//插入帖子
 								if(data.data.posts){
-									postsdefault.empty();
+									//插入帖子容器
+									that.searchContainer.append(postsContainerHeader+postsContainerFooter);
+									postsdefault = $('.search-content-details');
 									postsdefault.append(postsTPL);
 									//绑定事件
 									var EPostsContainer = $('.search-content-detail');
@@ -223,7 +184,7 @@
 										if(id === 'post-default'){
 											return;
 										}else{
-											window.location.href = '/posts/'+id.slice(id.lastIndexOf('_'));
+											window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
 										}
 									});
 									//提前加载距离
@@ -247,7 +208,7 @@
 											global.subData('/searchContent',{
 												text : inputtext,
 												gnum : 0,
-												pnum : 2 + pnum,
+												pnum : 6,
 												pn : cur_post_page,
 												gn : 1,
 											},function(data){
@@ -261,16 +222,16 @@
 
 												//插入数据
 												$('.search-content-details').append(result);
-												var EPostsContainer = $('.search-content-detail');
 
+												var EPostsContainer = $('.search-content-detail');
 												EPostsContainer.on('touchend',function(e){
 												var id = $(this).attr('id');
 												if(id === 'post-default'){
 													return;
 												}else{
-													window.location.href = '/posts/'+id.slice(id.lastIndexOf('_'));
+													window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
 												}
-												
+
 									});
 												me.resetload();											
 											});
@@ -284,8 +245,8 @@
 
 								$('.get-more-planets').on('touchend',
 								function(e){
-										e.preventDefault();
-										//星球容器
+									e.preventDefault();
+									//星球容器
 									var planetContainer = "<div class='showallplanets'><div class='planets-tag'><span>星球</span></div><div class='showallplanets-planetContainers'></div></div></div>";
 
 									//清空数据
@@ -293,20 +254,21 @@
 									//插入dom框架
 									that.searchContainer.append(planetContainer);
 									var showallplanetsContainers = $('.showallplanets-planetContainers');
+									//从我开始废弃------------------->>>>>>>>>>>>>>>>>>
 									//重新获取行数
+									/*
 									row = Math.ceil((pageheight - $('.showallplanets-planetContainers').offset().top)/planetHeight);
-
+									*/
+									//到我结束--------------------->>>>>>>>>>>>>>>>>>>
 									global.subData('/searchContent',{
 										text : inputtext,
-										gnum : row*col,
+										gnum : 18,
 										pnum : 0,
 										pn: 1,
 										gn:1,
 									},function(data){
 										var cur_planet_page = data.data.g_current_page;
 										var group_page = data.data.group_page;
-
-
 										if(data.ret===200){
 											if(data.data){
 												//插入星球
@@ -314,9 +276,15 @@
 												showallplanetsContainers.empty();
 												var allPlanetsTPL = template("showallplanets-tpl",data.data);
 												showallplanetsContainers.append(allPlanetsTPL);
+												//绑定事件
+												var target = $('.content-planets-planetContainer');
 
+												target.on('touchend',function(e){
+													var id = $(this).attr('id');
+													window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
+												});
 												//提前加载距离
-												var pre_destance = planetHeight;
+												var pre_destance = 100;
 
 												$('.search-content-all').dropload({
 													scrollArea: this,
@@ -331,7 +299,7 @@
 														var result = '';
 														global.subData('/searchContent',{
 														text : inputtext,
-														gnum :  row*col,
+														gnum :  18,
 														pnum : 0,
 														pn : cur_planet_page,
 														gn : 1,
@@ -345,22 +313,33 @@
 															}
 															//插入数据
 															$('.showallplanets-planetContainers').append(result);
+															//绑定事件
+															var target = $('.content-planets-planetContainer');
+
+															target.on('touchend',function(e){
+																var id = $(this).attr('id');
+																window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
+															});
 															me.resetload();											
 														});
 													},
 													threshold :pre_destance,
 												});
 
+											}else{
+												//swal('提示','获取全部星球数据不存在','warning')
 											}
 										}else{
-											alert('错误');
+											swal('错误','获取全部星球数据错误','error');
 										}
 									});
 									
 								});
+							}else{
+								swal('提示','获取数据不存在','warining')
 							}
 						}else{
-							alert("搜索错误！");
+							swal('错误','获取数据失败','error');
 						}
 					});
 				}
