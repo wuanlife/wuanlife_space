@@ -1,6 +1,6 @@
 <%- include base/headerMobile-default.ejs %>
 
-        <div class="default-container">
+        <div class="default-container post-margin-down">
             <div class="postreplies">
         
             </div>
@@ -119,54 +119,11 @@
 			bindEvent: function() {
                 var self = this;
                             
-                //这一块是下滑加载的事件绑定            
-                //提前加载距离
-                var pre_destance =  $('.postreplies')?Math.ceil($('.postreplies').outerHeight()*2/3) : 180;
-                //对返回的数据进行事件绑定
-                $('.postreplies').dropload({
-                    scrollArea : window,
-                    domUp: {
-
-                    },
-                    domDown : {
-                        domClass : 'dropload-down',
-                        domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-                        domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-                        domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>',
-                    },
-
-                    loadDownFn : function(me){
-                        self.loadedreplypn++;
-                        var result = '';
-                        global.subData("./<%= postid%>/reply", {replypn: self.loadedreplypn}, function(data) {
-                            result += template("reply-tpl",data.data);
-                            //插入数据
-                            $('.postreplies').append(result);
-
-                            $(".postreplies").off("touchend");
-                            //绑定每个回复的回复操作
-                            $(".postreplies").on("touchend","#index-collect-btn",function(e){
-                                //var indexid = getEntryId(e.target);
-                                //collect(indexid);
-                            });
-                            //绑定每个回复的删除操作
-                            $(".postreplies").on("touchend","#index-approve-btn",function(e){
-                                //var indexid = getEntryId(e.target);
-                                //approve(indexid);
-                            });
-
-                            me.resetload();                                         
-                        });
-                    },
-
-                    threshold :pre_destance,
-                });
-
 			},
 			init: function() {
                 var self = this;
-                
                 wuanHeadFun.title("帖子详情");
+                self.bindEvent();
 
                 //加载动画
                 HJLoading.start({
@@ -180,23 +137,55 @@
                     if (data.ret == 200 && data.data) {
                         var compiled = template("postdetails-tpl", data.data);
                         self.postContainer.html(compiled + self.postContainer.html());
+                        //TODO: 这里其实有点回调地狱的感觉，想办法用某种方法解决
+                        global.subData("./<%= postid%>/reply", {replypn: 1}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                var compiled = template("reply-initial-tpl", data.data);
+                                self.postReplies.html(compiled);
 
+                                //绑定下拉加载
+                                self.postContainer.dropload({
+                                    scrollArea: self.postReplies,
+                                    domDown:{
+                                        domClass : 'dropload-down',
+                                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                                    },
+
+                                    loadDownFn:function(me){
+                                        var result = '';
+                                        global.subData("./<%= postid%>/reply", {replypn: self.loadedreplypn}, function(data) {
+                                            if(self.loadedreplypn<=data.data.page_count){
+                                                result += template("reply-tpl",data.data);
+                                                self.loadedreplypn++;
+                                            }else{
+                                                me.lock();
+                                                me.noData();
+                                            }
+                                            //插入数据
+                                            $('.postreplies').append(result);
+                                            me.resetload();    
+                                            rebind();
+                                        });
+                                    }
+                                });
+
+                            } else {
+                                sweetAlert('错误', '回复数据获取失败', 'error');
+                            }
+                        });
                     } else {
                         sweetAlert('错误', '数据获取失败', 'error');
                     }
                 });
-                global.subData("./<%= postid%>/reply", {replypn: 1}, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        var compiled = template("reply-initial-tpl", data.data);
-                        self.postReplies.html(compiled);
-
-                    } else {
-                        sweetAlert('错误', '回复数据获取失败', 'error');
-                    }
-                    self.bindEvent();
-                });
 
 
+
+                var rebind = function() {
+
+                };
+ 
 			}
 		}
 		post.init();

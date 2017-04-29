@@ -8,14 +8,9 @@ Promise.promisifyAll(request);
 
 /* GET users listing. */
 router.post('/:postid/reply', function(req, res, next) {
-    if(!req.session.user) {
-        res.send({
-            ret: 403,
-            msg: '未登录'
-        });
-        return;
-    }
-    request(`${config.server}post/get_post_reply?user_id=${req.session.user.user_id}&post_id=${req.params.postid}&pn=${req.body.replypn}`,
+    request(req.session.user ? 
+        `${config.server}post/get_post_reply?user_id=${req.session.user.user_id}&post_id=${req.params.postid}&pn=${req.body.replypn}` :
+        `${config.server}post/get_post_reply?post_id=${req.params.postid}&pn=${req.body.replypn}`,
         function(error, httpResponse, body) {
             if (!error && httpResponse.statusCode == 200) {
                 console.log('get_index_post success!');
@@ -40,14 +35,9 @@ router.post('/:postid/reply', function(req, res, next) {
     )
 });
 router.post('/:postid', function(req, res, next) {
-    if(!req.session.user) {
-        res.send({
-            ret: 403,
-            msg: '未登录'
-        });
-        return;
-    }
-    request(`${config.server}post/get_post_base?user_id=${req.session.user.user_id}&post_id=${req.params.postid}`,
+    request(req.session.user ? 
+        `${config.server}post/get_post_base?user_id=${req.session.user.user_id}&post_id=${req.params.postid}` :
+        `${config.server}post/get_post_base?post_id=${req.params.postid}`,
         function(error, httpResponse, body) {
             if (!error && httpResponse.statusCode == 200) {
                 console.log('get_index_post success!');
