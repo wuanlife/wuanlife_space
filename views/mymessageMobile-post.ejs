@@ -1,29 +1,11 @@
-<%- include base/headerMobile.ejs %>
-		<nav class="navbar-default navbar-default-shadow">
-            <div class="nav-container">
-                <div class="navbar-header">
-                    <div class="navbar-brand">
-                        <h1>
-                            <span>
-                                <svg aria-hidden="true" class="icon">
-                                    <use xlink:href="#icon-goback">
-                                    </use>
-                                </svg>
-                            </span>
-                            <span>
-                            　　　　帖子通知
-                            </span>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-        </nav>
+<%- include base/headerMobile-default.ejs %>
+
         <div class="default-container">
             <div class="message-board">
             </div>
  
         </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 
 <script type="text/html" id="message-line-post-tpl">
 
@@ -54,6 +36,7 @@
 			},
 			init: function() {
                 var self = this;
+                wuanHeadFun.title("帖子通知");
 				this.bindEvent();
 
                 //绑定下拉加载
