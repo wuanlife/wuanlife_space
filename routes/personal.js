@@ -119,7 +119,7 @@ router.get('/changepassword', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
 
-	console.log('logout-req',req);
+	//console.log('logout-req',req);
 	req.session.destroy(function(err){
 		if(err){
 			res.send({
