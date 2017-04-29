@@ -11,7 +11,7 @@ var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使�
 var flash = require('connect-flash');
 
 var routes = require('./routes/index');
-//var discovery = require('/routes/discovery');
+
 
 var page = require('./routes/page');
 var api = require('./routes/api');
@@ -40,7 +40,7 @@ var myPlanet = require('./routes/myPlanet');
 //消息
 var myMessage = require('./routes/myMessage');
 //帖子详情
-var postdetails = require('./routes/postdetails')
+var postdetails = require('./routes/postdetails');
 
 var inviteCode = require('./routes/inviteCode');
 var registerNew = require('./routes/registerNew');
@@ -52,9 +52,12 @@ var searchContent = require('./routes/searchContent');
 
 var users = require('./routes/users');
 var groups = require('./routes/groups');
+var discovery = require('./routes/discovery');
+
 
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
+
 
 
 
@@ -126,7 +129,7 @@ app.use('/api/', api);
 
 
 app.use('/', routes);
-//app.use('/discovery', discovery);
+app.use('/discovery', discovery);
 app.use('/pages', page);
 app.use('/register',register);
 app.use('/createGroup', createGroup);

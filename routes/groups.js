@@ -123,10 +123,10 @@ router.post('/:groupid/post', function(req, res, next) {
     request.post({
         url: config.server + 'group/posts',
         formData: {
-            group_id: 1,
-            user_id: 2,
-            p_title: 1,
-            p_text: 1
+            group_id: req.params.groupid,
+            user_id: req.session.user.user_id,
+            p_title: req.body.p_title,
+            p_text: req.body.p_text,
         }
     }, function optionalCallback(err, httpResponse, body) {
         res.header('Content-type', 'application/json');

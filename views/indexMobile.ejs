@@ -151,9 +151,15 @@
 			},
 			init: function() {
                 var self = this;
-				
-                wuanHeadFun.tabHighlight("tab-head-myindex");
-                wuanHeadFun.title("首页");
+				var loadtype = window.location.pathname;
+                if(loadtype == '/discovery') {
+                    wuanHeadFun.tabHighlight("tab-head-discovery");
+                    wuanHeadFun.title("发现");      
+                } else {
+                    wuanHeadFun.tabHighlight("tab-head-myindex");
+                    wuanHeadFun.title("首页");                    
+                }
+
 
                 var rebind = function() {
 
@@ -187,7 +193,6 @@
 
                     loadDownFn:function(me){
                         var result = '';
-                        var loadtype = window.location.pathname;
                         global.subData(loadtype,{pn : self.loadedpn}, function(data) {
                             if(self.loadedpn<=data.data.page_count){
                                 result += template("index-entry-tpl",data.data);

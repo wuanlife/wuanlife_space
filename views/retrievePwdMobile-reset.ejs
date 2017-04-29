@@ -92,7 +92,7 @@
                         // Sign JWT, password=616161
                         var sHeader = JSON.stringify(oHeader);
                         var sPayload = JSON.stringify(oPayload);
-                        var token2 = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "example_key");
+                        var token2 = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "wuan_key");
 
 
                         global.subData('/retrievepassword/reset',{
@@ -122,7 +122,7 @@
 			},
 			init: function() {
                 var that = this;
-                 wuanHeadFun.title("重置密码");
+                wuanHeadFun.title("重置密码");
 				that.bindEvent();
 			}
 		}

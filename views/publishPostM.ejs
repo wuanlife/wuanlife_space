@@ -25,7 +25,8 @@
 <%- include base/baseJSMobile.ejs %>
 <script type="text/javascript">
   (function(){
-    var users={
+    var users = {
+      postTitle:$("#post-title").text(),
       postContent:$("#post-content").text(),
       groupid:1,
       loading:HJLoading,
@@ -40,22 +41,28 @@
         }
       },
       bindEvent:function(){
-        var self=this;
-        if(self.verifi()){
-          $(".publishPost-btn").on('touchend',function(){
+        var self = this;
+        $(".publishPost-btn").on('touchend',function(){
           self.loading.start({
                 loadingTPLId : 0,
                 target : $("body"),
                 loadingId : 'self'
               });
-          global.subData('/group/'+self.groupid+'/post',{
-            p_title:'',
-            p_text:''
+          global.subData('/groups/'+self.groupid+'/post',{
+            p_title: self.postTitle,
+            p_text: self.postContent
           },function(data){
             self.loading.stop('self');
+              if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('发布成功')
+
+              } else {
+                sweetAlert('错误', '测试中请勿使用', 'error');
+              }  
           });
         });
-        }
+
       },
       init:function(){
         this.bindEvent();
