@@ -160,7 +160,7 @@ app.use('/myplanet',myPlanet);
 app.use('/mymessage',myMessage);
 app.use('/changepassword',changepassword);
 app.use('/joinPensonalGroup',joinPensonalGroup);
-app.use('/post',postdetails);
+app.use('/posts',postdetails);
 
 app.use('/users', users);
 app.use('/groups', groups);

@@ -91,9 +91,6 @@
                 }
             }            
         }
-        var reply = function(id) {
-            //TODO: 跳转到对应贴子        
-        }
         var isApproved = function(domNode) {
             if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-approve-btn') {
                 return isCollected(domNode.parentNode);
@@ -158,21 +155,26 @@
                 wuanHeadFun.tabHighlight("tab-head-myindex");
                 wuanHeadFun.title("首页");
 
-                //请求初始数据
-                /*
-                global.subData("/", {pn: 1}, function(data) {
-                    var posts = data.data.info;
-                    HJLoading.stop('loginLoading');
-                    if (data.ret == 200 && data.data) {
-                        var compiled = template("index-entry-tpl", data.data);
-                        self.indexEntries.html(compiled);
+                var rebind = function() {
 
-                    } else {
-                        sweetAlert('错误', '数据获取失败', 'error');
-                    }
-                });
-                */
-               
+                    $(".index-entry").off("touchend");
+                    //绑定每个index-entry的收藏操作
+                    $(".index-entry").on("touchend","#index-collect-btn",function(e){
+                        var indexid = getEntryId(e.target);
+                        collect(indexid);
+                    });
+                    //绑定每个index-entry的回复操作
+                    $(".index-entry").on("touchend","#index-reply-btn",function(e){
+                        var indexid = getEntryId(e.target);
+                        window.location.href = '/posts/' + indexid;
+                    });
+                    //绑定每个index-entry的点赞操作
+                    $(".index-entry").on("touchend","#index-approve-btn",function(e){
+                        var indexid = getEntryId(e.target);
+                        approve(indexid);
+                    });
+                };
+
                 //绑定下拉加载
                 $('.tab-container').dropload({
                     scrollArea: window,
@@ -197,23 +199,8 @@
                             //插入数据
                             $('.index-entries').append(result);
                             me.resetload();    
+                            rebind();
 
-                            $(".index-entry").off("touchend");
-                            //绑定每个index-entry的收藏操作
-                            $(".index-entry").on("touchend","#index-collect-btn",function(e){
-                                var indexid = getEntryId(e.target);
-                                collect(indexid);
-                            });
-                            //绑定每个index-entry的回复操作
-                            $(".index-entry").on("touchend","#index-reply-btn",function(e){
-                                var indexid = getEntryId(e.target);
-                                reply(indexid);
-                            });
-                            //绑定每个index-entry的点赞操作
-                            $(".index-entry").on("touchend","#index-approve-btn",function(e){
-                                var indexid = getEntryId(e.target);
-                                approve(indexid);
-                            });
                         });
                     }
                 }); 

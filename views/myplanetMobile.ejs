@@ -7,7 +7,7 @@
 
 <script type="text/html" id="myplanet-item-tpl">
     {{each groups as item i}}
-    <div class="myplanet-item">
+    <div id="group-{{item.group_id}}" class="myplanet-item">
         <img src="{{item.g_image}}">
         <p>{{item.g_name}}</p>
     </div>
@@ -32,6 +32,15 @@
                 wuanHeadFun.tabHighlight("tab-head-myplanet");
                 wuanHeadFun.title("星球");
 
+
+                var rebind = function() {
+                    //绑定点击进入星球详情事件
+                    $(".myplanet-item").off("touchend");
+                    //绑定每个index-entry的收藏操作
+                    $(".myplanet-item").on("touchend",function(e){
+                        window.location.href = '/groups/' + e.target.parentElement.id.slice(-1);
+                    });
+                };
                 //绑定下拉加载
                 $('.tab-container').dropload({
                     scrollArea: window,
@@ -52,17 +61,11 @@
                                 me.lock();
                                 me.noData();
                             }
-                            //插入数据
                             $('.myplanet-board').append(result);
-                            me.resetload();    
-
-                            $(".myplanet-item").off("touchend");
-                            //绑定每个index-entry的收藏操作
-                            $(".myplanet-item").on("touchend","#index-collect-btn",function(e){
-                                var indexid = getEntryId(e.target);
-                                collect(indexid);
-                            });
+                            me.resetload();   
+                            rebind();
                         });
+
                     }
                 }); 
 			}
