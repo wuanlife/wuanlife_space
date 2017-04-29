@@ -59,7 +59,7 @@ router.post('/', function(req, res, next) {
     request.post({
         url: config.server + 'user/show_message',
         formData: {
-            user_id: req.body.user_id,
+            user_id: req.session.user_id,
             m_type: 4,
         }
     }, function optionalCallback(err, httpResponse, body) {

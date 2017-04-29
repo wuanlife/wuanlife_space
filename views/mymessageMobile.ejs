@@ -80,7 +80,7 @@
 				this.bindEvent();
 
                 //请求初始数据
-                global.subData("/mymessage", {user_id: 1}, function(data) {
+                global.subData("/mymessage", {}, function(data) {
                     var message = data.data.info;
                     //私密星球申请消息
                     if(message.apply !== null) {
