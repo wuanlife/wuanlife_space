@@ -7,7 +7,7 @@
         </svg>
     </button>
     <%if(result.identity=='01'){%>
-    <a href="/group/<%=result.group_id%>/set">星球设置</a>
+    <a href="/groups/<%=result.group_id%>/set">星球设置</a>
     <%}%>
     <div class="group-img">
     	<button style="background-image:url(<%=result.g_image%>);"></button>
@@ -93,7 +93,7 @@
 </div>
 <div class="download-part"></div>
 <%if(result.identity=='01'||result.identity=='02'){%>
-<a href="/group/<%=result.group_id%>/post" class="group-publish-post"><span>+</span></a>
+<a href="/groups/<%=result.group_id%>/post" class="group-publish-post"><span>+</span></a>
 <%}%>
 <%if(result.posts.length>0){%>
 <script id="post-list" type="text/html">
@@ -191,7 +191,7 @@
 		            //
 		            self.pagecount++;
 		            if(self.pagecount<=self.pageallnum){
-		              global.getData('/group/<%=result.group_id%>/more?pagecount='+self.pagecount,function(data){
+		              global.getData('/groups/<%=result.group_id%>/more?pagecount='+self.pagecount,function(data){
 		                self.loading.stop('self');
 		                if(data.ret==200){
 		                  var compiled=template('post-list',data.data);

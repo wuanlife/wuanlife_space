@@ -1,17 +1,4 @@
-<%- include base/headerMobile.ejs %>
-<nav class="personal-navbar">
-                    <button class="personal-icon-back" type="button">
-                        <svg aria-hidden="true" class="icon">
-                            <use xlink:href="#icon-goback">
-                            </use>
-                        </svg>
-                    </button>
-                    <div class="personal-navbar-brand">
-                        <h1>
-                            星球设置
-                        </h1>
-                    </div>
-</nav>
+<%- include base/headerMobile-default.ejs %>
 <div class="setgroup-content">
    <form id="group-infor">
    <span class="group-name">星球名称：<%=result.g_name%></span>
@@ -49,7 +36,7 @@
    </div>
    </form>
 </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 <script type="text/javascript">
   (function(){
     var users={
@@ -105,7 +92,7 @@
             self.introduction=$(".setgroup-intro").val();
             self.image=$("#g_img").val();
             self.private=$("#choose-btn").data('private');
-            global.getData('/group/<%=result.group_id%>/sub',{
+            global.getData('/groups/<%=result.group_id%>/sub',{
               introduction:self.introduction,
               image:self.image,
               private:self.private
@@ -125,6 +112,7 @@
         });
       },
       init:function(){
+        wuanHeadFun.title("星球设置");
         this.bindEvent();
         this.setPrivate();
       }

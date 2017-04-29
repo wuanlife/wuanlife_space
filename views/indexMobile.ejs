@@ -185,7 +185,8 @@
 
                     loadDownFn:function(me){
                         var result = '';
-                        global.subData('/',{pn : self.loadedpn}, function(data) {
+                        var loadtype = window.location.pathname;
+                        global.subData(loadtype,{pn : self.loadedpn}, function(data) {
                             if(self.loadedpn<=data.data.page_count){
                                 result += template("index-entry-tpl",data.data);
                                 self.loadedpn++;
