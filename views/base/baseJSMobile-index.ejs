@@ -39,10 +39,16 @@
                             window.location.href = '/';
                             break;
                         case 'tab-head-myplanet':
+                            <% if (typeof user !== 'undefined' && user) { %>
                             window.location.href = '/myplanet';
+                            <% } %>
+                            window.location.href = '/personal/login';
                             break;
                         case 'tab-head-mymessage':
+                            <% if (typeof user !== 'undefined' && user) { %>
                             window.location.href = '/mymessage';
+                            <% } %>
+                            window.location.href = '/personal/login';
                             break;
                         case 'tab-head-myself':
                             window.location.href = '/personal';     
