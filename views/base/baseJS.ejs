@@ -1,0 +1,88 @@
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/iconfont.js"></script>
+    <script src="//cdn.bootcss.com/es6-promise/4.1.0/es6-promise.auto.min.js"></script>
+    <script src="/javascripts/sweetalert2.js"></script>
+    <script src="/javascripts/template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/dropload.js"></script>
+    <script type="text/javascript" src="/javascripts/HJformcheck.js"></script>
+    <script type="text/javascript" src="/javascripts/HJLoadingX.js"></script>
+    <script language="JavaScript" type="text/javascript"
+      src="https://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js">
+    </script> 
+    <script type="text/javascript">
+        var global = (function($) {
+            //getJson获取数据
+            var getData =  function(url,param,cb){
+                $.getJSON(url, param, function(data) {
+                    cb(data);
+                });
+            };
+            //ajax提交数据
+            var subData = function(url,data,success){
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:data,
+                    success:function(d){
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
+                    },
+                    error:function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                });
+            };
+            /*获取get参数*/
+            var getUrlParam = function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+                if (r != null) 
+                    return unescape(r[2]); 
+                return null; //返回参数值
+            }; 
+
+
+            //用于把用utf16编码的字符转换成实体字符，以供后台存储 
+            var utf16toEntities = function(str){
+                var patt=/[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则  
+                str = str.replace(patt, function(char){  
+                    var H, L, code;  
+                    if (char.length===2) {  
+                        H = char.charCodeAt(0); // 取出高位  
+                        L = char.charCodeAt(1); // 取出低位  
+                        code = (H - 0xD800) * 0x400 + 0x10000 + L - 0xDC00; // 转换算法  
+                        return "&#" + code + ";";  
+                    } else {  
+                        return char;  
+                    }  
+                });  
+                return str; 
+            };
+            return {
+                getData:getData,
+                subData:subData,
+                getUrlParam: getUrlParam,
+                utf16toEntities:utf16toEntities
+            }
+        }(jQuery));
+    </script>
+    <% if (user) { %>
+    <script>
+        (function(){
+            var socket = io(location.hostname+':'+location.port);
+                socket.on('news',function(data){
+                // console.log('accept');
+                $('#mrp').css('display','block');
+            });
+            global.subData('/api/checkNewInfo',{},function(data){
+                if (data.ret == 200 && data.data && data.data.num == 1) {
+                    $('#mrp').css('display','block');
+                }
+            });
+        }());
+    </script>
+    <% } %>

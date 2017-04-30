@@ -1,4 +1,4 @@
-<%- include base/headerMobile.ejs %>
+<%- include base/headerMobile-default.ejs %>
 <nav class="personal-navbar">
                     <button class="personal-icon-back" type="button">
                         <svg aria-hidden="true" class="icon">
@@ -50,7 +50,7 @@
    </div>
    </form>
 </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 <script type="text/javascript">
   (function(){
     var users={
@@ -141,6 +141,7 @@
       init:function(){
         this.setPrivate();
         this.bindEvent();
+        wuanHeadFun.title("创建星球");
       }
     };
     users.uploader = Qiniu.uploader({

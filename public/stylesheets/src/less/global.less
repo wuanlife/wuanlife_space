@@ -1,0 +1,174 @@
+@import "public"; // publicM.less
+
+//iconfont　通用
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+//initial
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: 12px"宋体", "Arial Narrow", HELVETICA;
+    -webkit-text-size-adjust: 100%;
+}
+
+a {
+    color: #2d374b;
+    text-decoration: none
+}
+
+a:hover {
+    color: #cd0200;
+    text-decoration: underline
+}
+
+em {
+    font-style: normal
+}
+
+li {
+    list-style: none
+}
+
+img {
+    border: 0;
+    vertical-align: middle
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+p {
+    word-wrap: break-word
+}
+
+html, body {
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
+html {
+    background: #fff;
+}
+
+h1 {
+    margin: 0;
+}
+
+//消除chrome蛋疼的黄框
+*.focus {outline: none}
+
+/**
+分割
+**/
+#wrapper {
+    width: 950px;
+    margin: 0 auto;
+    .clearfix();
+}
+#content {
+    .clearfix();
+}
+
+
+/**
+ * section标签页
+ */
+.section {
+    margin-top: 15px;
+    .section-tab {
+        li {
+            cursor: pointer;
+            margin-right: 10px;
+            display: inline-block;
+            zoom: 1;
+            line-height: 1;
+            padding: 5px;
+            border-radius: 2px;
+        }
+        li.on > span{
+             
+        }
+        li.off > span {
+            color:#999999;
+        }
+    }
+    .section-hd {
+        span {
+            font-family:PingFangHK-Medium;
+            font-size: 18px;
+            color:#5677fc;
+            text-align:left;           
+        }
+
+    }
+}
+
+.article {
+    float: left;
+    width: 590px;
+    padding-right: 40px;
+}
+.aside {
+    float: right;
+    width: 310px;
+}
+.big-container {
+    margin-left: 0;
+    margin-right: 0;
+}
+.mid-container {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.section-hd {
+    margin-bottom: 20px;
+}
+
+
+/**
+ * Dropload样式
+ */
+.dropload-up,.dropload-down{
+    position: relative;
+    height: 0;
+    overflow: hidden;   
+    font-size: 12px;
+    /* 开启硬件加速 */
+    -webkit-transform:translateZ(0);
+    transform:translateZ(0);
+}
+.dropload-down{
+    height: 50px;
+}
+.dropload-refresh,.dropload-update,.dropload-load,.dropload-noData{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background-color: white;
+    color: @wuanBlue;
+    font-size: 24;
+}
+
+.dropload-load .loading{
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 100%;
+    margin: 6px;
+    border: 2px solid #666;
+    border-bottom-color: transparent;
+    vertical-align: middle;
+    -webkit-animation: rotate 0.75s linear infinite;
+    animation: rotate 0.75s linear infinite;
+}

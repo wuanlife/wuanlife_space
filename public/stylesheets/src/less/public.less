@@ -1,0 +1,32 @@
+@wuanBlue: #5677fc;
+@bgWhite: #ffffff;
+
+//圆角
+.border-radius(@radius: 2px) {
+    border-radius: @radius;
+}
+
+//清除浮动，在父元素里面放
+.clearfix() {
+    min-height: 1px;
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+}
+
+
+//单行超出省略号需要结合width
+.oneline-text-overflow {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+.auto-textbreak {
+    word-wrap:break-word;
+}
