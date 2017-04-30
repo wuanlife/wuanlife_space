@@ -7,7 +7,7 @@
 	        </svg>
 	    </button>
 	    <%if(result.identity=='01'){%>
-	    <a href="/groups/<%=result.group_id%>/set">星球设置</a>
+	    <a href="/groups/<%=result.group_id%>/set" class="group-set">星球设置</a>
 	    <%}%>
 	    <%if(result.identity=='02'){%>
 	    <span class="leave-btn">退出星球</span>
@@ -20,6 +20,9 @@
 	    <span>成员 <%=result.user_num%></span>.
 	    <span>话题 <%=result.post_num%></span>
 	    </div>
+	    <%if(result.private==1&&result.identity=='03'){%>
+	    <a href="#" class="join-private">加入</a>
+	    <%}%>
 	</nav>
 	<div class="allgroup-body">
 	<div class="group-content">
