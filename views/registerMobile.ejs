@@ -158,15 +158,15 @@
 
                                 }else{
                                     HJLoading.stop('registerLoading');
-                                    alert(data.msg);
+                                    swal('错误',data.msg,'error');
                                 }
                             }else{
                                 HJLoading.stop('registerLoading');
-                                alert(data.msg);
+                                swal('错误',data.msg,'error');
                             }
                         });
                     }else{
-                        alert(errorMsg);
+                        swal('提示',errorMsg,'warning');
                     }
                 });
 			},

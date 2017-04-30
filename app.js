@@ -26,7 +26,6 @@ var verifyEmail = require('./routes/verifyEmail');
 var search = require('./routes/search');
 var test = require('./routes/test');
 var news = require('./routes/news').router;
-var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
 var userManage = require('./routes/userManage');
 var myCollections = require('./routes/myCollections');

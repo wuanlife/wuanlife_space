@@ -147,6 +147,7 @@
 
 								var postsTPL = template("posts-tpl",data.data);
 								var planetsTPL = template("showallplanets-tpl",data.data);
+								that.searchContainer.unbind();
 								//清空元素
 								that.searchContainer.empty();
 
@@ -190,7 +191,7 @@
 									//提前加载距离
 									var pre_destance = 	$('.search-content-detail')?Math.ceil($('.search-content-detail').outerHeight()*2/3) : 180;
 									//对返回的数据进行事件绑定
-									$('.search-content-all').dropload({
+									that.searchContainer.dropload({
 										scrollArea : this,
 										domUp: {
 
@@ -248,7 +249,8 @@
 									e.preventDefault();
 									//星球容器
 									var planetContainer = "<div class='showallplanets'><div class='planets-tag'><span>星球</span></div><div class='showallplanets-planetContainers'></div></div></div>";
-
+									//为容器解除dropload事件绑定
+									that.searchContainer.unbind();			
 									//清空数据
 									that.searchContainer.empty();
 									//插入dom框架
@@ -272,7 +274,6 @@
 										if(data.ret===200){
 											if(data.data){
 												//插入星球
-
 												showallplanetsContainers.empty();
 												var allPlanetsTPL = template("showallplanets-tpl",data.data);
 												showallplanetsContainers.append(allPlanetsTPL);

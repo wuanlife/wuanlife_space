@@ -20,13 +20,13 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/groups', function(req, res, next) {
+router.get('/showallplanets', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']);
 	try{
-		var page = agent.Mobile ? 'addPlanetMobile' : 'addPlanet';
+		var page = agent.Mobile ? 'searchContentMobile' : 'searchContent';
 		res.render(page, {
 			'result': null,
-			'user': req.session.user
+			'user': null
 		});
 	} catch(e){
 		next(e);
@@ -55,7 +55,7 @@ router.post('/',function(req,res,next){
 	});	
 });
 
-router.post('/groups', function(req, res, next) {
+router.post('/showallplanets', function(req, res, next) {
     request(config.server + 'group/get_group_info?group_id=' + req.body.groupId + '&use_id' + req.body.userId, function optionalCallback(err, httpResponse, body) {
         res.header('Content-type', 'application/json');
         res.header('Charset', 'utf8');

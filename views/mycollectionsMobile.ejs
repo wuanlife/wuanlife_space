@@ -96,7 +96,7 @@
 
                         EPostsContainer.on('touchend',function(e){
                         var id = $(this).attr('id');
-                            window.location.href = '/posts/'+id.slice(id.lastIndexOf('_'));
+                            window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
                         });
 
                         //绑定下拉加载
@@ -129,7 +129,7 @@
 
                                     EPostsContainer.on('touchend',function(e){
                                     var id = $(this).attr('id');
-                                    window.location.href = '/posts/'+id.slice(id.lastIndexOf('_'));
+                                    window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
                                     });
                         
                                     me.resetload();
@@ -137,7 +137,7 @@
                             }
                         }); 
                     }else{
-                        sweetAlert('错误','数据获取失败','error');
+                        swal('错误','数据获取失败','error');
                     }                    
                 });
 			}
