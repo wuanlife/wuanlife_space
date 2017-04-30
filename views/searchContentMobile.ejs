@@ -49,6 +49,7 @@
 	(function() {
 		//存在问题。loading样式和默认占位元素设计
 		var search = {
+			win : $(window),
 			searchAction:$('.search-action'),
 			searchInput : $('#searchInput'),			
 			searchValid: $('.search-action-valid'),
@@ -147,28 +148,38 @@
 
 								var postsTPL = template("posts-tpl",data.data);
 								var planetsTPL = template("showallplanets-tpl",data.data);
-								that.searchContainer.unbind();
+								that.win.unbind();
 								//清空元素
 								that.searchContainer.empty();
 
 								//插入内容并绑定事件
 								//插入星球
 								if(data.data.group){
-									//插入dom
-									that.searchContainer.append(planetContainer);
+									if(!data.data.posts){
+										showallplanets();
+									}else{
+										//插入dom
+										that.searchContainer.append(planetContainer);
 
-									planetdefault = $('.content-planets-planetContainers');
-									//插入星球
-									planetdefault.append(planetsTPL);
-									//绑定事件
-									var EPlanetsContainer = $('.content-planets-planetContainer');
-									EPlanetsContainer.on('touchend',function(e){
-										var id = $(this).attr('id');
-										window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
-									});
+										planetdefault = $('.content-planets-planetContainers');
+										//插入星球
+										planetdefault.append(planetsTPL);
+										//绑定事件
+										var EPlanetsContainer = $('.content-planets-planetContainer');
+										EPlanetsContainer.on('touchend',function(e){
+											var id = $(this).attr('id');
+											window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
+										});
+
+										$('.get-more-planets').on('touchend',function(e){
+											e.preventDefault();
+											showallplanets();
+										});
+									}
+									
 									
 								}else{
-									//swal('提示','没找到任何星球','warning');
+									swal('提示','没找到任何星球','warning');
 								}
 								
 								//插入帖子
@@ -240,17 +251,18 @@
 
 										distance:pre_destance,
 									});
+								}else{
+									swal('提示','没找到任何帖子','warning');
 								}
 
 
 
-								$('.get-more-planets').on('touchend',
-								function(e){
-									e.preventDefault();
+								
+								function showallplanets(){
 									//星球容器
 									var planetContainer = "<div class='showallplanets'><div class='planets-tag'><span>星球</span></div><div class='showallplanets-planetContainers'></div></div></div>";
 									//为容器解除dropload事件绑定
-									that.searchContainer.unbind();			
+									that.win.unbind();			
 									//清空数据
 									that.searchContainer.empty();
 									//插入dom框架
@@ -269,10 +281,10 @@
 										pn: 1,
 										gn:1,
 									},function(data){
-										var cur_planet_page = data.data.g_current_page;
-										var group_page = data.data.group_page;
 										if(data.ret===200){
 											if(data.data){
+												var cur_planet_page = data.data.g_current_page;
+												var group_page = data.data.group_page;
 												//插入星球
 												showallplanetsContainers.empty();
 												var allPlanetsTPL = template("showallplanets-tpl",data.data);
@@ -287,7 +299,7 @@
 												//提前加载距离
 												var pre_destance = 100;
 
-												$('.search-content-all').dropload({
+												that.searchContainer.dropload({
 													scrollArea: this,
 													domDown:{
 														domClass : 'dropload-down',
@@ -302,9 +314,10 @@
 														text : inputtext,
 														gnum :  18,
 														pnum : 0,
-														pn : cur_planet_page,
-														gn : 1,
+														pn : 1,
+														gn : cur_planet_page,
 														},function(data){
+														if(data.data){
 															var arrLen = data.data.group?data.data.group.length:0;
 															if(arrLen >0 && cur_planet_page<=group_page){
 																result += template("showallplanets-tpl",data.data);
@@ -321,7 +334,10 @@
 																var id = $(this).attr('id');
 																window.location.href = '/groups/' + id.slice(id.lastIndexOf('_')+1);
 															});
-															me.resetload();											
+															me.resetload();	
+														}else{
+															swal('错误',data.msg,'error');
+														}										
 														});
 													},
 													threshold :pre_destance,
@@ -335,7 +351,9 @@
 										}
 									});
 									
-								});
+								}
+
+
 							}else{
 								swal('提示','获取数据不存在','warining')
 							}
