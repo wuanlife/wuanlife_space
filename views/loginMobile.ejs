@@ -123,15 +123,15 @@
                                     
                                 }else{
                                     HJLoading.stop('loginLoading');
-                                    alert(data.msg);
+                                    swal('错误',data.msg,'error');
                                 }
                             }else{
                                 HJLoading.stop('loginLoading');
-                                alert(data.msg);
+                                swal('错误',data.msg,'error');
                             }
                         });
                     }else{
-                        alert(errorMsg);
+                        swal('提示',errorMsg,'warning');
                     }
                     
                 });

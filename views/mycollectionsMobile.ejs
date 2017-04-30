@@ -11,7 +11,7 @@
 <script type="text/html" id="mycollection-entry-tpl">    
 
     {{each posts as item i}}
-        <div class="collection-entry" id="{{item.post_id}}">
+        <div class="collection-entry" id="post_{{item.post_id}}">
             <div class="collection-entry-content">
                 <div class="collection-entry-title">
                     <h1>{{item.p_title}}</h1>
@@ -91,6 +91,14 @@
                         }
                         var com = template("mycollection-entry-tpl",data.data);
                         that.container.html(com);
+                        //绑定事件
+                        var EPostsContainer = $('.collection-entry');
+
+                        EPostsContainer.on('touchend',function(e){
+                        var id = $(this).attr('id');
+                            window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
+                        });
+
                         //绑定下拉加载
                         that.wrapper.dropload({
                             scrollArea: this,
@@ -116,12 +124,20 @@
                                     }
 
                                     that.container.append(result);
+                                    //绑定事件
+                                    var EPostsContainer = $('.collection-entry');
+
+                                    EPostsContainer.on('touchend',function(e){
+                                    var id = $(this).attr('id');
+                                    window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
+                                    });
+                        
                                     me.resetload();
                                 });
                             }
                         }); 
                     }else{
-                        sweetAlert('错误','数据获取失败','error');
+                        swal('错误','数据获取失败','error');
                     }                    
                 });
 			}
