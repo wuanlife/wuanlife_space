@@ -38,7 +38,7 @@
                     $(".myplanet-item").off("touchend");
                     //绑定每个index-entry的收藏操作
                     $(".myplanet-item").on("touchend",function(e){
-                        window.location.href = '/groups/' + e.target.parentElement.id.slice(-1);
+                        window.location.href = '/groups/' + e.target.parentElement.id.slice(e.target.parentElement.id.indexOf('-')+1);
                     });
                 };
                 //绑定下拉加载

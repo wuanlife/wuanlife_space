@@ -165,22 +165,27 @@
 	.px2rem(padding-bottom, 22);
 
 	.alignCenter;
-	p {
+	input {
+		background: inherit;
 		order:-1;/* 让left居于左侧 */
 		line-height: 30px;
 		.px2rem(margin-left, 32);
 
 		font-family:PingFangHK-Regular;
 		.px2px(font-size, 32);
-		color:rgba(255,255,255,0.54);
+		color:rgba(255,255,255,0.8);
 		letter-spacing:0.57px;
 		text-align:left;
+	}
+	input[placeholder] {
+		color:rgba(255,255,255,0.54);
 	}
 	div {
 		height: 100%;
 		flex:1;
 	}
 	button {
+		background: none;
 		.px2rem(margin-right, 32);
 		flex:0 0 40px;/* 左右两列固定宽 */
 		line-height: 30px;

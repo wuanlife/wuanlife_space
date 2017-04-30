@@ -63,37 +63,6 @@ router.post('/:postid', function(req, res, next) {
 });
 router.get('/:postid', function(req, res, next) {
 	/*
-    if(!req.session.user) {
-        res.send({
-            ret: 403,
-            msg: '未登录'
-        });
-        return;
-    }
-    console.log(`${config.server}post/get_post_base?user_id=${req.session.user.user_id}`);
-    request(`${config.server}post/get_post_base?user_id=${req.session.user.user_id}&post_id=${req.body.postid}`,
-        function(error, httpResponse, body) {
-            if (!error && httpResponse.statusCode == 200) {
-                console.log('get_index_post success!');
-                return res.send(JSON.parse(body));
-            } else {
-                console.log('get_index_post error!  Server responded with:', body);
-                try {
-                    console.error('get_index_post failed:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:'服务器异常'
-                    });
-                } catch(error) {
-                    console.error('catch get_index_post exception:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:'服务器异常'
-                    });
-                }
-            }
-        }
-    )
 
 	*/
 	console.log("userid:" + req.param("postid"));
@@ -110,5 +79,35 @@ router.get('/:postid', function(req, res, next) {
 	}
 });
 
+router.post('/:postid/replysend', function(req, res, next) {
+    console.log(req.params.postid);
+    console.log(req.session.user_id);
+    console.log(req.body.p_text);
+    request.post({
+        url: config.server + 'post/post_reply',
+        formData: {
+            post_id: req.params.postid,
+            user_id: req.session.user_id,
+            p_text: req.body.p_text,
+        }
+    }, function optionalCallback(err, httpResponse, body) {
+        res.header('Content-type', 'application/json');
+        res.header('Charset', 'utf8');
+        if (!err && httpResponse.statusCode == 200) {
+            //console.log('CreatePlanet successful!  Server responded with:', body);
+             return res.send(JSON.parse(body));
+        } else {
+            try {
+                console.error('get mymessage failed:', err.toString());
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            } catch(err) {
+                console.error('get mymessage catch exception:', err.toString());
+            }
+        }
+    });
+});
 
 module.exports = router;

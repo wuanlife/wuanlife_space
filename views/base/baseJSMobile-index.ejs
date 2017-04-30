@@ -41,12 +41,14 @@
                         case 'tab-head-myplanet':
                             <% if (typeof user !== 'undefined' && user) { %>
                             window.location.href = '/myplanet';
+                            break;
                             <% } %>
                             window.location.href = '/personal/login';
                             break;
                         case 'tab-head-mymessage':
                             <% if (typeof user !== 'undefined' && user) { %>
                             window.location.href = '/mymessage';
+                            break;
                             <% } %>
                             window.location.href = '/personal/login';
                             break;

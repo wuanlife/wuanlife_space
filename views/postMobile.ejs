@@ -6,9 +6,9 @@
             </div>
         </div>
         <div class="fixed-footer reply-footer">
-            <p>可以他喵的说点啥</p>
+            <input id="reply-send-content" type="text" autocomplete="off" placeholder="可以他喵的说点啥">
             <div></div>
-            <button>                                
+            <button id="reply-send-btn">                                
                 <svg aria-hidden="true" class="icon">
                     <use xlink:href="#icon-goback"></use>
                 </svg>
@@ -113,12 +113,22 @@
             loadedreplypn: 1,
             postContainer: $('.default-container'),
             postReplies: $('.postreplies'),
+            replyInput: $('#reply-send-content'),
 			getServerData: function(param, cb) {
 				
 			},
 			bindEvent: function() {
                 var self = this;
-                            
+                $("#reply-send-btn").on("touchend", function() {
+                    global.subData("./<%= postid%>/replysend", {p_text: self.replyInput.val()}, function(data) {
+                        if (data.ret == 200 && data.data) {
+                            swal('发送成功');
+                            self.replyInput.val('');
+                        } else {
+                            sweetAlert('错误', '回复数据获取失败', 'error');
+                        }
+                    });                    
+                })
 			},
 			init: function() {
                 var self = this;

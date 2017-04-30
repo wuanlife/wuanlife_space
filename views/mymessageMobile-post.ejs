@@ -39,6 +39,14 @@
                 wuanHeadFun.title("帖子通知");
 				this.bindEvent();
 
+                var rebind = function() {
+                    //先解绑
+                    $(".message-line").off("touchend");
+                    //绑定每个查看操作
+                    $(".message-line").on("touchend",function(e){
+                        window.location.href = '/posts/' + e.target.parentElement.parentElement.id.slice(e.target.parentElement.parentElement.id.indexOf('-')+1);
+                    });
+                };
                 //绑定下拉加载
                 $('.default-container').dropload({
                     scrollArea: window,
@@ -62,7 +70,7 @@
                             //插入数据
                             $('.message-board').append(result);
                             me.resetload();    
-
+                            rebind();
                         });
                     }
                 }); 

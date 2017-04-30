@@ -78,9 +78,7 @@ router.post('/', function(req, res, next) {
             } catch(err) {
                 console.error('get mymessage catch exception:', err.toString());
             }
-
         }
-
     });
 });
 router.post('/post', function(req, res, next) {
