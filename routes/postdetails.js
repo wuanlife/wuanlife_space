@@ -80,14 +80,11 @@ router.get('/:postid', function(req, res, next) {
 });
 
 router.post('/:postid/replysend', function(req, res, next) {
-    console.log(req.params.postid);
-    console.log(req.session.user_id);
-    console.log(req.body.p_text);
     request.post({
         url: config.server + 'post/post_reply',
         formData: {
             post_id: req.params.postid,
-            user_id: req.session.user_id,
+            user_id: req.session.user.user_id,
             p_text: req.body.p_text,
         }
     }, function optionalCallback(err, httpResponse, body) {
