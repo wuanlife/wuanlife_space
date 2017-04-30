@@ -65,7 +65,7 @@ router.get('/:groupid/more',function(req, res, next){
 });
 //星球发帖
 router.get('/:groupid/post', function(req, res, next) {
-        console.log("uehfu");
+    if(req.session.user){
         var agent = ua(req.headers['user-agent']);
         //var userid = req.session.user.userID;
         var page = agent.Mobile ? 'publishPostM' : 'publishPostM';
@@ -102,6 +102,9 @@ router.get('/:groupid/post', function(req, res, next) {
                     next(error);
                 }*/
             });
+    }else{
+        res.redirect('/personal/login');
+    }
 
 });
 //发表帖子
