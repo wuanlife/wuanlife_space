@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 			'user':req.session.user
 		});
 	} else{
-		res.redirect('/login');
+		res.redirect('/personal/login');
 	}
 });
 //创建星球提交的数据
