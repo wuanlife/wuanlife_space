@@ -1,4 +1,4 @@
-<%- include base/headerMobile.ejs %>
+<%- include base/headerMobile-default.ejs %>
 <nav class="personal-navbar">
                     <button class="personal-icon-back" type="button">
                         <svg aria-hidden="true" class="icon">
@@ -12,10 +12,11 @@
                         </h1>
                     </div>
 </nav>
+<div class="allgroup-body">
 <div class="allgroup-content">
   <%for(var i in data.groups){%>
    <div class="allgroup-group">
-      <a href="group/<%=data.groups[i].group_id%>">
+      <a href="groups/<%=data.groups[i].group_id%>">
       <button type="button" style="background-image:url(<%=data.groups[i].g_image%>);"></button>
       </a>
       <h2><%=data.groups[i].g_name%></h2>
@@ -23,11 +24,11 @@
    </div>
   <%}%>
 </div>
-<div class="download-part"></div>
+</div>
 <script id="group-list" type="text/html">
   {{each groups as value i}}
   <div class="allgroup-group">
-      <a href="group/{{value.group_id}}">
+      <a href="groups/{{value.group_id}}">
       <button type="button" style="background-image:url({{value.g_image}});"></button>
       </a>
       <h2>{{value.g_name}}</h2>
@@ -35,7 +36,7 @@
    </div>
   {{/each}}
 </script>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 <script>
   (function(){
     var users={
@@ -44,40 +45,43 @@
       pageallnum:<%=data.page_count%>,
       download:function(){
         var self=this;
-        $(document).scroll(function(){
-          var scrolltop=$("body").scrollTop(),contentheight=$("body").outerHeight(),windowheight=$(window).height();
-          /*console.log(self.pagecount);
-          console.log($("body").outerHeight());
-          console.log(scrolltop + windowheight);*/
-          if(scrolltop + windowheight == contentheight){
-            self.loading.start({
-                loadingTPLId : 0,
-                target : $(".download-part"),
-                loadingId : 'self'
-              });
-            self.pagecount++;
-            if(self.pagecount<=self.pageallnum){
-              global.getData('/allGroup/more?pagecount='+self.pagecount,function(data){
-                self.loading.stop('self');
-                if(data.ret==200){
-                  var compiled=template('group-list',data.data);
-                  var temp=$(".allgroup-content").html()
-                  $(".allgroup-content").html(temp+compiled);
-                  self.pagecount=data.data.current_page;
-                }else{
-                  self.pagecount--;
-                }
-              });
-          }else{
-            self.loading.stop('self');
-            $(".download-part").text("没有更多了~");
-            self.pagecount=self.pagecount-1;
-          }
-          }
-        });
+        $('.allgroup-body').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+                    loadDownFn:function(me){
+                        self.pagecount++;
+                        //console.log(self.pagecount);
+                        if(self.pagecount<=self.pageallnum){
+                          global.getData('/allGroup/more?pagecount='+self.pagecount,function(data){
+                            if(data.ret==200){
+                              var compiled=template('group-list',data.data);
+                              var temp=$(".allgroup-content").html()
+                              $(".allgroup-content").html(temp+compiled);
+                              me.resetload(); 
+                              self.pagecount=data.data.current_page;
+                            }else{
+                              me.resetload();
+                              self.pagecount--;
+                            }
+                          });
+                      }else{
+                        me.lock();
+                        me.noData();
+                        me.resetload();
+                        self.pagecount=self.pagecount-1;
+                      }
+                      
+                    }
+                }); 
       },
       init:function(){
         this.download();
+        wuanHeadFun.title("全部星球");
       }
     }
     users.init();

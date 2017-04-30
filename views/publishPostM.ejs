@@ -1,4 +1,4 @@
-<%- include base/headerMobile.ejs %>
+<%- include base/headerMobile-default.ejs %>
 <nav class="personal-navbar">
                     <button class="personal-icon-back" type="button">
                         <svg aria-hidden="true" class="icon">
@@ -22,7 +22,7 @@
         </use>
   </svg>
 </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 <script type="text/javascript">
   (function(){
     var users = {
@@ -66,6 +66,7 @@
       },
       init:function(){
         this.bindEvent();
+        wuanHeadFun.title("发表帖子");
       }
     }
     users.init();

@@ -7,6 +7,7 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
     padding: 0
 }
 .group-nav{
+	position: relative;
 	width: 100%;
 	.px2rem(height,357);
 	background:#ffffff;
@@ -43,8 +44,10 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 		}
 	}
 	h2{
+		position: absolute;
+		left: 50%;
 		.px2rem(margin-top,-40);
-		.px2rem(margin-left,200);
+		.px2rem(margin-left,-175);
 		.px2rem(width,350);
 		.oneline-text-overflow;
 		text-align: center;
@@ -53,7 +56,9 @@ body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend,
 		color:#292929;
 	}
 	.group-number{
-		.px2rem(margin-left,280);
+		position: absolute;
+		left: 50%;
+		.px2rem(margin-left,-80);
 		.px2rem(margin-top,10);
 		font-family:PingFangHK-Regular;
 		.px2px(font-size,26);

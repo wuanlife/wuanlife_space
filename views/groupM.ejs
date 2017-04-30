@@ -18,6 +18,7 @@
     <span>话题 <%=result.post_num%></span>
     </div>
 </nav>
+<div class="allgroup-body">
 <div class="group-content">
  <%if(result.posts.length==0){%>
     <div class="group-nopost">还没有帖子~</div>
@@ -91,7 +92,7 @@
   <%}%>
  <%}%>
 </div>
-<div class="download-part"></div>
+</div>
 <%if(result.identity=='01'||result.identity=='02'){%>
 <a href="/groups/<%=result.group_id%>/post" class="group-publish-post"><span>+</span></a>
 <%}%>
@@ -173,14 +174,10 @@
 			loading:HJLoading,
             pagecount:1,
             pageallnum:<%=result.page_count%>,
-            download:function(){
+            /*download:function(){
 		        var self=this;
 		        $(document).scroll(function(){
 		          var scrolltop=$("body").scrollTop(),contentheight=Math.floor($("body").outerHeight()),windowheight=$(window).height();
-		          /*console.log(self.pagecount);
-		          console.log($("body").outerHeight());
-		          console.log(scrolltop + windowheight);
-		          console.log(self.pageallnum);*/
 		          //
 		          if(scrolltop + windowheight == contentheight){
 		            self.loading.start({
@@ -209,9 +206,49 @@
 		          }
 		         }
 		        });
+            },*/
+            download:function(){
+            	 var self=this;
+                 $('.allgroup-body').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+                    loadDownFn:function(me){
+                        self.pagecount++;
+                        //console.log(self.pagecount);
+                        if(self.pagecount<=self.pageallnum){
+                          global.getData('/groups/<%=result.group_id%>/more?pagecount='+self.pagecount,function(data){
+			                if(data.ret==200){
+			                  var compiled=template('post-list',data.data);
+			                  var temp=$(".group-content").html()
+			                  $(".group-content").html(temp+compiled);
+			                  me.resetload(); 
+			                  self.pagecount=data.data.current_page;
+			                }else{
+			                  me.resetload(); 
+			                  self.pagecount--;
+			                }
+			              });
+                      }else{
+                        me.lock();
+                        me.noData();
+                        me.resetload();
+                        self.pagecount=self.pagecount-1;
+                      }
+                      
+                    }
+                });
             },
 			init:function(){
 				this.download();
+				$(".personal-icon-back").on("touchend",function(){
+					console.log("hehe");
+					window.history.go(-1);
+				});
 			}
 		};
 		users.init();
