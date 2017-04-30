@@ -1,4 +1,4 @@
-<%- include base/headerMobile.ejs %>
+<%- include base/headerMobile-default.ejs %>
 <nav class="personal-navbar">
                     <button class="personal-icon-back" type="button">
                         <svg aria-hidden="true" class="icon">
@@ -90,7 +90,7 @@
                <button type="submit">保存</button>
            </form>
 </div>
-<%- include base/baseJSMobile.ejs %>
+<%- include base/baseJSMobile-default.ejs %>
 <script type="text/javascript">
   (function(){
     var users={
@@ -291,6 +291,7 @@
         this.bindTagEvent();
         this.ClientData();
         this.verifimail();
+        wuanHeadFun.title("个人资料");
       }
     };
     users.uploader = Qiniu.uploader({
