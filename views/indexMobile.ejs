@@ -179,6 +179,9 @@
                         var indexid = getEntryId(e.target);
                         approve(indexid);
                     });
+                    $(".index-entry-content").on("touchend",function(e){
+                        window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
+                    });
                 };
 
                 //绑定下拉加载

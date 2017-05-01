@@ -37,7 +37,8 @@
                     //绑定点击进入星球详情事件
                     $(".myplanet-item").off("touchend");
                     //绑定每个index-entry的收藏操作
-                    $(".myplanet-item").on("touchend",function(e){
+                    $(".myplanet-item").on("touchend", "img,p",function(e){
+                        e.stopPropagation();
                         window.location.href = '/groups/' + e.target.parentElement.id.slice(e.target.parentElement.id.indexOf('-')+1);
                     });
                 };
