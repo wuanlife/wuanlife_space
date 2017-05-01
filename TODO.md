@@ -3,6 +3,7 @@
 **TODOs in Mobile
 *重构*
 - 重构index等，采用面向对象的方法实现entry
+- 重构allGroup，路由改成groups，重构里面views
 
 **TODOs in PC
 *开发*

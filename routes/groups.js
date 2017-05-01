@@ -5,6 +5,7 @@ var config = require('../config/config');
 var ua = require('mobile-agent');
 var xss = require('xss');
 
+
 /* 获取星球主页 */
 router.get('/:groupid', function(req, res, next) {
     var agent = ua(req.headers['user-agent']),

@@ -41,6 +41,19 @@
                         e.stopPropagation();
                         window.location.href = '/groups/' + e.target.parentElement.id.slice(e.target.parentElement.id.indexOf('-')+1);
                     });
+
+                    //全部星球和创建星球事件绑定
+                    $("#all-planet").off("touchend");
+                    $("#create-planet").off("touchend");
+                    $("#all-planet").on("touchend", function(e){
+                        e.stopPropagation();
+                        window.location.href = '/allgroup';
+                    });    
+                    $("#create-planet").on("touchend", function(e){
+                        e.stopPropagation();
+                        window.location.href = '/creategroup';
+                    });                   
+
                 };
                 //绑定下拉加载
                 $('.tab-container').dropload({
@@ -55,12 +68,17 @@
                     loadDownFn:function(me){
                         var result = '';
                         global.subData('/myplanet',{pn : self.loadedpn}, function(data) {
-                            if(self.loadedpn<=data.data.page_count){
+                            if(self.loadedpn<data.data.page_count){
                                 result += template("myplanet-item-tpl",data.data);
                                 self.loadedpn++;
                             }else{
+                                result += template("myplanet-item-tpl",data.data);
+                                self.loadedpn++;
                                 me.lock();
                                 me.noData();
+                                //加入创建星球和全部星球,好丑
+                                result += '    <div id="all-planet" class="myplanet-item"><img src="./images/allPlanet.png"><p>全部星球</p></div>';
+                                result += '    <div id="create-planet" class="myplanet-item"><img src="./images/createPlanet.png"><p>创建星球</p></div>'
                             }
                             $('.myplanet-board').append(result);
                             me.resetload();   
