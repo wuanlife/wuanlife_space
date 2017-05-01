@@ -137,17 +137,10 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/',function(req,res,next){
 	
-	request.post({
-		url:config.server + 'group/check_status',
-		formData:{
-			user_id: req.body.userId
-		}
-	},function(err,httpResponse,body){
+	request(config.server + 'user/get_user_info?user_id=' + req.body.userId,
+	function(err,httpResponse,body){
 		res.header('Content-type', 'application/json');
 		res.header('Charset', 'utf8');
-		console.log('err',err);
-		console.log('status',httpResponse.statusCode);
-
 		if(!err && httpResponse.statusCode === 200){
 			var data = JSON.parse(body).data;
 			console.log('data',data);
