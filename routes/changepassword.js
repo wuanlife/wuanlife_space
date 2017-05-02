@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
         var userid = req.session.user.user_id;
-        var page = agent.Mobile ? 'changepasswordM' : 'changepasswordM';
+        var page = agent.Mobile ? 'changepasswordM' : 'changepassword';
         request(config.server + "user/get_user_info?user_id="+userid,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
