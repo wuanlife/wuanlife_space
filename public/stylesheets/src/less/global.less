@@ -79,6 +79,15 @@ h1 {
 #content {
     .clearfix();
 }
+.nav-wrap {
+    height: 100%;
+}
+.nav-primary {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 150px;
+}
 
 
 /**
@@ -132,6 +141,83 @@ h1 {
     margin-left: 40px;
     margin-right: 40px;
 }
+
+/**
+ * 头部logo
+ */
+.nav-logo {
+    float: left;
+    height: 27px;
+    width: 72px;
+    margin: 0 3% 0 0;
+    background: url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1361763051,2365245678&fm=23&gp=0.jpg) no-repeat;
+    background-position: center center;
+    background-size: cover;
+    a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        line-height: 100em;
+}
+}
+
+
+/**
+ * 头部search
+ */
+.nav-search {
+    //消除输入栏和搜索图标的边框
+    input {
+        border: none;
+    }
+    form {
+        border: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+    .inp-btn {
+        position: absolute;
+        left: 448px;
+        top: 7px;
+        width: 21px;
+        height: 20px;
+        border: 1px solid #e1e9e1;
+        border-left: none;
+        background-color: #fff;
+        font-size: 0;
+        overflow: hidden;
+        input {
+            color: transparent;
+            background: url(../../images/search_blue.svg) no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+        
+
+    }
+    .inp {
+        width: 480px;
+        height: 34px;
+        background: #fff;
+        border: 1px solid #e1e9e1;
+        text-align: left;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0;
+        input {
+            width: 440px;
+            height: 20px;
+            padding: 6px 8px 6px 0px;
+            outline: none;
+
+        }
+    }   
+
+}
+
 
 
 
