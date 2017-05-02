@@ -1,0 +1,58 @@
+<%- include base/header.ejs %>
+<h2 class="pensonal-title">个人资料</h2>
+<div class="pensonal-content">
+<form>
+	<div class="pensonal-img">
+		  <div class="img-upload-progress"></div>
+	      <button type="button" id="user-image-upload" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
+	      <input type="hidden" name="g_image" value="http://pic2.cxtuku.com/00/00/17/b91174f86091.jpg" id="g_img">
+		  <span>修改</span>
+	</div>
+	<div class="pensonal-mail">
+		<label for="email" class="input-text">邮箱</label>
+		<input type="email" id="email" value="2660591904@qq.com" disabled>
+		<button>验证</button>
+	</div>
+	<div class="pensonal-name">
+		<label for="name" class="input-text">昵称</label>
+		<input type="text" id="name" autocomplete="off" value="三木是什么">
+	</div>
+	<div class="pensonal-sex">
+		<label for="male" class="label-1 input-text">性别</label>
+        <input type="radio" name="sex" value="male" id="male" autocomplete="off">
+        <span>
+        	<svg aria-hidden="true" class="icon">
+                <use xlink:href="#icon-pitchon_not" data-sex="1">
+                </use>
+            </svg>男
+        </span>
+        <label for="female" class="label-e"></label>
+        <input type="radio" name="sex" value="male" id="female">
+        <span>
+        	<svg aria-hidden="true" class="icon">
+                <use xlink:href="#icon-pitchon_not" data-sex="1">
+                </use>
+            </svg>女
+        </span>
+        <label for="unknow" class="label-e"></label>
+        <input type="radio" name="sex" value="unknow" id="unknow">
+        <span>
+        	<svg aria-hidden="true" class="icon">
+                <use xlink:href="#icon-pitchon_not" data-sex="1">
+                </use>
+            </svg>不想透露
+        </span>
+	</div>
+	<div class="pensonal-birthday">
+		<label for="year" class="label-year input-text">生日</label>
+        <input type="text" name="sex" placeholder="如1990" value="1990" id="year" autocomplete="off">
+        <label for="month" class="label-month"></label>
+        <input type="text" name="sex" placeholder="如01" value="01" id="month" autocomplete="off">
+        <label for="day" class="label-day"></label>
+        <input type="text" name="sex" placeholder="如01" value="01" id="day" autocomplete="off">
+	</div>
+	<button class="pensonal-save" type="submit">保存</button>
+</form>
+</div>
+<%- include base/baseJS.ejs %>
+<%- include base/footerMobile.ejs %>

@@ -2,6 +2,7 @@
         <div class="personal-tab-container">
             <div class="personal-items">
                 <div class="personal-item personal-logstate">
+                    <% if(!user){ %>
                     <div class="personal-personIcon personal-state">
                         <div class="personal-Icon">
                             <svg aria-hidden="true" class="icon">
@@ -9,6 +10,13 @@
                             </svg>
                         </div>
                     </div>
+                    <%}else{%>
+                    <div>
+                    <div class="personal-personIcon personal-state">
+                         <img src=""></img>
+                    </div>   
+                    </div>
+                    <%}%>
                     <span class="personal-logfont personal-state">未登录</span>
                 </div>
                 <div class="personal-item personal-details">
@@ -75,6 +83,7 @@
     (function() {
         var personal = {
             name:$('.personal-state.personal-logfont'),
+            photo:$('.personal-personIcon > img'),
             state : $('.personal-state'),
             info : $('.personal-information'),
             changepwd : $('.personal-changepwd'),
@@ -117,6 +126,15 @@
                 wuanHeadFun.title('我的');
                 <% if(user) {%>
                     that.name.html('<%= user.user_name %>');
+                    global.subData('/personal',{userId:<%= user.user_id%>},function(data){
+                        if(data.data){
+                            that.photo.attr('src',data.data.profile_picture);
+                        }else{
+                            swal('错误',data.msg,'error');
+                        }    
+                        
+                    });
+                    
                 <% }else{ %>
                     that.name.html('未登录');
                 <% } %>
