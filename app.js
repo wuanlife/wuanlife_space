@@ -15,7 +15,6 @@ var routes = require('./routes/index');
 
 var page = require('./routes/page');
 var api = require('./routes/api');
-var register = require('./routes/register');
 var createGroup = require('./routes/createGroup');
 var topic = require('./routes/topic');
 var allGroup = require('./routes/allGroup');
@@ -42,7 +41,7 @@ var myMessage = require('./routes/myMessage');
 var postdetails = require('./routes/postdetails');
 
 var inviteCode = require('./routes/inviteCode');
-var registerNew = require('./routes/registerNew');
+var register = require('./routes/register');
 var retrievePwd = require('./routes/retrievePwd');
 var modifyPwd = require('./routes/modifyPwd');
 var addPlanet = require('./routes/addPlanet');
@@ -151,7 +150,7 @@ app.use('/addPlanet',addPlanet);
 app.use('/mycollections',myCollections);
 app.use('/personal',myself);
 app.use('/inviteCode',inviteCode);
-app.use('/registerNew',registerNew);
+app.use('/register',register);
 
 app.use('/retrievepassword',retrievePwd);
 app.use('/modifypassword',modifyPwd);
@@ -166,6 +165,8 @@ app.use('/posts',postdetails);
 
 app.use('/users', users);
 app.use('/groups', groups);
+
+
 
 
 

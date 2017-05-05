@@ -1,0 +1,147 @@
+<%- include base/headerMobile-index.ejs %>
+        <div class="personal-tab-container">
+            <div class="personal-items">
+                <div class="personal-item personal-logstate">
+                    <% if(!user){ %>
+                    <div class="personal-personIcon personal-state">
+                        <div class="personal-Icon">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-people"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <%}else{%>
+                    <div>
+                    <div class="personal-personIcon personal-state">
+                         <img src=""></img>
+                    </div>   
+                    </div>
+                    <%}%>
+                    <span class="personal-logfont personal-state">未登录</span>
+                </div>
+                <div class="personal-item personal-details">
+                    <div class="personal-detail persoanl-info">
+                        <div class="personal-item-icon personal-information">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-profile"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-information">个人资料</span>
+                        <div class="personal-next personal-information"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-pwd">
+                        <div class="personal-item-icon personal-changepwd">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-lock"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-changepwd">修改密码</span>
+                        <div class="personal-next personal-changepwd"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-collections">
+                        <div class="personal-item-icon personal-collection">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-star_grey"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-collection">我的收藏</span>
+                        <div class="personal-next personal-collection"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-friend">
+                        <div class="personal-item-icon personal-invitefriend">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-inviteFriend"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-invitefriend">邀请好友</span>
+                        <div class="personal-next personal-invitefriend"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                </div>
+                <% if (user) { %>
+                <div class="personal-item personal-signBtn">
+                    <button id="exit" type="button">退出登录</button>
+                </div>
+                <% }%>
+            </div>
+        </div>
+<%- include base/baseJSMobile-index.ejs %>
+
+
+<script>
+    (function() {
+        var personal = {
+            name:$('.personal-state.personal-logfont'),
+            photo:$('.personal-personIcon > img'),
+            state : $('.personal-state'),
+            info : $('.personal-information'),
+            changepwd : $('.personal-changepwd'),
+            collection : $('.personal-collection'),
+            invite : $('.personal-invitefriend'),
+            exit: $('#exit'),
+            getServerData: function(param, cb) {
+                
+            },
+            bindEvent: function() {
+                var that = this;
+
+                that.state.on('click',function(e){
+                    <%if(!user){%>
+                    window.location.href = window.location.pathname + "/personalInfo";
+                    <%}%>
+                });
+
+                that.info.on('click',function(e){
+                    window.location.href = window.location.pathname + "/personalInfo";
+                });
+                that.changepwd.on('click',function(e){
+                    window.location.href = window.location.pathname + "/changepassword";
+                });
+                that.collection.on('click',function(e){
+                    window.location.href = window.location.pathname + "/myCollection";
+                });
+                that.invite.on('click',function(e){
+                    window.location.href = window.location.pathname + "/invite";
+                });
+
+                that.exit.on('click',function(e){
+                    //退出登录
+                    window.location.href = window.location.pathname +"/logout";
+                });
+            },
+            init: function() {
+                var that = this;
+                wuanHeadFun.tabHighlight("tab-head-myself");
+                wuanHeadFun.title('我的');
+                <% if(user) {%>
+                    that.name.html('<%= user.user_name %>');
+                    global.subData('/personal',{userId:<%= user.user_id%>},function(data){
+                        if(data.data){
+                            that.photo.attr('src',data.data.profile_picture);
+                        }else{
+                            swal('错误',data.msg,'error');
+                        }    
+                        
+                    });
+                    
+                <% }else{ %>
+                    that.name.html('未登录');
+                <% } %>
+                that.bindEvent();
+            }
+        }
+        personal.init();
+    })();
+</script>
+<%- include base/footerMobile.ejs %>
