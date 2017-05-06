@@ -9,7 +9,7 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
     if (req.session.user) {
         var agent = ua(req.headers['user-agent']);
-        var page = agent.Mobile ? 'joinPensonalGroupM' : 'joinPensonalGroupM';
+        var page = agent.Mobile ? 'joinPensonalGroupM' : 'joinPensonalGroup';
         res.render(page, {
                             'title': '申请加入私密星球',
                             'user': req.session.user

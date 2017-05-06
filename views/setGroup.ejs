@@ -1,0 +1,34 @@
+<%- include base/header.ejs %>
+<div class="content">
+	<div class="section">
+		<div class="section-hd">
+                <span>星球设置</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+        </div>
+        <div class="section-content">
+        	<div class="creatgroup-content">
+        		<h3>星球名称</h3>
+        		<input type="text" name="" class="setgroup-name" value="三木哈哈哈哈哈" disabled="disabled">
+        		<h3>星球头像</h3>
+        		<button class="creatgroup-img" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
+        		<h3>星球介绍（选填）</h3>
+        		<textarea placeholder="星球介绍（选填）"></textarea>
+        		<h3>加入星球方式</h3>
+    			<button type="button" data-private="0" id="choose-btn">
+    				<span>
+    					加入星球的方式
+    				</span>
+    				<svg aria-hidden="true" class="icon">
+    					<use xlink:href="#icon-right_black">
+    					</use>
+    				</svg>
+    			</button>
+        		<button class="creatgroup-save">保存</button>
+        	</div>
+        </div>
+	</div>
+</div>
+<%- include base/baseJS.ejs %>
+<%- include base/footerMobile.ejs %>

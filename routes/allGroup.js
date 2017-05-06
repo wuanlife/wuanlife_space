@@ -8,7 +8,7 @@ var ua = require('mobile-agent');
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
 	pn = req.query.page || 1;
-	var page = agent.Mobile ? 'allGroupM' : 'allGroupM';
+	var page = agent.Mobile ? 'allGroupM' : 'allGroup';
 	request(config.server +"group/lists", function(error, response, body) {
 		if (!error) {
 			var result = JSON.parse(body);

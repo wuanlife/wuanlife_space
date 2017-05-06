@@ -1,0 +1,34 @@
+<%- include base/header.ejs %>
+<div class="content">
+	<div class="section">
+		<div class="section-hd">
+                <span>创建星球</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+        </div>
+        <div class="section-content">
+        	<div class="creatgroup-content">
+        		<h3>星球名称</h3>
+        		<input type="text" name="" class="creatgroup-name" placeholder="星球名称">
+        		<h3>星球头像（选填）</h3>
+        		<button class="creatgroup-img">+</button>
+        		<h3>星球介绍（选填）</h3>
+        		<textarea placeholder="星球介绍（选填）"></textarea>
+        		<h3>加入星球方式</h3>
+    			<button type="button" data-private="0" id="choose-btn">
+    				<span>
+    					加入星球的方式
+    				</span>
+    				<svg aria-hidden="true" class="icon">
+    					<use xlink:href="#icon-right_black">
+    					</use>
+    				</svg>
+    			</button>
+        		<button class="creatgroup-save">创建</button>
+        	</div>
+        </div>
+	</div>
+</div>
+<%- include base/baseJS.ejs %>
+<%- include base/footerMobile.ejs %>
