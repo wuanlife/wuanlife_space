@@ -159,7 +159,7 @@ router.post('/:groupid/post', function(req, res, next) {
 router.get('/:groupid/set', function(req, res, next) {
     var agent = ua(req.headers['user-agent']);
     var userid = (req.session.user) ? req.session.user.user_id : null;
-    var page = agent.Mobile ? 'setGroupM' : 'setGroupM';
+    var page = agent.Mobile ? 'setGroupM' : 'setGroup';
     var groupid = req.params.groupid;
     if(req.session.user){
     request(config.server +"group/get_group_info?group_id=" + groupid + "&user_id=" + userid,
