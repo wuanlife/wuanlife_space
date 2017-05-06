@@ -1,10 +1,5 @@
 @import "public"; // public.less
 
-.wuan-nav {
-    height: 50px;
-    background-color: #5677fc;;
-}
-
 .index-entry {
     background-color: #ffffff;
     margin-top: 12;
@@ -16,6 +11,10 @@
         height: 26px;
         padding: 10px 0 10px 0;
         .clearfix();
+        font-family:PingFangHK-Medium;
+        font-size:12px;
+        color:#999999;
+        text-align:left;
         .index-entry-info {
             height: 26px;
             img {
@@ -30,7 +29,6 @@
         };
         p {
             display: inline;
-            opacity:0.25;
             font-family:PingFangHK-Medium;
             color:#999999;
             text-align:left;
@@ -67,7 +65,6 @@
             display: flex;
             width: 100%;
             li {
-                flex: 1;
                 height: 100%;
                 svg {
                     font-size: 25px;
@@ -77,9 +74,30 @@
                     padding: 0 10px;
                     opacity:0.54;
                     font-family:PingFangHK-Regular;
-                    
                     color:#5677fc;
                     text-align:justify;
+
+                    width: 68px;
+                    overflow-wrap: normal;
+                    overflow: hidden;
+                }
+                //加入分割的点
+                &:not(:first-child) {
+                    &:before {
+                        content: '·';
+                        position: relative;
+                        left: 5px;
+                        float: left;
+                        color: #999999;
+                        font-size: 20px;
+                        height: 19px;
+                        border-radius: 100%;
+                    }
+                }
+            }
+            li.index-notdone {
+                p {
+                    color: #000000;
                 }
             }
         }
