@@ -14,6 +14,18 @@
     </script> 
     <script type="text/javascript">
         var global = (function($) {
+            //下拉菜单
+            $('[data-toggle="dropdown"]').on('mouseover',function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                $(this).addClass('open');
+            });
+            $('[data-toggle="dropdown"]').on('mouseleave',function(event) {
+                event.preventDefault();
+                /* Act on the event */
+                $(this).removeClass('open');
+            });
+            
             //getJson获取数据
             var getData =  function(url,param,cb){
                 $.getJSON(url, param, function(data) {

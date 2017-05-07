@@ -68,9 +68,10 @@ h1 {
 //消除chrome蛋疼的黄框
 *.focus {outline: none}
 
+
 /**
-分割
-**/
+ * 导航栏
+ */
 #wrapper {
     width: 950px;
     margin: 0 auto;
@@ -88,8 +89,9 @@ h1 {
 }
 .nav-primary {
     height: 100%;
-    width: 100%;
+    padding: 0 150px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -159,10 +161,8 @@ h1 {
  * 头部logo
  */
 .nav-logo {
-    float: left;
+    flex: 0 0 72px;
     height: 27px;
-    width: 72px;
-    margin: 0 3% 0 0;
     background: url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1361763051,2365245678&fm=23&gp=0.jpg) no-repeat;
     background-position: center center;
     background-size: cover;
@@ -172,7 +172,7 @@ h1 {
         height: 100%;
         overflow: hidden;
         line-height: 100em;
-}
+    }
 }
 
 
@@ -180,6 +180,8 @@ h1 {
  * 头部search
  */
 .nav-search {
+    flex: 0.9;
+    padding-right: 100px;
     //消除输入栏和搜索图标的边框
     input {
         border: none;
@@ -192,7 +194,7 @@ h1 {
     }
     .inp-btn {
         position: absolute;
-        left: 448px;
+        right: 10px;
         top: 7px;
         width: 21px;
         height: 20px;
@@ -211,7 +213,6 @@ h1 {
 
     }
     .inp {
-        width: 480px;
         height: 34px;
         background: #fff;
         border: 1px solid #e1e9e1;
@@ -227,7 +228,17 @@ h1 {
     }   
 
 }
-
+/**
+ * 头部登陆后下拉栏部分
+ */
+[data-toggle] {
+    .navbar-account-item {
+        font-family:PingFangHK-Medium;
+        font-size:14px;
+        color:#ffffff;
+        text-align:left;
+    }
+}
 
 /**
  * aside
@@ -255,8 +266,23 @@ h1 {
 
 
 
-
-
+/**
+ * Dropdown相关样式
+ */
+.dropdown-account {
+    position: absolute;
+    width: 130px;
+    color: #fff;
+    background-color: #5ab8fe;
+    text-align: left;
+    padding: 0 6px;
+    border-top: 1px solid #fff;
+    border-radius: 0 0 4px 4px;
+    display: none;
+}
+.open .dropdown-account {
+    display: block;
+}
 
 
 

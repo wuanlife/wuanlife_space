@@ -1,0 +1,66 @@
+<%- include base/header.ejs %>
+<div id="content">
+    <div class="section big-container">
+        <ul class="section-tab">
+            <li class="on section-hd" id="jd-book-chart-hd">
+                <span>帖子通知</span>
+            </li>
+            <li class="off section-hd" id="dangdang-book-chart-hd">
+                <span>星球通知</span>
+            </li>
+            <li class="off section-hd" id="dangdang-book-chart-hd">
+                <span>私密星球申请</span>
+            </li>
+
+            <!-- 以防万一在这留了一个可以在右边扩展的div-->
+            <div class="slide-controls">
+
+            </div>
+        </ul>  
+        <div class="section-content margin-H-16px">
+            <div class="message-board">
+                <div id="msg-{{item.messages.m_id}}" class="message-entry message-post">
+                    <img src="{{item.messages.image}}">
+                    <div class="message-entry-main">
+                        <h1>{{item.users.user_name}}</h1>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <button>查看</button>
+                </div>
+                <div id="msg-{{item.messages.m_id}}" class="message-entry message-planet">
+                    <img src="{{item.messages.image}}">
+                    <div class="message-entry-main">
+                        <h1>{{item.users.user_name}}</h1>
+                        <p>{{item.content}}</p>
+                    </div>
+                </div>
+                <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
+                    <img src="{{item.messages.image}}">
+                    <div class="message-entry-main">
+                        <h1>{{item.users.user_name}}</h1>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <button>同意</button>
+                    <button>拒接</button>
+                </div>
+                <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
+                    <img src="{{item.messages.image}}">
+                    <div class="message-entry-main">
+                        <h1>{{item.users.user_name}}</h1>
+                        <p>{{item.content}}</p>
+                    </div>
+                    <p class="verify-done">已拒绝</p>
+                </div>
+            </div>
+        </div>
+        <div class="section-content" style="display:none;">
+            <p>fuuuuuuuuuuuuuuuuuuuck</p>
+        </div> 
+        <div class="section-content" style="display:none;">
+            <p>fuuuuuuuuuuuuuuuuuuuck</p>
+        </div>             
+    </div>
+</div>
+<%- include base/baseJS.ejs %>
+
+<%- include base/footerMobile.ejs %>
