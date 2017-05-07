@@ -16,9 +16,7 @@ var routes = require('./routes/index');
 var page = require('./routes/page');
 var api = require('./routes/api');
 var createGroup = require('./routes/createGroup');
-var topic = require('./routes/topic');
 var allGroup = require('./routes/allGroup');
-var uGroup = require('./routes/uGroup');
 var logout = require('./routes/logout');
 var resetPassword = require('./routes/resetPassword');
 var verifyEmail = require('./routes/verifyEmail');
@@ -131,8 +129,6 @@ app.use('/discovery', discovery);
 app.use('/pages', page);
 app.use('/register',register);
 app.use('/createGroup', createGroup);
-app.use('/uGroup', uGroup);
-app.use('/topic', topic);
 
 app.use('/allGroup', allGroup);
 app.use('/logout',logout);
