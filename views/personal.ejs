@@ -1,86 +1,95 @@
-<%- include base/headerMobile-index.ejs %>
-        <div class="personal-tab-container">
-            <div class="personal-items">
-                <div class="personal-item personal-logstate">
-                    <% if(!user){ %>
-                    <div class="personal-personIcon personal-state">
-                        <div class="personal-Icon">
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-people"></use>
-                            </svg>
-                        </div>
-                    </div>
-                    <%}else{%>
-                    <div>
-                    <div class="personal-personIcon personal-state">
-                         <img src=""></img>
-                    </div>   
-                    </div>
-                    <%}%>
-                    <span class="personal-logfont personal-state">未登录</span>
-                </div>
-                <div class="personal-item personal-details">
-                    <div class="personal-detail persoanl-info">
-                        <div class="personal-item-icon personal-information">
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-profile"></use>
-                            </svg>
-                        </div>
-                        <span class="personal-item-text personal-information">个人资料</span>
-                        <div class="personal-next personal-information"> 
-                            <div class="personal-next1"></div> 
-                            <div class="personal-next2"></div> 
-                        </div>
-                    </div>
-                    <div class="personal-detail personal-pwd">
-                        <div class="personal-item-icon personal-changepwd">
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-lock"></use>
-                            </svg>
-                        </div>
-                        <span class="personal-item-text personal-changepwd">修改密码</span>
-                        <div class="personal-next personal-changepwd"> 
-                            <div class="personal-next1"></div> 
-                            <div class="personal-next2"></div> 
-                        </div>
-                    </div>
-                    <div class="personal-detail personal-collections">
-                        <div class="personal-item-icon personal-collection">
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-star_grey"></use>
-                            </svg>
-                        </div>
-                        <span class="personal-item-text personal-collection">我的收藏</span>
-                        <div class="personal-next personal-collection"> 
-                            <div class="personal-next1"></div> 
-                            <div class="personal-next2"></div> 
-                        </div>
-                    </div>
-                    <div class="personal-detail personal-friend">
-                        <div class="personal-item-icon personal-invitefriend">
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-inviteFriend"></use>
-                            </svg>
-                        </div>
-                        <span class="personal-item-text personal-invitefriend">邀请好友</span>
-                        <div class="personal-next personal-invitefriend"> 
-                            <div class="personal-next1"></div> 
-                            <div class="personal-next2"></div> 
-                        </div>
-                    </div>
-                </div>
-                <% if (user) { %>
-                <div class="personal-item personal-signBtn">
-                    <button id="exit" type="button">退出登录</button>
-                </div>
-                <% }%>
-            </div>
+<%- include base/header.ejs %>
+<div id="content" class="search-content">
+    <div class="section planets-section">
+        <div class="section-hd">
+            <span>相关星球</span>
         </div>
-<%- include base/baseJSMobile-index.ejs %>
+        <div class="section-content planets-section-container">
+            <div class="planets-container-entries">
+               <div class="planets-container-entry">
+               		<div class="planets-entry-profile">
+               			<img>
+               		</div>
+               		<div class="planets-entry-detail">
+               			<span class="detail-planet">我们都是技术宅</span>
+               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
+               		</div>
+               </div>
+               <div class="planets-container-entry">
+               		<div class="planets-entry-profile">
+               			<img>
+               		</div>
+               		<div class="planets-entry-detail">
+               			<span class="detail-planet">我们都是技术宅</span>
+               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
+               		</div>
+               </div>
+               <div class="planets-container-entry">
+               		<div class="planets-entry-profile">
+               			<img>
+               		</div>
+               		<div class="planets-entry-detail">
+               			<span class="detail-planet">我们都是技术宅</span>
+               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
+               		</div>
+               </div>               
+            </div>
+            <div class="planets-section-container-more">
+            	<button type="button">更多相关信息</button>
+            </div>
+        </div>            
+    </div>
+
+    <div class="section posts-section">
+        <div class="section-hd">
+            <span>相关星球</span>
+        </div>
+        <div class="section-content posts-section-container">
+            <div class="posts-section-entries">
+                <div class="posts-section-entry">
+                	<div class="entry-item posts-entry-info">
+                		<img>
+                		<span>淘淘  发表于  鬼扯天地</span>
+                		<span>2017-01-28 22:41</span>
+                	</div>
+                	<div class="entry-item posts-entry-title">
+                		<h1>Ubuntu开荒笔记</h1>
+                	</div>
+
+                	<div class="entry-item posts-entry-body">
+                		<p>
+                            安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
+                        </p>
+                	</div>
+                </div>
+                
+                <div class="posts-section-entry">
+                	<div class="entry-item posts-entry-info">
+                		<img>
+                		<span>淘淘  发表于  鬼扯天地</span>
+                		<span>2017-01-28 22:41</span>
+                	</div>
+                	<div class="entry-item posts-entry-title">
+                		<h1>Ubuntu开荒笔记</h1>
+                	</div>
+
+                	<div class="entry-item posts-entry-body">
+                		<p>
+                            安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
+                        </p>
+                	</div>
+                </div>
+            </div>
+        </div>            
+    </div>
+</div>
+<%- include base/baseJS.ejs %>
+
+<%- include base/footerMobile.ejs %>
 
 
 <script>
-    (function() {
+/*    (function() {
         var personal = {
             name:$('.personal-state.personal-logfont'),
             photo:$('.personal-personIcon > img'),
@@ -142,6 +151,5 @@
             }
         }
         personal.init();
-    })();
+    })();*/
 </script>
-<%- include base/footerMobile.ejs %>
