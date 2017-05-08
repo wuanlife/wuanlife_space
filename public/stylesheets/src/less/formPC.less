@@ -3,7 +3,7 @@
 .small-container{
 	display: flex;
 	justify-content:center;
-	
+	background-color: white;
 	.section-small-center{
 		width: 660px;
 		.form-height-section{
@@ -26,18 +26,18 @@
 					}
 
 					.form-container-input{
-
+				
 						box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
 						border-radius:2px;
 						input{
-							width: 100%;
+							width: e("calc(100% - 18px)");
     						height: 60px;
     						font-family:PingFangHK-Semibold;
 							font-size:16px;
 							color:#000000;
 							text-align:left;
 							padding-left: 18px;
-
+							
 
 						}
 					}
@@ -59,6 +59,18 @@
 						font-size:16px;
 						color:#ffffff;
 						text-align:center;
+					}
+				}
+
+				#form-others{
+					margin-top: 33px;
+					display: flex;
+					justify-content: space-between;
+					span{
+						font-family:PingFangHK-Medium;
+						font-size:14px;
+						color:#5677fc;
+						text-align:left;
 					}
 				}
 			}
