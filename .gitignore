@@ -1,6 +1,5 @@
 node_modules/
 npm*
-public/stylesheets/dist/
 public/stylesheets/src/css/
 startwuanlife.bat
 mongodb.bat

@@ -65,7 +65,8 @@
                             <p id="op-reply-reply">回复</p>
                         </div>
                     </div>
-                </div>    
+                </div>
+                <div id="demo1"></div>
                 <div class="post-reply-send">
                     <input id="post-reply-send-content" type="text" autocomplete="off" placeholder="">
                     <button id="post-reply-send-btn">回复</button>                    
@@ -77,3 +78,27 @@
 <%- include base/baseJS.ejs %>
 
 <%- include base/footerMobile.ejs %>
+
+<script>
+<script>
+(function() {
+    var postobj = {
+
+        bindEvent: function() {
+            var self = this;
+        },
+        init: function() {
+            laypage({
+                cont: document.getElementById('demo1'),
+                pages: 100, //总页数
+                groups: 5 //连续显示分页数
+            });           
+        },
+    }
+
+
+    postobj.init();
+
+})();
+</script>
+</script>
