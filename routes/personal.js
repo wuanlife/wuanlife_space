@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/login', function(req, res, next) {
-
+	//console.log('login get');
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'loginMobile' : 'login';
@@ -143,8 +143,8 @@ router.post('/',function(req,res,next){
 		res.header('Charset', 'utf8');
 		if(!err && httpResponse.statusCode === 200){
 			var data = JSON.parse(body).data;
-			console.log('data',data);
-			console.log('body',body);
+			//console.log('data',data);
+			//console.log('body',body);
 			if(data.code === 1){
 
 			}else{
@@ -153,10 +153,9 @@ router.post('/',function(req,res,next){
 
 			res.send(JSON.parse(body));
 		}else{
-			err && console.log('Get inviteCode Failed:',err.toString());
 			res.send({
 				ret: 500,
-				msg: '服务器异常'
+				msg: err.toString(),
 			});
 		}
 	});
@@ -164,9 +163,16 @@ router.post('/',function(req,res,next){
 
 
 router.post('/login', function(req, res, next) {
+
 	//如果用户已经用此账号登陆
 	if(req.session.user ? req.body.email == req.session.user.user_email:false){
 		//重定向到index.
+		//console.log('logined');
+		res.send({
+			ret:200,
+			flag:true,
+			msg:'已经登录',
+		})
 	}else{
 		request.post({
 			url: config.server + 'user/login',
@@ -177,11 +183,11 @@ router.post('/login', function(req, res, next) {
 		}, function optionalCallback(err, httpResponse, body) {
 			res.header('Content-type', 'application/json');
 			res.header('Charset', 'utf8');
-			console.log('err',err);
-			console.log('status',httpResponse.statusCode);
+			//console.log('err',err);
+			//console.log('status',httpResponse.statusCode);
 			if (!err && httpResponse.statusCode == 200) {
 				var data = JSON.parse(body).data;
-				console.log('mdzz',data);
+				//console.log('mdzz',data);
 				if(data.code == 1) {
 					req.session.user = data.info;
 					req.session.save(); //保存一下修改后的Session
@@ -189,13 +195,13 @@ router.post('/login', function(req, res, next) {
 				} else {
 					console.error('Login failed:', body);
 				}
-				console.log('body',JSON.parse(body));
+				//console.log('body',JSON.parse(body));
 				res.send(JSON.parse(body));
 			} else{
 				err && console.error('Login failed:', err.toString());
 				res.send({
 					ret:500,
-					msg:'服务器异常'
+					msg:err.toString(),
 				});
 			}
 		});

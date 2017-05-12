@@ -2,7 +2,7 @@
 <div id="content" class="small-container">
     <div class="section section-small-center">
         <div class="section-hd">
-            <span>重置密码</span>
+            <span>注册</span>
         </div>
         <div class="section-content form-height-section">
             <form>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-container form-btn">
-                    <button type="button">修改密码</button>
+                    <button type="button">注册</button>
                 </div>
             </form>
         </div>            
@@ -51,7 +51,7 @@
 
 
 <script>
-/*	(function() {
+	(function() {
 		var register = {
 
             regform : $('form')[0],
@@ -62,9 +62,9 @@
 
             regnickname : $('#nickname'),
 
-            reginviteCode : $('#inviteCode'),
+            reginviteCode : $('#code'),
 
-            regbtn : $('.register-container>.registerBtn'),
+            regbtn : $('.form-btn button'),
 
 			getServerData: function(param, cb) {
 				
@@ -141,10 +141,12 @@
                     if(!errorMsg){
 
                         HJLoading.start({
-                        loadingId : 'registerLoading'
+                        loadingId : 'registerLoading',
+                        loadingScale: 0.3,
+                        target:$('#wrapper'),
                         });
 
-                        global.subData('/registerNew',{
+                        global.subData('/register',{
                             nickname : self.regnickname.val(),
                             email : self.regemail.val(),
                             password : self.regpwd.val(),
@@ -155,7 +157,7 @@
                                 
                                     setTimeout(function(){
                                         HJLoading.stop('registerLoading');
-                                        window.location.href = '/';
+                                        window.location.href = '/personal/login';
                                     },3000);
 
                                 }else{
@@ -175,12 +177,12 @@
 			init: function() {
                 var self = this;
 
-                 wuanHeadFun.title("注册");
+                //wuanHeadFun.title("注册");
 				self.bindEvent();
 
 
 			},
 		}
 		register.init();
-	})();*/
+	})();
 </script>
