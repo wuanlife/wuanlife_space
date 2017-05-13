@@ -1,6 +1,7 @@
 node_modules/
 npm*
 public/stylesheets/src/css/
+public/stylesheets/dist/
 startwuanlife.bat
 mongodb.bat
 *.sublime*

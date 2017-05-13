@@ -3,10 +3,10 @@
     <div class="article">
         <div class="section mid-container">
             <ul class="section-tab">
-                <li class="on section-hd" id="jd-book-chart-hd">
+                <li class="on section-hd" id="myplanet-chart-hd">
                     <span>我的星球</span>
                 </li>
-                <li class="off section-hd" id="dangdang-book-chart-hd">
+                <li class="off section-hd" id="topic-chart-hd">
                     <span>最新话题</span>
                 </li>
 
@@ -18,7 +18,7 @@
             <div id="myplanet" class="section-content margin-H-16px"> 
                 <div id="demo1"></div>
             </div>
-            <div class="section-content" style="display:none;">
+            <div id="topic" class="section-content display-none margin-H-16px">
                 <p>fuuuuuuuuuuuuuuuuuuuck</p>
             </div>            
         </div>
@@ -152,7 +152,6 @@
             });            
         }
 
-
         var index = {
             indexEntries: $(".index-entries"),
             loadedpn: 1,
@@ -166,10 +165,20 @@
             },
             init: function() {
                 var self = this;
+                //标签页
+                $(".section-tab").on("click", ".section-hd[id]", function(e) {
+                    var a = "fuck";
+                    var targetid = e.currentTarget.id.split('-')[0];
+                    //添加删除类
+                    //头部部分
+                    $(".section-hd[id]").addClass("off").removeClass("on");
+                    $(e.currentTarget).addClass("on");
+                    //content部分
+                    $(".section-content[id]").addClass("display-none");
+                    $("#"+targetid).removeClass("display-none");
+                })
+
                 var loadtype = window.location.pathname;
-
-
-
                 var rebind = function() {
 
                     $(".index-entry").off("touchend");
