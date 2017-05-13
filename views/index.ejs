@@ -212,7 +212,7 @@
                         $('.index-entry').remove();
                         $('#myplanet').prepend(result);   
                         laypage({
-                            cont: document.getElementById('demo1'), //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                            cont: document.getElementById('demo1'),
                             pages: 10, //通过后台拿到的总页数
                             curr: curr || 1, //当前页
                             jump: function(obj, first){ //触发分页后的回调
