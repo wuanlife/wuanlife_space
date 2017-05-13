@@ -6,9 +6,9 @@
             </div>
             <div class="section-content collection-section">
                 <div class="mycollection-container--PC">
-
+                    <div id="pageLoad"></div>
                 </div>
-            </div>          
+            </div>         
         </div>
 </div>
 
@@ -16,7 +16,7 @@
 
 <script type="text/html" id="mycollection-entry-tpl">
     {{each posts as item i}}
-    <div class="mycollection-container-entry--PC">
+    <div class="mycollection-container-entry--PC" id="post_{{item.post_id}}">
         <div class="entry-item mycollection-container-head--PC">
             <h1>{{item.p_title}}</h1>
         </div>
@@ -35,6 +35,7 @@
 <script>
     (function() {
         var index = {
+            page:1,
             wrapper:$('.collection-section'),
             container:$('.mycollection-container--PC'),
             title : $('.mycollection-container-head--PC h1'),
@@ -48,98 +49,59 @@
 
             bindEvent: function() {
                 var that = this;
-                that.container.dropload({
-                    scrollArea:window,
-                    loadDownFn: function(me){
-                        global.getData('',{},function(data){
-                            setTimeout(function(){
-                                alert(data);
-                                me.resetload();
-                            },1000);
-                        });
-                    }
-                });
             },
 
 
             init: function() {
                 var that = this;
                 //wuanHeadFun.title("我的收藏");
+                var loadUrl = window.location.pathname;
 
                 that.bindEvent();
                 var user_id = <%= user.user_id%>;
 
-                global.subData('/personal/mycollection',{
-                    <% if(user){%>
-                        userId : user_id,
-                    <%}%>
-                    pn:1,
-                },function(data){
-                    if(data.ret === 200 && data.data){
-                        //显示返回至
-
-                        that.container.empty();
-                        var cur_post_page = data.data.current_page;
-                        var total_page = data.data.page_count;
-                        var post_length = data.data.posts.length;
-
-                        if(post_length<=0){
-                            var defaultHTML = "<div class='defaultPC'>你还没有收藏喔。。。</div>";
-                            that.wrapper.css('background-color','white');
-                            that.container.html(defaultHTML);
-                            return;
-                        }
-                        var com = template("mycollection-entry-tpl",data.data);
-                        that.container.html(com);
-                        //绑定事件
-                        var EPostsContainer = $('.collection-entry');
-
-                        EPostsContainer.on('touchend',function(e){
+                var rebind = function() {
+                    $(".mycollection-container-entry--PC").off("click");
+                    //绑定每个index-entry的收藏操作
+                    $(".mycollection-container-entry--PC").on("click",function(e){
                         var id = $(this).attr('id');
-                            window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
-                        });
+                        window.location.href = '/posts/' + id.slice(id.lastIndexOf('_')+1);
+                    });
+                };
 
-                        //绑定下拉加载
-                        that.wrapper.dropload({
-                            scrollArea: this,
-                            domDown:{
-                                domClass : 'dropload-down',
-                                domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
-                                domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
-                                domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
-                            },
+                //分页加载
+                function pageLoad(curr){
+                    global.subData(loadUrl,
+                        {
+                            <% if(user){ %>
+                                userId : user_id,
+                            <% }%>
+                            pn: that.page,
+                        },function(data){
+                            if(data.ret == 200 && data.data){
 
-                            loadDownFn:function(me){
-                                cur_post_page++;
-                                var result = '';
-                                global.subData('/personal/mycollection',{
-                                    userId:user_id,
-                                    pn : cur_post_page,
-                                },function(data){
-                                    if(cur_post_page<=total_page){
-                                        result += template("mycollection-entry-tpl",data.data);
-                                    }else{
-                                        me.lock();
-                                        me.noData();
+                                if(that.page<=data.data.page_count){
+                                    var result = template("mycollection-entry-tpl",data.data);
+                                    that.page++;
+                                }
+                                $('.mycollection-container-entry--PC').remove();
+                                that.container.prepend(result);
+                                laypage({
+                                    cont:$('#pageLoad')[0],
+                                    pages:data.data.page_count,
+                                    curr:curr || 1,
+                                    jump: function(obj,first){
+                                        if(!first){
+                                            pageLoad(obj.curr);
+                                        }
                                     }
-
-                                    that.container.append(result);
-                                    //绑定事件
-                                    var EPostsContainer = $('.collection-entry');
-
-                                    EPostsContainer.on('touchend',function(e){
-                                    var id = $(this).attr('id');
-                                    window.location.href = '/posts/'+id.slice(id.lastIndexOf('_')+1);
-                                    });
-                        
-                                    me.resetload();
                                 });
+
                             }
-                        }); 
-                    }else{
-                        swal('错误','数据获取失败','error');
-                    }                    
-                });
+                            rebind();
+                    });
+                };
+                pageLoad();
             }
         }
         index.init();
