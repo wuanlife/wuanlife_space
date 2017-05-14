@@ -20,7 +20,7 @@
         <div class="nav-wrap">
             <div class="nav-primary">
                 <div class="nav-logo">
-                    <a href="https://www.wuanla.com">午安网</a>
+                    <a href="/">午安网</a>
                 </div>
                 <div class="nav-search">
                     <form action="/searchContent" method="get">
@@ -31,6 +31,8 @@
                     </form>
                 </div>
                 <div class="nav-info">
+                    <% if (typeof user !== 'undefined') { %>
+
                     <li>
                         <a href="/message" class="navbar-account-item">
                             <span class="mNote"><i class="red-point" id="mrp"></i></span>
@@ -70,6 +72,10 @@
                             </li>
                         </ul>
                     </div>
+                    <% } else{ %>
+                        <a href="/personal/login">登陆</a>
+                        <a href="/register">注册</a>
+                    <% } %>    
                 </div>
             </div>
         </div>

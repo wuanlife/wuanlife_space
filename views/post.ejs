@@ -2,75 +2,16 @@
 <div id="content">
     <div class="section big-container">
         <div class="section-content bg-white">
-            <div id="post-2" class="post-details">
-                <div class="post-details-header">
-                    <div class="post-details-info">
-                        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493652669637&di=4ce34348511e978ed2d319e3ed3cf379&imgtype=0&src=http%3A%2F%2Fmvimg2.meitudata.com%2F55df129d14f895616.jpg">
-                        <p>666</p>
-                    </div>
-                    <div class="post-details-date">
-                        <p>{{item.posts.create_time}}</p>
-                    </div>
-                </div>
-                <div class="post-details-content">
-                    <h1>{{item.posts.p_title}}</h1>
-                    <div class="post-details-main">
-                        <p>{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}{{item.posts.p_text}}</p>
-                    </div>
-                </div>
-                <div class="post-details-footer">
-                    <div class="post-details-buttons">
-                        <button>                    
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-good">
-                                </use>
-                            </svg>
-                            点赞
-                        </button>
-                        <button>
-                            <svg aria-hidden="true" class="icon">
-                                <use xlink:href="#icon-home">
-                                </use>
-                            </svg>   
-                            收藏                    
-                        </button>
-                    </div>
-                    <div class="post-details-operations">
-                        <p id="op-setTop">置顶</p>
-                        <p id="op-lock">锁定</p>
-                        <p id="op-edit">编辑</p>
-                        <p id="op-delete">删除</p>
-                    </div>
-                </div>
-            </div>
             <div class="post-replies">
                 <div class="post-reply-header">
                     <h1>999+ 个回复</h1>
                 </div>
-                <div class="post-reply-entry">
-                    <div class="post-reply-entry-header">
-                        <div class="post-reply-name">
-                            <p>{{item.user_name}}</p>
-                        </div>
-                        <div class="post-reply-date">
-                            <p>{{item.create_time}}</p>
-                        </div>
-                    </div>
-                    <div class="post-reply-entry-body">
-                        <p>{{item.p_text}}</p>
-                    </div>
-                    <div class="post-reply-entry-footer">
-                        <div class="post-reply-operations">
-                            <p id="op-reply-delete">删除</p>
-                            <p id="op-reply-reply">回复</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="post-reply-replies"></div>
                 <div id="demo1"></div>
                 <div class="post-reply-send">
                     <input id="post-reply-send-content" type="text" autocomplete="off" placeholder="">
                     <button id="post-reply-send-btn">回复</button>                    
-                </div>    
+                </div>  
             </div>                  
         </div>     
     </div>
@@ -79,20 +20,116 @@
 
 <%- include base/footerMobile.ejs %>
 
-<script>
+<script type="text/html" id="postdetails-tpl">
+<div id="post-2" class="post-details">
+    <div class="post-details-header">
+        <div class="post-details-info">
+            <img src="{{users.profile_picture}}">
+            <p>{{users.user_name}}</p>
+        </div>
+        <div class="post-details-date">
+            <p>{{posts.create_time}}</p>
+        </div>
+    </div>
+    <div class="post-details-content">
+        <h1>{{posts.p_title}}</h1>
+        <div class="post-details-main">
+            <p>{{posts.p_text}}</p>
+        </div>
+    </div>
+    <div class="post-details-footer">
+        <div class="post-details-buttons">
+            <button>                    
+                <svg aria-hidden="true" class="icon">
+                    <use xlink:href="#icon-good">
+                    </use>
+                </svg>
+                点赞
+            </button>
+            <button>
+                <svg aria-hidden="true" class="icon">
+                    <use xlink:href="#icon-home">
+                    </use>
+                </svg>   
+                收藏                    
+            </button>
+        </div>
+        <div class="post-details-operations">
+            {{if rights.sticky_right == 1}} <p id="op-setTop">置顶</p> {{/if}}
+            {{if rights.lock_right == 1}} <p id="op-lock">锁定</p> {{/if}}
+            {{if rights.edit_right == 1}} <p id="op-edit">编辑</p> {{/if}}
+            {{if rights.delete_right == 1}} <p id="op-delete">删除</p> {{/if}}
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/html" id="reply-tpl">
+    {{each reply as item i}}
+        <div class="post-reply-entry">
+            <div class="post-reply-entry-header">
+                <div class="post-reply-name">
+                    <p>{{item.user_name}}</p>
+                </div>
+                <div class="post-reply-date">
+                    <p>{{item.create_time}}</p>
+                </div>
+            </div>
+            <div class="post-reply-entry-body">
+                <p>{{item.p_text}}</p>
+            </div>
+            <div class="post-reply-entry-footer">
+                <div class="post-reply-operations">
+                    {{if item.delete_right == 1}} <p id="op-reply-delete">删除</p> {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/each}}  
+</script>
+
 <script>
 (function() {
     var postobj = {
-
+        postContainer: $('.section-content'),
+        postReplies: $('.post-replies'),
+        replyInput: $('#reply-send-content'),
         bindEvent: function() {
             var self = this;
         },
         init: function() {
-            laypage({
-                cont: document.getElementById('demo1'),
-                pages: 100, //总页数
-                groups: 5 //连续显示分页数
-            });           
+            var self = this;
+            global.subData("./<%= postid%>", {}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    var compiled = template("postdetails-tpl", data.data);
+                    self.postContainer.html(compiled + self.postContainer.html());
+                } else {
+                    sweetAlert('错误', '数据获取失败', 'error');
+                }
+            });
+
+            //分页加载评论
+            function demo(curr){
+                var result = '';
+                global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
+                    if((curr || 1)<=data.data.page_count){
+                        result = template("reply-tpl",data.data);
+                    }
+                    //插入数据
+                    $('.post-reply-entry').remove();
+                    $('.post-reply-replies').append(result); 
+                    laypage({
+                        cont: document.getElementById('demo1'),
+                        pages: data.data.page_count, //通过后台拿到的总页数
+                        curr: curr || 1, //当前页
+                        jump: function(obj, first){ //触发分页后的回调
+                            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                demo(obj.curr);
+                            }
+                        }
+                    });
+                    //rebind();
+                });
+            };
+            demo();
         },
     }
 
