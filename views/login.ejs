@@ -27,8 +27,8 @@
                 </div>
 
                 <div class="form-container" id="form-others">
-                    <span>注册账号</span>
-                    <span>找回密码</span>
+                    <span id="regist">注册账号</span>
+                    <span id="retrievepwd">找回密码</span>
                 </div>
             </form>
         </div>            
@@ -40,19 +40,19 @@
 
 
 <script>
-/*	(function() {
+	(function() {
 		var loginobj = {
             loginform : $('form')[0],
 
-            loginemail : $('.login-container #email'),
+            loginemail : $('#email'),
 
-            loginpwd : $('.login-container #pwd'),
+            loginpwd : $('#pwd'),
 
-            loginbtn : $('.login-container .registerBtn'),
+            loginbtn : $('.form-btn > button'),
 
-            loginregister : $('#login-register'),
+            loginregister : $('#regist'),
 
-            loginforget : $('#login-misspwd'),
+            loginforget : $('#retrievepwd'),
 
 			getServerData: function(param, cb) {
 				
@@ -107,12 +107,22 @@
                         HJLoading.start({
                         loadingId : 'loginLoading',
                         loadingScale: 0.3,
+                        target:$('#wrapper'),
                         });
 
                         global.subData('/personal/login',{
                             email : self.loginemail.val(),
                             password : self.loginpwd.val(),
                         },function(data){
+                            if(data.flag){
+                               setTimeout(function(){
+                                    HJLoading.stop('loginLoading');
+                                    window.location.href = '/';
+                                },3000); 
+
+                               return;
+                            }
+
                             if(data.ret === 200 && data.data){
                                 if(data.data.code == 1){
                                     //延迟3秒跳转
@@ -139,7 +149,7 @@
 			},
 			init: function() {
                 var self = this;
-                wuanHeadFun.title("登录");
+                //wuanHeadFun.title("登录");
 
 				this.bindEvent();                
 			},
@@ -148,5 +158,5 @@
 
 		loginobj.init();
 
-	})();*/
+	})();
 </script>

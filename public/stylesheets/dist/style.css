@@ -774,8 +774,11 @@ button {
   width: 590px;
   border-radius: 8px;
 }
-.collection-content .collection-content-container .collection-section {
-  height: 400px;
+.collection-content .collection-content-container .collection-section .mycollection-container--PC .defaultPC {
+  text-align: center;
+  font-family: PingFangHK-Medium;
+  font-size: 18px;
+  color: #5677fc;
 }
 .collection-content .collection-content-container .collection-section .mycollection-container--PC .mycollection-container-entry--PC {
   margin: 0 15px 7px;
@@ -1026,6 +1029,7 @@ button {
 .auto-textbreak {
   word-wrap: break-word;
 }
+
 .post-details {
   margin: 0 16px;
 }
