@@ -2,6 +2,7 @@
 <div id="content">
     <div class="article">
         <div class="section mid-container">
+            <% if (typeof user !== 'undefined') { %>
             <ul class="section-tab">
                 <li class="on section-hd" id="myplanet-chart-hd">
                     <span>我的星球</span>
@@ -19,8 +20,19 @@
                 <div id="demo1"></div>
             </div>
             <div id="topic" class="section-content display-none margin-H-16px">
-                <p>fuuuuuuuuuuuuuuuuuuuck</p>
-            </div>            
+                <div id="demo2"></div>
+            </div>  
+            <% } else { %>   
+            <div class="section-hd">
+                <span>最新话题</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div id="topic" class="section-content">
+                <div id="demo3"></div>
+            </div>
+            <% } %>      
         </div>
     </div>
     <div class="aside">
@@ -201,12 +213,12 @@
                         window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
                     });
                 };
-                //分页加载
-                function demo(curr){
-                    global.subData(loadtype,{pn : self.loadedpn}, function(data) {
-                        if(self.loadedpn<=data.data.page_count){
+                <% if (typeof user !== 'undefined') { %>
+                //登陆我的星球分页加载
+                function demo1(curr){
+                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
                             result = template("index-entry-tpl",data.data);
-                            self.loadedpn++;
                         }
                         //插入数据
                         $('.index-entry').remove();
@@ -217,15 +229,61 @@
                             curr: curr || 1, //当前页
                             jump: function(obj, first){ //触发分页后的回调
                                 if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    demo(obj.curr);
+                                    demo1(obj.curr);
                                 }
                             }
                         });
                         rebind();
                     });
                 };
-                demo();
-
+                demo1();
+                //登陆我的星球分页加载
+                function demo2(curr){
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: true}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('.index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo2'),
+                            pages: 10, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo2(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    });
+                };
+                demo2();
+                <% } else { %>
+                function demo3(curr){
+                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('.index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo3'),
+                            pages: 10, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo3(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    });
+                };
+                demo3();
+                <% } %>    
                 //self.bindEvent();    
             }
         }
