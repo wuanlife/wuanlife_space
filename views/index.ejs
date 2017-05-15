@@ -35,6 +35,7 @@
             <% } %>      
         </div>
     </div>
+    <% if (typeof user !== 'undefined') { %>
     <div class="aside">
         <div class="section big-container">
             <div class="section-hd">
@@ -46,13 +47,14 @@
             <div class="section-content">
                 <div class="aside-group-list">
                     <div class="aside-group-item">
-                        <button class="aside-btn aside-btn-blue">全部星球</button>
+                        <button id="aside-allgroup" class="aside-btn aside-btn-blue">全部星球</button>
+                        <button id="aside-creatgroup" class="aside-btn aside-btn-blue">创建星球</button>
                     </div>                    
                 </div>
             </div>     
-
         </div>
     </div>
+    <% } %>
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/html" id="index-entry-tpl">
@@ -296,10 +298,13 @@
                     $('.aside-btn').on('click', function(e) {
                         window.location.href = '/groups/' + e.currentTarget.id;
                     })
-                    $('.aside-btn.aside-btn-blue').on('click', function(e) {
+                    $('#aside-allgroup').on('click', function(e) {
                         window.location.href = '/allgroup/';
-                    })                    
-                });                
+                    })
+                    $('#aside-creatgroup').on('click', function(e) {
+                        window.location.href = '/creategroup';
+                    })
+                });
                 <% } %>    
                 //self.bindEvent();    
             }
