@@ -20,8 +20,8 @@
     <div class="aside">
         <div class="section big-container">
             <div class="section-content">
-                <div class="card">
-                 
+                <div id="group-card" class="card">
+
                 </div>
             </div>     
         </div>
@@ -29,7 +29,25 @@
 </div>
 <%- include base/baseJS.ejs %>
 
-<%- include base/footerMobile.ejs %>
+<script type="text/html" id="group-card-tpl">
+<div class="group-card-header">
+    <img src="{{groups.g_image}}">
+    <div class="group-card-header-title">
+        <h1>{{groups.g_name}}</h1>
+        <div>
+            <p>999+ 话题</p>
+            <p>999+ 成员</p>
+        </div>
+    </div>
+</div>
+<div class="group-card-body">
+    <p>{{groups.g_introduction}}</p>
+    <p class="group-card-body-creator">星球主: {{groups.g_introduction}}</p>
+</div>
+<div class="group-card-footer">
+    <button id="quit-group">退出星球</button>
+</div>    
+</script>
 
 <script type="text/html" id="postdetails-tpl">
 <div id="post-2" class="post-details">
@@ -101,10 +119,10 @@
 (function() {
     var postobj = {
         postContainer: $('#post-container'),
-        postReplies: $('.post-replies'),
-        replyInput: $('#reply-send-content'),
+        replyInput: $('#post-reply-send-content'),
         bindEvent: function() {
             var self = this;
+ 
         },
         init: function() {
             var self = this;
@@ -112,6 +130,8 @@
                 if (data.ret == 200 && data.data) {
                     var compiled = template("postdetails-tpl", data.data);
                     self.postContainer.html(compiled + self.postContainer.html());
+                    compiled = template("group-card-tpl", data.data);
+                    $("#group-card").html(compiled);
                 } else {
                     sweetAlert('错误', '数据获取失败', 'error');
                 }
@@ -138,9 +158,22 @@
                         }
                     });
                     //rebind();
+                    //绑定回复
+                    $("#post-reply-send-btn").on("click", function() {
+                        global.subData("./<%= postid%>/replysend", {p_text: $('#post-reply-send-content').val()}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                swal('发送成功');
+                                $('#post-reply-send-content').val('');
+                            } else {
+                                sweetAlert('错误', '回复失败', 'error');
+                            }
+                        });
+                    })
                 });
             };
             demo();
+
+            self.bindEvent();
         },
     }
 
@@ -149,4 +182,4 @@
 
 })();
 </script>
-</script>
+<%- include base/footerMobile.ejs %>
