@@ -774,7 +774,9 @@ button {
   width: 590px;
   border-radius: 8px;
 }
--.collection-content .collection-content-container .collection-section .mycollection-container--PC .defaultPC {
+.collection-content .collection-content-container .collection-section .mycollection-container--PC #noCollections {
+  display: block;
+  width: 100%;
   text-align: center;
   font-family: PingFangHK-Medium;
   font-size: 18px;
