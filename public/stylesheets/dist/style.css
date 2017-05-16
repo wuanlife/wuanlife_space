@@ -10,8 +10,14 @@ input,
 button {
   border: none;
 }
+.allgroup-head {
+  margin-left: 120px;
+}
 .allgroup-content {
   width: 720px;
+  margin: 0 auto;
+  clear: both;
+  overflow: hidden;
 }
 .allgroup-content .allgroup-group {
   float: left;
@@ -122,7 +128,11 @@ input,
 button {
   border: none;
 }
+.creatgroup-head {
+  margin-left: 150px;
+}
 .creatgroup-content {
+  margin: 0 auto;
   background: #ffffff;
   border-radius: 4px;
   width: 660px;
@@ -176,7 +186,10 @@ button {
   font-size: 16px;
   color: #999999;
 }
-.creatgroup-content #choose-btn {
+.creatgroup-content .creatgroup-choose {
+  width: 240px;
+}
+.creatgroup-content .creatgroup-choose #choose-btn {
   background: #ffffff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
   border-radius: 2px;
@@ -190,11 +203,27 @@ button {
   text-align: left;
   padding-left: 12px;
 }
-.creatgroup-content #choose-btn span {
+.creatgroup-content .creatgroup-choose #choose-btn span {
   margin-right: 70px;
 }
-.creatgroup-content #choose-btn svg {
+.creatgroup-content .creatgroup-choose #choose-btn svg {
   font-size: 12px;
+}
+.creatgroup-content .creatgroup-choose .setgroup-choose {
+  width: 240px;
+  margin-left: 30px;
+  position: absolute;
+  visibility: hidden;
+}
+.creatgroup-content .creatgroup-choose .setgroup-choose button {
+  background: #ffffff;
+  border-radius: 2px;
+  width: 240px;
+  height: 60px;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #333333;
+  text-align: left;
 }
 .creatgroup-content .creatgroup-save {
   display: block;
@@ -295,6 +324,12 @@ input,
 button {
   border: none;
 }
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
 .group-msg {
   position: absolute;
   top: 69px;
@@ -368,6 +403,13 @@ button {
   font-size: 12px;
   color: #ffffff;
 }
+.group-nopost {
+  font-family: PingFangHK-Medium;
+  font-size: 32px;
+  color: #999999;
+  margin-left: 200px;
+  margin-top: 100px;
+}
 .group-post {
   margin-top: 8px;
   background: #ffffff;
@@ -426,6 +468,15 @@ button {
   margin-top: 11px;
   margin-left: 16px;
 }
+.group-post .group-post-title .group-sign {
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 60px;
+  height: 20px;
+  background-color: #1b87f6;
+  color: #ffffff;
+  border-radius: 4px;
+}
 .group-post .group-post-content {
   margin-top: 11px;
   margin-left: 16px;
@@ -455,6 +506,10 @@ button {
   font-family: PingFangHK-Medium;
   font-size: 14px;
   color: #5677fc;
+}
+.group-post .group-post-btn .be-choose {
+  opacity: 0.26;
+  color: #000000;
 }
 .group-public {
   position: fixed;
@@ -1490,3 +1545,5 @@ button {
   font-size: 16px;
   color: #5677fc;
 }
+
+

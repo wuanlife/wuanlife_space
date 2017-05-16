@@ -3,7 +3,7 @@
       <div class="section">
             <div class="section-hd">
                 <span>个人资料</span>
-                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <!--  以防万一在这留了一个可以在右边扩展的div-->
                 <div class="slide-controls">
                 </div> 
             </div>
@@ -184,11 +184,11 @@
               event.preventDefault();
               if(self.verificate()){
                 //self.loading.show();
-                self.loading.start({
+                /*self.loading.start({
                     loadingTPLId : 0,
                     target : $(".content"),
                     loadingId : 'self'
-                  });
+                  });*/
                 var subdata={
                   user_name:self.user_name,
                   profile_picture:$("#g_img").val(),
@@ -207,7 +207,7 @@
                     day:self.day
                   },function(data){
                   //self.loading.hide();
-                  self.loading.stop('self');
+                  //self.loading.stop('self');
                   if(data.ret==200){
                     if(data.data==1){
                       sweetAlert('成功',data.msg,'success');
@@ -223,12 +223,78 @@
               }
             });
           },
+          verifimail:function(){
+            var self=this;
+            function countfu(){
+              $("#verifibtn-on").css("background-color","#C0C0C0");
+              $("#verifibtn-on").off("touchend");
+              $("#verifibtn-on").text(time+'s');
+              if(time>0){
+                time=time-1;
+                var y=setTimeout(function(){
+                  countfu();
+                },1000);
+              }else{
+                $("#verifibtn-on").css("background-color","#5677fc");
+                $("#verifibtn-on").text("验证");
+                $("#verifibtn-on").on("click",function(){
+                  /*self.loading.start({
+                    loadingTPLId : 0,
+                    target : $(".personal-content"),
+                    loadingId : 'self'
+                  });*/
+                  time=60;
+                  global.getData('/users/verifycomfirm',function(data){
+                    /*self.loading.stop('self');*/
+                    if(data.ret==200){
+                      if(data.data.mail_check==1){
+                        sweetAlert('成功','邮箱已验证成功！请刷新页面更新信息！', 'success');
+                      }else{
+                        global.getData('/users/verify',function(data){
+                          if(data.ret==200){
+                            if(data.data.code==1){
+                              sweetAlert('成功',data.msg+'！请马上到邮箱完成验证~','success');
+                             }else{
+                              sweetAlert('提示','验证邮件发送失败，请稍后再试','success');
+                              }
+                            }else{
+                              sweetAlert('错误', data.msg, 'error');
+                            }
+                          });
+                      }
+                    }
+                  });
+                  countfu();
+                });
+              }
+            }
+            var time=60;
+            $("#verifibtn-on").on("click",function(){
+              /*self.loading.start({
+                    loadingTPLId : 0,
+                    target : $(".personal-content"),
+                    loadingId : 'self'
+              });*/
+              global.getData('/users/verify',function(data){
+                /*self.loading.stop('self');*/
+                if(data.ret==200){
+                  if(data.data.code==1){
+                    sweetAlert('成功',data.msg+'！请马上到邮箱完成验证~','success');
+                  }else{
+                    sweetAlert('提示','验证邮件发送失败，请稍后再试','success');
+                  }
+                }else{
+                  sweetAlert('错误', data.msg, 'error');
+                }
+              });
+              countfu();
+            });
+          },
           init:function(){
-            console.log("hehe");
             this.bindEvent();
             this.bindTagEvent();
             this.ClientData();
-            //this.verifimail();
+            this.verifimail();
             //wuanHeadFun.title("个人资料");
       }
     };

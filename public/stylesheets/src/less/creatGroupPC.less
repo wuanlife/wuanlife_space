@@ -2,7 +2,11 @@
 input,button{
 	border:none;
 }
+.creatgroup-head{
+	margin-left: 150px;
+}
 .creatgroup-content{
+	margin: 0 auto;
 	background:#ffffff;
 	border-radius:4px;
 	width:660px;
@@ -55,26 +59,45 @@ input,button{
 		font-size:16px;
 		color:#999999;
 	}
-	#choose-btn{
-		background:#ffffff;
-		box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
-		border-radius:2px;
-		width:240px;
-		height:60px;
-		margin-left: 30px;
-		margin-top: 8px;
-		font-family:PingFangSC-Regular;
-		font-size:16px;
-		color:#333333;
-		text-align: left;
-		padding-left: 12px;
-		span{
-			margin-right: 70px;
-		}
-		svg{
-			font-size:12px;
-		}
-	}
+	.creatgroup-choose{
+		width: 240px;
+			#choose-btn{
+				background:#ffffff;
+				box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+				border-radius:2px;
+				width:240px;
+				height:60px;
+				margin-left: 30px;
+				margin-top: 8px;
+				font-family:PingFangSC-Regular;
+				font-size:16px;
+				color:#333333;
+				text-align: left;
+				padding-left: 12px;
+				span{
+					margin-right: 70px;
+				}
+				svg{
+					font-size:12px;
+				}
+			}
+			.setgroup-choose{
+				width: 240px;
+				margin-left: 30px;
+				position: absolute;
+				visibility:hidden;
+				button{
+					background:#ffffff;
+					border-radius:2px;
+					width:240px;
+					height:60px;
+					font-family:PingFangSC-Regular;
+					font-size:16px;
+					color:#333333;
+					text-align: left;
+				}
+			}
+    }
 	.creatgroup-save{
 		display: block;
 		background:#5677fc;

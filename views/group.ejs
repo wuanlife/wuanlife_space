@@ -10,76 +10,226 @@
         <div class="section-content">
             <div class="group-msg">
             	<div class="group-img">
-                        <button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
+                        <button type="button" style="background-image:url(<%=result.g_image%>);"></button>
                 </div>
-                <h2 class="group-head">我们都是技术宅aaaaaa</h2>
+                <h2 class="group-head"><%=result.g_name%></h2>
                 <div class="group-number">
-                	<span>999+ 成员</span>
-	                <span>999+ 话题</span>
+                	<span><%=result.user_num%> 成员</span>
+	                <span><%=result.post_num%> 话题</span>
                 </div>
                 <div class="group-intro">
-                	我们是介绍啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+                	<%=result.g_introduction%>
                 </div>
                 <div class="group-creater">
-                	星球主：三木
+                	星球主：<%=result.creator_name%>
                 </div>
-                <button class="group-set">退出星球</button>
+                <%if(result.identity=='01'){%>
+                <a href="/groups/<%=result.group_id%>/set">
+                    <button class="group-set">
+                       星球设置
+                    </button>
+                </a>
+                <%}%>
+                <%if(result.identity=='02'){%>
+                    <button class="group-set leave-btn">
+                        退出星球
+                    </button>
+                <%}%>
+                <%if(result.identity=='03'){%>
+                    <button class="group-set">
+                        加入星球
+                    </button>
+                <%}%>
             </div>
-        	<div class="group-post">
-        		<div class="group-post-img">
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        		</div>
-        		<div class="group-post-msg">
-        			<span class="creater-name">三mu111111</span>
-        			<span> 发表于 </span>
-        			<span class="group-name">三木三木啊啊啊啊</span> 
-        			<span>2018-09-09 22:22</span>
-        		</div>
-        		<h3 class="group-post-title">孩子们</h3>
-        		<div class="group-post-content">哔哩哔哩周边 联系我们 加入我们 官方认证 传送门 帮助中心 高级弹幕 活动专题页 侵权申诉 分院帽计划 活动中心 用户反馈论坛 壁纸站 名人堂 手机端下载 新浪微...哔哩哔哩周边 联系我们 加入我们 官方认证 传送门 帮助中心 高级弹幕 活动专题页 侵权申诉 分院帽计划 活动中心 用户反馈论坛 壁纸站 名人堂 手机端下载 新浪微...</div>
-        		<div class="group-post-image">
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        		</div>
-        		<div class="group-post-btn">
-        			<span>评论</span>
-        			<span>999+</span>
-        			<span>点赞</span>
-        			<span>999+</span>
-        			<span>收藏</span>
-        			<span>999+</span>
-        		</div>
-        	</div>
-        	<div class="group-post">
-        		<div class="group-post-img">
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        		</div>
-        		<div class="group-post-msg">
-        			<span class="creater-name">三mu111111</span>
-        			<span> 发表于 </span>
-        			<span class="group-name">三木三木啊啊啊啊</span> 
-        			<span>2018-09-09 22:22</span>
-        		</div>
-        		<h3 class="group-post-title">孩子们</h3>
-        		<div class="group-post-content">哔哩哔哩周边 联系我们 加入我们 官方认证 传送门 帮助中心 高级弹幕 活动专题页 侵权申诉 分院帽计划 活动中心 用户反馈论坛 壁纸站 名人堂 手机端下载 新浪微...哔哩哔哩周边 联系我们 加入我们 官方认证 传送门 帮助中心 高级弹幕 活动专题页 侵权申诉 分院帽计划 活动中心 用户反馈论坛 壁纸站 名人堂 手机端下载 新浪微...</div>
-        		<div class="group-post-image">
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        			<button type="button" style="background-image:url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493741058612&di=fbe09f507e51e9f8516a0fbd9c2e6af0&imgtype=0&src=http%3A%2F%2Fscimg.jb51.net%2Fallimg%2F160404%2F14-160404103545501.jpg);"></button>
-        		</div>
-        		<div class="group-post-btn">
-        			<span>评论</span>
-        			<span>999+</span>
-        			<span>点赞</span>
-        			<span>999+</span>
-        			<span>收藏</span>
-        			<span>999+</span>
-        		</div>
-        	</div>
+            <%if(result.posts.length==0){%>
+                    <div class="group-nopost">还没有帖子~</div>
+            <%}else{%>
+            <div id="group-body">
+            <%for(var i in result.posts){%>
+            <div class="group-post">
+                <div class="group-post-img">
+                    <button type="button" style="background-image:url(<%=result.posts[i].users.profile_picture%>);"></button>
+                </div>
+                <div class="group-post-msg">
+                    <span class="creater-name"><%=result.posts[i].users.user_name%></span>
+                    <span> 发表于 </span>
+                    <span class="group-name"><%=result.g_name%></span> 
+                    <span><%=result.posts[i].posts.create_time%></span>
+                </div>
+                <a href="/post/<%=result.posts[i].posts.post_id%>">
+                <h3 class="group-post-title">
+                <%if(result.posts[i].posts.sticky==1){%>
+                <span class="group-sign">置顶</span>
+                <%}%>
+                <%if(result.posts[i].posts.digest==1){%>
+                <span class="group-sign">加精</span>
+                <%}%>
+                <%if(result.posts[i].posts.lock==1){%>
+                <span class="group-sign">锁定</span>
+                <%}%>
+                <%=result.posts[i].posts.p_title%>
+                </h3>
+                <div class="group-post-content"><%=result.posts[i].posts.p_text%></div>
+                <%if(result.posts[i].posts.image.length>0){%>
+                <div class="group-post-image">
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button>
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button>
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button>
+                </div>
+                <%}%>
+                </a>
+                <div class="group-post-btn">
+                    <%if(result.posts[i].posts.replied==1){%>
+                    <span class="be-choose">评论</span>
+                    <span class="be-choose"><%=result.posts[i].posts.replied_num%></span> 
+                    <%}else{%>
+                    <span>评论</span>
+                    <span><%=result.posts[i].posts.replied_num%></span> 
+                    <%}%>
+
+                    <%if(result.posts[i].posts.approved==1){%>
+                    <span class="be-choose">点赞</span>
+                    <span class="be-choose"><%=result.posts[i].posts.approved_num%></span>
+                    <%}else{%>
+                    <span>点赞</span>
+                    <span><%=result.posts[i].posts.approved_num%></span> 
+                    <%}%>
+
+                    <%if(result.posts[i].posts.collected==1){%>
+                    <span class="be-choose">收藏</span>
+                    <span class="be-choose"><%=result.posts[i].posts.collected_num%></span>
+                    <%}else{%>
+                    <span>收藏</span>
+                    <span><%=result.posts[i].posts.collected_num%></span>
+                    <%}%>
+                </div>
+            </div>
+            <%}%>
+            </div>
+            <div id="pages"></div>
+            <%}%>
         	<a href="#" class="group-public"><span>+</span></a>
         </div>
 	</div>
 </div>
+<%if(result.posts.length>0){%>
+<script id="post-list" type="text/html">
+{{each posts as value i}}
+<div class="group-post">
+                <div class="group-post-img">
+                    <button type="button" style="background-image:url({{value.users.profile_picture}});"></button>
+                </div>
+                <div class="group-post-msg">
+                    <span class="creater-name">{{value.users.user_name}}</span>
+                    <span> 发表于 </span>
+                    <span class="group-name"><%=result.g_name%></span> 
+                    <span>{{value.posts.create_time}}</span>
+                </div>
+                <a href="/post/{{value.posts.post_id}}">
+                <h3 class="group-post-title">
+                {{if value.posts.sticky==1}}
+                <span class="group-sign">置顶</span>
+                {{/if}}
+                {{if value.posts.digest==1}}
+                <span class="group-sign">加精</span>
+                {{/if}}
+                {{if value.posts.lock==1}}
+                <span class="group-sign">锁定</span>
+                {{/if}}
+                {{value.posts.p_title}}
+                </h3>
+                <div class="group-post-content">{{value.posts.p_text}}</div>
+                {{if value.posts.image.length>0}}
+                <div class="group-post-image">
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button>
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button>
+                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button>
+                </div>
+                {{/if}}
+                </a>
+                <div class="group-post-btn">
+                    {{if value.posts.replied==1}}
+                    <span class="be-choose">评论</span>
+                    <span class="be-choose">{{value.posts.replied_num}}</span> 
+                    {{else}}
+                    <span>评论</span>
+                    <span>{{value.posts.replied_num}}</span> 
+                    {{/if}}
+
+                    {{if value.posts.approved==1}}
+                    <span class="be-choose">点赞</span>
+                    <span class="be-choose">{{value.posts.approved_num}}</span>
+                    {{else}}
+                    <span>点赞</span>
+                    <span>{{value.posts.approved_num}}</span> 
+                    {{/if}}
+
+                    {{if value.posts.collected==1}}
+                    <span class="be-choose">收藏</span>
+                    <span class="be-choose">{{value.posts.collected_num}}</span>
+                    {{else}}
+                    <span>收藏</span>
+                    <span>{{value.posts.collected_num}}</span>
+                    {{/if}}
+                </div>
+</div>
+{{/each}}
+</script>
+<%}%>
 <%- include base/baseJS.ejs %>
+<script type="text/javascript">
+        (function(){
+            var users={
+                loading:HJLoading,
+                pagecount:1,
+                pageallnum:<%=result.page_count%>,
+                quitgroup:function(){
+                    $('.leave-btn').on('click',function(){
+                            //退出星球代码
+                            global.getData('/groups/<%=result.group_id%>/quit',function(data){
+                                if(data.data.code==1){
+                                    sweetAlert('成功',data.msg,'success');
+                                    var t=setTimeout(function(){
+                                  window.location.href="/groups/<%=result.group_id%>";
+                                },5000);
+                                }else{
+                                        sweetAlert('失败',data.msg,'error');
+                                }
+                            });
+                    });
+                },
+                download:function(){
+                     var self=this;
+                     function demo(curr){
+                        curr=curr || 1;
+                        global.getData('/groups/<%=result.group_id%>/more?pagecount='+curr, function(data) {
+                            if((curr || 1)<=data.data.page_count){
+                                var compiled=template('post-list',data.data);
+                            }
+                            //插入数据
+                            //var temp=$("#group-body").html()
+                            $("#group-body").html(compiled);
+                            laypage({
+                                cont: document.getElementById('pages'),
+                                pages: data.data.page_count, //通过后台拿到的总页数
+                                curr: data.data.current_page, //当前页
+                                jump: function(obj, first){ //触发分页后的回调
+                                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                        demo(obj.curr);
+                                    }
+                                }
+                            });
+                            //rebind();
+                        });
+                    };
+                    demo();
+                },
+                init:function(){
+                    this.download();
+                    this.quitgroup();
+                }
+            };
+            users.init();
+        })()
+</script>
 <%- include base/footerMobile.ejs %>
