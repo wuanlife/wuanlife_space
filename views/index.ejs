@@ -2,6 +2,7 @@
 <div id="content">
     <div class="article">
         <div class="section mid-container">
+            <% if (typeof user !== 'undefined') { %>
             <ul class="section-tab">
                 <li class="on section-hd" id="myplanet-chart-hd">
                     <span>我的星球</span>
@@ -19,10 +20,22 @@
                 <div id="demo1"></div>
             </div>
             <div id="topic" class="section-content display-none margin-H-16px">
-                <p>fuuuuuuuuuuuuuuuuuuuck</p>
-            </div>            
+                <div id="demo2"></div>
+            </div>  
+            <% } else { %>   
+            <div class="section-hd">
+                <span>最新话题</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div id="topic" class="section-content">
+                <div id="demo3"></div>
+            </div>
+            <% } %>      
         </div>
     </div>
+    <% if (typeof user !== 'undefined') { %>
     <div class="aside">
         <div class="section big-container">
             <div class="section-hd">
@@ -34,18 +47,14 @@
             <div class="section-content">
                 <div class="aside-group-list">
                     <div class="aside-group-item">
-                        <button class="aside-btn">我日啊</button>
-                        <button class="aside-btn">我日啊</button>
-                        <button class="aside-btn">我日啊</button>
-                        <button class="aside-btn">我日啊</button>
-                        <button class="aside-btn">我日啊</button>
-                        <button class="aside-btn aside-btn-blue">全部星球</button>
+                        <button id="aside-allgroup" class="aside-btn aside-btn-blue">全部星球</button>
+                        <button id="aside-creatgroup" class="aside-btn aside-btn-blue">创建星球</button>
                     </div>                    
                 </div>
             </div>     
-
         </div>
     </div>
+    <% } %>
 </div>
 <%- include base/baseJS.ejs %>
 <script type="text/html" id="index-entry-tpl">
@@ -80,6 +89,11 @@
             </ul>
         </div>
     </div>
+    {{/each}}
+</script>
+<script type="text/html" id="group-item-tpl">
+    {{each posts as item i}}
+    <button id="group-{{}}" class="aside-btn">{{}}</button>
     {{/each}}
 </script>
 <script>
@@ -201,31 +215,97 @@
                         window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
                     });
                 };
-                //分页加载
-                function demo(curr){
-                    global.subData(loadtype,{pn : self.loadedpn}, function(data) {
-                        if(self.loadedpn<=data.data.page_count){
+                <% if (typeof user !== 'undefined') { %>
+                //登陆我的星球分页加载
+                function demo1(curr){
+                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
                             result = template("index-entry-tpl",data.data);
-                            self.loadedpn++;
                         }
                         //插入数据
-                        $('.index-entry').remove();
+                        $('#myplanet > .index-entry').remove();
                         $('#myplanet').prepend(result);   
                         laypage({
                             cont: document.getElementById('demo1'),
-                            pages: 10, //通过后台拿到的总页数
+                            pages: data.data.page_count, //通过后台拿到的总页数
                             curr: curr || 1, //当前页
                             jump: function(obj, first){ //触发分页后的回调
                                 if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    demo(obj.curr);
+                                    demo1(obj.curr);
                                 }
                             }
                         });
                         rebind();
                     });
                 };
-                demo();
+                demo1();
+                //登陆我的星球分页加载
+                function demo2(curr){
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: true}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#topic > .index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo2'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo2(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    });
+                };
+                demo2();
+                <% } else { %>
+                //未登录情况获取最新的贴子
+                function demo3(curr){
+                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('.index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo3'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo3(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    });
+                };
+                demo3();
+                <% } %>    
 
+                // 登陆时获取用户星球列表
+                <% if (typeof user !== 'undefined') { %>
+                global.subData('/myplanet',{pn : 1}, function(data) { 
+                    //插入数据 
+                    result = template("group-item-tpl",data.data);
+                    $('.aside-group-item').html(result + $('.aside-group-item').html());
+                    //绑定事件
+                    $('.aside-btn').on('click', function(e) {
+                        window.location.href = '/groups/' + e.currentTarget.id;
+                    })
+                    $('#aside-allgroup').on('click', function(e) {
+                        window.location.href = '/allgroup/';
+                    })
+                    $('#aside-creatgroup').on('click', function(e) {
+                        window.location.href = '/creategroup';
+                    })
+                });
+                <% } %>    
                 //self.bindEvent();    
             }
         }

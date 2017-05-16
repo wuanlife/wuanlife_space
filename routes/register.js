@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 		var page = agent.Mobile ? 'registerMobile' : 'register';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user
 		});
 	} catch(e){
 		next(e);
@@ -36,11 +36,11 @@ router.post('/', function(req, res, next) {
 		
 		res.header('Content-type','application/json');
 		res.header('Charset','utf8');
-		console.log('err',err);
-		console.log('code',response.statusCode);
+		//console.log('err',err);
+		//console.log('code',response.statusCode);
 		if(!err && response.statusCode === 200){
 			var data = JSON.parse(body).data;
-			console.log('data',data);
+			//console.log('data',data);
 			if(data.code === 1){
 				console.log('register successful! responded ' ,body);
 			}else{
@@ -52,7 +52,7 @@ router.post('/', function(req, res, next) {
 			err && console.error('Register failed!',err.toString());
 			res.send({
 				ret:500,
-				msg:'服务器异常，注册一场',
+				msg:err.toString(),
 			});
 		}
 	});

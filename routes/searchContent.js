@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 		var page = agent.Mobile ? 'searchContentMobile' : 'searchContent';
 		res.render(page, {
 			'result': null,
-			'user': null
+			'user': req.session.user,
 		});
 	} catch(e){
 		next(e);

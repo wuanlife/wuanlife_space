@@ -1,40 +1,15 @@
 <%- include base/header.ejs %>
 <div id="content" class="search-content">
-    <div class="section planets-section">
+    <div class="section planets-section" style="display: none;">
         <div class="section-hd">
             <span>相关星球</span>
         </div>
-        <div class="section-content planets-section-container">
+        <div class="section-content planets-section-container" >
             <div class="planets-container-entries">
-               <div class="planets-container-entry">
-               		<div class="planets-entry-profile">
-               			<img>
-               		</div>
-               		<div class="planets-entry-detail">
-               			<span class="detail-planet">我们都是技术宅</span>
-               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
-               		</div>
-               </div>
-               <div class="planets-container-entry">
-               		<div class="planets-entry-profile">
-               			<img>
-               		</div>
-               		<div class="planets-entry-detail">
-               			<span class="detail-planet">我们都是技术宅</span>
-               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
-               		</div>
-               </div>
-               <div class="planets-container-entry">
-               		<div class="planets-entry-profile">
-               			<img>
-               		</div>
-               		<div class="planets-entry-detail">
-               			<span class="detail-planet">我们都是技术宅</span>
-               			<span class="detail-info">我们都是技术宅来阿里阿ddd...</span>
-               		</div>
-               </div>               
+ 
+               <div id="planetsLoad"></div>
             </div>
-            <div class="planets-section-container-more">
+            <div class="planets-section-container-more" style="display: none" id="more_planets">
             	<button type="button">更多相关信息</button>
             </div>
         </div>            
@@ -42,114 +17,233 @@
 
     <div class="section posts-section">
         <div class="section-hd">
-            <span>相关星球</span>
+            <span>相关帖子</span>
         </div>
         <div class="section-content posts-section-container">
             <div class="posts-section-entries">
-                <div class="posts-section-entry">
-                	<div class="entry-item posts-entry-info">
-                		<img>
-                		<span>淘淘  发表于  鬼扯天地</span>
-                		<span>2017-01-28 22:41</span>
-                	</div>
-                	<div class="entry-item posts-entry-title">
-                		<h1>Ubuntu开荒笔记</h1>
-                	</div>
-
-                	<div class="entry-item posts-entry-body">
-                		<p>
-                            安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
-                        </p>
-                	</div>
-                </div>
                 
-                <div class="posts-section-entry">
-                	<div class="entry-item posts-entry-info">
-                		<img>
-                		<span>淘淘  发表于  鬼扯天地</span>
-                		<span>2017-01-28 22:41</span>
-                	</div>
-                	<div class="entry-item posts-entry-title">
-                		<h1>Ubuntu开荒笔记</h1>
-                	</div>
-
-                	<div class="entry-item posts-entry-body">
-                		<p>
-                            安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
-                        </p>
-                	</div>
-                </div>
+                
+                <div id="postsLoad"></div>
             </div>
         </div>            
     </div>
 </div>
+
+<script type="text/html" id="moreplanets-tpl">
+
+    <div class="section more-planets-section">
+        <div class="section-hd">
+            <span>更多相关星球</span>
+        </div>
+        <div class="section-content more-planets-container">
+            <div class="more-planets-entries">
+                {{each group as item i}}
+                <div class="planets-container-entry" id="planet_{{item.group_id}}">
+                    <div class="more-planets-entry-profile">
+                        <img src={{item.g_image}}>
+                    </div>
+                    <div class="more-planets-entry-detail">
+                        <span class="detail-planet">{{item.g_name}}</span>
+                        <span class="detail-info">{{item.g_introduction}}</span>
+                    </div>
+                </div>
+                {{/each}}
+                <div id="moreLoad"></div>
+            </div>
+        </div>            
+    </div>
+</script>
+
+<script type="text/html" id="showallplanets-tpl">
+
+    {{each group as item i}}
+
+    <div class="planets-container-entry" id="planet_{{item.group_id}}">
+        <div class="planets-entry-profile">
+            <img src={{item.g_image}}>
+        </div>
+        <div class="planets-entry-detail">
+            <span class="detail-planet">{{item.g_name}}</span>
+            <span class="detail-info">{{item.g_introduction}}</span>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+
+<script type="text/html" id="posts-tpl">
+    
+    {{each posts as item i}}
+        <div class="posts-section-entry" id="post_{{item.post_id}}">
+            <div class="entry-item posts-entry-info">
+                <img src="{{item.profile_picture}}">
+                <span>{{item.user_name}}发表于{{item.g_name}}</span>
+                <span>{{item.create_time}}</span>
+            </div>
+            <div class="entry-item posts-entry-title">
+                <h1>{{item.p_title}}</h1>
+            </div>
+
+            <div class="entry-item posts-entry-body">
+                <p>{{item.p_text}}</p>
+            </div>
+        </div>
+    {{/each}}
+    
+
+</script>
+
 <%- include base/baseJS.ejs %>
 
-<%- include base/footerMobile.ejs %>
-
-
 <script>
-/*    (function() {
-        var personal = {
-            name:$('.personal-state.personal-logfont'),
-            photo:$('.personal-personIcon > img'),
-            state : $('.personal-state'),
-            info : $('.personal-information'),
-            changepwd : $('.personal-changepwd'),
-            collection : $('.personal-collection'),
-            invite : $('.personal-invitefriend'),
-            exit: $('#exit'),
-            getServerData: function(param, cb) {
-                
-            },
+    (function() {
+        //存在问题。loading样式和默认占位元素设计
+        var search = {
+            posts_page : 1,
+            planets_page: 1,
+            planetsContainer:$('.planets-container-entries'),
+            postsContainer:$('.posts-section-entries'),
+            container:$('.search-content'),
+
             bindEvent: function() {
                 var that = this;
-
-                that.state.on('click',function(e){
-                    <%if(!user){%>
-                    window.location.href = window.location.pathname + "/personalInfo";
-                    <%}%>
-                });
-
-                that.info.on('click',function(e){
-                    window.location.href = window.location.pathname + "/personalInfo";
-                });
-                that.changepwd.on('click',function(e){
-                    window.location.href = window.location.pathname + "/changepassword";
-                });
-                that.collection.on('click',function(e){
-                    window.location.href = window.location.pathname + "/myCollection";
-                });
-                that.invite.on('click',function(e){
-                    window.location.href = window.location.pathname + "/invite";
-                });
-
-                that.exit.on('click',function(e){
-                    //退出登录
-                    window.location.href = window.location.pathname +"/logout";
-                });
+                
             },
             init: function() {
                 var that = this;
-                wuanHeadFun.tabHighlight("tab-head-myself");
-                wuanHeadFun.title('我的');
-                <% if(user) {%>
-                    that.name.html('<%= user.user_name %>');
-                    global.subData('/personal',{userId:<%= user.user_id%>},function(data){
-                        if(data.data){
-                            that.photo.attr('src',data.data.profile_picture);
-                        }else{
-                            swal('错误',data.msg,'error');
-                        }    
-                        
+                var searchCon = window.location.search.split('?q=').join('');
+                var searchUrl = window.location.pathname;
+
+                function bindGroup(){
+                    $('.planets-container-entry').off('click');
+                    $('.planets-container-entry').on('click',function(e){
+                        var id = $(this).attr('id');
+
+                        window.location.href = '/groups/'+ id.slice(id.lastIndexOf('_')+1);
                     });
-                    
-                <% }else{ %>
-                    that.name.html('未登录');
-                <% } %>
+
+                }
+
+                function morePageLoad(curr){
+   
+                        that.container.empty();
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:16,
+                            gn:1,
+                            pnum:0,
+                            pn:1,                            
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                if(that.planets_page<=data.data.group_page){
+                                    var result = template("moreplanets-tpl",data.data);
+                                    that.planets_page++;
+                                }
+
+                                //$('.')
+                                that.container.append(result);
+                                laypage({
+                                    cont:$('#moreLoad')[0],
+                                    pages:data.data.group_page,
+                                    curr: curr || 1,
+                                    jump: function(obj,first){
+                                        if(!first){
+                                            morePageLoad();
+                                        }
+                                    }
+                                });
+                            }
+                            bindGroup();
+                        })
+                }
+
+                function bindPost(){
+                    $('.posts-section-entry').off('click');
+                    $('.posts-section-entry').on('click',function(e){
+                        var id = $(this).attr('id');
+
+                        window.location.href = '/posts/'+ id.slice(id.lastIndexOf('_')+1);
+                    });
+                }
+
+
+                function planetsPageLoad(curr){
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:3,
+                            gn:1,
+                            pnum:0,
+                            pn:1,
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                
+                                 if (!data.data.group) {
+                                    return;
+                                 }
+
+                                var result = template("showallplanets-tpl",data.data);
+                                $('.planets-container-entry').remove();
+                                that.planetsContainer.prepend(result);
+                                $('#more_planets').css({
+                                    display:'',
+                                });
+                                $('.planets-section').css({
+                                    display:'',
+                                });
+                            } 
+                            bindGroup(); 
+                            $('#more_planets button').on('click',function(e){
+                                morePageLoad();
+                            })
+                        })
+                }
+                //大同小异。。。。。。。。。。
+                function postsPageLoad(curr){
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:0,
+                            gn:1,
+                            pnum:10,
+                            pn:that.posts_page,
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                if(!data.data.posts){
+                                    //加入默认帖子提示
+                                    var noPosts = '<span id="noPosts">没有帖子喔</span>';
+                                    $('.posts-section-entry').remove();
+                                    that.postsContainer.prepend(noPosts);
+                                }
+
+                                if(that.posts_page<=data.data.posts_page){
+                                    var result = template("posts-tpl",data.data);
+                                    that.posts_page++;
+                                }
+
+                                $('.posts-section-entry').remove();
+                                that.postsContainer.prepend(result);
+
+                                laypage({
+                                    cont:$('#postsLoad')[0],
+                                    pages:data.data.posts_page,
+                                    curr:curr || 1,
+                                    jump:function(obj,first){
+                                        if(!first){
+                                            postsPageLoad();
+                                        }
+                                    }
+                                });
+                                
+                            }
+                            bindPost();
+                        });
+                }
+ 
+
+                planetsPageLoad();
+                postsPageLoad();
                 that.bindEvent();
             }
         }
-        personal.init();
-    })();*/
+        search.init();
+    })();
 </script>

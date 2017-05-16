@@ -20,10 +20,10 @@
         <div class="nav-wrap">
             <div class="nav-primary">
                 <div class="nav-logo">
-                    <a href="https://www.wuanla.com">午安网</a>
+                    <a href="/">午安网</a>
                 </div>
                 <div class="nav-search">
-                    <form action="https://www.douban.com/search" method="get">
+                    <form action="/searchContent" method="get">
                         <div class="inp">
                             <input id="inp-query" name="q" size="22" title="搜索搜索你感兴趣的内容和人..." maxlength="60" autocomplete="off" value="" placeholder="搜索你感兴趣的内容和人...">
                         </div>
@@ -31,10 +31,8 @@
                     </form>
                 </div>
                 <div class="nav-info">
-                    <!-- 未登录的时候，参照豆瓣读书
-                    <a></a>
-                    <a></a>
-                    -->
+                    <% if (typeof user !== 'undefined') { %>
+
                     <li>
                         <a href="/message" class="navbar-account-item">
                             <span class="mNote"><i class="red-point" id="mrp"></i></span>
@@ -48,7 +46,7 @@
                                     </use>
                                 </svg>       
                             </span>
-                            梁王
+                            <%=user.user_name%>
                         </span>
                         <ul class="dropdown-account">
                             <li>
@@ -56,14 +54,28 @@
                                     <use xlink:href="#icon-good">
                                     </use>
                                 </svg>                                  
-                                <a href="/users" class="per-icon">个人中心</a>
+                                <a href="/users" class="per-icon">个人资料</a>
                             </li>
                             <li>
                                 <svg aria-hidden="true" class="icon">
                                     <use xlink:href="#icon-good">
                                     </use>
                                 </svg>                                
-                                <a href="/myCollections" class="collect-icon">我的收藏</a>
+                                <a href="/personal/myCollection" class="collect-icon">我的收藏</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-good">
+                                    </use>
+                                </svg>                                
+                                <a href="/personal/inviteCode" class="collect-icon">邀请好友</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-good">
+                                    </use>
+                                </svg>                                
+                                <a href="/personal/changepassword" class="collect-icon">修改密码</a>
                             </li>
                             <li>
                                 <svg aria-hidden="true" class="icon">
@@ -74,10 +86,13 @@
                             </li>
                         </ul>
                     </div>
+                    <% } else{ %>
+                        <a href="/personal/login">登陆</a>
+                        <a href="/register">注册</a>
+                    <% } %>    
                 </div>
             </div>
         </div>
     </div> 
     <div id="wrapper">
-        
     
