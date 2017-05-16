@@ -15,9 +15,9 @@
         </div>            
     </div>
 
-    <div class="section posts-section" style="display: none;">
+    <div class="section posts-section">
         <div class="section-hd">
-            <span>相关星球</span>
+            <span>相关帖子</span>
         </div>
         <div class="section-content posts-section-container">
             <div class="posts-section-entries">
@@ -29,11 +29,36 @@
     </div>
 </div>
 
+<script type="text/html" id="moreplanets-tpl">
+
+    <div class="section more-planets-section">
+        <div class="section-hd">
+            <span>更多相关星球</span>
+        </div>
+        <div class="section-content more-planets-container">
+            <div class="more-planets-entries">
+                {{each group as item i}}
+                <div class="planets-container-entry" id="planet_{{item.group_id}}">
+                    <div class="more-planets-entry-profile">
+                        <img src={{item.g_image}}>
+                    </div>
+                    <div class="more-planets-entry-detail">
+                        <span class="detail-planet">{{item.g_name}}</span>
+                        <span class="detail-info">{{item.g_introduction}}</span>
+                    </div>
+                </div>
+                {{/each}}
+                <div id="moreLoad"></div>
+            </div>
+        </div>            
+    </div>
+</script>
+
 <script type="text/html" id="showallplanets-tpl">
 
     {{each group as item i}}
 
-    <div class="planets-container-entry" id="planet_"+{{item.group_id}}>
+    <div class="planets-container-entry" id="planet_{{item.group_id}}">
         <div class="planets-entry-profile">
             <img src={{item.g_image}}>
         </div>
@@ -78,9 +103,8 @@
             planets_page: 1,
             planetsContainer:$('.planets-container-entries'),
             postsContainer:$('.posts-section-entries'),
-            getServerData: function(param, cb) {
-                
-            },
+            container:$('.search-content'),
+
             bindEvent: function() {
                 var that = this;
                 
@@ -90,75 +114,128 @@
                 var searchCon = window.location.search.split('?q=').join('');
                 var searchUrl = window.location.pathname;
 
-                function showallplanets(curr,pages,tplData){
-                    if(that.planets_page <= pages){
-                        var result = template("showallplanets-tpl",tplData);
-                        that.planets_page++;
-                    }
+                function bindGroup(){
+                    $('.planets-container-entry').off('click');
+                    $('.planets-container-entry').on('click',function(e){
+                        var id = $(this).attr('id');
 
-                    $('.planets-container-entry').remove();
-                    that.planetsContainer.prepend(result);
-                    laypage({
-                        cont:$('#planetsLoad')[0],
-                        pages:pages,
-                        curr:curr || 1,
-                        jump:function(obj,first){
-                            if(!first){
-                                planetPageLoad();
-                            }
-                        }
+                        window.location.href = '/groups/'+ id.slice(id.lastIndexOf('_')+1);
                     });
-
 
                 }
 
-                function planetsPageLoad(curr){
-                    global.subData(searchUrl,{
-                        text:searchCon,
-                        gnum:3,
-                        pn:1,
-                        pnum:1,
-                        gn:that.planets_page,
-                    },function(data){
-                        if(data.ret == 200 && data.data){
-                            if(data.data.group){
-                                if(!data.data.posts){
-                                    showallplanets(curr,data.data.group_page,data.data);
-                                }else{
-                                    var result = template("showallplanets-tpl",data.data);
-                                    that.planetsContainer.prepend(result);
-                                    $('#more_planets').css({
-                                        display:'',
-                                    })
+                function morePageLoad(curr){
+   
+                        that.container.empty();
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:16,
+                            gn:1,
+                            pnum:0,
+                            pn:1,                            
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                if(that.planets_page<=data.data.group_page){
+                                    var result = template("moreplanets-tpl",data.data);
+                                    that.planets_page++;
                                 }
+
+                                //$('.')
+                                that.container.append(result);
+                                laypage({
+                                    cont:$('#moreLoad')[0],
+                                    pages:data.data.group_page,
+                                    curr: curr || 1,
+                                    jump: function(obj,first){
+                                        if(!first){
+                                            morePageLoad();
+                                        }
+                                    }
+                                });
+                            }
+                            bindGroup();
+                        })
+                }
+
+                function bindPost(){
+                    $('.posts-section-entry').off('click');
+                    $('.posts-section-entry').on('click',function(e){
+                        var id = $(this).attr('id');
+
+                        window.location.href = '/posts/'+ id.slice(id.lastIndexOf('_')+1);
+                    });
+                }
+
+
+                function planetsPageLoad(curr){
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:3,
+                            gn:1,
+                            pnum:0,
+                            pn:1,
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                
+                                 if (!data.data.group) {
+                                    return;
+                                 }
+
+                                var result = template("showallplanets-tpl",data.data);
+                                $('.planets-container-entry').remove();
+                                that.planetsContainer.prepend(result);
+                                $('#more_planets').css({
+                                    display:'',
+                                });
                                 $('.planets-section').css({
                                     display:'',
                                 });
-                            }else{
-
-                            }
-                        }
-                    });
+                            } 
+                            bindGroup(); 
+                            $('#more_planets button').on('click',function(e){
+                                morePageLoad();
+                            })
+                        })
                 }
-
+                //大同小异。。。。。。。。。。
                 function postsPageLoad(curr){
-                    global.subData(searchUrl,{
+                        global.subData(searchUrl,{
+                            text:searchCon,
+                            gnum:0,
+                            gn:1,
+                            pnum:10,
+                            pn:that.posts_page,
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                if(!data.data.posts){
+                                    //加入默认帖子提示
+                                    var noPosts = '<span id="noPosts">没有帖子喔</span>';
+                                    $('.posts-section-entry').remove();
+                                    that.postsContainer.prepend(noPosts);
+                                }
 
-                    },function(data){
-                        if(data.ret == 200 && data.data){
-                            if(data.data.posts){
                                 if(that.posts_page<=data.data.posts_page){
-                                    var result = template("",data.data);
+                                    var result = template("posts-tpl",data.data);
                                     that.posts_page++;
                                 }
 
-                                //待续
-                                $('.posts-section').css({
-                                    display:'',
-                                })
+                                $('.posts-section-entry').remove();
+                                that.postsContainer.prepend(result);
+
+                                laypage({
+                                    cont:$('#postsLoad')[0],
+                                    pages:data.data.posts_page,
+                                    curr:curr || 1,
+                                    jump:function(obj,first){
+                                        if(!first){
+                                            postsPageLoad();
+                                        }
+                                    }
+                                });
+                                
                             }
-                        }
-                    });
+                            bindPost();
+                        });
                 }
  
 

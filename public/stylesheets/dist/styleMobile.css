@@ -2430,6 +2430,283 @@ select {
 .auto-textbreak {
   word-wrap: break-word;
 }
+.message-board {
+  width: 100%;
+  background-color: #fff;
+  min-height: 1px;
+  zoom: 1;
+}
+.message-board:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.message-board .message-line {
+  margin: 0 auto;
+  min-height: 1px;
+  zoom: 1;
+  width: 8.53333333rem;
+  padding-top: 0.26666667rem;
+  padding-bottom: 0.26666667rem;
+  border-bottom: 2px solid #eff2f4;
+}
+.message-board .message-line:after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.message-board .message-line img {
+  width: 1.33333333rem;
+  heigh: 1.33333333rem;
+  border-radius: 50%;
+  overflow: hidden;
+  float: left;
+}
+.message-board .message-line .message-line-header,
+.message-board .message-line .message-line-short {
+  display: inline-block;
+}
+.message-board .message-line .message-line-header {
+  width: 7.2rem;
+}
+.message-board .message-line .message-line-header h1 {
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  color: #292929;
+  text-align: left;
+  line-height: 50px;
+  float: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-header h1 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-header h1 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-header h1 {
+  font-size: 41px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-header h1 {
+  font-size: 45px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-header h1 {
+  font-size: 60px;
+}
+.message-board .message-line .message-line-header button {
+  border-radius: 8px;
+  background: #5677fc;
+  line-height: 50px;
+  width: 1.68rem;
+  float: right;
+  font-family: PingFangHK-Regular;
+  font-szie: 12px;
+  color: #ffffff;
+  text-align: center;
+}
+[data-dpr="2"] .message-board .message-line .message-line-header button {
+  font-szie: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-header button {
+  font-szie: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-header button {
+  font-szie: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-header button {
+  font-szie: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-header button {
+  font-szie: 48px;
+}
+.message-board .message-line .message-line-short {
+  line-height: 0.53333333rem;
+  width: 7.2rem;
+}
+.message-board .message-line .message-line-short p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 6.66666667rem;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.54);
+}
+[data-dpr="2"] .message-board .message-line .message-line-short p {
+  font-size: 28px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-short p {
+  font-size: 35px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-short p {
+  font-size: 39px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-short p {
+  font-size: 42px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-short p {
+  font-size: 56px;
+}
+.message-board .message-line .message-line-verifyHeader {
+  width: 7.2rem;
+  display: inline-block;
+}
+.message-board .message-line .message-line-verifyInfo {
+  width: 5.86666667rem;
+  display: inline-block;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(40, 40, 40, 0.87);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyInfo h1 {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: PingFangHK-Regular;
+  font-size: 15px;
+  color: #292929;
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 30px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 38px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 41px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 45px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo h1 {
+  font-size: 60px;
+}
+.message-board .message-line .message-line-verifyInfo p {
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(40, 40, 40, 0.87);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyInfo p {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyButtons {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.message-board .message-line .message-line-verifyButtons button {
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+  background: #5677fc;
+  border-radius: 8px;
+  width: 2.66666667rem;
+  height: 0.66666667rem;
+  margin-left: 0.58666667rem;
+  margin-right: 0.29333333rem;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyButtons button {
+  font-size: 48px;
+}
+.message-board .message-line .message-line-verifyButtons p {
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.38);
+  text-align: left;
+}
+[data-dpr="2"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 24px;
+}
+[data-dpr="2.5"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 30px;
+}
+[data-dpr="2.75"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 33px;
+}
+[data-dpr="3"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 36px;
+}
+[data-dpr="4"] .message-board .message-line .message-line-verifyButtons p {
+  font-size: 48px;
+}
+
+.wuanBlueBackground {
+  background-color: #5677fc;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.alignCenter {
+  align-items: center;
+  display: flex;
+}
+.horizontalCenter {
+  justify-content: center;
+  display: flex;
+}
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.auto-textbreak {
+  word-wrap: break-word;
+}
 .modifypassword-default-container {
   width: 100%;
   position: absolute;
@@ -7523,3 +7800,4 @@ textarea {
   height: 16rem;
   background-color: white;
 }
+
