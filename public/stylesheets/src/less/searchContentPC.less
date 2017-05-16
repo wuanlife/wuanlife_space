@@ -21,6 +21,66 @@
 			}
 		}
 	}
+
+	.section.more-planets-section{
+		width: 700px;
+		.section-content.more-planets-container{
+			.more-planets-entries{
+				display: flex;
+    			flex-flow: row wrap;
+				justify-content:space-between;
+    			.planets-container-entry{
+    				margin-top: 11px;
+    				width: 342px;
+    				height: 86px;
+    				background-color: white;
+					display: flex;
+					align-items:center;
+    				.more-planets-entry-profile{
+						height: 100%;
+						margin-right: 7px;
+    					img{
+    						border-radius: 100%;
+    						margin-top: 10px;
+    						width: 50px;
+    						height: 50px;
+    					}
+    				}
+
+    				.more-planets-entry-detail{
+    					display: flex;
+						align-items: flex-start;
+						flex-direction: column;
+						justify-content: flex-start;
+						width: 0px;
+    					flex-grow: 1;
+    					span{
+							text-align:left;
+							font-size:14px;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							width: 100%;
+    					}
+
+    					.detail-planet{
+							font-family:PingFangHK-Medium;
+							color:#5992e4;
+    					}
+
+    					.detail-info{
+							font-family:PingFangHK-Regular;
+							color:#666666;
+    					}
+    				}
+    			}
+
+    			#moreLoad{
+    				width: 100%;
+    			}
+			}
+		}
+	}
 	.planets-section{
 		margin-bottom: 37px;
 		
@@ -51,11 +111,11 @@
 					width:190px;
 					display: flex;
 					align-items: center;
+					background-color: white;
 					.planets-entry-profile{
 						img{
 							width: 30px;
 							height: 30px;
-							background-color: blue;
 						}
 					}
 
@@ -95,10 +155,18 @@
 		.posts-section-container{
 
 			.posts-section-entries{
-
+				#noPosts{
+					display: block;
+					width: 100%;
+					color:#5992e4;
+					font-size: 20px;
+					text-align: center;
+					font-weight: bold;
+				}
 				.posts-section-entry{
 					margin: 0 15px 7px;
 					border-top: solid 1px #ffffff;
+					background-color: white;
 					.entry-item{
 						display: flex;
 						justify-content: flex-start;
