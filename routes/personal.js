@@ -130,7 +130,14 @@ router.get('/logout', function(req, res, next) {
 		}
 
 		//res.clearCookie(req.session.user.user_name);
-		res.redirect('/personal');
+        console.log('logout');
+        var agent = ua(req.headers['user-agent']);
+        try{
+            agent.Mobile?res.redirect('/personal'):res.redirect('/');
+        }catch(e){
+            next(e);
+        }
+		
 	});
 });
 
