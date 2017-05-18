@@ -99,8 +99,6 @@
     (function() {
         //存在问题。loading样式和默认占位元素设计
         var search = {
-            posts_page : 1,
-            planets_page: 1,
             planetsContainer:$('.planets-container-entries'),
             postsContainer:$('.posts-section-entries'),
             container:$('.search-content'),
@@ -129,15 +127,14 @@
                         that.container.empty();
                         global.subData(searchUrl,{
                             text:searchCon,
-                            gnum:16,
-                            gn:1,
+                            gnum:20,
+                            gn:curr || 1,
                             pnum:0,
                             pn:1,                            
                         },function(data){
                             if(data.ret == 200 && data.data){
-                                if(that.planets_page<=data.data.group_page){
+                                if((curr || 1)<=data.data.group_page){
                                     var result = template("moreplanets-tpl",data.data);
-                                    that.planets_page++;
                                 }
 
                                 //$('.')
@@ -148,7 +145,7 @@
                                     curr: curr || 1,
                                     jump: function(obj,first){
                                         if(!first){
-                                            morePageLoad();
+                                            morePageLoad(obj.curr);
                                         }
                                     }
                                 });
@@ -204,7 +201,7 @@
                             gnum:0,
                             gn:1,
                             pnum:10,
-                            pn:that.posts_page,
+                            pn:curr || 1,
                         },function(data){
                             if(data.ret == 200 && data.data){
                                 if(!data.data.posts){
@@ -214,9 +211,8 @@
                                     that.postsContainer.prepend(noPosts);
                                 }
 
-                                if(that.posts_page<=data.data.posts_page){
+                                if((curr || 1)<=data.data.posts_page){
                                     var result = template("posts-tpl",data.data);
-                                    that.posts_page++;
                                 }
 
                                 $('.posts-section-entry').remove();
@@ -228,7 +224,7 @@
                                     curr:curr || 1,
                                     jump:function(obj,first){
                                         if(!first){
-                                            postsPageLoad();
+                                            postsPageLoad(obj.curr);
                                         }
                                     }
                                 });
