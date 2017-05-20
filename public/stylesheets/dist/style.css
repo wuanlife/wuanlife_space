@@ -928,8 +928,12 @@ button {
 .message-verify {
   height: 71px;
 }
+.message-verify .buttons {
+  flex: 0 0 200px;
+}
 .message-verify button {
-  margin: 0 14px 0 10px;
+  margin: 0 7px;
+  width: 80px;
 }
 p.verify-done {
   width: 80px;

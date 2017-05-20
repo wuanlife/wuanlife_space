@@ -12,8 +12,20 @@ var flash = require('connect-flash');
 
 var routes = require('./routes/index');
 
+//RESTful api
+var api = require('./routes/api/main');
+var api_groups = require('./routes/api/groups');
 
-var api = require('./routes/api');
+
+
+
+
+
+
+
+
+
+
 var createGroup = require('./routes/createGroup');
 var allGroup = require('./routes/allGroup');
 var logout = require('./routes/logout');
@@ -107,19 +119,9 @@ var sessionMiddleware = session({
 // }));
 app.use(sessionMiddleware);
 
-
-app.use('/api/', api);
-// 路由入口的拦截，进行登陆的判定
-// app.use(function(req, res, next) {
-// 	var url = req.originalUrl;
-// 	console.log("url", url);
-// 	var UnAuthUrl = ["/login", "/", "/api/getIndex"];
-// 	if (UnAuthUrl.indexOf(url) == -1 && !req.session.user) {
-// 		return res.redirect("/login");
-// 	}
-// 	next();
-// });
-
+//http://stackoverflow.com/questions/23923365/how-to-separate-routes-on-node-js-and-express-4
+app.use('/api', api.router);
+app.use('/api/groups',api_groups.router)
 
 
 
