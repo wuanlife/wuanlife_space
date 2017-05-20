@@ -9,11 +9,7 @@ router.get('/', function(req, res, next) {
     delete req.session.user;
     var agent = ua(req.headers['user-agent']);
     try{
-        var page = agent.Mobile ? 'indexMobile' : 'index';
-        res.render(page, {
-            'enterMsg': "你已经成功登出",
-            'user': null
-        });
+        res.redirect('/');
     } catch(e){
         next(e);
     }

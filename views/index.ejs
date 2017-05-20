@@ -78,13 +78,13 @@
         <div class="index-entry-footer">
             <ul>
                 <li id="index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
-                    <p>{{item.posts.replied_num}}</p>
+                    <p>评论 {{item.posts.replied_num}}</p>
                 </li>
                 <li id="index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
-                    <p>{{item.posts.approved_num}}</p>
+                    <p>点赞 {{item.posts.approved_num}}</p>
                 </li>
                 <li id="index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
-                    <p>{{item.posts.collected_num}}</p>
+                    <p>收藏 {{item.posts.collected_num}}</p>
                 </li>
             </ul>
         </div>
@@ -92,8 +92,8 @@
     {{/each}}
 </script>
 <script type="text/html" id="group-item-tpl">
-    {{each posts as item i}}
-    <button id="group-{{}}" class="aside-btn">{{}}</button>
+    {{each groups as item i}}
+    <button id="group-{{item.group_id}}" class="aside-btn">{{item.g_name}}</button>
     {{/each}}
 </script>
 <script>
@@ -195,23 +195,23 @@
                 var loadtype = window.location.pathname;
                 var rebind = function() {
 
-                    $(".index-entry").off("touchend");
+                    $(".index-entry").off("click");
                     //绑定每个index-entry的收藏操作
-                    $(".index-entry").on("touchend","#index-collect-btn",function(e){
+                    $(".index-entry").on("click","#index-collect-btn",function(e){
                         var indexid = getEntryId(e.target);
                         collect(indexid);
                     });
                     //绑定每个index-entry的回复操作
-                    $(".index-entry").on("touchend","#index-reply-btn",function(e){
+                    $(".index-entry").on("click","#index-reply-btn",function(e){
                         var indexid = getEntryId(e.target);
                         window.location.href = '/posts/' + indexid;
                     });
                     //绑定每个index-entry的点赞操作
-                    $(".index-entry").on("touchend","#index-approve-btn",function(e){
+                    $(".index-entry").on("click","#index-approve-btn",function(e){
                         var indexid = getEntryId(e.target);
                         approve(indexid);
                     });
-                    $(".index-entry-content").on("touchend",function(e){
+                    $(".index-entry-content").on("click",function(e){
                         window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
                     });
                 };
@@ -296,7 +296,7 @@
                     $('.aside-group-item').html(result + $('.aside-group-item').html());
                     //绑定事件
                     $('.aside-btn').on('click', function(e) {
-                        window.location.href = '/groups/' + e.currentTarget.id;
+                        window.location.href = '/groups/' + e.currentTarget.id.split("-")[1];
                     })
                     $('#aside-allgroup').on('click', function(e) {
                         window.location.href = '/allgroup/';

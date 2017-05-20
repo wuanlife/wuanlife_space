@@ -10,8 +10,14 @@ input,
 button {
   border: none;
 }
+.allgroup-head {
+  margin-left: 120px;
+}
 .allgroup-content {
   width: 720px;
+  margin: 0 auto;
+  clear: both;
+  overflow: hidden;
 }
 .allgroup-content .allgroup-group {
   float: left;
@@ -122,7 +128,11 @@ input,
 button {
   border: none;
 }
+.creatgroup-head {
+  margin-left: 150px;
+}
 .creatgroup-content {
+  margin: 0 auto;
   background: #ffffff;
   border-radius: 4px;
   width: 660px;
@@ -176,7 +186,10 @@ button {
   font-size: 16px;
   color: #999999;
 }
-.creatgroup-content #choose-btn {
+.creatgroup-content .creatgroup-choose {
+  width: 240px;
+}
+.creatgroup-content .creatgroup-choose #choose-btn {
   background: #ffffff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.28);
   border-radius: 2px;
@@ -190,11 +203,27 @@ button {
   text-align: left;
   padding-left: 12px;
 }
-.creatgroup-content #choose-btn span {
+.creatgroup-content .creatgroup-choose #choose-btn span {
   margin-right: 70px;
 }
-.creatgroup-content #choose-btn svg {
+.creatgroup-content .creatgroup-choose #choose-btn svg {
   font-size: 12px;
+}
+.creatgroup-content .creatgroup-choose .setgroup-choose {
+  width: 240px;
+  margin-left: 30px;
+  position: absolute;
+  visibility: hidden;
+}
+.creatgroup-content .creatgroup-choose .setgroup-choose button {
+  background: #ffffff;
+  border-radius: 2px;
+  width: 240px;
+  height: 60px;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #333333;
+  text-align: left;
 }
 .creatgroup-content .creatgroup-save {
   display: block;
@@ -295,6 +324,12 @@ input,
 button {
   border: none;
 }
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
 .group-msg {
   position: absolute;
   top: 69px;
@@ -368,6 +403,13 @@ button {
   font-size: 12px;
   color: #ffffff;
 }
+.group-nopost {
+  font-family: PingFangHK-Medium;
+  font-size: 32px;
+  color: #999999;
+  margin-left: 200px;
+  margin-top: 100px;
+}
 .group-post {
   margin-top: 8px;
   background: #ffffff;
@@ -426,6 +468,15 @@ button {
   margin-top: 11px;
   margin-left: 16px;
 }
+.group-post .group-post-title .group-sign {
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 60px;
+  height: 20px;
+  background-color: #1b87f6;
+  color: #ffffff;
+  border-radius: 4px;
+}
 .group-post .group-post-content {
   margin-top: 11px;
   margin-left: 16px;
@@ -455,6 +506,10 @@ button {
   font-family: PingFangHK-Medium;
   font-size: 14px;
   color: #5677fc;
+}
+.group-post .group-post-btn .be-choose {
+  opacity: 0.26;
+  color: #000000;
 }
 .group-public {
   position: fixed;
@@ -565,9 +620,9 @@ button {
   font-family: PingFangHK-Regular;
   color: #5677fc;
   text-align: justify;
-  width: 68px;
   overflow-wrap: normal;
   overflow: hidden;
+  cursor: pointer;
 }
 .index-entry .index-entry-footer ul li:not(:first-child):before {
   content: '·';
@@ -975,6 +1030,7 @@ button {
   font-size: 16px;
   color: #000000;
   margin-left: 100px;
+  padding-left: 10px;
 }
 #personal .pensonal-sex {
   width: 683px;
@@ -1021,129 +1077,6 @@ button {
   font-family: PingFangSC-Regular;
   font-size: 12px;
   color: #ffffff;
-}
-
-.oneline-text-overflow {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.auto-textbreak {
-  word-wrap: break-word;
-}
-.search-content {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-}
-.search-content .section {
-  width: 590px;
-}
-.search-content .section .section-content {
-  width: 100%;
-}
-.search-content .section .section-hd span {
-  font-family: PingFangHK-Medium;
-  font-size: 14px;
-  color: #5677fc;
-  text-align: left;
-}
-.search-content .planets-section {
-  margin-bottom: 37px;
-}
-.search-content .planets-section .planets-section-container .planets-section-container-more {
-  display: flex;
-  justify-content: center;
-  margin-top: 14px;
-}
-.search-content .planets-section .planets-section-container .planets-section-container-more button {
-  background: #1b87f6;
-  border-radius: 3px;
-  height: 28px;
-  font-family: PingFangHK-Regular;
-  font-size: 12px;
-  color: #ffffff;
-  text-align: left;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries {
-  display: flex;
-  flex-flow: row nowrap;
-  height: 54px;
-  justify-content: space-between;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry {
-  border-radius: 4px;
-  width: 190px;
-  display: flex;
-  align-items: center;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry .planets-entry-profile img {
-  width: 30px;
-  height: 30px;
-  background-color: blue;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry .planets-entry-detail {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 0px;
-  flex-grow: 1;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry .planets-entry-detail span {
-  font-size: 10px;
-  text-align: left;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry .planets-entry-detail .detail-planet {
-  font-family: PingFangHK-Regular;
-  color: #666666;
-}
-.search-content .planets-section .planets-section-container .planets-container-entries .planets-container-entry .planets-entry-detail .detail-info {
-  font-family: PingFangHK-Medium;
-  color: #5992e4;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry {
-  margin: 0 15px 7px;
-  border-top: solid 1px #ffffff;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry .entry-item {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 10px;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry .entry-item img {
-  width: 26px;
-  height: 26px;
-  background-color: yellow;
-  margin-right: 11px;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry .entry-item span {
-  font-family: PingFangHK-Medium;
-  font-size: 12px;
-  color: #999999;
-  text-align: left;
-  margin-right: 11px;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry .entry-item h1 {
-  opacity: 0.87;
-  font-family: PingFangHK-Semibold;
-  font-size: 16px;
-  color: #003585;
-  text-align: left;
-}
-.search-content .posts-section .posts-section-container .posts-section-entries .posts-section-entry .entry-item p {
-  font-family: PingFangHK-Medium;
-  font-size: 14px;
-  color: #666666;
-  letter-spacing: 0;
-  text-align: justify;
 }
 
 .oneline-text-overflow {
@@ -1326,6 +1259,105 @@ button {
   font-size: 14px;
   color: #ffffff;
   text-align: center;
+}
+.card .group-card-header {
+  display: flex;
+}
+.card .group-card-header .group-card-header-title {
+  flex: 1;
+  padding: 10px;
+  align-self: center;
+}
+.card .group-card-header .group-card-header-title div {
+  display: flex;
+  justify-content: space-between;
+}
+.card .group-card-header img {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+}
+.card .group-card-header h1 {
+  font-family: PingFangHK-Medium;
+  font-size: 16px;
+  color: #275597;
+  text-align: left;
+}
+.card .group-card-header p {
+  font-family: PingFangHK-Medium;
+  font-size: 12px;
+  color: #8a94a9;
+  text-align: justify;
+}
+.card .group-card-body {
+  margin-top: 24px;
+  font-family: PingFangHK-Regular;
+  font-size: 14px;
+  color: #333333;
+  text-align: justify;
+}
+.card .group-card-body .group-card-body-creator {
+  margin-top: 23px;
+  font-family: PingFangHK-Regular;
+  font-size: 14px;
+  color: #8a94a9;
+  text-align: left;
+}
+.card .group-card-footer {
+  display: flex;
+  justify-content: center;
+}
+.card .group-card-footer button {
+  cursor: pointer;
+  margin: 12px 0;
+  background: #1b87f6;
+  border-radius: 4px;
+  width: 89px;
+  height: 30px;
+  font-family: PingFangHK-Regular;
+  font-size: 12px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.oneline-text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.auto-textbreak {
+  word-wrap: break-word;
+}
+#publishPost textarea {
+  padding: 18px 12px;
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #000;
+}
+#publishPost textarea::-webkit-input-placeholder {
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #999999;
+}
+#publishPost textarea::-moz-placeholder {
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #999999;
+}
+#publishPost textarea:-ms-input-placeholder {
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  color: #999999;
+}
+#publishPost form {
+  height: 100%;
+  width: 100%;
+}
+#publishPost .form-container.form-btn {
+  justify-content: flex-end;
+}
+#publishPost .form-container {
+  width: 100%;
 }
 
 .oneline-text-overflow {
@@ -1679,5 +1711,3 @@ button {
   font-size: 16px;
   color: #5677fc;
 }
-
-

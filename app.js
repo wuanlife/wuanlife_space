@@ -13,7 +13,6 @@ var flash = require('connect-flash');
 var routes = require('./routes/index');
 
 
-var page = require('./routes/page');
 var api = require('./routes/api');
 var createGroup = require('./routes/createGroup');
 var allGroup = require('./routes/allGroup');
@@ -126,7 +125,6 @@ app.use('/api/', api);
 
 app.use('/', routes);
 app.use('/discovery', discovery);
-app.use('/pages', page);
 app.use('/register',register);
 app.use('/createGroup', createGroup);
 
