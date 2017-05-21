@@ -54,6 +54,38 @@
                     }
                 });
             };
+            var putData = function(url, data, success) {
+                $.ajax({
+                    url: url,
+                    type : "put",    // 此处发送的是PUT请求
+                    data : data,
+                    success : function(data){
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
+                    },
+                    dataType : "json",
+                    error : function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                })
+            };
+            var deleteData = function(url, data, success) {
+                $.ajax({
+                    url: url,
+                    type : "DELETE",    // 此处发送的是PUT请求
+                    data : data,
+                    success : function(data){
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
+                    },
+                    dataType : "json",
+                    error : function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                })
+            };
             /*获取get参数*/
             var getUrlParam = function(name) {
                 var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -83,6 +115,8 @@
             return {
                 getData:getData,
                 subData:subData,
+                putData:putData,
+                deleteData:deleteData,
                 getUrlParam: getUrlParam,
                 utf16toEntities:utf16toEntities
             }
@@ -97,7 +131,7 @@
                 $('#mrp').css('display','block');
             });
             global.subData('/api/checkNewInfo',{},function(data){
-                if (data.ret == 200 && data.data && data.data.num == 1) {
+                if (data.ret == 200 && data.data && data.data.num >= 1) {
                     $('#mrp').css('display','block');
                 }
             });
