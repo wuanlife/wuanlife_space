@@ -618,7 +618,7 @@ a:active {
   padding: 0 10px;
   opacity: 0.54;
   font-family: PingFangHK-Regular;
-  color: #5677fc;
+  color: #999999;
   text-align: justify;
   overflow-wrap: normal;
   overflow: hidden;
@@ -633,6 +633,9 @@ a:active {
   font-size: 20px;
   height: 19px;
   border-radius: 100%;
+}
+.index-entry .index-entry-footer ul li.done p {
+  color: #5677fc;
 }
 .index-entry .index-entry-footer ul li.index-notdone p {
   color: #000000;
@@ -890,6 +893,7 @@ button {
   height: 50px;
   flex: 0 0 50px;
   /* 左右两列固定宽 */
+  padding: 10px;
 }
 .message-entry .message-entry-main {
   display: inline-block;
@@ -1715,5 +1719,3 @@ button {
   font-size: 16px;
   color: #5677fc;
 }
-
-

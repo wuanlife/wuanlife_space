@@ -36,7 +36,7 @@
         <img src="{{item.messages.image}}">
         <div class="message-entry-main">
             <h1>{{item.users.user_name}}</h1>
-            <p>{{item.content}}</p>
+            <p>回复了主题帖 {{item.posts.p_title}}</p>
         </div>
         <button id="post-{{item.posts.post_id}}">查看</button>
     </div>
@@ -93,7 +93,7 @@
                     //添加删除类
                     //头部部分
                     $(".section-hd[id]").addClass("off").removeClass("on");
-                    $(e.currentTarget).addClass("on");
+                    $(e.currentTarget).addClass("on").removeClass("off");
                     //content部分
                     $(".section-content[id]").addClass("display-none");
                     $("#"+targetid).removeClass("display-none");
