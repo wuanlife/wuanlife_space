@@ -113,7 +113,7 @@
                 $('#mrp').css('display','block');
             });
             global.subData('/api/checkNewInfo',{},function(data){
-                if (data.ret == 200 && data.data && data.data.num == 1) {
+                if (data.ret == 200 && data.data && data.data.num >= 1) {
                     $('#mrp').css('display','block');
                 }
             });

@@ -77,13 +77,13 @@
         </div>
         <div class="index-entry-footer">
             <ul>
-                <li id="index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
+                <li id="{{item.posts.post_id}}-index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
                     <p>评论 {{item.posts.replied_num}}</p>
                 </li>
-                <li id="index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
+                <li id="{{item.posts.post_id}}-index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
                     <p>点赞 {{item.posts.approved_num}}</p>
                 </li>
-                <li id="index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
+                <li id="{{item.posts.post_id}}-index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
                     <p>收藏 {{item.posts.collected_num}}</p>
                 </li>
             </ul>
@@ -109,56 +109,48 @@
                 return parseInt(domNode.id.slice(5));
             }
         };
-        var isReplied = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-reply-btn') {
-                return isReplied(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
-        var isApproved = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-approve-btn') {
-                return isCollected(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
         var approve = function(id) {
-            // if(isApproved())
+            var li = $("#"+id.toString()+"-index-approve-btn");
+            var p = $("#"+id.toString()+"-index-approve-btn > p");
             global.subData('/approve',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
-                    swal('点赞成功')
+                    if(li.hasClass('done')) {
+                        swal('取消点赞成功');
+                        li.removeClass('done');
+                        num--;
+                        p.html("点赞 " + num.toString());
+                    } else {
+                        swal('点赞成功');
+                        li.addClass('done');   
+                        num++;
+                        p.html("点赞 " + num.toString());             
+                    }
 
                 } else {
                     sweetAlert('错误', '点赞失败', 'error');
                 }                                   
             });            
         }
-        var isCollected = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-collect-btn') {
-                return isCollected(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
         var collect = function(id) {
+            var li = $("#"+id.toString()+"-index-collect-btn");
+            var p = $("#"+id.toString()+"-index-collect-btn > p");
             global.subData('/collect',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
-                    swal('收藏成功');
+                    if(li.hasClass('done')) {
+                        swal('取消收藏成功');
+                        li.removeClass('done');
+                        num--;
+                        p.html("收藏 " + num.toString());
+                    } else {
+                        swal('收藏成功');
+                        li.addClass('done');    
+                        num++;
+                        p.html("收藏 " + num.toString());                                    
+                    }
 
                 } else {
                     sweetAlert('错误', '收藏失败', 'error');
@@ -197,17 +189,17 @@
 
                     $(".index-entry").off("click");
                     //绑定每个index-entry的收藏操作
-                    $(".index-entry").on("click","#index-collect-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-collect-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         collect(indexid);
                     });
                     //绑定每个index-entry的回复操作
-                    $(".index-entry").on("click","#index-reply-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-reply-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         window.location.href = '/posts/' + indexid;
                     });
                     //绑定每个index-entry的点赞操作
-                    $(".index-entry").on("click","#index-approve-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-approve-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         approve(indexid);
                     });
