@@ -6,6 +6,7 @@
     <script src="//cdn.bootcss.com/es6-promise/4.1.0/es6-promise.auto.min.js"></script>
     <script src="/javascripts/sweetalert2.js"></script>
     <script src="/javascripts/template.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/javascripts/wangEditor.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="/javascripts/plupload/plupload.full.min.js"></script>
     <script type="text/javascript" src="/javascripts/plupload/i18n/zh_CN.js"></script>
     <script type="text/javascript" src="/javascripts/qiniu.js"></script>
@@ -53,6 +54,22 @@
                     }
                 });
             };
+            var putData = function(url, data, success) {
+                $.ajax({
+                    url: url,
+                    type : "put",    // 此处发送的是PUT请求
+                    data : data,
+                    success : function(data){
+                        if (typeof success === 'function') {
+                            success(d);
+                        }
+                    },
+                    dataType : "json",
+                    error : function(x,h,r){
+                        console && console.log(x, h, r);
+                    }
+                })
+            }
             /*获取get参数*/
             var getUrlParam = function(name) {
                 var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -96,7 +113,7 @@
                 $('#mrp').css('display','block');
             });
             global.subData('/api/checkNewInfo',{},function(data){
-                if (data.ret == 200 && data.data && data.data.num == 1) {
+                if (data.ret == 200 && data.data && data.data.num >= 1) {
                     $('#mrp').css('display','block');
                 }
             });

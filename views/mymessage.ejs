@@ -2,13 +2,13 @@
 <div id="content">
     <div class="section big-container">
         <ul class="section-tab">
-            <li class="on section-hd" id="jd-book-chart-hd">
+            <li class="on section-hd" id="post-message-hd">
                 <span>帖子通知</span>
             </li>
-            <li class="off section-hd" id="dangdang-book-chart-hd">
+            <li class="off section-hd" id="planet-message-hd">
                 <span>星球通知</span>
             </li>
-            <li class="off section-hd" id="dangdang-book-chart-hd">
+            <li class="off section-hd" id="apply-message-hd">
                 <span>私密星球申请</span>
             </li>
 
@@ -16,51 +16,202 @@
             <div class="slide-controls">
 
             </div>
-        </ul>  
-        <div class="section-content margin-H-16px">
-            <div class="message-board">
-                <div id="msg-{{item.messages.m_id}}" class="message-entry message-post">
-                    <img src="{{item.messages.image}}">
-                    <div class="message-entry-main">
-                        <h1>{{item.users.user_name}}</h1>
-                        <p>{{item.content}}</p>
-                    </div>
-                    <button>查看</button>
-                </div>
-                <div id="msg-{{item.messages.m_id}}" class="message-entry message-planet">
-                    <img src="{{item.messages.image}}">
-                    <div class="message-entry-main">
-                        <h1>{{item.users.user_name}}</h1>
-                        <p>{{item.content}}</p>
-                    </div>
-                </div>
-                <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
-                    <img src="{{item.messages.image}}">
-                    <div class="message-entry-main">
-                        <h1>{{item.users.user_name}}</h1>
-                        <p>{{item.content}}</p>
-                    </div>
-                    <button>同意</button>
-                    <button>拒接</button>
-                </div>
-                <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
-                    <img src="{{item.messages.image}}">
-                    <div class="message-entry-main">
-                        <h1>{{item.users.user_name}}</h1>
-                        <p>{{item.content}}</p>
-                    </div>
-                    <p class="verify-done">已拒绝</p>
-                </div>
-            </div>
+        </ul>
+        <div id="post" class="section-content margin-H-16px"> 
+            <div id="demo1"></div>
         </div>
-        <div class="section-content" style="display:none;">
-            <p>fuuuuuuuuuuuuuuuuuuuck</p>
-        </div> 
-        <div class="section-content" style="display:none;">
-            <p>fuuuuuuuuuuuuuuuuuuuck</p>
-        </div>             
+        <div id="planet" class="section-content display-none margin-H-16px">
+            <div id="demo2"></div>
+        </div>     
+        <div id="apply" class="section-content display-none margin-H-16px">
+            <div id="demo3"></div>
+        </div>                   
     </div>
 </div>
 <%- include base/baseJS.ejs %>
+
+<script type="text/html" id="message-line-post-tpl">
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-entry message-post">
+        <img src="{{item.messages.image}}">
+        <div class="message-entry-main">
+            <h1>{{item.users.user_name}}</h1>
+            <p>{{item.content}}</p>
+        </div>
+        <button id="post-{{item.posts.post_id}}">查看</button>
+    </div>
+    {{/each}}
+</script>
+<script type="text/html" id="message-line-planet-tpl">
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-entry message-planet">
+        <img src="{{item.messages.image}}">
+        <div class="message-entry-main">
+            <h1>{{item.users.user_name}}</h1>
+            <p>{{item.content}}</p>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="message-line-apply-tpl">
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
+        <img src="{{item.messages.image}}">
+        <div class="message-entry-main">
+            <h1>{{item.users.user_name}}</h1>
+            <p>{{item.content}}</p>
+        </div>
+        {{if item.messages.status == '1'}}
+        <div id="group-{{item.groups.group_id}}" class="buttons"> 
+            <button class="accept">同意</button>
+            <button class="reject">拒接</button>
+        </div>
+        {{else}} 
+        <p class="verify-done">已拒绝</p>
+        {{/if}}
+    </div>
+    {{/each}}
+</script>
+<script>
+    (function() {
+        var mymessage = {
+
+            getServerData: function(param, cb) {
+                
+            },
+            bindEvent: function() {
+                var self = this;   
+
+            },
+            init: function() {
+                var self = this;
+                //标签页
+                $(".section-tab").on("click", ".section-hd[id]", function(e) {
+                    var a = "fuck";
+                    var targetid = e.currentTarget.id.split('-')[0];
+                    //添加删除类
+                    //头部部分
+                    $(".section-hd[id]").addClass("off").removeClass("on");
+                    $(e.currentTarget).addClass("on");
+                    //content部分
+                    $(".section-content[id]").addClass("display-none");
+                    $("#"+targetid).removeClass("display-none");
+                })
+
+                var loadtype = window.location.pathname;
+                //重新绑定帖子消息部分的按钮跳转事件
+                var rebindPost = function() {
+
+                    $(".message-post > button").off("click");
+                    //绑定每个查看按钮的跳转
+                    $(".message-post > button").on("click",function(e){
+                        var indexid = e.target.id.split("-")[1]
+                        window.location.href = "/posts/" + indexid;
+                    });
+                };
+                //重新绑定加入确认部分的按钮事件
+                var rebindApply = function() {
+
+                    $(".message-verify > .buttons").off("click");
+                    //同意按钮绑定/:groupid/members/:userid
+                    $(".message-verify > .buttons").on("click", ".accept",function(e){
+                        var groupid = e.currentTarget.id.split("-")[1];
+                        var messageid = e.currentTarget.parentNode.id.split("-")[1];
+                        global.subData("/api/messages/"+messageid+"/agree",{}, function(data) {
+                            swal("同意加入成功");
+                            $(e.currentTarget.parentNode.parentNode).append("<p class='verify-done'>已同意</p>");
+                            e.currentTarget.parentNode.style.display = "none";
+                            console.log(data);
+                        });
+                    });
+                    //拒绝按钮绑定
+                    $(".message-verify > .buttons").on("click", ".reject",function(e){
+                        var groupid = e.currentTarget.id.split("-")[1];
+                        var messageid = e.currentTarget.parentNode.id.split("-")[1];
+                        global.subData("/api/messages/"+messageid+"/reject",{}, function(data) {
+                            swal("拒绝加入成功");
+                            $(e.currentTarget.parentNode.parentNode).append("<p class='verify-done'>已拒绝</p>");
+                            e.currentTarget.parentNode.style.display = "none";
+                            console.log(data);
+                        });
+                    });
+                };
+                //帖子消息
+                function demo1(curr){
+                    global.subData("/mymessage/post",{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("message-line-post-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#post > .message-entry').remove();
+                        $('#post').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo1'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo1(obj.curr);
+                                }
+                            }
+                        });
+                        rebindPost();
+                    });
+                };
+                demo1();
+                //星球消息
+                function demo2(curr){
+                    global.subData("/mymessage/planet",{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("message-line-planet-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#planet > .message-entry').remove();
+                        $('#planet').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo2'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo2(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    });
+                };
+                demo2();  
+                //申请加入消息
+                function demo3(curr){
+                    global.subData("/mymessage/apply",{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("message-line-apply-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#apply > .message-entry').remove();
+                        $('#apply').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo3'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo3(obj.curr);
+                                }
+                            }
+                        });
+                        rebindApply();
+                    });
+                };
+                demo3();  
+
+                //self.bindEvent();    
+            }
+        }
+        mymessage.init();
+    })();
+</script>
 
 <%- include base/footerMobile.ejs %>

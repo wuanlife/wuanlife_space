@@ -79,9 +79,14 @@
                             pn: that.page,
                         },function(data){
                             if(data.ret == 200 && data.data){
-
+                                var result = '';
+                                if(data.data.posts.length == 0){
+                                    result = "<span id='noCollections'>没有收藏喔</span>";
+                                    that.container.prepend(result);
+                                    return;
+                                }
                                 if(that.page<=data.data.page_count){
-                                    var result = template("mycollection-entry-tpl",data.data);
+                                    result = template("mycollection-entry-tpl",data.data);
                                     that.page++;
                                 }
                                 $('.mycollection-container-entry--PC').remove();
@@ -108,5 +113,5 @@
     })();
 </script>
 
-<%- include base/baseJS.ejs %>
+<%- include base/footer.ejs %>
 

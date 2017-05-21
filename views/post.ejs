@@ -68,14 +68,14 @@
     </div>
     <div class="post-details-footer">
         <div class="post-details-buttons">
-            <button>                    
+            <button id="btn-approve">                    
                 <svg aria-hidden="true" class="icon">
                     <use xlink:href="#icon-good">
                     </use>
                 </svg>
                 点赞
             </button>
-            <button>
+            <button id="btn-collect">
                 <svg aria-hidden="true" class="icon">
                     <use xlink:href="#icon-home">
                     </use>
@@ -117,12 +117,42 @@
 
 <script>
 (function() {
+    var approve = function(id) {
+        // if(isApproved())
+        global.subData('/approve',{postid : id}, function(data) {
+            if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('点赞成功')
+
+            } else {
+                sweetAlert('错误', '点赞失败', 'error');
+            }                                   
+        });            
+    }
+    var collect = function(id) {
+        global.subData('/collect',{postid : id}, function(data) {
+            if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('收藏成功');
+
+            } else {
+                sweetAlert('错误', '收藏失败', 'error');
+            }                                   
+        });            
+    } 
     var postobj = {
         postContainer: $('#post-container'),
         replyInput: $('#post-reply-send-content'),
         bindEvent: function() {
             var self = this;
- 
+
+            //绑定点赞和收藏
+            $("#btn-approve").on("click", function() {
+                approve(<%= postid%>);
+            })
+            $("#btn-collect").on("click", function() {
+                collect(<%= postid%>);
+            })       
         },
         init: function() {
             var self = this;
@@ -132,6 +162,7 @@
                     self.postContainer.html(compiled + self.postContainer.html());
                     compiled = template("group-card-tpl", data.data);
                     $("#group-card").html(compiled);
+                    self.bindEvent();
                 } else {
                     sweetAlert('错误', '数据获取失败', 'error');
                 }
@@ -141,6 +172,10 @@
             function demo(curr){
                 var result = '';
                 global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
+                    //第一次加载获取评论总数
+                    if(!curr) {
+                        data.data.reply_count;
+                    }
                     if((curr || 1)<=data.data.page_count){
                         result = template("reply-tpl",data.data);
                     }

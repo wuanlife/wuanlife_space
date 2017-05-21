@@ -69,13 +69,13 @@ router.get('/:groupid/post', function(req, res, next) {
     if(req.session.user){
         var agent = ua(req.headers['user-agent']);
         //var userid = req.session.user.userID;
-        var page = agent.Mobile ? 'publishPostM' : 'publishPostM';
-        var tip = agent.Mobile ? 'publishPostM' : 'publishPostM';
+        var page = agent.Mobile ? 'publishPostM' : 'publishPost';
+        var tip = agent.Mobile ? 'publishPostM' : 'publishPost';
         //http://dev.wuanlife.com:800/group/posts?group_id=1&user_id=2&p_title=1&p_text=1
         request(config.server+"group/posts?group_id=1&user_id=2&p_title=1&p_text=1",
             function(error, response, body) {
                 res.render(page, {
-                                'groupID': 'req.params.groupid',
+                                'groupID': req.params.groupid,
                                 'title': '发表帖子',
                                 'user': req.session.user
                             });
@@ -110,20 +110,14 @@ router.get('/:groupid/post', function(req, res, next) {
 });
 //发表帖子
 router.post('/:groupid/post', function(req, res, next) {
-    var userid = (req.session.user) ? req.session.user.userID : null;
-    console.log("can post be used?");
-    var html = xss(req.body.text, {
-        onTag: function(tag, html, options) {
-            if (tag == "strike") {
-                return html;
-            }
-        },
-        onTagAttr: function(tag, name, value, isWhiteAttr) {
-            if (name == 'style') {
-                return name + '="' + value + '"';
-            }
-        }
-    });
+    var userid = (req.session.user) ? req.session.user.user_id : null;
+    if(userid == null) {
+        res.send({
+            ret:401,
+            msg:'未登录'
+        });
+        return;
+    }
     request.post({
         url: config.server + 'group/posts',
         formData: {

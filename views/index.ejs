@@ -77,14 +77,14 @@
         </div>
         <div class="index-entry-footer">
             <ul>
-                <li id="index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
-                    <p>{{item.posts.replied_num}}</p>
+                <li id="{{item.posts.post_id}}-index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
+                    <p>评论 {{item.posts.replied_num}}</p>
                 </li>
-                <li id="index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
-                    <p>{{item.posts.approved_num}}</p>
+                <li id="{{item.posts.post_id}}-index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
+                    <p>点赞 {{item.posts.approved_num}}</p>
                 </li>
-                <li id="index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
-                    <p>{{item.posts.collected_num}}</p>
+                <li id="{{item.posts.post_id}}-index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
+                    <p>收藏 {{item.posts.collected_num}}</p>
                 </li>
             </ul>
         </div>
@@ -92,8 +92,8 @@
     {{/each}}
 </script>
 <script type="text/html" id="group-item-tpl">
-    {{each posts as item i}}
-    <button id="group-{{}}" class="aside-btn">{{}}</button>
+    {{each groups as item i}}
+    <button id="group-{{item.group_id}}" class="aside-btn">{{item.g_name}}</button>
     {{/each}}
 </script>
 <script>
@@ -109,56 +109,48 @@
                 return parseInt(domNode.id.slice(5));
             }
         };
-        var isReplied = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-reply-btn') {
-                return isReplied(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
-        var isApproved = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-approve-btn') {
-                return isCollected(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
         var approve = function(id) {
-            // if(isApproved())
+            var li = $("#"+id.toString()+"-index-approve-btn");
+            var p = $("#"+id.toString()+"-index-approve-btn > p");
             global.subData('/approve',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
-                    swal('点赞成功')
+                    if(li.hasClass('done')) {
+                        swal('取消点赞成功');
+                        li.removeClass('done');
+                        num--;
+                        p.html("点赞 " + num.toString());
+                    } else {
+                        swal('点赞成功');
+                        li.addClass('done');   
+                        num++;
+                        p.html("点赞 " + num.toString());             
+                    }
 
                 } else {
                     sweetAlert('错误', '点赞失败', 'error');
                 }                                   
             });            
         }
-        var isCollected = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "ul" || domNode.className != 'index-collect-btn') {
-                return isCollected(domNode.parentNode);
-            } else {
-                if(domNode.className == 'done') {
-                    return true;
-                } else {
-                    return false
-                }
-            }            
-        }
         var collect = function(id) {
+            var li = $("#"+id.toString()+"-index-collect-btn");
+            var p = $("#"+id.toString()+"-index-collect-btn > p");
             global.subData('/collect',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
-                    swal('收藏成功');
+                    if(li.hasClass('done')) {
+                        swal('取消收藏成功');
+                        li.removeClass('done');
+                        num--;
+                        p.html("收藏 " + num.toString());
+                    } else {
+                        swal('收藏成功');
+                        li.addClass('done');    
+                        num++;
+                        p.html("收藏 " + num.toString());                                    
+                    }
 
                 } else {
                     sweetAlert('错误', '收藏失败', 'error');
@@ -195,23 +187,23 @@
                 var loadtype = window.location.pathname;
                 var rebind = function() {
 
-                    $(".index-entry").off("touchend");
+                    $(".index-entry").off("click");
                     //绑定每个index-entry的收藏操作
-                    $(".index-entry").on("touchend","#index-collect-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-collect-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         collect(indexid);
                     });
                     //绑定每个index-entry的回复操作
-                    $(".index-entry").on("touchend","#index-reply-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-reply-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         window.location.href = '/posts/' + indexid;
                     });
                     //绑定每个index-entry的点赞操作
-                    $(".index-entry").on("touchend","#index-approve-btn",function(e){
+                    $(".index-entry").on("click","[id*='index-approve-btn']",function(e){
                         var indexid = getEntryId(e.target);
                         approve(indexid);
                     });
-                    $(".index-entry-content").on("touchend",function(e){
+                    $(".index-entry-content").on("click",function(e){
                         window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
                     });
                 };
@@ -296,7 +288,7 @@
                     $('.aside-group-item').html(result + $('.aside-group-item').html());
                     //绑定事件
                     $('.aside-btn').on('click', function(e) {
-                        window.location.href = '/groups/' + e.currentTarget.id;
+                        window.location.href = '/groups/' + e.currentTarget.id.split("-")[1];
                     })
                     $('#aside-allgroup').on('click', function(e) {
                         window.location.href = '/allgroup/';

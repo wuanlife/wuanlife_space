@@ -56,7 +56,7 @@
                     <span class="group-name"><%=result.g_name%></span> 
                     <span><%=result.posts[i].posts.create_time%></span>
                 </div>
-                <a href="/post/<%=result.posts[i].posts.post_id%>">
+                <a href="/posts/<%=result.posts[i].posts.post_id%>">
                 <h3 class="group-post-title">
                 <%if(result.posts[i].posts.sticky==1){%>
                 <span class="group-sign">置顶</span>
@@ -108,7 +108,7 @@
             </div>
             <div id="pages"></div>
             <%}%>
-        	<a href="#" class="group-public"><span>+</span></a>
+        	<a id="create_post" class="group-public"><span>+</span></a>
         </div>
 	</div>
 </div>
@@ -125,7 +125,7 @@
                     <span class="group-name"><%=result.g_name%></span> 
                     <span>{{value.posts.create_time}}</span>
                 </div>
-                <a href="/post/{{value.posts.post_id}}">
+                <a href="/posts/{{value.posts.post_id}}">
                 <h3 class="group-post-title">
                 {{if value.posts.sticky==1}}
                 <span class="group-sign">置顶</span>
@@ -224,7 +224,13 @@
                     };
                     demo();
                 },
+                bindEvent: function() {
+                    $("#create_post").on("click", function() {
+                        window.location.href += "/post";
+                    })
+                },
                 init:function(){
+                    this.bindEvent();
                     this.download();
                     this.quitgroup();
                 }
