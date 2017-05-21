@@ -9,7 +9,7 @@ router.get('/', function(req, res) {
   res.json({ message: 'this is groups' });  
 });
 
-router.route('/members/:userid')
+router.route('/:groupid/members/:userid')
     .put(function(req, res, next) {
         console.log(`apply: ${config.server}user/process_apply?user_id=${req.params.userid}&m_id=${req.body.m_id}&mark=${req.body.mark}`)
         request(`${config.server}user/process_apply?user_id=${req.params.userid}&m_id=${req.body.m_id}&mark=${req.body.mark}`,

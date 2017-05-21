@@ -15,6 +15,7 @@ var routes = require('./routes/index');
 //RESTful api
 var api = require('./routes/api/main');
 var api_groups = require('./routes/api/groups');
+var api_messages = require('./routes/api/messages');
 
 
 
@@ -121,8 +122,8 @@ app.use(sessionMiddleware);
 
 //http://stackoverflow.com/questions/23923365/how-to-separate-routes-on-node-js-and-express-4
 app.use('/api', api.router);
-app.use('/api/groups',api_groups.router)
-
+app.use('/api/groups',api_groups.router);
+app.use('/api/messages', api_messages.router);
 
 
 app.use('/', routes);

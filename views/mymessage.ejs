@@ -63,7 +63,7 @@
             <p>{{item.content}}</p>
         </div>
         {{if item.messages.status == '1'}}
-        <div id="group-{{item.groups.group_id}} class="buttons"> 
+        <div id="group-{{item.groups.group_id}}" class="buttons"> 
             <button class="accept">同意</button>
             <button class="reject">拒接</button>
         </div>
@@ -113,16 +113,28 @@
                 //重新绑定加入确认部分的按钮事件
                 var rebindApply = function() {
 
-                    $(".message-verify > buttons").off("click");
-                    //同意按钮绑定
-                    $(".message-verify > buttons").on("click", ".accept",function(e){
-                        var indexid = e.currentTarget.id.split("-")[1]
-                        window.location.href = "/posts/" + indexid;
+                    $(".message-verify > .buttons").off("click");
+                    //同意按钮绑定/:groupid/members/:userid
+                    $(".message-verify > .buttons").on("click", ".accept",function(e){
+                        var groupid = e.currentTarget.id.split("-")[1];
+                        var messageid = e.currentTarget.parentNode.id.split("-")[1];
+                        global.subData("/api/messages/"+messageid+"/agree",{}, function(data) {
+                            swal("同意加入成功");
+                            $(e.currentTarget.parentNode.parentNode).append("<p class='verify-done'>已同意</p>");
+                            e.currentTarget.parentNode.style.display = "none";
+                            console.log(data);
+                        });
                     });
                     //拒绝按钮绑定
-                    $(".message-verify > button").on("click", ".reject",function(e){
-                        var indexid = e.currentTarget.id.split("-")[1]
-                        window.location.href = "/posts/" + indexid;
+                    $(".message-verify > .buttons").on("click", ".reject",function(e){
+                        var groupid = e.currentTarget.id.split("-")[1];
+                        var messageid = e.currentTarget.parentNode.id.split("-")[1];
+                        global.subData("/api/messages/"+messageid+"/reject",{}, function(data) {
+                            swal("拒绝加入成功");
+                            $(e.currentTarget.parentNode.parentNode).append("<p class='verify-done'>已拒绝</p>");
+                            e.currentTarget.parentNode.style.display = "none";
+                            console.log(data);
+                        });
                     });
                 };
                 //帖子消息
@@ -190,7 +202,7 @@
                                 }
                             }
                         });
-                        rebind();
+                        rebindApply();
                     });
                 };
                 demo3();  
