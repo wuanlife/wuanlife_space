@@ -83,7 +83,7 @@
                     <span class="be-choose">评论</span>
                     <span class="be-choose"><%=result.posts[i].posts.replied_num%></span> 
                     <%}else{%>
-                    <span>评论</span>
+                    <span class="replied">评论</span>
                     <span><%=result.posts[i].posts.replied_num%></span> 
                     <%}%>
 
@@ -91,7 +91,7 @@
                     <span class="be-choose">点赞</span>
                     <span class="be-choose"><%=result.posts[i].posts.approved_num%></span>
                     <%}else{%>
-                    <span>点赞</span>
+                    <span class="approved" data-postid="<%=result.posts[i].posts.post_id%>">点赞</span>
                     <span><%=result.posts[i].posts.approved_num%></span> 
                     <%}%>
 
@@ -99,7 +99,7 @@
                     <span class="be-choose">收藏</span>
                     <span class="be-choose"><%=result.posts[i].posts.collected_num%></span>
                     <%}else{%>
-                    <span>收藏</span>
+                    <span class="collected">收藏</span>
                     <span><%=result.posts[i].posts.collected_num%></span>
                     <%}%>
                 </div>
@@ -152,7 +152,7 @@
                     <span class="be-choose">评论</span>
                     <span class="be-choose">{{value.posts.replied_num}}</span> 
                     {{else}}
-                    <span>评论</span>
+                    <span class="replied">评论</span>
                     <span>{{value.posts.replied_num}}</span> 
                     {{/if}}
 
@@ -160,7 +160,7 @@
                     <span class="be-choose">点赞</span>
                     <span class="be-choose">{{value.posts.approved_num}}</span>
                     {{else}}
-                    <span>点赞</span>
+                    <span class="approved" data-postid="{{value.posts.post_id}}">点赞</span>
                     <span>{{value.posts.approved_num}}</span> 
                     {{/if}}
 
@@ -168,7 +168,7 @@
                     <span class="be-choose">收藏</span>
                     <span class="be-choose">{{value.posts.collected_num}}</span>
                     {{else}}
-                    <span>收藏</span>
+                    <span class="collected">收藏</span>
                     <span>{{value.posts.collected_num}}</span>
                     {{/if}}
                 </div>
@@ -227,7 +227,14 @@
                 bindEvent: function() {
                     $("#create_post").on("click", function() {
                         window.location.href += "/post";
-                    })
+                    });
+                    //帖子按钮相关
+                    //点赞
+                    //$(".approved").each(function)
+                    $(".approved").on("click",function(event){
+                        alert("jk");
+                        console.log($(this).data("postid"));
+                    });
                 },
                 init:function(){
                     this.bindEvent();
