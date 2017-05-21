@@ -9,7 +9,26 @@ router.get('/', function(req, res) {
   res.json({ message: 'this is groups' });  
 });
 
-router.route('/:groupid/members/:userid')
+router.route('/:groupid/members')
+    //加入星球
+    .post(function(req, res, next) {
+
+        console.log(`${config.server}group/join?user_id=${req.session.user.user_id}&group_id=${req.params.groupid}`)
+        request(`${config.server}group/join?user_id=${req.session.user.user_id}&group_id=${req.params.groupid}`,
+            function(error, httpResponse, body) {
+                if (!error && httpResponse.statusCode == 200) {
+                    console.log('join(apply) success!');
+                    res.send(JSON.parse(body));
+                } else {
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        );
+    })
+    /*
     .put(function(req, res, next) {
         console.log(`apply: ${config.server}user/process_apply?user_id=${req.params.userid}&m_id=${req.body.m_id}&mark=${req.body.mark}`)
         request(`${config.server}user/process_apply?user_id=${req.params.userid}&m_id=${req.body.m_id}&mark=${req.body.mark}`,
@@ -26,4 +45,5 @@ router.route('/:groupid/members/:userid')
             }
         );        
     })
+    */
 module.exports.router = router;

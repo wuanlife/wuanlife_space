@@ -299,6 +299,18 @@
                 });
                 <% } %>    
                 //self.bindEvent();    
+
+
+                global.subData('/api/groups/402/members',{}, function(data) {
+                    if (data.ret == 200 && data.data) {
+                        //样式更新或者如何
+                        var fuck = "asd";
+
+                    } else {
+                        sweetAlert('错误', '点赞失败', 'error');
+                    }                                   
+                });  
+
             }
         }
         index.init();
