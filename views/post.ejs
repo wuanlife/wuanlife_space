@@ -106,9 +106,9 @@
             <div class="post-reply-entry-body">
                 <p>{{item.p_text}}</p>
             </div>
-            <div class="post-reply-entry-footer">
+            <div id="reply-{{item.reply_floor}}" class="post-reply-entry-footer">
                 <div class="post-reply-operations">
-                    {{if item.delete_right == 1}} <p id="op-reply-delete">删除</p> {{/if}}
+                    {{if item.delete_right == 1}} <p id="{{item.reply_floor}}-op-reply-delete">删除</p> {{/if}}
                 </div>
             </div>
         </div>
@@ -134,13 +134,13 @@
             if (data.ret == 200 && data.data) {
                 //样式更新或者如何
                 swal('收藏成功');
-
             } else {
                 sweetAlert('错误', '收藏失败', 'error');
             }                                   
         });            
     } 
     var postobj = {
+        postid: <%= postid%>,
         postContainer: $('#post-container'),
         replyInput: $('#post-reply-send-content'),
         bindEvent: function() {
@@ -199,10 +199,25 @@
                             if (data.ret == 200 && data.data) {
                                 swal('发送成功');
                                 $('#post-reply-send-content').val('');
+                                location.replace(location.href);
                             } else {
                                 sweetAlert('错误', '回复失败', 'error');
                             }
                         });
+                    })
+                    //绑定各个回复的删除按钮
+                    $("p[id*='op-reply-delete']").on("click", function(e) {
+                        var replyid = e.target.id.split("-")[0];
+                        //我在玩蛇
+                        var entry = e.target.parentNode.parentNode.parentNode;
+                        global.deleteData("/api/posts/"+self.postid+"/replies/"+replyid, {}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                swal('删除成功');
+                                entry.style.display = "none";
+                            } else {
+                                sweetAlert('错误', '回复失败', 'error');
+                            }                            
+                        })
                     })
                 });
             };

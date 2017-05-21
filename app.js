@@ -16,8 +16,7 @@ var routes = require('./routes/index');
 var api = require('./routes/api/main');
 var api_groups = require('./routes/api/groups');
 var api_messages = require('./routes/api/messages');
-
-
+var api_posts = require('./routes/api/posts');
 
 
 
@@ -124,7 +123,7 @@ app.use(sessionMiddleware);
 app.use('/api', api.router);
 app.use('/api/groups',api_groups.router);
 app.use('/api/messages', api_messages.router);
-
+app.use('/api/posts', api_posts.router);
 
 app.use('/', routes);
 app.use('/discovery', discovery);
