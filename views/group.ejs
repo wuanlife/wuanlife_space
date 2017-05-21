@@ -45,66 +45,7 @@
                     <div class="group-nopost">还没有帖子~</div>
             <%}else{%>
             <div id="group-body">
-            <%for(var i in result.posts){%>
-            <div class="group-post">
-                <div class="group-post-img">
-                    <button type="button" style="background-image:url(<%=result.posts[i].users.profile_picture%>);"></button>
-                </div>
-                <div class="group-post-msg">
-                    <span class="creater-name"><%=result.posts[i].users.user_name%></span>
-                    <span> 发表于 </span>
-                    <span class="group-name"><%=result.g_name%></span> 
-                    <span><%=result.posts[i].posts.create_time%></span>
-                </div>
-                <a href="/posts/<%=result.posts[i].posts.post_id%>">
-                <h3 class="group-post-title">
-                <%if(result.posts[i].posts.sticky==1){%>
-                <span class="group-sign">置顶</span>
-                <%}%>
-                <%if(result.posts[i].posts.digest==1){%>
-                <span class="group-sign">加精</span>
-                <%}%>
-                <%if(result.posts[i].posts.lock==1){%>
-                <span class="group-sign">锁定</span>
-                <%}%>
-                <%=result.posts[i].posts.p_title%>
-                </h3>
-                <div class="group-post-content"><%=result.posts[i].posts.p_text%></div>
-                <%if(result.posts[i].posts.image.length>0){%>
-                <div class="group-post-image">
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button>
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button>
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button>
-                </div>
-                <%}%>
-                </a>
-                <div class="group-post-btn">
-                    <%if(result.posts[i].posts.replied==1){%>
-                    <span class="be-choose">评论</span>
-                    <span class="be-choose"><%=result.posts[i].posts.replied_num%></span> 
-                    <%}else{%>
-                    <span class="replied">评论</span>
-                    <span><%=result.posts[i].posts.replied_num%></span> 
-                    <%}%>
-
-                    <%if(result.posts[i].posts.approved==1){%>
-                    <span class="be-choose">点赞</span>
-                    <span class="be-choose"><%=result.posts[i].posts.approved_num%></span>
-                    <%}else{%>
-                    <span class="approved" data-postid="<%=result.posts[i].posts.post_id%>">点赞</span>
-                    <span><%=result.posts[i].posts.approved_num%></span> 
-                    <%}%>
-
-                    <%if(result.posts[i].posts.collected==1){%>
-                    <span class="be-choose">收藏</span>
-                    <span class="be-choose"><%=result.posts[i].posts.collected_num%></span>
-                    <%}else{%>
-                    <span class="collected">收藏</span>
-                    <span><%=result.posts[i].posts.collected_num%></span>
-                    <%}%>
-                </div>
-            </div>
-            <%}%>
+            
             </div>
             <div id="pages"></div>
             <%}%>
@@ -141,36 +82,23 @@
                 <div class="group-post-content">{{value.posts.p_text}}</div>
                 {{if value.posts.image.length>0}}
                 <div class="group-post-image">
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[0]%>);"></button>
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[1]%>);"></button>
-                    <button type="button" style="background-image:url(<%=result.posts[i].posts.image[2]%>);"></button>
+                    <button type="button" style="background-image:url({{value.posts.image[0]}});"></button>
+                    <button type="button" style="background-image:url({{value.posts.image[1]}});"></button>
+                    <button type="button" style="background-image:url({{value.posts.image[2]}});"></button>
                 </div>
                 {{/if}}
                 </a>
                 <div class="group-post-btn">
-                    {{if value.posts.replied==1}}
-                    <span class="be-choose">评论</span>
-                    <span class="be-choose">{{value.posts.replied_num}}</span> 
-                    {{else}}
+                    <a href="/posts/{{value.posts.post_id}}">
                     <span class="replied">评论</span>
-                    <span>{{value.posts.replied_num}}</span> 
-                    {{/if}}
+                    <span>{{value.posts.replied_num}}</span>
+                    </a>
 
-                    {{if value.posts.approved==1}}
-                    <span class="be-choose">点赞</span>
-                    <span class="be-choose">{{value.posts.approved_num}}</span>
-                    {{else}}
                     <span class="approved" data-postid="{{value.posts.post_id}}">点赞</span>
-                    <span>{{value.posts.approved_num}}</span> 
-                    {{/if}}
+                    <span id="approved-{{value.posts.post_id}}">{{value.posts.approved_num}}</span>
 
-                    {{if value.posts.collected==1}}
-                    <span class="be-choose">收藏</span>
-                    <span class="be-choose">{{value.posts.collected_num}}</span>
-                    {{else}}
-                    <span class="collected">收藏</span>
-                    <span>{{value.posts.collected_num}}</span>
-                    {{/if}}
+                    <span class="collected" data-postid="{{value.posts.post_id}}">收藏</span>
+                    <span id="collected-{{value.posts.post_id}}">{{value.posts.collected_num}}</span>
                 </div>
 </div>
 {{/each}}
@@ -209,6 +137,50 @@
                             //插入数据
                             //var temp=$("#group-body").html()
                             $("#group-body").html(compiled);
+                            //点赞
+                            $(".approved").on("click",function(event){
+                                //console.log($(this).data("postid"));
+                                var id=$(this).data("postid");
+                                global.subData('/approve',{postid : id}, function(data) {
+                                    if (data.ret == 200 && data.data) {
+                                        if(data.data.code==1){
+                                            swal('点赞成功');
+                                            console.log($("#approved-"+id).html());
+                                            var num=parseInt($("#approved-"+id).html())+1;
+                                            $("#approved-"+id).html(num);
+                                        }else{
+                                            swal(data.data.msg);
+                                            console.log($("#approved-"+id).html());
+                                            var num=parseInt($("#approved-"+id).html())-1;
+                                            $("#approved-"+id).html(num);
+                                        }
+                                    }else{
+                                        sweetAlert('错误', '点赞失败', 'error');
+                                    }
+                                });
+                            });
+                            //收藏
+                            $(".collected").on("click",function(e){
+                                //
+                                var id=$(this).data("postid");
+                                global.subData('/collect',{postid : id}, function(data){
+                                        if (data.ret == 200 && data.data) {
+                                            if(data.data.code==1){
+                                                swal('收藏成功');
+                                                console.log($("#collected-"+id).html());
+                                                var num=parseInt($("#collected-"+id).html())+1;
+                                                $("#collected-"+id).html(num);
+                                            }else{
+                                                swal(data.data.msg);
+                                                console.log($("#collected-"+id).html());
+                                                var num=parseInt($("#collected-"+id).html())-1;
+                                                $("#collected-"+id).html(num);
+                                            }
+                                        }else{
+                                            sweetAlert('错误', '收藏失败', 'error');
+                                        }
+                                });
+                            })
                             laypage({
                                 cont: document.getElementById('pages'),
                                 pages: data.data.page_count, //通过后台拿到的总页数
@@ -227,13 +199,6 @@
                 bindEvent: function() {
                     $("#create_post").on("click", function() {
                         window.location.href += "/post";
-                    });
-                    //帖子按钮相关
-                    //点赞
-                    //$(".approved").each(function)
-                    $(".approved").on("click",function(event){
-                        alert("jk");
-                        console.log($(this).data("postid"));
                     });
                 },
                 init:function(){
