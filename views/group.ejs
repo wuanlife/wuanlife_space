@@ -35,12 +35,22 @@
                         退出星球
                     </button>
                 <%}%>
-                <%if(result.identity=='03'){%>
-                    <button class="group-set">
+                <%if(result.identity=='03'||result.identity=='04'){%>
+                    <button class="group-set join-btn">
                         加入星球
                     </button>
                 <%}%>
             </div>
+            <%if(result.private==1&&(result.identity=='03'||result.identity=='04')){%>
+                <form id="join-form">
+                    <div class="verifi-msg">
+                        <span>验证信息</span>
+                        <input type="text" name="" id="message">
+                        <button type="submit" id="joinperson">申请加入</button>
+                    </div>
+                </form>
+                <div class="message">加入该星球后方可浏览内容</div>
+            <%}else{%>
             <%if(result.posts.length==0){%>
                     <div class="group-nopost">还没有帖子~</div>
             <%}else{%>
@@ -49,7 +59,11 @@
             </div>
             <div id="pages"></div>
             <%}%>
+            <%}%>
+
+            <%if(result.identity=='01'||result.identity=='02'){%>
         	<a id="create_post" class="group-public"><span>+</span></a>
+            <%}%>
         </div>
 	</div>
 </div>
@@ -108,9 +122,7 @@
 <script type="text/javascript">
         (function(){
             var users={
-                loading:HJLoading,
                 pagecount:1,
-                pageallnum:<%=result.page_count%>,
                 quitgroup:function(){
                     $('.leave-btn').on('click',function(){
                             //退出星球代码
@@ -197,14 +209,102 @@
                     demo();
                 },
                 bindEvent: function() {
+                    var self=this;
                     $("#create_post").on("click", function() {
                         window.location.href += "/post";
                     });
+                    //退出星球
+                    $(".leave-btn").on("click",function(){
+                        //var groupid=<%=result.group_id%>;
+                        global.getData('/groups/<%=result.group_id%>/quit',function(data){
+                            if (data.ret == 200 && data.data) {
+                                if(data.data.code==1){
+                                    swal(data.msg);
+                                    var t=setTimeout(function(){
+                                          window.location.href="/groups/<%=result.group_id%>";
+                                        },2000);
+                                }else{
+                                    swal(data.msg);
+                                }
+                            }else{
+                                swal("退出星球失败");
+                            }
+                        })
+                    });
+                    //加入星球
+                    $(".join-btn").on("click",function(){
+                        //console.log("hahaha")
+                        var private='<%=result.private%>';
+                        //判断星球是私密还是公共
+                        //console.log(private)
+                        if(private=='0'){
+                            //公共
+                            //console.log("iheij")
+                            global.subData('/api/groups/<%=result.group_id%>/members',{},function(data){
+                                console.log(data)
+                                if(data.ret == 200 && data.data){
+                                    console.log(data+"hh")
+                                    if(data.data){
+                                        swal(data.msg);
+                                        var t=setTimeout(function(){
+                                          window.location.href="/groups/<%=result.group_id%>";
+                                        },2000);
+                                    }else{
+                                        swal(data.msg);
+                                    }
+                                }else{
+                                    swal("加入星球失败");
+                                }
+                            });
+                        }else{
+                            console.log("私密");
+                            //私密
+                            //self.joinPenson();
+                            $("#join-form").trigger("submit");
+                        }
+                    });
+                },
+                verifi:function(){
+                    if($("#message").val().length>50){
+                      sweetAlert('格式错误','申请信息不能超过50个字','warning');
+                      return false;
+                    }
+                    return true;
+                },
+                joinPenson:function(){
+                    var self=this;
+                    $("#join-form").submit(function(e){
+                      e.preventDefault();
+                      if(self.verifi()){
+                        /*self.loading.start({
+                            loadingTPLId : 0,
+                            target : $(".joinPensonalG-content"),
+                            loadingId : 'self'
+                          });*/
+                        var text=$("#message").val();
+                        global.getData('/joinPensonalGroup/sub',{
+                          group_id:<%=result.group_id%>,
+                          text:text
+                          },function(data){
+                          /*self.loading.stop('self');*/
+                          if(data.data.code==1){
+                            sweetAlert('成功',data.msg,'success');
+                            //转向星球详情页，这里暂时转到临时页
+                            var t=setTimeout(function(){
+                                window.location.href="/groups/<%=result.group_id%>";
+                              },3000);
+                          }else{
+                            sweetAlert('提示', data.msg, 'warning');
+                          }
+                        });
+                      }
+                  });
                 },
                 init:function(){
                     this.bindEvent();
                     this.download();
                     this.quitgroup();
+                    this.joinPenson();
                 }
             };
             users.init();
