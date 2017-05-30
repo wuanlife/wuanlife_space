@@ -67,7 +67,10 @@ h1 {
 
 //消除chrome蛋疼的黄框
 *.focus {outline: none}
-
+//按钮指针
+button {
+    cursor: pointer;
+}
 
 /**
  * 导航栏
@@ -79,6 +82,7 @@ h1 {
 }
 #content {
     .clearfix();
+    display: flex;
 }
 .wuan-nav {
     height: 50px;
@@ -109,6 +113,7 @@ h1 {
  * section标签页
  */
 .section {
+    width: 100%;
     margin-top: 15px;
     .section-tab {
         li {
@@ -140,13 +145,12 @@ h1 {
 }
 
 .article {
-    float: left;
-    width: 590px;
+    flex: 1;
+    min-width: 590px;
     padding-right: 40px;
 }
 .aside {
-    float: right;
-    width: 310px;
+    min-width: 310px;
 }
 .big-container {
     margin-left: 0;

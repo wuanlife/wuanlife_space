@@ -5,7 +5,7 @@
             <div id="post-container" class="section-content bg-white">
                 <div class="post-replies">
                     <div class="post-reply-header">
-                        <h1>999+ 个回复</h1>
+                        <h1> 个回复</h1>
                     </div>
                     <div class="post-reply-replies"></div>
                     <div id="demo1"></div>
@@ -70,14 +70,14 @@
         <div class="post-details-buttons">
             <button id="btn-approve">                    
                 <svg aria-hidden="true" class="icon">
-                    <use xlink:href="#icon-good">
+                    <use xlink:href="#icon-good_blue">
                     </use>
                 </svg>
                 点赞
             </button>
             <button id="btn-collect">
                 <svg aria-hidden="true" class="icon">
-                    <use xlink:href="#icon-home">
+                    <use xlink:href="#icon-star_blue">
                     </use>
                 </svg>   
                 收藏                    
@@ -106,9 +106,9 @@
             <div class="post-reply-entry-body">
                 <p>{{item.p_text}}</p>
             </div>
-            <div id="reply-{{item.reply_floor}}" class="post-reply-entry-footer">
+            <div id="reply-{{item.p_floor}}" class="post-reply-entry-footer">
                 <div class="post-reply-operations">
-                    {{if item.delete_right == 1}} <p id="{{item.reply_floor}}-op-reply-delete">删除</p> {{/if}}
+                    {{if item.delete_right == 1}} <p id="{{item.p_floor}}-op-reply-delete">删除</p> {{/if}}
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
         global.subData('/approve',{postid : id}, function(data) {
             if (data.ret == 200 && data.data) {
                 //样式更新或者如何
-                swal('点赞成功')
+                swal(data.data.msg)
 
             } else {
                 sweetAlert('错误', '点赞失败', 'error');
@@ -153,6 +153,17 @@
             $("#btn-collect").on("click", function() {
                 collect(<%= postid%>);
             })       
+            //绑定置顶
+            $("#op-setTop").on("click", function() {
+                global.putData("./<%= postid%>", {setTop: true}, function(data) {
+                    if (data.ret == 200 && data.data) {
+                        swal("置顶成功")
+                        
+                    } else {
+                        sweetAlert('错误', '数据获取失败', 'error');
+                    }
+                });
+            })                   
         },
         init: function() {
             var self = this;
@@ -174,7 +185,7 @@
                 global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
                     //第一次加载获取评论总数
                     if(!curr) {
-                        data.data.reply_count;
+                        $('.post-reply-header').html('<h1>' + data.data.reply_count + " 个回复</h1>");
                     }
                     if((curr || 1)<=data.data.page_count){
                         result = template("reply-tpl",data.data);
@@ -215,7 +226,7 @@
                                 swal('删除成功');
                                 entry.style.display = "none";
                             } else {
-                                sweetAlert('错误', '回复失败', 'error');
+                                sweetAlert('错误', '删除失败', 'error');
                             }                            
                         })
                     })
