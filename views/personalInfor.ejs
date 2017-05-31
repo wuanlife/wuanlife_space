@@ -11,9 +11,11 @@
                 <form id="personal">
                     <div class="pensonal-img">
                         <div class="img-upload-progress"></div>
-                        <button type="button" id="user-image-upload" style="background-image:url(<%=result.profile_picture%>);"></button>
-                        <input type="hidden" name="g_image" value="<%=result.profile_picture%>" id="g_img">
-                        <span>修改</span>
+                        <div id="user-image-uploadpart">
+	                        <button type="button" id="user-image-upload" style="background-image:url(<%=result.profile_picture%>);"></button>
+	                        <input type="hidden" name="g_image" value="<%=result.profile_picture%>" id="g_img">
+	                        <span>修改</span>
+                        </div>
                     </div>
                     <div class="pensonal-mail">
                         <label for="email" class="input-text">邮箱</label>
@@ -105,7 +107,7 @@
           day: null,
           sex: '0',
           user_name:null,
-          oldname:null,
+          oldname:'<%=result.user_name%>',
           bindTagEvent:function(){
             $(".pensonal-sex").children("span").click(function(e){
               console.log("god");
@@ -189,35 +191,59 @@
                     target : $(".content"),
                     loadingId : 'self'
                   });*/
-                var subdata={
+                /*var subdata={
                   user_name:self.user_name,
                   profile_picture:$("#g_img").val(),
                   sex:self.sex,
                   year:self.year,
                   month:self.month,
                   day:self.day
-                  };
-                global.getData('/users/sub/',
-                  {
-                    user_name:self.user_name,
-                    profile_picture:$("#g_img").val(),
-                    sex:self.sex,
-                    year:self.year,
-                    month:self.month,
-                    day:self.day
-                  },function(data){
-                  //self.loading.hide();
-                  //self.loading.stop('self');
-                  if(data.ret==200){
-                    if(data.data==1){
-                      sweetAlert('成功',data.msg,'success');
-                    }else{
-                      sweetAlert('提示', data.msg, 'warning');
-                    }
-                  }else{
-                    sweetAlert('错误', data.msg, 'error');
-                  }
-                });
+                  };*/
+                if(self.oldname==self.user_name){
+	                	global.getData('/users/sub1/',
+	                  {
+	                    profile_picture:$("#g_img").val(),
+	                    sex:self.sex,
+	                    year:self.year,
+	                    month:self.month,
+	                    day:self.day
+	                  },function(data){
+	                  //self.loading.hide();
+	                  //self.loading.stop('self');
+	                  if(data.ret==200){
+	                    if(data.data==1){
+	                      sweetAlert('成功',data.msg,'success');
+	                    }else{
+	                      sweetAlert('提示', data.msg, 'warning');
+	                    }
+	                  }else{
+	                    sweetAlert('错误', data.msg, 'error');
+	                  }
+	                });
+                }else{
+	                	global.getData('/users/sub/',
+	                  {
+	                    user_name:self.user_name,
+	                    profile_picture:$("#g_img").val(),
+	                    sex:self.sex,
+	                    year:self.year,
+	                    month:self.month,
+	                    day:self.day
+	                  },function(data){
+	                  //self.loading.hide();
+	                  //self.loading.stop('self');
+	                  if(data.ret==200){
+	                    if(data.data==1){
+	                      sweetAlert('成功',data.msg,'success');
+	                    }else{
+	                      sweetAlert('提示', data.msg, 'warning');
+	                    }
+	                  }else{
+	                    sweetAlert('错误', data.msg, 'error');
+	                  }
+	                });
+                }
+                
 
 
               }
@@ -300,7 +326,7 @@
     };
     users.uploader = Qiniu.uploader({
       runtimes: 'html5,flash,html4', //上传模式,依次退化
-      browse_button: 'user-image-upload', //上传选择的点选按钮，**必需**
+      browse_button: 'user-image-uploadpart', //上传选择的点选按钮，**必需**
       uptoken_url: '/uptoken',
       //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
       // uptoken : '<Your upload token>',
