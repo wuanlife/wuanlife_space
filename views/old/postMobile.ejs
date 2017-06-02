@@ -1,0 +1,79 @@
+<%- include base/headerMobile.ejs %>
+<div class="main">
+	<div class="location clearfix">
+		<h1>发表帖子</h1>
+	</div>
+	<div class="post">
+		<form class="post-form clearfix" action="/group/<%=groupID%>/post" method="post">
+			<input type="text" name="title" value="" placeholder="标题" class="form-control" id="post-title">
+			<textarea placeholder="内容" class="form-control" id="textareaMobile" name="text"></textarea>
+			<button type="submit" class="post-sub" id="post-issue">发表</button>
+		</form>
+	</div>
+</div>
+<%- include base/baseJSMobile.ejs %>
+<script>
+	(function() {
+		var post = {
+			editor: $("#textareaMobile"),
+			title: $("#post-title"),
+			postForm: $(".post-form"),
+			subBtn: $("#post-issue"),
+			loading: $(".loading"),
+			text:'',
+			verificate: function() {
+				var title = $.trim(this.title.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
+				var text = $.trim(this.editor.val());
+				this.title.val(title);
+				if (this.title.val().length == 0) {
+					sweetAlert('格式错误', '请填写标题！', 'warning');
+					return false;
+				}
+				if (this.title.val().length > 60) {
+					sweetAlert('格式错误', '请设置60字符以内标题', 'warning');
+					return false;
+				}
+				if (text.length == 0) {
+					sweetAlert('格式错误', '请填写内容！', 'warning');
+					return false;
+				}
+				if (text.length > 5000) {
+					sweetAlert('格式错误','文章长度不能超出5000字符','warning');
+					return false;
+				}
+				this.text = global.utf16toEntities(text);
+				return true;
+			},
+			bindEvent: function() {
+				var self = this;
+				self.postForm.submit(function(event) {
+					event.preventDefault();
+					if (self.verificate()) {
+						self.loading.show();
+						global.subData('/group/'+'<%=groupID%>'+'/post',{
+							title:self.title.val(),
+							text:self.text
+						},function(data){
+							if (data.ret == 200 && data.data) {
+								if (data.data.code == 1) {
+									window.location.href = '/topic/' + data.data.info.post_base_id;
+								} else{
+									self.loading.hide();
+									sweetAlert('错误', '发布失败', 'error');
+								}
+							} else{
+								self.loading.hide();
+								sweetAlert('错误', data.msg, 'error');
+							}
+						});
+					}
+				});
+			},
+			init: function() {
+				this.bindEvent();
+			}
+		}
+		post.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>

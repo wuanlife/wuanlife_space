@@ -1,0 +1,38 @@
+<%- include baseJSMobile.ejs %>
+    <script>
+        <% if (typeof user !== 'undefined' && user) { %>
+
+        <% } %>
+    </script>
+    <script>
+        var wuanHeadFun = function() {
+            /**
+             * 高亮tab
+             * @param  {String}  elemid tab头的id
+             * @return {Boolean}        成功与否
+             */
+            var tabHighlight =  function(elemid){
+                var $tab = $("#"+elemid);
+                if($tab) {
+                    var originVal =  $tab.find("use").attr("xlink:href")
+                    $tab.find("use").attr("xlink:href", originVal.slice(0,-5));
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            var title = function(title) {
+                var $brandContent = $(".navbar-brand > .header-default-title");
+                $brandContent.html(title);
+            }
+            return {
+                tabHighlight: tabHighlight,
+                title: title,
+            }
+        }();
+
+        //绑定back事件
+        $('.navbar-brand > span').on('touchend', function() {
+            window.history.back(-1); 
+        });
+    </script>

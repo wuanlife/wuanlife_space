@@ -1,71 +1,153 @@
-<%- include base/headerMobile.ejs %>
-<div class="main">
-	<div class="login">
-		<form class="login-form line-form" action="/login" title="" method="post">
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-e"></label>
-				<input type="email" name="email" value="" placeholder="邮箱" id="email">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="pw" class="label-paw"></label>
-				<input type="password" name="password" value="" placeholder="密码" id="pw">
-			</div>
-			<a href="/resetPassword" title="">忘记密码？</a>
-			<a href="/register" title="" class="fR">注册账号</a>
-			<button id='login' type="submit">登录</button>
-		</form>
-	</div>
-</div>
-<%- include base/baseJSMobile.ejs %>
-<script type="text/javascript">
+<%- include base/headerMobile-default.ejs %>
+
+        <div class="login-default-container">
+            <div class="login-body">
+                <form>
+                    <div class="login-container">
+                        <input id="email" type="email" class=" login-input">
+                        <label for="email">邮箱</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="login-container">
+                        <input id="pwd" class="login-input" type="password">
+                        <label>密码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="login-container">
+                        <button class="registerBtn" type="button">登录</button>
+                        <div class="login-others">
+                            <span id="login-register">注册账号</span>
+                            <span id="login-misspwd">忘记密码</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<%- include base/baseJSMobile-default.ejs %>
+
+<script>
+    $('.login-input').on('click',function(e){
+        $(this).siblings('label').removeClass('blur-label').addClass('active');
+        $(this).siblings('.foot-line').removeClass('blur-line').addClass('highlight');
+    });
+
+    $('.login-input').on('blur',function(e){
+        if(this.value === ""){
+            $(this).siblings('label').removeClass('active').addClass('blur-label');
+        }
+        $(this).siblings('.foot-line').removeClass('highlight').addClass('blur-line');
+    });
+</script>
+
+<script>
 	(function() {
-		var login = {
-			email: $("#email"),
-			pw: $("#pw"),
-			loginform: $(".login-form"),
-			loading: $(".loading"),
-			verificate: function() {
-				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-				if (!myreg.test(this.email.val())) {
-					sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-					return false;
-				}
-				if (this.pw.val().length == 0) {
-					sweetAlert('格式错误', '请填写密码！', 'warning');
-					return false;
-				}
-				return true;
+		var loginobj = {
+            loginform : $('form')[0],
+
+            loginemail : $('.login-container #email'),
+
+            loginpwd : $('.login-container #pwd'),
+
+            loginbtn : $('.login-container .registerBtn'),
+
+            loginregister : $('#login-register'),
+
+            loginforget : $('#login-misspwd'),
+
+			getServerData: function(param, cb) {
+				
 			},
+
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.loginemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                },{
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.loginpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
+
 			bindEvent: function() {
-				var self = this;
-				self.loginform.submit(function(event) {
-					event.preventDefault();
-					if (self.verificate()) {
-						self.loading.show();
-						global.subData('/login', {
-							email: self.email.val(),
-							password: self.pw.val()
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									window.location.href = '/'; //登录成功
-								} else {
-									self.loading.hide();
-									sweetAlert('提示', data.data.msg, 'warning');
-								}
-							} else {
-								self.loading.hide();
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});
+                var self = this;
+                self.loginregister.on('touchend',function(){
+                    window.location.href = '/register';
+                });
+
+                self.loginforget.on('touchend',function(){
+                    window.location.href = '/retrievepassword';
+                });
+
+                self.loginbtn.on('touchend',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                        loadingId : 'loginLoading',
+                        });
+
+                        global.subData('/personal/login',{
+                            email : self.loginemail.val(),
+                            password : self.loginpwd.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    //延迟3秒跳转
+                                    setTimeout(function(){
+                                        HJLoading.stop('loginLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    HJLoading.stop('loginLoading');
+                                    swal('错误',data.msg,'error');
+                                }
+                            }else{
+                                HJLoading.stop('loginLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        });
+                    }else{
+                        swal('提示',errorMsg,'warning');
+                    }
+                    
+                });
+
 			},
 			init: function() {
-				this.bindEvent();
-			}
+                var self = this;
+                wuanHeadFun.title("登录");
+
+				this.bindEvent();                
+			},
 		}
-		login.init();
+
+
+		loginobj.init();
+
 	})();
 </script>
 <%- include base/footerMobile.ejs %>

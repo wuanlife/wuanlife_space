@@ -1,0 +1,78 @@
+<!--  -->
+<%- include base/headerMobile-default.ejs %>
+<nav class="personal-navbar">
+                    <button class="personal-icon-back" type="button">
+                        <svg aria-hidden="true" class="icon">
+                            <use xlink:href="#icon-goback">
+                            </use>
+                        </svg>
+                    </button>
+                    <div class="personal-navbar-brand">
+                        <h1>
+                            加入星球
+                        </h1>
+                    </div>
+</nav>
+<div class="joinPensonalG-content">
+   <form id="join-form">
+   <div class="joinPensonalG-msg">
+     <span>验证信息</span>
+     <input type="text" value="" id="message" autocomplete="off"/>
+   </div>
+   <button type="submit">申请加入</button>
+   </form>
+</div>
+<%- include base/baseJSMobile-default.ejs %>
+<script type="text/javascript">
+  (function(){
+    var users={
+      loading:HJLoading,
+      //通过渲染获得groupid
+      groupid:390,
+      text:$("#message").val(),
+      verifi:function(){
+        if($("#message").val().length>50){
+          sweetAlert('格式错误','申请信息不能超过50个字','warning');
+          return false;
+        }
+        return true;
+      },
+      //提交数据
+      bindEvent:function(){
+        var self=this;
+        $("#join-form").submit(function(e){
+          e.preventDefault();
+          if(self.verifi()){
+            self.loading.start({
+                loadingTPLId : 0,
+                target : $(".joinPensonalG-content"),
+                loadingId : 'self'
+              });
+            self.text=$("#message").val();
+            global.getData('joinPensonalGroup/sub',{
+              group_id:self.groupid,
+              text:self.text
+              },function(data){
+              self.loading.stop('self');
+              if(data.data.code==1){
+                sweetAlert('成功',data.msg,'success');
+                //转向星球详情页，这里暂时转到临时页
+                var t=setTimeout(function(){
+                    window.location.href="/group/1/set";
+                  },5000);
+              }else{
+                sweetAlert('提示', data.msg, 'warning');
+              }
+            });
+          }
+      });
+      },
+      init:function(){
+        this.bindEvent();
+        wuanHeadFun.title("加入星球");
+      }
+    };
+    users.init();
+  })()
+</script>
+<%- include base/footerMobile.ejs %>

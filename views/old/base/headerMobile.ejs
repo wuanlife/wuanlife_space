@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <meta content="telephone=no,email=no" name="format-detection">
+        <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/sweetAlert.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/globalMobile.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
+        <% if(typeof title == 'undefined'){%>
+        <title>午安网 - 过你想过的生活</title>
+        <%}else{%>
+        <title><%=title%> - 午安网 - 过你想过的生活</title>
+        <%}%>
+    </head>
+    <body>
+    <div class="container all-wrapper">
+        <div class="main-wrapper">
+            <div class="navbar">
+                <h1>午安网</h1>
+                <button type="button" class="navbar-toggle"></button>
+                <% if (typeof unsearchbtn == 'undefined' ) {%> 
+                <a href="/search" class="gl-search-btn"></a>
+                <% } %>
+            </div>
+            <div class="mainContainer">
+                
+            

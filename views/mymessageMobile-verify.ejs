@@ -1,0 +1,76 @@
+<%- include base/headerMobile-default.ejs %>
+
+        <div class="default-container">
+            <div class="message-board">
+            </div>
+        </div>
+<%- include base/baseJSMobile-default.ejs %>
+
+<script type="text/html" id="message-line-apply-tpl">            
+    {{each info as item i}}
+    <div id="msg-{{item.messages.m_id}}" class="message-line">
+        <div class="message-line-verifyHeader">
+            <img src="{{item.messages.image}}"> 
+            <div class="message-line-verifyInfo">
+                <h1>{{item.users.user_name}} 申请加入 {{item.groups.g_name}}</h1>
+                <p>{{item.messages.text}}</p>
+            </div>
+        </div>
+        <div class="message-line-verifyButtons">
+            <p>已拒绝</p>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script>
+    (function() {
+        var messageApply = {
+
+            messageBoard: $(".message-board"),
+            loadedpn: 1,
+            getServerData: function(param, cb) {
+                
+            },
+
+            bindEvent: function() {
+
+            },
+
+            init: function() {
+                var self = this;
+                this.bindEvent();
+
+                //绑定下拉加载
+                $('.default-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('./apply',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<=data.data.page_count){
+                                result += template("message-line-apply-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                me.lock();
+                                me.noData();
+                            }
+                            //插入数据
+                            $('.message-board').append(result);
+                            me.resetload();    
+
+                        });
+                    }
+                }); 
+            }
+        }
+        messageApply.init();
+    })();
+</script>
+<%- include base/footerMobile.ejs %>

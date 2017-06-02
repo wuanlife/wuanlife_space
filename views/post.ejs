@@ -1,235 +1,235 @@
 <%- include base/header.ejs %>
-<div class="main">
-	<div class="location clearfix">
-		<h1>发表帖子</h1>
-	</div>
-	<div class="post">
-		<form class="post-form clearfix" action="/group/<%=groupID%>/post" method="post">
-			<input type="text" name="title" placeholder="标题" class="form-control" id="post-title">
-			<div class="wangEditor-pc-container" id="wangEditor-pc-container">
-				<textarea name="text" class="form-control" id="textareaPC">
-                            
-                </textarea>
+<div id="content">
+    <div class="article">
+        <div class="section big-container">
+            <div id="post-container" class="section-content bg-white">
+                <div class="post-replies">
+                    <div class="post-reply-header">
+                        <h1>999+ 个回复</h1>
+                    </div>
+                    <div class="post-reply-replies"></div>
+                    <div id="demo1"></div>
+                    <div class="post-reply-send">
+                        <input id="post-reply-send-content" type="text" autocomplete="off" placeholder="">
+                        <button id="post-reply-send-btn">回复</button>                    
+                    </div>  
+                </div>                  
+            </div>     
+        </div>
+    </div>
+    <div class="aside">
+        <div class="section big-container">
+            <div class="section-content">
+                <div id="group-card" class="card">
 
-			</div>
-			<span class="word-num-tip text-ellipsis"></span>
-			<button type="submit" class="post-sub" id="post-issue">发表</button>
-		</form>
-	</div>
+                </div>
+            </div>     
+        </div>
+    </div>
 </div>
 <%- include base/baseJS.ejs %>
-<script>
-	(function() {
-		// 封装 console.log 函数
-		function printLog(title, info) {
-			window.console && console.log(title, info);
-		}
-		// 初始化七牛上传
-		function uploadInit() {
-			var editor = this;
-			var btnId = editor.customUploadBtnId;
-			var containerId = editor.customUploadContainerId;
 
-			// 创建上传对象
-			var uploader = Qiniu.uploader({
-				runtimes: 'html5,flash,html4', //上传模式,依次退化
-				browse_button: btnId, //上传选择的点选按钮，**必需**
-				uptoken_url: '/uptoken',
-				//Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
-				// uptoken : '<Your upload token>',
-				//若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-				// unique_names: true,
-				// 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
-				// save_key: true,
-				// 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-				domain: 'http://7xlx4u.com1.z0.glb.clouddn.com/',
-				//bucket 域名，下载资源时用到，**必需**
-				container: containerId, //上传区域DOM ID，默认是browser_button的父元素，
-				max_file_size: '100mb', //最大文件体积限制
-				flash_swf_url: '/javascripts/plupload/Moxie.swf', //引入flash,相对路径
-				filters: {
-					mime_types: [
-						//只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
-						{
-							title: "图片文件",
-							extensions: "jpg,gif,png,bmp"
-						}
-					]
-				},
-				max_retries: 3, //上传失败最大重试次数
-				dragdrop: true, //开启可拖曳上传
-				drop_element: 'wangEditor-pc-container', //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-				chunk_size: '4mb', //分块上传时，每片的体积
-				auto_start: true, //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-				init: {
-					'FilesAdded': function(up, files) {
-						plupload.each(files, function(file) {
-							// 文件添加进队列后,处理相关的事情
-							//printLog('on FilesAdded');
-						});
-					},
-					'BeforeUpload': function(up, file) {
-						// 每个文件上传前,处理相关的事情
-						//printLog('on BeforeUpload');
-					},
-					'UploadProgress': function(up, file) {
-						// 显示进度条
-						editor.showUploadProgress(file.percent);
-					},
-					'FileUploaded': function(up, file, info) {
-						// 每个文件上传成功后,处理相关的事情
-						// 其中 info 是文件上传成功后，服务端返回的json，形式如
-						// {
-						//    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
-						//    "key": "gogopher.jpg"
-						//  }
-						// printLog(info);
-						// 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
-
-						var domain = up.getOption('domain');
-						var res = $.parseJSON(info);
-						var sourceLink = domain + res.key; //获取上传成功后的文件的Url
-
-						// printLog(sourceLink);
-
-						// 插入图片到editor
-						editor.command(null, 'insertHtml', '<img src="' + sourceLink + '" style="max-width:100%;"/>')
-					},
-					'Error': function(up, err, errTip) {
-						//上传出错时,处理相关的事情
-						printLog('on Error');
-					},
-					'UploadComplete': function() {
-							//队列文件处理完毕后,处理相关的事情
-							// printLog('on UploadComplete');
-							// 隐藏进度条
-							editor.hideUploadProgress();
-						}
-						// Key 函数如果有需要自行配置，无特殊需要请注释
-						//,
-						// 'Key': function(up, file) {
-						//     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-						//     // 该配置必须要在 unique_names: false , save_key: false 时才生效
-						//     var key = "";
-						//     // do something with key here
-						//     return key
-						// }
-				}
-			});
-			// domain 为七牛空间（bucket)对应的域名，选择某个空间后，可通过"空间设置->基本设置->域名设置"查看获取
-			// uploader 为一个plupload对象，继承了所有plupload的方法，参考http://plupload.com/docs
-		}
-		var editor;
-		//禁止输出log调试
-		wangEditor.config.printLog = false;
-		editor = new wangEditor("textareaPC");
-		editor.config.menus = [
-			'fontfamily',
-			'fontsize',
-			'bold',
-			'underline',
-			'italic',
-			'strikethrough',
-			'eraser',
-			'forecolor',
-			'bgcolor',
-			'|',
-			'orderlist',
-			'alignleft',
-			'aligncenter',
-			'alignright',
-			'|',
-			'img',
-			'link',
-			'emotion',
-			'undo',
-			'redo',
-		];
-		editor.config.customUpload = true;
-		editor.config.customUploadInit = uploadInit;
-		editor.create();
-		$(".wangEditor-container").find('*').focus(function(event) {
-			/* Act on the event */
-			$(".wangEditor-container").addClass('textarea-focus');
-		});
-		$(".wangEditor-container").find('*').blur(function(event) {
-			/* Act on the event */
-			$(".wangEditor-container").removeClass('textarea-focus');
-		});
-		var post = {
-			title: $("#post-title"),
-			postForm: $(".post-form"),
-			subBtn: $("#post-issue"),
-			loading: $(".loading"),
-			text:'',
-			wmTip:$('.word-num-tip'),
-			verificate: function() {
-				var title = $.trim(this.title.val()).replace(/[\ud800-\udbff][\udc00-\udfff]/g,'');
-				this.title.val(title);
-				if (this.title.val().length == 0) {
-					sweetAlert('格式错误', '请填写标题！', 'warning');
-					return false;
-				}
-				if (this.title.val().length > 60) {
-					sweetAlert('格式错误', '请设置60字符以内标题', 'warning');
-					return false;
-				}
-				var imgs = editor.$txt.find('img').length;
-				if (editor.$txt.formatText().replace(/&nbsp;|\s/g, "").length == 0 && imgs == 0) {
-					sweetAlert('格式错误', '请填写内容！', 'warning');
-					return false;
-				}
-				if (imgs.length > 50) {
-					sweetAlert('格式错误','图片上传不能超过50张','warning');
-					return false;
-				}
-				if (editor.$txt.text().length > 5000) {
-					sweetAlert('格式错误','文章长度不能超出5000字符','warning');
-					return false;
-				}
-				var text =  global.utf16toEntities($.trim(editor.$txt.html()));
-				this.text = text;
-				return true;
-			},
-			bindEvent: function() {
-				var self = this;
-				self.postForm.submit(function(event){
-					event.preventDefault();
-					if (self.verificate()) {
-						self.loading.show();
-						global.subData('/group/'+'<%=groupID%>'+'/post',{
-							title:self.title.val(),
-							text:self.text
-						},function(data){
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									window.location.href = '/topic/' + data.data.info.post_base_id;
-								} else{
-									self.loading.hide();
-									sweetAlert('错误', '发布失败', 'error');
-								}
-							} else{
-								self.loading.hide();
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});
-				editor.onchange = function(){
-					var num = editor.$txt.text().length;
-					var exceed = num - 5000;
-					if (exceed>0) {
-						self.wmTip.html('已超出'+exceed+'字符');
-					} else{
-						self.wmTip.html('');
-					}
-				};
-			},
-			init: function() {
-				this.bindEvent();
-			}
-		}
-		post.init();
-	})();
+<script type="text/html" id="group-card-tpl">
+<div class="group-card-header">
+    <img src="{{groups.g_image}}">
+    <div class="group-card-header-title">
+        <h1>{{groups.g_name}}</h1>
+        <div>
+            <p>999+ 话题</p>
+            <p>999+ 成员</p>
+        </div>
+    </div>
+</div>
+<div class="group-card-body">
+    <p>{{groups.g_introduction}}</p>
+    <p class="group-card-body-creator">星球主: {{groups.g_introduction}}</p>
+</div>
+<div class="group-card-footer">
+    <button id="quit-group">退出星球</button>
+</div>    
 </script>
-<%- include base/footer.ejs %>
+
+<script type="text/html" id="postdetails-tpl">
+<div id="post-2" class="post-details">
+    <div class="post-details-header">
+        <div class="post-details-info">
+            <img src="{{users.profile_picture}}">
+            <p>{{users.user_name}}</p>
+        </div>
+        <div class="post-details-date">
+            <p>{{posts.create_time}}</p>
+        </div>
+    </div>
+    <div class="post-details-content">
+        <h1>{{posts.p_title}}</h1>
+        <div class="post-details-main">
+            <p>{{posts.p_text}}</p>
+        </div>
+    </div>
+    <div class="post-details-footer">
+        <div class="post-details-buttons">
+            <button id="btn-approve">                    
+                <svg aria-hidden="true" class="icon">
+                    <use xlink:href="#icon-good">
+                    </use>
+                </svg>
+                点赞
+            </button>
+            <button id="btn-collect">
+                <svg aria-hidden="true" class="icon">
+                    <use xlink:href="#icon-home">
+                    </use>
+                </svg>   
+                收藏                    
+            </button>
+        </div>
+        <div class="post-details-operations">
+            {{if rights.sticky_right == 1}} <p id="op-setTop">置顶</p> {{/if}}
+            {{if rights.lock_right == 1}} <p id="op-lock">锁定</p> {{/if}}
+            {{if rights.edit_right == 1}} <p id="op-edit">编辑</p> {{/if}}
+            {{if rights.delete_right == 1}} <p id="op-delete">删除</p> {{/if}}
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/html" id="reply-tpl">
+    {{each reply as item i}}
+        <div class="post-reply-entry">
+            <div class="post-reply-entry-header">
+                <div class="post-reply-name">
+                    <p>{{item.user_name}}</p>
+                </div>
+                <div class="post-reply-date">
+                    <p>{{item.create_time}}</p>
+                </div>
+            </div>
+            <div class="post-reply-entry-body">
+                <p>{{item.p_text}}</p>
+            </div>
+            <div id="reply-{{item.reply_floor}}" class="post-reply-entry-footer">
+                <div class="post-reply-operations">
+                    {{if item.delete_right == 1}} <p id="{{item.reply_floor}}-op-reply-delete">删除</p> {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/each}}  
+</script>
+
+<script>
+(function() {
+    var approve = function(id) {
+        // if(isApproved())
+        global.subData('/approve',{postid : id}, function(data) {
+            if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('点赞成功')
+
+            } else {
+                sweetAlert('错误', '点赞失败', 'error');
+            }                                   
+        });            
+    }
+    var collect = function(id) {
+        global.subData('/collect',{postid : id}, function(data) {
+            if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('收藏成功');
+            } else {
+                sweetAlert('错误', '收藏失败', 'error');
+            }                                   
+        });            
+    } 
+    var postobj = {
+        postid: <%= postid%>,
+        postContainer: $('#post-container'),
+        replyInput: $('#post-reply-send-content'),
+        bindEvent: function() {
+            var self = this;
+
+            //绑定点赞和收藏
+            $("#btn-approve").on("click", function() {
+                approve(<%= postid%>);
+            })
+            $("#btn-collect").on("click", function() {
+                collect(<%= postid%>);
+            })       
+        },
+        init: function() {
+            var self = this;
+            global.subData("./<%= postid%>", {}, function(data) {
+                if (data.ret == 200 && data.data) {
+                    var compiled = template("postdetails-tpl", data.data);
+                    self.postContainer.html(compiled + self.postContainer.html());
+                    compiled = template("group-card-tpl", data.data);
+                    $("#group-card").html(compiled);
+                    self.bindEvent();
+                } else {
+                    sweetAlert('错误', '数据获取失败', 'error');
+                }
+            });
+
+            //分页加载评论
+            function demo(curr){
+                var result = '';
+                global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
+                    //第一次加载获取评论总数
+                    if(!curr) {
+                        data.data.reply_count;
+                    }
+                    if((curr || 1)<=data.data.page_count){
+                        result = template("reply-tpl",data.data);
+                    }
+                    //插入数据
+                    $('.post-reply-entry').remove();
+                    $('.post-reply-replies').append(result); 
+                    laypage({
+                        cont: document.getElementById('demo1'),
+                        pages: data.data.page_count, //通过后台拿到的总页数
+                        curr: curr || 1, //当前页
+                        jump: function(obj, first){ //触发分页后的回调
+                            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                demo(obj.curr);
+                            }
+                        }
+                    });
+                    //rebind();
+                    //绑定回复
+                    $("#post-reply-send-btn").on("click", function() {
+                        global.subData("./<%= postid%>/replysend", {p_text: $('#post-reply-send-content').val()}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                swal('发送成功');
+                                $('#post-reply-send-content').val('');
+                                location.replace(location.href);
+                            } else {
+                                sweetAlert('错误', '回复失败', 'error');
+                            }
+                        });
+                    })
+                    //绑定各个回复的删除按钮
+                    $("p[id*='op-reply-delete']").on("click", function(e) {
+                        var replyid = e.target.id.split("-")[0];
+                        //我在玩蛇
+                        var entry = e.target.parentNode.parentNode.parentNode;
+                        global.deleteData("/api/posts/"+self.postid+"/replies/"+replyid, {}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                swal('删除成功');
+                                entry.style.display = "none";
+                            } else {
+                                sweetAlert('错误', '回复失败', 'error');
+                            }                            
+                        })
+                    })
+                });
+            };
+            demo();
+
+            self.bindEvent();
+        },
+    }
+
+
+    postobj.init();
+
+})();
+</script>
+<%- include base/footerMobile.ejs %>

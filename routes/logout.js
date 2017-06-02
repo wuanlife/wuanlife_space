@@ -1,24 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var ua = require('mobile-agent');
 var config = require('../config/config');
 
 
 router.get('/', function(req, res, next) {
-    request(config.server + '?service=User.Logout', function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            //console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-            var data = JSON.parse(body);
-            if (data.ret == 200) {//操作成功或失败均注销成功
-                req.session.destroy(function() {
-                    res.redirect('back');
-                });
-            } 
-        } else {
-            next(error);
-        }
-    })
-
+    delete req.session.user;
+    var agent = ua(req.headers['user-agent']);
+    try{
+        res.redirect('/');
+    } catch(e){
+        next(e);
+    }
 });
 
 // router.get('/', function(req, res, next) {

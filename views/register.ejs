@@ -1,88 +1,187 @@
 <%- include base/header.ejs %>
-<div class="main">
-	<div class="login">
-		<form class="login-form line-form" action="/register" title="" method="post">
-			<div class="login-group line-fgroup">
-				<label for="nickname" class="label-name"></label>
-				<input type="text" name="nickname" placeholder="昵称" id="nickname">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-e"></label>
-				<input type="email" name="Email" placeholder="邮箱" id="email">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="pw" class="label-paw"></label>
-				<input type="password" name="password" placeholder="密码" id="pw">
-			</div>
-			<button id='login' type="submit">注册</button>
-		</form>
-	</div>
+<div id="content" class="small-container">
+    <div class="section section-small-center">
+        <div class="section-hd">
+            <span>注册</span>
+        </div>
+        <div class="section-content form-height-section">
+            <form>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>邮箱</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="text" name="email" id="email">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>昵称</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="text" name="nickname" id="nickname">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>密码</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="password" name="pwd" id="pwd">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>邀请码</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="text" name="code" id="code">
+                    </div>
+                </div>
+                <div class="form-container form-btn">
+                    <button type="button">注册</button>
+                </div>
+            </form>
+        </div>            
+    </div>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/javascript">
+
+<%- include base/footerMobile.ejs %>
+
+
+<script>
 	(function() {
 		var register = {
-			nickname: $("#nickname"),
-			email: $("#email"),
-			pw: $("#pw"),
-			loginform: $(".login-form"),
-			loading: $(".loading"),
-			verificate: function() {
-				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-				if (this.nickname.val().length == 0 || this.nickname.val().length > 18) {
-					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
-					return false;
-				}
-				if (!myregName.test(this.nickname.val())) {
-					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
-					return false;
-				}
-				if (!myreg.test(this.email.val())) {
-					sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-					return false;
-				}
-				if (this.pw.val().length == 0) {
-					sweetAlert('格式错误', '请填写密码！', 'warning');
-					return false;
-				}
-				if (this.pw.val().length < 6 || this.pw.val().length > 20) {
-					sweetAlert('格式错误', '请填写6-20位密码', 'warning');
-					return false;
-				}
-				return true;
+
+            regform : $('form')[0],
+
+            regpwd : $('#pwd'),
+
+            regemail : $('#email'),
+
+            regnickname : $('#nickname'),
+
+            reginviteCode : $('#code'),
+
+            regbtn : $('.form-btn button'),
+
+			getServerData: function(param, cb) {
+				
 			},
+
+            validataFunc : function(){
+                var validator = new HJformcheck();
+                var self = this;
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('maxLength',function(value,length,errorMsg){
+                    if(value.length>length){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('isNickName',function(value,errorMsg){
+                    if(!/^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.regemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                }, {
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.regnickname,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '昵称不能为空'
+                },{
+                strategy: 'maxLength:18',
+                errorMsg: '请输入1-18位字符作为昵称'
+                },{
+                strategy: 'isNickName',
+                errorMsg: '只允许中文、数字、字母和下划线'
+                }]);
+
+                validator.add(self.regpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }, {
+                strategy: 'minLength:6',
+                errorMsg: '密码长度不能小于6位'
+                },{
+                strategy: 'maxLength:20',
+                errorMsg: '密码长度不能超过20位'
+                }]);
+
+                validator.add(self.reginviteCode,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '邀请码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
 			bindEvent: function() {
-				var self = this;
-				self.loginform.submit(function(event) {
-					event.preventDefault();
-					if (self.verificate()) {
-						self.loading.show();
-						global.subData('/register', {
-							email: self.email.val(),
-							password: self.pw.val(),
-							nickname: self.nickname.val()
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									window.location.href = '/'; //注册成功
-								} else {
-									self.loading.hide();
-									sweetAlert('提示', data.data.msg, 'warning');
-								}
-							} else {
-								self.loading.hide();
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});
+                var self = this;
+                self.regbtn.on('click',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = self.validataFunc();
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                        loadingId : 'registerLoading',
+                        loadingScale: 0.3,
+                        });
+
+                        global.subData('/register',{
+                            nickname : self.regnickname.val(),
+                            email : self.regemail.val(),
+                            password : self.regpwd.val(),
+                            inviteCode : self.reginviteCode.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                
+                                    setTimeout(function(){
+                                        HJLoading.stop('registerLoading');
+                                        window.location.href = '/personal/login';
+                                    },3000);
+
+                                }else{
+                                    HJLoading.stop('registerLoading');
+                                    swal('错误',data.msg,'error');
+                                }
+                            }else{
+                                HJLoading.stop('registerLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        });
+                    }else{
+                        swal('提示',errorMsg,'warning');
+                    }
+                });
 			},
 			init: function() {
-				this.bindEvent();
-			}
+                var self = this;
+
+                //wuanHeadFun.title("注册");
+				self.bindEvent();
+
+
+			},
 		}
 		register.init();
 	})();
 </script>
-<%- include base/footer.ejs %>

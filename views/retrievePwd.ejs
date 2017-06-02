@@ -1,0 +1,101 @@
+<%- include base/header.ejs %>
+<div id="content" class="small-container">
+    <div class="section section-small-center">
+        <div class="section-hd">
+            <span>找回密码</span>
+        </div>
+        <div class="section-content form-height-section">
+            <form>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>邮箱</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="text" name="email" id="email" placeholder="输入邮箱">
+                    </div>
+                </div>
+                <div class="form-container form-btn">
+                    <button type="button" id="retBtn">找回密码</button>
+                </div>
+            </form>
+        </div>            
+    </div>
+</div>
+<%- include base/baseJS.ejs %>
+<script type="text/javascript">
+    (function(){
+        var retPwd = {
+            retEmail: $('#email'),
+            retBtn: $('.form-btn #retBtn'),
+
+            validataFunc : function(){
+                var that = this;
+                var validator = new HJformcheck();
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(that.retEmail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                },{
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
+
+            bindEvent:function(){
+                var that = this;
+                var retUrl = window.location.pathname;
+
+                that.retBtn.on('click',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = that.validataFunc();
+
+                    if(!errorMsg){
+                        HJLoading.start({
+                            loadingId:'retPwdLoading',
+                            loadingScale:0.3,
+                        })
+                        global.subData(retUrl,{
+                            email:encodeURIComponent(that.retEmail.val()),
+                        },function(data){
+                            if(data.ret == 200 && data.data){
+                                if(data.data.code == 1){
+                                    setTimeout(function(){
+                                        HJLoading.stop('retPwdLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                }else{
+                                    HJLoading.stop('retPwdLoading');
+                                    swal('警告',data.msg,'warning')
+                                }
+                            }else{
+                                HJLoading.stop('retPwdLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        })
+                    }
+                })
+            },
+
+
+            init: function(){
+                var that = this;
+                that.bindEvent();
+            }
+
+        }
+        retPwd.init();
+    })();
+
+</script>
