@@ -11,7 +11,7 @@ button {
   border: none;
 }
 .allgroup-head {
-  margin-left: 120px;
+  margin-left: 180px;
 }
 .allgroup-content {
   width: 720px;
@@ -331,9 +331,10 @@ a:active {
   text-decoration: none;
 }
 .group-msg {
-  position: absolute;
-  top: 69px;
-  right: 150px;
+  float: right;
+  /*position: absolute;
+	top: 69px;
+	right: 150px;*/
   background: #ffffff;
   border: 1px solid #f0f6fd;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.24);
@@ -409,6 +410,12 @@ a:active {
   color: #999999;
   margin-left: 200px;
   margin-top: 100px;
+}
+#group-body {
+  float: left;
+}
+#pages {
+  clear: both;
 }
 .group-post {
   margin-top: 8px;
@@ -988,6 +995,7 @@ button {
   background-size: 100% 100%;
 }
 #personal .pensonal-img span {
+  cursor: pointer;
   font-family: PingFangHK-Regular;
   font-size: 14px;
   color: #5677fc;
@@ -1075,6 +1083,7 @@ button {
   width: 52px;
 }
 #personal .pensonal-save {
+  cursor: pointer;
   margin-top: 57px;
   margin-left: 205px;
   background: #5677fc;
