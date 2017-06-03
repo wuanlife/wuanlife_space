@@ -59,8 +59,12 @@
     <div id="msg-{{item.messages.m_id}}" class="message-entry message-verify">
         <img src="{{item.messages.image}}">
         <div class="message-entry-main">
-            <h1>{{item.users.user_name}}</h1>
-            <p>{{item.content}}</p>
+            <h1>{{item.users.user_name}} 申请加入 {{item.groups.g_name}}</h1>
+            {{if item.messages.text != null}}
+            <p>{{item.messages.text}}</p>
+            {{else}}
+            <p>无申请消息</p>
+            {{/if}}
         </div>
         {{if item.messages.status == '1'}}
         <div id="group-{{item.groups.group_id}}" class="buttons"> 
