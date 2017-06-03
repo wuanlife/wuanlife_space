@@ -3,8 +3,7 @@
 .index-entry {
     background-color: #ffffff;
     margin-top: 12;
-    .index-entry-header, .index-entry-content {
-    }
+    margin-bottom: 0.5em;
     .index-entry-header {
         max-width:  100%;
         display: flex;
@@ -37,8 +36,8 @@
         };
     };
     .index-entry-content {
-
         h1 {
+            margin-bottom: 0.4em;
             opacity:0.87;
             font-family:PingFangHK-Semibold;
             font-size:16px;
@@ -47,10 +46,10 @@
         };
         .index-entry-brief {
             p {
+                line-height: 20px;
                 font-size: 14px;
-                opacity:0.54;
                 font-family:PingFangHK-Regular;
-                color:#000000;
+                color:#666666;
                 letter-spacing:0;
                 text-align:justify;
             }
@@ -58,7 +57,6 @@
     };
     .index-entry-footer {
         margin-top: 10px;
-        border-top: 1px solid rgba(0,0,0,0.25);
         padding: 10px 0 10px 0;
         ul {
             display: -webkit-flex;
@@ -71,7 +69,7 @@
                 }
                 p {
                     font-size: 14px;
-                    padding: 0 10px;
+                    padding: 0 10px 0 0;
                     opacity:0.54;
                     font-family:PingFangHK-Regular;
                     color:#999999;
@@ -87,11 +85,11 @@
                     &:before {
                         content: '·';
                         position: relative;
-                        left: 5px;
+                        left: -5px;
                         float: left;
                         color: #999999;
-                        font-size: 20px;
-                        height: 19px;
+                        font-size: 10px;
+                        line-height: 20px;
                         border-radius: 100%;
                     }
                 }
