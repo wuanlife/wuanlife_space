@@ -125,6 +125,9 @@ button {
             padding: 5px;
             border-radius: 2px;
         }
+        li.on {
+            border-bottom: 2px solid #5677fc;
+        }
         li.on > span{
              
         }
@@ -150,7 +153,7 @@ button {
     padding-right: 40px;
 }
 .aside {
-    min-width: 310px;
+    flex: 0 0 310px;
 }
 .big-container {
     margin-left: 0;
@@ -199,11 +202,10 @@ button {
     .inp-btn {
         position: absolute;
         right: 10px;
-        top: 7px;
+        top: 9px;
         width: 21px;
         height: 20px;
-        border: 1px solid #e1e9e1;
-        border-left: none;
+        border: none;
         background-color: #fff;
         font-size: 0;
         overflow: hidden;
