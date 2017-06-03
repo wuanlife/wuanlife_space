@@ -13,13 +13,18 @@
         padding: 10px;
     }
     .message-entry-main {
-        display: inline-block;
+        padding: 10px 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        box-sizing: border-box;
         flex: 1;
         h1 {
             font-family:PingFangHK-Medium;
             font-size:14px;
             color:#000000;
-            text-align:left;            
+            text-align:left;         
         }
         p {
             font-family:PingFangHK-Regular;
@@ -53,6 +58,9 @@
 }
 .message-verify {
     height: 71px;
+    h1 {
+        color:#5992e4 !important;
+    }
     .buttons {
         flex:0 0 200px;
     }
