@@ -72,6 +72,13 @@ button {
     cursor: pointer;
 }
 
+
+span.hoverabel {
+    cursor: pointer;
+    &:hover {
+        color: #5677fc;
+    }
+}
 /**
  * 导航栏
  */
@@ -111,6 +118,12 @@ button {
         font-family:PingFangHK-Regular;
         font-size:14px;
         color:#ffffff;
+        &:hover {
+        }
+    }
+    #nav-register {
+        margin-right: 36px;
+        padding-left: 0.8em;
     }
 
 }
@@ -157,7 +170,7 @@ button {
             font-family:PingFangHK-Medium;
             font-size: 18px;
             color:#5677fc;
-            text-align:left;           
+            text-align:left;
         }
 
     }
@@ -166,10 +179,53 @@ button {
 .article {
     flex: 1;
     min-width: 590px;
-    padding-right: 40px;
+    padding-right: 60px;
 }
 .aside {
-    flex: 0 0 310px;
+    flex: 0 0 250px;
+    .section {
+        margin-top: 19px;
+        .section-hd {
+            span{
+                font-family:PingFangHK-Medium;
+                font-size:14px;
+                color:#5677fc;     
+            }
+        }
+    }
+}
+.aside-group-item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.aside-groupdiscover-list {
+
+}
+.aside-groupdiscover-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    background:#ffffff;
+    img {
+        padding: 8px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+    .aside-groupdiscover-item-content {
+        margin-left: 8px;
+    }
+    h1 {
+        font-family:PingFangHK-Medium;
+        font-size:14px;
+        color:#5992e4;
+    }
+    p {
+        font-family:PingFangHK-Regular;
+        font-size:14px;
+        color:#666666;
+    }
 }
 .big-container {
     margin-left: 0;
@@ -203,8 +259,8 @@ button {
  * 头部search
  */
 .nav-search {
-    flex: 0.9;
-    padding-right: 100px;
+    flex: 0.84;
+    padding-right: 150px;
     //消除输入栏和搜索图标的边框
     input {
         border: none;
@@ -241,7 +297,7 @@ button {
         text-align: left;
         border-radius:4px;
         input {
-            width: 430px;
+            width: 462px;
             height: 20px;
             padding: 6px 8px 6px 10px;
             outline: none;

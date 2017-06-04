@@ -6,7 +6,19 @@ var config = require('../../config/config');
 
 
 router.get('/', function(req, res) {
-  res.json({ message: 'this is groups' });  
+    request(`${config.server}group/lists?pn=${req.body.pn || 1}`,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('get groups success!');
+                res.send(JSON.parse(body));
+            } else {
+                res.send({
+                    ret: 500,
+                    msg:'服务器异常'
+                });
+            }
+        }
+    );
 });
 
 router.route('/:groupid/members')
