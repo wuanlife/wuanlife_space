@@ -1,7 +1,7 @@
 <%- include base/header.ejs %>
 <div id="content">
     <div class="article">
-        <div class="section mid-container">
+        <div class="section">
             <% if (typeof user !== 'undefined') { %>
             <ul class="section-tab">
                 <li class="on section-hd" id="myplanet-chart-hd">
@@ -48,12 +48,29 @@
                 <div class="aside-group-list">
                     <div class="aside-group-item">
                         <button id="aside-allgroup" class="aside-btn aside-btn-blue">全部星球</button>
-                        <button id="aside-creatgroup" class="aside-btn aside-btn-blue">创建星球</button>
-                    </div>                    
+                    </div>     
+                    <div class="aside-group-item">
+                        <button id="aside-allgroup" class="aside-btn aside-btn-blue">全部星球</button>
+                    </div>                 
                 </div>
             </div>     
         </div>
     </div>
+    <% } else {%>
+    <div class="aside">
+        <div class="section big-container">
+            <div class="section-hd">
+                <span>发现星球</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div class="section-content">
+                <div class="aside-groupdiscover-list">                 
+                </div>
+            </div>     
+        </div> 
+    </div>       
     <% } %>
 </div>
 <%- include base/baseJS.ejs %>
@@ -63,7 +80,7 @@
         <div class="index-entry-header">
             <div class="index-entry-info">
                 <img src="{{item.users.profile_picture}}">
-                <p>{{item.users.user_name}}　发表于　{{item.groups.g_name}}</p>
+                <p>{{item.users.user_name}} 发表于 <span class="hoverabel"><a href="/groups/{{item.groups.group_id}}">{{item.groups.g_name}}<a/></span></p>
             </div>
             <div class="index-entry-date">
                 <p>{{item.posts.create_time}}</p>
@@ -94,6 +111,17 @@
 <script type="text/html" id="group-item-tpl">
     {{each groups as item i}}
     <button id="group-{{item.group_id}}" class="aside-btn">{{item.g_name}}</button>
+    {{/each}}
+</script>
+<script type="text/html" id="groupdiscover-item-tpl">
+    {{each groups as item i}}
+    <div id="group-{{item.group_id}}" class="aside-groupdiscover-item">
+        <img src="{{item.g_image}}">
+        <div class="aside-groupdiscover-item-content">
+            <h1>{{item.g_name}}</h1>
+            <p>{{item.g_introduction}}</p>
+        </div>
+    </div>   
     {{/each}}
 </script>
 <script>
@@ -297,7 +325,24 @@
                         window.location.href = '/creategroup';
                     })
                 });
-                <% } %>    
+                <% } else {%>
+                global.getData('/api/groups/',{pn : 1}, function(data) { 
+                    //插入数据 
+                    result = template("groupdiscover-item-tpl",data.data);
+                    $('.aside-groupdiscover-list').html(result + $('.aside-groupdiscover-list').html());
+                    //绑定事件
+                    $('.aside-btn').on('click', function(e) {
+                        window.location.href = '/groups/' + e.currentTarget.id.split("-")[1];
+                    })
+                    $('#aside-allgroup').on('click', function(e) {
+                        window.location.href = '/allgroup/';
+                    })
+                    $('#aside-creatgroup').on('click', function(e) {
+                        window.location.href = '/creategroup';
+                    })
+                });
+
+                <% } %>   
                 //self.bindEvent();    
 
             }
