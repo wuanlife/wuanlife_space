@@ -80,7 +80,7 @@
         <div class="index-entry-header">
             <div class="index-entry-info">
                 <img src="{{item.users.profile_picture}}">
-                <p>{{item.users.user_name}} 发表于 <span class="hoverabel">{{item.groups.g_name}}</span></p>
+                <p>{{item.users.user_name}} 发表于 <span class="hoverabel"><a href="/groups/{{item.groups.group_id}}">{{item.groups.g_name}}<a/></span></p>
             </div>
             <div class="index-entry-date">
                 <p>{{item.posts.create_time}}</p>
