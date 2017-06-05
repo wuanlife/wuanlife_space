@@ -10,6 +10,10 @@ var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使�
 // var RedisStore = require('connect-redis')(session);
 var flash = require('connect-flash');
 
+//监控插件
+var fundebug = require("fundebug-nodejs");
+fundebug.apikey="e76768413a54073546036eff31808236d9ee45db26a32628c931a3556565a708";
+
 var routes = require('./routes/index');
 
 //RESTful api
@@ -196,6 +200,10 @@ app.use(function(err, req, res, next) {
 		error: {}
 	});
 });
+
+app.use(fundebug.ExpressErrorHandler);
+fundebug.notify("Test", "Hello Fundebug!");
+
 
 module.exports = app;
 module.exports.sessionMiddleware = sessionMiddleware;
