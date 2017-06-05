@@ -1,0 +1,124 @@
+<%- include base/header.ejs %>
+<div id="content" class="small-container">
+    <div class="section section-small-center">
+        <div class="section-hd">
+            <span>重置密码</span>
+        </div>
+        <div class="section-content form-height-section">
+            <form>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>新密码</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="password" name="password" id="password" placeholder="输入新密码" required="required">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>确认新密码</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="password" name="pwd" id="pwd" placeholder="确认密码" required="required">
+                    </div>
+                </div>
+                <div class="form-container form-btn">
+                    <button type="button" id="resetBtn">重置密码</button>
+                </div>
+            </form>
+        </div>            
+    </div>
+</div>
+<%- include base/baseJS.ejs %>
+<script>
+    (function() {
+        var retrievePwdreset = {
+
+            retPwdpwd : $('#password'),
+            retPwdpwdack : $('#pwd'),
+            retPwdbtn : $('#resetBtn'),
+
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
+
+
+                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isNonEmpty',
+                        errorMsg: '密码不能为空'
+                    },
+                ]);
+/*                validator.add(self.retPwdpwd, [
+                    {
+                        strategy: 'isSame:' + self.retPwdpwd.val(),
+                        errorMsg: '两次密码不相同'
+                    },
+                ]);*/
+
+                var errorMsg = validator.start();
+                return errorMsg;
+            },
+            bindEvent: function() {
+                var self = this;
+                self.retPwdbtn.on('click',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                            loadingId : 'retPwdresetLoading',
+                        });
+                        //TODO: 把封装成token的放到node里面
+                        var sJWT = global.getUrlParam('token');
+                        var token1 = KJUR.jws.JWS.readSafeJSONString(b64utoutf8(sJWT.split(".")[1]));
+                        // Header
+                        var oHeader = {alg: 'HS256', typ: 'JWT'};
+                        // Payload
+                        var oPayload = {};
+                        var tNow = KJUR.jws.IntDate.get('now');
+                        var tEnd = KJUR.jws.IntDate.get('now + 1day');
+                        oPayload.exp = token1.exp;
+                        oPayload.user_id = token1.user_id;
+                        oPayload.password = self.retPwdpwd.val();
+                        // Sign JWT, password=616161
+                        var sHeader = JSON.stringify(oHeader);
+                        var sPayload = JSON.stringify(oPayload);
+                        var token2 = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, "wuan_key");
+
+
+                        global.subData('/retrievepassword/reset',{
+                            token: token2,
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    //延迟3秒跳转
+                                    setTimeout(function(){
+                                        HJLoading.stop('retPwdresetLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    HJLoading.stop('retPwdresetLoading');
+                                    swal('警告',data.msg,'warning');
+                                }
+                            }else{
+                                HJLoading.stop('retPwdresetLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        });
+                    }else{
+                        swal('警告',errorMsg,'warning');
+                    } 
+                });
+            },
+            init: function() {
+                var that = this;
+                that.bindEvent();
+            }
+        }
+        retrievePwdreset.init();
+    })();
+</script>

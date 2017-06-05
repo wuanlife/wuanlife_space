@@ -1,0 +1,27 @@
+
+<%- include headerMobile.ejs %>
+	<div class="search-header">
+		<div class="search-goback">
+            <svg aria-hidden="true" class="icon">
+                <use xlink:href="#icon-goback">
+                </use>
+            </svg>	
+		</div>
+		<div class="search-content">
+			<input placeholder="搜索帖子或者星球" id="searchInput" type="text" class="search-action-valid"></input>
+
+		</div>
+		<div class="search-action search-action-valid">
+            <svg aria-hidden="true" class="icon">
+                <use xlink:href="#icon-search_blue">
+                </use>
+            </svg>				
+		</div>
+	</div>
+<%- include baseJSMobile.ejs %>
+	<script>
+		//绑定back事件
+		$('.search-header > .search-goback').on('touchend',function(){
+			window.history.back(-1);
+		})
+	</script>

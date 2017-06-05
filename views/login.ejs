@@ -1,71 +1,161 @@
 <%- include base/header.ejs %>
-<div class="main">
-	<div class="login">
-		<form class="login-form line-form" action="/login" title="" method="post">
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-e"></label>
-				<input type="email" name="email" value="" placeholder="邮箱" id="email">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="pw" class="label-paw"></label>
-				<input type="password" name="password" value="" placeholder="密码" id="pw">
-			</div>
-			<a href="/resetPassword" title="忘记密码">忘记密码？</a>
-			<a href="/register" title="注册账号" class="fR">注册账号</a>
-			<button id='login' type="submit">登录</button>
-		</form>
-	</div>
+<div id="content" class="small-container">
+    <div class="section section-small-center">
+        <div class="section-hd">
+            <span>登录</span>
+        </div>
+        <div class="section-content form-height-section">
+            <form>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>邮箱</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="text" name="email" id="email" placeholder="输入邮箱">
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="form-container-hd">
+                        <span>密码</span>
+                    </div>
+                    <div class="form-container-input">
+                        <input type="password" name="pwd" id="pwd" placeholder="输入密码">
+                    </div>
+                </div>
+                <div class="form-container form-btn">
+                    <button type="button">登录</button>
+                </div>
+
+                <div class="form-container" id="form-others">
+                    <span id="regist">注册账号</span>
+                    <span id="retrievepwd">找回密码</span>
+                </div>
+            </form>
+        </div>            
+    </div>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/javascript">
-	(function(){
-		var login = {
-		email: $("#email"),
-		pw: $("#pw"),
-		loginform: $(".login-form"),
-		loading: $(".loading"),
-		verificate: function() {
-			var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-			if (!myreg.test(this.email.val())) {
-				sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-				return false;
-			}
-			if (this.pw.val().length == 0) {
-				sweetAlert('格式错误', '请填写密码！', 'warning');
-				return false;
-			}
-			return true;
-		},
-		bindEvent: function() {
-			var self = this;
-			self.loginform.submit(function(event) {
-				event.preventDefault();
-				if (self.verificate()) {
-					self.loading.show();
-					global.subData('/login',{
-						email: self.email.val(),
-						password: self.pw.val()
-					},function(data){
-						if (data.ret == 200 && data.data) {
-							if (data.data.code == 1) {
-								window.location.href = '/'; //登录成功
-							} else {
-								self.loading.hide();
-								sweetAlert('提示', data.data.msg, 'warning');
-							}
-						} else {
-							self.loading.hide();
-							sweetAlert('错误', data.msg, 'error');
-						}
-					});
-				}
-			});
-		},
-		init: function() {
-			this.bindEvent();
+
+<%- include base/footerMobile.ejs %>
+
+
+<script>
+	(function() {
+		var loginobj = {
+            loginform : $('form')[0],
+
+            loginemail : $('#email'),
+
+            loginpwd : $('#pwd'),
+
+            loginbtn : $('.form-btn > button'),
+
+            loginregister : $('#regist'),
+
+            loginforget : $('#retrievepwd'),
+
+			getServerData: function(param, cb) {
+				
+			},
+
+            validataFunc : function(){
+                var self = this;
+                var validator = new HJformcheck();
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.loginemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                },{
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.loginpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
+
+			bindEvent: function() {
+                var self = this;
+                self.loginregister.on('click',function(){
+                    window.location.href = '/register';
+                });
+
+                self.loginforget.on('click',function(){
+                    window.location.href = '/retrievepassword';
+                });
+
+                self.loginbtn.on('click',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = self.validataFunc();
+
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                        loadingId : 'loginLoading',
+                        loadingScale: 0.3,
+                        });
+
+                        global.subData('/personal/login',{
+                            email : self.loginemail.val(),
+                            password : self.loginpwd.val(),
+                        },function(data){
+                            if(data.flag){
+                               setTimeout(function(){
+                                    HJLoading.stop('loginLoading');
+                                    window.location.href = '/';
+                                },3000); 
+
+                               return;
+                            }
+
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                    //延迟3秒跳转
+                                    setTimeout(function(){
+                                        HJLoading.stop('loginLoading');
+                                        window.location.href = '/';
+                                    },3000);
+                                    
+                                }else{
+                                    HJLoading.stop('loginLoading');
+                                    swal('错误',data.msg,'error');
+                                }
+                            }else{
+                                HJLoading.stop('loginLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        });
+                    }else{
+                        swal('提示',errorMsg,'warning');
+                    }
+                    
+                });
+
+			},
+			init: function() {
+                var self = this;
+                //wuanHeadFun.title("登录");
+
+				this.bindEvent();                
+			},
 		}
-	}
-	login.init();
+
+
+		loginobj.init();
+
 	})();
 </script>
-<%- include base/footer.ejs %>

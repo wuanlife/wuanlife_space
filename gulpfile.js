@@ -16,7 +16,7 @@ var filepath = {
     'css' : path.join(publicdir,'stylesheets/dist/*.css'),
     'js' : path.join(publicdir,'javascripts/**/*.js'),
     'ejs': path.join(basedir,'views/**/*.ejs'),
-    'less': path.join(publicdir,'stylesheets/src/less/!(global*).less'),
+    'less': path.join(publicdir,'stylesheets/src/less/!(global*|public*).less'),
     'gLess': path.join(publicdir,'stylesheets/src/less/global*.less'),
     'pcCss': path.join(publicdir,'stylesheets/src/css/*PC.css'),
     'mCss' : path.join(publicdir,'stylesheets/src/css/*Mobile.css'),
@@ -28,7 +28,7 @@ gulp.task('watch',function(){
     //设置代理模式并指定5000端口
     //监听files变化并自动刷新浏览器
     browserSync.init({
-        proxy: 'http://localhost:3000',
+        proxy: 'localhost:3000',
         port: 5000,
         files: [filepath.css,filepath.js,filepath.ejs]
     });

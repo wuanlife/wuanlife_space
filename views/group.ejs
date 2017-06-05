@@ -1,292 +1,313 @@
 <%- include base/header.ejs %>
-<div class="main main-page">
-	<div class="location clearfix">
-		<h1>
-		<a class="text-ellipsis" href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a>
-		<%if(result.identity == '01'){%>
-		<a href="/group/<%=result.groupID%>/set" title="" class="gSet icon"></a>
-		<% } %>
-		</h1>
-	</div>
-	<div class="group-related clearfix">
-		<h2 class="gCreator">
-			<p class="text-ellipsis">
-			创建者：<%=result.creatorName%>
-			</p>
-		</h2>
-		<%if(result.identity=='01'){%>
-		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
-		<a href="/userManage/<%=result.groupID%>" class="locBtn">成员管理</a>
-		<%}else if(result.identity == '02'){%>
-		<button type="button" id="joinBtn" class="locBtn">+发帖</button>
-		<button type="button" id="quitBtn" class="locBtn">退出星球</button>
-		<%}else if(result.identity == '04'){%>
-		<button type="button" id="joinBtn" class="locBtn">+已申请</button>
-		<%}else{%>
-		<button type="button" id="joinBtn" class="locBtn">+加入</button>
-		<%}%>
-	</div>
-	<%if(result.private=="1" && (result.identity=="03" || result.identity=="04")){%>
-	<div class="blockPage">
-		<p>您还未加入，无法浏览内容</p>
-		<img src="../images/not_join.png">
-	</div>
-	<%} else if(result.posts.length > 0){%>
-	<div class="chapter-col">
-		<% result.posts.forEach(function(item) { %>
-		<div class="chapter">
-			<h2>
-				<%if(parseInt(item.sticky)){%>
-				<i class="cha-top">置顶</i>
-				<%}%>
-				<a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
-			<div class="chapter-text">
-				<%-item.text%>
-			</div>
-			<%if(item.image.length >0){%>
-			<div class="chapter-img clearfix">
-				<%for(var i=0;i<item.image.length;i++){%>
-				<img src="<%-item.image[i]%>?imageView2/1/w/100/h/100" alt="">
-				<%}%>
-			</div>
-			<%}%>
-			<div class="chapter-info">
-				<span class="text-ellipsis"><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
-				<span class="postIn">发表于</span>
-				<span class="text-ellipsis"><a href="/group/<%=result.groupID%>" title="<%=result.groupName%>"><%=result.groupName%></a></span>
-				<span class="cha-time"><%=item.createTime%></span>
-			</div>
-		</div>
-		<% }); %>
-	</div>
-	<div class="page-turn">
-		<%if(result.currentPage == 1){%>
-		<button type="button" class="unCBtn" id="pre">上一页</button>
-		<%}else{%>
-		<button type="button" id="pre">上一页</button>
-		<%}%>
-		<span><%=result.currentPage%>/<%=result.pageCount%></span>
-		<%if(result.currentPage == result.pageCount){%>
-		<button type="button" class="unCBtn" id="next">下一页</button>
-		<%}else{%>
-		<button type="button" id="next">下一页</button>
-		<%}%>
-	</div>
-	<%}else{%>
-	<div class="emptyPage">
-		星球空空，可以注水~~
-	</div>
-	<%} %>
-</div>
-<%- include base/baseJS.ejs %>
-<script type="text/html" id="listtemplate">
-	{{each posts as item i}}
-	<div class="chapter">
-		<h2>
-			{{if item.sticky>0}}<i class="cha-top">置顶</i> {{/if}}
-			<a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a>
-		</h2>
-		<div class="chapter-text">{{#item.text}}</div>
-		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
-		<div class="chapter-info">
-			<span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
-			<span class="postIn">发表于</span>
-			<span class="text-ellipsis"><a href="/group/{{groupID}}" title="{{groupName}}">{{groupName}}</a></span>
-			<span class="cha-time">{{item.createTime}}</span>
-		</div>
-	</div>
-	{{/each}}
-</script>
-<script type="text/html" id="imgtemplate">
-	<div class="chapter-img clearfix">
-		{{each image as item i}}
-		<img src="{{item}}?imageView2/1/w/100/h/100" alt=""> {{/each}}
-	</div>
-</script>
-<script type="text/javascript">
-	(function() {
-		var group = {
-			pre: $("#pre"),
-			next: $("#next"),
-			page: $(".page-turn").find('span').eq(0),
-			main: $(".chapter-col"),
-			joinBtn: $("#joinBtn"),
-			quitBtn:$("#quitBtn"),
-			loading: $(".loading"),
-			identity: parseInt("<%=result.identity%>"),
-			pageCount: parseInt("<%=result.pageCount%>"),
-			private:parseInt("<%=result.private%>"),
-			getServerData: function(param, cb) {
-				global.getData("/api/getGroupPlanetShow", param, cb);
-			},
-			//测试过不影响其他地方的sweetAlert表现
-			//压缩成一行了
-			//复用性有待提高，目标：实现相当于在swal外封装一层，提高复用性。
-			sweetAlertForPost: function() {
-                var self = this;
-                //发现个更好的方法解决局部自定义样式，但都做了那么多了下个版本再改吧
-				var compressedCSS = ".swal2-show{padding:20px 60px!important;width:680px!important;height:400px!important}.swal2-show>h2{float:left!important;color:#5ab8fe!important;font-weight:unset!important}.swal2-textarea{outline:0!important;resize:none!important;height:240px!important;margin:0!important;background-color:rgba(243,243,243,1)!important}.swal2-cancel{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}.swal2-confirm{display:inline-block!important;font-size:18px!important;padding:4px 27px!important;float:right!important;border-radius:4px!important;color:#f6fafb!important;background-color:#5ab8fe!important;cursor:pointer!important}";
+<div class="content">
+	<div class="section">
+		<div class="section-hd">
+                <span></span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+        </div>
+        <div class="section-content">
+            <div class="group-msg">
+            	<div class="group-img">
+                        <button type="button" style="background-image:url(<%=result.g_image%>);"></button>
+                </div>
+                <h2 class="group-head"><%=result.g_name%></h2>
+                <div class="group-number">
+                	<span><%=result.user_num%> 成员</span>
+	                <span><%=result.post_num%> 话题</span>
+                </div>
+                <div class="group-intro">
+                	<%=result.g_introduction%>
+                </div>
+                <div class="group-creater">
+                	星球主：<%=result.creator_name%>
+                </div>
+                <%if(result.identity=='01'){%>
+                <a href="/groups/<%=result.group_id%>/set">
+                    <button class="group-set">
+                       星球设置
+                    </button>
+                </a>
+                <%}%>
+                <%if(result.identity=='02'){%>
+                    <button class="group-set leave-btn">
+                        退出星球
+                    </button>
+                <%}%>
+                <%if(result.identity=='03'||result.identity=='04'){%>
+                    <button class="group-set join-btn">
+                        加入星球
+                    </button>
+                <%}%>
+            </div>
+            <%if(result.private==1&&(result.identity=='03'||result.identity=='04')){%>
+                <form id="join-form">
+                    <div class="verifi-msg">
+                        <span>验证信息</span>
+                        <input type="text" name="" id="message">
+                        <button type="submit" id="joinperson">申请加入</button>
+                    </div>
+                </form>
+                <div class="message">加入该星球后方可浏览内容</div>
+            <%}else{%>
+            <%if(result.posts.length==0){%>
+                    <div class="group-nopost">还没有帖子~</div>
+            <%}else{%>
+            <div id="group-body">
+            
+            </div>
+            <div id="pages"></div>
+            <%}%>
+            <%}%>
 
-				swal({
-					title: '发送信息',
-					html: '<style>' + compressedCSS+'</style>',
-					input: 'textarea',
-					showCancelButton: true,
-                    confirmButtonText: '申请',
-                    cancelButtonText: '取消'
-				}).then(function(text) {
-					if(text.length > 60) {
-						sweetAlert('错误', '申请消息长度不能超于60', 'error');
-						return;
-					}
-                    self.loading.show();
-                    global.subData("/api/applyPrivateGroup",{
-                        groupid: parseInt("<%=result.groupID%>"),
-                        applyText: text
-                    }, function(data) {
-                        if (data.ret == 200 && data.data && data.data.code == 1) {
-                                sweetAlert({
-                                title: '提示',
-                                text: '申请成功等待审核',
-                                type: 'success',
-                                timer: 2000
-                                }).catch(swal.noop);
-                            self.joinBtn.text('+已申请'); //正在申请
-                            self.identity = 4;
-                        } else {
-                            sweetAlert('错误', '加入星球失败', 'error');
-                        }
-                        self.loading.hide();
-                        self.joinBtn.removeAttr('disabled');
-                    }); 
-				}, function() {
-                    /*cancel to do*/
-                });
-			},
-			updateByPage:function(){
-				var self = this;
-				var pageNow = global.getPageNow();
-				self.loading.show();
-				self.getServerData({
-					currentpage: pageNow,
-					groupid: parseInt("<%=result.groupID%>")
-				}, function(data) {
-					if (pageNow != global.getPageNow()) {
-						return;
-					}
-					if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-						var compiled = template("listtemplate", data.data);
-						self.main.html(compiled);
-						self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-						global.setPageCount(data.data.pageCount);
-						self.pre.removeAttr('class');
-						self.next.removeAttr('class');
-						if (data.data.currentPage == 1) {
-							self.pre.addClass('unCBtn');
-						}
-						if (data.data.currentPage == data.data.pageCount) {
-							self.next.addClass('unCBtn')
-						}
-						self.loading.hide();
-						$(window).scrollTop(0);
-					} else {
-						self.loading.hide();
-						sweetAlert('错误', '数据获取失败', 'error');
-					}
-				});
-			},
-			//退出星球处理函数
-			quitGroup:function(){
-				var self = this;
-				swal({
-					title: '退出星球',
-                    text: '是否退出星球 "<%=result.groupName%>"?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消'
-				}).then(function(){
-					$(".loading").show();
-					$("#quitBtn").attr('disabled', 'disabled');
-					global.subData("/api/quitGroup",{
-						groupid:parseInt("<%=result.groupID%>")
-					},function(data) {
-                        if (data.data.ret == 200 && data.data.data && data.data.data.code == 1) {
-                                sweetAlert({
-                                title: '提示',
-                                text: data.data.data.msg,
-                                type: 'success',
-                                timer: 2000
-                                }).catch(swal.noop);
-                            self.identity = 3;
-                            setTimeout(function(){
-                            	window.location.href = "/uGroup/"+parseInt(data.userid);
-                            },2000);
-                        } else {
-                            sweetAlert('错误', '加入星球失败', 'error');
-                            $("#quitBtn").removeAttr('disabled');
-                        }
-                        $(".loading").hide();
-                    });
-				}).catch(swal.noop);
-			},
-			bindEvent: function() {
-				var self = this;
-				self.joinBtn.on("click", function(event) {
-					event.preventDefault();
-					<%if(user){%>
-					switch(self.identity){
-						case 1:
-							window.location.href = '/group/<%=result.groupID%>/post';
-							break;
-						case 2:
-							window.location.href = '/group/<%=result.groupID%>/post';
-							break;
-						case 3:
-							self.joinBtn.attr('disabled',true);
-							if(self.private == 0){
-								global.subData('/api/applyGroup',{
-									groupid: parseInt("<%=result.groupID%>")
-								}, function(data) {
-									if (data.ret == 200 && data.data && data.data.code == 1) {
-										sweetAlert({
-										title: '提示',
-										text: '加入成功',
-										type: 'success',
-										timer: 2000
-										}).catch(swal.noop);
-										self.joinBtn.text('+发帖'); //加入成功
-										self.identity = 2;
-									} else {
-										sweetAlert('错误', '加入星球失败', 'error');
-									}
-									self.joinBtn.removeAttr('disabled');
-								});
-							} else if(self.private == 1) {
-                                self.sweetAlertForPost();
-                                self.joinBtn.removeAttr('disabled');				
-							}
-							break;
-						case 4:
-							sweetAlert('提示', '已提交申请，请等待审核', 'warning');
-							break;
-						default:
-							console.log(self.identity);
-							break;
-					}
-					<%}else{%>
-					window.location.href = '/login';
-					<%}%>
-				});
-				global.setPageCount(self.pageCount);
-				global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-                $("#quitBtn").on('click',self.quitGroup);
-			},
-			init: function() {
-				this.bindEvent();
-			}
-		}
-		group.init();
-	})();
+            <%if(result.identity=='01'||result.identity=='02'){%>
+        	<a id="create_post" class="group-public"><span>+</span></a>
+            <%}%>
+        </div>
+	</div>
+</div>
+<%if(result.posts.length>0){%>
+<script id="post-list" type="text/html">
+{{each posts as value i}}
+<div class="group-post">
+                <div class="group-post-img">
+                    <button type="button" style="background-image:url({{value.users.profile_picture}});"></button>
+                </div>
+                <div class="group-post-msg">
+                    <span class="creater-name">{{value.users.user_name}}</span>
+                    <span> 发表于 </span>
+                    <span class="group-name"><%=result.g_name%></span> 
+                    <span>{{value.posts.create_time}}</span>
+                </div>
+                <a href="/posts/{{value.posts.post_id}}">
+                <h3 class="group-post-title">
+                {{if value.posts.sticky==1}}
+                <span class="group-sign">置顶</span>
+                {{/if}}
+                {{if value.posts.digest==1}}
+                <span class="group-sign">加精</span>
+                {{/if}}
+                {{if value.posts.lock==1}}
+                <span class="group-sign">锁定</span>
+                {{/if}}
+                {{value.posts.p_title}}
+                </h3>
+                <div class="group-post-content">{{value.posts.p_text}}</div>
+                {{if value.posts.image.length>0}}
+                <div class="group-post-image">
+                    <button type="button" style="background-image:url({{value.posts.image[0]}});"></button>
+                    <button type="button" style="background-image:url({{value.posts.image[1]}});"></button>
+                    <button type="button" style="background-image:url({{value.posts.image[2]}});"></button>
+                </div>
+                {{/if}}
+                </a>
+                <div class="group-post-btn">
+                    <a href="/posts/{{value.posts.post_id}}">
+                    <span class="replied">评论</span>
+                    <span>{{value.posts.replied_num}}</span>
+                    </a>
+
+                    <span class="approved" data-postid="{{value.posts.post_id}}">点赞</span>
+                    <span id="approved-{{value.posts.post_id}}">{{value.posts.approved_num}}</span>
+
+                    <span class="collected" data-postid="{{value.posts.post_id}}">收藏</span>
+                    <span id="collected-{{value.posts.post_id}}">{{value.posts.collected_num}}</span>
+                </div>
+</div>
+{{/each}}
 </script>
-<%- include base/footer.ejs %>
+<%}%>
+<%- include base/baseJS.ejs %>
+<script type="text/javascript">
+        (function(){
+            var users={
+                pagecount:1,
+                quitgroup:function(){
+                    $('.leave-btn').on('click',function(){
+                            //退出星球代码
+                            global.getData('/groups/<%=result.group_id%>/quit',function(data){
+                                if(data.data.code==1){
+                                    sweetAlert('成功',data.msg,'success');
+                                    var t=setTimeout(function(){
+                                  window.location.href="/groups/<%=result.group_id%>";
+                                },5000);
+                                }else{
+                                        sweetAlert('失败',data.msg,'error');
+                                }
+                            });
+                    });
+                },
+                download:function(){
+                     var self=this;
+                     function demo(curr){
+                        curr=curr || 1;
+                        global.getData('/groups/<%=result.group_id%>/more?pagecount='+curr, function(data) {
+                            if((curr || 1)<=data.data.page_count){
+                                var compiled=template('post-list',data.data);
+                            }
+                            //插入数据
+                            //var temp=$("#group-body").html()
+                            $("#group-body").html(compiled);
+                            //点赞
+                            $(".approved").on("click",function(event){
+                                //console.log($(this).data("postid"));
+                                var id=$(this).data("postid");
+                                global.subData('/approve',{postid : id}, function(data) {
+                                    if (data.ret == 200 && data.data) {
+                                        if(data.data.code==1){
+                                            swal('点赞成功');
+                                            console.log($("#approved-"+id).html());
+                                            var num=parseInt($("#approved-"+id).html())+1;
+                                            $("#approved-"+id).html(num);
+                                        }else{
+                                            swal(data.data.msg);
+                                            console.log($("#approved-"+id).html());
+                                            var num=parseInt($("#approved-"+id).html())-1;
+                                            $("#approved-"+id).html(num);
+                                        }
+                                    }else{
+                                        sweetAlert('错误', '点赞失败', 'error');
+                                    }
+                                });
+                            });
+                            //收藏
+                            $(".collected").on("click",function(e){
+                                //
+                                var id=$(this).data("postid");
+                                global.subData('/collect',{postid : id}, function(data){
+                                        if (data.ret == 200 && data.data) {
+                                            if(data.data.code==1){
+                                                swal('收藏成功');
+                                                console.log($("#collected-"+id).html());
+                                                var num=parseInt($("#collected-"+id).html())+1;
+                                                $("#collected-"+id).html(num);
+                                            }else{
+                                                swal(data.data.msg);
+                                                console.log($("#collected-"+id).html());
+                                                var num=parseInt($("#collected-"+id).html())-1;
+                                                $("#collected-"+id).html(num);
+                                            }
+                                        }else{
+                                            sweetAlert('错误', '收藏失败', 'error');
+                                        }
+                                });
+                            })
+                            laypage({
+                                cont: document.getElementById('pages'),
+                                pages: data.data.page_count, //通过后台拿到的总页数
+                                curr: data.data.current_page, //当前页
+                                jump: function(obj, first){ //触发分页后的回调
+                                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                        demo(obj.curr);
+                                    }
+                                }
+                            });
+                            //rebind();
+                        });
+                    };
+                    demo();
+                },
+                bindEvent: function() {
+                    var self=this;
+                    $("#create_post").on("click", function() {
+                        window.location.href += "/post";
+                    });
+                    //退出星球
+                    $(".leave-btn").on("click",function(){
+                        //var groupid=<%=result.group_id%>;
+                        global.getData('/groups/<%=result.group_id%>/quit',function(data){
+                            if (data.ret == 200 && data.data) {
+                                if(data.data.code==1){
+                                    swal(data.msg);
+                                    var t=setTimeout(function(){
+                                          window.location.href="/groups/<%=result.group_id%>";
+                                        },2000);
+                                }else{
+                                    swal(data.msg);
+                                }
+                            }else{
+                                swal("退出星球失败");
+                            }
+                        })
+                    });
+                    //加入星球
+                    $(".join-btn").on("click",function(){
+                        //console.log("hahaha")
+                        var private='<%=result.private%>';
+                        //判断星球是私密还是公共
+                        //console.log(private)
+                        if(private=='0'){
+                            //公共
+                            //console.log("iheij")
+                            global.subData('/api/groups/<%=result.group_id%>/members',{},function(data){
+                                console.log(data)
+                                if(data.ret == 200 && data.data){
+                                    console.log(data+"hh")
+                                    if(data.data){
+                                        swal(data.msg);
+                                        var t=setTimeout(function(){
+                                          window.location.href="/groups/<%=result.group_id%>";
+                                        },2000);
+                                    }else{
+                                        swal(data.msg);
+                                    }
+                                }else{
+                                    swal("加入星球失败");
+                                }
+                            });
+                        }else{
+                            console.log("私密");
+                            //私密
+                            //self.joinPenson();
+                            $("#join-form").trigger("submit");
+                        }
+                    });
+                },
+                verifi:function(){
+                    if($("#message").val().length>50){
+                      sweetAlert('格式错误','申请信息不能超过50个字','warning');
+                      return false;
+                    }
+                    return true;
+                },
+                joinPenson:function(){
+                    var self=this;
+                    $("#join-form").submit(function(e){
+                      e.preventDefault();
+                      if(self.verifi()){
+                        /*self.loading.start({
+                            loadingTPLId : 0,
+                            target : $(".joinPensonalG-content"),
+                            loadingId : 'self'
+                          });*/
+                        var text=$("#message").val();
+                        global.getData('/joinPensonalGroup/sub',{
+                          group_id:<%=result.group_id%>,
+                          text:text
+                          },function(data){
+                          /*self.loading.stop('self');*/
+                          if(data.data.code==1){
+                            sweetAlert('成功',data.msg,'success');
+                            //转向星球详情页，这里暂时转到临时页
+                            var t=setTimeout(function(){
+                                window.location.href="/groups/<%=result.group_id%>";
+                              },3000);
+                          }else{
+                            sweetAlert('提示', data.msg, 'warning');
+                          }
+                        });
+                      }
+                  });
+                },
+                init:function(){
+                    this.bindEvent();
+                    this.download();
+                    this.quitgroup();
+                    this.joinPenson();
+                }
+            };
+            users.init();
+        })()
+</script>
+<%- include base/footerMobile.ejs %>

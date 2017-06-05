@@ -5,38 +5,116 @@ var ua = require('mobile-agent');
 var config = require('../config/config');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	var agent = ua(req.headers['user-agent']),
-		pn = req.query.page || 1,
-		userID = (req.session.user) ? req.session.user.userID : null;
-	request(config.server + '?service=Post.GetIndexPost&pn=' + pn + '&user_id=' + userID, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
-			//console.log(JSON.parse(body)); // Show the HTML for the Google homepage. 
-			try{
-				var data = JSON.parse(body);
-				if (data.ret == 200) {
-					var page = agent.Mobile ? 'indexMobile' : 'index';
-					res.render(page, {
-						'result': data.data,
-						'user':req.session.user
-					});
-				} else {
-					res.render('error', {
-						'message': data.msg,
-						error: {
-							'status': data.ret,
-							'stack': ''
-						}
-					});
-				}
-			} catch(e){
-				next(e);
-			}
-		} else {
-			next(error);
-		}
-	})
 
+router.get('/', function(req, res, next) {
+	var agent = ua(req.headers['user-agent']);
+	var userID = (req.session.user) ? req.session.user.user_id : null;
+    console.log(userID);
+	try{
+		var page = agent.Mobile ? 'indexMobile' : 'index';
+		res.render(page, {
+			'result': null,
+			'user': req.session.user
+		});
+	} catch(e){
+		next(e);
+	}
+	
+
+});
+
+router.post('/', function(req, res, next) {
+    request(req.session.user && !req.body.loadlatest ? 
+        config.server + "post/get_index_post?user_id=" + req.session.user.user_id + "&pn=" + req.body.pn : 
+        config.server + "post/get_index_post?&pn=" + req.body.pn,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('get_index_post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('get_index_post error!  Server responded with:', body);
+                try {
+                    console.error('get_index_post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch get_index_post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    )
+});
+
+
+router.post('/approve', function(req, res, next) {
+    if(!req.session.user) {
+        res.send({
+            ret: 403,
+            msg: '未登录'
+        });
+        return;
+    }
+    request(config.server + "Post/approve_post?post_id=" + req.body.postid + "&user_id=" + req.session.user.user_id + "&floor=1",
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('approve a post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('approve a post error!  Server responded with:', body);
+                try {
+                    console.error('approve a post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch approve a post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    );
+});
+router.post('/collect', function(req, res, next) {
+    if(!req.session.user) {
+        res.send({
+            ret: 403,
+            msg: '未登录'
+        });
+        return;
+    }
+    request(config.server + "Post/collect_post?post_id=" + req.body.postid + "&user_id=" + req.session.user.user_id,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('collect a post success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('collect a post error!  Server responded with:', body);
+                try {
+                    console.error('collect a post failed:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                } catch(error) {
+                    console.error('catch collect a post exception:', error.toString());
+                    res.send({
+                        ret: 500,
+                        msg:'服务器异常'
+                    });
+                }
+            }
+        }
+    )
 });
 
 module.exports = router;

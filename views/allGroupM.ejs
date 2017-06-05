@@ -1,0 +1,90 @@
+<%- include base/headerMobile-default.ejs %>
+<nav class="personal-navbar">
+                    <button class="personal-icon-back" type="button">
+                        <svg aria-hidden="true" class="icon">
+                            <use xlink:href="#icon-goback">
+                            </use>
+                        </svg>
+                    </button>
+                    <div class="personal-navbar-brand">
+                        <h1>
+                            全部星球
+                        </h1>
+                    </div>
+</nav>
+<div class="allgroup-body">
+<div class="allgroup-content">
+  <%for(var i in data.groups){%>
+   <div class="allgroup-group">
+      <a href="groups/<%=data.groups[i].group_id%>">
+      <button type="button" style="background-image:url(<%=data.groups[i].g_image%>);"></button>
+      </a>
+      <h2><%=data.groups[i].g_name%></h2>
+      <span><%=data.groups[i].g_introduction%></span>
+   </div>
+  <%}%>
+</div>
+</div>
+<script id="group-list" type="text/html">
+  {{each groups as value i}}
+  <div class="allgroup-group">
+      <a href="groups/{{value.group_id}}">
+      <button type="button" style="background-image:url({{value.g_image}});"></button>
+      </a>
+      <h2>{{value.g_name}}</h2>
+      <span>{{value.g_introduction}}</span>
+   </div>
+  {{/each}}
+</script>
+<%- include base/baseJSMobile-default.ejs %>
+<script>
+  (function(){
+    var users={
+      loading:HJLoading,
+      pagecount:1,
+      pageallnum:<%=data.page_count%>,
+      download:function(){
+        var self=this;
+        $('.allgroup-body').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+                    loadDownFn:function(me){
+                        self.pagecount++;
+                        //console.log(self.pagecount);
+                        if(self.pagecount<=self.pageallnum){
+                          global.getData('/allGroup/more?pagecount='+self.pagecount,function(data){
+                            if(data.ret==200){
+                              var compiled=template('group-list',data.data);
+                              var temp=$(".allgroup-content").html()
+                              $(".allgroup-content").html(temp+compiled);
+                              me.resetload(); 
+                              self.pagecount=data.data.current_page;
+                            }else{
+                              me.resetload();
+                              self.pagecount--;
+                            }
+                          });
+                      }else{
+                        me.lock();
+                        me.noData();
+                        me.resetload();
+                        self.pagecount=self.pagecount-1;
+                      }
+                      
+                    }
+                }); 
+      },
+      init:function(){
+        this.download();
+        wuanHeadFun.title("全部星球");
+      }
+    }
+    users.init();
+  })()
+</script>
+<%- include base/footerMobile.ejs %>

@@ -1,371 +1,147 @@
-<%- include base/headerMobile.ejs %>
-<div class="main">
-	<div class="location clearfix">
-		<h1>个人中心</h1>
-	</div>
+<%- include base/headerMobile-index.ejs %>
+        <div class="personal-tab-container">
+            <div class="personal-items">
+                <div class="personal-item personal-logstate">
+                    <% if(!user){ %>
+                    <div class="personal-personIcon personal-state">
+                        <div class="personal-Icon">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-people"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <%}else{%>
+                    <div>
+                    <div class="personal-personIcon personal-state">
+                         <img src=""></img>
+                    </div>   
+                    </div>
+                    <%}%>
+                    <span class="personal-logfont personal-state">未登录</span>
+                </div>
+                <div class="personal-item personal-details">
+                    <div class="personal-detail persoanl-info">
+                        <div class="personal-item-icon personal-information">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-profile"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-information">个人资料</span>
+                        <div class="personal-next personal-information"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-pwd">
+                        <div class="personal-item-icon personal-changepwd">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-lock"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-changepwd">修改密码</span>
+                        <div class="personal-next personal-changepwd"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-collections">
+                        <div class="personal-item-icon personal-collection">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-star_grey"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-collection">我的收藏</span>
+                        <div class="personal-next personal-collection"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                    <div class="personal-detail personal-friend">
+                        <div class="personal-item-icon personal-invitefriend">
+                            <svg aria-hidden="true" class="icon">
+                                <use xlink:href="#icon-inviteFriend"></use>
+                            </svg>
+                        </div>
+                        <span class="personal-item-text personal-invitefriend">邀请好友</span>
+                        <div class="personal-next personal-invitefriend"> 
+                            <div class="personal-next1"></div> 
+                            <div class="personal-next2"></div> 
+                        </div>
+                    </div>
+                </div>
+                <% if (user) { %>
+                <div class="personal-item personal-signBtn">
+                    <button id="exit" type="button">退出登录</button>
+                </div>
+                <% }%>
+            </div>
+        </div>
+<%- include base/baseJSMobile-index.ejs %>
 
-	<div class="location-plus clearfix tab-head">
-        <h2 class="selected">基本资料</h2>
-        <h2>密码安全</h2>
-    </div>
 
-	<div class="loginL tab-content show">
-		<form class="login-form line-form" method="post">
-		    <div class="login-image">
-		        <div class="img-upload-progress"></div>
-		    	<button type="button" id="user-image-upload" style="background-image:url(<%=result.profile_picture%>);"></button>
-		    	<input type="hidden" name="g_image" value="<%=result.profile_picture%>" id="g_img">
-		    </div>
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-e"></label>
-				<input type="email" value="<%=result.Email%>" id="email" readonly>
-				<% if(result.mailChecked >0){%>
-				<span class="verify">已验证</span>
-				<%}else{%>
-				<a href="/verifyEmail" title="" class="verify">验证</a>
-				<% } %>
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-name"></label>
-				<input type="text" value="<%=result.nickname%>" id="name" autocomplete="off">
-			</div>
-			<div class="login-group line-fgroup">
-				<label class="label-sex"></label>
-				<div class="radiobox">
-					<label for="male" class="login-r">男<input type="radio" id="male" name="sex" value="1" <% if(result.sex == 1){%> checked="checked" <% } %>></label>
-					<label for="female" class="login-r">女<input type="radio" id="female" name="sex" value="2" <% if(result.sex == 2){%> checked="checked" <% } %>></label>
-					<label for="privated" class="login-r">保密<input type="radio" id="privated" name="sex" value="0" <% if(result.sex != 2 && result.sex !=1){%> checked="checked" <% } %>></label>
-				</div>
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="br" class="label-br"></label>
-				<%if(result.year && result.month && result.day){%>
-				<input type="text" value="<%=result.year%>-<%=result.month%>-<%=result.day%>" id="br" placeholder="如: 1970-01-01">
-				<%}else{%>
-				<input type="text" value="" placeholder="如: 1970-01-01" id="br">
-				<% } %>
-			</div>
-			<button type="submit">保存</button>
-		</form>
-	</div>
-	<div class="loginL tab-content">
-		<form class="pwdsafe-form line-form" method="post">
-			<div class="normaltext-group line-fgroup">
-				<label for="email" class="normaltext-group-key">登录密码：</label>
-				<input type="password" placeholder="请输入登陆密码" id="oldpwd" >
-			</div>
-			<div class="normaltext-group line-fgroup">
-				<label for="email" class="normaltext-group-key">新密码  ：</label>
-				<input type="password" placeholder="请输入新密码" id="newpwd" >
-			</div>
-			<div class="normaltext-group line-fgroup">
-				<label for="email" class="normaltext-group-key">确认密码：</label>
-				<input type="password" placeholder="请再次输入新密码" id="newpwd2" >
-			</div>			
-			<button type="submit">保存</button>
-		</form>
-	</div>	
-</div>
-<%- include base/baseJSMobile.ejs %>
-<script type="text/javascript">
-	(function() {
-		var users = {
-			br: $("#br"),
-			name:$("#name"),
-			personalForm: $(".login-form"),
-			pwdsafeForm: $(".pwdsafe-form"),
-			loading: $(".loading"),
-			oldpwd: $("#oldpwd"),
-			newpwd: $("#newpwd"),
-			newpwd2: $("#newpwd2"),
-			year: null,
-			month: null,
-			day: null,
-			sex: '0',
-			user_name:null,
-			oldname:null,
-			sexChoose: ['1', '2'],
-			ClientData: function() {
-				this.year = "<%=result.year%>";
-				this.month = "<%=result.month%>";
-				this.day = "<%=result.day%>";
-				this.sex = "<%=result.sex%>";
-				this.user_name="<%=result.nickname%>";
-				this.oldname="<%=result.nickname%>";
-			},
-			verificate: function() {
-				//昵称字符数控制
-				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-				var name = $("#name").val();
-				if (name.length == 0 || name.length > 18) {
-					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
-					return false;
-				}
-				if (!myregName.test(name)) {
-					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
-					return false;
-				}
-                this.user_name = name;
-				//性别验证
-				if (this.sexChoose.indexOf($(":checked").val()) == -1) {
-					this.sex = '0';
-				} else {
-					this.sex = $(":checked").val();
-				}
-				if (!(this.br.val())) {
-					this.year = this.month = this.day = null;
-					return true;
-				}
-				//日期验证
-				var myreg = /^(\d{4})-(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$/;
-				if (!myreg.test(this.br.val())) {
-					sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-					return false;
-				}
-				var lessMonth = ['04', '06', '09', '11'];
-				var d = new Date();
-				var date = myreg.exec(this.br.val());
-				console.log(date);
-				var year = date[1];
-				var month = (date[2].length == 1) ? ('0' + date[2]) : date[2];
-				var day = (date[3].length == 1) ? ('0' + date[3]) : date[3];
-				if (year < 1900 || year > d.getFullYear()) {
-					sweetAlert('格式错误', '请填写正确的年份！', 'warning');
-					return false;
-				}
-				if ((lessMonth.indexOf(month) > -1) && (day > 30)) {
-					sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-					return false;
-				}
-				if (month == 2) {
-					if ((year % 4 == 0) && (year % 100 != 0 || year % 400 == 0)) {
-						if (day > 29) {
-							sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-							return false;
-						}
-					} else if (day > 28) {
-						sweetAlert('格式错误', '请填写正确的日期！', 'warning');
-						return false;
-					}
-				}
-				//判断用户名是否冲突(重名)，本来想写的，发现没接口（摊手）
-				
-				this.year = year;
-				this.month = month;
-				this.day = day;
-				return true;
-			},
-			//绑定标签页相关事件
-			bindTabEvent: function() {
-			    var tabs = $(".tab-head > h2");
-			    var contents = $(".main > .tab-content");
+<script>
+    (function() {
+        var personal = {
+            name:$('.personal-state.personal-logfont'),
+            photo:$('.personal-personIcon > img'),
+            state : $('.personal-state'),
+            info : $('.personal-information'),
+            changepwd : $('.personal-changepwd'),
+            collection : $('.personal-collection'),
+            invite : $('.personal-invitefriend'),
+            exit: $('#exit'),
+            getServerData: function(param, cb) {
+                
+            },
+            bindEvent: function() {
+                var that = this;
 
-			    (function changeTab(tab) {
-			        for(var i = 0, len = tabs.length; i < len; i++) {
-			            $(tabs[i]).on("touchend", showTab);
+                that.state.on('touchend',function(e){
+                    <%if(!user){%>
+                    window.location.href = window.location.pathname + "/personalInfo";
+                    <%}%>
+                });
 
-			        }
-			    })();
-			    //这个循环貌似有点不好，有没有办法提高效率？
-			    function showTab() {
-			        for(var i = 0, len = tabs.length; i < len; i++) {
-			            if(tabs[i] === this) {
-			                $(tabs[i]).addClass("selected");
-			                $(contents[i]).addClass("show");
-			            } else {
-			            	if($(tabs[i]).hasClass("selected")) {
-                            	$(tabs[i]).removeClass("selected");
-                            }
-			            	if($(contents[i]).hasClass("show")) {
-                            	$(contents[i]).removeClass("show");
-                            }                            
-			            }
-			        }
-			    }
-			},
-			bindEvent: function() {
-				var self = this;
-				self.personalForm.submit(function(event) {
-					event.preventDefault();
-					if (self.verificate()) {
-						self.loading.show();
-						//console.log(self.user_name);
-						
-						global.subData('/users', {
-							user_name:self.user_name,
-							profile_picture:$("#g_img").val(),
-							sex: self.sex,
-							year: self.year,
-							month: self.month,
-							day: self.day
-							
-						}, function(data) {
-							self.loading.hide();
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									sweetAlert('提示', data.data.msg, 'success');
-										if (self.year) {
-											self.br.val(self.year + '-' + self.month + '-' + self.day);
-										            }
-										$("#nav-username").text($("#name").val());
-										
-								} else {
-									sweetAlert('提示', data.data.msg, 'warning');
-									self.name.val(self.oldname);
-								}
-								
-							} else {
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});
+                that.info.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/personalInfo";
+                });
+                that.changepwd.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/changepassword";
+                });
+                that.collection.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/myCollection";
+                });
+                that.invite.on('touchend',function(e){
+                    window.location.href = window.location.pathname + "/invite";
+                });
 
-				//绑定密码安全标签页事件
-				self.pwdsafeForm.submit(function(event) {
-					event.preventDefault();
-					var verifyFlag = true;
-					//密码空间认证,懒得新写一个verificate，有没有办法通过获取当前标签页号来扩展verificate？
-					if (self.oldpwd.val().length < 6 || self.newpwd.val().length < 6 || self.newpwd2.val().length < 6) {
-						sweetAlert('格式错误', '密码长度不足6位', 'warning');
-						verifyFlag = false;
-					}
-					if (verifyFlag) {
-						self.loading.show();
-						global.subData('/api/changepwd', {
-							oldpwd: self.oldpwd.val(),
-							newpwd: self.newpwd.val(),
-							newpwd2: self.newpwd2.val(),
-						}, function(data) {
-							self.loading.hide();
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									sweetAlert('提示', '密码修改成功,3秒后跳转到登陆界面', 'success');
-									setTimeout(
-										function(){
-											window.location.href = "/logout";
-										},3000
-									);
-								} else {
-									sweetAlert('提示', data.data.msg, 'warning');
-									self.name.val(self.oldname);
-								}
-							} else {
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});	
-			},
-			init: function() {
-				this.ClientData();
-				this.bindEvent();
-				this.bindTabEvent();
-			}
-		}
-		users.uploader = Qiniu.uploader({
-			runtimes: 'html5,flash,html4', //上传模式,依次退化
-			browse_button: 'user-image-upload', //上传选择的点选按钮，**必需**
-			uptoken_url: '/uptoken',
-			//Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
-			// uptoken : '<Your upload token>',
-			//若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-			unique_names: true,
-			// 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
-			// save_key: true,
-			// 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-			domain: 'http://7xlx4u.com1.z0.glb.clouddn.com/',
-			//bucket 域名，下载资源时用到，**必需**
-			//container: containerId,           //上传区域DOM ID，默认是browser_button的父元素，
-			max_file_size: '100mb', //最大文件体积限制
-			flash_swf_url: '/javascripts/plupload/Moxie.swf', //引入flash,相对路径
-			filters: {
-				mime_types: [
-					//只允许上传图片文件 （注意，extensions中，逗号后面不要加空格）
-					{
-						title: "图片文件",
-						extensions: "jpg,gif,png,bmp"
-					}
-				]
-			},
-			max_retries: 3, //上传失败最大重试次数
-			dragdrop: true, //开启可拖曳上传
-			//drop_element: 'editor-container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-			chunk_size: '4mb', //分块上传时，每片的体积
-			auto_start: true, //选择文件后自动上传，若关闭需要自己绑定事件触发上传
-			init: {
-				'FilesAdded': function(up, files) {
-					plupload.each(files, function(file) {
-						// 文件添加进队列后,处理相关的事情
-						//printLog('on FilesAdded');
-					});
-				},
-				'BeforeUpload': function(up, file) {
-					// 每个文件上传前,处理相关的事情
-					//printLog('on BeforeUpload');
-				},
-				'UploadProgress': function(up, file) {
-					// 显示进度条
-					showUploadProgress(file.percent);
-				},
-				'FileUploaded': function(up, file, info) {
-					// 每个文件上传成功后,处理相关的事情
-					// 其中 info 是文件上传成功后，服务端返回的json，形式如
-					// {
-					//    "hash": "Fh8xVqod2MQ1mocfI4S4KpRL6D98",
-					//    "key": "gogopher.jpg"
-					//  }
-					//printLog(info);
-					// 参考http://developer.qiniu.com/docs/v6/api/overview/up/response/simple-response.html
-
-					var domain = up.getOption('domain');
-					var res = $.parseJSON(info);
-					var sourceLink = domain + res.key; //获取上传成功后的文件的Url
-
-					// printLog(sourceLink);
-					//console.log(sourceLink);
-					var url = sourceLink + '?imageView2/1/w/100/h/100';
-					//设置表单图片数据
-					$("#g_img").val(url);
-					var src = 'url(' + url + ')';
-					// 设置图片为背景
-					$("#user-image-upload").html("");
-					$("#user-image-upload").css('background-image', src);
-				},
-				'Error': function(up, err, errTip) {
-					//上传出错时,处理相关的事情
-					sweetAlert('错误', errTip, 'error');
-				},
-				'UploadComplete': function() {
-						//队列文件处理完毕后,处理相关的事情
-						//printLog('on UploadComplete');
-
-						// 隐藏进度条
-						hideUploadProgress();
-					}
-					// Key 函数如果有需要自行配置，无特殊需要请注释
-					//,
-					// 'Key': function(up, file) {
-					//     // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
-					//     // 该配置必须要在 unique_names: false , save_key: false 时才生效
-					//     var key = "";
-					//     // do something with key here
-					//     return key
-					// }
-			}
-		});
-		function showUploadProgress(progress) {
-			var $progress = $(".img-upload-progress");
-			var width = $(".login-image").width();
-			$progress.css('visibility', 'visible');
-			$progress.width(progress * width / 100);
-		}
-
-		function hideUploadProgress() {
-			var $progress = $(".img-upload-progress");
-			$progress.css('visibility', 'hidden');
-		}
-		users.init();
-	})();
+                that.exit.on('touchend',function(e){
+                    //退出登录
+                    window.location.href = window.location.pathname +"/logout";
+                });
+            },
+            init: function() {
+                var that = this;
+                wuanHeadFun.tabHighlight("tab-head-myself");
+                wuanHeadFun.title('我的');
+                <% if(user) {%>
+                    that.name.html('<%= user.user_name %>');
+                    global.subData('/personal',{userId:<%= user.user_id%>},function(data){
+                        if(data.data){
+                            that.photo.attr('src',data.data.profile_picture);
+                        }else{
+                            swal('错误',data.msg,'error');
+                        }    
+                        
+                    });
+                    
+                <% }else{ %>
+                    that.name.html('未登录');
+                <% } %>
+                that.bindEvent();
+            }
+        }
+        personal.init();
+    })();
 </script>
 <%- include base/footerMobile.ejs %>

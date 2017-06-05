@@ -1,0 +1,198 @@
+@import "publicM";//publicM.less
+
+.postdetails {
+	background-color: #fff;
+	.px2rem(padding-top, 22);
+	.px2rem(padding-right, 32);
+	.px2rem(padding-bottom, 22);
+	.px2rem(padding-left, 32);
+	.px2rem(margin-bottom, 12);
+	.postdetails-header {
+		.clearfix;
+		.px2rem(margin-bottom, 20);
+		h1 {
+			opacity:0.87;
+			font-family:PingFangHK-Medium;
+			.px2px(font-size, 40);
+			color:rgba(47,47,47,0.87);
+			letter-spacing:1px;
+			text-align:justify;
+			.px2px(height, 100);
+			.auto-textbreak;
+			overflow: hidden;
+
+			.px2rem(margin-bottom, 20);
+		}
+		.postdetails-info {
+			font-family:PingFangHK-Regular;
+			.px2px(font-size, 24);
+			color:rgba(0,0,0,0.36);
+			display: inline-block;
+			float: left;
+		}
+		.postdetails-date {
+			font-family:PingFangHK-Regular;
+			.px2px(font-size, 24);
+			color:rgba(0,0,0,0.36);
+			display: inline-block;
+			float: right;
+		}
+	}
+	.postdetails-body {
+		.px2rem(margin-bottom, 22);
+		p {
+			font-family:PingFangHK-Regular;
+			.px2px(font-size, 28);
+			color:rgba(0,0,0,0.87);
+			text-align:left;
+		}
+	}
+
+	.postdetails-footer {
+		.clearfix;
+		.postdetails-buttons {
+			button {
+				svg {
+					.px2px(font-size, 28px);
+					.px2rem(padding-right, 18);
+				}
+				opacity:0.87;
+				background:#5677fc;
+				.border-radius(8px);
+				.px2rem(width, 180);
+				.px2rem(height, 50);
+				text-align: center;
+				.px2rem(margin-right, 36);
+
+				//字体
+				opacity:0.87;
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 28px);
+				color:#ffffff;
+			}
+		}
+		.postdetails-operations {
+			.px2rem(margin-top, 28);
+			p {
+				.px2rem(margin-right, 32);
+				display: inline-block;
+				float: left;
+
+				//字体
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 28px);
+				color:rgba(86,119,251,0.87);
+				letter-spacing:0.5px;
+				text-align:left;
+			}
+		}
+	}
+}
+.postreplies {
+	background-color: #fff;
+	.px2rem(padding-top, 22);
+	.px2rem(padding-right, 32);
+	.px2rem(padding-bottom, 22);
+	.px2rem(padding-left, 32);
+	.postreplies-count {
+		border-bottom: 2px solid rgba(86,119,252,0.36);
+		.px2rem(padding-bottom, 12);
+		//字体
+		font-family:PingFangHK-Regular;
+		.px2px(font-size, 24px);
+		color:rgba(0,0,0,0.36);
+		letter-spacing:0.42px;
+		text-align:left;
+	}
+	.postreply-entry {
+		.px2rem(padding-top, 12);
+		.px2rem(padding-bottom, 12);
+		border-bottom: 1px solid rgba(86,119,252,0.26);
+		.postreply-entry-header {
+			.px2rem(margin-bottom, 18);
+			.clearfix;
+			.postreply-name {
+				float: left;
+				.px2px(line-height, 33);
+
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24);
+				color:rgba(0,0,0,0.36);
+				text-align:left;	
+			}
+			.postreply-date {
+				float: right;
+				.px2px(line-height, 33);
+
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24px);
+				color:rgba(0,0,0,0.36);
+				text-align: left;
+			}
+		}
+		.postreply-entry-body {
+			p {
+				font-family:PingFangHK-Regular;
+				.px2px(font-size, 24);
+				color:rgba(0,0,0,0.87);
+				text-align:left;
+			}
+		}
+		.postreply-entry-footer {
+			.px2rem(margin-top, 28);
+			.clearfix;
+			.postreply-operations {
+				p {
+					.px2rem(margin-right, 32);
+					display: inline-block;
+					float: left;
+
+					//字体
+					font-family:PingFangHK-Regular;
+					.px2px(font-size, 28px);
+					color:rgba(86,119,251,0.87);
+					letter-spacing:0.5px;
+					text-align:left;
+				}
+			}
+		}
+	}
+}
+
+.reply-footer {
+	.px2rem(height, 58);
+	.px2rem(padding-top, 22);
+	.px2rem(padding-bottom, 22);
+
+	.alignCenter;
+	input {
+		background: inherit;
+		order:-1;/* 让left居于左侧 */
+		line-height: 30px;
+		.px2rem(margin-left, 32);
+
+		font-family:PingFangHK-Regular;
+		.px2px(font-size, 32);
+		color:rgba(255,255,255,0.8);
+		letter-spacing:0.57px;
+		text-align:left;
+	}
+	input[placeholder] {
+		color:rgba(255,255,255,0.54);
+	}
+	div {
+		height: 100%;
+		flex:1;
+	}
+	button {
+		background: none;
+		.px2rem(margin-right, 32);
+		flex:0 0 40px;/* 左右两列固定宽 */
+		line-height: 30px;
+	}
+}
+
+
+.post-margin-down {
+	.px2rem(margin-bottom, 101);
+}
