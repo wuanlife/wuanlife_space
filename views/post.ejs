@@ -63,7 +63,7 @@
     <div class="post-details-content">
         <h1>{{posts.p_title}}</h1>
         <div class="post-details-main">
-            <p>{{posts.p_text}}</p>
+            {{posts.p_text}}
         </div>
     </div>
     <div class="post-details-footer">
@@ -169,6 +169,7 @@
             var self = this;
             global.subData("./<%= postid%>", {}, function(data) {
                 if (data.ret == 200 && data.data) {
+                    template.config("escape", false);
                     var compiled = template("postdetails-tpl", data.data);
                     self.postContainer.html(compiled + self.postContainer.html());
                     compiled = template("group-card-tpl", data.data);
