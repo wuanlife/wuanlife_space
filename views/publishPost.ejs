@@ -18,8 +18,10 @@
                     <div class="form-container-hd">
                         <span>内容</span>
                     </div>
-                    <div class="form-container-input" style="height: 300px">
-                        <textarea id="content" placeholder="输入内容"></textarea>
+                    <div class="form-container-input">
+                        <div class="quill-input">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="form-container form-btn">
@@ -36,6 +38,42 @@
 
 <script>
     (function() {
+        var imageUploadtoken;
+        global.getData('/api/image/qiniutoken',{},function(data){
+            if (data.ret == 200) {
+                imageUploadtoken = data.token;
+            } else{
+                sweetAlert('错误', 'token获取失败', 'error');
+            }
+        });        
+        var imageHandler = function(image, callback) {
+            var formData = new FormData();
+            formData.append('token', imageUploadtoken);
+            formData.append('file', image, image.name);
+            $.ajax({
+                type:"post",
+                url:"http://up.qiniu.com/",
+                data: formData,
+                async: false,  
+                cache: false,  
+                contentType: false,  
+                processData: false,  
+                success:function(data){
+                    console.log(data);
+                    quill.insertEmbed(10, 'image', 'http://7xlx4u.com1.z0.glb.clouddn.com/' + data.key);
+                },
+            });
+        };
+        var quill = new Quill('.quill-input', {
+            modules: {
+                toolbar: [
+                    ['image']
+                ]
+            },
+            placeholder: 'Compose an epic...',
+            theme: 'snow',  // or 'bubble'
+            imageHandler: imageHandler
+        });
         var publishPost = {
             title: $("#title"),
             content: $("#content"),
@@ -44,7 +82,7 @@
                 $(".form-btn > button").on("click", function() {
                     global.subData('/groups/'+'<%=groupID%>'+'/post',{
                         p_title: self.title.val(),
-                        p_text: self.content.val(),
+                        p_text: quill.container.firstChild.innerHTML,
                     },function(data){
                         if (data.ret == 200 && data.data) {
                             if (data.data.code == 1) {
