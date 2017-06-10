@@ -133,7 +133,7 @@
         global.subData('/collect',{postid : id}, function(data) {
             if (data.ret == 200 && data.data) {
                 //样式更新或者如何
-                swal('收藏成功');
+                swal(data.msg);
             } else {
                 sweetAlert('错误', '收藏失败', 'error');
             }                                   
@@ -155,12 +155,12 @@
             })       
             //绑定置顶
             $("#op-setTop").on("click", function() {
-                global.putData("./<%= postid%>", {setTop: true}, function(data) {
+                global.putData("/api/posts/<%= postid%>/setTop", {setTop: true}, function(data) {
                     if (data.ret == 200 && data.data) {
                         swal("置顶成功")
                         
                     } else {
-                        sweetAlert('错误', '数据获取失败', 'error');
+                        sweetAlert('错误', '置顶失败', 'error');
                     }
                 });
             })                   
@@ -207,6 +207,16 @@
                     //rebind();
                     //绑定回复
                     $("#post-reply-send-btn").on("click", function() {
+                        //判断是否登录
+                        <% if(typeof user== 'undefined') {%>
+                            
+                            sweetAlert('错误','请登录之后在进行回复','error');
+                            setTimeout(function(){
+                                window.location.href = '/personal/login';
+                                },2000);
+                            
+                        <% }else{%>
+
                         global.subData("./<%= postid%>/replysend", {p_text: $('#post-reply-send-content').val()}, function(data) {
                             if (data.ret == 200 && data.data) {
                                 swal('发送成功');
@@ -216,6 +226,7 @@
                                 sweetAlert('错误', '回复失败', 'error');
                             }
                         });
+                        <% }%>
                     })
                     //绑定各个回复的删除按钮
                     $("p[id*='op-reply-delete']").on("click", function(e) {

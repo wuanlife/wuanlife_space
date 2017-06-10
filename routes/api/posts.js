@@ -47,4 +47,22 @@ router.route('/:postid/replies/:repliyid')
         );        
     })
 
+router.route('/:postid/setTop')
+    .put(function(req,res,next){
+        if(req.body.setTop){
+            request(`${config.server}post/sticky_post?post_id=${req.params.postid}`,
+                function(error,httpResponse,body){
+                    if(!error && httpResponse.statusCode==200){
+                        console.log('set top success');
+                        res.send(JSON.parse(body));
+                    }else{
+                        res.send({
+                            ret:500,
+                            msg:'服务器异常'
+                        })
+                    }
+                })
+        }
+    })
+
 module.exports.router = router;
