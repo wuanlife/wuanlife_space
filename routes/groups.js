@@ -131,18 +131,16 @@ router.post('/:groupid/post', function(req, res, next) {
         res.header('Charset', 'utf8');
         try{
             if (!err && httpResponse.statusCode == 200) {
-                var result = JSON.parse(body);
-                //console.log(result);
-                return res.send(result);
+                return res.send(JSON.parse(body));
             }
             res.send({
                 ret:500,
-                msg:'服务器异常'
+                msg:body
             });
         } catch(e){
             res.send({
                 ret:500,
-                msg:'服务器异常'
+                msg:body
             });
         }
     });
