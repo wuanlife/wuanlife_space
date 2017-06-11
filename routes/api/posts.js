@@ -50,9 +50,11 @@ router.route('/:postid/replies/:repliyid')
 router.route('/:postid/onSetTop')
     .put(function(req,res,next){
         if(req.body.setTop){
-            request(`${config.server}post/sticky_post?post_id=${req.params.postid}`,
+            request({url:`${config.server}post/sticky_post?post_id=${req.params.postid}`,headers:{'Access-Token':req.session.user['Access-Token']}},
                 function(error,httpResponse,body){
-                    console.log(req.session.user);
+                    //console.log(req.session.user['Access-Token']);
+                    //console.log('error',error+httpResponse.statusCode);
+                    //console.log('body',body)
                     if(!error && httpResponse.statusCode==200){
                         console.log('set top success');
                         res.send(JSON.parse(body));
@@ -71,10 +73,8 @@ router.route('/:postid/onSetTop')
 
 router.route('/:postid/onLock')
     .put(function(req,res,next){
-        if(req.body.onLock){
-            request(`${config.server}post/lock_post?post_id=${req.params.postid}`,
+            request({url:`${config.server}post/lock_post?post_id=${req.params.postid}`,headers:{'Access-Token':req.session.user['Access-Token']}},
                 function(error,httpResponse,body){
-                    console.log(req.session.user);
                     if(!error && httpResponse.statusCode==200){
                         console.log('lock success');
                         res.send(JSON.parse(body));
@@ -85,17 +85,14 @@ router.route('/:postid/onLock')
                         })
                     }
                 })
-        }else{
-            //帖子锁定取消
-        }
+
     })
 
 
 router.route('/:postid/onDelete')
     .delete(function(req,res,next){
-            request(`${config.server}post/delete_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`,
+            request({url:`${config.server}post/delete_post?post_id=${req.params.postid}`,headers:{'Access-Token':req.session.user['Access-Token']}},
                 function(error,httpResponse,body){
-                    console.log(req.session.user);
                     if(!error && httpResponse.statusCode==200){
                         console.log('delete success');
                         res.send(JSON.parse(body));

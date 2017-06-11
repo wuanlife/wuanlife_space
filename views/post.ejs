@@ -156,9 +156,21 @@
             //绑定置顶
             $("#op-setTop").on("click", function() {
                 global.putData("/api/posts/<%= postid%>/onSetTop", {setTop: true}, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        swal("置顶成功")
-                        
+                    if (data.ret == 200) {
+
+                        switch(data.data){
+                            case 0:
+                                swal('置顶帖子失败');
+                                break;
+                            case 1:
+                                swal('置顶帖子成功');
+                                break;
+                            case 2:
+                                swal('取消置顶帖子成功');
+                                break;
+                            default:
+                                swal(data.msg);
+                        }               
                     } else {
                         sweetAlert('错误', '置顶失败', 'error');
                     }
@@ -167,9 +179,22 @@
 
             //绑定锁定
             $("#op-lock").on("click", function() {
-                global.putData("/api/posts/<%= postid%>/onLock", {setTop: true}, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        swal("锁定成功")
+                global.putData("/api/posts/<%= postid%>/onLock", {}, function(data) {
+                     if (data.ret == 200) {
+                            switch(data.code){
+                                case 0:
+                                    swal('锁定帖子失败');
+                                    break;
+                                case 1:
+                                    swal('锁定帖子成功');
+                                    break;
+                                case 2:
+                                    swal('取消锁定帖子成功');
+                                    break;
+                                default:
+                                    swal(data.msg);
+                            }
+                        
                         
                     } else {
                         sweetAlert('错误', '锁定失败', 'error');
@@ -180,8 +205,22 @@
             //绑定删除
             $("#op-delete").on("click", function() {
                 global.deleteData("/api/posts/<%= postid%>/onDelete", {setTop: true}, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        swal("删除成功")
+                    if (data.ret == 200) {
+                        if(data.data.code){
+                            switch(data.data.code){
+                                case 0:
+                                    swal('删除帖子失败');
+                                    break;
+                                case 1:
+                                    swal('删除帖子成功');
+                                    break;
+                                default:
+                                    swal(data.msg);
+                            }
+                        }else{
+                            sweetAlert('错误',data.msg,'error');
+                        }
+                        
                         
                     } else {
                         sweetAlert('错误', '删除失败', 'error');
