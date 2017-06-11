@@ -47,11 +47,12 @@ router.route('/:postid/replies/:repliyid')
         );        
     })
 
-router.route('/:postid/setTop')
+router.route('/:postid/onSetTop')
     .put(function(req,res,next){
         if(req.body.setTop){
             request(`${config.server}post/sticky_post?post_id=${req.params.postid}`,
                 function(error,httpResponse,body){
+                    console.log(req.session.user);
                     if(!error && httpResponse.statusCode==200){
                         console.log('set top success');
                         res.send(JSON.parse(body));
@@ -62,7 +63,51 @@ router.route('/:postid/setTop')
                         })
                     }
                 })
+        }else{
+            //帖子置顶取消
         }
     })
+
+
+router.route('/:postid/onLock')
+    .put(function(req,res,next){
+        if(req.body.onLock){
+            request(`${config.server}post/lock_post?post_id=${req.params.postid}`,
+                function(error,httpResponse,body){
+                    console.log(req.session.user);
+                    if(!error && httpResponse.statusCode==200){
+                        console.log('lock success');
+                        res.send(JSON.parse(body));
+                    }else{
+                        res.send({
+                            ret:500,
+                            msg:'服务器异常'
+                        })
+                    }
+                })
+        }else{
+            //帖子锁定取消
+        }
+    })
+
+
+router.route('/:postid/onDelete')
+    .delete(function(req,res,next){
+            request(`${config.server}post/delete_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`,
+                function(error,httpResponse,body){
+                    console.log(req.session.user);
+                    if(!error && httpResponse.statusCode==200){
+                        console.log('delete success');
+                        res.send(JSON.parse(body));
+                    }else{
+                        res.send({
+                            ret:500,
+                            msg:'服务器异常'
+                        })
+                    }
+                })
+    })
+
+
 
 module.exports.router = router;
