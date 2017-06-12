@@ -80,6 +80,12 @@ router.get('/:postid', function(req, res, next) {
 });
 
 router.post('/:postid/replysend', function(req, res, next) {
+    if(!req.session.user) {
+        return res.send({
+            ret: 403,
+            msg:'未登录'
+        });    
+    }
     request.post({
         url: config.server + 'post/post_reply',
         formData: {
@@ -88,8 +94,6 @@ router.post('/:postid/replysend', function(req, res, next) {
             p_text: req.body.p_text,
         }
     }, function optionalCallback(err, httpResponse, body) {
-        res.header('Content-type', 'application/json');
-        res.header('Charset', 'utf8');
         if (!err && httpResponse.statusCode == 200) {
             //console.log('CreatePlanet successful!  Server responded with:', body);
              return res.send(JSON.parse(body));

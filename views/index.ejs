@@ -16,10 +16,10 @@
 
                 </div>
             </ul>  
-            <div id="myplanet" class="section-content margin-H-16px"> 
+            <div id="myplanet" class="section-content"> 
                 <div id="demo1"></div>
             </div>
-            <div id="topic" class="section-content display-none margin-H-16px">
+            <div id="topic" class="section-content display-none">
                 <div id="demo2"></div>
             </div>  
             <% } else { %>   
@@ -74,7 +74,7 @@
 <%- include base/baseJS.ejs %>
 <script type="text/html" id="index-entry-tpl">
     {{each posts as item i}}
-    <div id="post-{{item.posts.post_id}}" class="index-entry">
+    <div data-postid="{{item.posts.post_id}}" class="index-entry">
         <div class="index-entry-header">
             <div class="index-entry-info">
                 <img src="{{item.users.profile_picture}}">
@@ -92,13 +92,13 @@
         </div>
         <div class="index-entry-footer">
             <ul>
-                <li id="{{item.posts.post_id}}-index-reply-btn" {{if item.posts.replied == 1}} class="done" {{/if}}>                        
+                <li data-postid="{{item.posts.post_id}}" class="index-reply-btn {{if item.posts.replied == 1}} done {{/if}}">                         
                     <p>评论 {{item.posts.replied_num}}</p>
                 </li>
-                <li id="{{item.posts.post_id}}-index-approve-btn" {{if item.posts.approved == 1}} class="done" {{/if}}>
+                <li data-postid="{{item.posts.post_id}}" class="index-approve-btn {{if item.posts.approved == 1}}done{{/if}}">
                     <p>点赞 {{item.posts.approved_num}}</p>
                 </li>
-                <li id="{{item.posts.post_id}}-index-collect-btn" {{if item.posts.collected == 1}} class="done" {{/if}}>
+                <li data-postid="{{item.posts.post_id}}"  class=" index-collect-btn  {{if item.posts.collected == 1}}done {{/if}}" >
                     <p>收藏 {{item.posts.collected_num}}</p>
                 </li>
             </ul>
@@ -124,20 +124,9 @@
 </script>
 <script>
     (function() {
-        //TODO: 改成面向对象的方式,这里需要重构
-        //TODO: 收藏和取消收藏即使显示
-        //TODO: 添加取消收藏
-        //在绑定每个单项的按钮时使用,获取其操作的帖子的id
-        var getEntryId = function(domNode) {
-            if(domNode.tagName.toLowerCase() != "div" || domNode.className != 'index-entry') {
-                return getEntryId(domNode.parentNode);
-            } else {
-                return parseInt(domNode.id.slice(5));
-            }
-        };
         var approve = function(id) {
-            var li = $("#"+id.toString()+"-index-approve-btn");
-            var p = $("#"+id.toString()+"-index-approve-btn > p");
+            var li = $(`.index-approve-btn[data-postid=${id.toString()}]`);
+            var p = $(`.index-approve-btn[data-postid=${id.toString()}] > p`);
             global.subData('/approve',{postid : id}, function(data) {
                 var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
@@ -155,13 +144,13 @@
                     }
 
                 } else {
-                    sweetAlert('错误', '点赞失败', 'error');
+                    sweetAlert('错误', data.msg, 'error');
                 }                                   
             });            
         }
         var collect = function(id) {
-            var li = $("#"+id.toString()+"-index-collect-btn");
-            var p = $("#"+id.toString()+"-index-collect-btn > p");
+            var li = $(`.index-collect-btn[data-postid=${id.toString()}]`);
+            var p = $(`.index-collect-btn[data-postid=${id.toString()}] > p`);
             global.subData('/collect',{postid : id}, function(data) {
                 var num = p.html().split(" ")[1];
                 if (data.ret == 200 && data.data) {
@@ -179,7 +168,7 @@
                     }
 
                 } else {
-                    sweetAlert('错误', '收藏失败', 'error');
+                    sweetAlert('错误', data.msg, 'error');
                 }                                   
             });            
         }
@@ -215,22 +204,22 @@
 
                     $(".index-entry").off("click");
                     //绑定每个index-entry的收藏操作
-                    $(".index-entry").on("click","[id*='index-collect-btn']",function(e){
-                        var indexid = getEntryId(e.target);
+                    $(".index-entry").on("click",".index-collect-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
                         collect(indexid);
                     });
                     //绑定每个index-entry的回复操作
-                    $(".index-entry").on("click","[id*='index-reply-btn']",function(e){
-                        var indexid = getEntryId(e.target);
+                    $(".index-entry").on("click",".index-reply-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
                         window.location.href = '/posts/' + indexid;
                     });
                     //绑定每个index-entry的点赞操作
-                    $(".index-entry").on("click","[id*='index-approve-btn']",function(e){
-                        var indexid = getEntryId(e.target);
+                    $(".index-entry").on("click",".index-approve-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
                         approve(indexid);
                     });
                     $(".index-entry-content").on("click",function(e){
-                        window.location.href = '/posts/' + e.currentTarget.parentElement.id.slice(e.currentTarget.parentElement.id.indexOf('-')+1);
+                        window.location.href = '/posts/' + e.currentTarget.parentNode.getAttribute('data-postid');
                     });
                 };
                 <% if (typeof user !== 'undefined') { %>
