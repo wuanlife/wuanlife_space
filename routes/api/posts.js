@@ -105,6 +105,21 @@ router.route('/:postid/onDelete')
                 })
     })
 
+router.route('/:postid/onEdit')
+    .put(function(req,res,next){
+            request({url:`${config.server}post/edit_post?post_id=${req.params.postid}`,headers:{'Access-Token':req.session.user['Access-Token']}},
+                function(error,httpResponse,body){
+                    if(!error && httpResponse.statusCode==200){
+                        console.log('edit success');
+                        res.send(JSON.parse(body));
+                    }else{
+                        res.send({
+                            ret:500,
+                            msg:'服务器异常'
+                        })
+                    }
+                })
+    })
 
 
 module.exports.router = router;

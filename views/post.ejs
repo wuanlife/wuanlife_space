@@ -156,23 +156,23 @@
             //绑定置顶
             $("#op-setTop").on("click", function() {
                 global.putData("/api/posts/<%= postid%>/onSetTop", {setTop: true}, function(data) {
-                    if (data.ret == 200) {
+                    if (data.ret == 200 && data.data) {
 
-                        switch(data.data){
+                        switch(data.data.code){
                             case 0:
-                                swal('置顶帖子失败');
+                                swal('置顶失败',data.msg,'error');
                                 break;
                             case 1:
-                                swal('置顶帖子成功');
+                                swal('置顶成功',data.msg,'success');
                                 break;
                             case 2:
-                                swal('取消置顶帖子成功');
+                                swal('取消置顶成功',data.msg,'success');
                                 break;
                             default:
-                                swal(data.msg);
+                                swal('失败',data.msg,'error');
                         }               
                     } else {
-                        sweetAlert('错误', '置顶失败', 'error');
+                        sweetAlert('错误', data.msg, 'error');
                     }
                 });
             })
@@ -180,42 +180,42 @@
             //绑定锁定
             $("#op-lock").on("click", function() {
                 global.putData("/api/posts/<%= postid%>/onLock", {}, function(data) {
-                     if (data.ret == 200) {
-                            switch(data.code){
+                     if (data.ret == 200 && data.data) {
+                            switch(data.data.code){
                                 case 0:
-                                    swal('锁定帖子失败');
+                                    swal('锁定失败',data.msg,'error');
                                     break;
                                 case 1:
-                                    swal('锁定帖子成功');
+                                    swal('锁定成功',data.msg,'success');
                                     break;
                                 case 2:
-                                    swal('取消锁定帖子成功');
+                                    swal('取消锁定成功',data.msg,'success');
                                     break;
                                 default:
-                                    swal(data.msg);
+                                    swal('失败',data.msg,'error');
                             }
                         
                         
                     } else {
-                        sweetAlert('错误', '锁定失败', 'error');
+                        sweetAlert('错误', data.msg, 'error');
                     }
                 });
             }) 
 
             //绑定删除
             $("#op-delete").on("click", function() {
-                global.deleteData("/api/posts/<%= postid%>/onDelete", {setTop: true}, function(data) {
-                    if (data.ret == 200) {
+                global.deleteData("/api/posts/<%= postid%>/onDelete", {}, function(data) {
+                    if (data.ret == 200 && data.data) {
                         if(data.data.code){
                             switch(data.data.code){
                                 case 0:
-                                    swal('删除帖子失败');
+                                    swal('删除失败',data.msg,'error');
                                     break;
                                 case 1:
-                                    swal('删除帖子成功');
+                                    swal('删除成功',data.msg,'success');
                                     break;
                                 default:
-                                    swal(data.msg);
+                                    swal('错误',data.msg,'error');
                             }
                         }else{
                             sweetAlert('错误',data.msg,'error');
@@ -223,10 +223,38 @@
                         
                         
                     } else {
-                        sweetAlert('错误', '删除失败', 'error');
+                        sweetAlert('错误', data.msg, 'error');
                     }
                 });
-            })                    
+            })
+
+            //绑定编辑
+            $("#op-edit").on("click", function() {
+                //window.location.href = ''
+
+                global.putData("/api/posts/<%= postid%>/onEdit", {}, function(data) {
+                    if (data.ret == 200 && data.data) {
+                        if(data.data.code){
+                            switch(data.data.code){
+                                case 0:
+                                    swal('编辑失败',data.msg,'error');
+                                    break;
+                                case 1:
+                                    swal('编辑成功',data.msg,'success');
+                                    break;
+                                default:
+                                    swal('错误',data.msg,'error');
+                            }
+                        }else{
+                            sweetAlert('错误',data.msg,'error');
+                        }
+                        
+                        
+                    } else {
+                        sweetAlert('错误', data.msg, 'error');
+                    }
+                });
+            })                                        
         },
         init: function() {
             var self = this;
