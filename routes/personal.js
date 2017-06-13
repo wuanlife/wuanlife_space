@@ -174,7 +174,7 @@ router.post('/login', function(req, res, next) {
 	//如果用户已经用此账号登陆
 	if(req.session.user ? req.body.email == req.session.user.user_email:false){
 		//重定向到index.
-		//console.log('logined');
+		//console.log('logined'+res);
 		res.send({
 			ret:200,
 			flag:true,
