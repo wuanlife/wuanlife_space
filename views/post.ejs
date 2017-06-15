@@ -68,14 +68,14 @@
     </div>
     <div class="post-details-footer">
         <div class="post-details-buttons">
-            <button id="btn-approve">                    
+            <button id="btn-approve" class="{{if posts.approved == '1'}}done{{/if}}">                    
                 <svg aria-hidden="true" class="icon">
                     <use xlink:href="#icon-good_blue">
                     </use>
                 </svg>
                 点赞
             </button>
-            <button id="btn-collect">
+            <button id="btn-collect" {{if posts.collected == '1'}}done{{/if}}>
                 <svg aria-hidden="true" class="icon">
                     <use xlink:href="#icon-star_blue">
                     </use>
@@ -119,23 +119,36 @@
 (function() {
     var approve = function(id) {
         // if(isApproved())
+        var button = $('#btn-approve');
         global.subData('/approve',{postid : id}, function(data) {
             if (data.ret == 200 && data.data) {
                 //样式更新或者如何
-                swal(data.data.msg)
+                if(button.hasClass('done')) {
+                    hjnotice.info({message:'取消点赞', duration:1000, position: 'bottom'});
+                    button.removeClass('done');
+                } else {
+                    hjnotice.success({message:'点赞成功', duration:1000, position: 'bottom'});
+                    button.addClass('done');          
+                }
 
             } else {
-                sweetAlert('错误', '点赞失败', 'error');
+                hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
             }                                   
         });            
     }
     var collect = function(id) {
+        var button = $('#btn-collect');
         global.subData('/collect',{postid : id}, function(data) {
             if (data.ret == 200 && data.data) {
-                //样式更新或者如何
-                swal('收藏成功');
+                if(button.hasClass('done')) {
+                    hjnotice.info({message:'取消收藏', duration:1000, position: 'bottom'});
+                    button.removeClass('done');
+                } else {
+                    hjnotice.success({message:'收藏成功', duration:1000, position: 'bottom'});
+                    button.addClass('done');          
+                }
             } else {
-                sweetAlert('错误', '收藏失败', 'error');
+                hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
             }                                   
         });            
     } 

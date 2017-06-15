@@ -24,9 +24,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    request(req.session.user && !req.body.loadlatest ? 
-        config.server + "post/get_index_post?user_id=" + req.session.user.user_id + "&pn=" + req.body.pn : 
-        config.server + "post/get_index_post?&pn=" + req.body.pn,
+    let latest = req.body.loadlatest || 1
+    request({
+            url: `${config.server}post/get_index_post?pn=${req.body.pn}&latest=${latest}`,
+            headers:{'Access-Token':req.session.user ? req.session.user['Access-Token'] : ''},
+        },
         function(error, httpResponse, body) {
             if (!error && httpResponse.statusCode == 200) {
                 console.log('get_index_post success!');
