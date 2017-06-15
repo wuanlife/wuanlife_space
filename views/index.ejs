@@ -132,19 +132,19 @@
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
                     if(li.hasClass('done')) {
-                        swal('取消点赞成功');
+                        hjnotice.info({message:'取消点赞', duration:1000, position: 'bottom'});
                         li.removeClass('done');
                         num--;
                         p.html("点赞 " + num.toString());
                     } else {
-                        swal('点赞成功');
+                        hjnotice.success({message:'点赞成功', duration:1000, position: 'bottom'});
                         li.addClass('done');   
                         num++;
                         p.html("点赞 " + num.toString());             
                     }
 
                 } else {
-                    sweetAlert('错误', data.msg, 'error');
+                    hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
                 }                                   
             });            
         }
@@ -156,19 +156,19 @@
                 if (data.ret == 200 && data.data) {
                     //样式更新或者如何
                     if(li.hasClass('done')) {
-                        swal('取消收藏成功');
+                        hjnotice.info({message:'取消收藏', duration:1000, position: 'bottom'});
                         li.removeClass('done');
                         num--;
                         p.html("收藏 " + num.toString());
                     } else {
-                        swal('收藏成功');
+                        hjnotice.success({message:'收藏成功', duration:1000, position: 'bottom'});
                         li.addClass('done');    
                         num++;
                         p.html("收藏 " + num.toString());                                    
                     }
 
                 } else {
-                    sweetAlert('错误', data.msg, 'error');
+                    hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
                 }                                   
             });            
         }
@@ -225,7 +225,7 @@
                 <% if (typeof user !== 'undefined') { %>
                 //登陆我的星球分页加载
                 function demo1(curr){
-                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: 0}, function(data) {
                         if((curr || 1)<=data.data.page_count){
                             result = template("index-entry-tpl",data.data);
                         }
@@ -246,9 +246,9 @@
                     });
                 };
                 demo1();
-                //登陆我的星球分页加载
+                //登陆后最新话题分页加载
                 function demo2(curr){
-                    global.subData(loadtype,{pn : curr || 1, loadlatest: true}, function(data) {
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: 1}, function(data) {
                         if((curr || 1)<=data.data.page_count){
                             result = template("index-entry-tpl",data.data);
                         }
