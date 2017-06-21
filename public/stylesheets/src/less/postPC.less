@@ -1,4 +1,7 @@
 @import "public"; // public.less
+#post-container {
+    margin-bottom: 30px;
+}
 
 //帖子主题部分
 .post-details {
@@ -159,6 +162,8 @@
     align-items: center;
     justify-content: space-between;
     input {
+        border: 1px solid #a7c1db;
+        margin-right: 10px;
         width: 90%;
         height: 14px;
         padding: 10px;
@@ -189,6 +194,8 @@
             }
         }
         img {
+            cursor: pointer;
+            
             width:60px;
             height:60px;
             border-radius:100%;
@@ -198,6 +205,8 @@
             font-size:16px;
             color:#275597;
             text-align:left;
+
+            cursor: pointer;
         }
         p {
             font-family:PingFangHK-Medium;
@@ -238,4 +247,12 @@
             text-align:center;
         }
     }
+}
+
+p.nomessage {
+    line-height: 300px;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'PingFangHK-Medium';
+    color: #8a94a9;
 }

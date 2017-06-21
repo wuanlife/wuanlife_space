@@ -96,9 +96,9 @@
                 <div class="group-post-content">{{value.posts.p_text}}</div>
                 {{if value.posts.image.length>0}}
                 <div class="group-post-image">
-                    <button type="button" style="background-image:url({{value.posts.image[0]}});"></button>
-                    <button type="button" style="background-image:url({{value.posts.image[1]}});"></button>
-                    <button type="button" style="background-image:url({{value.posts.image[2]}});"></button>
+                    {{each value.posts.image}}
+                    <button type="button" style="background-image:url({{$value}});"></button>
+                    {{/each}}
                 </div>
                 {{/if}}
                 </a>

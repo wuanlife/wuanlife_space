@@ -89,6 +89,15 @@
             <div class="index-entry-brief">
                 <p>{{item.posts.p_text}}</p>
             </div>
+            {{if item.posts.image.length>0}}
+            <div class="index-entry-imgs">
+                {{each item.posts.image}}
+                <div class="index-entry-img">
+                    <img src="{{$value}}"></img>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
         </div>
         <div class="index-entry-footer">
             <ul>

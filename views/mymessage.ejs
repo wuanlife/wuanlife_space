@@ -144,6 +144,11 @@
                 //帖子消息
                 function demo1(curr){
                     global.subData("/mymessage/post",{pn : curr || 1}, function(data) {
+                        if(data.data.code == 0) {
+                            $('#post > .message-entry').remove();
+                            $('#post').prepend('<p class="nomessage">您暂时没有该类消息</p>');
+                            return;
+                        }
                         if((curr || 1)<=data.data.page_count){
                             result = template("message-line-post-tpl",data.data);
                         }
@@ -167,6 +172,11 @@
                 //星球消息
                 function demo2(curr){
                     global.subData("/mymessage/planet",{pn : curr || 1}, function(data) {
+                        if(data.data.code == 0) {
+                            $('#planet > .message-entry').remove();
+                            $('#planet').prepend('<p class="nomessage">您暂时没有该类消息</p>');
+                            return;
+                        }
                         if((curr || 1)<=data.data.page_count){
                             result = template("message-line-planet-tpl",data.data);
                         }
@@ -190,6 +200,11 @@
                 //申请加入消息
                 function demo3(curr){
                     global.subData("/mymessage/apply",{pn : curr || 1}, function(data) {
+                        if(data.data.code == 0) {
+                            $('#apply > .message-entry').remove();
+                            $('#apply').prepend('<p class="nomessage">您暂时没有该类消息</p>');
+                            return;
+                        }
                         if((curr || 1)<=data.data.page_count){
                             result = template("message-line-apply-tpl",data.data);
                         }
