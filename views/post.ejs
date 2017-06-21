@@ -30,13 +30,13 @@
 <%- include base/baseJS.ejs %>
 
 <script type="text/html" id="group-card-tpl">
-<div class="group-card-header">
+<div class="group-card-header" data-groupid="{{groups.group_id}}">
     <img src="{{groups.g_image}}">
     <div class="group-card-header-title">
         <h1>{{groups.g_name}}</h1>
         <div>
-            <p>999+ 话题</p>
-            <p>999+ 成员</p>
+            <p>{{groups.post_num}} 话题</p>
+            <p>{{groups.user_num}} 成员</p>
         </div>
     </div>
 </div>
@@ -271,6 +271,9 @@
 
             //绑定回复
             $("#post-reply-send-btn").on("click", function() {
+                if($('#post-reply-send-content').val() == '') {
+                    hjnotice.info({message:'回复内容为空', duration:1000, position: 'bottom'});
+                }
                 global.subData("./<%= postid%>/replysend", {p_text: $('#post-reply-send-content').val()}, function(data) {
                     if (data.ret == 200 && data.data) {
                         swal('发送成功');
@@ -282,7 +285,15 @@
                         sweetAlert('错误', data.msg, 'error');
                     }
                 });
-            })                 
+            })    
+
+            //绑定group card的跳转事件
+            $(".group-card-header").on("click", "h1", function(e) {
+                window.location.href = '/groups/' + e.currentTarget.parentNode.parentNode.getAttribute('data-groupid');
+            })  
+            $(".group-card-header > img").on("click", function(e) {
+                window.location.href = '/groups/' + e.currentTarget.parentNode.getAttribute('data-groupid');
+            })                
         },
         init: function() {
             var self = this;
@@ -302,57 +313,57 @@
                     }
                 });
             });
-            var p2 = new Promise(function (resolve) {
-                //分页加载评论
-                function demo(curr){
-                    var result = '';
-                    global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
-                        //第一次加载获取评论总数
-                        if(!curr) {
-                            $('.post-reply-header').html('<h1>' + data.data.reply_count + " 个回复</h1>");
-                        }
-                        if((curr || 1)<=data.data.page_count){
-                            result = template("reply-tpl",data.data);
-                        }
-                        //插入数据
-                        $('.post-reply-entry').remove();
-                        $('.post-reply-replies').append(result); 
-                        resolve();
-                        laypage({
-                            cont: document.getElementById('demo1'),
-                            pages: data.data.page_count, //通过后台拿到的总页数
-                            curr: curr || 1, //当前页
-                            jump: function(obj, first){ //触发分页后的回调
-                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-                                    demo(obj.curr);
-                                }
+            p1.then(function() {
+                return new Promise(function (resolve) {
+                    //分页加载评论
+                    function demo(curr){
+                        var result = '';
+                        global.subData("./<%= postid%>/reply", {replypn : curr || 1}, function(data) {
+                            //第一次加载获取评论总数
+                            if(!curr) {
+                                $('.post-reply-header').html('<h1>' + data.data.reply_count + " 个回复</h1>");
                             }
-                        });
-                        //rebind();
-                        //绑定各个回复的删除按钮
-                        $("p[id*='op-reply-delete']").on("click", function(e) {
-                            var replyid = e.target.id.split("-")[0];
-                            //我在玩蛇
-                            var entry = e.target.parentNode.parentNode.parentNode;
-                            global.deleteData("/api/posts/"+self.postid+"/replies/"+replyid, {}, function(data) {
-                                if (data.ret == 200 && data.data) {
-                                    swal('删除成功');
-                                    entry.style.display = "none";
-                                } else {
-                                    sweetAlert('错误', '删除失败', 'error');
-                                }                            
+                            if((curr || 1)<=data.data.page_count){
+                                result = template("reply-tpl",data.data);
+                            }
+                            //插入数据
+                            $('.post-reply-entry').remove();
+                            $('.post-reply-replies').append(result); 
+                            resolve();
+                            laypage({
+                                cont: document.getElementById('demo1'),
+                                pages: data.data.page_count, //通过后台拿到的总页数
+                                curr: curr || 1, //当前页
+                                jump: function(obj, first){ //触发分页后的回调
+                                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                        demo(obj.curr);
+                                    }
+                                }
+                            });
+                            //rebind();
+                            //绑定各个回复的删除按钮
+                            $("p[id*='op-reply-delete']").on("click", function(e) {
+                                var replyid = e.target.id.split("-")[0];
+                                //我在玩蛇
+                                var entry = e.target.parentNode.parentNode.parentNode;
+                                global.deleteData("/api/posts/"+self.postid+"/replies/"+replyid, {}, function(data) {
+                                    if (data.ret == 200 && data.data) {
+                                        swal('删除成功');
+                                        entry.style.display = "none";
+                                    } else {
+                                        sweetAlert('错误', '删除失败', 'error');
+                                    }                            
+                                })
                             })
-                        })
-                    });
-                };
-                demo();
-            });
-            Promise.all([p1, p2]).then(function (result) {
-                console.log("load all");
-                self.bindEvent();
+                        });
+                    };
+                    demo();
+                    self.bindEvent();
+                });
             }).catch(function(error) {
-                swal('错误', error, 'error');
+                hjnotice.error({message: error})
             });
+            
         },
     }
 
