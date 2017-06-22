@@ -91,7 +91,8 @@ router.route('/:postid/onLock')
 
 router.route('/:postid/onDelete')
     .delete(function(req,res,next){
-            request({url:`${config.server}post/delete_post?post_id=${req.params.postid}`,headers:{'Access-Token':req.session.user['Access-Token']}},
+            console.log('url',`${config.server}post/delete_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`);
+            request({url:`${config.server}post/delete_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`,headers:{'Access-Token':req.session.user['Access-Token']}},
                 function(error,httpResponse,body){
                     if(!error && httpResponse.statusCode==200){
                         console.log('delete success');

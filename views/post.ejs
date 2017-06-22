@@ -227,6 +227,7 @@
                                     break;
                                 case 1:
                                     swal('删除成功',data.msg,'success');
+                                    history.back();
                                     break;
                                 default:
                                     swal('错误',data.msg,'error');
