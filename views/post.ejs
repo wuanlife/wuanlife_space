@@ -42,7 +42,7 @@
 </div>
 <div class="group-card-body">
     <p>{{groups.g_introduction}}</p>
-    <p class="group-card-body-creator">星球主: {{groups.g_introduction}}</p>
+    <p class="group-card-body-creator">星球主: {{groups.creator_name}}</p>
 </div>
 <div class="group-card-footer">
     <button id="quit-group">退出星球</button>
@@ -243,7 +243,7 @@
 
             //绑定编辑
             $("#op-edit").on("click", function() {
-                //window.location.href = ''
+                window.location.href += '/edit'
 
                 global.putData("/api/posts/<%= postid%>/onEdit", {}, function(data) {
                     if (data.ret == 200 && data.data) {

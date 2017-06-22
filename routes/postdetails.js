@@ -54,10 +54,6 @@ router.post('/:postid', function(req, res, next) {
     )
 });
 router.get('/:postid', function(req, res, next) {
-	/*
-
-	*/
-	console.log("userid:" + req.param("postid"));
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'postMobile' : 'post';
@@ -69,6 +65,20 @@ router.get('/:postid', function(req, res, next) {
 	} catch(e){
 		next(e);
 	}
+});
+router.get('/:postid/edit', function(req, res, next) {
+
+    var agent = ua(req.headers['user-agent']);
+    try{
+        var page = 'postEdit';
+        res.render(page, {
+            'result': null,
+            'user': req.session.user,
+            'postid': req.param("postid"),
+        });
+    } catch(e){
+        next(e);
+    }
 });
 
 router.post('/:postid/replysend', function(req, res, next) {
