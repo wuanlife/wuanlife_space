@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
         var page = agent.Mobile ? 'mycollectionsMobile' : 'mycollections';
         res.render(page, {
             'result': null,
-            'user': null
+            'user': req.session.user,
         });
     } catch(e){
         next(e);
@@ -19,4 +19,21 @@ router.get('/', function(req, res, next) {
     
 });
 
+router.post('/:id', function(req, res, next) {
+    request(`${config.server}post/collect_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`,
+        function(error, httpResponse, body) {
+            if (!error && httpResponse.statusCode == 200) {
+                console.log('cancel collection success!');
+                return res.send(JSON.parse(body));
+            } else {
+                console.log('cancel collection error!  Server responded with:', body);
+                 res.send({
+                    ret: 500,
+                    msg:JSON.parse(body).msg
+                });
+ 
+            }
+        }
+    )
+});
 module.exports = router;
