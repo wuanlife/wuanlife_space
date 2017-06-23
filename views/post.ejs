@@ -327,7 +327,7 @@
             var self = this;
             // 两个Promise都完成后才绑定事件，否则有bug
             var p1 = new Promise(function (resolve) {
-                global.subData("./<%= postid%>", {}, function(data) {
+                global.subData("/posts/<%= postid%>", {}, function(data) {
                     if (data.ret == 200 && data.data) {
                         self.groupId = data.data.groups.group_id;
                         template.config("escape", false);
