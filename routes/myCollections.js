@@ -20,10 +20,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/:id', function(req, res, next) {
-    request(`${config.server}post/collect_post?post_id=${req.params.postid}&user_id=${req.session.user.user_id}`,
+    console.log(`${config.server}post/collect_post?post_id=${req.params.id}&user_id=${req.session.user.user_id}`);
+    request(`${config.server}post/collect_post?post_id=${req.params.id}&user_id=${req.session.user.user_id}`,
         function(error, httpResponse, body) {
             if (!error && httpResponse.statusCode == 200) {
                 console.log('cancel collection success!');
+
+                console.log(JSON.parse(body).msg);
                 return res.send(JSON.parse(body));
             } else {
                 console.log('cancel collection error!  Server responded with:', body);
