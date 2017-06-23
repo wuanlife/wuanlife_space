@@ -17,19 +17,11 @@ router.post('/:postid/reply', function(req, res, next) {
                 return res.send(JSON.parse(body));
             } else {
                 console.log('get_index_post error!  Server responded with:', body);
-                try {
-                    console.error('get_index_post failed:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:'服务器异常'
-                    });
-                } catch(error) {
-                    console.error('catch get_index_post exception:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:'服务器异常'
-                    });
-                }
+                res.send({
+                    ret: httpResponse.statusCode,
+                    msg: JSON.parse(body).msg
+                });
+
             }
         }
     )
@@ -48,13 +40,13 @@ router.post('/:postid', function(req, res, next) {
                     console.error('get_index_post failed:', error.toString());
                     res.send({
                         ret: 500,
-                        msg:'服务器异常'
+                        msg:JSON.parse(body).msg
                     });
                 } catch(error) {
                     console.error('catch get_index_post exception:', error.toString());
                     res.send({
                         ret: 500,
-                        msg:'服务器异常'
+                        msg:JSON.parse(body).msg
                     });
                 }
             }
@@ -62,10 +54,6 @@ router.post('/:postid', function(req, res, next) {
     )
 });
 router.get('/:postid', function(req, res, next) {
-	/*
-
-	*/
-	console.log("userid:" + req.param("postid"));
 	var agent = ua(req.headers['user-agent']);
 	try{
 		var page = agent.Mobile ? 'postMobile' : 'post';
@@ -77,6 +65,20 @@ router.get('/:postid', function(req, res, next) {
 	} catch(e){
 		next(e);
 	}
+});
+router.get('/:postid/edit', function(req, res, next) {
+
+    var agent = ua(req.headers['user-agent']);
+    try{
+        var page = 'postEdit';
+        res.render(page, {
+            'result': null,
+            'user': req.session.user,
+            'postid': req.param("postid"),
+        });
+    } catch(e){
+        next(e);
+    }
 });
 
 router.post('/:postid/replysend', function(req, res, next) {

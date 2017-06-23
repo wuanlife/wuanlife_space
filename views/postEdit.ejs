@@ -2,7 +2,7 @@
 <div id="publishPost" class="small-container">
     <div class="section section-small-center">
         <div class="section-hd">
-            <span>发布帖子</span>
+            <span>编辑帖子</span>
         </div>
         <div class="section-content form-height-section">
             <form>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="form-container form-btn">
-                    <button type="button">创建</button>
+                    <button type="button">编辑</button>
                 </div>
             </form>
         </div>            
@@ -77,19 +77,20 @@
             theme: 'snow',  // or 'bubble'
             imageHandler: imageHandler
         });
-        var publishPost = {
+        var editPost = {
             title: $("#title"),
             content: $("#content"),
             bindEvent: function() {
                 var self = this;
                 $(".form-btn > button").on("click", function() {
-                    global.subData('/groups/'+'<%=groupID%>'+'/post',{
+                    global.putData('/api/posts/'+'<%=postid%>'+'/edit',{
+                        post_id : <%=postid%>,
                         p_title: self.title.val(),
                         p_text: quill.container.firstChild.innerHTML,
                     },function(data){
                         if (data.ret == 200 && data.data) {
                             if (data.data.code == 1) {
-                                window.location.href = './';
+                                window.location.href = '../<%=postid%>';
                             } else{
                                 self.loading.hide();
                                 sweetAlert('错误', '发布失败', 'error');
@@ -103,11 +104,20 @@
             },
             init: function() {
                 var self = this;
+                global.subData('/posts/'+'<%=postid%>', {}, function(data) {
+                    if (data.ret == 200 && data.data) {
+                        self.title.val(data.data.posts.p_title);
+                        quill.clipboard.dangerouslyPasteHTML(5, data.data.posts.p_text);
+                    } else {
+                        hjnotice.error({message: "获取数据失败"})
+                    }
+                });
+                
 
                 this.bindEvent();                
             },
         }
-        publishPost.init();
+        editPost.init();
 
     })();
 </script>

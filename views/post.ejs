@@ -42,7 +42,7 @@
 </div>
 <div class="group-card-body">
     <p>{{groups.g_introduction}}</p>
-    <p class="group-card-body-creator">星球主: {{groups.g_introduction}}</p>
+    <p class="group-card-body-creator">星球主: {{groups.creator_name}}</p>
 </div>
 <div class="group-card-footer">
     <button id="quit-group">退出星球</button>
@@ -177,9 +177,11 @@
                                 swal('置顶失败',data.msg,'error');
                                 break;
                             case 1:
+                                $('#op-setTop').text('取消置顶');
                                 swal('置顶成功',data.msg,'success');
                                 break;
                             case 2:
+                                $('#op-setTop').text('置顶');
                                 swal('取消置顶成功',data.msg,'success');
                                 break;
                             default:
@@ -200,9 +202,17 @@
                                     swal('锁定失败',data.msg,'error');
                                     break;
                                 case 1:
+                                    $('#op-lock').text('取消锁定');
+                                    $('#post-container .post-replies>.post-reply-send').css({
+                                        display:'none'
+                                    });
                                     swal('锁定成功',data.msg,'success');
                                     break;
                                 case 2:
+                                    $('#op-lock').text('锁定');
+                                    $('#post-container .post-replies>.post-reply-send').css({
+                                        display:'flex'
+                                    });
                                     swal('取消锁定成功',data.msg,'success');
                                     break;
                                 default:
@@ -218,31 +228,49 @@
 
             //绑定删除
             $("#op-delete").on("click", function() {
-                global.deleteData("/api/posts/<%= postid%>/onDelete", {}, function(data) {
-                    if (data.ret == 200 && data.data) {
-                        if(data.data.code){
-                            switch(data.data.code){
-                                case 0:
-                                    swal('删除失败',data.msg,'error');
-                                    break;
-                                case 1:
-                                    swal('删除成功',data.msg,'success');
-                                    break;
-                                default:
-                                    swal('错误',data.msg,'error');
+                swal({
+                    title: '确定删除?',
+                    text: '删除之后不可恢复',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '果断删除',
+                    cancelButtonText: '让我想想',
+                    }).then(function() {
+                        global.deleteData("/api/posts/<%= postid%>/onDelete", {}, function(data) {
+                            if (data.ret == 200 && data.data) {
+                                if(data.data.code){
+                                    switch(data.data.code){
+                                        case 0:
+                                            swal('删除失败',data.msg,'error');
+                                            break;
+                                         case 1:
+                                            swal('删除成功',data.msg,'success').then(function(){
+                                                
+                                                //location.reload();
+                                                window.location.href = '/groups/' + self.groupId;
+                                            });
+                                            break;
+                                        default:
+                                            swal('错误',data.msg,'error');
+                                    }
+                                }else{
+                                    sweetAlert('错误',data.msg,'error');
+                                }
+                            }else{
+                                sweetAlert('错误', data.msg, 'error');
                             }
-                        }else{
-                            sweetAlert('错误',data.msg,'error');
-                        }
-                    }else{
-                        sweetAlert('错误', data.msg, 'error');
+                        });
+                    },function(isConfirm){
+                            if(isConfirm === 'cancel'){
+                                swal('谢谢','明智的选择','success');
+                            }
                     }
-                });
-            })  
+                );
+            });
 
             //绑定编辑
             $("#op-edit").on("click", function() {
-                //window.location.href = ''
+                window.location.href += '/edit'
 
                 global.putData("/api/posts/<%= postid%>/onEdit", {}, function(data) {
                     if (data.ret == 200 && data.data) {
@@ -299,8 +327,9 @@
             var self = this;
             // 两个Promise都完成后才绑定事件，否则有bug
             var p1 = new Promise(function (resolve) {
-                global.subData("./<%= postid%>", {}, function(data) {
+                global.subData("/posts/<%= postid%>", {}, function(data) {
                     if (data.ret == 200 && data.data) {
+                        self.groupId = data.data.groups.group_id;
                         template.config("escape", false);
                         var compiled = template("postdetails-tpl", data.data);
                         self.postContainer.html(compiled + self.postContainer.html());
