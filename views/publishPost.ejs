@@ -60,7 +60,10 @@
                 processData: false,  
                 success:function(data){
                     console.log(data);
-                    quill.insertEmbed(10, 'image', 'http://7xlx4u.com1.z0.glb.clouddn.com/' + data.key);
+                    var cursorIndex = quill.getSelection().index;
+                    quill.insertEmbed(cursorIndex,'image', 'http://7xlx4u.com1.z0.glb.clouddn.com/' + data.key);
+                    // 光标后移
+                    quill.setSelection(cursorIndex + 1, 0);
                 },
             });
         };
