@@ -35,10 +35,7 @@ router.post('/:postid', function(req, res, next) {
                 console.log('get_index_post success!');
                 return res.send(JSON.parse(body));
             } else {
-                res.send(httpResponse.statusCode,{
-                    ret: httpResponse.statusCode,
-                    msg: JSON.parse(body).msg
-                });
+                res.send(httpResponse.statusCode, JSON.parse(body));
             }
         }
     )

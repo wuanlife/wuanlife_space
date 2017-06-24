@@ -50,8 +50,11 @@
                         }
                     },
                     error:function(x,h,r){
-                        hjnotice.error({message: JSON.parse(x.responseText).msg.msg})
-                        error(x,h,r);
+                        console.dir(x);
+                        hjnotice.error({message: JSON.parse(x.responseText).msg})
+                        if (typeof error === 'function') {
+                            error(x,h,r);
+                        }                        
                     }
                 });
             };
