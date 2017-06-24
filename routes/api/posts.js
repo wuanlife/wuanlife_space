@@ -26,9 +26,9 @@ router.route('/:postid/edit')
                 res.send(JSON.parse(body));
             }else{
                 err && console.log(' Failed:',err.toString());
-                res.send({
-                    ret: 500,
-                    msg: '服务器异常'
+                res.send(httpResponse.statusCode, {
+                    ret: httpResponse.statusCode,
+                    msg: JSON.parse(body)
                 });
             }
         });
@@ -65,10 +65,10 @@ router.route('/:postid/onSetTop')
                         console.log('set top success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send({
-                            ret:500,
-                            msg:'服务器异常'
-                        })
+                        res.send(httpResponse.statusCode, {
+                            ret: httpResponse.statusCode,
+                            msg: JSON.parse(body)
+                        });
                     }
                 })
         }else{
@@ -85,10 +85,10 @@ router.route('/:postid/onLock')
                         console.log('lock success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send({
-                            ret:500,
-                            msg:'服务器异常'
-                        })
+                        res.send(httpResponse.statusCode, {
+                            ret: httpResponse.statusCode,
+                            msg: JSON.parse(body)
+                        });
                     }
                 })
 
@@ -104,10 +104,10 @@ router.route('/:postid/onDelete')
                         console.log('delete success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send({
-                            ret:500,
-                            msg:'服务器异常'
-                        })
+                        res.send(httpResponse.statusCode, {
+                            ret: httpResponse.statusCode,
+                            msg: JSON.parse(body)
+                        });
                     }
                 })
     })
@@ -120,10 +120,10 @@ router.route('/:postid/onEdit')
                         console.log('edit success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send({
-                            ret:500,
-                            msg:'服务器异常'
-                        })
+                        res.send(httpResponse.statusCode, {
+                            ret: httpResponse.statusCode,
+                            msg: JSON.parse(body)
+                        });
                     }
                 })
     })

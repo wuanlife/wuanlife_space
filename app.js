@@ -203,7 +203,6 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(fundebug.ExpressErrorHandler);
-fundebug.notify("Test", "Hello Fundebug!");
 
 
 module.exports = app;
