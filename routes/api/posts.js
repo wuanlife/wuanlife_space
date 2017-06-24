@@ -26,10 +26,7 @@ router.route('/:postid/edit')
                 res.send(JSON.parse(body));
             }else{
                 err && console.log(' Failed:',err.toString());
-                res.send(httpResponse.statusCode, {
-                    ret: httpResponse.statusCode,
-                    msg: JSON.parse(body)
-                });
+                res.send(httpResponse.statusCode, JSON.parse(body));
             }
         });
       
@@ -65,10 +62,7 @@ router.route('/:postid/onSetTop')
                         console.log('set top success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send(httpResponse.statusCode, {
-                            ret: httpResponse.statusCode,
-                            msg: JSON.parse(body)
-                        });
+                        res.send(httpResponse.statusCode, JSON.parse(body));
                     }
                 })
         }else{
@@ -104,10 +98,7 @@ router.route('/:postid/onDelete')
                         console.log('delete success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send(httpResponse.statusCode, {
-                            ret: httpResponse.statusCode,
-                            msg: JSON.parse(body)
-                        });
+                        res.send(httpResponse.statusCode, JSON.parse(body));
                     }
                 })
     })
@@ -120,10 +111,7 @@ router.route('/:postid/onEdit')
                         console.log('edit success');
                         res.send(JSON.parse(body));
                     }else{
-                        res.send(httpResponse.statusCode, {
-                            ret: httpResponse.statusCode,
-                            msg: JSON.parse(body)
-                        });
+                        res.send(httpResponse.statusCode, JSON.parse(body));
                     }
                 })
     })

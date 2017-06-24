@@ -35,10 +35,7 @@ router.post('/', function(req, res, next) {
                 return res.send(JSON.parse(body));
             } else {
                 console.log('get_index_post error!  Server responded with:', body);
-                res.send(httpResponse.statusCode, {
-                    ret: httpResponse.statusCode,
-                    msg: JSON.parse(body)
-                });
+                res.send(httpResponse.statusCode, JSON.parse(body));
             }
         }
     )
