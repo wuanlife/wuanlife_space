@@ -35,20 +35,10 @@ router.post('/:postid', function(req, res, next) {
                 console.log('get_index_post success!');
                 return res.send(JSON.parse(body));
             } else {
-                console.log('get_index_post error!  Server responded with:', body);
-                try {
-                    console.error('get_index_post failed:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:JSON.parse(body).msg
-                    });
-                } catch(error) {
-                    console.error('catch get_index_post exception:', error.toString());
-                    res.send({
-                        ret: 500,
-                        msg:JSON.parse(body).msg
-                    });
-                }
+                res.send(httpResponse.statusCode,{
+                    ret: httpResponse.statusCode,
+                    msg: JSON.parse(body).msg
+                });
             }
         }
     )

@@ -340,6 +340,11 @@
                         sweetAlert('错误', '数据获取失败', 'error');
                         reject('数据获取失败')
                     }
+                }, function(x,h,r) {
+                    sweetAlert('错误','帖子已被删除', 'error');
+                    setTimeout(function() {
+                        window.location.href = '/'
+                    }, 1000)
                 });
             });
             p1.then(function() {

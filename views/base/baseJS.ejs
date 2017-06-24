@@ -39,7 +39,7 @@
                 });
             };
             //ajax提交数据
-            var subData = function(url,data,success){
+            var subData = function(url,data,success,error){
                 $.ajax({
                     type:"post",
                     url:url,
@@ -50,9 +50,8 @@
                         }
                     },
                     error:function(x,h,r){
-                        console && console.log(x, h, r);
-                        console.dir(x)
                         hjnotice.error({message: JSON.parse(x.responseText).msg.msg})
+                        error(x,h,r);
                     }
                 });
             };
