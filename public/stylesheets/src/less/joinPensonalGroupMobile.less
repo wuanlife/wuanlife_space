@@ -1,0 +1,60 @@
+@import "publicM";
+input,button{
+	border:none;
+}
+body, ol, ul, h1, h2, h3, h4, h5, h6, p, th, td, dl, dd, form, fieldset, legend, input, textarea, select {
+    margin: 0;
+    padding: 0
+}
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+
+/**/
+/*申请加入私密星球*/
+/**/
+.joinPensonalG-content{
+	.px2rem(margin-top,12);
+	background-color: #ffffff;
+	width: 100%;
+	.px2rem(height,1218);
+	position: relative;
+	.joinPensonalG-msg{
+		.px2rem(padding-right,40);
+		.px2rem(height,100);
+		.px2rem(width,612);
+		margin:0 auto;
+		.px2rem(padding-top,98);
+		border-bottom:4px solid rgba(86,118,252,0.87);
+		span{
+			.px2rem(padding-left,30);
+			display: block;
+			font-family:PingFangSC-Regular;
+			.px2px(font-size,24);
+			color:rgba(86,119,251,0.87);
+		}
+		input{
+			.px2rem(padding-left,30);
+			overflow: hidden;
+			font-family:PingFangSC-Regular;
+			.px2px(font-size,32);
+			color:rgba(0,0,0,0.87);
+			.px2rem(padding-top,20);
+			width: 100%;
+		}
+	}
+	button{
+		.px2rem(width,608);
+		.px2rem(height,88);
+		background:#5677fc;
+        border-radius:8px;
+        .px2rem(margin-left,56);
+        .px2rem(margin-top,275);
+        font-family:PingFangSC-Regular;
+		.px2px(font-size,32);
+		color:#ffffff;
+	}
+}

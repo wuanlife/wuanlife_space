@@ -1,0 +1,85 @@
+@wuanBlue: #5677fc;
+@bgWhite: #ffffff;
+
+// 例如: .px2rem(height, 80);
+// 750设计稿
+.px2rem(@name, @px){
+    @{name}: @px / 75 * 1rem;
+}
+//字体适配
+//使用时.px2px(font-size, 32);
+.px2px(@name, @px) {
+    @{name}: round(@px / 2) * 1px;
+    [data-dpr="2"] & {
+        @{name}: @px * 1px;
+    }
+    // for mx3
+    [data-dpr="2.5"] & {
+        @{name}: round(@px * 2.5 / 2) * 1px;
+    }
+    // for 小米note
+    [data-dpr="2.75"] & {
+        @{name}: round(@px * 2.75 / 2) * 1px;
+    }
+    [data-dpr="3"] & {
+        @{name}: round(@px / 2 * 3) * 1px
+    }
+    // for 三星note4
+    [data-dpr="4"] & {
+        @{name}: @px * 2px;
+    }
+}
+
+
+
+.wuanBlueBackground {
+    background-color: @wuanBlue;
+}
+
+//圆角
+.border-radius(@radius: 2px) {
+    border-radius: @radius;
+}
+
+//水平垂直居中
+.center {
+    justify-content: center; //子元素水平居中
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+.alignCenter {
+    align-items: center; //子元素垂直居中
+    display: flex;
+}
+.horizontalCenter {
+    justify-content: center; //子元素水平居中
+    display: flex;
+}
+
+//清除浮动，在父元素里面放
+.clearfix() {
+    min-height: 1px;
+    zoom: 1;
+    &:after {
+        content: "";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden
+    }
+}
+
+.bottom-shadow(@hshadow: 8px) {
+    box-shadow: 0 0 @hshadow 0;
+}
+
+//单行超出省略号需要结合width
+.oneline-text-overflow {
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+
+.auto-textbreak {
+    word-wrap:break-word;
+}

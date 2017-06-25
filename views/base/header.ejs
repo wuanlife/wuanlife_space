@@ -5,10 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
         <meta name="keywords" content="午安网">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/sweetAlert.css">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/global.css">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
-        <link rel="stylesheet" type="text/css" href="/editor/wangEditor.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/dist/global.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/sweetalert2.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/HJpage.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/quill.snow.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/notice.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/dist/style.css">
         <% if( typeof title == 'undefined'){%>
         <title>午安网 - 过你想过的生活</title>
         <%}else{%>
@@ -16,49 +18,84 @@
         <%}%>
     </head>
     <body>
-    <div class="container all-wrapper">
-        <div class="navbar">
-            <h1 class="navbar-title"><a href="/" title="">午安网</a></h1>
-            <ul class="navbar-account">
-                <li>
-                    <form method="get" class="gl-search" action="/search/r" id="gl-search">
-                        <% if (typeof searchText !== 'undefined') {%>
-                        <input type="text" name="text" value="<%=searchText%>" placeholder="请输入搜索内容" id="searchCon">
-                         <% } else { %>
-                         <input type="text" name="text" placeholder="请输入搜索内容" id="searchCon">
-                         <% } %>
-                        <button></button>
+    <div class="wuan-nav">
+        <div class="nav-wrap">
+            <div class="nav-primary">
+                <div class="nav-logo">
+                    <a href="/">午安网</a>
+                </div>
+                <div class="nav-search">
+                    <form action="/searchContent" method="get">
+                        <div class="inp">
+                            <input id="inp-query" name="q" size="22" title="搜索搜索你感兴趣的内容和人..." maxlength="60" autocomplete="off" value="" placeholder="搜索你感兴趣的内容和人...">
+                        </div>
+                        <div class="inp-btn"><input type="submit" value="搜索"></div>
                     </form>
-                </li>
-                <% if (user) { %>
-                <li>
-                    <a href="/message" class="navbar-account-item">
+                </div>
+                <% if (typeof user !== 'undefined') { %>
+                <div id="bell">
+                    <a href="/mymessage" class="navbar-account-item">
                         <span class="mNote"><i class="red-point" id="mrp"></i></span>
                     </a>
-                </li>
-                <li data-toggle='dropdown'>
-
-                    
-
-                    <span class="navbar-account-item" id="nav-username"><%=user.nickname%><span class="caret"></span></span>
-
-                    <ul class="dropdown-account">
-                        <li><a href="/users" class="per-icon">个人中心</a></li>
-                        <li><a href="/myCollections" class="collect-icon">我的收藏</a></li>
-                        <li><a href="/logout" class="exit-icon">退出</a></li>
-                    </ul>
-                </li>
-                <% } else { %>
-                <li><a href="/login" title="" class="navbar-account-item">登录</a></li>
-                <li><a href="/register" title="" class="navbar-account-item">注册</a></li>
+                </div>
                 <% } %>
-            </ul>
-            <ul class="navbar-option">
-                <li><a href="/" title="" class="navbar-option-item">首页</a></li>   
-                <% if (user) { %>
-                <li id="nav-myP"><a href="/uGroup/<%=user.userID%>" title="" class="navbar-option-item">我的星球</a></li>
-                <% } %>
-                <li id="nav-allP"><a href="/allGroup" title="" class="navbar-option-item">全部星球</a></li>
-               
-            </ul>
-        </div>  
+                <div class="nav-info">
+                    <% if (typeof user !== 'undefined') { %>
+                    <div data-toggle="dropdown" class="">
+                        <span class="navbar-account-item" id="nav-username">
+                            <span class="avatar-icon">
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-peopleCircle_white">
+                                    </use>
+                                </svg>       
+                            </span>
+                            <%=user.user_name%>
+                        </span>
+                        <ul class="dropdown-account">
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-people_white">
+                                    </use>
+                                </svg>                                  
+                                <a href="/users" class="per-icon">个人资料</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-starSolid_white">
+                                    </use>
+                                </svg>                                
+                                <a href="/personal/myCollection" class="collect-icon">我的收藏</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-inviteFriend_white">
+                                    </use>
+                                </svg>                                
+                                <a href="/inviteCode" class="collect-icon">邀请好友</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-lock_white">
+                                    </use>
+                                </svg>                                
+                                <a href="/personal/changepassword" class="collect-icon">修改密码</a>
+                            </li>
+                            <li>
+                                <svg aria-hidden="true" class="icon">
+                                    <use xlink:href="#icon-poweroff_white">
+                                    </use>
+                                </svg>                                
+                                <a href="/logout" class="exit-icon">退出</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <% } else{ %>
+                        <a id="nav-login" href="/personal/login">登录</a>
+                        <a id="nav-register" href="/register">注册</a>
+                    <% } %>    
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div id="wrapper">
+    

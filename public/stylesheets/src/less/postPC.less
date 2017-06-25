@@ -1,0 +1,259 @@
+@import "public"; // public.less
+#post-container {
+    margin-bottom: 30px;
+}
+
+//帖子主题部分
+.post-details {
+    margin: 0 16px;
+    .post-details-header {
+        max-width:  100%;
+        display: flex;
+        height: 40px;
+        margin: 10px 0;
+        .clearfix();
+        .post-details-info {
+            height: 40px;
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius:100%;
+            };
+        };
+        .post-details-date {
+            margin-left: 24px;
+        };
+        p {
+            display: inline;
+            font-family: 'PingFangHK-Medium';
+            color:#525252;
+            text-align:left;
+            line-height: 40px;
+            font-size: 14px;
+        };
+    };
+    .post-details-content {
+        h1 {
+            margin: 8px 0;
+            opacity:0.87;
+            font-family: 'PingFangHK-Semibold';
+            font-size:22px;
+            color:#003585;
+            text-align:left;
+        }
+        img {
+            object-fit: scale-down;
+            height: 100%;
+            width: 100%;
+        }
+        pre {
+            overflow: scroll;
+        }
+        .post-details-main {
+            p {
+                font-size: 14px;
+                font-family: 'PingFangHK-Regular';
+                color:#000000;
+                letter-spacing:0;
+                text-align:justify;
+                word-break: break-all;
+            }
+        };
+    };
+    .post-details-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 17px 0;
+        .post-details-buttons {
+            display: inline-block;
+            button {
+                background:#ebf3fb;
+                border-radius:4px;
+                width:72px;
+                height:36px;
+
+                font-family:PingFangHK-Regular;
+                font-size:14px;
+                color:#2682cf;
+            }
+            button.done {
+                background-color: #bbc5cf;
+                color: #567c9c
+            }
+        }
+        .post-details-operations {
+            .clearfix();
+            display: inline-block;
+            font-family: 'PingFangHK-Medium';
+            font-size:14px;
+            color:#8a94a9;
+            text-align:justify;
+            p {
+                display: inline-block;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.post-replies {
+    border:1px solid #dce8f4;
+    border-radius:4px;
+    h1 {
+        font-family:PingFangHK-Medium;
+        font-size:14px;
+        color:#215094;
+        text-align:justify;        
+    }
+    .post-reply-header {
+        border-bottom:1px solid #dce8f4;
+        padding: 16px;
+    }
+}
+.post-reply-entry {
+    margin: 16px 16px 0 16px;
+    padding-bottom: 8px;
+    border-bottom:1px solid #dce8f4;
+    .post-reply-entry-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        .post-reply-name {
+            font-family:PingFangHK-Medium;
+            font-size:14px;
+            color:#215094;
+            text-align:justify;            
+        }
+        .post-reply-date {
+            font-family:PingFangHK-Medium;
+            font-size:14px;
+            color:#8a94a9;
+            text-align:justify;
+        }
+    }
+    .post-reply-entry-body {
+        p {
+            font-family:PingFangHK-Medium;
+            font-size:14px;
+            color:#333333;
+            text-align:justify;
+        }
+    }
+    .post-reply-entry-footer {
+        .post-reply-operations {
+            margin: 8px 0;
+            .clearfix();
+            display: inline-block;
+            font-family: 'PingFangHK-Medium';
+            font-size:14px;
+            color:#8a94a9;
+            text-align:justify;
+            p {
+                display: inline-block;
+            }            
+        }
+    }
+}
+
+//底部回复部分
+.post-reply-send {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    input {
+        border: 1px solid #a7c1db;
+        margin-right: 10px;
+        width: 90%;
+        height: 14px;
+        padding: 10px;
+    }
+    button {
+        background:#97bce1;
+        border-radius:4px;
+        width:60px;
+        height:34px;
+
+        font-family:PingFangHK-Medium;
+        font-size:14px;
+        color:#ffffff;
+        text-align:center;
+    }
+}
+
+.card {
+    .group-card-header {
+        display: flex;
+        .group-card-header-title {
+            flex: 1;
+            padding: 10px;
+            align-self: center;
+            div {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        img {
+            cursor: pointer;
+            
+            width:60px;
+            height:60px;
+            border-radius:100%;
+        }
+        h1 {
+            font-family:PingFangHK-Medium;
+            font-size:16px;
+            color:#275597;
+            text-align:left;
+
+            cursor: pointer;
+        }
+        p {
+            font-family:PingFangHK-Medium;
+            font-size:12px;
+            color:#8a94a9;
+            text-align:justify;
+        }
+    }
+    .group-card-body {
+        margin-top: 24px;
+        font-family:PingFangHK-Regular;
+        font-size:14px;
+        color:#333333;
+        text-align:justify;
+        .group-card-body-creator {
+            margin-top: 23px;
+            font-family:PingFangHK-Regular;
+            font-size:14px;
+            color:#8a94a9;
+            text-align:left;
+        }
+    }
+    .group-card-footer {
+        display: flex;
+        justify-content: center;
+        button {
+            cursor: pointer;
+
+            margin: 12px 0;
+            background:#1b87f6;
+            border-radius:4px;
+            width:89px;
+            height:30px;
+
+            font-family:PingFangHK-Regular;
+            font-size:12px;
+            color:#ffffff;
+            text-align:center;
+        }
+    }
+}
+
+p.nomessage {
+    line-height: 300px;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'PingFangHK-Medium';
+    color: #8a94a9;
+}

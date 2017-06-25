@@ -7,16 +7,15 @@ var ua = require('mobile-agent');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 	var agent = ua(req.headers['user-agent']),
-		pn = req.query.page || 1;
-	request(config.server + "?service=Group.Lists&page=" + pn, function(error, response, body) {
+	pn = req.query.page || 1;
+	var page = agent.Mobile ? 'allGroupM' : 'allGroup';
+	request(config.server +"group/lists", function(error, response, body) {
 		if (!error) {
 			var result = JSON.parse(body);
 			//console.log(result);
-			if (result.ret == 200 && result.msg == "") {
-				var page = agent.Mobile ? 'allGroupMobile' : 'allGroup';
+			if (result.ret == 200) {
 				res.render(page, {
-					'path':'',
-					result: result.data,
+					'data': result.data,
 					'title':'全部星球',
 					'user':req.session.user
 				});
@@ -30,6 +29,28 @@ router.get('/', function(req, res, next) {
 				});
 			}
 		} else {
+			console.error('allGroup failed:', error);
+			next(error);
+		}
+	});
+});
+router.get('/more',function(req,res,next){
+	var pn=req.query.pagecount;
+	request(config.server + 'group/lists?pn=' + pn,function(error, response, body){
+		if(!error){
+			var result = JSON.parse(body);
+			if(result.ret==200){
+				res.send(result);
+			}else{
+				res.render('error', {
+					'message': result.msg,
+					error: {
+						'status': result.ret,
+						'stack': ''
+					}
+				});
+			}
+		}else{
 			console.error('allGroup failed:', error);
 			next(error);
 		}

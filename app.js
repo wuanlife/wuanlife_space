@@ -10,30 +10,65 @@ var MongoStore = require('connect-mongo/es5')(session);//node低于4.0版本使�
 // var RedisStore = require('connect-redis')(session);
 var flash = require('connect-flash');
 
+//监控插件
+var fundebug = require("fundebug-nodejs");
+fundebug.apikey="e76768413a54073546036eff31808236d9ee45db26a32628c931a3556565a708";
+
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var page = require('./routes/page');
-var api = require('./routes/api');
-var login = require('./routes/login');
-var register = require('./routes/register');
+
+//RESTful api
+var api = require('./routes/api/main');
+var api_groups = require('./routes/api/groups');
+var api_messages = require('./routes/api/messages');
+var api_posts = require('./routes/api/posts');
+var api_image = require('./routes/api/image');
+
+
+
+
+
+
+
+
 var createGroup = require('./routes/createGroup');
-var topic = require('./routes/topic');
-var group = require('./routes/group');
 var allGroup = require('./routes/allGroup');
-var uGroup = require('./routes/uGroup');
 var logout = require('./routes/logout');
-var isLogin = require('./routes/isLogin');
 var resetPassword = require('./routes/resetPassword');
 var verifyEmail = require('./routes/verifyEmail');
 var search = require('./routes/search');
 var test = require('./routes/test');
 var news = require('./routes/news').router;
-var message = require('./routes/message');
 var uptoken = require('./routes/uptoken');
-var userManage=require('./routes/userManage');
-var myCollections=require('./routes/myCollections');
+var userManage = require('./routes/userManage');
+var myCollections = require('./routes/myCollections');
+var myself = require('./routes/personal');
+
+var changepassword = require('./routes/changepassword');
+var joinPensonalGroup = require('./routes/joinPensonalGroup');
+
+
+var myPlanet = require('./routes/myPlanet');
+//消息
+var myMessage = require('./routes/myMessage');
+//帖子详情
+var postdetails = require('./routes/postdetails');
+
+var inviteCode = require('./routes/inviteCode');
+var register = require('./routes/register');
+var retrievePwd = require('./routes/retrievePwd');
+var modifyPwd = require('./routes/modifyPwd');
+var addPlanet = require('./routes/addPlanet');
+var addPlanetPrivate = require('./routes/addPlanetPrivate');
+var searchContent = require('./routes/searchContent');
+
+var users = require('./routes/users');
+var groups = require('./routes/groups');
+var discovery = require('./routes/discovery');
+
+
 var config = require('./config/config');
 var mongodb = require('./models/db.js');
+
 
 
 
@@ -72,7 +107,7 @@ var sessionMiddleware = session({
     secret: config.db.cookieSecret,
     key: config.db.db, //cookie name
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 30
+        maxAge: 1000 * 60 * 60 * 24 * 30,
     }, //30 days
     store: new MongoStore({
         url: 'mongodb://localhost/wuanDB'
@@ -88,43 +123,53 @@ var sessionMiddleware = session({
 // }));
 app.use(sessionMiddleware);
 
-
-app.use('/api/', api);
-// 路由入口的拦截，进行登陆的判定
-// app.use(function(req, res, next) {
-// 	var url = req.originalUrl;
-// 	console.log("url", url);
-// 	var UnAuthUrl = ["/login", "/", "/api/getIndex"];
-// 	if (UnAuthUrl.indexOf(url) == -1 && !req.session.user) {
-// 		return res.redirect("/login");
-// 	}
-// 	next();
-// });
-
-
-
+//http://stackoverflow.com/questions/23923365/how-to-separate-routes-on-node-js-and-express-4
+app.use('/api', api.router);
+app.use('/api/groups',api_groups.router);
+app.use('/api/messages', api_messages.router);
+app.use('/api/posts', api_posts.router);
+app.use('/api/image', api_image.router);
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/pages', page);
-app.use('/login', login);
+app.use('/discovery', discovery);
 app.use('/register',register);
 app.use('/createGroup', createGroup);
-app.use('/uGroup', uGroup);
-app.use('/topic', topic);
-app.use('/group', group);
+
 app.use('/allGroup', allGroup);
 app.use('/logout',logout);
-app.use('/isLogin',isLogin);
 app.use('/resetPassword',resetPassword);
 app.use('/verifyEmail',verifyEmail);
 app.use('/news',news);
-app.use('/message',message);
 app.use('/search',search);
 app.use('/test',test);
 app.use('/uptoken',uptoken);
 app.use('/userManage',userManage);
-app.use('/myCollections',myCollections);
+
+app.use('/addPlanet',addPlanet);
+
+
+app.use('/mycollections',myCollections);
+app.use('/personal',myself);
+app.use('/inviteCode',inviteCode);
+app.use('/register',register);
+
+app.use('/retrievepassword',retrievePwd);
+app.use('/modifypassword',modifyPwd);
+app.use('/addPlanetPrivate',addPlanetPrivate);
+app.use('/searchContent',searchContent);
+
+app.use('/myplanet',myPlanet);
+app.use('/mymessage',myMessage);
+app.use('/changepassword',changepassword);
+app.use('/joinPensonalGroup',joinPensonalGroup);
+app.use('/posts',postdetails);
+
+app.use('/users', users);
+app.use('/groups', groups);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -156,6 +201,9 @@ app.use(function(err, req, res, next) {
 		error: {}
 	});
 });
+
+app.use(fundebug.ExpressErrorHandler);
+
 
 module.exports = app;
 module.exports.sessionMiddleware = sessionMiddleware;

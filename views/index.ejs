@@ -1,136 +1,362 @@
 <%- include base/header.ejs %>
-<div class="main main-page">
-	<div class="location clearfix">
-		<h1><a href="/" title="">首页</a></h1>
-	</div>
-	<%if(result.posts.length > 0){%>
-	<div class="chapter-col">
-		<% result.posts.forEach(function(item) { %>
-		<div class="chapter">
-			<h2><a href="/topic/<%=item.postID%>" title="<%=item.title%>"><%=item.title%></a></h2>
-			<div><% var like = item.approved == '0'?'like-icon':'liked-icon'%><span class="<%=like%>"><%=item.approvednum%></span></div>
-			<div class="chapter-text">
-				<%-item.text%>
-			</div>
-			<%if(item.image.length >0){%>
-			<div class="chapter-img clearfix">
-				<%for(var i=0;i<item.image.length;i++){%>
-				<img src="<%=item.image[i]%>?imageView2/1/w/100/h/100" alt="">
-				<%}%>
-			</div>
-			<%}%>
-			<div class="chapter-info">
-				<span class="text-ellipsis"><a href="#?" title="<%=item.nickname%>"><%=item.nickname%></a></span>
-				<span class="postIn">发表于</span>
-				<span class="text-ellipsis"><a href="/group/<%=item.groupID%>" title="<%=item.groupName%>"><%=item.groupName%></a></span>
-				<span class="cha-time"><%=item.createTime%></span>
-			</div>
-		</div>
-		<% }); %>
-	</div>
-	<div class="page-turn">
-		<%if(result.currentPage == 1){%>
-		<button type="button" class="unCBtn" id="pre">上一页</button>
-		<%}else{%>
-		<button type="button" id="pre">上一页</button>
-		<%}%>
-		<span><%=result.currentPage%>/<%=result.pageCount%></span>
-		<%if(result.currentPage == result.pageCount){%>
-		<button type="button" class="unCBtn" id="next">下一页</button>
-		<%}else{%>
-		<button type="button" id="next">下一页</button>
-		<%}%>
-	</div>
-	<%}else{%>
-	<div class="emptyPage">
-		目前还没有帖子哦~~
-	</div>
-	<%}%>
+<div id="content">
+    <div class="article">
+        <div class="section">
+            <% if (typeof user !== 'undefined') { %>
+            <ul class="section-tab">
+                <li class="on section-hd" id="myplanet-chart-hd">
+                    <span>我的星球</span>
+                </li>
+                <li class="off section-hd" id="topic-chart-hd">
+                    <span>最新话题</span>
+                </li>
+
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+
+                </div>
+            </ul>  
+            <div id="myplanet" class="section-content"> 
+                <div id="demo1"></div>
+            </div>
+            <div id="topic" class="section-content display-none">
+                <div id="demo2"></div>
+            </div>  
+            <% } else { %>   
+            <div class="section-hd">
+                <span>最新话题</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div id="topic" class="section-content">
+                <div id="demo3"></div>
+            </div>
+            <% } %>      
+        </div>
+    </div>
+    <% if (typeof user !== 'undefined') { %>
+    <div class="aside">
+        <div class="section big-container">
+            <div class="section-hd">
+                <span>我加入的星球</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div class="section-content">
+                <div class="aside-group-list">
+                    <div class="aside-group-item">
+                        <button id="aside-allgroup" class="aside-btn aside-btn-blue">全部星球</button>
+                        <button id="aside-creatgroup" class="aside-btn aside-btn-blue">创建星球</button>
+                    </div>                 
+                </div>
+            </div>     
+        </div>
+    </div>
+    <% } else {%>
+    <div class="aside">
+        <div class="section big-container">
+            <div class="section-hd">
+                <span>发现星球</span>
+                <!-- 以防万一在这留了一个可以在右边扩展的div-->
+                <div class="slide-controls">
+                </div> 
+            </div>
+            <div class="section-content">
+                <div class="aside-groupdiscover-list">                 
+                </div>
+            </div>     
+        </div> 
+    </div>       
+    <% } %>
 </div>
 <%- include base/baseJS.ejs %>
-<script type="text/html" id="listtemplate">
-	{{each posts as item i}}
-	<div class="chapter">
-		<h2><a href="/topic/{{item.postID}}" title="{{item.title}}">{{item.title}}</a></h2>
-		<div>
-			<span class="{{like = item.approved == '0'?'like-icon':'liked-icon'}}">{{item.approvednum}}</span>
-		</div>
-		<div class="chapter-text">{{#item.text}}</div>
-		{{if item.image.length}} {{include 'imgtemplate' item}} {{/if}}
-		<div class="chapter-info">
-			<span class="text-ellipsis"><a href="#?" title="{{item.nickname}}">{{item.nickname}}</a></span>
-			<span class="postIn">发表于</span>
-			<span class="text-ellipsis"><a href="/group/{{item.groupID}}" title="{{item.groupName}}">{{item.groupName}}</a></span>
-			<span class="cha-time">{{item.createTime}}</span>
-		</div>
-	</div>
-	{{/each}}
+<script type="text/html" id="index-entry-tpl">
+    {{each posts as item i}}
+    <div data-postid="{{item.posts.post_id}}" class="index-entry">
+        <div class="index-entry-header">
+            <div class="index-entry-info">
+                <img src="{{item.users.profile_picture}}">
+                <p>{{item.users.user_name}} 发表于 <span class="hoverabel"><a href="/groups/{{item.groups.group_id}}">{{item.groups.g_name}}<a/></span></p>
+            </div>
+            <div class="index-entry-date">
+                <p>{{item.posts.create_time}}</p>
+            </div>
+        </div>
+        <div class="index-entry-content">
+            <h1>{{item.posts.p_title}}</h1>
+            <div class="index-entry-brief">
+                <p>{{item.posts.p_text}}</p>
+            </div>
+            {{if item.posts.image.length>0}}
+            <div class="index-entry-imgs">
+                {{each item.posts.image}}
+                <div class="index-entry-img">
+                    <img src="{{$value}}"></img>
+                </div>
+                {{/each}}
+            </div>
+            {{/if}}
+        </div>
+        <div class="index-entry-footer">
+            <ul>
+                <li data-postid="{{item.posts.post_id}}" class="index-reply-btn {{if item.posts.replied == 1}} done {{/if}}">                         
+                    <p>评论 {{item.posts.replied_num}}</p>
+                </li>
+                <li data-postid="{{item.posts.post_id}}" class="index-approve-btn {{if item.posts.approved == 1}}done{{/if}}">
+                    <p>点赞 {{item.posts.approved_num}}</p>
+                </li>
+                <li data-postid="{{item.posts.post_id}}"  class=" index-collect-btn  {{if item.posts.collected == 1}}done {{/if}}" >
+                    <p>收藏 {{item.posts.collected_num}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{/each}}
 </script>
-<script type="text/html" id="imgtemplate">
-	<div class="chapter-img clearfix">
-		{{each image as item i}}
-		<img src="{{item}}?imageView2/1/w/100/h/100" alt=""> 
-		{{/each}}
-	</div>
+<script type="text/html" id="group-item-tpl">
+    {{each groups as item i}}
+    <button id="group-{{item.group_id}}" class="aside-btn">{{item.g_name}}</button>
+    {{/each}}
+</script>
+<script type="text/html" id="groupdiscover-item-tpl">
+    {{each groups as item i}}
+    <div id="group-{{item.group_id}}" class="aside-groupdiscover-item">
+        <img src="{{item.g_image}}">
+        <div class="aside-groupdiscover-item-content">
+            <h1>{{item.g_name}}</h1>
+            <p>{{item.g_introduction}}</p>
+        </div>
+    </div>   
+    {{/each}}
 </script>
 <script>
-(function(){
-	var index = {
-		pre: $("#pre"),
-		next: $("#next"),
-		page: $(".page-turn").find('span').eq(0),
-		main: $(".chapter-col"),
-		nav_home: $(".navbar-option").find('.navbar-option-item').eq(0),
-		loading: $(".loading"),
-		pageCount: parseInt("<%=result.pageCount%>"),
-		initPage: function() {
-			this.nav_home.addClass("navbar-active");
-		},
-		getServerData: function(param, cb) {
-			global.getData("/api/getindex",param,cb);
-		},
-		updateByPage:function(){
-			var self = this;
-			var pageNow = global.getPageNow();
-			self.loading.show();
-			self.getServerData({
-				currentpage: pageNow
-			}, function(data) {
-				if (pageNow != global.getPageNow()) {
-					return;
-				}
-				if (data.ret == 200 && data.data && data.data.posts.length > 0) {
-					var compiled = template("listtemplate", data.data);
-					self.main.html(compiled);
-					self.page.text(data.data.currentPage + '/' + data.data.pageCount);
-					global.setPageCount(data.data.pageCount);
-					self.pre.removeAttr('class');
-					self.next.removeAttr('class');
-					if (data.data.currentPage == 1) {
-						self.pre.addClass('unCBtn');
-					}
-					if (data.data.currentPage == data.data.pageCount) {
-						self.next.addClass('unCBtn')
-					}
-					self.loading.hide();
-					$(window).scrollTop(0);
-				} else {
-					self.loading.hide();
-					sweetAlert('错误', '数据获取失败', 'error');
-				}
-			});
-		},
-		bindEvent: function() {
-			var self = this;
-			global.setPageCount(self.pageCount);
-			global.pageTurning.apply(self,["#pre","#next",self.updateByPage]);
-		},
-		init: function() {
-			this.initPage();
-			this.bindEvent();
-		}
-	}
-	index.init();
-})();
+    (function() {
+        var approve = function(id) {
+            var li = $(`.index-approve-btn[data-postid=${id.toString()}]`);
+            var p = $(`.index-approve-btn[data-postid=${id.toString()}] > p`);
+            global.subData('/approve',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    if(li.hasClass('done')) {
+                        hjnotice.info({message:'取消点赞', duration:1000, position: 'bottom'});
+                        li.removeClass('done');
+                        num--;
+                        p.html("点赞 " + num.toString());
+                    } else {
+                        hjnotice.success({message:'点赞成功', duration:1000, position: 'bottom'});
+                        li.addClass('done');   
+                        num++;
+                        p.html("点赞 " + num.toString());             
+                    }
+
+                } else {
+                    hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
+                }                                   
+            });            
+        }
+        var collect = function(id) {
+            var li = $(`.index-collect-btn[data-postid=${id.toString()}]`);
+            var p = $(`.index-collect-btn[data-postid=${id.toString()}] > p`);
+            global.subData('/collect',{postid : id}, function(data) {
+                var num = p.html().split(" ")[1];
+                if (data.ret == 200 && data.data) {
+                    //样式更新或者如何
+                    if(li.hasClass('done')) {
+                        hjnotice.info({message:'取消收藏', duration:1000, position: 'bottom'});
+                        li.removeClass('done');
+                        num--;
+                        p.html("收藏 " + num.toString());
+                    } else {
+                        hjnotice.success({message:'收藏成功', duration:1000, position: 'bottom'});
+                        li.addClass('done');    
+                        num++;
+                        p.html("收藏 " + num.toString());                                    
+                    }
+
+                } else {
+                    hjnotice.error({message:data.msg, duration:1000, position: 'bottom'});
+                }                                   
+            });            
+        }
+
+        var index = {
+            indexEntries: $(".index-entries"),
+            loadedpn: 1,
+
+            getServerData: function(param, cb) {
+                
+            },
+            bindEvent: function() {
+                var self = this;   
+
+            },
+            init: function() {
+                var self = this;
+                //标签页
+                $(".section-tab").on("click", ".section-hd[id]", function(e) {
+                    var a = "fuck";
+                    var targetid = e.currentTarget.id.split('-')[0];
+                    //添加删除类
+                    //头部部分
+                    $(".section-hd[id]").addClass("off").removeClass("on");
+                    $(e.currentTarget).addClass("on").removeClass("off");
+                    //content部分
+                    $(".section-content[id]").addClass("display-none");
+                    $("#"+targetid).removeClass("display-none");
+                })
+
+                var loadtype = window.location.pathname;
+                var rebind = function() {
+
+                    $(".index-entry").off("click");
+                    //绑定每个index-entry的收藏操作
+                    $(".index-entry").on("click",".index-collect-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
+                        collect(indexid);
+                    });
+                    //绑定每个index-entry的回复操作
+                    $(".index-entry").on("click",".index-reply-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
+                        window.location.href = '/posts/' + indexid;
+                    });
+                    //绑定每个index-entry的点赞操作
+                    $(".index-entry").on("click",".index-approve-btn[data-postid]",function(e){
+                        var indexid = e.currentTarget.getAttribute('data-postid');
+                        approve(indexid);
+                    });
+                    $(".index-entry-content").on("click",function(e){
+                        window.location.href = '/posts/' + e.currentTarget.parentNode.getAttribute('data-postid');
+                    });
+                };
+                <% if (typeof user !== 'undefined') { %>
+                //登陆我的星球分页加载
+                function demo1(curr){
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: 0}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#myplanet > .index-entry').remove();
+                        $('#myplanet').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo1'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo1(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    }, function(x,h,r) {
+                        if(x.status == 400) {
+                            window.location.href = '/logout'
+                        }
+                    });
+                };
+                demo1();
+                //登陆后最新话题分页加载
+                function demo2(curr){
+                    global.subData(loadtype,{pn : curr || 1, loadlatest: 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('#topic > .index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo2'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo2(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    }, function(x,h,r) {
+                        if(x.status == 400) {
+                            window.location.href = '/logout'
+                        }
+                    });
+                };
+                demo2();
+                <% } else { %>
+                //未登录情况获取最新的贴子
+                function demo3(curr){
+                    global.subData(loadtype,{pn : curr || 1}, function(data) {
+                        if((curr || 1)<=data.data.page_count){
+                            result = template("index-entry-tpl",data.data);
+                        }
+                        //插入数据
+                        $('.index-entry').remove();
+                        $('#topic').prepend(result);   
+                        laypage({
+                            cont: document.getElementById('demo3'),
+                            pages: data.data.page_count, //通过后台拿到的总页数
+                            curr: curr || 1, //当前页
+                            jump: function(obj, first){ //触发分页后的回调
+                                if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                    demo3(obj.curr);
+                                }
+                            }
+                        });
+                        rebind();
+                    }, function(x,h,r) {
+                        if(x.status == 400) {
+                            window.location.href = '/logout'
+                        }
+                    });
+                };
+                demo3();
+                <% } %>    
+
+                // 登陆时获取用户星球列表
+                <% if (typeof user !== 'undefined') { %>
+                global.subData('/myplanet',{pn : 1}, function(data) { 
+                    //插入数据 
+                    result = template("group-item-tpl",data.data);
+                    $('.aside-group-item').html(result + $('.aside-group-item').html());
+                    //绑定事件
+                    $('.aside-btn').on('click', function(e) {
+                        window.location.href = '/groups/' + e.currentTarget.id.split("-")[1];
+                    })
+                    $('#aside-allgroup').on('click', function(e) {
+                        window.location.href = '/allgroup/';
+                    })
+                    $('#aside-creatgroup').on('click', function(e) {
+                        window.location.href = '/creategroup';
+                    })
+                });
+                <% } else {%>
+                global.getData('/api/groups/',{pn : 1}, function(data) { 
+                    //插入数据 
+                    result = template("groupdiscover-item-tpl",data.data);
+                    $('.aside-groupdiscover-list').html(result + $('.aside-groupdiscover-list').html());
+                    //绑定事件
+                    $('.aside-btn').on('click', function(e) {
+                        window.location.href = '/groups/' + e.currentTarget.id.split("-")[1];
+                    })
+                    $('#aside-allgroup').on('click', function(e) {
+                        window.location.href = '/allgroup/';
+                    })
+                    $('#aside-creatgroup').on('click', function(e) {
+                        window.location.href = '/creategroup';
+                    })
+                });
+
+                <% } %>   
+                //self.bindEvent();    
+
+            }
+        }
+        index.init();
+    })();
 </script>
-<%- include base/footer.ejs %>
+
+<%- include base/footerMobile.ejs %>

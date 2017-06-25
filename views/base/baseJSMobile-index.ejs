@@ -1,0 +1,78 @@
+<%- include baseJSMobile.ejs %>
+    <script>
+        <% if (typeof user !== 'undefined' && user) { %>
+        ;(function() {
+            $("#tab-head-myplanet").after('<li id="tab-head-discovery"><svg aria-hidden="true" class="icon"><use xlink:href="#icon-discovery_blue"></use></svg></li>');
+        })();
+        <% } %>
+    </script>
+    <script>
+        var wuanHeadFun = function() {
+            /**
+             * 高亮tab
+             * @param  {String}  elemid tab头的id
+             * @return {Boolean}        成功与否
+             */
+            var tabHighlight =  function(elemid){
+                var $tab = $("#"+elemid);
+                if($tab) {
+                    var originVal =  $tab.find("use").attr("xlink:href")
+                    $tab.find("use").attr("xlink:href", originVal.slice(0,-5));
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            var title = function(title) {
+                var $brandContent = $(".navbar-brand > h1");
+                $brandContent.html(title);
+            }
+
+            //tab 列表 ['tab-head-myindex', 'tab-head-myplanet','tab-head-mymessage', 'tab-head-myself', 'tab-head-discovery'];
+            //绑定tab头事件 使用事件委托简化代码
+            var $tabHead = $(".tab-head-bar");
+            $tabHead.on("touchend", function(event) {
+                var target = event.target;
+                if(target.nodeName.toLocaleLowerCase() == 'li') {
+                    switch(target.id) {
+                        case 'tab-head-myindex':
+                            window.location.href = '/';
+                            break;
+                        case 'tab-head-myplanet':
+                            <% if (typeof user !== 'undefined' && user) { %>
+                            window.location.href = '/myplanet';
+                            break;
+                            <% } %>
+                            window.location.href = '/personal/login';
+                            break;
+                        case 'tab-head-mymessage':
+                            <% if (typeof user !== 'undefined' && user) { %>
+                            window.location.href = '/mymessage';
+                            break;
+                            <% } %>
+                            window.location.href = '/personal/login';
+                            break;
+                        case 'tab-head-myself':
+                            window.location.href = '/personal';     
+                            break;
+                        case 'tab-head-discovery':
+                            window.location.href = '/discovery';                       
+                    }
+                } else if(target && (target.nodeName.toLocaleLowerCase() == 'use' || target.nodeName.toLocaleLowerCase() == 'svg')) {
+                    arguments.callee({target:target.parentNode})
+                }
+            });
+
+            var $searchBtn = $(".search-toggle");
+            $searchBtn.on("touchend", function() {
+                window.location.href = '/searchContent';
+            });
+            return {
+                tabHighlight: tabHighlight,
+                title: title,
+            }
+        }();
+
+        //绑定search事件
+        
+    </script>

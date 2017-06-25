@@ -1,0 +1,95 @@
+<%- include base/headerMobile-index.ejs %>
+        <div class="tab-container">
+            <div class="myplanet-board">
+            </div>
+        </div>       
+<%- include base/baseJSMobile-index.ejs %>
+
+<script type="text/html" id="myplanet-item-tpl">
+    {{each groups as item i}}
+    <div id="group-{{item.group_id}}" class="myplanet-item">
+        <img src="{{item.g_image}}">
+        <p>{{item.g_name}}</p>
+    </div>
+    {{/each}}
+</script>
+
+<script>
+	(function() {
+		var index = {
+            loadedpn: 1,
+
+			getServerData: function(param, cb) {
+				
+			},
+			bindEvent: function() {
+
+			},
+			init: function() {
+                var self = this;
+				this.bindEvent();
+
+                wuanHeadFun.tabHighlight("tab-head-myplanet");
+                wuanHeadFun.title("星球");
+
+
+                var rebind = function() {
+                    //绑定点击进入星球详情事件
+                    $(".myplanet-item").off("touchend");
+                    //绑定每个index-entry的收藏操作
+                    $(".myplanet-item").on("touchend", "img,p",function(e){
+                        e.stopPropagation();
+                        window.location.href = '/groups/' + e.target.parentElement.id.slice(e.target.parentElement.id.indexOf('-')+1);
+                    });
+
+                    //全部星球和创建星球事件绑定
+                    $("#all-planet").off("touchend");
+                    $("#create-planet").off("touchend");
+                    $("#all-planet").on("touchend", function(e){
+                        e.stopPropagation();
+                        window.location.href = '/allgroup';
+                    });    
+                    $("#create-planet").on("touchend", function(e){
+                        e.stopPropagation();
+                        window.location.href = '/creategroup';
+                    });                   
+
+                };
+                //绑定下拉加载
+                $('.tab-container').dropload({
+                    scrollArea: window,
+                    domDown:{
+                        domClass : 'dropload-down',
+                        domRefresh : '<div class="dropload-refresh">上面有更多精彩...</div>',
+                        domLoad    : '<div class="dropload-load"><span class="loading"></span>正在努力加载中...</div>',
+                        domNoData  : '<div class="dropload-noData">再看也没有了...</div>',
+                    },
+
+                    loadDownFn:function(me){
+                        var result = '';
+                        global.subData('/myplanet',{pn : self.loadedpn}, function(data) {
+                            if(self.loadedpn<data.data.page_count){
+                                result += template("myplanet-item-tpl",data.data);
+                                self.loadedpn++;
+                            }else{
+                                result += template("myplanet-item-tpl",data.data);
+                                self.loadedpn++;
+                                me.lock();
+                                me.noData();
+                                //加入创建星球和全部星球,好丑
+                                result += '    <div id="all-planet" class="myplanet-item"><img src="./images/allPlanet.png"><p>全部星球</p></div>';
+                                result += '    <div id="create-planet" class="myplanet-item"><img src="./images/createPlanet.png"><p>创建星球</p></div>'
+                            }
+                            $('.myplanet-board').append(result);
+                            me.resetload();   
+                            rebind();
+                        });
+
+                    }
+                }); 
+			}
+		}
+		index.init();
+	})();
+</script>
+<%- include base/footerMobile.ejs %>

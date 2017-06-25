@@ -1,0 +1,34 @@
+.loadingcontainer{
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: row wrap;
+	justify-content: space-around;
+
+}
+
+.loadingbtn{
+	width: 100px;
+	height: 40px;
+	background-color: red;
+}
+
+.specialtarget{
+	width: 400px;
+	height: 200px;
+	background-color: blue;
+}
+
+.specialloadingtarget{
+	width: 400px;
+	height: 200px;
+	background-color: green;
+}
+
+.loadingContent{
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	opacity: 0.6;
+}

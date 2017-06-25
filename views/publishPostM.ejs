@@ -1,0 +1,75 @@
+<%- include base/headerMobile-default.ejs %>
+<nav class="personal-navbar">
+    <button class="personal-icon-back" type="button">
+        <svg aria-hidden="true" class="icon">
+            <use xlink:href="#icon-goback">
+            </use>
+        </svg>
+    </button>
+    <div class="personal-navbar-brand">
+        <h1>
+            发表帖子
+        </h1>
+        <button class="publishPost-btn">发表</button>
+    </div>
+</nav>
+<div class="publishPost-content">
+  <input type="text" id="post-title" placeholder="帖子标题" autocomplete="off"/>
+  <span class="text-title">在这里写下你的故事</span>
+  <textarea id="post-content"></textarea>
+  <svg aria-hidden="true" class="icon">
+      <use xlink:href="#icon-picture">
+      </use>
+  </svg>
+</div>
+<%- include base/baseJSMobile-default.ejs %>
+<script type="text/javascript">
+  (function(){
+    var users = {
+      postTitle:$("#post-title").text(),
+      postContent:$("#post-content").text(),
+      groupid:1,
+      loading:HJLoading,
+      verifi:function(){
+        if($("#post-title").val().length > 60){
+          sweetAlert('格式错误','帖子标题不能超过60个字','warning');
+          return false;
+        }
+        if($("#post-title").val().length == 0){
+          sweetAlert('格式错误','帖子标题不能为空!','warning');
+          return false;
+        }
+      },
+      bindEvent:function(){
+        var self = this;
+        $(".publishPost-btn").on('touchend',function(){
+          self.loading.start({
+                loadingTPLId : 0,
+                target : $("body"),
+                loadingId : 'self'
+              });
+          global.subData('/groups/'+self.groupid+'/post',{
+            p_title: self.postTitle,
+            p_text: self.postContent
+          },function(data){
+            self.loading.stop('self');
+              if (data.ret == 200 && data.data) {
+                //样式更新或者如何
+                swal('发布成功')
+
+              } else {
+                sweetAlert('错误', '测试中请勿使用', 'error');
+              }  
+          });
+        });
+
+      },
+      init:function(){
+        this.bindEvent();
+        wuanHeadFun.title("发表帖子");
+      }
+    }
+    users.init();
+  })()
+</script>
+<%- include base/footerMobile.ejs %>

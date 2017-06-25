@@ -15,7 +15,7 @@ var config = {
             host: 'localhost',
             port: 27017
         },
-        server: 'http://dev.wuanlife.com:800/',
+        server: 'http://104.199.245.21:800/',
         'ACCESS_KEY': 'fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs',
         'SECRET_KEY': 'GWhI_igD2NcqaomXi0fv8R_j8fnGVvH6tJPLwLFk',
         'Bucket_Name': 'wuanlife',

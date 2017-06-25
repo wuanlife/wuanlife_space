@@ -1,86 +1,184 @@
-<%- include base/headerMobile.ejs %>
-<div class="main">
-	<div class="login">
-		<form class="login-form line-form" action="/register" title="" method="post">
-			<div class="login-group line-fgroup">
-				<label for="nickname" class="label-name"></label>
-				<input type="text" name="nickname" placeholder="昵称" id="nickname">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="email" class="label-e"></label>
-				<input type="email" name="email" placeholder="邮箱" id="email">
-			</div>
-			<div class="login-group line-fgroup">
-				<label for="pw" class="label-paw"></label>
-				<input type="password" name="password" placeholder="密码" id="pw">
-			</div>
-			<button id='register' type="submit">注册</button>
-		</form>
-	</div>
-</div>
-<%- include base/baseJSMobile.ejs %>
-<script type="text/javascript">
+<%- include base/headerMobile-default.ejs %>
+
+        <div class="register-default-container">
+            <div class="register-body">
+                <form>
+                    <div class="register-container">
+                        <input id="email" type="email" name="email" class=" register-input">
+                        <label for="email">邮箱</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="nickname" class="register-input" name="nickname" type="text">
+                        <label>昵称</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="pwd" class="register-input" name="password" type="password">
+                        <label>密码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <input id="inviteCode" class=" register-input" name="inviteCode" type="text">
+                        <label>邀请码</label>
+                        <div class="foot-line"></div>
+                    </div>
+                    <div class="register-container">
+                        <button class="registerBtn" type="button">注册</button>
+                    </div>
+                </form>
+            </div>
+ 
+        </div>
+<%- include base/baseJSMobile-default.ejs %>
+
+<script>
+    $('.register-input').on('click',function(e){
+
+        $(this).siblings('label').removeClass('blur-label').addClass('active');
+        $(this).siblings('.foot-line').removeClass('blur-line').addClass('highlight');
+    });
+
+    $('.register-input').on('blur',function(e){
+        if(this.value === ""){
+            $(this).siblings('label').removeClass('active').addClass('blur-label');
+        }
+        
+        $(this).siblings('.foot-line').removeClass('highlight').addClass('blur-line');
+    });
+</script>
+
+<script>
 	(function() {
 		var register = {
-			nickname: $("#nickname"),
-			email: $("#email"),
-			pw: $("#pw"),
-			loginform: $(".login-form"),
-			loading: $(".loading"),
-			verificate: function() {
-				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-				var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-				if (this.nickname.val().length == 0 || this.nickname.val().length > 18) {
-					sweetAlert('格式错误', '请输入1-18位字符作为昵称！', 'warning');
-					return false;
-				}
-				if (!myregName.test(this.nickname.val())) {
-					sweetAlert('格式错误', '只允许中文、数字、字母和下划线！', 'warning');
-					return false;
-				}
-				if (!myreg.test(this.email.val())) {
-					sweetAlert('格式错误', '请填写正确的邮箱！', 'warning');
-					return false;
-				}
-				if (this.pw.val().length == 0) {
-					sweetAlert('格式错误', '请填写密码！', 'warning');
-					return false;
-				}
-				if (this.pw.val().length < 6 || this.pw.val().length > 20) {
-					sweetAlert('格式错误', '请填写6-20位密码', 'warning');
-					return false;
-				}
-				return true;
+
+            regform : $('form')[0],
+
+            regpwd : $('#pwd'),
+
+            regemail : $('#email'),
+
+            regnickname : $('#nickname'),
+
+            reginviteCode : $('#inviteCode'),
+
+            regbtn : $('.register-container>.registerBtn'),
+
+			getServerData: function(param, cb) {
+				
 			},
+
+            validataFunc : function(){
+                var validator = new HJformcheck();
+                var self = this;
+
+                validator.extend('isEmail',function(value,errorMsg){
+                    if(!/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('maxLength',function(value,length,errorMsg){
+                    if(value.length>length){
+                        return errorMsg;
+                    }
+                });
+
+                validator.extend('isNickName',function(value,errorMsg){
+                    if(!/^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/.test(value)){
+                        return errorMsg;
+                    }
+                });
+
+                validator.add(self.regemail, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '邮箱不能为空'
+                }, {
+                strategy: 'isEmail',
+                errorMsg: '邮箱格式有误，请重试'
+                }]);
+
+                validator.add(self.regnickname,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '昵称不能为空'
+                },{
+                strategy: 'maxLength:18',
+                errorMsg: '请输入1-18位字符作为昵称'
+                },{
+                strategy: 'isNickName',
+                errorMsg: '只允许中文、数字、字母和下划线'
+                }]);
+
+                validator.add(self.regpwd, [{
+                strategy: 'isNonEmpty',
+                errorMsg: '密码不能为空'
+                }, {
+                strategy: 'minLength:6',
+                errorMsg: '密码长度不能小于6位'
+                },{
+                strategy: 'maxLength:20',
+                errorMsg: '密码长度不能超过20位'
+                }]);
+
+                validator.add(self.reginviteCode,[{
+                strategy: 'isNonEmpty',
+                errorMsg: '邀请码不能为空'
+                }]);
+
+                var errorMsg = validator.start();
+
+                return errorMsg;
+            },
+
 			bindEvent: function() {
-				var self = this;
-				self.loginform.submit(function(event) {
-					event.preventDefault();
-					if (self.verificate()) {
-						self.loading.show();
-						global.subData('/register', {
-							email: self.email.val(),
-							password: self.pw.val(),
-							nickname: self.nickname.val()
-						}, function(data) {
-							if (data.ret == 200 && data.data) {
-								if (data.data.code == 1) {
-									window.location.href = '/'; //注册成功
-								} else {
-									self.loading.hide();
-									sweetAlert('提示', data.data.msg, 'warning');
-								}
-							} else {
-								self.loading.hide();
-								sweetAlert('错误', data.msg, 'error');
-							}
-						});
-					}
-				});
+                var self = this;
+                self.regbtn.on('touchend',function(e){
+                    e.preventDefault();
+
+                    var errorMsg = self.validataFunc();
+                    if(!errorMsg){
+
+                        HJLoading.start({
+                        loadingId : 'registerLoading',
+                        
+                        });
+
+                        global.subData('/register',{
+                            nickname : self.regnickname.val(),
+                            email : self.regemail.val(),
+                            password : self.regpwd.val(),
+                            inviteCode : self.reginviteCode.val(),
+                        },function(data){
+                            if(data.ret === 200 && data.data){
+                                if(data.data.code == 1){
+                                
+                                    setTimeout(function(){
+                                        HJLoading.stop('registerLoading');
+                                        window.location.href = '/';
+                                    },3000);
+
+                                }else{
+                                    HJLoading.stop('registerLoading');
+                                    swal('错误',data.msg,'error');
+                                }
+                            }else{
+                                HJLoading.stop('registerLoading');
+                                swal('错误',data.msg,'error');
+                            }
+                        });
+                    }else{
+                        swal('提示',errorMsg,'warning');
+                    }
+                });
 			},
 			init: function() {
-				this.bindEvent();
-			}
+                var self = this;
+
+                 wuanHeadFun.title("注册");
+				self.bindEvent();
+
+
+			},
 		}
 		register.init();
 	})();

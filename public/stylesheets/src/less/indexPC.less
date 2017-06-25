@@ -1,0 +1,125 @@
+@import "public"; // public.less
+
+.index-entry {
+    background-color: #ffffff;
+    margin-bottom: 0.5em;
+    padding: 0 16px;
+    .index-entry-header {
+        max-width:  100%;
+        display: flex;
+        height: 26px;
+        padding: 10px 0 10px 0;
+        .clearfix();
+        font-family:PingFangHK-Medium;
+        font-size:12px;
+        color:#999999;
+        text-align:left;
+        .index-entry-info {
+            height: 26px;
+            img {
+                width: 26px;
+                height: 26px;
+                padding-right: 8px;
+                border-radius:100%;
+            };
+        };
+        .index-entry-date {
+            height: 26px;
+            margin-left: 12px;
+        };
+        p {
+            display: inline;
+            font-family:PingFangHK-Medium;
+            color:#999999;
+            text-align:left;
+            line-height: 26px;
+            font-size: 12px;
+        };
+    };
+    .index-entry-content {
+        h1 {
+            cursor: pointer;
+            margin-bottom: 0.4em;
+            opacity:0.87;
+            font-family:PingFangHK-Semibold;
+            font-size:16px;
+            color:#003585;
+            text-align:left;
+        };
+        .index-entry-brief {
+            p {
+                line-height: 20px;
+                font-size: 14px;
+                font-family:PingFangHK-Regular;
+                color:#666666;
+                letter-spacing:0;
+                text-align:justify;
+            }
+        };
+        .index-entry-imgs {
+            display: flex;
+            margin-top: 12px;
+            .index-entry-img {
+                width:174px;
+                height:174px;
+                margin-right: 15px;
+                img {
+                    object-fit: contain;
+                    width: 100%;
+                    height: 100%;
+                }               
+            }
+        }
+    };
+    .index-entry-footer {
+        margin-top: 10px;
+        padding: 10px 0 10px 0;
+        ul {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+            li {
+                height: 100%;
+                svg {
+                    font-size: 25px;
+                }
+                p {
+                    font-size: 14px;
+                    padding: 0 10px 0 0;
+                    opacity:0.54;
+                    font-family:PingFangHK-Regular;
+                    color:#999999;
+                    text-align:justify;
+
+                    overflow-wrap: normal;
+                    overflow: hidden;
+
+                    cursor: pointer;
+                }
+                //加入分割的点
+                &:not(:first-child) {
+                    &:before {
+                        content: '·';
+                        position: relative;
+                        left: -5px;
+                        float: left;
+                        color: #999999;
+                        font-size: 10px;
+                        line-height: 20px;
+                        border-radius: 100%;
+                    }
+                }
+            }
+            li.done {
+                p {
+                    color: #5677fc;
+                }
+            }
+            li.index-notdone {
+                p {
+                    color: #000000;
+                }
+            }
+        }
+    }
+}
