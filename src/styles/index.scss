@@ -267,3 +267,42 @@ code {
     animation: octocat-wave 560ms ease-in-out
   }
 }
+
+
+/**** Card ****/
+// default Card with default style, you can add style in your page
+.wuan-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  img {
+    margin: 10px 8px 10px 0;
+    width: 40px;
+    height: 40px;
+  }
+  .wuan-card__content {
+    min-width: 0;
+    flex: 1;
+    h2 {
+      margin: 2px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      font-size:14px;
+      color:#5992e4;
+      text-align:left;
+    }
+    p {
+      margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      font-size:14px;
+      color:#666666;
+      text-align:left;
+    }    
+  }
+}

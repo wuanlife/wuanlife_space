@@ -101,7 +101,7 @@
         flex: 0 0 480px;
         min-width: 300px;
         @media screen and (max-width: 900px) {
-          flex: 0.8;
+          flex: 0.7;
         }
       }
       .login-container, .avatar-container {

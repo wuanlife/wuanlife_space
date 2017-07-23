@@ -93,7 +93,8 @@ section.app-main {
       .el-tabs__item {
         font-size:18px;
         color:#999999;
-        padding: 0 11px;
+        margin-right: 22px;
+        padding: 0;
 
         transition: all .28s ease-in-out;
         // animation for active
@@ -104,7 +105,6 @@ section.app-main {
           position: absolute;
           bottom: 0;
           left: 0;
-          padding: 0 11px;
           background-clip: content-box;
           background-color: #5677fc;
 

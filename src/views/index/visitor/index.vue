@@ -16,10 +16,16 @@
       </section>
       <aside>
         <header>
-          <h1>发现星球</h1>
+          <h2>发现星球</h2>
         </header>
         <div class="aside-content">
-          
+          <div class="index-aside-card wuan-card">
+            <img src="http://img.alicdn.com/bao/uploaded/i2/TB2x7C0nFXXXXbsXpXXXXXXXXXX_!!101742512.jpg">
+            <div class="wuan-card__content">
+              <h2>asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
+              <p>asdadqwdqwdguiqasdasdwgdiuqwgdiuqwgdqiuw</p>
+            </div>
+          </div>
         </div>
       </aside>
     </div>
@@ -74,6 +80,21 @@
       flex: 0 0 250px;
       @media screen and (max-width: 900px) {
         display: none;
+      }
+      header {
+        h2 {
+          margin: 20px 0;
+
+          font-family:PingFangHK-Medium;
+          font-size:14px;
+          color:#5677fc;
+        }
+      }
+      .aside-content {
+        .index-aside-card {
+          width: 250px;
+          height: 70px;
+        }
       }
     }
 
