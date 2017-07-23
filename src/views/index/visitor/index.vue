@@ -1,7 +1,6 @@
 <template>
     <div class="index-visitor-container">
-      <section>
-      
+      <section>     
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="myplanet" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading">
@@ -19,7 +18,7 @@
         <header>
           <h1>发现星球</h1>
         </header>
-        <div class="aside-container">
+        <div class="aside-content">
           
         </div>
       </aside>
@@ -60,8 +59,24 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .index-visitor-container {
+    display: flex;
+    justify-content: space-between;
     margin: auto;
-    width: 750px;
+    max-width: 900px;
+    min-width: 590px;
+    @media screen and (max-width: 900px) {
+      justify-content: center;
+    }
+    section {
+      flex: 0 0 590px;
+    }
+    aside {
+      flex: 0 0 250px;
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
+    }
+
   }
   .index-tabcontent {
     min-height: 200px;
