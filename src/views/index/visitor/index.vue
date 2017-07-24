@@ -2,12 +2,12 @@
     <div class="index-visitor-container">
       <section>     
         <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="myplanet" name="index-myplanet">
+          <el-tab-pane label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading">
               asdasdasdasdasdas
             </div>
           </el-tab-pane>
-          <el-tab-pane label="myplanet" name="index-newtopic">
+          <el-tab-pane label="最新话题" name="index-newtopic">
             <div class="index-tabcontent" v-loading="loading2">
               newtopic
             </div>
@@ -101,5 +101,6 @@
   }
   .index-tabcontent {
     min-height: 200px;
+    margin-top: 5px;
   }
 </style>
