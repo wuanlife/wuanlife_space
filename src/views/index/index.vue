@@ -24,7 +24,8 @@
       ])
     },
     created() {
-      if (this.access_token != null) {
+      /*if (this.access_token != null) {*/
+      if(true){
         this.currentRole = 'UserIndex';
       }
     }
