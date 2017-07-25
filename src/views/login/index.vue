@@ -1,33 +1,21 @@
 <template>
-    <div class="index-visitor-container">
+    <div class="login-container">
       <section>     
-        <el-tabs v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="我的星球" name="index-myplanet">
-            <div class="index-tabcontent" v-loading="loading">
-              asdasdasdasdasdas
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="最新话题" name="index-newtopic">
-            <div class="index-tabcontent" v-loading="loading2">
-              newtopic
-            </div>
-          </el-tab-pane>
-        </el-tabs>
-      </section>
-      <aside>
-        <header>
-          <h2>发现星球</h2>
-        </header>
-        <div class="aside-content">
-          <div class="index-aside-card wuan-card">
-            <img src="http://img.alicdn.com/bao/uploaded/i2/TB2x7C0nFXXXXbsXpXXXXXXXXXX_!!101742512.jpg">
-            <div class="wuan-card__content">
-              <h2>asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
-              <p>asdadqwdqwdguiqasdasdwgdiuqwgdiuqwgdqiuw</p>
-            </div>
-          </div>
+        <header>Login</header>
+        <div class="form-content">
+          <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="Email" prop="email">
+              <el-input v-model.number="loginForm.email"></el-input>
+            </el-form-item>
+            <el-form-item label="Password" prop="password">
+              <el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label-width="100px">
+              <el-button type="primary" @click="submitForm('loginForm')">login</el-button>
+            </el-form-item>
+          </el-form>
         </div>
-      </aside>
+      </section>
     </div>
 </template>
 
@@ -37,70 +25,91 @@
   export default {
     name: 'index-visitor',
     data() {
+      // element-ui validator
+      var validateUser = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入Username'));
+        } else {
+          callback();
+        }
+      };
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          callback();
+        }
+      };
       return {
         activeName: 'index-myplanet',
         loading: false,
+
+        // form part
+        loginForm: {
+          email: '',
+          password: '',
+        },
+        loginRules: {
+          email: [
+            { validator: validateUser, trigger: 'blur' }
+          ],
+          password: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+        }
       }
     },
     computed: {
       ...mapGetters([
         'user',
-        'access_token',
+        'token',
       ])
     },
     mounted() {
-      this.loading = true;
-      this.loading2 = true;
-      // simulate ajax loading
-      setTimeout(() => {
-        this.loading = false;
-      }, 4000)
-      setTimeout(() => {
-        this.loading2 = false;
-      }, 6000)
-
-    }
+    },
+    methods: {
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.loading = true;
+            this.$store.dispatch('Login', this.loginForm).then(() => {
+              this.loading = false;
+              this.$router.push({ path: '/' });
+                // this.showDialog = true;
+            }).catch(err => {
+              console.log(err);
+              this.loading = false;
+            });
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+    },
   }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .index-visitor-container {
+  .login-container {
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 900px;
-    min-width: 590px;
-    @media screen and (max-width: 900px) {
-      justify-content: center;
-    }
+    max-width: 660px;
+    min-width: 380px;
     section {
-      flex: 0 0 590px;
-    }
-    aside {
-      flex: 0 0 250px;
-      @media screen and (max-width: 900px) {
-        display: none;
-      }
+      flex: 1;
       header {
-        h2 {
-          margin: 20px 0;
+        margin: 15px 0 20px 0;
 
-          font-family:PingFangHK-Medium;
-          font-size:14px;
-          color:#5677fc;
-        }
+        font-family:PingFangHK-Medium;
+        font-size:18px;
+        color:#5677fc;
       }
-      .aside-content {
-        .index-aside-card {
-          width: 250px;
-          height: 70px;
-        }
+      div.form-content {
+        width: 100%;
       }
     }
 
-  }
-  .index-tabcontent {
-    min-height: 200px;
-    margin-top: 5px;
   }
 </style>

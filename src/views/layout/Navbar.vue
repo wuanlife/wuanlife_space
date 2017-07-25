@@ -50,7 +50,7 @@
   import Levelbar from './Levelbar';
   import TabsView from './TabsView';
   import ErrorLog from 'components/ErrLog';
-  import errLogStore from 'store/errLog';
+  import errLogStore from 'vuex-store/errLog';
 
   export default {
     components: {
