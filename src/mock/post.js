@@ -1,12 +1,13 @@
 import Mock from 'mockjs';
 
 
-const List = [];
+let List = {}
+List.data = []
 const count = 20;
 
 
 for (let i = 0; i < count; i++) {
-  List.push(Mock.mock({
+  List.data.push(Mock.mock({
     id: '@id',
     title: '@ctitle(10, 20)',
     'status|1': ['published', 'draft'],
@@ -18,7 +19,7 @@ for (let i = 0; i < count; i++) {
 
 export default {
   getList: () => List,
-  getArticle: () => ({
+  getPost: () => ({
     id: 120000000001,
     author: { key: 'mockPan' },
     source_name: '原创作者',

@@ -38,8 +38,8 @@
       </el-dropdown>
       <!-- login bar (if not logined) -->
       <div class="login-container">
-        <span><router-link to="login">Login</router-link></span>
-        <span><router-link to="signup">Signup</router-link></span>
+        <span><router-link to="/login">Login</router-link></span>
+        <span><router-link to="/signup">Signup</router-link></span>
       </div>
     </div>
   </el-menu>

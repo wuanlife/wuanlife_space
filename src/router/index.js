@@ -8,7 +8,7 @@ import Layout from '../views/layout/Layout';
 
 /* login */
 const Login = _import('login/index');
-const authRedirect = _import('login/authredirect');
+/*const authRedirect = _import('login/authredirect');*/
 
 
 import Index from 'views/index'
@@ -44,10 +44,9 @@ Vue.use(Router);
   **/
 
 export const constantRouterMap = [
-    { path: '/login', component: Login, hidden: true },
-    { path: '/authredirect', component: authRedirect, hidden: true },
-    { path: '/404', component: Err404, hidden: true },
-    { path: '/401', component: Err401, hidden: true },
+  /*{ path: '/authredirect', component: authRedirect, hidden: true },*/
+  { path: '/404', component: Err404, hidden: true },
+  { path: '/401', component: Err401, hidden: true },
   {
     path: '/',
     component: Layout,
@@ -56,14 +55,13 @@ export const constantRouterMap = [
     hidden: true,
     children: [{ path: 'index', component: Index }]
   },
-  {
-    path: '/introduction',
+  { 
+    path: '/login',
     component: Layout,
-    redirect: '/introduction/index',
-    icon: 'xinrenzhinan',
-    noDropdown: true,
-    children: [{ path: 'index', component: Introduction, name: '简述' }]
-  }
+    redirect: '/login/index',
+    hidden: true,
+    children: [{ path: 'index', component: Login }]
+  },
 ]
 
 export default new Router({
