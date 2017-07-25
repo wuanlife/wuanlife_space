@@ -1,7 +1,11 @@
+.DS_Store
 node_modules/
-npm*
-public/stylesheets/src/css/
-public/stylesheets/dist/
-startwuanlife.bat
-mongodb.bat
-*.sublime*
+dist/
+static/ckeditor
+gifs/
+UI/
+npm-debug.log
+test/unit/coverage
+test/e2e/reports
+selenium-debug.log
+.idea
