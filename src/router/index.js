@@ -57,6 +57,7 @@ export const constantRouterMap = [
   },
   { 
     path: '/login',
+    name: 'login',
     component: Layout,
     redirect: '/login/index',
     hidden: true,

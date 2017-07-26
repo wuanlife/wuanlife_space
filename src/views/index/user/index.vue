@@ -4,7 +4,31 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading">
-              asdasdasdasdasdas
+              <ul class="index-cards">
+                <li class="index-card">
+                  <header>
+                    <img src="#">
+                    <span>taotao</span>
+                    <span>posted in</span>
+                    <span>guice</span>
+                    <time>2017-02-21</time>
+                  </header>
+                  <div class="index-card-content">
+                    sadoiwdhqdoihqwdoihqdoihqwdoi
+                  </div>
+                  <footer>
+                    <ul>
+                      <li class="done">reviews 134</li>
+                      <li>approves 134</li>
+                      <li>collections 134</li>
+                    </ul>
+                  </footer>
+                </li>  
+              </ul>
+              <el-pagination
+                layout="prev, pager, next"
+                :total="1000">
+              </el-pagination>
             </div>
           </el-tab-pane>
           <el-tab-pane label="最新话题" name="index-newtopic">
@@ -102,5 +126,39 @@
   .index-tabcontent {
     min-height: 200px;
     margin-top: 5px;
+  }
+  // post card style    
+  .index-cards {    
+    .index-card {   
+      padding: 10px 16px 12px 16px;   
+      background-color: #ffffff;    
+      header {    
+        display: flex;    
+        align-items: center;    
+    
+        font-size:12px;   
+        color:#999999;    
+        img {
+          width: 26px;    
+          height: 26px;   
+          border-radius: 100%;    
+          margin-right: 10px;   
+        }
+        span {    
+          &:not(:first-child) {   
+            margin-left: 5px;   
+          }
+        }
+        time {    
+          margin-left: 12px;    
+        }   
+      }
+      div.index-card-content {
+
+      }
+      footer {
+
+      }  
+    }   
   }
 </style>
