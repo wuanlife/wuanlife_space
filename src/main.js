@@ -3,7 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import store from './store';
+import store from 'vuex-store';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
 import 'assets/custom-theme/index.css'; // 换肤版本element-ui css
@@ -17,8 +17,7 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';// 多选框组件css
 import Sticky from 'components/Sticky'; // 粘性header组件
 import IconSvg from 'components/Icon-svg';// svg 组件
 import vueWaves from './directive/waves';// 水波纹指令
-import errLog from 'store/errLog';// error log组件
-import './mock/index.js';  // 该项目所有请求使用mockjs模拟
+import errLog from 'vuex-store/errLog';// error log组件
 
 // register globally
 Vue.component('multiselect', Multiselect);
@@ -47,23 +46,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        store.dispatch('GetInfo').then(res => { // 拉取user_info
-          const roles = res.data.role;
-          store.dispatch('GenerateRoutes', { roles }).then(() => { // 生成可访问的路由表
-            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
-            next({ ...to }); // hack方法 确保addRoutes已完成
-          })
-        })
-      } else {
-        // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
-        if (hasPermission(store.getters.roles, to.meta.role)) {
-          next();//
-        } else {
-          next({ path: '/401', query: { noGoBack: true } });
-        }
-        // 可删 ↑
-      }
+      next()
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
