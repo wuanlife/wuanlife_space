@@ -10,7 +10,7 @@
             </header>
             <article>
               <h1>Ubuntu keke</h1>
-              <div>asadasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
+              <div class="post-html">asadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
             </article>
             <footer>
               <div class="btns">
@@ -31,11 +31,45 @@
           </div>
           <div class="review-wrapper">
             <header>
-              asdasd
+              999+ reviews
             </header>
             <ul>
-              
+              <li>
+                <header>
+                  <h2>asd</h2>
+                  <time> 2017-02-13</time>
+                </header>
+                <div class="review-html">
+                  asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+                </div>
+                <footer>
+                  <span>回复</span>
+                  <span>删除</span>
+                </footer>
+              </li>
+              <li>
+                <header>
+                  <h2>asd</h2>
+                  <time> 2017-02-13</time>
+                </header>
+                <div class="review-html">
+                  asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+                </div>
+                <footer>
+                  <span>回复</span>
+                  <span>删除</span>
+                </footer>
+              </li>
             </ul>
+            <el-pagination
+              class="review-paging"
+              layout="prev, pager, next"
+              :total="1000">
+            </el-pagination>
+            <footer class="review-reply">
+              <input placeholder="请输入内容" type="text">
+              <button>回复</button>
+            </footer>
           </div>
         </div>
       </section>
@@ -102,11 +136,46 @@
     padding: 16px;
     background: #ffffff;
     .post-wrapper {
+      margin-bottom: 20px;
       header {
-
+        display: flex;
+        align-items: center;
+        margin-bottom: 18px;
+        img {
+          background:#d8d8d8;
+          margin-right: 12px;
+          width:40px;
+          height:40px;
+          border-radius:100%;
+        }
+        span.author {
+          margin-right: 24px;
+          font-family:PingFangHK-Semibold;
+          font-size:14px;
+          color:#525252;
+        }
+        time {
+          font-family:PingFangHK-Medium;
+          font-size:14px;
+          color:#525252;
+        }
       }
       article {
+        h1 {
+          margin-bottom: 12px;
+          color: #275193;
+          font-family:PingFangHK-Semibold;
+          font-size:32px;
+        }
+        .post-html {
+          margin-bottom: 39px;
+          word-break: break-all;
 
+          font-size:14px;
+          color:#333333;
+          letter-spacing:0;
+          text-align:justify;
+        }
       }
       footer {
         display: flex;
@@ -144,12 +213,108 @@
           }
         }
         .opts {
-
+          &:not(:first-child) {
+            margin-left: 10px; 
+          }
+          span {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            font-family:PingFangHK-Medium;
+            font-size:14px;
+            color:#8a94a9;
+            &:hover {
+              color:#66ccff;
+            }
+          }
         }
       }
     }
     .review-wrapper {
+      border:1px solid #dce8f4;
+      border-radius:4px;
+      & > header {
+        padding: 16px;
+        border-bottom: 1px solid #dce8f4;
 
+        text-align:justify;
+        font-weight: bold;
+        font-family:PingFangHK-Medium;
+        font-size:14px;
+        color:#215094;
+      }
+      ul {
+        padding: 0 16px;
+        li {
+          padding: 16px 0 8px 0;
+          border-bottom: 1px solid #dce8f4;
+          header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            h2 {
+              font-family:PingFangHK-Medium;
+              font-size:14px;
+              color:#215094;
+            }
+            time {
+              font-family:PingFangHK-Medium;
+              font-size:14px;
+              color:#8a94a9;
+            }
+          }
+          .review-html {
+            margin-bottom: 6px;
+            word-break: break-all;
+
+            font-size:14px;
+            color:#333333;
+            letter-spacing:0;
+            text-align:justify;
+          }
+          footer {
+            span {
+              margin-right: 28px;
+              cursor: pointer;
+              transition: all 0.3s ease-in-out;
+              font-family:PingFangHK-Medium;
+              font-size:14px;
+              color:#8a94a9;
+              text-align:justify;
+              &:hover {
+                color:#66ccff;
+              }
+            }
+          }
+        }
+      }
+      .review-paging {
+        text-align: center;
+        padding: 18px 0;
+      }
+      footer.review-reply {
+        padding: 16px 0;
+        text-align: center;
+        border-top: 1px solid #dce8f4;
+        input {
+          padding: 0 15px;
+          border:1px solid #97bce2;
+          border-radius:4px;
+          width:450px;
+          height:32px;
+        }
+        button {
+          padding: 7px 16px;
+          background: #97bce1;
+          border: none;
+          border-radius:4px;
+          height:34px;
+
+          font-family:PingFangHK-Medium;
+          font-size:14px;
+          color:#ffffff;
+        }
+      }
     }
   }
 </style>
