@@ -69,8 +69,7 @@ export const constantRouterMap = [
     path: '/post',
     name: 'post',
     component: Layout,
-    redirect: '/',
-    children: [{ path: '/:id', component: Post}],
+    children: [{ path: ':id', component: Post}],
   }
 ]
 
