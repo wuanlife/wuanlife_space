@@ -4,7 +4,7 @@
         asd
       </section>
       <aside>
-        asda
+        asdaasdasd
       </aside>
     </div>
 </template>
@@ -13,7 +13,7 @@
   import { mapGetters } from 'vuex';
 
   export default {
-    name: 'index-visitor',
+    name: 'post',
     data() {
       return {
         loading: false,
@@ -28,6 +28,7 @@
     mounted() {
       this.loading = true;
       // simulate ajax loading
+      console.log('im here')
       setTimeout(() => {
         this.loading = false;
       }, 4000)
