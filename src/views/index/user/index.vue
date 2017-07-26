@@ -104,7 +104,7 @@
       </section>
       <aside>
         <header>
-          <h2>发现星球</h2>
+          <h2>我加入的星球</h2>
         </header>
         <div class="aside-content">
           <div class="index-aside-card wuan-card">
