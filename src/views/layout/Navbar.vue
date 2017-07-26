@@ -18,7 +18,7 @@
       </div>
       <!-- avatar bar -->
       <el-dropdown menu-align="start" 
-                   v-if="user" 
+                   v-if="user.token != ''" 
                    class="avatar-container" 
                    trigger="click"
                    @visible-change="visibleChange">
@@ -95,7 +95,7 @@
     },
     methods: {
       logout() {
-        this.$store.dispatch('LogOut').then(() => {
+        this.$store.dispatch('Logout').then(() => {
           location.reload();// 为了重新实例化vue-router对象 避免bug
         });
       },

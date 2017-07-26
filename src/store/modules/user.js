@@ -4,8 +4,8 @@ import { storeWithExpiration } from 'utils';
 
 const user = {
   state: {
-    token: Cookies.get('Admin-Token'),
-    userInfo: {},
+    token: storeWithExpiration.get('token') || '',
+    userInfo: storeWithExpiration.get('userInfo') || {},
     setting: '',
   },
 
@@ -18,8 +18,9 @@ const user = {
       state.token = token
     },
     LOGOUT_USER: state => {
-      state.user = '';
-    }
+      state.token = '';
+      state.userInfo = {};
+    },
   },
 
   actions: {
@@ -46,13 +47,19 @@ const user = {
 
         // for demo
         console.dir(response);
-        storeWithExpiration.set('user', response, 86400000);
-        storeWithExpiration.set('token', ['Access-Token'], 86400000);
+        storeWithExpiration.set('userInfo', response, 86400000);
+        storeWithExpiration.set('token', response['Access-Token'], 86400000);
         commit('SET_USERINFO', response);  
         commit('SET_TOKEN', response['Access-Token']);  
         resolve();      
       });
     },
+    // for later one-use token, Logout should in actions
+    Logout({ commit }) {
+      commit('LOGOUT_USER'); 
+      storeWithExpiration.set('userInfo', {});
+      storeWithExpiration.set('token', '');
+    }
   }
 };
 
