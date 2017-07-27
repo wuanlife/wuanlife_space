@@ -19,13 +19,13 @@
     },
     computed: {
       ...mapGetters([
-        'user',
-        'access_token',
+        'token',
+        'userInfo',
       ])
     },
     created() {
       /*if (this.access_token != null) {*/
-      if(true){
+      if(this.token != ''){
         this.currentRole = 'UserIndex';
       }
     }

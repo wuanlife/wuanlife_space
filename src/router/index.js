@@ -12,6 +12,8 @@ const Login = _import('login/index');
 
 
 import Index from 'views/index'
+
+import Post from 'views/post'
 /* dashboard */
 const dashboard = _import('dashboard/index');
 
@@ -57,11 +59,18 @@ export const constantRouterMap = [
   },
   { 
     path: '/login',
+    name: 'login',
     component: Layout,
     redirect: '/login/index',
     hidden: true,
     children: [{ path: 'index', component: Login }]
   },
+  {
+    path: '/post',
+    name: 'post',
+    component: Layout,
+    children: [{ path: ':id', component: Post}],
+  }
 ]
 
 export default new Router({

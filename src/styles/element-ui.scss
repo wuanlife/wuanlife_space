@@ -126,3 +126,14 @@ section.app-main {
     }
   }
 }
+
+// header avatar container part
+.el-dropdown-menu.user-dropdown {
+  border: none;
+  margin: 0 0 -3px 0;
+  padding: 0;
+  width: 114px;
+  background:#0074e9;
+  box-shadow:0 2px 4px 0 rgba(0,0,0,0.26);
+  border-radius:0 0 2px 2px;
+}
