@@ -148,10 +148,10 @@
         }
         div.preview-imgs {
           display: flex;
-          justify-content: space-between;
           img {
             width: 174px;
             height: 174px;
+            margin-right: 15px;
             background:#d8d8d8;
             border-radius:4px;
             align-self: center;
