@@ -14,6 +14,10 @@ const Login = _import('login/index');
 import Index from 'views/index'
 
 import Post from 'views/post'
+
+import Inform from 'views/inform'
+
+import Collection from 'views/collection'
 /* dashboard */
 const dashboard = _import('dashboard/index');
 
@@ -70,6 +74,22 @@ export const constantRouterMap = [
     name: 'post',
     component: Layout,
     children: [{ path: ':id', component: Post}],
+  },
+  {
+    path: '/inform',
+    name: 'inform',
+    component: Layout,
+    redirect: '/inform/index',
+    hidden: true,
+    children: [{ path: 'index', component: Inform}],
+  },
+  {
+    path: '/collection',
+    name: 'collection',
+    component: Layout,
+    redirect: '/collection/index',
+    hidden: true,
+    children: [{ path: 'index', component: Collection}],
   }
 ]
 
