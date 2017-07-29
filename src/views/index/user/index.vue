@@ -190,10 +190,12 @@
 
   }
   .index-tabcontent {
-    text-align: center;
     min-height: 200px;
     margin-top: 5px;
     margin-bottom: 20px;
+    .el-pagination {
+      text-align: center;
+    }
   }
   // post card style    
   .index-cards { 
