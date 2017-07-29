@@ -32,7 +32,6 @@
                 <div class="preview-html">
                   安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
                 </div>
-                <div class="preview-imgs"></div>
               </div>
               <footer>
                 <span>鬼扯天地</span>
@@ -108,7 +107,7 @@
   // post card style    
   .index-cards { 
     .index-card {   
-      padding: 10px 16px 12px 16px;   
+      padding: 16px 16px 12px 16px;   
       background-color: #ffffff;
       border-radius: 8px;  
       &:not(:first-child) {
@@ -137,9 +136,10 @@
           color: #003585;
           font-family:PingFangHK-Semibold;
           font-size:16px;
+          opacity: 0.87;
         }
         div.preview-html {
-          margin-bottom: 14px;
+          margin-bottom: 12px;
           word-break: break-all;
           font-size:14px;
           color:#666666;
