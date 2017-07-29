@@ -25,10 +25,10 @@
           <footer>
             <div class="btns">
               <el-button type="primary" class="done">
-                <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>999+
               </el-button>
               <el-button type="primary">
-                <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>999+
               </el-button>
             </div>
             <div class="opts">
