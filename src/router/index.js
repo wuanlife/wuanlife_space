@@ -14,6 +14,7 @@ const Login = _import('login/index');
 import Index from 'views/index'
 
 import Post from 'views/post'
+import Group from 'views/group'
 
 import Inform from 'views/inform'
 
@@ -74,6 +75,12 @@ export const constantRouterMap = [
     name: 'post',
     component: Layout,
     children: [{ path: ':id', component: Post}],
+  },
+  {
+    path: '/group',
+    name: 'group',
+    component: Layout,
+    children: [{ path: ':id', component: Group}],
   },
   {
     path: '/inform',
