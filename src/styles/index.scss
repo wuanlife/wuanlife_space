@@ -1,6 +1,15 @@
 @import './btn.scss';
 @import './element-ui.scss';
 @import './mixin.scss';
+
+// font part
+$font_path: '~/static/fonts/';
+@font-face {
+  font-family: PingFangHK-Medium;
+  src: url($font_path +'PingFang-HK-Medium.ttf');
+}
+
+
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -309,4 +318,8 @@ code {
       text-align:left;
     }    
   }
+}
+
+.clickable {
+  cursor: pointer;
 }
