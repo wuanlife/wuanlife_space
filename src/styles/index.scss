@@ -8,7 +8,14 @@ $font_path: '~/static/fonts/';
   font-family: PingFangHK-Medium;
   src: url($font_path +'PingFang-HK-Medium.ttf');
 }
-
+@font-face {
+  font-family: PingFangHK-Regular;
+  src: url($font_path +'PingFang-HK-Regular.ttf');
+}
+@font-face {
+  font-family: PingFangHK-Semibold;
+  src: url($font_path +'PingFang-HK-Semibold.ttf');
+}
 
 body {
   -moz-osx-font-smoothing: grayscale;
