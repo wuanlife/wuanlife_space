@@ -23,37 +23,37 @@
                    trigger="click"
                    @visible-change="visibleChange">
         <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
-          <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+          <icon-svg icon-class="peopleCircle" class="avatar-icon"></icon-svg>
           <span>keke</span>
         </div>
         <el-dropdown-menu class="user-dropdown" slot="dropdown">
           <router-link class='inlineBlock' to="/">
             <el-dropdown-item>
-              <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+              <icon-svg icon-class="people_2" class="avatar-icon"></icon-svg>
               个人资料
             </el-dropdown-item>
           </router-link>
           <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+              <icon-svg icon-class="starSolid" class="avatar-icon"></icon-svg>
               我的收藏
             </el-dropdown-item>
           </a>
           <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+              <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
               邀请好友
             </el-dropdown-item>
           </a>
           <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>
-              <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+              <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
               修改密码
             </el-dropdown-item>
           </a>
           <a @click="logout">
             <el-dropdown-item>
-              <icon-svg icon-class="b" class="avatar-icon"></icon-svg>
+              <icon-svg icon-class="poweroff" class="avatar-icon"></icon-svg>
               退出登录
             </el-dropdown-item>
           </a>
@@ -157,8 +157,12 @@
           cursor: pointer;
           line-height: 20px;
           transition: all 0.5s ease-in-out;
+          color: #fff;
           font-size:14px;
-          
+          .avatar-icon {
+            font-size: 18px;
+            margin-right: 6px;
+          }
         }
         .avatar-wrapper.active {
           color:#ffffff;

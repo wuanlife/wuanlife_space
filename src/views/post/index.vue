@@ -351,6 +351,7 @@
         margin-right: 7px;
       }
       .group-info {
+        min-width: 0;
         align-self: center;
         h2 {
           text-overflow: ellipsis;
