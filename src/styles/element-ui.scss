@@ -137,3 +137,17 @@ section.app-main {
   box-shadow:0 2px 4px 0 rgba(0,0,0,0.26);
   border-radius:0 0 2px 2px;
 }
+
+// popover in post
+.reviewPopover {
+  margin-left: -5px;
+  background:#ffffff;
+  border:1px solid #97bce1;
+  box-shadow:0 2px 5px 0 rgba(0,0,0,0.24);
+  border-radius:4px 0 0 0 0 4px 4px 4px;
+  padding: 16px 0;
+  text-align: center;
+  .popper__arrow {
+    margin-left: 25px;
+  }
+}

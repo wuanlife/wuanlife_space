@@ -1,98 +1,96 @@
 <template>
-    <div id="post">
-      <section>
-        <div class="post-container">
-          <div class="post-wrapper">
-            <header>
-              <img src="#">
-              <span class="author">taotao</span>
-              <time>2017-01-28 22:41</time>
-            </header>
-            <article>
-              <h1>Ubuntu keke</h1>
-              <div class="post-html">asadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
-            </article>
-            <footer>
-              <div class="btns">
-                <el-button type="primary" class="done">
-                  <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
-                </el-button>
-                <el-button type="primary">
-                  <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
-                </el-button>
-              </div>
-              <div class="opts">
-                <span>重置</span>
-                <span>锁定</span>
-                <span>编辑</span>
-                <span>删除</span>
-              </div>
-            </footer>
-          </div>
-          <div class="review-wrapper">
-            <header>
-              999+ reviews
-            </header>
-            <ul>
-              <li>
-                <header>
-                  <h2>asd</h2>
-                  <time> 2017-02-13</time>
-                </header>
-                <div class="review-html">
-                  asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
-                </div>
-                <footer>
-                  <span>回复</span>
-                  <span>删除</span>
-                </footer>
-              </li>
-              <li>
-                <header>
-                  <h2>asd</h2>
-                  <time> 2017-02-13</time>
-                </header>
-                <div class="review-html">
-                  asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
-                </div>
-                <footer>
-                  <span>回复</span>
-                  <span>删除</span>
-                </footer>
-              </li>
-            </ul>
-            <el-pagination
-              class="review-paging"
-              layout="prev, pager, next"
-              :total="1000">
-            </el-pagination>
-            <footer class="review-reply">
-              <input placeholder="请输入内容" type="text">
-              <button>回复</button>
-            </footer>
-          </div>
-        </div>
-      </section>
-      <aside>
-        <div class="aside-card">
+  
+  <div id="post">
+    <el-popover
+      ref="reviewPopover"
+      placement="bottom-start"
+      width="558"
+      popper-class="reviewPopover"
+      trigger="click">
+      <input placeholder="请输入内容" type="text">
+      <button>回复</button>
+    </el-popover>
+    <section>
+      <div class="post-container">
+        <div class="post-wrapper">
           <header>
             <img src="#">
-            <div class="group-info">
-              <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
-              <span>999+ top</span>
-              <span>999+ mem</span>
-            </div>
+            <span class="author">taotao</span>
+            <time>2017-01-28 22:41</time>
           </header>
-          <div class="aside-card-content">
-            <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
-            <span>Creator: Taotao</span>
-          </div>
+          <article>
+            <h1>Ubuntu keke</h1>
+            <div class="post-html">asadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
+          </article>
           <footer>
-            <el-button>退出星球</el-button>
+            <div class="btns">
+              <el-button type="primary" class="done">
+                <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
+              </el-button>
+              <el-button type="primary">
+                <icon-svg icon-class="b" class="avatar-icon"></icon-svg>999+
+              </el-button>
+            </div>
+            <div class="opts">
+              <span>重置</span>
+              <span>锁定</span>
+              <span>编辑</span>
+              <span>删除</span>
+            </div>
           </footer>
         </div>
-      </aside>
-    </div>
+        <div class="review-wrapper">
+          <header>
+            999+ reviews
+          </header>
+          <ul>
+            <li>
+              <header>
+                <h2>asd</h2>
+                <time> 2017-02-13</time>
+              </header>
+              <div class="review-html">
+                asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+              </div>
+              <footer>
+                <span v-popover:reviewPopover>回复</span>
+                <span>删除</span>
+              </footer>
+            </li>
+
+          </ul>
+          <el-pagination
+            class="review-paging"
+            layout="prev, pager, next"
+            :total="1000">
+          </el-pagination>
+          <footer class="review-reply">
+            <input placeholder="请输入内容" type="text">
+            <button>回复</button>
+          </footer>
+        </div>
+      </div>
+    </section>
+    <aside>
+      <div class="aside-card">
+        <header>
+          <img src="#">
+          <div class="group-info">
+            <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
+            <span>999+ top</span>
+            <span>999+ mem</span>
+          </div>
+        </header>
+        <div class="aside-card-content">
+          <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
+          <span>Creator: Taotao</span>
+        </div>
+        <footer>
+          <el-button>退出星球</el-button>
+        </footer>
+      </div>
+    </aside>
+  </div>
 </template>
 
 <script>
@@ -401,6 +399,26 @@
           border-color: #4db3ff;
         }
       }
+    }
+  }
+  .reviewPopover {
+    input {
+      padding: 0 15px;
+      border:1px solid #97bce2;
+      border-radius:4px;
+      width:450px;
+      height:32px;
+    }
+    button {
+      padding: 7px 16px;
+      background: #97bce1;
+      border: none;
+      border-radius:4px;
+      height:34px;
+
+      font-family:PingFangHK-Medium;
+      font-size:14px;
+      color:#ffffff;
     }
   }
 </style>
