@@ -74,7 +74,23 @@
         </div>
       </section>
       <aside>
-        asdaasdasd
+        <div class="aside-card">
+          <header>
+            <img src="#">
+            <div class="group-info">
+              <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
+              <span>999+ top</span>
+              <span>999+ mem</span>
+            </div>
+          </header>
+          <div class="aside-card-content">
+            <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
+            <span>Creator: Taotao</span>
+          </div>
+          <footer>
+            <el-button>退出星球</el-button>
+          </footer>
+        </div>
       </aside>
     </div>
 </template>
@@ -313,6 +329,76 @@
           font-family:PingFangHK-Medium;
           font-size:14px;
           color:#ffffff;
+        }
+      }
+    }
+  }
+
+  // aside part
+  .aside-card {
+    width: 248px;
+    padding: 10px 14px;
+    background:#ffffff;
+    border:1px solid #f0f6fd;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.24);
+    border-radius:4px;
+    header {
+      display: flex;
+      margin-bottom: 10px;
+      img {
+        flex: 0 0 60px;
+        width:60px;
+        height:60px;
+        border-radius:100%;
+        margin-right: 7px;
+      }
+      .group-info {
+        align-self: center;
+        h2 {
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+          font-family:PingFangHK-Medium;
+          font-size:16px;
+          color:#275597;
+        }
+        span {
+          font-family:PingFangHK-Medium;
+          font-size:12px;
+          color:#8a94a9;
+        }
+      }
+    }
+    .aside-card-content {
+      margin: 14px 0 20px 0;
+      p {
+        word-break: break-all;
+        margin-bottom: 23px;
+
+        font-family:PingFangHK-Regular;
+        font-size:14px;
+        color:#333333;
+      }
+      span {
+        font-family:PingFangHK-Regular;
+        font-size:14px;
+        color:#8a94a9;
+      }
+    }
+    footer {
+      text-align: center;
+      button {
+        background:#1b87f6;
+        border-radius:4px;
+        padding: 8px 20px;
+        border: none;
+
+        font-family:PingFangHK-Regular;
+        font-size:12px;
+        color:#ffffff;
+        &:hover {
+          background: #4db3ff;
+          border-color: #4db3ff;
         }
       }
     }
