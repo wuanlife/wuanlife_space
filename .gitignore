@@ -4,6 +4,7 @@ dist/
 static/ckeditor
 gifs/
 UI/
+UI2/
 npm-debug.log
 test/unit/coverage
 test/e2e/reports

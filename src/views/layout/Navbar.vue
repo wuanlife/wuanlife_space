@@ -2,7 +2,7 @@
   <el-menu class="navbar" mode="horizontal">
     <div class="navbar-container">
       <!-- Logo bar -->
-      <div class="logo">
+      <div class="logo" @click="$router.push({path: '/'})">
         <img src="">
         Wuanlife
       </div>
@@ -117,6 +117,7 @@
       max-width: 900px;
       margin: auto;
       .logo {
+        cursor: pointer;
         margin-right: 38px;
 
         font-family:FZLTZHK--GBK1-0;

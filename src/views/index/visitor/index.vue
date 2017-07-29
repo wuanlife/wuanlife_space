@@ -9,9 +9,9 @@
             <li class="index-card">
               <header>
                 <img src="#">
-                <span>taotao</span>
+                <span class="clickable">taotao</span>
                 <span>posted in</span>
-                <span>guice</span>
+                <span class="clickable">guice</span>
                 <time>2017-02-21</time>
               </header>
               <div class="index-card-content">
@@ -47,11 +47,15 @@
           <div class="index-aside-card wuan-card">
             <img src="http://img.alicdn.com/bao/uploaded/i2/TB2x7C0nFXXXXbsXpXXXXXXXXXX_!!101742512.jpg">
             <div class="wuan-card__content">
-              <h2>asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
+              <h2 class="clickable">asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
               <p>asdadqwdqwdguiqasdasdwgdiuqwgdiuqwgdqiuw</p>
             </div>
           </div>
         </div>
+        <footer>
+          <span class="clickable">全部星球</span>
+          <span class="clickable">创建星球</span>
+        </footer>
       </aside>
     </div>
 </template>
@@ -118,6 +122,7 @@
           margin: 20px 0;
 
           font-family:PingFangHK-Medium;
+          font-weight: normal;
           font-size:14px;
           color:#5677fc;
         }
@@ -128,12 +133,27 @@
           height: 70px;
         }
       }
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+        span {
+          font-family:PingFangHK-Regular;
+          font-size:14px;
+          color:#5992e4;
+        }
+      }
     }
 
   }
   .index-tabcontent {
     min-height: 200px;
     margin-top: 5px;
+    margin-bottom: 20px;
+    .el-pagination {
+      text-align: center;
+    }
   }
   // post card style    
   .index-cards { 
@@ -142,13 +162,22 @@
       background-color: #ffffff;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
+      &:last-child {
+        margin-bottom: 20px;
+      }
       header {    
         display: flex;    
         align-items: center;    
         margin-bottom: 6px;
         font-size:12px;   
-        color:#999999;    
+        color:#999999; 
+        & > .clickable {
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            color: #5677fc;
+          }
+        }   
         img {
           width: 26px;    
           height: 26px;   
@@ -167,10 +196,31 @@
       div.index-card-content {
         margin-bottom: 12px;
         h1 {
+          display: inline-block;
+          position: relative;
+          cursor: pointer;
           margin-bottom: 6px;
+
           color: #2e5897;
           font-family:PingFangHK-Semibold;
           font-size:16px;
+          // hover animation
+          &::after {
+            content: '';
+            transition: all 0.5s ease-in-out;
+            transform: scaleX(0);
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #2e5897;
+          }
+          &:hover {
+            &::after {
+              transform: scaleX(1);
+            }
+          }
         }
         div.preview-html {
           margin-bottom: 12px;
