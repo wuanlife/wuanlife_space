@@ -47,11 +47,15 @@
           <div class="index-aside-card wuan-card">
             <img src="http://img.alicdn.com/bao/uploaded/i2/TB2x7C0nFXXXXbsXpXXXXXXXXXX_!!101742512.jpg">
             <div class="wuan-card__content">
-              <h2>asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
+              <h2 class="clickable">asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
               <p>asdadqwdqwdguiqasdasdwgdiuqwgdiuqwgdqiuw</p>
             </div>
           </div>
         </div>
+        <footer>
+          <span class="clickable">全部星球</span>
+          <span class="clickable">创建星球</span>
+        </footer>
       </aside>
     </div>
 </template>
@@ -118,6 +122,7 @@
           margin: 20px 0;
 
           font-family:PingFangHK-Medium;
+          font-weight: normal;
           font-size:14px;
           color:#5677fc;
         }
@@ -128,12 +133,25 @@
           height: 70px;
         }
       }
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+        span {
+          font-family:PingFangHK-Regular;
+          font-size:14px;
+          color:#5992e4;
+        }
+      }
     }
 
   }
   .index-tabcontent {
+    text-align: center;
     min-height: 200px;
     margin-top: 5px;
+    margin-bottom: 20px;
   }
   // post card style    
   .index-cards { 
@@ -142,7 +160,10 @@
       background-color: #ffffff;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
+      &:last-child {
+        margin-bottom: 20px;
+      }
       header {    
         display: flex;    
         align-items: center;    

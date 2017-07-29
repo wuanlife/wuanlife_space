@@ -175,6 +175,7 @@
           margin: 20px 0;
 
           font-family:PingFangHK-Medium;
+          font-weight: normal;
           font-size:14px;
           color:#5677fc;
         }
@@ -189,8 +190,10 @@
 
   }
   .index-tabcontent {
+    text-align: center;
     min-height: 200px;
     margin-top: 5px;
+    margin-bottom: 20px;
   }
   // post card style    
   .index-cards { 
@@ -199,7 +202,10 @@
       background-color: #ffffff;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
+      &:last-child {
+        margin-bottom: 20px;
+      }
       header {    
         display: flex;    
         align-items: center;    
@@ -230,6 +236,8 @@
       div.index-card-content {
         margin-bottom: 12px;
         h1 {
+          display: inline-block;
+          position: relative;
           cursor: pointer;
           margin-bottom: 6px;
 
@@ -237,9 +245,21 @@
           font-family:PingFangHK-Semibold;
           font-size:16px;
           // hover animation
-          &:before {
+          &::after {
             content: '';
+            transition: all 0.5s ease-in-out;
+            transform: scaleX(0);
+            position: absolute;
             width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #2e5897;
+          }
+          &:hover {
+            &::after {
+              transform: scaleX(1);
+            }
           }
         }
         div.preview-html {
