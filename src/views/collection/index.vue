@@ -4,10 +4,10 @@
         <header>
             我的收藏
         </header>
-        <div class="index-tabcontent" v-loading="loading2">
-          <ul class="index-cards">
-            <li class="index-card">
-              <div class="index-card-content">
+        <div class="collection-tabcontent">
+          <ul class="collection-cards">
+            <li class="collection-card">
+              <div class="collection-card-content">
                 <h1>Ubuntu开荒笔记</h1>
                 <div class="preview-html">
                   安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
@@ -26,13 +26,12 @@
                 </div>
               </footer>
             </li>
-            <li class="index-card">
-              <div class="index-card-content">
+            <li class="collection-card">
+              <div class="collection-card-content">
                 <h1>Ubuntu开荒笔记</h1>
                 <div class="preview-html">
                   安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
                 </div>
-                <div class="preview-imgs"></div>
               </div>
               <footer>
                 <span>鬼扯天地</span>
@@ -55,8 +54,7 @@
     name: 'collection-container',
     data() {
       return {
-        activeName: 'index-myplanet',
-        loading: false,
+        
       }
     },
     computed: {
@@ -66,16 +64,7 @@
       ])
     },
     mounted() {
-      this.loading = true;
-      this.loading2 = true;
-      // simulate ajax loading
-      setTimeout(() => {
-        this.loading = false;
-      }, 4000)
-      setTimeout(() => {
-        this.loading2 = false;
-      }, 6000)
-
+      
     }
   }
 </script>
@@ -101,14 +90,14 @@
       }
     }
   }
-  .index-tabcontent {
+  .collection-tabcontent {
     min-height: 200px;
     margin-top: 5px;
   }
   // post card style    
-  .index-cards { 
-    .index-card {   
-      padding: 10px 16px 12px 16px;   
+  .collection-cards { 
+    .collection-card {   
+      padding: 16px 16px 12px 16px;   
       background-color: #ffffff;
       border-radius: 8px;  
       &:not(:first-child) {
@@ -120,6 +109,7 @@
         font-size:12px;   
         color:#999999;
         position: relative;
+        font-family:PingFangHK-Medium;
         div {
           position: absolute;
           right: 0;
@@ -130,21 +120,23 @@
           }
         } 
       }
-      div.index-card-content {
+      div.collection-card-content {
         margin-bottom: 12px;
         h1 {
           margin-bottom: 6px;
           color: #003585;
           font-family:PingFangHK-Semibold;
           font-size:16px;
+          opacity: 0.87;
         }
         div.preview-html {
-          margin-bottom: 14px;
+          margin-bottom: 12px;
           word-break: break-all;
           font-size:14px;
           color:#666666;
           letter-spacing:0;
           text-align:justify;
+          font-family:PingFangHK-Medium;
         }
         div.preview-imgs {
           display: flex;
