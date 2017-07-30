@@ -4,22 +4,22 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="帖子通知" name="inform-card">
             <div class="inform-tabcontent" v-loading="loading">
-              <ul class="index-cards">
-                <li class="index-card">
+              <ul class="inform-cards">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
-                      <p>格子</p>
-                      <p><span>回复了主题帖</span><span>23周周报</span></p>
+                      <span>格子格子格子格子格子格子格子格子格子格子格子格子格子格子格子</span>
+                      <p><span>回复了主题帖</span><span>23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报</span></p>
                     </div>
                     <button>查看</button>
                   </div>
                 </li> 
-                <li class="index-card">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
-                      <p>格子</p>
+                      <span>格子</span>
                       <p><span>回复了主题帖</span><span>23周周报</span></p>
                     </div>
                     <button>查看</button>
@@ -30,21 +30,21 @@
           </el-tab-pane>
           <el-tab-pane label="星球通知" name="inform-planet">
             <div class="inform-tabcontent" v-loading="loading2">
-              <ul class="index-cards">
-                <li class="index-card">
+              <ul class="inform-cards">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
-                      <p>格子</p>
-                      <p><span>退出</span><span>午安煎饼计划组</span></p>
+                      <span>格子</span>
+                      <p><span>退出</span><span>午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组</span></p>
                     </div>
                   </div>
                 </li>
-                <li class="index-card">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
-                      <p>格子</p>
+                      <span>格子</span>
                       <p><span>退出</span><span>午安煎饼计划组</span></p>
                     </div>
                   </div>
@@ -54,13 +54,13 @@
           </el-tab-pane>
           <el-tab-pane label="私密星球申请" name="inform-applyplanet">
             <div class="inform-tabcontent" v-loading="loading3">
-              <ul class="index-cards">
-                <li class="index-card">
+              <ul class="inform-cards">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
                       <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <span>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</span>
+                      <p>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</p>
                     </div>
                     <div id="inform-applyplanet-btn">
                       <button>同意</button>
@@ -68,12 +68,12 @@
                     </div>
                   </div>
                 </li>
-                <li class="index-card">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
-                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <span>加加加我啊</span>
+                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组</span></p>
+                      <p>加加加我啊</p>
                     </div>
                     <div id="inform-applyplanet-btn">
                       <button>同意</button>
@@ -81,24 +81,24 @@
                     </div>
                   </div>
                 </li>
-                <li class="index-card">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
                       <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <span>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</span>
+                      <p>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</p>
                     </div>
                     <div id="inform-applyplanet-btn">
                       <span>已拒绝</span>
                     </div>
                   </div>
                 </li>
-                <li class="index-card">
+                <li class="inform-card">
                   <div>
                     <img src="#">
                     <div>
                       <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <span>加加加我啊</span>
+                      <p>加加加我啊</p>
                     </div>
                     <div id="inform-applyplanet-btn">
                       <span>已同意</span>
@@ -154,7 +154,7 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    font-family:PingFangHK-Semibold;
+    font-family:PingFangHK-Regular;
     max-width: 590px;
     min-width: 590px;
     @media screen and (max-width: 900px) {
@@ -171,14 +171,14 @@
     margin-top: 5px;
   }
   // post card style    
-  .index-cards { 
-    .index-card {   
+  .inform-cards { 
+    .inform-card {   
       padding: 10px;   
       background-color: #ffffff;
       border-radius: 4px;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
       div {    
         display: flex;    
         align-items: center;
@@ -187,43 +187,47 @@
         position: relative;    
         img {
           width: 50px;    
-          height: 51px;   
+          height: 50px;   
           border-radius: 100%;    
           margin-right: 8px;   
         }
         div {
           height: 42px;
           display: block;
-          p:nth-child(1) {
+          width: 512px;
+          > span {
             color: #000000;
-            span {
-              color: #5992e4;
-              &:not(:first-child) {
-                  margin-left: 5px;
-              }
-            }
-          }
-          p:nth-child(2) {
-            span {
-              color: #666666;
-              &:not(:first-child) {
-                  margin-left: 5px;
-              }
-            }
-          }
-          > span {    
             width: 290px;
+            font-family:PingFangHK-Medium;
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            &:not(:first-child) {   
-              margin-rigth: 5px;   
+          }
+          > p {
+            width: 300px;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            span {
+              &:not(:first-child) {
+                  margin-left: 5px;
+              }
             }
+          }
+          p:nth-child(1) {
+            color: #5992e4;
+            font-family:PingFangHK-Medium;
+          }
+          p:nth-child(2) {
+            width: 300px;
+            font-family:PingFangHK-Regular;
           }
         }
         button {
           font-size: 12px;
+          font-family:PingFangSC-Regular;
           color: #ffffff;
           background:#5677fc;
           box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
@@ -233,14 +237,15 @@
           border: none;
           padding: 0;
           position: absolute;
-          right: 38px;
+          right: 28px;
         }
       }
     }  
   }
   #inform-applyplanet-btn{
     position: absolute;
-    right: 20px;
+    width: auto;
+    right: 10px;
     height: 30px;
     font-size: 12px;
     button {
@@ -265,5 +270,30 @@
         width:80px;
         height:30px;
     }
-  }   
+  }
+    
+</style>
+<style rel="stylesheet/scss" lang="scss">
+  div.inform-container {
+    section {
+      .el-tabs {
+        .el-tabs__header {
+          .el-tabs__nav-wrap {
+            .el-tabs__nav-scroll {
+              .el-tabs__nav {
+                div.el-tabs__item {
+                  height: 30px;
+                  line-height: 25px;
+                  margin-top: 15px;
+                }
+                div.is-active {
+                  font-family:PingFangHK-Semibold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 </style>
