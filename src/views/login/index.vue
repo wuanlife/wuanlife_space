@@ -78,6 +78,7 @@
               this.$router.push({ path: '/' });
                 // this.showDialog = true;
             }).catch(err => {
+              console.dir(err)
               this.$message({
                 message: err.error,
                 type: 'error',

@@ -12,7 +12,7 @@
     </el-popover>
     <section>
       <div class="post-container" v-loading="loading">
-        <div v-if="post" class="post-wrapper">
+        <div v-if="post_formatted" class="post-wrapper">
           <header>
             <img src="#">
             <span class="author">{{ post_formatted.author.name }}</span>
@@ -39,18 +39,17 @@
             </div>
           </footer>
         </div>
-        <div class="review-wrapper">
+        <div class="review-wrapper" v-if="commentsObj_formatted">
           <header>
-            999+ reviews
+            {{ commentsObj_formatted.reply_count }} reviews
           </header>
           <ul>
-            <li>
+            <li v-for="comment of commentsObj_formatted.reply">
               <header>
-                <h2>asd</h2>
+                <h2>{{ comment.user_name }}</h2>
                 <time> 2017-02-13</time>
               </header>
-              <div class="review-html">
-                asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+              <div class="review-html" v-html="comment.comment">
               </div>
               <footer>
                 <span v-popover:reviewPopover>回复</span>
@@ -95,7 +94,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { getPost } from 'api/post';
+  import { getPost,getCommentsByPostId } from 'api/post';
   import { parseTime } from 'utils/date'
 
   export default {
@@ -105,6 +104,7 @@
         postid: null,
         post: null,
         loading: false,
+        commentsObj: null,
       }
     },
     computed: {
@@ -113,9 +113,25 @@
         'access_token',
       ]),
       post_formatted: function() {
-        let newpost = Vue.util.extend({}, this.post);
-        newpost.create_time_formatted = parseTime('yyyy-MM-dd HH:mm')
+        if(!this.post) {
+          return null;
+        }
+        let newPost = Object.assign({}, this.post);
+        newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
+        return newPost;
       },
+      commentsObj_formatted: function() {
+        if(!this.commentsObj) {
+          return null;
+        }
+        let newCommentsObj = Object.assign({}, this.commentsObj);
+        newCommentsObj.reply = newCommentsObj.reply.map((comment) => {
+          let newComment = Object.assign({}, comment);
+          newComment.create_time_formatted = parseTime(newComment.create_time, 'yyyy-MM-dd HH:mm')
+          return newComment;
+        })
+        return newCommentsObj;
+      }
     },
     created() {
       this.postid = this.$route.params.id;
@@ -123,9 +139,12 @@
     mounted() {
       this.loading = true;
 
-      getPost(this.postid).then((res) => {
-        this.post = res;
-        console.dir(res);
+      // promise all for loading post and comment
+      var promise = Promise.all([getPost(this.postid), getCommentsByPostId(this.postid)])
+      promise.then(res => {
+        this.post = res[0];
+        this.commentsObj = res[1];
+
         this.loading = false;
       }).catch((err) => {
         this.$message({
