@@ -90,7 +90,6 @@
     computed: {
       ...mapGetters([
         'user',
-        'token',
       ])
     },
     methods: {

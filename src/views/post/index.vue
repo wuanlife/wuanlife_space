@@ -122,6 +122,13 @@
         this.post = res;
         console.dir(res);
         this.loading = false;
+      }).catch((err) => {
+        this.$message({
+          message: err.error,
+          type: 'error',
+          duration: 1000,
+        });
+        this.loading = false;
       })
     }
   }

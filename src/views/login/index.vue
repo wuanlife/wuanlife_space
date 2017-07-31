@@ -64,7 +64,6 @@
     computed: {
       ...mapGetters([
         'user',
-        'token',
       ])
     },
     mounted() {
@@ -79,7 +78,11 @@
               this.$router.push({ path: '/' });
                 // this.showDialog = true;
             }).catch(err => {
-              console.log(err);
+              this.$message({
+                message: err.error,
+                type: 'error',
+                duration: 1000,
+              });
               this.loading = false;
             });
           } else {
