@@ -11,24 +11,24 @@
       <button>回复</button>
     </el-popover>
     <section>
-      <div class="post-container">
+      <div class="post-container" v-loading="loading">
         <div v-if="post" class="post-wrapper">
           <header>
             <img src="#">
-            <span class="author">{{ post.author.name }}</span>
-            <time>2017-01-28 22:41</time>
+            <span class="author">{{ post_formatted.author.name }}</span>
+            <time>{{ post_formatted.create_time_formatted }}</time>
           </header>
           <article>
-            <h1>{{ post.title }}</h1>
-            <div class="post-html" v-html="post.content"></div>
+            <h1>{{ post_formatted.title }}</h1>
+            <div class="post-html" v-html="post_formatted.content"></div>
           </article>
           <footer>
             <div class="btns">
               <el-button type="primary" class="done">
-                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
               <el-button type="primary">
-                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
             <div class="opts">
@@ -96,6 +96,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { getPost } from 'api/post';
+  import { parseTime } from 'utils/date'
 
   export default {
     name: 'post',
@@ -110,7 +111,11 @@
       ...mapGetters([
         'user',
         'access_token',
-      ])
+      ]),
+      post_formatted: function() {
+        let newpost = Vue.util.extend({}, this.post);
+        newpost.create_time_formatted = parseTime('yyyy-MM-dd HH:mm')
+      },
     },
     created() {
       this.postid = this.$route.params.id;
@@ -160,6 +165,7 @@
   }
   // postdetails container(include post and review)
   .post-container {
+    min-height: 300px;
     border-radius:8px;
     padding: 16px;
     background: #ffffff;
