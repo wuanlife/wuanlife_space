@@ -11,24 +11,24 @@
       <button>回复</button>
     </el-popover>
     <section>
-      <div class="post-container">
-        <div v-if="post" class="post-wrapper">
+      <div class="post-container" v-loading="loading">
+        <div v-if="post_formatted" class="post-wrapper">
           <header>
             <img src="#">
-            <span class="author">{{ post.author.name }}</span>
-            <time>2017-01-28 22:41</time>
+            <span class="author">{{ post_formatted.author.name }}</span>
+            <time>{{ post_formatted.create_time_formatted }}</time>
           </header>
           <article>
-            <h1>{{ post.title }}</h1>
-            <div class="post-html" v-html="post.content"></div>
+            <h1>{{ post_formatted.title }}</h1>
+            <div class="post-html" v-html="post_formatted.content"></div>
           </article>
           <footer>
             <div class="btns">
               <el-button type="primary" class="done">
-                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
               <el-button type="primary">
-                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>999+
+                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
             <div class="opts">
@@ -39,18 +39,17 @@
             </div>
           </footer>
         </div>
-        <div class="review-wrapper">
+        <div class="review-wrapper" v-if="commentsObj_formatted">
           <header>
-            999+ reviews
+            {{ commentsObj_formatted.reply_count }} reviews
           </header>
           <ul>
-            <li>
+            <li v-for="comment of commentsObj_formatted.reply">
               <header>
-                <h2>asd</h2>
+                <h2>{{ comment.user_name }}</h2>
                 <time> 2017-02-13</time>
               </header>
-              <div class="review-html">
-                asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+              <div class="review-html" v-html="comment.comment">
               </div>
               <footer>
                 <span v-popover:reviewPopover>回复</span>
@@ -95,7 +94,8 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { getPost } from 'api/post';
+  import { getPost,getCommentsByPostId } from 'api/post';
+  import { parseTime } from 'utils/date'
 
   export default {
     name: 'post',
@@ -104,23 +104,46 @@
         postid: null,
         post: null,
         loading: false,
+        commentsObj: null,
       }
     },
     computed: {
       ...mapGetters([
         'user',
         'access_token',
-      ])
+      ]),
+      post_formatted: function() {
+        if(!this.post) {
+          return null;
+        }
+        let newPost = Object.assign({}, this.post);
+        newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
+        return newPost;
+      },
+      commentsObj_formatted: function() {
+        if(!this.commentsObj) {
+          return null;
+        }
+        let newCommentsObj = Object.assign({}, this.commentsObj);
+        newCommentsObj.reply = newCommentsObj.reply.map((comment) => {
+          let newComment = Object.assign({}, comment);
+          newComment.create_time_formatted = parseTime(newComment.create_time, 'yyyy-MM-dd HH:mm')
+          return newComment;
+        })
+        return newCommentsObj;
+      }
     },
     created() {
       this.postid = this.$route.params.id;
     },
     mounted() {
       this.loading = true;
+      // promise all for loading post and comment
+      var promise = Promise.all([getPost(this.postid), getCommentsByPostId(this.postid)])
+      promise.then(res => {
+        this.post = res[0];
+        this.commentsObj = res[1];
 
-      getPost(this.postid).then((res) => {
-        this.post = res;
-        console.dir(res);
         this.loading = false;
       }).catch((err) => {
         this.$message({
@@ -160,6 +183,7 @@
   }
   // postdetails container(include post and review)
   .post-container {
+    min-height: 300px;
     border-radius:8px;
     padding: 16px;
     background: #ffffff;
