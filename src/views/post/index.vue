@@ -12,15 +12,15 @@
     </el-popover>
     <section>
       <div class="post-container">
-        <div class="post-wrapper">
+        <div v-if="post" class="post-wrapper">
           <header>
             <img src="#">
-            <span class="author">taotao</span>
+            <span class="author">{{ post.author.name }}</span>
             <time>2017-01-28 22:41</time>
           </header>
           <article>
-            <h1>Ubuntu keke</h1>
-            <div class="post-html">asadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
+            <h1>{{ post.title }}</h1>
+            <div class="post-html" v-html="post.content"></div>
           </article>
           <footer>
             <div class="btns">
@@ -95,11 +95,14 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getPost } from 'api/post';
 
   export default {
     name: 'post',
     data() {
       return {
+        postid: null,
+        post: null,
         loading: false,
       }
     },
@@ -109,13 +112,24 @@
         'access_token',
       ])
     },
+    created() {
+      this.postid = this.$route.params.id;
+    },
     mounted() {
       this.loading = true;
-      // simulate ajax loading
-      console.log('im here')
-      setTimeout(() => {
+
+      getPost(this.postid).then((res) => {
+        this.post = res;
+        console.dir(res);
         this.loading = false;
-      }, 4000)
+      }).catch((err) => {
+        this.$message({
+          message: err.error,
+          type: 'error',
+          duration: 1000,
+        });
+        this.loading = false;
+      })
     }
   }
 </script>
