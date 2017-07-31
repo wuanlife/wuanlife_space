@@ -24,10 +24,10 @@
           </article>
           <footer>
             <div class="btns">
-              <el-button type="primary" class="done">
+              <el-button type="primary" :class="{'done': post_formatted.approved}">
                 <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
-              <el-button type="primary">
+              <el-button type="primary" :class="{'done': post_formatted.collected}">
                 <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
@@ -71,21 +71,22 @@
       </div>
     </section>
     <aside>
-      <div class="aside-card">
+      <div class="aside-card" v-if="group" v-loading="loadingAside">
         <header>
-          <img src="#">
+          <img :src="group.image_url">
           <div class="group-info">
-            <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
-            <span>999+ top</span>
-            <span>999+ mem</span>
+            <h2>{{ group.name }}</h2>
+            <span>{{ group.post_num }} 话题　</span>
+            <span>{{ group.member_num }} 成员</span>
           </div>
         </header>
         <div class="aside-card-content">
-          <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
-          <span>Creator: Taotao</span>
+          <p>{{ group.introduction }}</p>
+          <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button>退出星球</el-button>
+          <el-button v-if="group.identity == 'member'">退出星球</el-button>
+          <el-button v-else-if="group.identity == 'not_applied'">加入星球</el-button>
         </footer>
       </div>
     </aside>
@@ -95,7 +96,8 @@
 <script>
   import { mapGetters } from 'vuex';
   import { getPost,getCommentsByPostId } from 'api/post';
-  import { parseTime } from 'utils/date'
+  import { getGroup } from 'api/group';
+  import { parseTime } from 'utils/date';
 
   export default {
     name: 'post',
@@ -103,7 +105,9 @@
       return {
         postid: null,
         post: null,
+        group: null,
         loading: false,
+        loadingAside: false,
         commentsObj: null,
       }
     },
@@ -137,22 +141,55 @@
       this.postid = this.$route.params.id;
     },
     mounted() {
+      let self = this;
       this.loading = true;
-      // promise all for loading post and comment
-      var promise = Promise.all([getPost(this.postid), getCommentsByPostId(this.postid)])
-      promise.then(res => {
-        this.post = res[0];
-        this.commentsObj = res[1];
+      this.loadingAside = true;
 
-        this.loading = false;
-      }).catch((err) => {
-        this.$message({
-          message: err.error,
-          type: 'error',
-          duration: 1000,
+
+      // promise all for loading post and comment
+      var loadPostAndComments = function() {
+        return new Promise((resolve, reject) => {
+          Promise.all([getPost(self.postid), getCommentsByPostId(self.postid)]).then(res => {
+            console.log('step1');
+            console.dir(res);
+            self.post = res[0];
+            self.commentsObj = res[1];
+
+            self.loading = false;
+            resolve(res[0].group.id)
+          }).catch(error => {
+            reject(error);
+          });
         });
-        this.loading = false;
-      })
+        
+      }
+      // loading group data and Authority information
+      var loadGroup = function(groupid) {
+        
+        return new Promise((resolve, reject) => {
+          getGroup(groupid).then(res => {
+            self.group = res;
+            self.loadingAside = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      }
+
+      loadPostAndComments()
+        .then(loadGroup)
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading = false;
+          this.loadingAside = false;
+        })
+
     }
   }
 </script>
