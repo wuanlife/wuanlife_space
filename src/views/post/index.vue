@@ -138,7 +138,6 @@
     },
     mounted() {
       this.loading = true;
-
       // promise all for loading post and comment
       var promise = Promise.all([getPost(this.postid), getCommentsByPostId(this.postid)])
       promise.then(res => {
