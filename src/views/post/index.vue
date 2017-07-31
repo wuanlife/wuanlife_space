@@ -71,21 +71,22 @@
       </div>
     </section>
     <aside>
-      <div class="aside-card" v-loading="loadingAside">
+      <div class="aside-card" v-if="group" v-loading="loadingAside">
         <header>
-          <img src="#">
+          <img :src="group.image_url">
           <div class="group-info">
-            <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
-            <span>999+ top</span>
-            <span>999+ mem</span>
+            <h2>{{ group.name }}</h2>
+            <span>{{ group.post_num }} 话题　</span>
+            <span>{{ group.member_num }} 成员</span>
           </div>
         </header>
         <div class="aside-card-content">
-          <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
-          <span>Creator: Taotao</span>
+          <p>{{ group.introduction }}</p>
+          <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button>退出星球</el-button>
+          <el-button v-if="group.identity == 'member'">退出星球</el-button>
+          <el-button v-else-if="group.identity == 'not_applied'">加入星球</el-button>
         </footer>
       </div>
     </aside>
@@ -95,7 +96,8 @@
 <script>
   import { mapGetters } from 'vuex';
   import { getPost,getCommentsByPostId } from 'api/post';
-  import { parseTime } from 'utils/date'
+  import { getGroup } from 'api/group';
+  import { parseTime } from 'utils/date';
 
   export default {
     name: 'post',
@@ -166,8 +168,7 @@
         
         return new Promise((resolve, reject) => {
           getGroup(groupid).then(res => {
-            console.log('step2');
-            console.dir(res);
+            self.group = res;
             self.loadingAside = false;
             resolve();
           }).catch(error => {
@@ -179,6 +180,7 @@
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
+          console.dir(err);
           this.$message({
             message: err.error,
             type: 'error',
