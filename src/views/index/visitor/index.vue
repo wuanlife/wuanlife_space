@@ -11,7 +11,10 @@
                 <img :src="post.author.avatar_url">
                 <span class="clickable">{{ post.author.name }}</span>
                 <span>发表于</span>
-                <span class="clickable">{{ post.group.name }}</span>
+                <span class="clickable"
+                  @click="$router.push({path: '/group/' + post.group.id})">
+                  {{ post.group.name }}
+                </span>
                 <time>{{ post.create_time_formatted }}</time>
               </header>
               <div class="index-card-content">
