@@ -11,24 +11,24 @@
       <button>回复</button>
     </el-popover>
     <section>
-      <div class="post-container">
-        <div class="post-wrapper">
+      <div class="post-container" v-loading="loading">
+        <div v-if="post_formatted" class="post-wrapper">
           <header>
             <img src="#">
-            <span class="author">taotao</span>
-            <time>2017-01-28 22:41</time>
+            <span class="author">{{ post_formatted.author.name }}</span>
+            <time>{{ post_formatted.create_time_formatted }}</time>
           </header>
           <article>
-            <h1>Ubuntu keke</h1>
-            <div class="post-html">asadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasdasadasdasdasdasdas<strong>asdasdasd</strong>asdasdasdasd</div>
+            <h1>{{ post_formatted.title }}</h1>
+            <div class="post-html" v-html="post_formatted.content"></div>
           </article>
           <footer>
             <div class="btns">
-              <el-button type="primary" class="done">
-                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>999+
+              <el-button type="primary" :class="{'done': post_formatted.approved}">
+                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
-              <el-button type="primary">
-                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>999+
+              <el-button type="primary" :class="{'done': post_formatted.collected}">
+                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
             <div class="opts">
@@ -39,18 +39,17 @@
             </div>
           </footer>
         </div>
-        <div class="review-wrapper">
+        <div class="review-wrapper" v-if="commentsObj_formatted">
           <header>
-            999+ reviews
+            {{ commentsObj_formatted.reply_count }} reviews
           </header>
           <ul>
-            <li>
+            <li v-for="comment of commentsObj_formatted.reply">
               <header>
-                <h2>asd</h2>
+                <h2>{{ comment.user_name }}</h2>
                 <time> 2017-02-13</time>
               </header>
-              <div class="review-html">
-                asawduqgwasdasdasdwqdqwdqwdqwdqwdqwdqwdwqdqdqwdqwdqwqwdqwddiuqgwdouqwgdouqwgdouqgwdougqwodugqwodugqwodugqwoudgwq
+              <div class="review-html" v-html="comment.comment">
               </div>
               <footer>
                 <span v-popover:reviewPopover>回复</span>
@@ -72,21 +71,22 @@
       </div>
     </section>
     <aside>
-      <div class="aside-card">
+      <div class="aside-card" v-if="group" v-loading="loadingAside">
         <header>
-          <img src="#">
+          <img :src="group.image_url">
           <div class="group-info">
-            <h2>asdasdasdqwdqwdqwdqwdqwdqwd</h2>
-            <span>999+ top</span>
-            <span>999+ mem</span>
+            <h2>{{ group.name }}</h2>
+            <span>{{ group.post_num }} 话题　</span>
+            <span>{{ group.member_num }} 成员</span>
           </div>
         </header>
         <div class="aside-card-content">
-          <p>asdqwudgqouwdgqouwdgoquwgfoqwbfoqgwfouqgwfouqbwovuqbwouqownvnqownvqogdouqwgdoquwgdoquwgdouqwgofuqwofugqwougqwofugqwfouqgwfouqgofugqwou</p>
-          <span>Creator: Taotao</span>
+          <p>{{ group.introduction }}</p>
+          <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button>退出星球</el-button>
+          <el-button v-if="group.identity == 'member'">退出星球</el-button>
+          <el-button v-else-if="group.identity == 'not_applied'">加入星球</el-button>
         </footer>
       </div>
     </aside>
@@ -95,27 +95,101 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getPost,getCommentsByPostId } from 'api/post';
+  import { getGroup } from 'api/group';
+  import { parseTime } from 'utils/date';
 
   export default {
     name: 'post',
     data() {
       return {
+        postid: null,
+        post: null,
+        group: null,
         loading: false,
+        loadingAside: false,
+        commentsObj: null,
       }
     },
     computed: {
       ...mapGetters([
         'user',
         'access_token',
-      ])
+      ]),
+      post_formatted: function() {
+        if(!this.post) {
+          return null;
+        }
+        let newPost = Object.assign({}, this.post);
+        newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
+        return newPost;
+      },
+      commentsObj_formatted: function() {
+        if(!this.commentsObj) {
+          return null;
+        }
+        let newCommentsObj = Object.assign({}, this.commentsObj);
+        newCommentsObj.reply = newCommentsObj.reply.map((comment) => {
+          let newComment = Object.assign({}, comment);
+          newComment.create_time_formatted = parseTime(newComment.create_time, 'yyyy-MM-dd HH:mm')
+          return newComment;
+        })
+        return newCommentsObj;
+      }
+    },
+    created() {
+      this.postid = this.$route.params.id;
     },
     mounted() {
+      let self = this;
       this.loading = true;
-      // simulate ajax loading
-      console.log('im here')
-      setTimeout(() => {
-        this.loading = false;
-      }, 4000)
+      this.loadingAside = true;
+
+
+      // promise all for loading post and comment
+      var loadPostAndComments = function() {
+        return new Promise((resolve, reject) => {
+          Promise.all([getPost(self.postid), getCommentsByPostId(self.postid)]).then(res => {
+            console.log('step1');
+            console.dir(res);
+            self.post = res[0];
+            self.commentsObj = res[1];
+
+            self.loading = false;
+            resolve(res[0].group.id)
+          }).catch(error => {
+            reject(error);
+          });
+        });
+        
+      }
+      // loading group data and Authority information
+      var loadGroup = function(groupid) {
+        
+        return new Promise((resolve, reject) => {
+          getGroup(groupid).then(res => {
+            self.group = res;
+            self.loadingAside = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      }
+
+      loadPostAndComments()
+        .then(loadGroup)
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading = false;
+          this.loadingAside = false;
+        })
+
     }
   }
 </script>
@@ -146,6 +220,7 @@
   }
   // postdetails container(include post and review)
   .post-container {
+    min-height: 300px;
     border-radius:8px;
     padding: 16px;
     background: #ffffff;

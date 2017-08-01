@@ -19,6 +19,8 @@ import Group from 'views/group'
 import Inform from 'views/inform'
 
 import Collection from 'views/collection'
+
+import Register from 'views/register'
 /* dashboard */
 const dashboard = _import('dashboard/index');
 
@@ -97,6 +99,14 @@ export const constantRouterMap = [
     redirect: '/collection/index',
     hidden: true,
     children: [{ path: 'index', component: Collection}],
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Layout,
+    redirect: '/register/index',
+    hidden: true,
+    children: [{ path: 'index', component: Register}],
   }
 ]
 
