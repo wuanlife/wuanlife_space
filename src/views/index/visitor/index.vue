@@ -42,7 +42,10 @@
           <h2>发现星球</h2>
         </header>
         <div class="aside-content">
-          <div v-for="group of discoveryGroups" class="index-aside-card wuan-card">
+          <div v-for="group of discoveryGroups" 
+            class="index-aside-card wuan-card clickable"
+            @click="$router.push({path: '/group/' + group.id})"
+            >
             <img :src="group.image_url">
             <div class="wuan-card__content">
               <h2 class="clickable">{{ group.name }}</h2>
@@ -115,8 +118,7 @@
         
         return new Promise((resolve, reject) => {
           getGroups().then(res => {
-            console.dir(res)
-            self.discoveryGroups = res;
+            self.discoveryGroups = res.data;
             self.loadingAside = false;
             resolve();
           }).catch(error => {
@@ -191,6 +193,7 @@
         .index-aside-card {
           width: 250px;
           height: 70px;
+          margin-bottom: 4px;
         }
       }
       footer {
