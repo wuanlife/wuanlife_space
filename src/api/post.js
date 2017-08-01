@@ -1,8 +1,8 @@
 import fetch from 'utils/fetch';
 
-export function getPosts() {
+export function getPosts(latest=true, offset=0, limit=20) {
   return fetch({
-    url: '/posts',
+    url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,
     method: 'get',
   });
 }
