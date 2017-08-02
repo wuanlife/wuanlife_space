@@ -6,3 +6,9 @@ export function getGroup(id) {
     method: 'get',
   });
 }
+export function getGroups(offset=0, limit=20) {
+  return fetch({
+    url: `/groups?offset=${offset}&limit=${limit}`,
+    method: 'get',
+  });
+}
