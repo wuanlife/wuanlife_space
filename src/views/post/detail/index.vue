@@ -86,8 +86,8 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
+          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -463,20 +463,6 @@
     }
     footer {
       text-align: center;
-      button {
-        background:#1b87f6;
-        border-radius:4px;
-        padding: 8px 20px;
-        border: none;
-
-        font-family:PingFangHK-Regular;
-        font-size:12px;
-        color:#ffffff;
-        &:hover {
-          background: #4db3ff;
-          border-color: #4db3ff;
-        }
-      }
     }
   }
   .reviewPopover {
