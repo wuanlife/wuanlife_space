@@ -4,7 +4,7 @@
         <header>
           最新话题
         </header>
-        <div class="index-tabcontent" v-loading="loading2">
+        <div class="index-tabcontent" v-loading="loading">
           <ul class="index-cards">
             <li v-for="post of posts" class="index-card">
               <header>
@@ -27,16 +27,16 @@
               </div>
               <footer>
                 <ul>
-                  <li :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                  <li :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                  <li :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
+                  <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+                  <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+                  <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
                 </ul>
               </footer>
             </li>  
           </ul>
-          <el-pagination
-            layout="prev, pager, next"
-            :total="1000">
+          <el-pagination layout="prev, pager, next, jumper"
+                         :page-count="pagination.pageCount"
+                         @current-change="loadPosts">
           </el-pagination>
         </div>
       </section>
@@ -44,7 +44,7 @@
         <header>
           <h2>发现星球</h2>
         </header>
-        <div class="aside-content">
+        <div class="aside-content" v-loading="loadingAside">
           <div v-for="group of discoveryGroups" 
             class="index-aside-card wuan-card clickable"
             @click="$router.push({path: '/group/' + group.id})"
@@ -67,6 +67,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
+  import { parseQueryParams } from 'utils/url';
   import { getPosts } from 'api/post';
   import { getGroups } from 'api/group';
 
@@ -74,10 +75,15 @@
     name: 'index-visitor',
     data() {
       return {
-        activeName: 'index-myplanet',
         loading: false,
+        loadingAside: false,
         posts: [],
         discoveryGroups: [],
+        pagination: {
+          pageCount: 1,
+          currentPage: 1,
+          limit: 20,
+        }
       }
     },
     computed: {
@@ -99,38 +105,10 @@
       },
     },
     mounted() {
-      var self = this;
-      this.loading = true;
-      this.loadingAside = true;
       
-      // promise all for loading post and comment
-      var loadPosts = function() {
-        return new Promise((resolve, reject) => {
-          getPosts(true).then(res => {
-            console.dir(res);
-            self.posts = res.data;
-            self.loading = false;
-            resolve();
-          }).catch(error => {
-            reject(error);
-          });
-        });
-      }
-      // loading group data and Authority information
-      var loadGroups = function(groupid) {
-        
-        return new Promise((resolve, reject) => {
-          getGroups().then(res => {
-            self.discoveryGroups = res.data;
-            self.loadingAside = false;
-            resolve();
-          }).catch(error => {
-            reject(error);
-          });
-        });
-      }
+      
 
-      loadPosts()
+      this.loadPosts()
         .then()
         .catch((err) => {
           console.dir(err);
@@ -141,7 +119,7 @@
           });
           this.loading = false;
         })
-      loadGroups()
+      this.loadGroups()
         .then()
         .catch((err) => {
           console.dir(err);
@@ -151,8 +129,44 @@
             duration: 1000,
           });
           this.loadingAside = false;
-        });
+        });  
+    },
+    methods: {
+      loadPosts(page) {
+        var self = this;
+        this.loading = true;
+        console.log(`page is ${page}`)
+        return new Promise((resolve, reject) => {
+          getPosts(true,(page-1)*self.pagination.limit || 0).then(res => {
+            console.dir(res);
+            self.posts = res.data;
+            self.loading = false;
 
+            // pagination
+            let pageFinal = parseQueryParams(res.paging.final);
+            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      loadGroups() {
+        var self = this;
+        this.loadingAside = true;
+        return new Promise((resolve, reject) => {
+          getGroups().then(res => {
+            self.discoveryGroups = res.data;
+            self.loadingAside = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      gotoLogin() {
+        this.$router.push({path: '/login/'})
+      },
     }
   }
 </script>
@@ -193,6 +207,7 @@
         }
       }
       .aside-content {
+        min-height: 100px;
         .index-aside-card {
           width: 250px;
           height: 70px;

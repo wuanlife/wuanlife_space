@@ -70,9 +70,8 @@ export const constantRouterMap = [
     path: '/login',
     name: 'login',
     component: Layout,
-    redirect: '/login/index',
     hidden: true,
-    children: [{ path: 'index', component: Login }]
+    children: [{ path: '', component: Login }]
   },
   {
     path: '/post',
