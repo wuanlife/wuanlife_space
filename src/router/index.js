@@ -16,7 +16,8 @@ import Index from 'views/index'
 import PostDetail from 'views/post/detail'
 import PostPublish from 'views/post/publish'
 
-import Group from 'views/group'
+import GroupDetail from 'views/group/detail'
+import GroupCreate from 'views/group/create'
 
 import Inform from 'views/inform'
 
@@ -83,7 +84,7 @@ export const constantRouterMap = [
     path: '/group',
     name: 'group',
     component: Layout,
-    children: [{ path: ':id', component: Group}],
+    children: [{ path: 'create', component: GroupCreate }, { path: ':id', component: GroupDetail}],
   },
   {
     path: '/inform',
