@@ -101,3 +101,36 @@ $panGreen: #30B08F;
     font-size: 14px;
     border-radius: 4px;
 }
+
+
+// wuan button
+.wuan-button {
+  background:#5677fc;
+  box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+  border-radius:2px;
+  border: none;
+  padding: 7px;
+  transition: all 0.3s ease-in-out;
+
+  font-family:PingFangSC-Regular;
+  font-size:12px;
+  color:#ffffff;
+  &:hover {
+    background: #3d53cf;
+  }
+}
+
+.func-button {
+  background:#1b87f6;
+  border-radius:4px;
+  border: none;
+  padding: 7px;
+  transition: all 0.3s ease-in-out;
+
+  font-family:PingFangHK-Regular;
+  font-size:12px;
+  color:#ffffff;
+  &:hover {
+    background: #4db3ff;
+  }
+}

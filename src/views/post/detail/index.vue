@@ -71,7 +71,8 @@
       </div>
     </section>
     <aside>
-      <div class="aside-card" v-if="group" v-loading="loadingAside">
+
+      <div class="aside-card" v-if="group">
         <header>
           <img :src="group.image_url">
           <div class="group-info">
@@ -85,9 +86,12 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
+          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
         </footer>
+      </div>
+      <!-- for aside loading -->
+      <div v-else class="aside-card" v-loading="loadingAside">
       </div>
     </aside>
   </div>
@@ -150,8 +154,6 @@
       var loadPostAndComments = function() {
         return new Promise((resolve, reject) => {
           Promise.all([getPost(self.postid), getCommentsByPostId(self.postid)]).then(res => {
-            console.log('step1');
-            console.dir(res);
             self.post = res[0];
             self.commentsObj = res[1];
 
@@ -161,7 +163,6 @@
             reject(error);
           });
         });
-        
       }
       // loading group data and Authority information
       var loadGroup = function(groupid) {
@@ -409,6 +410,7 @@
 
   // aside part
   .aside-card {
+    min-height: 200px;
     width: 248px;
     padding: 10px 14px;
     background:#ffffff;
@@ -461,20 +463,6 @@
     }
     footer {
       text-align: center;
-      button {
-        background:#1b87f6;
-        border-radius:4px;
-        padding: 8px 20px;
-        border: none;
-
-        font-family:PingFangHK-Regular;
-        font-size:12px;
-        color:#ffffff;
-        &:hover {
-          background: #4db3ff;
-          border-color: #4db3ff;
-        }
-      }
     }
   }
   .reviewPopover {
