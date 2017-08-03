@@ -13,8 +13,11 @@ const Login = _import('login/index');
 
 import Index from 'views/index'
 
-import Post from 'views/post'
-import Group from 'views/group'
+import PostDetail from 'views/post/detail'
+import PostPublish from 'views/post/publish'
+
+import GroupDetail from 'views/group/detail'
+import GroupCreate from 'views/group/create'
 
 import Inform from 'views/inform'
 
@@ -68,21 +71,20 @@ export const constantRouterMap = [
     path: '/login',
     name: 'login',
     component: Layout,
-    redirect: '/login/index',
     hidden: true,
-    children: [{ path: 'index', component: Login }]
+    children: [{ path: '', component: Login }]
   },
   {
     path: '/post',
     name: 'post',
     component: Layout,
-    children: [{ path: ':id', component: Post}],
+    children: [{ path: 'publish', component: PostPublish}, { path: ':id', component: PostDetail}],
   },
   {
     path: '/group',
     name: 'group',
     component: Layout,
-    children: [{ path: ':id', component: Group}],
+    children: [{ path: 'create', component: GroupCreate }, { path: ':id', component: GroupDetail}],
   },
   {
     path: '/inform',

@@ -35,7 +35,8 @@
     }
     .main-container {
       background-color: #f8f9fa;
-      min-height: calc(100vh - 50px);
+      height: calc(100vh - 50px);
+      overflow: auto;
       transition: all .28s ease-out;
     }
   }

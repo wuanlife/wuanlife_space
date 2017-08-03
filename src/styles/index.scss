@@ -63,6 +63,26 @@ a:hover {
   text-decoration: none;
 }
 
+//滚动条样式
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+  -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+
 .fr {
   float: right;
 }
@@ -116,25 +136,21 @@ code {
   opacity: 0;
 }
 
-
-//main-container全局样式
-.app-container {
-  padding: 20px;
-}
-.components-container {
-  margin: 30px 50px;
-  position: relative;
-}
-.pagination-container {
-  margin-top: 30px;
+// simple markdown
+.simplemde-container {
+  display: flex;
+  flex-direction: column;
+  .CodeMirror {
+    flex: 1;
+  }
 }
 
-.editor-container .CodeMirror {
-  height: 100%!important;
-}
 
 .text-center{
-  text-align: center
+  text-align: center;
+}
+.text-right {
+  text-align: right;
 }
 .svg-icon {
   width: 1em;
@@ -143,61 +159,6 @@ code {
   fill: currentColor;
   overflow: hidden;
 }
-
-.sub-navbar {
-  height: 50px;
-  line-height: 50px;
-  position: relative;
-  width: 100%;
-  text-align: right;
-  padding-right: 20px;
-  transition: 600ms ease position;
-  background: linear-gradient(90deg, rgba(32, 182, 249, 1) 0%, rgba(32, 182, 249, 1) 0%, rgba(33, 120, 241, 1) 100%, rgba(33, 120, 241, 1) 100%);
-  .subtitle {
-    font-size: 20px;
-    color: #fff;
-  }
-  &.draft {
-    background: #d0d0d0;
-  }
-  &.deleted {
-    background: #d0d0d0;
-  }
-}
-
-.link-type,
-.link-type:focus {
-  color: #337ab7;
-  cursor: pointer;
-  &:hover {
-    color: rgb(32, 160, 255);
-  }
-}
-
-.publishedTag,
-.draftTag,
-.deletedTag {
-  color: #fff;
-  background-color: $panGreen;
-  line-height: 1;
-  text-align: center;
-  margin: 0;
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 4px;
-  position: absolute;
-  left: 20px;
-  top: 10px;
-}
-
-.draftTag {
-  background-color: $yellow;
-}
-
-.deletedTag {
-  background-color: $red;
-}
-
 .input-label {
   font-size: 14px;
   color: #48576a;
