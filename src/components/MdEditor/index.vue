@@ -27,7 +27,6 @@
       },
       height: {
         type: Number,
-        default: 150
       },
       zIndex: {
         type: Number,

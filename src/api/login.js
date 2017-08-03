@@ -8,6 +8,6 @@ export function login(email, password) {
   return fetch({
     url: '/users/signin',
     method: 'post',
-    data
+    data: data,
   });
 }
