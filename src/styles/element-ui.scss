@@ -188,3 +188,86 @@ section.app-main {
     margin-top: 36px;
   }
 }
+//个人资料里的表单
+.personal-data-form-inputy{
+    display: flex;
+    align-items: center;
+    label{
+        font-size: 16px;
+        color: #000000;
+        font-family: PingFangHK-Semibold;
+        text-align: left;
+        padding: 0;
+        line-height: 22px;
+    }
+    .el-form-item__content{
+        > span{
+            font-family:PingFangHK-Semibold;
+            font-size:16px;
+            color:#666666;
+            text-align:left;
+            margin-left: -68px;
+            margin-right: 68px;
+        }
+        .el-input{
+            width: 210px;
+            margin-left: -68px;
+            input{
+                border: 1px solid #d8d8d8;
+                font-size: 16px;
+                color: #000000;
+                font-family: PingFangHK-Regular;
+                padding: 6px 10px;
+                background-color: #f2f2f2;
+                border-radius: 2px;
+                height: 32px;
+                &::-webkit-input-placeholder{
+                  color: #000000;
+                  font-family:PingFangHK-Regular;
+                }
+            }
+        }
+        button{
+            font-size: 12px;
+            color: #ffffff;
+            background-color: #5677fc;
+            font-family: PingFangSC-Regular;
+            padding: 7px 28px 6px 28px;
+            line-height: 17px;
+            border-radius: 2px;
+            box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+            border: none;
+        }
+        > .el-radio-group{
+            margin-left: -68px;
+            .el-radio{
+                .el-radio__input{
+                    .el-radio__inner{
+                        border: 3px solid #979797;
+                        width: 14px;
+                        height: 14px;
+                        &::after{
+                          width: 4px;
+                          height: 4px;
+                          border-radius: 100%;
+                        }
+                    }
+                }
+                > span{
+                    font-size: 16px;
+                }
+                .is-checked{
+                    .el-radio__inner{
+                        border: 5px solid #5677fc;
+                    }
+                }
+            }
+            .el-radio+.el-radio{
+                margin-left: 70px;
+            }
+        }
+        .el-form-item__error{
+          left: -68px;
+        }
+    }
+}
