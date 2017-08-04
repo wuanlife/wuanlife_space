@@ -111,7 +111,7 @@
             this.$store.dispatch('Rigister',this.loginForm).then(() => {
               this.loading = false;
               //重新指向登录页
-              this.$router.push({ path: 'login' });
+              this.$router.push({ path: '/' });
             }).catch(err => {
               console.dir(err)
               this.$message({
@@ -127,29 +127,6 @@
           }
         });
       },
-      /*submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.loading = true;
-            this.$store.dispatch('Login', this.loginForm).then(() => {
-              this.loading = false;
-              this.$router.push({ path: '/' });
-                // this.showDialog = true;
-            }).catch(err => {
-              console.dir(err)
-              this.$message({
-                message: err.error,
-                type: 'error',
-                duration: 1000,
-              });
-              this.loading = false;
-            });
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },*/
     },
   }
 </script>
