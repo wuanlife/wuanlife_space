@@ -62,7 +62,6 @@
         // form part
         personalDataForm: {
           email: '',
-          password: '',
           name: '',
           resource: '',
         },
@@ -88,9 +87,8 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.loading = true;
-            this.$store.dispatch('Login', this.personalDataForm).then(() => {
+            this.$store.dispatch('SetInfo', this.personalDataForm).then(() => {
               this.loading = false;
-              this.$router.push({ path: '/' });
                 // this.showDialog = true;
             }).catch(err => {
               console.dir(err)

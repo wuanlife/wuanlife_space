@@ -11,3 +11,16 @@ export function login(email, password) {
     data: data,
   });
 }
+
+export function getInfo(email, name, resource) {
+  const data = {
+    email: email,
+    name: name,
+    resource: resource,
+  }
+  return fetch({
+    url: '/user/info',
+    method: 'post',
+    data: data,
+  });
+}
