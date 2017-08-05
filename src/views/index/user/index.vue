@@ -26,9 +26,9 @@
                   </div>
                   <footer>
                     <ul>
-                      <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
+                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
                     </ul>
                   </footer>
                 </li>  
@@ -63,9 +63,9 @@
                   </div>
                   <footer>
                     <ul>
-                      <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
+                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
                     </ul>
                   </footer>
                 </li>  
@@ -88,10 +88,10 @@
               <button @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</button>
             </li>
             <li class="group-card-func">
-              <button @click="$router.push({path: `/group/${group.id}`})">全部星球</button>
+              <button @click="$router.push({path: `/index/`})">全部星球</button>
             </li>
             <li class="group-card-func">
-              <button @click="$router.push({path: `/group/${group.id}`})">创建星球</button>
+              <button @click="$router.push({path: `/index/`})">创建星球</button>
             </li>
           </ul>
         </div>
@@ -103,7 +103,11 @@
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
-  import { getPosts } from 'api/post';
+  import { 
+    getPosts,
+    approvePost,
+    collectPost,
+  } from 'api/post';
   import { getGroups } from 'api/group';
 
   export default {
@@ -205,7 +209,6 @@
         console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(false,(page-1)*self.pagination_myplanet.limit || 0).then(res => {
-            console.dir(res);
             self.myplanetsPosts = res.data;
             self.loading_myplanet = false;
 
@@ -224,7 +227,6 @@
         console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(true,(page-1)*self.pagination_newtopic.limit || 0).then(res => {
-            console.dir(res);
             self.newtopicPosts = res.data;
             self.loading_newtopic = false;
 
@@ -236,8 +238,7 @@
             reject(error);
           });
         });
-      },
-      
+      },    
       loadGroups() {
         var self = this;
         this.loadingAside = true;
@@ -251,6 +252,52 @@
           });
         });
       },
+      // collect post
+      collect(id) {
+        var self = this;
+        collectPost({
+          id: id,
+          userid: self.user.userInfo.id,
+        }).then(() => {
+          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
+            return item.id === id
+          })
+          let newtopicIndex = self.newtopicPosts.findIndex(item => {
+            return item.id === id
+          })
+          let preCollected = self.myplanetsPosts[myplanetsIndex].collected
+          if(myplanetsIndex != -1) {
+            self.myplanetsPosts[myplanetsIndex].collected = preCollected ? false : true;
+            self.myplanetsPosts[myplanetsIndex].collected_num = parseInt(self.myplanetsPosts[myplanetsIndex].collected_num) + (preCollected ? -1 : 1);
+          }
+          if(newtopicIndex != -1) {
+            self.newtopicPosts[newtopicIndex].collected = preCollected ? false : true;
+            self.newtopicPosts[newtopicIndex].collected_num = parseInt(self.newtopicPosts[newtopicIndex].collected_num) + (preCollected ? -1 : 1);
+          }
+        })
+      },
+      approve(id) {
+        var self = this;
+        approvePost({
+          id: id,
+        }).then(() => {
+          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
+            return item.id === id
+          })
+          let newtopicIndex = self.newtopicPosts.findIndex(item => {
+            return item.id === id
+          })
+          let preApproved = self.myplanetsPosts[myplanetsIndex].approved
+          if(myplanetsIndex != -1) {
+            self.myplanetsPosts[myplanetsIndex].approved = preApproved ? false : true;
+            self.myplanetsPosts[myplanetsIndex].approved_num = parseInt(self.myplanetsPosts[myplanetsIndex].approved_num) + (preApproved ? -1 : 1);
+          }
+          if(newtopicIndex != -1) {
+            self.newtopicPosts[newtopicIndex].approved = preApproved ? false : true;
+            self.newtopicPosts[newtopicIndex].approved_num = parseInt(self.newtopicPosts[newtopicIndex].approved_num) + (preApproved ? -1 : 1);
+          }
+        })
+      }
     }
   }
 </script>
@@ -437,7 +484,7 @@
       font-family:PingFangHK-Medium;
       font-size:12px;
       color:#5992e4;
-      text-align:left;
+      text-align: center;
       &:hover {
         background: #5992e4;
         color: #ffffff;
@@ -446,5 +493,13 @@
         outline: none;
       }
     }
+  }
+  .group-card-func {
+    @extend .group-card;
+    button {
+      background: #5677fc;
+      color: #ffffff;
+    }
+    
   }
 </style>
