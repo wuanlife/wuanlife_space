@@ -110,7 +110,6 @@
             this.loading=true;
             this.$store.dispatch('Rigister',this.loginForm).then(() => {
               this.loading = false;
-              //重新指向登录页
               this.$router.push({ path: '/' });
             }).catch(err => {
               console.dir(err)
