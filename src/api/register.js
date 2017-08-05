@@ -8,7 +8,7 @@ export function register(email,nickname,password,inviteword) {
     code: inviteword,
   };
   return fetch({
-    url: '/user/reg',
+    url: '/users',
     method: 'post',
     data: data,
   });
