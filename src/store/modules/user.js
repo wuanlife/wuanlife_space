@@ -61,6 +61,23 @@ const user = {
       storeWithExpiration.set('user.userInfo', {});
       storeWithExpiration.set('user.token', '');
     },
+    //注册
+    Rigister({ commit },register_params){
+      return new Promise((resolve, reject) => {
+        register(register_params.email, register_params.nickname,register_params.password,register_params.inviteword).then(response => {
+          console.dir(response)
+          const data = response;
+          storeWithExpiration.set('user.userInfo', response, 86400000);
+          storeWithExpiration.set('user.token', response['Access-Token'], 86400000);
+          commit('SET_USERINFO', response);  
+          commit('SET_TOKEN', response['Access-Token']);  
+          resolve();      
+        }).catch(error => {
+          reject(error);
+        });
+   
+      });
+    },
     //保存个人资料
     SetInfo({ commit }, setinfo_params) {
       return new Promise((resolve, reject) => {
@@ -77,6 +94,6 @@ const user = {
       });
     }
   }
-}
+};
 
 export default user;
