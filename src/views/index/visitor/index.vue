@@ -18,7 +18,7 @@
                 <time>{{ post.create_time_formatted }}</time>
               </header>
               <div class="index-card-content">
-                <h1>{{ post.title }}</h1>
+                <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
                 <div class="preview-html" v-html="post.content">
                 </div>
                 <div class="preview-imgs">
