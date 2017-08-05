@@ -5,7 +5,7 @@
         <div class="form-content">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
-              <el-input v-model.number="loginForm.email" placeholder="输入邮箱"></el-input>
+              <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password" class="form-inputy">
               <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
