@@ -1,4 +1,5 @@
 import { login } from 'api/login';
+import { register } from 'api/register';
 import Cookies from 'js-cookie';
 import { storeWithExpiration } from 'utils';
 
@@ -7,9 +8,6 @@ const user = {
     token: storeWithExpiration.get('user.token') == '' ? storeWithExpiration.get('user.token') : '',
     userInfo: storeWithExpiration.get('user.userInfo') || {},
     setting: '',
-    name: '',
-    email: '',
-    resource: ''
   },
 
   mutations: {
@@ -24,15 +22,6 @@ const user = {
       state.token = '';
       state.userInfo = {};
     },
-    SET_NAME: (state, name) => {
-      state.name = name;
-    },
-    SET_EMAIL: (state, email) => {
-      state.email = email;
-    },
-    SET_RESOURCE: (state, resource) => {
-      state.resource = resource;
-    }
   },
 
   actions: {
@@ -76,21 +65,6 @@ const user = {
           reject(error);
         });
    
-      });
-    },
-    //保存个人资料
-    SetInfo({ commit }, setinfo_params) {
-      return new Promise((resolve, reject) => {
-        getInfo(setinfo_params.email, setinfo_params.name, setinfo_params.resource).then(response => {
-          console.dir(response)
-          const data = response;
-          commit('SET_NAME', data.name);  
-          commit('SET_EMAIL', data.email);  
-          commit('SET_RESOURCE', data.resource);
-          resolve();      
-        }).catch(error => {
-          reject(error);
-        });
       });
     }
   }
