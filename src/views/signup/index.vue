@@ -108,7 +108,7 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            this.$store.dispatch('Rigister',this.loginForm).then(() => {
+            this.$store.dispatch('Signup',this.loginForm).then(() => {
               this.loading = false;
               this.$router.push({ path: '/' });
             }).catch(err => {

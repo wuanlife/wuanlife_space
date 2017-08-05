@@ -6,7 +6,7 @@
         </header>
         <div class="index-tabcontent" v-loading="loading">
           <ul class="index-cards">
-            <li v-for="post of posts" class="index-card">
+            <li v-for="post of posts_formatted" class="index-card">
               <header>
                 <img :src="post.author.avatar_url">
                 <span class="clickable">{{ post.author.name }}</span>
@@ -95,19 +95,17 @@
         if(this.posts.length === 0) {
           return [];
         }
-        let newPosts = new Array(this.posts);
+        let newPosts = this.posts.slice(0);
         newPosts = newPosts.map((post) => {
           let newPost = post;
           newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
           return newPost;
         })
+        console.dir(newPosts)
         return newPosts;
       },
     },
     mounted() {
-      
-      
-
       this.loadPosts()
         .then()
         .catch((err) => {

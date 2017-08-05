@@ -5,7 +5,7 @@
         <div class="form-content">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
-              <el-input v-model.number="loginForm.email" placeholder="输入邮箱"></el-input>
+              <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password" class="form-inputy">
               <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
@@ -14,8 +14,8 @@
               <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
             </el-form-item>
           </el-form>
-          <a href="#/login" id="register">注册账号</a>
-          <a href="#/login" id="findpassword">找回密码</a>
+          <a href="#/signup/" id="register">注册账号</a>
+          <a href="#/login/" id="findpassword">找回密码</a>
         </div>
       </section>
     </div>
@@ -28,9 +28,9 @@
     name: 'index-visitor',
     data() {
       // element-ui validator
-      var validateUser = (rule, value, callback) => {
+      var validateEmail = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入Username'));
+          callback(new Error('请再次输入邮箱'));
         } else {
           callback();
         }
@@ -53,7 +53,7 @@
         },
         loginRules: {
           email: [
-            { validator: validateUser, trigger: 'blur' }
+            { validator: validateEmail, trigger: 'blur' }
           ],
           password: [
             { validator: validatePass, trigger: 'blur' }

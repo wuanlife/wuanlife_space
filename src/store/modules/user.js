@@ -1,11 +1,9 @@
-import { login } from 'api/login';
-import { register } from 'api/register';
-import Cookies from 'js-cookie';
+import { login, signup } from 'api/auth';
 import { storeWithExpiration } from 'utils';
 
 const user = {
   state: {
-    token: storeWithExpiration.get('user.token') == '' ? storeWithExpiration.get('user.token') : '',
+    token: storeWithExpiration.get('user.token') != '' ? storeWithExpiration.get('user.token') : '',
     userInfo: storeWithExpiration.get('user.userInfo') || {},
     setting: '',
   },
@@ -51,9 +49,9 @@ const user = {
       storeWithExpiration.set('user.token', '');
     },
     //注册
-    Rigister({ commit },register_params){
+    Signup({ commit },register_params){
       return new Promise((resolve, reject) => {
-        register(register_params.email, register_params.nickname,register_params.password,register_params.inviteword).then(response => {
+        register(register_params).then(response => {
           console.dir(response)
           const data = response;
           storeWithExpiration.set('user.userInfo', response, 86400000);
