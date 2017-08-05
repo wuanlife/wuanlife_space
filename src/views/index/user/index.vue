@@ -3,100 +3,76 @@
       <section>     
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane label="我的星球" name="index-myplanet">
-            <div class="index-tabcontent" v-loading="loading">
+            <div class="index-tabcontent" v-loading="loading_myplanet">
               <ul class="index-cards">
-                <li class="index-card">
+                <li v-for="post of myplanetsPosts_formatted" class="index-card">
                   <header>
-                    <img src="#">
-                    <span class="clickable">taotao</span>
-                    <span>posted in</span>
-                    <span class="clickable">guice</span>
-                    <time>2017-02-21</time>
+                    <img :src="post.author.avatar_url">
+                    <span class="clickable">{{ post.author.name }}</span>
+                    <span>发表于</span>
+                    <span class="clickable"
+                      @click="$router.push({path: '/group/' + post.group.id})">
+                      {{ post.group.name }}
+                    </span>
+                    <time>{{ post.create_time_formatted }}</time>
                   </header>
                   <div class="index-card-content">
-                    <h1>asdwqdqwdqw</h1>
-                    <div class="preview-html">
-                      asdasdasdasd<strong>strongtest</strong>asdasdasdasdwqdqwdqwdqwdwqdqwdqwasdadqwhdqiuwdgiquwdgqiwudgqiuwdgqwiudgqdwqdqwdoiqhwdoiqwdoiqwd
+                    <h1>{{ post.title }}</h1>
+                    <div class="preview-html" v-html="post.content">
                     </div>
                     <div class="preview-imgs">
-                      <img src="#">
-                      <img src="#">
+                      <img v-for="img of post.image_url" :src="img">
                     </div>
                   </div>
                   <footer>
                     <ul>
-                      <li class="done">reviews 134</li>
-                      <li>approves 134</li>
-                      <li>collections 134</li>
-                    </ul>
-                  </footer>
-                </li> 
-                <li class="index-card">
-                  <header>
-                    <img src="#">
-                    <span>taotao</span>
-                    <span>posted in</span>
-                    <span>guice</span>
-                    <time>2017-02-21</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1>asdwqdqwdqw</h1>
-                    <div class="preview-html">
-                      asdasdasdasd<strong>strongtest</strong>asdasdasdasdwqdqwdqwdqwdwqdqwdqwasdadqwhdqiuwdgiquwdgqiwudgqiuwdgqwiudgqdwqdqwdoiqhwdoiqwdoiqwd
-                    </div>
-                    <div class="preview-imgs">
-                      <img src="#">
-                      <img src="#">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li class="done">reviews 134</li>
-                      <li>approves 134</li>
-                      <li>collections 134</li>
-                    </ul>
-                  </footer>
-                </li> 
-              </ul>
-              <el-pagination
-                layout="prev, pager, next"
-                :total="1000">
-              </el-pagination>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="最新话题" name="index-newtopic">
-            <div class="index-tabcontent" v-loading="loading2">
-              <ul class="index-cards">
-                <li class="index-card">
-                  <header>
-                    <img src="#">
-                    <span>taotao</span>
-                    <span>posted in</span>
-                    <span>guice</span>
-                    <time>2017-02-21</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1>asdwqdqwdqw</h1>
-                    <div class="preview-html">
-                      asdasdasdasd<strong>strongtest</strong>asdasdasdasdwqdqwdqwdqwdwqdqwdqwasdadqwhdqiuwdgiquwdgqiwudgqiuwdgqwiudgqdwqdqwdoiqhwdoiqwdoiqwd
-                    </div>
-                    <div class="preview-imgs">
-                      <img src="#">
-                      <img src="#">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li class="done">reviews 134</li>
-                      <li>approves 134</li>
-                      <li>collections 134</li>
+                      <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+                      <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+                      <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
                     </ul>
                   </footer>
                 </li>  
               </ul>
-              <el-pagination
-                layout="prev, pager, next"
-                :total="1000">
+              <el-pagination layout="prev, pager, next, jumper"
+                             :page-count="pagination_myplanet.pageCount"
+                             @current-change="loadPosts_myplanet">
+              </el-pagination>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="最新话题" name="index-newtopic">
+            <div class="index-tabcontent" v-loading="loading_newtopic">
+              <ul class="index-cards">
+                <li v-for="post of newtopicPosts_formatted" class="index-card">
+                  <header>
+                    <img :src="post.author.avatar_url">
+                    <span class="clickable">{{ post.author.name }}</span>
+                    <span>发表于</span>
+                    <span class="clickable"
+                      @click="$router.push({path: '/group/' + post.group.id})">
+                      {{ post.group.name }}
+                    </span>
+                    <time>{{ post.create_time_formatted }}</time>
+                  </header>
+                  <div class="index-card-content">
+                    <h1>{{ post.title }}</h1>
+                    <div class="preview-html" v-html="post.content">
+                    </div>
+                    <div class="preview-imgs">
+                      <img v-for="img of post.image_url" :src="img">
+                    </div>
+                  </div>
+                  <footer>
+                    <ul>
+                      <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+                      <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+                      <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
+                    </ul>
+                  </footer>
+                </li>  
+              </ul>
+              <el-pagination layout="prev, pager, next, jumper"
+                             :page-count="pagination_newtopic.pageCount"
+                             @current-change="loadPosts_newtopic">
               </el-pagination>
             </div>
           </el-tab-pane>
@@ -107,13 +83,17 @@
           <h2>我加入的星球</h2>
         </header>
         <div class="aside-content">
-          <div class="index-aside-card wuan-card">
-            <img src="http://img.alicdn.com/bao/uploaded/i2/TB2x7C0nFXXXXbsXpXXXXXXXXXX_!!101742512.jpg">
-            <div class="wuan-card__content">
-              <h2>asdasdqwdqwdqasdasdasdasdasdwdqwdqwdqwd</h2>
-              <p>asdadqwdqwdguiqasdasdwgdiuqwgdiuqwgdqiuw</p>
-            </div>
-          </div>
+          <ul class="group-cards">
+            <li v-for="group of myGroups" class="group-card">
+              <button @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</button>
+            </li>
+            <li class="group-card-func">
+              <button @click="$router.push({path: `/group/${group.id}`})">全部星球</button>
+            </li>
+            <li class="group-card-func">
+              <button @click="$router.push({path: `/group/${group.id}`})">创建星球</button>
+            </li>
+          </ul>
         </div>
       </aside>
     </div>
@@ -121,32 +101,156 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { parseTime } from 'utils/date';
+  import { parseQueryParams } from 'utils/url';
+  import { getPosts } from 'api/post';
+  import { getGroups } from 'api/group';
 
   export default {
     name: 'index-visitor',
     data() {
       return {
         activeName: 'index-myplanet',
-        loading: false,
+
+        loading_myplanet: false,
+        loading_newtopic: false,
+        loadingAside: false,
+        myplanetsPosts: [],
+        newtopicPosts: [],
+        pagination_myplanet: {
+          pageCount: 1,
+          currentPage: 1,
+          limit: 20,
+        },
+        pagination_newtopic: {
+          pageCount: 1,
+          currentPage: 1,
+          limit: 20,
+        },
+
+        // aside group
+        myGroups: [],
       }
     },
     computed: {
       ...mapGetters([
         'user',
-        'access_token',
-      ])
+        'token',
+      ]),
+      myplanetsPosts_formatted: function() {
+        if(this.myplanetsPosts.length === 0) {
+          return [];
+        }
+        let newPosts = this.myplanetsPosts.slice(0);
+        newPosts = newPosts.map((post) => {
+          let newPost = post;
+          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
+          return newPost;
+        })
+        return newPosts;
+      },
+      newtopicPosts_formatted: function() {
+        if(this.newtopicPosts.length === 0) {
+          return [];
+        }
+        let newPosts = this.newtopicPosts.slice(0);
+        newPosts = newPosts.map((post) => {
+          let newPost = post;
+          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
+          return newPost;
+        })
+        return newPosts;
+      },
     },
     mounted() {
-      this.loading = true;
-      this.loading2 = true;
-      // simulate ajax loading
-      setTimeout(() => {
-        this.loading = false;
-      }, 4000)
-      setTimeout(() => {
-        this.loading2 = false;
-      }, 6000)
+      this.loadPosts_myplanet()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading_myplanet = false;
+        })
+      this.loadPosts_newtopic()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading_newtopic = false;
+        })
+      this.loadGroups()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loadingAside = false;
+        });
+    },
+    methods: {
+       // OPTIMIZE: there is a redundant code using ctrl+c to load newtopic and myplanet posts
+       loadPosts_myplanet(page) {
+        var self = this;
+        this.loading_myplanet = true;
+        console.log(`page is ${page}`)
+        return new Promise((resolve, reject) => {
+          getPosts(false,(page-1)*self.pagination_myplanet.limit || 0).then(res => {
+            console.dir(res);
+            self.myplanetsPosts = res.data;
+            self.loading_myplanet = false;
 
+            // pagination
+            let pageFinal = parseQueryParams(res.paging.final);
+            self.pagination_myplanet.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      loadPosts_newtopic(page) {
+        var self = this;
+        this.loading_newtopic = true;
+        console.log(`page is ${page}`)
+        return new Promise((resolve, reject) => {
+          getPosts(true,(page-1)*self.pagination_newtopic.limit || 0).then(res => {
+            console.dir(res);
+            self.newtopicPosts = res.data;
+            self.loading_newtopic = false;
+
+            // pagination
+            let pageFinal = parseQueryParams(res.paging.final);
+            self.pagination_newtopic.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      
+      loadGroups() {
+        var self = this;
+        this.loadingAside = true;
+        return new Promise((resolve, reject) => {
+          getGroups().then(res => {
+            self.myGroups = res.data;
+            self.loadingAside = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
     }
   }
 </script>
@@ -305,5 +409,42 @@
         }
       }  
     }   
+  }
+
+  // aside style
+  .group-cards {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+  .group-card {
+    margin-bottom: 8px;
+    &:nth-child(odd) {
+      margin-right: 18px;
+    }
+    button {
+      background:#ffffff;
+      border-radius:4px;
+      border: none;
+      padding: 8px 16px;
+      width:116px;
+      height:34px;
+      transition: all 0.4s ease-in-out;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+      font-family:PingFangHK-Medium;
+      font-size:12px;
+      color:#5992e4;
+      text-align:left;
+      &:hover {
+        background: #5992e4;
+        color: #ffffff;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
   }
 </style>

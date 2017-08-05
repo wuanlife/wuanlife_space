@@ -4,7 +4,7 @@
       <!-- Logo bar -->
       <div class="logo" @click="$router.push({path: '/'})">
         <img src="">
-        Wuanlife
+        午安网
       </div>
       <!-- Search bar -->
       <div class="search-container">
@@ -24,7 +24,7 @@
                    @visible-change="visibleChange">
         <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
           <icon-svg icon-class="peopleCircle" class="avatar-icon"></icon-svg>
-          <span>keke</span>
+          <span>{{ user.userInfo.name }}</span>
         </div>
         <el-dropdown-menu class="user-dropdown" slot="dropdown">
           <router-link class='inlineBlock' to="/">
@@ -33,19 +33,19 @@
               个人资料
             </el-dropdown-item>
           </router-link>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <a target='_blank' href="www.baidu.com">
             <el-dropdown-item>
               <icon-svg icon-class="starSolid" class="avatar-icon"></icon-svg>
               我的收藏
             </el-dropdown-item>
           </a>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <a target='_blank' href="www.baidu.com">
             <el-dropdown-item>
               <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
               邀请好友
             </el-dropdown-item>
           </a>
-          <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
+          <a target='_blank' href="www.baidu.com">
             <el-dropdown-item>
               <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
               修改密码
@@ -61,8 +61,8 @@
       </el-dropdown>
       <!-- login bar (if not logined) -->
       <div v-else class="login-container">
-        <span><router-link to="/login/">Login</router-link></span>
-        <span><router-link to="/signup/">Signup</router-link></span>
+        <span><router-link to="/login/">登录</router-link></span>
+        <span><router-link to="/signup/">注册</router-link></span>
       </div>
     </div>
   </el-menu>
@@ -72,14 +72,12 @@
   import { mapGetters } from 'vuex';
   import Levelbar from './Levelbar';
   import TabsView from './TabsView';
-  import ErrorLog from 'components/ErrLog';
   import errLogStore from 'vuex-store/errLog';
 
   export default {
     components: {
       Levelbar,
       TabsView,
-      ErrorLog,
     },
     data() {
       return {
