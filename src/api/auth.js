@@ -25,3 +25,17 @@ export function signup(regObj) {
     data: data,
   });
 }
+
+export function setinfo(infoObj) {
+  const data = {
+    name: infoObj.name,
+    avatar_url: infoObj.imageUrl,
+    sex: infoObj.sex,
+    birthday: infoObj.birthday,
+  };
+  return fetch({
+    url: '/users/:id',
+    method: 'put',
+    data: data,
+  })
+}

@@ -23,6 +23,8 @@ import Inform from 'views/inform'
 
 import Collection from 'views/collection'
 
+import PersonalData from 'views/personalData'
+
 import Signup from 'views/signup'
 /* dashboard */
 const dashboard = _import('dashboard/index');
@@ -108,6 +110,14 @@ export const constantRouterMap = [
     component: Layout,
     hidden: true,
     children: [{ path: '', component: Signup}],
+  },
+  {
+    path: '/personalData',
+    name: 'personalData',
+    component: Layout,
+    redirect: '/personalData/index',
+    hidden: true,
+    children: [{ path: 'index', component: PersonalData}],
   }
 ]
 
