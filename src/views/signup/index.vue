@@ -106,6 +106,7 @@
     methods: {
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
+          console.log(this.loginForm.inviteword);
           if(valid){
             this.loading=true;
             this.$store.dispatch('Signup',this.loginForm).then(() => {
