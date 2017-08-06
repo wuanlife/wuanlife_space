@@ -4,28 +4,27 @@ const _import = require('./_import_' + process.env.NODE_ENV);
 // in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
-import Layout from '../views/layout/Layout';
+import Layout from 'views/layout/Layout';
 
 /* login */
 const Login = _import('login/index');
 /*const authRedirect = _import('login/authredirect');*/
 
 
-import Index from 'views/index'
+const Index = _import('index/index');
 
-import PostDetail from 'views/post/detail'
-import PostPublish from 'views/post/publish'
+const PostDetail = _import('post/detail/index');
+const PostPublish = _import('post/publish/index');
 
-import GroupDetail from 'views/group/detail'
-import GroupCreate from 'views/group/create'
+const GroupDetail = _import('group/detail/index');
+const GroupCreate = _import('group/create/index');
 
-import Inform from 'views/inform'
+const Inform = _import('inform/index');
+
 
 import Collection from 'views/collection'
 
 import Signup from 'views/signup'
-/* dashboard */
-const dashboard = _import('dashboard/index');
 
 /* Introduction */
 const Introduction = _import('introduction/index');
@@ -78,7 +77,14 @@ export const constantRouterMap = [
     path: '/post',
     name: 'post',
     component: Layout,
-    children: [{ path: 'publish', component: PostPublish}, { path: ':id', component: PostDetail}],
+    children: [
+      { 
+        path: 'publish', component: PostPublish
+      }, 
+      { 
+        path: ':id', component: PostDetail
+      }
+    ],
   },
   {
     path: '/group',
