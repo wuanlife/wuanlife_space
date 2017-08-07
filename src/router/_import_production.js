@@ -1,2 +1,4 @@
 // lazyload router
-module.exports = resolve => require(['views/' + file + '.vue'], resolve)
+module.exports = (file) => {
+    return resolve => require(['views/' + file + '.vue'], resolve)
+}
