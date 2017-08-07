@@ -28,6 +28,10 @@ import PersonalData from 'views/personalData'
 
 import Signup from 'views/signup'
 
+import FindPassword from 'views/findpassword'
+
+import Resetpsw from 'views/resetpsw'
+
 /* Introduction */
 const Introduction = _import('introduction/index');
 
@@ -124,6 +128,22 @@ export const constantRouterMap = [
     redirect: '/personalData/index',
     hidden: true,
     children: [{ path: 'index', component: PersonalData}],
+  },
+  {
+    path: '/findpassword',
+    name: 'findpassword',
+    component: Layout,
+    redirect: '/findpassword/index',
+    hidden: true,
+    children: [{ path: 'index', component: FindPassword}],
+  },
+  {
+    path: '/resetpsw',
+    name: 'resetpsw',
+    component: Layout,
+    redirect: '/resetpsw/index',
+    hidden: true,
+    children: [{ path: 'index', component: Resetpsw}],
   }
 ]
 
