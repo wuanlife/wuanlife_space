@@ -36,7 +36,6 @@ module.exports = {
         }
     },
     externals: {
-        jquery: 'jQuery'
     },
     module: {
         rules: [
