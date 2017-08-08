@@ -39,3 +39,15 @@ export function setinfo(infoObj) {
     data: data,
   });
 }
+
+//重置密码接口
+export function resetpsw(infoObj) {
+  const data = {
+    mail: infoObj.email,
+  };
+  return fetch({
+    url: '/users/resetpsw',
+    method: 'post',
+    data: data,
+  });
+}
