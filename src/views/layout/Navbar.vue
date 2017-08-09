@@ -16,7 +16,8 @@
           :on-icon-click="()=>{}">
         </el-input>
       </div>
-      <div class="notif-container">
+      <div class="notif-container"
+           @click="$router.push({path: '/inform/'})">
         <el-badge :is-dot="true">
           <icon-svg icon-class="smallbell" class="notif-icon"></icon-svg>
         </el-badge>

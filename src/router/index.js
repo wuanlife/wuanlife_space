@@ -102,9 +102,7 @@ export const constantRouterMap = [
     path: '/inform',
     name: 'inform',
     component: Layout,
-    redirect: '/inform/index',
-    hidden: true,
-    children: [{ path: 'index', component: Inform}],
+    children: [{ path: '', component: Inform}],
   },
   {
     path: '/collection',

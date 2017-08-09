@@ -20,7 +20,7 @@
               <time>{{ post.create_time_formatted }}</time>
             </header>
             <div class="index-card-content">
-              <h1>{{ post.title }}</h1>
+              <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
               <div class="preview-html" v-html="post.content">
               </div>
               <div class="preview-imgs">
@@ -57,8 +57,18 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button v-if="group.identity == 'member'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="quitGroup">
+            退出星球
+          </el-button>
+          <el-button v-else-if="group.identity == 'not_applied'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="joinGroup">
+            加入星球
+          </el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -72,7 +82,7 @@
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
   import { getPostsByGroupId, approvePost, collectPost } from 'api/post';
-  import { getGroup } from 'api/group';
+  import { getGroup, joinGroup, quitGroup } from 'api/group';
 
   export default {
     name: 'group-public',
@@ -88,7 +98,9 @@
           pageCount: 1,
           currentPage: 1,
           limit: 20,
-        }
+        },
+        joinGroupLoading: false,
+        quitGroupLoading: false,
       }
     },
     computed: {
@@ -199,6 +211,30 @@
             type: 'success',
             duration: 1000,
           });
+        })
+      },
+      quitGroup() {
+        this.quitGroupLoading = true;
+        quitGroup(this.group.id).then(res => {
+          this.quitGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'quit success',
+            type: 'info'
+          });
+          this.group.identity = 'not_applied';
+        })
+      },
+      joinGroup() {
+        this.joinGroupLoading = true;
+        joinGroup(this.group.id).then(res => {
+          this.joinGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'join success',
+            type: 'success'
+          });
+          this.group.identity = 'member';
         })
       },
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="index-visitor-container">
       <section>     
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="()=>{}">
           <el-tab-pane label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading_myplanet">
               <ul class="index-cards">
@@ -264,7 +264,7 @@
           let newtopicIndex = self.newtopicPosts.findIndex(item => {
             return item.id === id
           })
-          let preCollected = self.myplanetsPosts[myplanetsIndex].collected
+          let preCollected = myplanetsIndex !== -1 ? self.myplanetsPosts[myplanetsIndex].collected : self.newtopicPosts[newtopicIndex].collected;
           if(myplanetsIndex != -1) {
             self.myplanetsPosts[myplanetsIndex].collected = preCollected ? false : true;
             self.myplanetsPosts[myplanetsIndex].collected_num = parseInt(self.myplanetsPosts[myplanetsIndex].collected_num) + (preCollected ? -1 : 1);
@@ -286,7 +286,8 @@
           let newtopicIndex = self.newtopicPosts.findIndex(item => {
             return item.id === id
           })
-          let preApproved = self.myplanetsPosts[myplanetsIndex].approved
+
+          let preApproved = myplanetsIndex !== -1 ? self.myplanetsPosts[myplanetsIndex].approved : self.newtopicPosts[newtopicIndex].approved;
           if(myplanetsIndex != -1) {
             self.myplanetsPosts[myplanetsIndex].approved = preApproved ? false : true;
             self.myplanetsPosts[myplanetsIndex].approved_num = parseInt(self.myplanetsPosts[myplanetsIndex].approved_num) + (preApproved ? -1 : 1);
