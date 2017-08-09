@@ -100,10 +100,6 @@ var webpackConfig = merge(baseWebpackConfig, {
                 ignore: ['.*']
             }
         ]),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            'jQuery': 'jquery'
-        })
     ]
 })
 if (config.build.bundleAnalyzerReport) {

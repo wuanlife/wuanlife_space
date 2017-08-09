@@ -12,3 +12,16 @@ export function getGroups(offset=0, limit=20) {
     method: 'get',
   });
 }
+
+export function joinGroup(id) {
+  return fetch({
+    url: `/groups/${id}/members`,
+    method: 'post',
+  })
+}
+export function quitGroup(id) {
+  return fetch({
+    url: `/groups/${id}/members`,
+    method: 'delete',
+  })
+}

@@ -3,7 +3,7 @@
 @import './mixin.scss';
 
 // font part
-$font_path: '~/static/fonts/';
+/* $font_path: '~/static/fonts/';
 @font-face {
   font-family: PingFangHK-Medium;
   src: url($font_path +'PingFang-HK-Medium.ttf');
@@ -21,13 +21,13 @@ $font_path: '~/static/fonts/';
   src: url($font_path +'PingFang-HK-Semibold.ttf');
   // not support yet
   font-display: swap;
-}
+} */
 
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: PingFangHK-Regular, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Noto Sans CJK SC,WenQuanYi Micro Hei,Arial,sans-serif;
 }
 
 label {
