@@ -224,7 +224,6 @@
       loadPosts_newtopic(page) {
         var self = this;
         this.loading_newtopic = true;
-        console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(true,(page-1)*self.pagination_newtopic.limit || 0).then(res => {
             self.newtopicPosts = res.data;

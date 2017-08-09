@@ -35,7 +35,7 @@
                 <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
-            <div class="opts">
+            <div v-if="group" class="opts">
               <span>重?置</span>
               <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">锁定</span>
               <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">编辑</span>
@@ -62,14 +62,13 @@
             </li>
 
           </ul>
-          <el-pagination
-            class="review-paging"
-            layout="prev, pager, next"
-            :total="1000">
+          <el-pagination layout="prev, pager, next, jumper"
+                         :page-count="pagination.pageCount"
+                         @current-change="loadReplies">
           </el-pagination>
           <footer class="review-reply">
-            <input placeholder="请输入内容" type="text">
-            <button>回复</button>
+            <input placeholder="请输入内容" type="text" v-model="replyInput">
+            <button :class="{ 'wuan-loading' : replyLoading }" @click="reply()">回复</button>
           </footer>
         </div>
       </div>
@@ -113,6 +112,9 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import {
+    parseQueryParams,
+  } from 'utils/url'
   import { 
     getPost,
     getCommentsByPostId,
@@ -129,12 +131,19 @@
       return {
         postid: null,
         post: null,
+        pagination: {
+          pageCount: 1,
+          currentPage: 1,
+          limit: 20,
+        },
         group: null,
         loading: false,
         loadingAside: false,
         joinGroupLoading: false,
         quitGroupLoading: false,
         commentsObj: null,
+        replyInput: '',
+        replyLoading: false,
       }
     },
     computed: {
@@ -200,6 +209,20 @@
         });
       }
 
+      
+
+      this.loadReplies()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading_newtopic = false;
+        })
+
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
@@ -214,6 +237,23 @@
         })
     },
     methods: {
+      loadReplies(page=1) {
+        var self = this;
+        this.replyLoading = true;
+        return new Promise((resolve, reject) => {
+          getCommentsByPostId(this.postid, (page-1)*self.pagination.limit || 0).then(res => {
+            self.commentsObj = res;
+            self.replyLoading = false;
+
+            // pagination
+            let pageFinal = parseQueryParams(res.paging.final);
+            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
       // collect post
       collect(id) {
         var self = this;
@@ -232,6 +272,16 @@
         }).then(() => {
           this.post.approved_num += this.post.approved ? -1 : 1;
           this.post.approved = !this.post.approved;
+        })
+      },
+      reply() {
+        var self = this;
+        this.replyLoading = true;
+        replyPost(this.post.id, {comment: this.replyInput}).then(res => {
+          this.replyInput = ''
+          this.replyLoading = false;
+        }).catch(error => {
+          this.replyLoading = false;
         })
       },
       quitGroup() {
@@ -389,6 +439,10 @@
     .review-wrapper {
       border:1px solid #dce8f4;
       border-radius:4px;
+      .el-pagination {
+        padding: 10px;
+        text-align: center;
+      }
       & > header {
         padding: 16px;
         border-bottom: 1px solid #dce8f4;

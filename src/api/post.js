@@ -52,13 +52,13 @@ export function collectPost(params) {
   });  
 }
 // params {id: postid, floor: floor, comment: comment}
-export function replyPost(params) {
+export function replyPost(postid, params) {
   const data = {
     floor: params.floor || 1,
     comment: params.comment,
   };
   return fetch({
-    url: `/posts/${params.id}/comments`,
+    url: `/posts/${postid}/comments`,
     method: 'post',
     data: data,
   });

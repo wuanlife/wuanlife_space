@@ -134,3 +134,28 @@ $panGreen: #30B08F;
     background: #4db3ff;
   }
 }
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+button.wuan-loading {
+  position: relative;
+  pointer-events: none;
+  &:before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    border-radius: inherit;
+    background-color: hsla(0,0%,100%,.35)
+  }
+  &:after {
+
+  }
+}
