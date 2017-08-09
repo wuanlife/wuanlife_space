@@ -26,13 +26,13 @@ import Collection from 'views/collection'
 
 import PersonalData from 'views/personalData'
 
-import RelatedPlanets from 'views/relatedPlanets'
-
 import Signup from 'views/signup'
 
 import FindPassword from 'views/findpassword'
 
 import Resetpsw from 'views/resetpsw'
+
+import RelatedPlanets from 'views/relatedPlanets'
 
 /* Introduction */
 const Introduction = _import('introduction/index');
@@ -132,14 +132,6 @@ export const constantRouterMap = [
     children: [{ path: 'index', component: PersonalData}],
   },
   {
-    path: '/relatedPlanets',
-    name: 'relatedPlanets',
-    component: Layout,
-    redirect: '/relatedPlanets/index',
-    hidden: true,
-    children: [{ path: 'index', component: RelatedPlanets}],
-  },
-  {
     path: '/findpassword',
     name: 'findpassword',
     component: Layout,
@@ -154,6 +146,14 @@ export const constantRouterMap = [
     redirect: '/resetpsw/index',
     hidden: true,
     children: [{ path: 'index', component: Resetpsw}],
+  },
+  {
+    path: '/relatedPlanets',
+    name: 'relatedPlanets',
+    component: Layout,
+    redirect: '/relatedPlanets/index',
+    hidden: true,
+    children: [{ path: 'index', component: RelatedPlanets}],
   }
 ]
 
