@@ -39,7 +39,6 @@ Join the group on QQ 591724180.
 - Dropzone
 - Sticky
 - CountTo
-- ECharts
 - 401, 404 error page
 - Error log
 - Exporting to Excel

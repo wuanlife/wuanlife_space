@@ -55,7 +55,23 @@ const user = {
     //注册
     Signup({ commit },register_params){
       return new Promise((resolve, reject) => {
-        register(register_params).then(response => {
+        signup(register_params).then(response => {
+          console.dir(response)
+          const data = response;
+          storeWithExpiration.set('user.userInfo', response, 86400000);
+          storeWithExpiration.set('user.token', response['Access-Token'], 86400000);
+          commit('SET_USERINFO', response);  
+          commit('SET_TOKEN', response['Access-Token']);  
+          resolve();      
+        }).catch(error => {
+          reject(error);
+        });
+   
+      });
+    },
+    setinfo({ commit },info_params){
+      return new Promise((resolve, reject) => {
+        register(info_params).then(response => {
           console.dir(response)
           const data = response;
           storeWithExpiration.set('user.userInfo', response, 86400000);
