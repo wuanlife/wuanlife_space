@@ -24,18 +24,22 @@
           </article>
           <footer>
             <div class="btns">
-              <el-button type="primary" :class="{'done': post_formatted.approved}">
+              <el-button type="primary" 
+                         :class="{'done': post_formatted.approved}"
+                         @click="approve(post_formatted.id)">
                 <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
-              <el-button type="primary" :class="{'done': post_formatted.collected}">
+              <el-button type="primary" 
+                         :class="{'done': post_formatted.collected}"
+                         @click="collect(post_formatted.id)">
                 <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
             <div class="opts">
-              <span>重置</span>
-              <span>锁定</span>
-              <span>编辑</span>
-              <span>删除</span>
+              <span>重?置</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">锁定</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">编辑</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">删除</span>
             </div>
           </footer>
         </div>
@@ -86,8 +90,18 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button v-if="group.identity == 'member'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="quitGroup">
+            退出星球
+          </el-button>
+          <el-button v-else-if="group.identity == 'not_applied'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="joinGroup">
+            加入星球
+          </el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -99,8 +113,14 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { getPost,getCommentsByPostId } from 'api/post';
-  import { getGroup } from 'api/group';
+  import { 
+    getPost,
+    getCommentsByPostId,
+    approvePost,
+    collectPost,
+    replyPost,
+  } from 'api/post';
+  import { getGroup, joinGroup, quitGroup } from 'api/group';
   import { parseTime } from 'utils/date';
 
   export default {
@@ -112,6 +132,8 @@
         group: null,
         loading: false,
         loadingAside: false,
+        joinGroupLoading: false,
+        quitGroupLoading: false,
         commentsObj: null,
       }
     },
@@ -190,7 +212,52 @@
           this.loading = false;
           this.loadingAside = false;
         })
-
+    },
+    methods: {
+      // collect post
+      collect(id) {
+        var self = this;
+        collectPost({
+          id: id,
+          userid: self.user.userInfo.id,
+        }).then(() => {
+          this.post.collected_num += this.post.collected ? -1 : 1;
+          this.post.collected = !this.post.collected;
+        })
+      },
+      approve(id) {
+        var self = this;
+        approvePost({
+          id: id,
+        }).then(() => {
+          this.post.approved_num += this.post.approved ? -1 : 1;
+          this.post.approved = !this.post.approved;
+        })
+      },
+      quitGroup() {
+        this.quitGroupLoading = true;
+        quitGroup(this.group.id).then(res => {
+          this.quitGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'quit success',
+            type: 'info'
+          });
+          this.group.identity = 'not_applied';
+        })
+      },
+      joinGroup() {
+        this.joinGroupLoading = true;
+        joinGroup(this.group.id).then(res => {
+          this.joinGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'join success',
+            type: 'success'
+          });
+          this.group.identity = 'member';
+        })
+      }
     }
   }
 </script>
