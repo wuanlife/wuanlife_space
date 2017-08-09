@@ -26,6 +26,8 @@ import Collection from 'views/collection'
 
 import PersonalData from 'views/personalData'
 
+import RelatedPlanets from 'views/relatedPlanets'
+
 import Signup from 'views/signup'
 
 import FindPassword from 'views/findpassword'
@@ -128,6 +130,14 @@ export const constantRouterMap = [
     redirect: '/personalData/index',
     hidden: true,
     children: [{ path: 'index', component: PersonalData}],
+  },
+  {
+    path: '/relatedPlanets',
+    name: 'relatedPlanets',
+    component: Layout,
+    redirect: '/relatedPlanets/index',
+    hidden: true,
+    children: [{ path: 'index', component: RelatedPlanets}],
   },
   {
     path: '/findpassword',
