@@ -13,6 +13,18 @@ export function getGroups(offset=0, limit=20) {
   });
 }
 
+export function searchGroups(name, offset=0, limit=20) {
+  const data = {
+    name: name,
+    offset: offset,
+    limit: limit,
+  };
+  return fetch({
+    url: '/groups',
+    method: 'get',
+  });
+}
+
 export function joinGroup(id) {
   return fetch({
     url: `/groups/${id}/members`,
@@ -25,3 +37,4 @@ export function quitGroup(id) {
     method: 'delete',
   })
 }
+
