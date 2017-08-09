@@ -152,15 +152,18 @@
       loadPosts(page) {
         var self = this;
         this.loading = true;
-        console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPostsByGroupId(self.groupid,(page-1)*self.pagination.limit || 0).then(res => {
             self.posts = res.data;
             self.loading = false;
 
             // pagination
+            try {
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            } catch (e) {
+              console.log(e);
+            }
             resolve();
           }).catch(error => {
             reject(error);
