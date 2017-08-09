@@ -66,8 +66,8 @@
         loading1: false,
       }
     },
-    munted: {
-      
+    mounted () {
+      this.getSearchGroupsData();
     },
     computed: {
       ...mapGetters([

@@ -40,7 +40,18 @@ export function setinfo(infoObj) {
   });
 }
 
-<<<<<<< HEAD
+//重置密码接口
+export function resetpsw(infoObj) {
+  const data = {
+    mail: infoObj.email,
+  };
+  return fetch({
+    url: '/users/resetpsw',
+    method: 'post',
+    data: data,
+  });
+}
+
 export function getPostInform(id, type, offset=0, limit=20) {
   return new fetch({
     url: `/users/${id}/messages?offset=${offset}&limit=${limit}&type=${type}`,
@@ -54,20 +65,10 @@ export function dealApplyPlanetPost(id, mid, is_apply) {
   };
   return new fetch({
     url: `/users/${id}/messages/${mid}`,
-=======
-//重置密码接口
-export function resetpsw(infoObj) {
-  const data = {
-    mail: infoObj.email,
-  };
-  return fetch({
-    url: '/users/resetpsw',
->>>>>>> ec8ac5bf52ef48d448e14138e79029f79eab572a
     method: 'post',
     data: data,
   });
 }
-<<<<<<< HEAD
 
 export function getUserInfo(id) {
   return new fetch({
@@ -75,5 +76,3 @@ export function getUserInfo(id) {
     method: 'get',
   });
 }
-=======
->>>>>>> ec8ac5bf52ef48d448e14138e79029f79eab572a
