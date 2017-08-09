@@ -63,3 +63,16 @@ export function replyPost(params) {
     data: data,
   });
 }
+
+// publish post
+export function publishPost(groupid, params) {
+  const data = {
+    title: params.title,
+    content: params.content,
+  };
+  return fetch({
+    url: `/groups/${groupid}/posts`,
+    method: 'post',
+    data: data,
+  });
+}

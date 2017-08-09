@@ -52,8 +52,6 @@ router.beforeEach((to, from, next) => {
     if (blackList.indexOf(to.path) == -1) { // 不在录重定向黑名单，直接进入
       next()
     } else {
-      console.log(to.path)
-      console.log("redirect to login")
       next('/login'); // 否则全部重定向到登录页
       NProgress.done(); // 在hash模式下 改变手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！
     }

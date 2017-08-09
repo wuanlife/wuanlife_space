@@ -76,7 +76,7 @@
         <header>
           <img :src="group.image_url">
           <div class="group-info">
-            <h2>{{ group.name }}</h2>
+            <h2 @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</h2>
             <span>{{ group.post_num }} 话题　</span>
             <span>{{ group.member_num }} 成员</span>
           </div>
@@ -433,6 +433,7 @@
         h2 {
           text-overflow: ellipsis;
           overflow: hidden;
+          cursor: pointer;
 
           font-family:PingFangHK-Medium;
           font-size:16px;

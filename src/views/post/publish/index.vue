@@ -37,7 +37,8 @@
   // simple markdown
   import MdEditor from 'components/MdEditor';
   import { mapGetters } from 'vuex';
-  import {  } from 'api/post';
+  import { publishPost } from 'api/post';
+  import showdown from 'showdown';
 
   export default {
     name: 'post-pulish',
@@ -62,19 +63,29 @@
       
     },
     created() {
-      this.groupid = this.$route.params.groupid;
+      if(!this.$route.query.groupid) {
+        this.$router.go(-1);
+        return;
+      }
+      this.groupid = parseInt(this.$route.query.groupid);
     },
     mounted() {
     },
     methods: {
       markdown2Html(md) {
-        import('showdown').then(showdown => {
-          const converter = new showdown.Converter();
-          return converter.makeHtml(this.content)
-        })
+        const converter = new showdown.Converter();
+        return converter.makeHtml(md)
       },
       onSubmit() {
         this.form.content = this.markdown2Html(this.form.md);
+        publishPost(this.groupid, {
+          title: this.form.title,
+          content: this.form.content,
+        }).then((res) => {
+          this.$router.push({path: `/post/${res.id}`});
+        }).catch((error) => {
+          console.log(`publish error ${error}`)
+        })
       }
     }
   }
