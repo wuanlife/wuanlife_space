@@ -2,9 +2,9 @@
     <div class="personalData-container">
       <section>     
         <header>个人资料</header>
-        <div class="form-content">
+        <div class="form-content" v-loading="loading">
           <div class="personalDataUpLoader">
-            <img :src="imageUrl" class="avatar">
+            <img :src="personalDataForm.avatar_url" class="avatar">
             <el-upload
               class="avatar-uploader"
               action="https://jsonplaceholder.typicode.com/posts/"
@@ -16,8 +16,8 @@
           </div>
           <el-form :model="personalDataForm" :rules="personalDataRules" ref="personalDataForm" class="personalDataForm" :label-position="labelPosition">
             <el-form-item label="邮箱" prop="email" class="hhh" label-width="66px">
-              <span v-model="personalDataForm.email" style="font-family:PingFangHK-Semibold;font-size:16px;color:#666666;text-align:left;width: 210px;display: inline-block;margin-right: 11px;">123456678@qq.com</span>
-              <el-button @click.prevent="removeDomain(domain)" style="font-size: 12px;color: #ffffff;background-color: #5677fc;font-family:PingFangSC-Regular;box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);border-radius:2px;width:80px;height:30px;border: none;padding: 0;">验证</el-button>
+              <span style="font-family:PingFangHK-Semibold;font-size:16px;color:#666666;text-align:left;width: 210px;display: inline-block;margin-right: 11px;">{{ personalDataForm.mail }}</span>
+              <el-button @click.prevent="checkMail(domain)" style="font-size: 12px;color: #ffffff;background-color: #5677fc;font-family:PingFangSC-Regular;box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);border-radius:2px;width:80px;height:30px;border: none;padding: 0;">验证</el-button>
             </el-form-item>
             <el-form-item label="昵称" prop="name" label-width="66px">
               <el-input v-model="personalDataForm.name" placeholder="陶陶" style="width:208px;"></el-input>
@@ -28,6 +28,15 @@
               <el-radio label="女"></el-radio>
               </el-radio-group>
             </el-form-item>
+            <el-form-item label="生日" prop="sex" label-width="66px">
+              <span>{{ personalDataForm.birthday }}</span><button @click="selectData"><</button>
+              <div v-if="selectdata">
+                
+              </div>
+            </el-form-item>
+            <el-form-item label="生日" label-width="66px">
+              <el-date-picker :clearable="false" type="date" v-model="personalDataForm.birthday" style="width: 160px;font-size: 16px;font-family:PingFangHK-Semibold;color: #000000;"></el-date-picker>
+            </el-form-item>
             <el-button type="primary" @click="submitForm('personalDataForm')">保存</el-button>
           </el-form>
         </div>
@@ -37,6 +46,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getUserInfo } from 'api/auth';
 
   export default {
     name: 'personalData-container',
@@ -57,14 +67,17 @@
       return {
         activeName: 'index-myplanet',
         loading: false,
+        selectdata: false,
 
         // form part
         personalDataForm: {
-          email: '',
-          name: '',
-          sex: '',
-          imageUrl: '',
           birthday: '',
+          sex: '',
+          mail_checked: '',
+          avatar_url: '',
+          mail: '',
+          name: '',
+          code: '',
         },
         personalDataRules: {
           name: [
@@ -84,6 +97,7 @@
       ])
     },
     mounted() {
+      this.getPersonalData();
     },
     methods: {
       submitForm(formName) {
@@ -108,6 +122,20 @@
           }
         });
       },
+      getPersonalData () {
+        var self = this;
+        this.loading = true;
+        return new Promise((resolve, reject) => {
+          getUserInfo(self.user.userInfo.id).then(res => {
+            self.personalDataForm = res;
+            self.loading = false;
+            resolve();
+          }).catch(error => {
+            self.loading = false;
+            reject(error);
+          });
+        });
+      },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
@@ -122,6 +150,13 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      selectData () {
+        if (this.selectdata === false) {
+          this.selectdata = true;
+        } else{
+          this.selectdata = false;
+        }
       }
     },
   }
@@ -214,6 +249,5 @@
         }
       }
     }
-
   }
 </style>

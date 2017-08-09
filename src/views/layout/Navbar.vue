@@ -83,6 +83,7 @@
       return {
         log: errLogStore.state.errLog,
         isShowDrop: false,
+        input2: '',
       }
     },
     computed: {
@@ -98,6 +99,9 @@
       },
       visibleChange() {
         this.isShowDrop = !this.isShowDrop;
+      },
+      handleIconClick() {
+        this.$store.commit('SET_SEARCHTEXT',this.input2);
       }
     }
   }

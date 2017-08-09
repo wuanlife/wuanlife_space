@@ -6,6 +6,7 @@ const user = {
     token: storeWithExpiration.get('user.token') != '' ? storeWithExpiration.get('user.token') : '',
     userInfo: storeWithExpiration.get('user.userInfo') || {},
     setting: '',
+    searchText: '',
   },
 
   mutations: {
@@ -20,6 +21,9 @@ const user = {
       state.token = '';
       state.userInfo = {};
     },
+    SET_SEARCHTEXT: (state, inputValue) => {
+      state.searchText = inputValue;
+    }
   },
 
   actions: {

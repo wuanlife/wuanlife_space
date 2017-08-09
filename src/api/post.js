@@ -27,6 +27,13 @@ export function getCommentsByPostId(id, offset=0, limit=20) {
   });  
 }
 
+export function getCollectPost(id, offset=0, limit=20) {
+  return new fetch({
+    url: `/users/${id}/collections`,
+    method: 'get',
+  });
+}
+
 // params {id: postid, floor: floor}
 export function approvePost(params) {
   const data = {

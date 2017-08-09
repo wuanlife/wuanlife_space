@@ -4,40 +4,25 @@
         <header>
             我的收藏
         </header>
-        <div class="collection-tabcontent">
+        <div class="collection-tabcontent" v-loading="loading">
           <ul class="collection-cards">
-            <li class="collection-card">
+            <li class="collection-card" v-for="item in collecations">
               <div class="collection-card-content">
-                <h1>Ubuntu开荒笔记</h1>
+                <h1>{{ item.title }}</h1>
                 <div class="preview-html">
-                  安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
+                  {{ item.content }}
                 </div>
                 <div class="preview-imgs">
-                  <img src="#">
-                  <img src="#">
-                  <img src="#">
+                  <ul>
+                  	<li v-for="imgs in item.image_url"><img v-bind:src="imgs" /></li>
+                  </ul>
                 </div>
               </div>
               <footer>
-                <span>鬼扯天地</span>
+                <span>{{ item.group.name }}</span>
                 <div>
                   <span>收藏于</span>
-                  <time>2017-02-21 22:41</time>
-                </div>
-              </footer>
-            </li>
-            <li class="collection-card">
-              <div class="collection-card-content">
-                <h1>Ubuntu开荒笔记</h1>
-                <div class="preview-html">
-                  安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件安装后。终端操作：sudo apt updatesudo apt upgrade重启，执行上述update命令一次，然后执行：sudo apt install ***常用的软件...
-                </div>
-              </div>
-              <footer>
-                <span>鬼扯天地</span>
-                <div>
-                  <span>收藏于</span>
-                  <time>2017-02-21 22:41</time>
+                  <time>{{ item.create_time }}</time>
                 </div>
               </footer>
             </li>
@@ -49,12 +34,14 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getCollectPost } from 'api/post';
 
   export default {
     name: 'collection-container',
     data() {
       return {
-        
+        collecations: [],
+        loading: false,
       }
     },
     computed: {
@@ -64,7 +51,29 @@
       ])
     },
     mounted() {
-      
+      this.getCollectPosts();
+    },
+    methods: {
+      getCollectPosts () {
+        var self = this;
+        this.loading = true;
+        return new Promise((resolve, reject) => {
+          getCollectPost(self.user.userInfo.id).then(res => {
+            for (let i  = 0, j = res.data.length; i < j; i++) {
+              res.data[i].create_time = self.dealTime(res.data[i].create_time);
+            }
+            self.collecations = res.data;
+            self.loading = false;
+            resolve();
+          }).catch(reeor => {
+            self.loading = false;
+            reject(error);
+          })
+        })
+      },
+      dealTime (time) {
+        return time.slice(0, 10) + ' ' + time.slice(11, 16);
+      }
     }
   }
 </script>
@@ -140,13 +149,19 @@
         }
         div.preview-imgs {
           display: flex;
-          img {
-            width: 174px;
-            height: 174px;
-            margin-right: 15px;
-            background:#d8d8d8;
-            border-radius:4px;
-            align-self: center;
+          ul {
+            li {
+              display: inline-block;
+              box-sizing: border-box;
+              img {
+                width: 174px;
+                height: 174px;
+                margin-right: 15px;
+                background:#d8d8d8;
+                border-radius:4px;
+                align-self: center;
+              }
+            }
           }
         }
       }

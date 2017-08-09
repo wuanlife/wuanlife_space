@@ -25,6 +25,8 @@ import Collection from 'views/collection'
 
 import PersonalData from 'views/personalData'
 
+import RelatedPlanets from 'views/relatedPlanets'
+
 import Signup from 'views/signup'
 /* dashboard */
 const dashboard = _import('dashboard/index');
@@ -118,6 +120,14 @@ export const constantRouterMap = [
     redirect: '/personalData/index',
     hidden: true,
     children: [{ path: 'index', component: PersonalData}],
+  },
+  {
+    path: '/relatedPlanets',
+    name: 'relatedPlanets',
+    component: Layout,
+    redirect: '/relatedPlanets/index',
+    hidden: true,
+    children: [{ path: 'index', component: RelatedPlanets}]
   }
 ]
 
