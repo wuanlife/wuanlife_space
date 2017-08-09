@@ -1,6 +1,11 @@
 <template>
   <div class="group-public-container">
-    <section>     
+    <section>    
+      <div v-if="groupid" class="group-publish">
+        <button @click="$router.push({path: '/post/publish/', query: { groupid: groupid }})">
+          <icon-svg icon-class="smallbell"></icon-svg>发表帖子
+        </button>
+      </div> 
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
           <li v-for="post of posts" class="index-card">
@@ -226,6 +231,29 @@
       flex: 0 0 250px;
       @media screen and (max-width: 900px) {
         display: none;
+      }
+    }
+  }
+  // post publish div
+  .group-publish {
+    width: 100%;   
+    height:40px;
+    button {
+      width: 100%;
+      height: 100%;
+      background:#ffffff;
+      border: none;
+      margin-bottom: 4px;
+      box-shadow:0 2px 4px 0 rgba(0,0,0,0.06);
+      border-radius:4px;
+      transition: all 0.5s ease-in-out;
+
+      font-family:PingFangHK-Regular;
+      font-size:12px;
+      color:#1b87f6;
+      &:hover {
+        color: #ffffff;
+        background: #66ccff;
       }
     }
   }

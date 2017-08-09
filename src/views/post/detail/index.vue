@@ -24,18 +24,22 @@
           </article>
           <footer>
             <div class="btns">
-              <el-button type="primary" :class="{'done': post_formatted.approved}">
+              <el-button type="primary" 
+                         :class="{'done': post_formatted.approved}"
+                         @click="approve(post_formatted.id)">
                 <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
               </el-button>
-              <el-button type="primary" :class="{'done': post_formatted.collected}">
+              <el-button type="primary" 
+                         :class="{'done': post_formatted.collected}"
+                         @click="collect(post_formatted.id)">
                 <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
               </el-button>
             </div>
-            <div class="opts">
-              <span>重置</span>
-              <span>锁定</span>
-              <span>编辑</span>
-              <span>删除</span>
+            <div v-if="group" class="opts">
+              <span>重?置</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">锁定</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">编辑</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">删除</span>
             </div>
           </footer>
         </div>
@@ -58,14 +62,13 @@
             </li>
 
           </ul>
-          <el-pagination
-            class="review-paging"
-            layout="prev, pager, next"
-            :total="1000">
+          <el-pagination layout="prev, pager, next, jumper"
+                         :page-count="pagination.pageCount"
+                         @current-change="loadReplies">
           </el-pagination>
           <footer class="review-reply">
-            <input placeholder="请输入内容" type="text">
-            <button>回复</button>
+            <input placeholder="请输入内容" type="text" v-model="replyInput">
+            <button :class="{ 'wuan-loading' : replyLoading }" @click="reply()">回复</button>
           </footer>
         </div>
       </div>
@@ -76,7 +79,7 @@
         <header>
           <img :src="group.image_url">
           <div class="group-info">
-            <h2>{{ group.name }}</h2>
+            <h2 @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</h2>
             <span>{{ group.post_num }} 话题　</span>
             <span>{{ group.member_num }} 成员</span>
           </div>
@@ -86,8 +89,18 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button v-if="group.identity == 'member'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="quitGroup">
+            退出星球
+          </el-button>
+          <el-button v-else-if="group.identity == 'not_applied'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="joinGroup">
+            加入星球
+          </el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -99,8 +112,17 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { getPost,getCommentsByPostId } from 'api/post';
-  import { getGroup } from 'api/group';
+  import {
+    parseQueryParams,
+  } from 'utils/url'
+  import { 
+    getPost,
+    getCommentsByPostId,
+    approvePost,
+    collectPost,
+    replyPost,
+  } from 'api/post';
+  import { getGroup, joinGroup, quitGroup } from 'api/group';
   import { parseTime } from 'utils/date';
 
   export default {
@@ -109,10 +131,19 @@
       return {
         postid: null,
         post: null,
+        pagination: {
+          pageCount: 1,
+          currentPage: 1,
+          limit: 20,
+        },
         group: null,
         loading: false,
         loadingAside: false,
+        joinGroupLoading: false,
+        quitGroupLoading: false,
         commentsObj: null,
+        replyInput: '',
+        replyLoading: false,
       }
     },
     computed: {
@@ -178,6 +209,20 @@
         });
       }
 
+      
+
+      this.loadReplies()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading_newtopic = false;
+        })
+
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
@@ -190,7 +235,79 @@
           this.loading = false;
           this.loadingAside = false;
         })
+    },
+    methods: {
+      loadReplies(page=1) {
+        var self = this;
+        this.replyLoading = true;
+        return new Promise((resolve, reject) => {
+          getCommentsByPostId(this.postid, (page-1)*self.pagination.limit || 0).then(res => {
+            self.commentsObj = res;
+            self.replyLoading = false;
 
+            // pagination
+            let pageFinal = parseQueryParams(res.paging.final);
+            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      // collect post
+      collect(id) {
+        var self = this;
+        collectPost({
+          id: id,
+          userid: self.user.userInfo.id,
+        }).then(() => {
+          this.post.collected_num += this.post.collected ? -1 : 1;
+          this.post.collected = !this.post.collected;
+        })
+      },
+      approve(id) {
+        var self = this;
+        approvePost({
+          id: id,
+        }).then(() => {
+          this.post.approved_num += this.post.approved ? -1 : 1;
+          this.post.approved = !this.post.approved;
+        })
+      },
+      reply() {
+        var self = this;
+        this.replyLoading = true;
+        replyPost(this.post.id, {comment: this.replyInput}).then(res => {
+          this.replyInput = ''
+          this.replyLoading = false;
+        }).catch(error => {
+          this.replyLoading = false;
+        })
+      },
+      quitGroup() {
+        this.quitGroupLoading = true;
+        quitGroup(this.group.id).then(res => {
+          this.quitGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'quit success',
+            type: 'info'
+          });
+          this.group.identity = 'not_applied';
+        })
+      },
+      joinGroup() {
+        this.joinGroupLoading = true;
+        joinGroup(this.group.id).then(res => {
+          this.joinGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'join success',
+            type: 'success'
+          });
+          this.group.identity = 'member';
+        })
+      }
     }
   }
 </script>
@@ -322,6 +439,10 @@
     .review-wrapper {
       border:1px solid #dce8f4;
       border-radius:4px;
+      .el-pagination {
+        padding: 10px;
+        text-align: center;
+      }
       & > header {
         padding: 16px;
         border-bottom: 1px solid #dce8f4;
@@ -433,6 +554,7 @@
         h2 {
           text-overflow: ellipsis;
           overflow: hidden;
+          cursor: pointer;
 
           font-family:PingFangHK-Medium;
           font-size:16px;

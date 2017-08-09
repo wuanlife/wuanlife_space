@@ -127,9 +127,8 @@ export const constantRouterMap = [
     path: '/personalData',
     name: 'personalData',
     component: Layout,
-    redirect: '/personalData/index',
     hidden: true,
-    children: [{ path: 'index', component: PersonalData}],
+    children: [{ path: '', component: PersonalData}],
   },
   {
     path: '/findpassword',

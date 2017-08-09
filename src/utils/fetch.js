@@ -25,7 +25,6 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(
   response => {
-    console.dir(response)
     if(response.status == 200) {
       return response.data
     }
