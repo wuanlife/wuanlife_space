@@ -486,3 +486,12 @@
     }
   }
 </style>
+
+<style rel="stylesheet/scss" lang="scss">
+// adjust for post content
+.post-html {
+  img {
+    max-width: 100%;
+  }
+}
+</style>

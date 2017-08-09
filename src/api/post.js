@@ -1,4 +1,5 @@
 import fetch from 'utils/fetch';
+// TODO: add vuex in this file to simplify the params
 
 export function getPosts(latest=true, offset=0, limit=20) {
   return fetch({
@@ -30,7 +31,7 @@ export function getCommentsByPostId(id, offset=0, limit=20) {
 // params {id: postid, floor: floor}
 export function approvePost(params) {
   const data = {
-    floor: floor || 1,
+    floor: params.floor || 1,
   };
   return fetch({
     url: `/posts/${params.id}/approval`,
@@ -41,7 +42,7 @@ export function approvePost(params) {
 // put? 后端在逗我吧 /users/:id/collections
 export function collectPost(params) {
   const data = {
-    floor: floor || 1,
+    floor: params.floor || 1,
     post_id: params.id,
   };
   return fetch({
@@ -53,7 +54,7 @@ export function collectPost(params) {
 // params {id: postid, floor: floor, comment: comment}
 export function replyPost(params) {
   const data = {
-    floor: floor || 1,
+    floor: params.floor || 1,
     comment: params.comment,
   };
   return fetch({
