@@ -1,51 +1,32 @@
 <template>
     <div class="inform-container">
       <section>     
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="getInforms">
           <el-tab-pane label="帖子通知" name="inform-card">
             <div class="inform-tabcontent" v-loading="loading">
               <ul class="inform-cards">
-                <li class="inform-card">
+                <li class="inform-card" v-for="item in cardPosts">
                   <div>
                     <img src="#">
                     <div>
-                      <span>格子格子格子格子格子格子格子格子格子格子格子格子格子格子格子</span>
-                      <p><span>回复了主题帖</span><span>23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报23周周报</span></p>
+                      <span>{{ item.user.name }}</span>
+                      <p><span>回复了主题帖</span><span>{{ item.post.title }}</span></p>
                     </div>
                     <button>查看</button>
                   </div>
-                </li> 
-                <li class="inform-card">
-                  <div>
-                    <img src="#">
-                    <div>
-                      <span>格子</span>
-                      <p><span>回复了主题帖</span><span>23周周报</span></p>
-                    </div>
-                    <button>查看</button>
-                  </div>
-                </li> 
+                </li>
               </ul>
             </div>
           </el-tab-pane>
           <el-tab-pane label="星球通知" name="inform-planet">
             <div class="inform-tabcontent" v-loading="loading2">
               <ul class="inform-cards">
-                <li class="inform-card">
+                <li class="inform-card" v-for="item in planetPosts">
                   <div>
                     <img src="#">
                     <div>
-                      <span>格子</span>
-                      <p><span>退出</span><span>午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组午安煎饼计划组</span></p>
-                    </div>
-                  </div>
-                </li>
-                <li class="inform-card">
-                  <div>
-                    <img src="#">
-                    <div>
-                      <span>格子</span>
-                      <p><span>退出</span><span>午安煎饼计划组</span></p>
+                      <span>{{ item.user.name }}</span>
+                      <p><span>退出</span><span>{{ item.group.name }}</span></p>
                     </div>
                   </div>
                 </li>
@@ -55,53 +36,22 @@
           <el-tab-pane label="私密星球申请" name="inform-applyplanet">
             <div class="inform-tabcontent" v-loading="loading3">
               <ul class="inform-cards">
-                <li class="inform-card">
+                <li class="inform-card" v-for="(item, index) in applyplanetPosts">
                   <div>
                     <img src="#">
                     <div>
-                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <p>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</p>
+                      <p><span>{{ item.user.name }}</span><span>申请加入</span><span>{{ item.group.name }}</span></p>
+                      <p>{{ item.message.text }}</p>
                     </div>
-                    <div id="inform-applyplanet-btn">
-                      <button>同意</button>
-                      <button>拒绝</button>
+                    <div id="inform-applyplanet-btn" v-if="item.message.status ===1">
+                      <button @click="dealApplication(index, true)">同意</button>
+                      <button @click="dealApplication(index, false)">拒绝</button>
                     </div>
-                  </div>
-                </li>
-                <li class="inform-card">
-                  <div>
-                    <img src="#">
-                    <div>
-                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组午安煎饼计划UI组</span></p>
-                      <p>加加加我啊</p>
-                    </div>
-                    <div id="inform-applyplanet-btn">
-                      <button>同意</button>
-                      <button>拒绝</button>
-                    </div>
-                  </div>
-                </li>
-                <li class="inform-card">
-                  <div>
-                    <img src="#">
-                    <div>
-                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <p>加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊加加加我啊</p>
-                    </div>
-                    <div id="inform-applyplanet-btn">
-                      <span>已拒绝</span>
-                    </div>
-                  </div>
-                </li>
-                <li class="inform-card">
-                  <div>
-                    <img src="#">
-                    <div>
-                      <p><span>格子</span><span>申请加入</span><span>午安煎饼计划UI组</span></p>
-                      <p>加加加我啊</p>
-                    </div>
-                    <div id="inform-applyplanet-btn">
+                    <div id="inform-applyplanet-btn" v-else-if="item.message.status ===2">
                       <span>已同意</span>
+                    </div>
+                    <div id="inform-applyplanet-btn" v-else-if="item.message.status ===3">
+                      <span>已拒绝</span>
                     </div>
                   </div>
                 </li>
@@ -115,6 +65,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getPostInform, dealApplyPlanetPost } from 'api/auth';
 
   export default {
     name: 'inform-container',
@@ -122,7 +73,17 @@
       return {
         activeName: 'inform-card',
         loading: false,
+        loading2: false,
+        loading3: false,
+        cardPosts: [],
+        planetPosts: [],
+        applyplanetPosts: [],
+        userid: null,
+        informType: 'post',
       }
+    },
+    created () {
+      this.userid = this.$store.state.user.userInfo.id;
     },
     computed: {
       ...mapGetters([
@@ -131,20 +92,72 @@
       ])
     },
     mounted() {
-      this.loading = true;
-      this.loading2 = true;
-      this.loading3 = true;
-      // simulate ajax loading
-      setTimeout(() => {
-        this.loading = false;
-      }, 4000)
-      setTimeout(() => {
-        this.loading2 = false;
-      }, 6000)
-      setTimeout(() => {
-        this.loading3 = false;
-      }, 8000)
-
+      this.getInform();
+    },
+    methods: {
+      getInforms: function (tab) {
+        switch (tab.index){
+          case '0':
+            this.informType = 'post';
+            this.loading = true;
+        	break;
+          case '1':
+            this.informType = 'group';
+            this.loading2 = true;
+            break;
+          case '2':
+            this.informType = 'apply';
+            this.loading3 = true;
+            break;
+          default:
+            this.informType = 'post';
+            this.loading = true;
+            break;
+        }
+        var self = this;
+        return new Promise((resolve, reject) => {
+          getPostInform(self.userid, self.informType).then(res => {
+            if (self.informType === 'post') {
+              self.cardPosts = res.data;
+            } else if (self.informType === 'group') {
+              self.planetPosts = res.data;
+            } else {
+              self.applyplanetPosts = res.data;
+            }
+            self.loading = false;
+            self.loading2 = false;
+            self.loading3 = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      getInform: function () {
+        var self = this;
+        this.loading = true;
+        return new Promise((resolve, reject) => {
+          getPostInform(self.userid, self.informType).then(res => {
+            self.cardPosts = res.data;
+            self.loading = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      dealApplication: function (index, is_apply) {
+        var self = this;
+        let mid = this.applyplanetPosts[index].message.id;
+        return new Promise((resolve, reject) => {
+          dealApplyPlanetPost(self.userid, mid, is_apply).then(res => {
+            alert(res.success);
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      }
     }
   }
 </script>

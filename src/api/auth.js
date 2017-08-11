@@ -51,3 +51,28 @@ export function resetpsw(infoObj) {
     data: data,
   });
 }
+
+export function getPostInform(id, type, offset=0, limit=20) {
+  return new fetch({
+    url: `/users/${id}/messages?offset=${offset}&limit=${limit}&type=${type}`,
+    method: 'get',
+  });
+}
+
+export function dealApplyPlanetPost(id, mid, is_apply) {
+  const data = {
+    is_apply: is_apply,
+  };
+  return new fetch({
+    url: `/users/${id}/messages/${mid}`,
+    method: 'post',
+    data: data,
+  });
+}
+
+export function getUserInfo(id) {
+  return new fetch({
+    url: `/users/${id}`,
+    method: 'get',
+  });
+}

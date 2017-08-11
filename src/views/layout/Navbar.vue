@@ -105,6 +105,14 @@
       },
       visibleChange() {
         this.isShowDrop = !this.isShowDrop;
+      },
+      handleIconClick() {
+        if (this.input2 !== '') {
+          this.$store.commit('SET_SEARCHTEXT',this.input2);
+          this.$router.push({ path: '/relatedPlanets' });
+        } else{
+          alert("请输入要搜索的内容");
+        }
       }
     }
   }
