@@ -9,33 +9,6 @@
                            :key="post.id+'myplanet'" 
                            :post.sync="post">  
                 </post-card>
-                <!-- <li v-for="post of myplanetsPosts_formatted" class="index-card">
-                  <header>
-                    <img :src="post.author.avatar_url">
-                    <span class="clickable">{{ post.author.name }}</span>
-                    <span>发表于</span>
-                    <span class="clickable"
-                      @click="$router.push({path: '/group/' + post.group.id})">
-                      {{ post.group.name }}
-                    </span>
-                    <time>{{ post.create_time_formatted }}</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-                    <div class="preview-html" v-html="post.content">
-                    </div>
-                    <div class="preview-imgs">
-                      <img v-for="img of post.image_url" :src="img">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-                    </ul>
-                  </footer>
-                </li>   -->
               </ul>
               <el-pagination layout="prev, pager, next, jumper"
                              :page-count="pagination_myplanet.pageCount"
@@ -46,33 +19,10 @@
           <el-tab-pane label="最新话题" name="index-newtopic">
             <div class="index-tabcontent" v-loading="loading_newtopic">
               <ul class="index-cards">
-                <li v-for="post of newtopicPosts_formatted" class="index-card">
-                  <header>
-                    <img :src="post.author.avatar_url">
-                    <span class="clickable">{{ post.author.name }}</span>
-                    <span>发表于</span>
-                    <span class="clickable"
-                      @click="$router.push({path: '/group/' + post.group.id})">
-                      {{ post.group.name }}
-                    </span>
-                    <time>{{ post.create_time_formatted }}</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-                    <div class="preview-html" v-html="post.content">
-                    </div>
-                    <div class="preview-imgs">
-                      <img v-for="img of post.image_url" :src="img">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-                    </ul>
-                  </footer>
-                </li>  
+                <post-card v-for="post of newtopicPosts" 
+                           :key="post.id+'newtopic'" 
+                           :post.sync="post">  
+                </post-card>
               </ul>
               <el-pagination layout="prev, pager, next, jumper"
                              :page-count="pagination_newtopic.pageCount"
@@ -147,32 +97,7 @@
     computed: {
       ...mapGetters([
         'user',
-        'token',
       ]),
-      myplanetsPosts_formatted: function() {
-        if(this.myplanetsPosts.length === 0) {
-          return [];
-        }
-        let newPosts = this.myplanetsPosts.slice(0);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        return newPosts;
-      },
-      newtopicPosts_formatted: function() {
-        if(this.newtopicPosts.length === 0) {
-          return [];
-        }
-        let newPosts = this.newtopicPosts.slice(0);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        return newPosts;
-      },
     },
     mounted() {
       this.loadPosts_myplanet()
@@ -210,12 +135,23 @@
         });
     },
     methods: {
+      // OPTIMIZE: use reset
       tabChange(targetTab) {
         switch(targetTab.name) {
           case 'index-newtopic':
+            this.pagination_newtopic = {
+              pageCount: 1,
+              currentPage: 1,
+              limit: 20,
+            },
             this.loadPosts_newtopic()
             break;
           case 'index-myplanet':
+            this.pagination_myplanet = {
+              pageCount: 1,
+              currentPage: 1,
+              limit: 20,
+            }
             this.loadPosts_myplanet()
             break;
         }
