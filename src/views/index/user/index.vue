@@ -1,11 +1,15 @@
 <template>
     <div class="index-visitor-container">
       <section>     
-        <el-tabs v-model="activeName" @tab-click="()=>{}">
+        <el-tabs v-model="activeName" @tab-click="tabChange">
           <el-tab-pane label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading_myplanet">
-              <ul class="index-cards">
-                <li v-for="post of myplanetsPosts_formatted" class="index-card">
+              <ul v-if="myplanetsPosts.length > 0" class="index-cards">
+                <post-card v-for="post of myplanetsPosts" 
+                           :key="post.id+'myplanet'" 
+                           :post.sync="post">  
+                </post-card>
+                <!-- <li v-for="post of myplanetsPosts_formatted" class="index-card">
                   <header>
                     <img :src="post.author.avatar_url">
                     <span class="clickable">{{ post.author.name }}</span>
@@ -31,7 +35,7 @@
                       <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
                     </ul>
                   </footer>
-                </li>  
+                </li>   -->
               </ul>
               <el-pagination layout="prev, pager, next, jumper"
                              :page-count="pagination_myplanet.pageCount"
@@ -109,9 +113,13 @@
     collectPost,
   } from 'api/post';
   import { getGroups } from 'api/group';
+  import PostCard from 'components/PostCard'
 
   export default {
     name: 'index-visitor',
+    components: {
+      PostCard
+    },
     data() {
       return {
         activeName: 'index-myplanet',
@@ -202,8 +210,18 @@
         });
     },
     methods: {
-       // OPTIMIZE: there is a redundant code using ctrl+c to load newtopic and myplanet posts
-       loadPosts_myplanet(page) {
+      tabChange(targetTab) {
+        switch(targetTab.name) {
+          case 'index-newtopic':
+            this.loadPosts_newtopic()
+            break;
+          case 'index-myplanet':
+            this.loadPosts_myplanet()
+            break;
+        }
+      },
+      // OPTIMIZE: there is a redundant code using ctrl+c to load newtopic and myplanet posts
+      loadPosts_myplanet(page=1) {
         var self = this;
         this.loading_myplanet = true;
         console.log(`page is ${page}`)
@@ -221,7 +239,7 @@
           });
         });
       },
-      loadPosts_newtopic(page) {
+      loadPosts_newtopic(page=1) {
         var self = this;
         this.loading_newtopic = true;
         return new Promise((resolve, reject) => {
@@ -251,53 +269,6 @@
           });
         });
       },
-      // collect post
-      collect(id) {
-        var self = this;
-        collectPost({
-          id: id,
-          userid: self.user.userInfo.id,
-        }).then(() => {
-          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
-            return item.id === id
-          })
-          let newtopicIndex = self.newtopicPosts.findIndex(item => {
-            return item.id === id
-          })
-          let preCollected = myplanetsIndex !== -1 ? self.myplanetsPosts[myplanetsIndex].collected : self.newtopicPosts[newtopicIndex].collected;
-          if(myplanetsIndex != -1) {
-            self.myplanetsPosts[myplanetsIndex].collected = preCollected ? false : true;
-            self.myplanetsPosts[myplanetsIndex].collected_num = parseInt(self.myplanetsPosts[myplanetsIndex].collected_num) + (preCollected ? -1 : 1);
-          }
-          if(newtopicIndex != -1) {
-            self.newtopicPosts[newtopicIndex].collected = preCollected ? false : true;
-            self.newtopicPosts[newtopicIndex].collected_num = parseInt(self.newtopicPosts[newtopicIndex].collected_num) + (preCollected ? -1 : 1);
-          }
-        })
-      },
-      approve(id) {
-        var self = this;
-        approvePost({
-          id: id,
-        }).then(() => {
-          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
-            return item.id === id
-          })
-          let newtopicIndex = self.newtopicPosts.findIndex(item => {
-            return item.id === id
-          })
-
-          let preApproved = myplanetsIndex !== -1 ? self.myplanetsPosts[myplanetsIndex].approved : self.newtopicPosts[newtopicIndex].approved;
-          if(myplanetsIndex != -1) {
-            self.myplanetsPosts[myplanetsIndex].approved = preApproved ? false : true;
-            self.myplanetsPosts[myplanetsIndex].approved_num = parseInt(self.myplanetsPosts[myplanetsIndex].approved_num) + (preApproved ? -1 : 1);
-          }
-          if(newtopicIndex != -1) {
-            self.newtopicPosts[newtopicIndex].approved = preApproved ? false : true;
-            self.newtopicPosts[newtopicIndex].approved_num = parseInt(self.newtopicPosts[newtopicIndex].approved_num) + (preApproved ? -1 : 1);
-          }
-        })
-      }
     }
   }
 </script>

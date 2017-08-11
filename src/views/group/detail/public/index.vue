@@ -159,10 +159,10 @@
 
             // pagination
             try {
-            let pageFinal = parseQueryParams(res.paging.final);
-            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+              let pageFinal = parseQueryParams(res.paging.final);
+              self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
             } catch (e) {
-              console.log(e);
+              //console.log(e);
             }
             resolve();
           }).catch(error => {
