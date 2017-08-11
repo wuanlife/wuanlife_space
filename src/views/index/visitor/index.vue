@@ -5,34 +5,11 @@
           最新话题
         </header>
         <div class="index-tabcontent" v-loading="loading">
-          <ul class="index-cards">
-            <li v-for="post of posts_formatted" class="index-card">
-              <header>
-                <img :src="post.author.avatar_url">
-                <span class="clickable">{{ post.author.name }}</span>
-                <span>发表于</span>
-                <span class="clickable"
-                  @click="$router.push({path: '/group/' + post.group.id})">
-                  {{ post.group.name }}
-                </span>
-                <time>{{ post.create_time_formatted }}</time>
-              </header>
-              <div class="index-card-content">
-                <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-                <div class="preview-html" v-html="post.content">
-                </div>
-                <div class="preview-imgs">
-                  <img v-for="img of post.image_url" :src="img">
-                </div>
-              </div>
-              <footer>
-                <ul>
-                  <li @click="gotoLogin()" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                  <li @click="gotoLogin()" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                  <li @click="gotoLogin()" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-                </ul>
-              </footer>
-            </li>  
+          <ul v-if="posts.length > 0" class="index-cards">
+            <post-card v-for="post of posts" 
+                       :key="post.id" 
+                       :post.sync="post">  
+            </post-card>
           </ul>
           <el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
@@ -70,9 +47,13 @@
   import { parseQueryParams } from 'utils/url';
   import { getPosts } from 'api/post';
   import { getGroups } from 'api/group';
+  import PostCard from 'components/PostCard'
 
   export default {
     name: 'index-visitor',
+    components: {
+      PostCard
+    },
     data() {
       return {
         loading: false,
@@ -89,21 +70,7 @@
     computed: {
       ...mapGetters([
         'user',
-        'access_token',
       ]),
-      posts_formatted: function() {
-        if(this.posts.length === 0) {
-          return [];
-        }
-        let newPosts = this.posts.slice(0);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        console.dir(newPosts)
-        return newPosts;
-      },
     },
     mounted() {
       this.loadPosts()
@@ -161,9 +128,6 @@
             reject(error);
           });
         });
-      },
-      gotoLogin() {
-        this.$router.push({path: '/login/'})
       },
     }
   }

@@ -44,10 +44,10 @@
           </footer>
         </div>
         <div class="review-wrapper" v-if="commentsObj_formatted">
-          <header>
+          <header ref="replyHeader">
             {{ commentsObj_formatted.reply_count }} reviews
           </header>
-          <ul>
+          <ul v-loading="replyLoading">
             <li v-for="comment of commentsObj_formatted.reply">
               <header>
                 <h2>{{ comment.user_name }}</h2>
@@ -64,6 +64,7 @@
           </ul>
           <el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
+                         :current-page="pagination.currentPage"
                          @current-change="loadReplies">
           </el-pagination>
           <footer class="review-reply">
@@ -237,17 +238,22 @@
         })
     },
     methods: {
-      loadReplies(page=1) {
+      loadReplies(page) {
         var self = this;
         this.replyLoading = true;
         return new Promise((resolve, reject) => {
-          getCommentsByPostId(this.postid, (page-1)*self.pagination.limit || 0).then(res => {
+          getCommentsByPostId(this.postid, ((page || 1) - 1)*self.pagination.limit || 0).then(res => {
             self.commentsObj = res;
             self.replyLoading = false;
 
             // pagination
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+
+            // scroll into view
+            if(page) {
+              self.$refs.replyHeader.scrollIntoView(true);
+            }
             resolve();
           }).catch(error => {
             reject(error);
@@ -280,6 +286,7 @@
         replyPost(this.post.id, {comment: this.replyInput}).then(res => {
           this.replyInput = ''
           this.replyLoading = false;
+          this.loadReplies(this.pagination.currentPage);
         }).catch(error => {
           this.replyLoading = false;
         })

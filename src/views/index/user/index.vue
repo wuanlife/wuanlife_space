@@ -1,37 +1,14 @@
 <template>
     <div class="index-visitor-container">
       <section>     
-        <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tabs v-model="activeName" @tab-click="tabChange">
           <el-tab-pane label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading_myplanet">
-              <ul class="index-cards">
-                <li v-for="post of myplanetsPosts_formatted" class="index-card">
-                  <header>
-                    <img :src="post.author.avatar_url">
-                    <span class="clickable">{{ post.author.name }}</span>
-                    <span>发表于</span>
-                    <span class="clickable"
-                      @click="$router.push({path: '/group/' + post.group.id})">
-                      {{ post.group.name }}
-                    </span>
-                    <time>{{ post.create_time_formatted }}</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-                    <div class="preview-html" v-html="post.content">
-                    </div>
-                    <div class="preview-imgs">
-                      <img v-for="img of post.image_url" :src="img">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-                    </ul>
-                  </footer>
-                </li>  
+              <ul v-if="myplanetsPosts.length > 0" class="index-cards">
+                <post-card v-for="post of myplanetsPosts" 
+                           :key="post.id+'myplanet'" 
+                           :post.sync="post">  
+                </post-card>
               </ul>
               <el-pagination layout="prev, pager, next, jumper"
                              :page-count="pagination_myplanet.pageCount"
@@ -42,33 +19,10 @@
           <el-tab-pane label="最新话题" name="index-newtopic">
             <div class="index-tabcontent" v-loading="loading_newtopic">
               <ul class="index-cards">
-                <li v-for="post of newtopicPosts_formatted" class="index-card">
-                  <header>
-                    <img :src="post.author.avatar_url">
-                    <span class="clickable">{{ post.author.name }}</span>
-                    <span>发表于</span>
-                    <span class="clickable"
-                      @click="$router.push({path: '/group/' + post.group.id})">
-                      {{ post.group.name }}
-                    </span>
-                    <time>{{ post.create_time_formatted }}</time>
-                  </header>
-                  <div class="index-card-content">
-                    <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-                    <div class="preview-html" v-html="post.content">
-                    </div>
-                    <div class="preview-imgs">
-                      <img v-for="img of post.image_url" :src="img">
-                    </div>
-                  </div>
-                  <footer>
-                    <ul>
-                      <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                      <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                      <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-                    </ul>
-                  </footer>
-                </li>  
+                <post-card v-for="post of newtopicPosts" 
+                           :key="post.id+'newtopic'" 
+                           :post.sync="post">  
+                </post-card>
               </ul>
               <el-pagination layout="prev, pager, next, jumper"
                              :page-count="pagination_newtopic.pageCount"
@@ -109,9 +63,13 @@
     collectPost,
   } from 'api/post';
   import { getGroups } from 'api/group';
+  import PostCard from 'components/PostCard'
 
   export default {
     name: 'index-visitor',
+    components: {
+      PostCard
+    },
     data() {
       return {
         activeName: 'index-myplanet',
@@ -139,32 +97,7 @@
     computed: {
       ...mapGetters([
         'user',
-        'token',
       ]),
-      myplanetsPosts_formatted: function() {
-        if(this.myplanetsPosts.length === 0) {
-          return [];
-        }
-        let newPosts = this.myplanetsPosts.slice(0);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        return newPosts;
-      },
-      newtopicPosts_formatted: function() {
-        if(this.newtopicPosts.length === 0) {
-          return [];
-        }
-        let newPosts = this.newtopicPosts.slice(0);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        return newPosts;
-      },
     },
     mounted() {
       this.loadPosts_myplanet()
@@ -202,8 +135,29 @@
         });
     },
     methods: {
-       // OPTIMIZE: there is a redundant code using ctrl+c to load newtopic and myplanet posts
-       loadPosts_myplanet(page) {
+      // OPTIMIZE: use reset
+      tabChange(targetTab) {
+        switch(targetTab.name) {
+          case 'index-newtopic':
+            this.pagination_newtopic = {
+              pageCount: 1,
+              currentPage: 1,
+              limit: 20,
+            },
+            this.loadPosts_newtopic()
+            break;
+          case 'index-myplanet':
+            this.pagination_myplanet = {
+              pageCount: 1,
+              currentPage: 1,
+              limit: 20,
+            }
+            this.loadPosts_myplanet()
+            break;
+        }
+      },
+      // OPTIMIZE: there is a redundant code using ctrl+c to load newtopic and myplanet posts
+      loadPosts_myplanet(page=1) {
         var self = this;
         this.loading_myplanet = true;
         console.log(`page is ${page}`)
@@ -221,7 +175,7 @@
           });
         });
       },
-      loadPosts_newtopic(page) {
+      loadPosts_newtopic(page=1) {
         var self = this;
         this.loading_newtopic = true;
         return new Promise((resolve, reject) => {
@@ -251,52 +205,6 @@
           });
         });
       },
-      // collect post
-      collect(id) {
-        var self = this;
-        collectPost({
-          id: id,
-          userid: self.user.userInfo.id,
-        }).then(() => {
-          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
-            return item.id === id
-          })
-          let newtopicIndex = self.newtopicPosts.findIndex(item => {
-            return item.id === id
-          })
-          let preCollected = self.myplanetsPosts[myplanetsIndex].collected
-          if(myplanetsIndex != -1) {
-            self.myplanetsPosts[myplanetsIndex].collected = preCollected ? false : true;
-            self.myplanetsPosts[myplanetsIndex].collected_num = parseInt(self.myplanetsPosts[myplanetsIndex].collected_num) + (preCollected ? -1 : 1);
-          }
-          if(newtopicIndex != -1) {
-            self.newtopicPosts[newtopicIndex].collected = preCollected ? false : true;
-            self.newtopicPosts[newtopicIndex].collected_num = parseInt(self.newtopicPosts[newtopicIndex].collected_num) + (preCollected ? -1 : 1);
-          }
-        })
-      },
-      approve(id) {
-        var self = this;
-        approvePost({
-          id: id,
-        }).then(() => {
-          let myplanetsIndex = self.myplanetsPosts.findIndex(item => {
-            return item.id === id
-          })
-          let newtopicIndex = self.newtopicPosts.findIndex(item => {
-            return item.id === id
-          })
-          let preApproved = self.myplanetsPosts[myplanetsIndex].approved
-          if(myplanetsIndex != -1) {
-            self.myplanetsPosts[myplanetsIndex].approved = preApproved ? false : true;
-            self.myplanetsPosts[myplanetsIndex].approved_num = parseInt(self.myplanetsPosts[myplanetsIndex].approved_num) + (preApproved ? -1 : 1);
-          }
-          if(newtopicIndex != -1) {
-            self.newtopicPosts[newtopicIndex].approved = preApproved ? false : true;
-            self.newtopicPosts[newtopicIndex].approved_num = parseInt(self.newtopicPosts[newtopicIndex].approved_num) + (preApproved ? -1 : 1);
-          }
-        })
-      }
     }
   }
 </script>
