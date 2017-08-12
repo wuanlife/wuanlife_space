@@ -62,7 +62,7 @@
     approvePost,
     collectPost,
   } from 'api/post';
-  import { getGroups } from 'api/group';
+  import { getGroupsByUserId } from 'api/group';
   import PostCard from 'components/PostCard'
 
   export default {
@@ -196,7 +196,7 @@
         var self = this;
         this.loadingAside = true;
         return new Promise((resolve, reject) => {
-          getGroups().then(res => {
+          getGroupsByUserId(self.user.userInfo.id).then(res => {
             self.myGroups = res.data;
             self.loadingAside = false;
             resolve();

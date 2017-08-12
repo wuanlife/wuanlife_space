@@ -12,6 +12,12 @@ export function getGroups(offset=0, limit=20) {
     method: 'get',
   });
 }
+export function getGroupsByUserId(user_id, offset=0, limit=20) {
+  return fetch({
+    url: `/groups?user_id=${user_id}&fset=${offset}&limit=${limit}`,
+    method: 'get',
+  });
+}
 
 export function searchGroups(name, offset=0, limit=20) {
   const data = {
