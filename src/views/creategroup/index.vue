@@ -4,26 +4,18 @@
   		<header>创建星球</header>
   		<div class="form-content">
   			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
-            <el-form-item label="星球名称" prop="email" class="form-inputc">
-              <el-input v-model="loginForm.email" placeholder="星球名称" class="name"></el-input>
+            <el-form-item label="星球名称" prop="name" class="form-inputc">
+              <el-input v-model="loginForm.name" placeholder="星球名称" class="name"></el-input>
             </el-form-item>
             <div>星球头像(选填)</div>
-            <button @click="upload"></button>
-            <el-upload
-              class="upload-demo upload-c"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList">
-              <el-button size="small" type="primary">+</el-button>
-            </el-upload>
-            <el-form-item label="星球介绍(选填)" class="form-inputc">
-              <el-input type="textarea" v-model="loginForm.inviteword" placeholder="星球介绍(选填)" class="intro"></el-input>
+            <button id="upload-img" class="img-upload" @click="upload"><span>+</span></button>
+            <el-form-item label="星球介绍(选填)" prop="introduction" class="form-inputc">
+              <el-input type="textarea" v-model="loginForm.introduction" placeholder="星球介绍(选填)" class="intro"></el-input>
             </el-form-item>
             <el-form-item label="加入星球方式" class="form-inputc">
-              <el-select v-model="loginForm.inviteword" placeholder="加入星球方式" class="join-c">
-                <el-option label="允许任何人加入" value="0"></el-option>
-                <el-option label="验证水电费" value="1"></el-option>
+              <el-select v-model="loginForm.private" placeholder="加入星球方式" class="join-c">
+                <el-option label="允许任何人加入" value="false"></el-option>
+                <el-option label="验证水电费" value="true"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label-width="100px" class="form-inputc">
@@ -40,6 +32,8 @@
   import { UploaderBuilder, Uploader } from 'qiniu4js';
 
   // qiniu4js uploader object
+  var domainurl="http://7xlx4u.com1.z0.glb.clouddn.com/";
+  var urlkey='';
   var uploader = new UploaderBuilder()
     .debug(false)//开启debug，默认false
     .domain({http: "http://upload.qiniu.com", https: "https://up.qbox.me"})
@@ -94,6 +88,8 @@
         //一个任务上传成功后回调
         console.log(task.result.key);//文件的key
         console.log(task.result.hash);//文件hash
+        urlkey=task.result.key;
+        document.getElementById("upload-img").style.backgroundImage="url("+domainurl+urlkey+")";
       },onTaskFail(task) {
         //一个任务在经历重传后依然失败后回调此函数
         
@@ -111,41 +107,17 @@
     name: 'index-visitor',
     data() {
       // element-ui validator
-      var validateUser = (rule, value, callback) => {
-        var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        if (value === '') {
-          callback(new Error('请输入邮箱'));
-        }else if(!myreg.test(value)){
-          callback(new Error('请填写正确的邮箱格式！'));
-        } else {
-          callback();
-        }
-      };
       var validateName = (rule, value, callback) => {
-        var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-        if (value === '') {
-          callback(new Error('请输入昵称'));
-        }else if(value.length == 0 || value.length > 18){
-          callback(new Error('请输入1-18位字符作为昵称！'));
-        }else if(!myregName.test(value)){
-          callback(new Error('只允许中文、数字、字母和下划线！'));
+        if (value.length<1 || value.length>80) {
+          callback(new Error('星球长度1~80个字符'));
         } else {
           callback();
         }
       };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        }else if(value.length < 6 || value.length>20){
-          callback(new Error('请填写6-20位密码'));
-        } else {
-          callback();
-        }
-      };
-      var validateWord = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入邀请码'));
-        } else {
+      var validateIntro = (rule, value, callback) => {
+        if (value.length>50) {
+          callback(new Error('星球介绍1~50个字符'));
+        }else {
           callback();
         }
       };
@@ -155,23 +127,17 @@
 
         // form part
         loginForm: {
-          email: '',
-          nickname: '',
-          password: '',
-          inviteword: '',
+          name: '',
+          image_url: '',
+          introduction: '',
+          private: false,
         },
         loginRules: {
-          email: [
-            { validator: validateUser, trigger: 'blur' }
-          ],
-          nickname: [
+          name: [
             { validator: validateName, trigger: 'blur' }
           ],
-          password: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          inviteword: [
-            { validator: validateWord, trigger: 'blur' }
+          introduction: [
+            { validator: validateIntro, trigger: 'blur' }
           ],
         }
       }
@@ -185,14 +151,19 @@
 
     },
     methods: {
-      upload() {
+      upload(event) {
         uploader.chooseFile();
+        event.stopPropagation();
       },
       submitForm(formName){
+        this.loginForm.image_url=domainurl+urlkey;
+        this.loginForm.private=(this.loginForm.private=="true")?true:false;
+        //console.log(this.loginForm.private);
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            this.$store.dispatch('Signup',this.loginForm).then(() => {
+            return new Promise((resolve, reject) => {});
+            /*this.$store.dispatch('Signup',this.loginForm).then(() => {
               this.loading = false;
               this.$router.push({ path: '/' });
             }).catch(err => {
@@ -203,7 +174,7 @@
                 duration: 1000,
               });
               this.loading = false;
-            });
+            });*/
           }else{
             console.log('error submit!!');
             return false;
@@ -236,6 +207,22 @@
         height:699px;
         padding-top:40px;
         padding-left:30px;
+        .img-upload{
+          margin-top: 8px;
+          margin-bottom:10px;
+          background:#ffffff;
+          box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+          border-radius:100px;
+          width:80px;
+          height:80px;
+          background-image: url();
+          background-repeat: no-repeat;
+          background-size:100% 100%;
+          span{
+            font-size: 30px;
+            color: #5677fc;
+          }
+        }
       }
     }
 }

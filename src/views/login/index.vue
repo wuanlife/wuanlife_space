@@ -2,7 +2,7 @@
     <div class="login-container">
       <section>     
         <header>登录</header>
-        <div class="form-content">
+        <div class="form-content" v-loading="loading">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
