@@ -135,6 +135,13 @@ button.func-button {
   }
 }
 
+button.func-button.disabled {
+  background: #d3d3d3;
+  pointer-events: none;
+}
+
+
+
 button {
   &:focus {
     outline: none;
