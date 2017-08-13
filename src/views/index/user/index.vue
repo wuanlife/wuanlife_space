@@ -45,7 +45,7 @@
               <button @click="$router.push({path: `/index/`})">全部星球</button>
             </li>
             <li class="group-card-func">
-              <button @click="$router.push({path: `/index/`})">创建星球</button>
+              <button @click="$router.push({path: `/creategroup/`})">创建星球</button>
             </li>
           </ul>
         </div>
