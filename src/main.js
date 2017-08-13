@@ -39,17 +39,17 @@ function hasPermission(roles, permissionRoles) {
 }
 
 // register global progress.
-const blackList = [];// 重定向黑名单
+const blackList = ['inform', 'collection'];// 重定向黑名单
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开启Progress
-  if (store.getters.token != '') { // 判断是否有token
+  if (store.getters.user.token != '') { // 判断是否有token
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
       next()
     }
   } else {
-    if (blackList.indexOf(to.path) == -1) { // 不在录重定向黑名单，直接进入
+    if (blackList.indexOf(to.name) == -1) { // 不在录重定向黑名单，直接进入
       next()
     } else {
       next('/login'); // 否则全部重定向到登录页
