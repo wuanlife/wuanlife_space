@@ -31,9 +31,10 @@
   import { getToken } from 'api/qiniu'
   import { UploaderBuilder, Uploader } from 'qiniu4js';
   import { createGroup } from 'api/group';
+  import { DOMAIN_URL } from '../../../config/domain.env.js';
 
   // qiniu4js uploader object
-  var domainurl="http://7xlx4u.com1.z0.glb.clouddn.com/";
+  var domainurl=DOMAIN_URL;
   var urlkey='';
   var uploader = new UploaderBuilder()
     .debug(false)//开启debug，默认false
