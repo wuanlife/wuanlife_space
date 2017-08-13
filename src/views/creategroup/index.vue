@@ -53,9 +53,9 @@
     .accept(['.gif','.png','.jpg'])//过滤文件，默认无，详细配置见http://www.w3schools.com/tags/
     .tokenShare(true)
     .tokenFunc(function (setToken,task) {
-      setTimeout(function () {
-        setToken("fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs:3DUNhyHauRIWHHivzdrVe-QDS0g=:eyJzY29wZSI6Ind1YW5saWZlIiwiZGVhZGxpbmUiOjE1MDI1NzcwMTV9");
-      }, 1000);
+      getToken().then(res => {
+        setToken(res.uploadToken);
+      })
     })
     //任务拦截器
     .interceptor({
