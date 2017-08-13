@@ -1,3 +1,9 @@
+<!-- 
+  TODO:
+    1. Add effect and cursor for <h1> tag
+    2. group can be clicked.
+ -->
+
 <template>
     <div class="collection-container">
       <section>     
@@ -8,7 +14,7 @@
           <ul class="collection-cards">
             <li class="collection-card" v-for="item in collecations">
               <div class="collection-card-content">
-                <h1>{{ item.title }}</h1>
+                <h1 @click="$router.push({ path: `/post/${item.id}` })">{{ item.title }}</h1>
                 <div class="preview-html">
                   {{ item.content }}
                 </div>

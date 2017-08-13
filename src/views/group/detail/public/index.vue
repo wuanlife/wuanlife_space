@@ -2,7 +2,7 @@
   <div class="group-public-container">
     <section>    
       <div v-if="group && (group.identity === 'creator' || group.identity === 'member')" class="group-publish">
-        <button @click="$router.push({path: '/post/publish/', query: { groupid: groupid }})">
+        <button @click="$router.push({path: '/post/publish/', query: { groupid: group.id }})">
           <icon-svg icon-class="smallbell"></icon-svg>发表帖子
         </button>
       </div> 
@@ -59,7 +59,7 @@
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
   import { getPostsByGroupId, approvePost, collectPost } from 'api/post';
-  import { getGroup, joinGroup, quitGroup } from 'api/group';
+  import { joinGroup, quitGroup } from 'api/group';
 
   import PostCard from 'components/PostCard'
   export default {
@@ -67,13 +67,17 @@
     components: {
       PostCard
     },
+    props: {
+      group: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
         loading: false,
         loadingAside: false,
         posts: [],
-        groupid: null,
-        group: null,
         discoveryGroups: [],
         pagination: {
           pageCount: 1,
@@ -103,7 +107,6 @@
       },
     },
     created() {
-      this.groupid = this.$route.params.id;
     },
     mounted() {
       this.loadPosts()
@@ -117,24 +120,13 @@
           });
           this.loading = false;
         })
-      this.loadGroup(this.groupid)
-        .then(this.loadPosts)
-        .catch((err) => {
-          this.$message({
-            message: err.error,
-            type: 'error',
-            duration: 1000,
-          });
-          this.loadingAside = false;
-        })
-      //this.loading2 = true;
     },
     methods: {
       loadPosts(page) {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          getPostsByGroupId(self.groupid,(page-1)*self.pagination.limit || 0).then(res => {
+          getPostsByGroupId(self.group.id,(page-1)*self.pagination.limit || 0).then(res => {
             self.posts = res.data;
             self.loading = false;
 
@@ -145,19 +137,6 @@
             } catch (e) {
               //console.log(e);
             }
-            resolve();
-          }).catch(error => {
-            reject(error);
-          });
-        });
-      },
-      loadGroup(groupid) {
-        var self = this;
-        this.loadingAside = true;
-        return new Promise((resolve, reject) => {
-          getGroup(groupid).then(res => {
-            self.group = res;
-            self.loadingAside = false;
             resolve();
           }).catch(error => {
             reject(error);

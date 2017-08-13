@@ -1,11 +1,17 @@
+<!-- 
+  OPTIMIZATION:
+    1. the aside should be seperated
+ -->
+
 <template>
   <div class="group-container">
-    <component v-bind:is="currentRole"> </component>
+    <component v-if="group" v-bind:is="currentRole" :group.sync="group"> </component>
   </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
+  import { getGroup } from 'api/group';
   import PrivateGroup from './private';
   import PublicGroup from './public';
 
@@ -14,7 +20,9 @@
     components: { PrivateGroup, PublicGroup },
     data() {
       return {
-        currentRole: 'PublicGroup'
+        currentRole: 'PublicGroup',
+        groupid: null,
+        group: null,
       }
     },
     computed: {
@@ -24,10 +32,20 @@
       ])
     },
     created() {
-      /*if (this.access_token != null) {*/
-      if(true){
-        this.currentRole = 'PublicGroup';
-      }
+
+    },
+    mounted() {
+      var self = this;
+      this.groupid = this.$route.params.id;
+      getGroup(this.groupid).then(res => {
+        self.group = res;
+        if(!self.group.private){
+          this.currentRole = 'PublicGroup';
+        } else {
+          this.currentRole = 'PrivateGroup';
+        }
+      }).catch(error => {
+      });
     }
   }
 </script>

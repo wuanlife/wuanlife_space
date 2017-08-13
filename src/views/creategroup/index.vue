@@ -1,3 +1,12 @@
+<!-- 
+  TODO:
+    1. hide the "plus icon" after uploaded image
+    2. jump to the group page after created
+    3. add 'enter' event for quick submit
+    4. BUG: the first upload doesn't work
+    5. add default value for loginForm.private
+ -->
+
 <template>
   <div class="register-container">
   	<section>
@@ -31,10 +40,8 @@
   import { getToken } from 'api/qiniu'
   import { UploaderBuilder, Uploader } from 'qiniu4js';
   import { createGroup } from 'api/group';
-  import { DOMAIN_URL } from '../../../config/domain.env.js';
 
   // qiniu4js uploader object
-  var domainurl=DOMAIN_URL;
   var urlkey='';
   var uploader = new UploaderBuilder()
     .debug(false)//开启debug，默认false
@@ -49,9 +56,9 @@
     .accept(['.gif','.png','.jpg'])//过滤文件，默认无，详细配置见http://www.w3schools.com/tags/
     .tokenShare(true)
     .tokenFunc(function (setToken,task) {
-      setTimeout(function () {
-        setToken("fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs:3DUNhyHauRIWHHivzdrVe-QDS0g=:eyJzY29wZSI6Ind1YW5saWZlIiwiZGVhZGxpbmUiOjE1MDI1NzcwMTV9");
-      }, 1000);
+      getToken().then(res => {
+        setToken(res.uploadToken);
+      })
     })
     //任务拦截器
     .interceptor({
@@ -89,9 +96,8 @@
       },onTaskSuccess(task){
         //一个任务上传成功后回调
         console.log(task.result.key);//文件的key
-        console.log(task.result.hash);//文件hash
         urlkey=task.result.key;
-        document.getElementById("upload-img").style.backgroundImage="url("+domainurl+urlkey+")";
+        document.getElementById("upload-img").style.backgroundImage="url("+process.env.QINIU_DOMAIN_URL+urlkey+")";
       },onTaskFail(task) {
         //一个任务在经历重传后依然失败后回调此函数
         
@@ -158,7 +164,7 @@
         event.stopPropagation();
       },
       submitForm(formName){
-        this.loginForm.image_url=domainurl+urlkey;
+        this.loginForm.image_url=process.env.QINIU_DOMAIN_URL+urlkey;
         this.loginForm.private=(this.loginForm.private=="true")?true:false;
         //console.log(this.loginForm.private);
         this.$refs[formName].validate((valid) => {
@@ -169,7 +175,7 @@
                 res => {
                   //转到星球主页
                   this.loading = false;
-                  this.$router.push({ path: '/' });
+                  this.$router.push({ path: `/group/${res.id}` });
                   resolve();
                 }).catch(error => {
                 this.$message({
