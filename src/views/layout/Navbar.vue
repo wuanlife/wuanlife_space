@@ -45,7 +45,7 @@
               我的收藏
             </el-dropdown-item>
           </router-link>
-          <router-link class='inlineBlock' to="/collection/">
+          <router-link class='inlineBlock' to="/invitecode/">
             <el-dropdown-item>
               <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
               邀请好友

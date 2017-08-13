@@ -58,6 +58,24 @@ export function collectPost(params) {
     data: data,
   });  
 }
+export function deletePost(id) {
+  return fetch({
+    url: `/posts/${id}`,
+    method: 'delete',
+  })
+}
+export function lockPost(id) {
+  return fetch({
+    url: `/posts/${id}/locks`,
+    method: 'put',
+  })
+}
+export function settopPost(id) {
+  return fetch({
+    url: `/posts/${id}/tops`,
+    method: 'put',
+  })
+}
 // params {id: postid, floor: floor, comment: comment}
 export function replyPost(postid, params) {
   const data = {

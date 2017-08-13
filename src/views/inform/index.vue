@@ -7,12 +7,12 @@
               <ul class="inform-cards">
                 <li class="inform-card" v-for="item in cardPosts">
                   <div>
-                    <img src="#">
+                    <img :src="item.message.image_url">
                     <div>
                       <span>{{ item.user.name }}</span>
                       <p><span>回复了主题帖</span><span>{{ item.post.title }}</span></p>
                     </div>
-                    <button>查看</button>
+                    <button @click="$router.push({path: `/post/${item.post.id}`})">查看</button>
                   </div>
                 </li>
               </ul>
@@ -23,7 +23,7 @@
               <ul class="inform-cards">
                 <li class="inform-card" v-for="item in planetPosts">
                   <div>
-                    <img src="#">
+                    <img :src="item.message.image_url">
                     <div>
                       <span>{{ item.user.name }}</span>
                       <p><span>退出</span><span>{{ item.group.name }}</span></p>
@@ -38,7 +38,7 @@
               <ul class="inform-cards">
                 <li class="inform-card" v-for="(item, index) in applyplanetPosts">
                   <div>
-                    <img src="#">
+                    <img :src="item.message.image_url">
                     <div>
                       <p><span>{{ item.user.name }}</span><span>申请加入</span><span>{{ item.group.name }}</span></p>
                       <p>{{ item.message.text }}</p>

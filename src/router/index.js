@@ -20,6 +20,7 @@ const GroupDetail = _import('group/detail/index');
 const GroupCreate = _import('group/create/index');
 
 const Inform = _import('inform/index');
+const InviteCode = _import('invitecode/index');
 
 
 import Collection from 'views/collection'
@@ -107,6 +108,14 @@ export const constantRouterMap = [
     name: 'inform',
     component: Layout,
     children: [{ path: '', component: Inform}],
+  },
+  {
+    path: '/invitecode',
+    name: 'invitecode',
+    component: Layout,
+    redirect: '/invitecode/index',
+    hidden: true,
+    children: [{ path: 'index', component: InviteCode}],
   },
   {
     path: '/collection',

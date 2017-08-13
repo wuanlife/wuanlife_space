@@ -36,10 +36,22 @@
               </el-button>
             </div>
             <div v-if="group" class="opts">
-              <span>重?置</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">锁定</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">编辑</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">删除</span>
+              <span 
+                    @click="settop(post_formatted.id)">
+                置顶
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="lock(post_formatted.id)">
+                锁定
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="edit(post_formatted.id)">
+                编辑
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="del(post_formatted.id)">
+                删除
+              </span>
             </div>
           </footer>
         </div>
@@ -122,6 +134,9 @@
     approvePost,
     collectPost,
     replyPost,
+    deletePost,
+    lockPost,
+    settopPost,
   } from 'api/post';
   import { getGroup, joinGroup, quitGroup } from 'api/group';
   import { parseTime } from 'utils/date';
@@ -215,9 +230,8 @@
       this.loadReplies()
         .then()
         .catch((err) => {
-          console.dir(err);
           this.$message({
-            message: err.error,
+            message: err.data.error,
             type: 'error',
             duration: 1000,
           });
@@ -227,14 +241,18 @@
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
-          console.dir(err);
           this.$message({
-            message: err.error,
+            message: err.data.error,
             type: 'error',
             duration: 1000,
           });
           this.loading = false;
           this.loadingAside = false;
+          if(err.status == 410) {
+            setTimeout(() => {
+              this.$router.push({path: `/index/`})
+            }, 2000)
+          }
         })
     },
     methods: {
@@ -314,7 +332,59 @@
           });
           this.group.identity = 'member';
         })
-      }
+      },
+      // OPTIMIZATION: just re-fetch the data rather than reload page
+      settop(id) {
+        settopPost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '置顶成功',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.go(0)
+          },3000)  
+        }).catch(err => {
+          this.$message({
+            message: err.data.error,
+            type: 'error',
+            duration: 1000,
+          });
+        })
+      },
+      lock(id) {
+        lockPost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '锁定成功',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.go(0)
+          },3000)  
+        }).catch(err => {
+          this.$message({
+            message: err.data.error,
+            type: 'error',
+            duration: 1000,
+          });
+        })
+      },
+      edit(id) {
+        this.$router.push({path: `/post/${this.post.id}/edit`})
+      },
+      del(id) {
+        deletePost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '删除成功，3秒后跳转到星球',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.push({path: `/group/${this.group.id}`})
+          },3000)      
+        })
+      },
     }
   }
 </script>

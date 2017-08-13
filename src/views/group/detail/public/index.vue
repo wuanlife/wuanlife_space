@@ -1,40 +1,17 @@
 <template>
   <div class="group-public-container">
     <section>    
-      <div v-if="groupid" class="group-publish">
+      <div v-if="group && (group.identity === 'creator' || group.identity === 'member')" class="group-publish">
         <button @click="$router.push({path: '/post/publish/', query: { groupid: groupid }})">
           <icon-svg icon-class="smallbell"></icon-svg>发表帖子
         </button>
       </div> 
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-          <li v-for="post of posts" class="index-card">
-            <header>
-              <img :src="post.author.avatar_url">
-              <span class="clickable">{{ post.author.name }}</span>
-              <span>发表于</span>
-              <span class="clickable"
-                @click="$router.push({path: '/group/' + post.group.id})">
-                {{ group && group.name || '' }}
-              </span>
-              <time>{{ post.create_time_formatted }}</time>
-            </header>
-            <div class="index-card-content">
-              <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
-              <div class="preview-html" v-html="post.content">
-              </div>
-              <div class="preview-imgs">
-                <img v-for="img of post.image_url" :src="img">
-              </div>
-            </div>
-            <footer>
-              <ul>
-                <li @click="reply(post.id)" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-              </ul>
-            </footer>
-          </li>  
+          <post-card v-for="post of posts" 
+                     :key="post.id" 
+                     :post.sync="post">  
+          </post-card>  
         </ul>
         <el-pagination layout="prev, pager, next, jumper"
                        :page-count="pagination.pageCount"
@@ -84,8 +61,12 @@
   import { getPostsByGroupId, approvePost, collectPost } from 'api/post';
   import { getGroup, joinGroup, quitGroup } from 'api/group';
 
+  import PostCard from 'components/PostCard'
   export default {
     name: 'group-public',
+    components: {
+      PostCard
+    },
     data() {
       return {
         loading: false,
