@@ -30,6 +30,7 @@
   import { mapGetters } from 'vuex';
   import { getToken } from 'api/qiniu'
   import { UploaderBuilder, Uploader } from 'qiniu4js';
+  import { createGroup } from 'api/group';
 
   // qiniu4js uploader object
   var domainurl="http://7xlx4u.com1.z0.glb.clouddn.com/";
@@ -162,19 +163,22 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            return new Promise((resolve, reject) => {});
-            /*this.$store.dispatch('Signup',this.loginForm).then(() => {
-              this.loading = false;
-              this.$router.push({ path: '/' });
-            }).catch(err => {
-              console.dir(err)
-              this.$message({
-                message: err.error,
-                type: 'error',
-                duration: 1000,
+            return new Promise((resolve, reject) => {
+              createGroup(this.loginForm).then(
+                res => {
+                  //转到星球主页
+                  this.loading = false;
+                  this.$router.push({ path: '/' });
+                  resolve();
+                }).catch(error => {
+                this.$message({
+                  message: error.error,
+                  type: 'error',
+                  duration: 1000,
+                });
+                reject(error);
               });
-              this.loading = false;
-            });*/
+            });
           }else{
             console.log('error submit!!');
             return false;

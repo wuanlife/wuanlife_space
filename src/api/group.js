@@ -38,3 +38,16 @@ export function quitGroup(id) {
   })
 }
 
+export function createGroup(data) {
+  const data1 = {
+    name: data.name,
+    image_url: data.image_url,
+    introduction: data.introduction,
+    private: data.private,
+  };
+  return fetch({
+    url: `/groups`,
+    method: 'post',
+    data: data1,
+  })
+}
