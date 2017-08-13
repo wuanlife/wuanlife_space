@@ -22,8 +22,12 @@
     <section v-else>
       <div class="group-apply-card">
         <h2>验证信息</h2>
-        <input type="text" placeholder="邀请码">
-        <button class="func-button">申请加入</button>
+        <input type="text" 
+               :placeholder="blockApply ? '' : '验证信息'" 
+               :disabled="{'disabled' : blockApply}" 
+               v-model="applyComment">
+        <button v-if="blockApply" class="disabled func-button">已申请</button>
+        <button v-else class="func-button" @click="sendApply">申请加入</button>
       </div>
       <div class="group-apply-notice">加入星球后方可浏览内容</div>
     </section>
@@ -67,7 +71,7 @@
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
   import { getPostsByGroupId, approvePost, collectPost } from 'api/post';
-  import { joinGroup, quitGroup } from 'api/group';
+  import { joinGroup, quitGroup, applyPrivateGroup } from 'api/group';
 
   import PostCard from 'components/PostCard'
   export default {
@@ -85,6 +89,9 @@
       return {
         loading: false,
         loadingAside: false,
+        // apply message
+        applyComment: null,
+        blockApply: false,
         posts: [],
         discoveryGroups: [],
         pagination: {
@@ -117,7 +124,7 @@
     created() {
     },
     mounted() {
-      if(group.identity === 'creator' || group.identity === 'member') {
+      if(this.group.identity === 'creator' || this.group.identity === 'member') {
         this.loadPosts()
           .then()
           .catch((err) => {
@@ -129,6 +136,8 @@
             });
             this.loading = false;
           })
+      } else if(this.group.identity === 'is_applied') {
+        this.blockApply = true;
       }
     },
     methods: {
@@ -152,6 +161,32 @@
             reject(error);
           });
         });
+      },
+      sendApply() {
+        if(!this.user.userInfo.id) {
+          this.$router.push({path: '/login/'});
+          return
+        }
+        if(!this.applyComment) {
+          this.$message({
+            message: '申请消息不能为空',
+            type: 'info',
+            duration: 1000,
+          });
+          return
+        }
+        this.blockApply = true;
+        applyPrivateGroup(this.group.id, {
+          comment: this.applyComment,
+        }).then(res => {
+          this.blockApply = false;
+          this.$message({
+            message: '申请已发送',
+            type: 'success',
+            duration: 1000,
+          });
+        })
+        this.applyComment = null;
       },
       reply(postid) {
         if(!this.user.id) {

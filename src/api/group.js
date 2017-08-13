@@ -37,6 +37,23 @@ export function joinGroup(id) {
     method: 'post',
   })
 }
+// user apply to join the private group
+export function applyPrivateGroup(id, params) {
+  return fetch({
+    url: `/groups/${id}/private`,
+    method: 'post',
+    data: params,
+  })
+}
+// creator agree the user to join the private group or not
+export function processGroupApply(id, mid, params) {
+  return fetch({
+    url: `/users/${id}/messages/${mid}`,
+    method: 'post',
+    data: params,
+  })
+} 
+
 export function quitGroup(id) {
   return fetch({
     url: `/groups/${id}/members`,
