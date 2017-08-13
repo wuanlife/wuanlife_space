@@ -17,7 +17,7 @@
               <el-input v-model="loginForm.inviteword" auto-complete="off" placeholder="输入邀请码"></el-input>
             </el-form-item>
             <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" @click="submitForm('loginForm')">注册</el-button>
+              <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
             </el-form-item>
           </el-form>
   		</div>
