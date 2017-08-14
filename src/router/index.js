@@ -33,7 +33,7 @@ import FindPassword from 'views/findpassword'
 
 import Resetpsw from 'views/resetpsw'
 
-import RelatedPlanets from 'views/relatedPlanets'
+import Search from 'views/search'
 
 import CreatePlanets from 'views/creategroup'
 
@@ -145,12 +145,10 @@ export const constantRouterMap = [
     children: [{ path: 'index', component: Resetpsw}],
   },
   {
-    path: '/relatedPlanets',
-    name: 'relatedPlanets',
+    path: '/search',
     component: Layout,
-    redirect: '/relatedPlanets/index',
     hidden: true,
-    children: [{ path: 'index', component: RelatedPlanets}],
+    children: [{ path: '', name: 'search', component: Search}],
   },
   {
     path: '/creategroup',
