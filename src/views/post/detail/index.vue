@@ -1,15 +1,6 @@
 <template>
   
   <div id="post">
-    <el-popover
-      ref="reviewPopover"
-      placement="bottom-start"
-      width="558"
-      popper-class="reviewPopover"
-      trigger="click">
-      <input placeholder="请输入内容" type="text">
-      <button>回复</button>
-    </el-popover>
     <section>
       <div class="post-container" v-loading="loading">
         <div v-if="post_formatted" class="post-wrapper">
@@ -36,7 +27,7 @@
               </el-button>
             </div>
             <div v-if="group" class="opts">
-              <span 
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
                     @click="settop(post_formatted.id)">
                 置顶
               </span>
@@ -63,13 +54,24 @@
             <li v-for="comment of commentsObj_formatted.reply">
               <header>
                 <h2>{{ comment.user_name }}</h2>
-                <time> 2017-02-13</time>
+                <time> {{ parseTime(comment.create_time, 'yyyy-MM-dd HH:mm') }} </time>
               </header>
               <div class="review-html" v-html="comment.comment">
               </div>
-              <footer>
-                <span v-popover:reviewPopover>回复</span>
-                <span>删除</span>
+              <footer v-if="group">
+                <el-popover
+                  ref="reviewPopover"
+                  placement="bottom-start"
+                  width="558"
+                  :disabled="replyPop"
+                  popper-class="reviewPopover"
+                  trigger="click">
+                  <input v-model="replypopInput" placeholder="请输入内容" type="text">
+                  <button :class="{ 'wuan-loading' : replypopLoading }" 
+                          @click="replyComment(comment.floor)">回复</button>
+                  <span slot="reference">回复</span>
+                </el-popover>
+                <span v-if="group.identity === 'creator' || user.userInfo.id === comment.user_id">删除</span>
               </footer>
             </li>
 
@@ -158,8 +160,12 @@
         joinGroupLoading: false,
         quitGroupLoading: false,
         commentsObj: null,
+
+        replyPop: false,
         replyInput: '',
         replyLoading: false,
+        replypopInput: '',
+        replypopLoading: false,
       }
     },
     computed: {
@@ -256,6 +262,9 @@
         })
     },
     methods: {
+      parseTime(dateable, format) {
+        return parseTime(dateable, format)
+      },
       loadReplies(page) {
         var self = this;
         this.replyLoading = true;
@@ -298,7 +307,7 @@
           this.post.approved = !this.post.approved;
         })
       },
-      reply() {
+      reply(reply_floor) {
         var self = this;
         this.replyLoading = true;
         replyPost(this.post.id, {comment: this.replyInput}).then(res => {
@@ -307,6 +316,20 @@
           this.loadReplies(this.pagination.currentPage);
         }).catch(error => {
           this.replyLoading = false;
+        })
+      },
+      replyComment(reply_floor) {
+        var self = this;
+        this.replyPop = true;
+        
+        this.replypopLoading = true;
+        replyPost(this.post.id, {comment: this.replypopInput, floor: reply_floor}).then(res => {
+          this.replypopInput = ''
+          this.replypopLoading = false;
+          this.replyPop = false;
+          this.loadReplies(this.pagination.currentPage);
+        }).catch(error => {
+          this.replypopLoading = false;
         })
       },
       quitGroup() {
