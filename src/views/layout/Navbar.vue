@@ -13,7 +13,7 @@
           placeholder="Search for ..."
           icon="search"
           v-model="searchContent"
-          :on-icon-click="()=>{}">
+          @keyup.enter.native="$router.push({path: '/search', query:{search: searchContent}})">
         </el-input>
       </div>
       <div class="notif-container"
