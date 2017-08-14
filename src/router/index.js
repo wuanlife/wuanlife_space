@@ -79,10 +79,8 @@ export const constantRouterMap = [
   },
   { 
     path: '/login',
-    name: 'login',
     component: Layout,
-    hidden: true,
-    children: [{ path: '', component: Login }]
+    children: [{ path: '', name: 'login', component: Login }]
   },
   {
     path: '/post',
@@ -105,27 +103,22 @@ export const constantRouterMap = [
   },
   {
     path: '/inform',
-    name: 'inform',
     component: Layout,
     children: [{ path: '', name: 'inform', component: Inform}],
   },
   {
     path: '/invitecode',
-    name: 'invitecode',
     component: Layout,
     children: [{ path: '', name: 'invitecode',component: InviteCode}],
   },
   {
     path: '/collection',
-    name: 'collection',
     component: Layout,
     children: [{ path: '', name: 'collection', component: Collection}],
   },
   {
     path: '/signup',
-    name: 'signup',
     component: Layout,
-    hidden: true,
     children: [{ path: '', component: Signup}],
   },
   {
