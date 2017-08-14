@@ -114,7 +114,7 @@
             }).catch(err => {
               console.dir(err)
               this.$message({
-                message: err.error,
+                message: err.data.error,
                 type: 'error',
                 duration: 1000,
               });
