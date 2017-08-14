@@ -104,7 +104,7 @@ $panGreen: #30B08F;
 
 
 // wuan button
-.wuan-button {
+button.wuan-button {
   background:#5677fc;
   box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
   border-radius:2px;
@@ -120,7 +120,7 @@ $panGreen: #30B08F;
   }
 }
 
-.func-button {
+button.func-button {
   background:#1b87f6;
   border-radius:4px;
   border: none;
@@ -134,6 +134,13 @@ $panGreen: #30B08F;
     background: #4db3ff;
   }
 }
+
+button.func-button.disabled {
+  background: #d3d3d3;
+  pointer-events: none;
+}
+
+
 
 button {
   &:focus {

@@ -22,6 +22,7 @@
     "jsonlint": "1.6.2",
     "normalize.css": "3.0.2",
     "nprogress": "0.2.0",
+    "qiniu4js": "^1.0.13",
     "screenfull": "3.2.2",
     "script-loader": "^0.7.0",
     "showdown": "1.7.1",

@@ -2,7 +2,7 @@
   <div class="register-container">
   	<section>
   		<header>注册</header>
-  		<div class="form-content">
+  		<div class="form-content" v-loading="loading">
   			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
@@ -17,7 +17,7 @@
               <el-input v-model="loginForm.inviteword" auto-complete="off" placeholder="输入邀请码"></el-input>
             </el-form-item>
             <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" @click="submitForm('loginForm')">注册</el-button>
+              <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
             </el-form-item>
           </el-form>
   		</div>

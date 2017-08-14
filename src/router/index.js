@@ -20,6 +20,7 @@ const GroupDetail = _import('group/detail/index');
 const GroupCreate = _import('group/create/index');
 
 const Inform = _import('inform/index');
+const InviteCode = _import('invitecode/index');
 
 
 import Collection from 'views/collection'
@@ -32,7 +33,9 @@ import FindPassword from 'views/findpassword'
 
 import Resetpsw from 'views/resetpsw'
 
-import RelatedPlanets from 'views/relatedPlanets'
+import Search from 'views/search'
+
+import CreatePlanets from 'views/creategroup'
 
 /* Introduction */
 const Introduction = _import('introduction/index');
@@ -76,10 +79,8 @@ export const constantRouterMap = [
   },
   { 
     path: '/login',
-    name: 'login',
     component: Layout,
-    hidden: true,
-    children: [{ path: '', component: Login }]
+    children: [{ path: '', name: 'login', component: Login }]
   },
   {
     path: '/post',
@@ -102,25 +103,22 @@ export const constantRouterMap = [
   },
   {
     path: '/inform',
-    name: 'inform',
     component: Layout,
-    redirect: '/inform/index',
-    hidden: true,
-    children: [{ path: 'index', component: Inform}],
+    children: [{ path: '', name: 'inform', component: Inform}],
+  },
+  {
+    path: '/invitecode',
+    component: Layout,
+    children: [{ path: '', name: 'invitecode',component: InviteCode}],
   },
   {
     path: '/collection',
-    name: 'collection',
     component: Layout,
-    redirect: '/collection/index',
-    hidden: true,
-    children: [{ path: 'index', component: Collection}],
+    children: [{ path: '', name: 'collection', component: Collection}],
   },
   {
     path: '/signup',
-    name: 'signup',
     component: Layout,
-    hidden: true,
     children: [{ path: '', component: Signup}],
   },
   {
@@ -147,12 +145,18 @@ export const constantRouterMap = [
     children: [{ path: 'index', component: Resetpsw}],
   },
   {
-    path: '/relatedPlanets',
-    name: 'relatedPlanets',
+    path: '/search',
     component: Layout,
-    redirect: '/relatedPlanets/index',
     hidden: true,
-    children: [{ path: 'index', component: RelatedPlanets}],
+    children: [{ path: '', name: 'search', component: Search}],
+  },
+  {
+    path: '/creategroup',
+    name: 'creategroup',
+    component: Layout,
+    redirect: '/creategroup/index',
+    hidden: true,
+    children: [{ path: 'index', component: CreatePlanets}],
   }
 ]
 

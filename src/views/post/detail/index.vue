@@ -1,15 +1,6 @@
 <template>
   
   <div id="post">
-    <el-popover
-      ref="reviewPopover"
-      placement="bottom-start"
-      width="558"
-      popper-class="reviewPopover"
-      trigger="click">
-      <input placeholder="请输入内容" type="text">
-      <button>回复</button>
-    </el-popover>
     <section>
       <div class="post-container" v-loading="loading">
         <div v-if="post_formatted" class="post-wrapper">
@@ -36,34 +27,58 @@
               </el-button>
             </div>
             <div v-if="group" class="opts">
-              <span>重?置</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">锁定</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">编辑</span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id">删除</span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="settop(post_formatted.id)">
+                置顶
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="lock(post_formatted.id)">
+                锁定
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="edit(post_formatted.id)">
+                编辑
+              </span>
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
+                    @click="del(post_formatted.id)">
+                删除
+              </span>
             </div>
           </footer>
         </div>
         <div class="review-wrapper" v-if="commentsObj_formatted">
-          <header>
+          <header ref="replyHeader">
             {{ commentsObj_formatted.reply_count }} reviews
           </header>
-          <ul>
+          <ul v-loading="replyLoading">
             <li v-for="comment of commentsObj_formatted.reply">
               <header>
                 <h2>{{ comment.user_name }}</h2>
-                <time> 2017-02-13</time>
+                <time> {{ parseTime(comment.create_time, 'yyyy-MM-dd HH:mm') }} </time>
               </header>
               <div class="review-html" v-html="comment.comment">
               </div>
-              <footer>
-                <span v-popover:reviewPopover>回复</span>
-                <span>删除</span>
+              <footer v-if="group">
+                <el-popover
+                  ref="reviewPopover"
+                  placement="bottom-start"
+                  width="558"
+                  :disabled="replyPop"
+                  popper-class="reviewPopover"
+                  trigger="click">
+                  <input v-model="replypopInput" placeholder="请输入内容" type="text">
+                  <button :class="{ 'wuan-loading' : replypopLoading }" 
+                          @click="replyComment(comment.floor)">回复</button>
+                  <span slot="reference">回复</span>
+                </el-popover>
+                <span v-if="group.identity === 'creator' || user.userInfo.id === comment.user_id">删除</span>
               </footer>
             </li>
 
           </ul>
           <el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
+                         :current-page="pagination.currentPage"
                          @current-change="loadReplies">
           </el-pagination>
           <footer class="review-reply">
@@ -121,6 +136,9 @@
     approvePost,
     collectPost,
     replyPost,
+    deletePost,
+    lockPost,
+    settopPost,
   } from 'api/post';
   import { getGroup, joinGroup, quitGroup } from 'api/group';
   import { parseTime } from 'utils/date';
@@ -142,8 +160,12 @@
         joinGroupLoading: false,
         quitGroupLoading: false,
         commentsObj: null,
+
+        replyPop: false,
         replyInput: '',
         replyLoading: false,
+        replypopInput: '',
+        replypopLoading: false,
       }
     },
     computed: {
@@ -214,9 +236,8 @@
       this.loadReplies()
         .then()
         .catch((err) => {
-          console.dir(err);
           this.$message({
-            message: err.error,
+            message: err.data.error,
             type: 'error',
             duration: 1000,
           });
@@ -226,28 +247,40 @@
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
-          console.dir(err);
           this.$message({
-            message: err.error,
+            message: err.data.error,
             type: 'error',
             duration: 1000,
           });
           this.loading = false;
           this.loadingAside = false;
+          if(err.status == 410) {
+            setTimeout(() => {
+              this.$router.push({path: `/index/`})
+            }, 2000)
+          }
         })
     },
     methods: {
-      loadReplies(page=1) {
+      parseTime(dateable, format) {
+        return parseTime(dateable, format)
+      },
+      loadReplies(page) {
         var self = this;
         this.replyLoading = true;
         return new Promise((resolve, reject) => {
-          getCommentsByPostId(this.postid, (page-1)*self.pagination.limit || 0).then(res => {
+          getCommentsByPostId(this.postid, ((page || 1) - 1)*self.pagination.limit || 0).then(res => {
             self.commentsObj = res;
             self.replyLoading = false;
 
             // pagination
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+
+            // scroll into view
+            if(page) {
+              self.$refs.replyHeader.scrollIntoView(true);
+            }
             resolve();
           }).catch(error => {
             reject(error);
@@ -274,14 +307,29 @@
           this.post.approved = !this.post.approved;
         })
       },
-      reply() {
+      reply(reply_floor) {
         var self = this;
         this.replyLoading = true;
         replyPost(this.post.id, {comment: this.replyInput}).then(res => {
           this.replyInput = ''
           this.replyLoading = false;
+          this.loadReplies(this.pagination.currentPage);
         }).catch(error => {
           this.replyLoading = false;
+        })
+      },
+      replyComment(reply_floor) {
+        var self = this;
+        this.replyPop = true;
+        
+        this.replypopLoading = true;
+        replyPost(this.post.id, {comment: this.replypopInput, floor: reply_floor}).then(res => {
+          this.replypopInput = ''
+          this.replypopLoading = false;
+          this.replyPop = false;
+          this.loadReplies(this.pagination.currentPage);
+        }).catch(error => {
+          this.replypopLoading = false;
         })
       },
       quitGroup() {
@@ -307,7 +355,59 @@
           });
           this.group.identity = 'member';
         })
-      }
+      },
+      // OPTIMIZATION: just re-fetch the data rather than reload page
+      settop(id) {
+        settopPost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '置顶成功',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.go(0)
+          },3000)  
+        }).catch(err => {
+          this.$message({
+            message: err.data.error,
+            type: 'error',
+            duration: 1000,
+          });
+        })
+      },
+      lock(id) {
+        lockPost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '锁定成功',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.go(0)
+          },3000)  
+        }).catch(err => {
+          this.$message({
+            message: err.data.error,
+            type: 'error',
+            duration: 1000,
+          });
+        })
+      },
+      edit(id) {
+        this.$router.push({path: `/post/${this.post.id}/edit`})
+      },
+      del(id) {
+        deletePost(id).then(res => {
+          this.$notify({
+            title: '成功',
+            message: '删除成功，3秒后跳转到星球',
+            type: 'info'
+          });
+          setTimeout(() => {
+            this.$router.push({path: `/group/${this.group.id}`})
+          },3000)      
+        })
+      },
     }
   }
 </script>

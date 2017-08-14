@@ -188,3 +188,70 @@ section.app-main {
     margin-top: 36px;
   }
 }
+//创建星球表单，与修改星球信息可以复用
+.form-inputc{
+  label{
+    float:none;
+    font-family:PingFangSC-Regular;
+    font-size:12px;
+    color:#666666;
+  }
+  .el-input,textarea{
+    margin-left: -100px;
+    margin-top: 8px;
+  }
+  .resize-triggers{
+    margin-left: -100px;
+    margin-top: 8px;
+  }
+  .el-input__icon{
+    margin-left: -200px;
+  }
+  .el-form-item__error{
+    margin-left: -100px;
+  }
+  .name input{
+    background:#ffffff;
+    box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+    border-radius:2px;
+    width:600px;
+    height:60px;
+  }
+  .intro textarea{
+    background:#ffffff;
+    box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+    border-radius:2px;
+    width:600px;
+    height:120px;
+    resize: none;
+    padding-top: 18px;
+    padding-left: 12px;
+  }
+  .join-c{
+    input{
+      height:60px;
+    }
+   .el-input{
+    background:#ffffff;
+    box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
+    border-radius:2px;
+    width:240px;
+    height:60px;
+    }
+  }
+  .el-button{
+    margin-left: -100px;
+    width: 124px;
+  }
+}
+.el-scrollbar{
+  width:240px;
+  height:100px;
+  ul{
+    padding-top: 0px;
+  li{
+    padding-top: 16px;
+    height: 50px;
+   }
+  }
+}

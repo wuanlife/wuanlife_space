@@ -16,7 +16,8 @@
           :on-icon-click="()=>{}">
         </el-input>
       </div>
-      <div class="notif-container">
+      <div class="notif-container"
+           @click="$router.push({path: '/inform/'})">
         <el-badge :is-dot="true">
           <icon-svg icon-class="smallbell" class="notif-icon"></icon-svg>
         </el-badge>
@@ -44,7 +45,7 @@
               我的收藏
             </el-dropdown-item>
           </router-link>
-          <router-link class='inlineBlock' to="/collection/">
+          <router-link class='inlineBlock' to="/invitecode/">
             <el-dropdown-item>
               <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
               邀请好友

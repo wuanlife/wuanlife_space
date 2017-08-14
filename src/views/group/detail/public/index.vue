@@ -1,40 +1,17 @@
 <template>
   <div class="group-public-container">
     <section>    
-      <div v-if="groupid" class="group-publish">
-        <button @click="$router.push({path: '/post/publish/', query: { groupid: groupid }})">
+      <div v-if="group && (group.identity === 'creator' || group.identity === 'member')" class="group-publish">
+        <button @click="$router.push({path: '/post/publish/', query: { groupid: group.id }})">
           <icon-svg icon-class="smallbell"></icon-svg>发表帖子
         </button>
       </div> 
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-          <li v-for="post of posts" class="index-card">
-            <header>
-              <img :src="post.author.avatar_url">
-              <span class="clickable">{{ post.author.name }}</span>
-              <span>发表于</span>
-              <span class="clickable"
-                @click="$router.push({path: '/group/' + post.group.id})">
-                {{ group && group.name || '' }}
-              </span>
-              <time>{{ post.create_time_formatted }}</time>
-            </header>
-            <div class="index-card-content">
-              <h1>{{ post.title }}</h1>
-              <div class="preview-html" v-html="post.content">
-              </div>
-              <div class="preview-imgs">
-                <img v-for="img of post.image_url" :src="img">
-              </div>
-            </div>
-            <footer>
-              <ul>
-                <li @click="reply(post.id)" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-                <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-                <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
-              </ul>
-            </footer>
-          </li>  
+          <post-card v-for="post of posts" 
+                     :key="post.id" 
+                     :post.sync="post">  
+          </post-card>  
         </ul>
         <el-pagination layout="prev, pager, next, jumper"
                        :page-count="pagination.pageCount"
@@ -57,8 +34,18 @@
           <span>星球主: {{ group.creator.name }}</span>
         </div>
         <footer>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-if="group.identity == 'member'">退出星球</el-button>
-          <el-button class="func-button" style="width: 90px; height: 30px" v-else-if="group.identity == 'not_applied'">加入星球</el-button>
+          <el-button v-if="group.identity == 'member'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="quitGroup">
+            退出星球
+          </el-button>
+          <el-button v-else-if="group.identity == 'not_applied'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="joinGroup">
+            加入星球
+          </el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -72,23 +59,33 @@
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
   import { getPostsByGroupId, approvePost, collectPost } from 'api/post';
-  import { getGroup } from 'api/group';
+  import { joinGroup, quitGroup } from 'api/group';
 
+  import PostCard from 'components/PostCard'
   export default {
     name: 'group-public',
+    components: {
+      PostCard
+    },
+    props: {
+      group: {
+        type: Object,
+        required: true,
+      },
+    },
     data() {
       return {
         loading: false,
         loadingAside: false,
         posts: [],
-        groupid: null,
-        group: null,
         discoveryGroups: [],
         pagination: {
           pageCount: 1,
           currentPage: 1,
           limit: 20,
-        }
+        },
+        joinGroupLoading: false,
+        quitGroupLoading: false,
       }
     },
     computed: {
@@ -110,7 +107,6 @@
       },
     },
     created() {
-      this.groupid = this.$route.params.id;
     },
     mounted() {
       this.loadPosts()
@@ -124,44 +120,23 @@
           });
           this.loading = false;
         })
-      this.loadGroup(this.groupid)
-        .then(this.loadPosts)
-        .catch((err) => {
-          this.$message({
-            message: err.error,
-            type: 'error',
-            duration: 1000,
-          });
-          this.loadingAside = false;
-        })
-      //this.loading2 = true;
     },
     methods: {
       loadPosts(page) {
         var self = this;
         this.loading = true;
-        console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
-          getPostsByGroupId(self.groupid,(page-1)*self.pagination.limit || 0).then(res => {
+          getPostsByGroupId(self.group.id,(page-1)*self.pagination.limit || 0).then(res => {
             self.posts = res.data;
             self.loading = false;
 
             // pagination
-            let pageFinal = parseQueryParams(res.paging.final);
-            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
-            resolve();
-          }).catch(error => {
-            reject(error);
-          });
-        });
-      },
-      loadGroup(groupid) {
-        var self = this;
-        this.loadingAside = true;
-        return new Promise((resolve, reject) => {
-          getGroup(groupid).then(res => {
-            self.group = res;
-            self.loadingAside = false;
+            try {
+              let pageFinal = parseQueryParams(res.paging.final);
+              self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            } catch (e) {
+              //console.log(e);
+            }
             resolve();
           }).catch(error => {
             reject(error);
@@ -199,6 +174,30 @@
             type: 'success',
             duration: 1000,
           });
+        })
+      },
+      quitGroup() {
+        this.quitGroupLoading = true;
+        quitGroup(this.group.id).then(res => {
+          this.quitGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'quit success',
+            type: 'info'
+          });
+          this.group.identity = 'not_applied';
+        })
+      },
+      joinGroup() {
+        this.joinGroupLoading = true;
+        joinGroup(this.group.id).then(res => {
+          this.joinGroupLoading = false;
+          this.$notify({
+            title: '成功',
+            message: 'join success',
+            type: 'success'
+          });
+          this.group.identity = 'member';
         })
       },
     }

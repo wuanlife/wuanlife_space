@@ -2,8 +2,8 @@
     <div class="login-container">
       <section>     
         <header>登录</header>
-        <div class="form-content">
-          <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm">
+        <div class="form-content" v-loading="loading">
+          <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
@@ -11,7 +11,7 @@
               <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
             </el-form-item>
             <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+              <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">登录</el-button>
             </el-form-item>
           </el-form>
           <a href="#/signup/" id="register">注册账号</a>
@@ -30,7 +30,7 @@
       // element-ui validator
       var validateEmail = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('请再次输入邮箱'));
+          callback(new Error('请输入邮箱'));
         } else {
           callback();
         }
