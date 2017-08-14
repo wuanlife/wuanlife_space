@@ -41,14 +41,12 @@
             <li v-for="group of myGroups" class="group-card">
               <button @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</button>
             </li>
-            <li class="group-card-func">
-              <button @click="$router.push({path: `/index/`})">全部星球</button>
-            </li>
-            <li class="group-card-func">
-              <button @click="$router.push({path: `/creategroup/`})">创建星球</button>
-            </li>
           </ul>
         </div>
+        <footer>
+          <span class="clickable" @click="$router.push({path: `/index/`})">全部星球</span>
+          <span class="clickable" @click="$router.push({path: `/login/`})">创建星球</span>
+        </footer>
       </aside>
     </div>
 </template>
@@ -242,6 +240,17 @@
         .index-aside-card {
           width: 250px;
           height: 70px;
+        }
+      }
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+        span {
+          font-family:PingFangHK-Regular;
+          font-size:14px;
+          color:#5992e4;
         }
       }
     }
