@@ -17,7 +17,7 @@
             </div>
           </div>
           <el-form :model="personalDataForm" :rules="personalDataRules" ref="personalDataForm" class="personalDataForm" :label-position="labelPosition">
-            <el-form-item label="邮箱" prop="email" class="hhh" label-width="66px">
+            <el-form-item label="邮箱" prop="email" label-width="66px">
               <span style="font-family:PingFangHK-Semibold;font-size:16px;color:#666666;text-align:left;width: 210px;display: inline-block;margin-right: 11px;">{{ personalDataForm.mail }}</span>
               <el-button @click.prevent="checkMail(domain)" style="font-size: 12px;color: #ffffff;background-color: #5677fc;font-family:PingFangSC-Regular;box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);border-radius:2px;width:80px;height:30px;border: none;padding: 0;">验证</el-button>
             </el-form-item>
@@ -32,7 +32,7 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="生日" label-width="66px">
-              <el-date-picker :clearable="false" type="date" v-model="personalDataForm.birthday" style="width: 160px;font-size: 16px;font-family:PingFangHK-Semibold;color: #000000;"></el-date-picker>
+              <el-date-picker :editable="false" class="birthday-input" placeholder="1994年12月30日" :clearable="false" type="date" v-model="personalDataForm.birthday" style="width: 160px;font-size: 16px;font-family:PingFangHK-Semibold;color: #000000;"></el-date-picker>
             </el-form-item>
             <el-button type="primary" @click="submitForm('personalDataForm')">保存</el-button>
           </el-form>
@@ -176,6 +176,8 @@
             margin-bottom: 3px;
           }
           .avatar-uploader {
+            display: flex;
+            justify-content: center;
             button {
               border: none;
               padding: 0;

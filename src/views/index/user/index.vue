@@ -41,14 +41,12 @@
             <li v-for="group of myGroups" class="group-card">
               <button @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</button>
             </li>
-            <li class="group-card-func">
-              <button @click="$router.push({path: `/index/`})">全部星球</button>
-            </li>
-            <li class="group-card-func">
-              <button @click="$router.push({path: `/creategroup/`})">创建星球</button>
-            </li>
           </ul>
         </div>
+        <footer>
+          <span class="clickable" @click="$router.push({path: `/index/`})">全部星球</span>
+          <span class="clickable" @click="$router.push({path: `/login/`})">创建星球</span>
+        </footer>
       </aside>
     </div>
 </template>
@@ -64,7 +62,6 @@
   } from 'api/post';
   import { getGroupsByUserId } from 'api/group';
   import PostCard from 'components/PostCard'
-
   export default {
     name: 'index-visitor',
     components: {
@@ -73,7 +70,6 @@
     data() {
       return {
         activeName: 'index-myplanet',
-
         loading_myplanet: false,
         loading_newtopic: false,
         loadingAside: false,
@@ -89,7 +85,6 @@
           currentPage: 1,
           limit: 20,
         },
-
         // aside group
         myGroups: [],
       }
@@ -165,7 +160,6 @@
           getPosts(false,(page-1)*self.pagination_myplanet.limit || 0).then(res => {
             self.myplanetsPosts = res.data;
             self.loading_myplanet = false;
-
             // pagination
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination_myplanet.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
@@ -182,7 +176,6 @@
           getPosts(true,(page-1)*self.pagination_newtopic.limit || 0).then(res => {
             self.newtopicPosts = res.data;
             self.loading_newtopic = false;
-
             // pagination
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination_newtopic.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
@@ -231,7 +224,6 @@
       header {
         h2 {
           margin: 20px 0;
-
           font-family:PingFangHK-Medium;
           font-weight: normal;
           font-size:14px;
@@ -244,8 +236,18 @@
           height: 70px;
         }
       }
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+        span {
+          font-family:PingFangHK-Regular;
+          font-size:14px;
+          color:#5992e4;
+        }
+      }
     }
-
   }
   .index-tabcontent {
     min-height: 200px;
@@ -300,7 +302,6 @@
           position: relative;
           cursor: pointer;
           margin-bottom: 6px;
-
           color: #2e5897;
           font-family:PingFangHK-Semibold;
           font-size:16px;
@@ -325,7 +326,6 @@
         div.preview-html {
           margin-bottom: 12px;
           word-break: break-all;
-
           font-size:14px;
           color:#666666;
           letter-spacing:0;
@@ -338,14 +338,12 @@
             width: 174px;
             height: 174px;
           }
-
         }
       }
       footer {
         ul {
           display: flex;
           li {
-
             transition: all 0.2s ease-in-out;
             cursor: pointer;
             color: #bcbcbc;
@@ -364,7 +362,6 @@
       }  
     }   
   }
-
   // aside style
   .group-cards {
     display: flex;
@@ -387,7 +384,6 @@
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-
       font-family:PingFangHK-Medium;
       font-size:12px;
       color:#5992e4;

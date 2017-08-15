@@ -25,7 +25,7 @@
                 </div>
               </div>
               <footer>
-                <span>{{ item.group.name }}</span>
+                <span @click="$router.push({ path: `/group/${item.group.id}` })">{{ item.group.name }}</span>
                 <div>
                   <span>收藏于</span>
                   <time>{{ item.create_time }}</time>
@@ -130,6 +130,7 @@
           right: 0;
         }
         span {    
+          cursor: ppointer;
           &:not(:first-child) {   
             margin-left: 5px;   
           }
@@ -143,6 +144,7 @@
           font-family:PingFangHK-Semibold;
           font-size:16px;
           opacity: 0.87;
+          cursor: pointer;
         }
         div.preview-html {
           margin-bottom: 12px;

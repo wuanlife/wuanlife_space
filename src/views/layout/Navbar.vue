@@ -13,7 +13,7 @@
           placeholder="Search for ..."
           icon="search"
           v-model="searchContent"
-          :on-icon-click="()=>{}">
+          @keyup.enter.native="$router.push({path: '/search', query:{search: searchContent}})">
         </el-input>
       </div>
       <div class="notif-container"
@@ -108,8 +108,8 @@
       },
       handleIconClick() {
         if (this.input2 !== '') {
-          this.$store.commit('SET_SEARCHTEXT',this.input2);
-          this.$router.push({ path: '/relatedPlanets' });
+          this.$store.commit('SET_SEARCHTEXT',this.searchContent);
+          this.$router.push({ path: '/search' });
         } else{
           alert("请输入要搜索的内容");
         }
