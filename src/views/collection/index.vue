@@ -25,7 +25,7 @@
                 </div>
               </div>
               <footer>
-                <span>{{ item.group.name }}</span>
+                <span class="collection-card-plantname" @click="$router.push({ path: `/group/${item.group.id}` })">{{ item.group.name }}</span>
                 <div>
                   <span>收藏于</span>
                   <time>{{ item.create_time }}</time>
@@ -130,10 +130,18 @@
           right: 0;
         }
         span {    
+          cursor: ppointer;
           &:not(:first-child) {   
             margin-left: 5px;   
           }
-        } 
+        }
+        > .collection-card-plantname{
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            color: #5677fc;
+          }
+        }
       }
       div.collection-card-content {
         margin-bottom: 12px;
@@ -143,6 +151,25 @@
           font-family:PingFangHK-Semibold;
           font-size:16px;
           opacity: 0.87;
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          &::after {
+            content: '';
+            transition: all 0.5s ease-in-out;
+            transform: scaleX(0);
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: #2e5897;
+          }
+          &:hover {
+            &::after {
+              transform: scaleX(1);
+            }
+          }
         }
         div.preview-html {
           margin-bottom: 12px;

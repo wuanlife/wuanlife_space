@@ -2,10 +2,10 @@
     <div class="relatedPlanets-container">
       <section>
         <header>相关星球</header>
-        <div class="planetsBox" v-loading='loading' style="width: 590px;">
+        <div class="planetsBox" v-loading='loading' style="width: 600px;">
           <el-card v-for="item in relatedPlantesData" class="planetsBox-card relatedPlanets__boxCard">
             <img v-bind:src="item.image_url" style="width:30px;height:30px;border-radius:100%;float: left;margin-right: 4px;" />
-            <h3 style="width: 136px;font-family:PingFangHK-Medium;font-size:10px;color:#5992e4;text-align:left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{ item.name }}</h3>
+            <h3 style="width: 136px;font-family:PingFangHK-Medium;font-size:10px;color:#5992e4;text-align:left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;cursor: pointer;" @click="$router.push({ path: `/group/${item.id}` })">{{ item.name }}</h3>
             <span style="width: 136px;font-family:PingFangHK-Regular;font-size:10px;color:#666666;text-align:left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: block;">{{ item.introduction }}</span>
           </el-card>
         </div>
@@ -72,17 +72,14 @@
     computed: {
       ...mapGetters([
         'user',
-      ]),
-      searchName () {
-        return this.$store.state.user.searchText
-      }
+      ])
     },
     methods: {
       getSearchGroupsData () {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          searchGroups(this.serchName).then(res => {
+          searchGroups(this.$route.query.search).then(res => {
             self.relatedPlantesData = res.data;
             self.loading = false;
             resolve();
@@ -126,6 +123,7 @@
           border: none;
           padding: 12px 10px;
           display: inline-block;
+          margin-right: 10px;
         }
       }
       > button{

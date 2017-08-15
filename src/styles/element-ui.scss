@@ -255,3 +255,72 @@ section.app-main {
    }
   }
 }
+
+//个人资料样式
+.personalData-container{
+    .el-form-item__label{
+      font-family:PingFangHK-Semibold;
+      font-size:16px;
+      color:#000000;
+      line-height: 22px;
+    }
+    .el-input__inner{
+      font-family:PingFangHK-Regular;
+      font-size:16px;
+      color:#000000;
+      background:#f2f2f2;
+      border:1px solid #d8d8d8;
+      border-radius:2px;
+      padding: 6px 10px;
+    }
+    .el-input__inner::-webkit-input-placeholder{
+      font-family:PingFangHK-Regular;
+      font-size:16px;
+      color:#000000;
+    }
+    .el-radio__label{
+      font-family:PingFangHK-Semibold;
+      font-size:16px;
+      color:#000000;
+    }
+    .el-radio__inner{
+      border:3px solid #979797;
+      width:14px;
+      height:14px;
+      border-radius:100%;
+    }
+    .is-checked{
+      .el-radio__inner{
+        border:5px solid #20a0ff;
+        width:14px;
+        height:14px;
+        border-radius:100%;
+        &::after{
+          width: 4px;
+          height: 4px;
+        }
+      }
+    }
+    .birthday-input{
+      position: relative;
+      > .el-input__inner{
+        padding: 0;
+        border: none;
+        background: #FFFFFF;
+        font-family:PingFangHK-Semibold;
+      }
+      > .el-input__icon{
+        border-right: 9px solid #5677fc;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        width:0px;
+        height:11px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: block;
+        &::before{
+          content: "";
+        }
+      }
+    }
+}
