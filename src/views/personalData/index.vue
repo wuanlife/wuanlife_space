@@ -13,7 +13,7 @@
           <div class="personalDataUpLoader">
             <img :src="personalDataForm.avatar_url" class="avatar">
             <div class="avatar-uploader">
-              <button @click="changeAvatar"><img />修改</button>
+              <button @click="changeAvatar"><icon-svg icon-class="edit" class="edit-icon"></icon-svg>修改</button>
             </div>
           </div>
           <el-form :model="personalDataForm" :rules="personalDataRules" ref="personalDataForm" class="personalDataForm" :label-position="labelPosition">
@@ -188,7 +188,7 @@
               display: flex;
               align-items: center;
               outline: none;
-              img {
+              .edit-icon {
                 width: 14px;
                 height: 14px;
                 margin-right: 7px;
