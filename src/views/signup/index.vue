@@ -116,7 +116,7 @@
               this.$message({
                 message: err.data.error,
                 type: 'error',
-                duration: 1000,
+                duration: 2000,
               });
               this.loading = false;
             });

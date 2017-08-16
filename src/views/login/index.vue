@@ -15,7 +15,7 @@
             </el-form-item>
           </el-form>
           <a href="#/signup/" id="register">注册账号</a>
-          <a href="#/login/" id="findpassword">找回密码</a>
+          <a href="#/findpassword/" id="findpassword">找回密码</a>
         </div>
       </section>
     </div>
@@ -80,9 +80,9 @@
             }).catch(err => {
               console.dir(err)
               this.$message({
-                message: err.error,
+                message: err.data.error,
                 type: 'error',
-                duration: 1000,
+                duration: 2000,
               });
               this.loading = false;
             });
