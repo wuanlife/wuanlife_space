@@ -2,7 +2,7 @@
   <div class="register-container">
   	<section>
   		<header>找回密码</header>
-  		<div class="form-content">
+  		<div class="form-content"  v-loading="loading">
   			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
             <el-form-item label="新密码" prop="password" class="form-inputy">
               <el-input type="password" v-model="loginForm.password" placeholder="输入新密码"></el-input>
@@ -11,7 +11,7 @@
               <el-input type="password" v-model="loginForm.confirmpassword" auto-complete="off" placeholder="确认新密码"></el-input>
             </el-form-item>
             <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" @click="submitForm('loginForm')">找回密码</el-button>
+              <el-button type="primary" :loading="loading" @click="submitForm('loginForm')">找回密码</el-button>
             </el-form-item>
         </el-form>
   		</div>
@@ -20,7 +20,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex';
-  import { resetpsw } from 'api/auth';
+  import { resetpassword } from 'api/auth';
 
   export default {
     name: 'index-visitor',
@@ -54,6 +54,7 @@
         loginForm: {
           password: '',
           confirmpassword: '',
+          token: '',
         },
         loginRules: {
           password: [
@@ -75,10 +76,30 @@
     methods: {
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
-          //console.log(this.loginForm.email+valid);
+          this.loginForm.token=this.$route.query.token;
           if(valid){
-            console.log(this.loginForm);
-            //console.log(resetpsw(this.loginForm));
+            this.loading = true;
+            //resetpassword(this.loginForm);
+            return new Promise((resolve, reject) => {
+              resetpassword(this.loginForm).then(
+                res => {
+                  this.$message({
+                    message: '重置密码成功!!',
+                    type: 'success',
+                    duration: 2000,
+                  });
+                  this.$router.push({ path: '/login' });
+                  this.loading = false;
+                }).catch(error => {
+                this.$message({
+                  message: error.data.error,
+                  type: 'error',
+                  duration: 2000,
+                });
+                this.loading = false;
+                reject(error);
+              });
+            });
           }else{
             console.log('error submit!!');
             return false;
