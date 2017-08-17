@@ -2,13 +2,13 @@
   <div class="register-container">
   	<section>
   		<header>找回密码</header>
-  		<div class="form-content">
+  		<div class="form-content"  v-loading="loading">
   			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
             <el-form-item label="邮箱" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
             <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" @click="submitForm('loginForm')">找回密码</el-button>
+              <el-button type="primary" :loading="loading" @click="submitForm('loginForm')">找回密码</el-button>
             </el-form-item>
         </el-form>
   		</div>
@@ -60,8 +60,26 @@
         this.$refs[formName].validate((valid) => {
           //console.log(this.loginForm.email+valid);
           if(valid){
-            console.log(this.loginForm);
-            //console.log(resetpsw(this.loginForm));
+            this.loading = true;
+            return new Promise((resolve, reject) => {
+              resetpsw(this.loginForm).then(
+                res => {
+                  this.loading = false;
+                  this.$message({
+                    message: '验证信息已飞到你的邮箱，快快去查看!!',
+                    type: 'success',
+                    duration: 1000,
+                  });
+                }).catch(error => {
+                this.$message({
+                  message: error.data.error,
+                  type: 'error',
+                  duration: 2000,
+                });
+                this.loading = false;
+                reject(error);
+              });
+            });
           }else{
             console.log('error submit!!');
             return false;
