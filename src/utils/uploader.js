@@ -1,6 +1,7 @@
 // TODO: make it resuable and configurable
 
 import { UploaderBuilder, Uploader } from 'qiniu4js';
+import { getToken } from 'api/qiniu';
 
 // qiniu4js uploader object
 export const uploader = new UploaderBuilder()
@@ -16,8 +17,12 @@ export const uploader = new UploaderBuilder()
   .accept(['.gif','.png','.jpg'])//过滤文件，默认无，详细配置见http://www.w3schools.com/tags/
   .tokenShare(true)
   .tokenFunc(function (setToken,task) {
+    let token = '';
+    getToken().then(res => {
+      token = res.uploadToken
+    });
     setTimeout(function () {
-      setToken("fOCmqJDZvBUZCL9lGSbN1sl1_cVNuV7f7ns0bcfs:3DUNhyHauRIWHHivzdrVe-QDS0g=:eyJzY29wZSI6Ind1YW5saWZlIiwiZGVhZGxpbmUiOjE1MDI1NzcwMTV9");
+      setToken(token);
     }, 1000);
   })
   //任务拦截器
@@ -57,6 +62,8 @@ export const uploader = new UploaderBuilder()
       //一个任务上传成功后回调
       console.log(task.result.key);//文件的key
       console.log(task.result.hash);//文件hash
+      console.log(process.env.QINIU_DOMAIN_URL + task.result.key);
+      return process.env.QINIU_DOMAIN_URL + task.result.key;
     },onTaskFail(task) {
       //一个任务在经历重传后依然失败后回调此函数
       

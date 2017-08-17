@@ -76,3 +76,17 @@ export function getUserInfo(id) {
     method: 'get',
   });
 }
+
+
+//重置密码接口,发送新密码数据
+export function resetpassword(infoObj) {
+  const data = {
+    token: infoObj.token,
+    password: infoObj.password
+  };
+  return fetch({
+    url: '/users/resetpsw',
+    method: 'put',
+    data: data,
+  });
+} 

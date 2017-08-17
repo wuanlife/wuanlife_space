@@ -101,3 +101,15 @@ export function publishPost(groupid, params) {
     data: data,
   });
 }
+
+export function searchPosts(name, offset=0, limit=20) {
+  const data = {
+    name: name,
+    offset: offset,
+    limit: limit,
+  };
+  return fetch({
+    url: '/posts',
+    method: 'get',
+  });
+}
