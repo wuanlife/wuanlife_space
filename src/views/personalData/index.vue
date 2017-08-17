@@ -13,7 +13,7 @@
           <div class="personalDataUpLoader">
             <img :src="personalDataForm.avatar_url" class="avatar">
             <div class="avatar-uploader">
-              <button @click="changeAvatar"><icon-svg icon-class="edit" class="edit-icon"></icon-svg>修改</button>
+              <button id="changeAvatar" @click="changeAvatar"><icon-svg icon-class="edit" class="edit-icon"></icon-svg>修改</button>
             </div>
           </div>
           <el-form :model="personalDataForm" :rules="personalDataRules" ref="personalDataForm" class="personalDataForm" :label-position="labelPosition">
@@ -108,6 +108,7 @@
               name: this.personalDataForm.name,
               sex: this.personalDataForm.sex,
               birthday: this.personalDataForm.birthday,
+              avatar_url: this.personalDataForm.avatar_url,
             }).then(res => {
               this.loading = false;
             })
