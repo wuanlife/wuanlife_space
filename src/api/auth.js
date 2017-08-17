@@ -89,4 +89,4 @@ export function resetpassword(infoObj) {
     method: 'put',
     data: data,
   });
-} 
+}
