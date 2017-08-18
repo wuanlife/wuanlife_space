@@ -25,9 +25,11 @@ export function searchGroups(name, offset=0, limit=20) {
     offset: offset,
     limit: limit,
   };
+  console.log('searchGroups: ', data);
   return fetch({
     url: '/groups',
     method: 'get',
+    params: data,
   });
 }
 

@@ -68,6 +68,7 @@
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
+          console.log('search:', this.$route.query.search);
           searchGroups(this.$route.query.search).then(res => {
             self.relatedPlantesData = res.data;
             for(let i = 0,j = 3; i < j; i++){
@@ -104,11 +105,6 @@
           arr[i].create_time = arr[i].create_time.slice(0, 10) + ' ' + arr[i].create_time.slice(11, 16)
         }
         return arr
-      }
-    },
-    watch: {
-      searchName: function () {
-        this.getSearchGroupsData();
       }
     }
   }
