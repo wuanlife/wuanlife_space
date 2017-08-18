@@ -17,7 +17,7 @@
             <p>内容</p>
             <div class="editor-container">
               <md-editor id='contentEditor' 
-                         ref="contentEditor" 
+                         ref="contentEditor"
                          v-model='form.md' 
                          :height='300'
                          placeholder='请输入内容'
