@@ -111,6 +111,6 @@ export function searchPosts(name, offset=0, limit=20) {
   return fetch({
     url: '/posts',
     method: 'get',
-    data: data,
+    params: data,
   });
 }

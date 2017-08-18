@@ -106,11 +106,6 @@
         }
         return arr
       }
-    },
-    watch: {
-      searchName: function () {
-        this.getSearchGroupsData();
-      }
     }
   }
 </script>
