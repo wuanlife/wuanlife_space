@@ -64,9 +64,13 @@
           "bold", 
           "italic", 
           "heading", 
-          "|", 
-          "image",
+          "|",
           "quote",
+          "unordered-list",
+          "ordered-list",
+          "|", 
+          "code",
+          "link",
           {
             name: "custom",
             action: function customFunction(editor){
@@ -123,9 +127,13 @@
                 }).build();
               uploader.chooseFile();
             },
-            className: "fa fa-star",
+            className: "fa fa-image",
             title: "Custom Button",
           },
+          "|",
+          "preview",
+          "side-by-side",
+          "fullscreen",
         ],
       // hideIcons: ['guide', 'heading', 'quote', 'image', 'preview', 'side-by-side', 'fullscreen'],
         placeholder: this.placeholder
