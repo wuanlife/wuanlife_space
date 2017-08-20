@@ -49,7 +49,6 @@
 
   var avatarImgKey = '';
   var uploader = new UploaderBuilder()
-    .debug(false)//开启debug，默认false
     .domain({http: "http://upload.qiniu.com", https: "https://up.qbox.me"})
     .retry(2)//设置重传次数，默认0，不重传
     .compress(0.5)//默认为1,范围0-1
@@ -83,22 +82,7 @@
       }
     }) 
     .listener({
-      onReady(tasks) {
-          //该回调函数在图片处理前执行,也就是说task.file中的图片都是没有处理过的
-        //选择上传文件确定后,该生命周期函数会被回调。
-        
-      },onStart(tasks){
-          //所有内部图片任务处理后执行
-        //开始上传
-        console.log('upload start')
-        
-      },onTaskGetKey(task){
-        
-      },onTaskProgress: function (task) {
-          //每一个任务的上传进度,通过`task.progress`获取
-        console.log(task.progress);
-        
-      },onTaskSuccess(task){
+      onTaskSuccess(task){
         //一个任务上传成功后回调
         console.log(task.result.key);//文件的key
         avatarImgKey=task.result.key;
