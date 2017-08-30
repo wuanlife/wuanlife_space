@@ -3,7 +3,8 @@ import { storeWithExpiration } from 'utils';
 
 const user = {
   state: {
-    token: storeWithExpiration.get('user.token') != '' ? storeWithExpiration.get('user.token') : '',
+    // OPTIMIZE: the logic is so shit...
+    token: (storeWithExpiration.get('user').token && storeWithExpiration.get('user').token != '') ? storeWithExpiration.get('user.token') : '',
     userInfo: storeWithExpiration.get('user.userInfo') || {},
     setting: '',
     searchText: '',
