@@ -8,7 +8,6 @@
   import { mapGetters } from 'vuex';
   import UserIndex from './user/index';
   import VisitorIndex from './visitor/index';
-
   export default {
     name: 'index',
     components: { UserIndex, VisitorIndex },
