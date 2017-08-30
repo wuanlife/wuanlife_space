@@ -2,9 +2,9 @@
     <div class="index-visitor-container">
       <section>     
         <el-tabs v-model="activeName" @tab-click="tabChange">
-          <el-tab-pane label="我的星球" name="index-myplanet">
+          <el-tab-pane v-if="!myplanetsPosts || myplanetsPosts.length > 0" label="我的星球" name="index-myplanet">
             <div class="index-tabcontent" v-loading="loading_myplanet">
-              <ul v-if="myplanetsPosts.length > 0" class="index-cards">
+              <ul class="index-cards">
                 <post-card v-for="post of myplanetsPosts" 
                            :key="post.id+'myplanet'" 
                            :post.sync="post">  
@@ -75,8 +75,8 @@
         loading_myplanet: false,
         loading_newtopic: false,
         loadingAside: false,
-        myplanetsPosts: [],
-        newtopicPosts: [],
+        myplanetsPosts: null,
+        newtopicPosts: null,
         pagination_myplanet: {
           pageCount: 1,
           currentPage: 1,
@@ -161,12 +161,17 @@
         console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(false,(page-1)*self.pagination_myplanet.limit || 0).then(res => {
-            self.myplanetsPosts = res.data;
-            self.loading_myplanet = false;
+            if(res.data) {
+              self.myplanetsPosts = res.data;
+              self.loading_myplanet = false;
 
-            // pagination
-            let pageFinal = parseQueryParams(res.paging.final);
-            self.pagination_myplanet.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+              // pagination
+              let pageFinal = parseQueryParams(res.paging.final);
+              self.pagination_myplanet.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            } else {
+              self.myplanetsPosts = [];
+              self.activeName = 'index-newtopic';
+            }
             resolve();
           }).catch(error => {
             reject(error);
