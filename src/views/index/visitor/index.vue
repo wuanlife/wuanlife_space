@@ -34,7 +34,7 @@
           </div>
         </div>
         <footer>
-          <span class="clickable">全部星球</span>
+          <span class="clickable" @click="$router.push({path: `/allgroups`})">全部星球</span>
           <span class="clickable">创建星球</span>
         </footer>
       </aside>
