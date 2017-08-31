@@ -34,8 +34,6 @@ import Resetpsw from 'views/resetpsw'
 
 import Search from 'views/search'
 
-import CreatePlanets from 'views/creategroup'
-
 /* Introduction */
 const Introduction = _import('introduction/index');
 
@@ -152,14 +150,6 @@ export const constantRouterMap = [
     hidden: true,
     children: [{ path: '', name: 'search', component: Search}],
   },
-  {
-    path: '/creategroup',
-    name: 'creategroup',
-    component: Layout,
-    redirect: '/creategroup/index',
-    hidden: true,
-    children: [{ path: 'index', component: CreatePlanets}],
-  }
 ]
 
 export default new Router({
