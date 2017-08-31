@@ -34,6 +34,8 @@ import Resetpsw from 'views/resetpsw'
 
 import Search from 'views/search'
 
+const AllGroups = _import('group/allGroups/index');
+
 /* Introduction */
 const Introduction = _import('introduction/index');
 
@@ -149,6 +151,12 @@ export const constantRouterMap = [
     component: Layout,
     hidden: true,
     children: [{ path: '', name: 'search', component: Search}],
+  },
+ {
+    path: '/allgroups',
+    component: Layout,
+    hidden: true,
+    children: [{ path: '', name: 'allgroups', component: AllGroups}],
   },
 ]
 
