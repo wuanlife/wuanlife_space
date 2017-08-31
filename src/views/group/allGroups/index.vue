@@ -31,7 +31,8 @@
       ]),
     },
     mounted() {
-      this.loadGroups()
+      if (this.user.userInfo.id) {
+        this.loadUserGroups()
         .then()
         .catch((err) => {
           console.dir(err);
@@ -42,6 +43,19 @@
           });
           this.loading = false;
         });
+      } else{
+        this.loadGroups()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading = false;
+        });
+      }
     },
     methods: {
       loadGroups () {
