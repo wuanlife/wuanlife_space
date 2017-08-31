@@ -15,7 +15,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { getGroupsByUserId } from 'api/group';
+  import { getGroupsByUserId,getGroups } from 'api/group';
   
   export default {
     name: 'allGroups',
@@ -58,11 +58,24 @@
       }
     },
     methods: {
-      loadGroups () {
+      loadUserGroups () {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
           getGroupsByUserId(self.user.userInfo.id).then(res => {
+            self.myGroups = res.data;
+            self.loading = false;
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        });
+      },
+      loadGroups () {
+        var self = this;
+        this.loading = true;
+        return new Promise((resolve, reject) => {
+          getGroups(self.user.userInfo.id).then(res => {
             self.myGroups = res.data;
             self.loading = false;
             resolve();
