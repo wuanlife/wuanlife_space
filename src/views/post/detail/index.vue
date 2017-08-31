@@ -5,7 +5,7 @@
       <div class="post-container" v-loading="loading">
         <div v-if="post_formatted" class="post-wrapper">
           <header>
-            <img src="group.image_url">
+            <img v-bind:src="group.image_url">
             <span class="author">{{ post_formatted.author.name }}</span>
             <time>{{ post_formatted.create_time_formatted }}</time>
           </header>
