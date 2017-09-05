@@ -1,15 +1,15 @@
 <template>
   <div class="allGroups-container">
-  	<section>
-  	  <header>全部星球</header>
-  	  <div class="planetsBox" v-loading='loading'>
+    <section>
+      <header>全部星球</header>
+      <div class="planetsBox" v-loading='loading'>
         <div v-for="item in myGroups" class="allGroups-card">
           <img v-bind:src="item.image_url"/>
           <h3 @click="$router.push({ path: `/group/${item.id}` })">{{ item.name }}</h3>
           <span>{{ item.introduction }}</span>
         </div>
       </div>
-  	</section>
+    </section>
   </div>
 </template>
 
@@ -147,6 +147,7 @@
           span {
             font-family:PingFangHK-Regular;
             color:#666666;
+            min-height: 19px;
             word-wrap: break-word;
             overflow : hidden;
             text-overflow: ellipsis;
