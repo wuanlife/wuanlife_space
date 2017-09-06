@@ -18,7 +18,8 @@
       </div>
       <div class="notif-container"
            @click="$router.push({path: '/inform/'}), clickDot()">
-        <el-badge :is-dot="dotShow">
+        <el-badge :is-dot="dotShow"
+                  v-if="user.token != ''">
           <icon-svg icon-class="smallbell" class="notif-icon"></icon-svg>
         </el-badge>
       </div>
@@ -223,6 +224,10 @@
           .avatar-icon {
             font-size: 18px;
             margin-right: 6px;
+          }
+          > span {
+            width: 58px;
+            display: inline-block;
           }
         }
         .avatar-wrapper.active {
