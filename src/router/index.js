@@ -4,55 +4,76 @@ const _import = require('./_import_' + process.env.NODE_ENV);
 // in development env not use Lazy Loading,because Lazy Loading large page will cause webpack hot update too slow.so only in production use Lazy Loading
 
 /* layout */
-const Layout = _import('layout/Layout');
+//const Layout = _import('layout/Layout');
+const Layout = resolve => require.ensure([], () => resolve(require('../views/layout/Layout')), 'Layout');
 
 /* login */
-const Login = _import('login/index');
+//const Login = _import('login/index');
 /*const authRedirect = _import('login/authredirect');*/
+const Login = resolve => require.ensure([], () => resolve(require('../views/login/index')), 'Login');
 
+//const Index = _import('index/index');
+const Index = resolve => require.ensure([], () => resolve(require('../views/index/index')), 'Index');
 
-const Index = _import('index/index');
+//const PostDetail = _import('post/detail/index');
+//const PostPublish = _import('post/publish/index');
+const PostDetail = resolve => require.ensure([], () => resolve(require('../views/post/detail/index')), 'PostDetail');
+const PostPublish = resolve => require.ensure([], () => resolve(require('../views/post/publish/index')), 'PostPublish');
 
-const PostDetail = _import('post/detail/index');
-const PostPublish = _import('post/publish/index');
+//const GroupDetail = _import('group/detail/index');
+//const GroupCreate = _import('group/create/index');
+const GroupDetail = resolve => require.ensure([], () => resolve(require('../views/group/detail/index')), 'GroupDetail');
+const GroupCreate = resolve => require.ensure([], () => resolve(require('../views/group/create/index')), 'GroupCreate');
 
-const GroupDetail = _import('group/detail/index');
-const GroupCreate = _import('group/create/index');
+//const Inform = _import('inform/index');
+//const InviteCode = _import('invitecode/index');
+const Inform = resolve => require.ensure([], () => resolve(require('../views/inform/index')), 'Inform');
+const InviteCode = resolve => require.ensure([], () => resolve(require('../views/invitecode/index')), 'InviteCode');
 
-const Inform = _import('inform/index');
-const InviteCode = _import('invitecode/index');
+//const Collection = _import('collection/index');
+const Collection = resolve => require.ensure([], () => resolve(require('../views/collection/index')), 'Collection');
 
-const Collection = _import('collection/index');
+//import PersonalData from 'views/personalData'
+const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/index')), 'PersonalData');
 
-import PersonalData from 'views/personalData'
+//import Signup from 'views/signup'
+const Signup = resolve => require.ensure([], () => resolve(require('../views/signup/index')), 'Signup');
 
-import Signup from 'views/signup'
+//import FindPassword from 'views/findpassword'
+const FindPassword = resolve => require.ensure([], () => resolve(require('../views/findpassword/index')), 'FindPassword');
 
-import FindPassword from 'views/findpassword'
+//import Resetpsw from 'views/resetpsw'
+const Resetpsw = resolve => require.ensure([], () => resolve(require('../views/resetpsw/index')), 'Resetpsw');
 
-import Resetpsw from 'views/resetpsw'
+//import Search from 'views/search'
+const Search = resolve => require.ensure([], () => resolve(require('../views/search/index')), 'Search');
 
-import Search from 'views/search'
-
-const AllGroups = _import('group/allGroups/index');
+//const AllGroups = _import('group/allGroups/index');
+const AllGroups = resolve => require.ensure([], () => resolve(require('../views/group/allGroups/index')), 'AllGroups');
 
 /* Introduction */
-const Introduction = _import('introduction/index');
+//const Introduction = _import('introduction/index');
+const Introduction = resolve => require.ensure([], () => resolve(require('../views/introduction/index')), 'Introduction');
 
 /* components */
-const componentsIndex = _import('components/index');
-const Markdown = _import('components/markdown');
+//const componentsIndex = _import('components/index');
+//const Markdown = _import('components/markdown');
+const componentsIndex = resolve => require.ensure([], () => resolve(require('../views/components/index')), 'componentsIndex');
+const Markdown = resolve => require.ensure([], () => resolve(require('../views/components/markdown')), 'Markdown');
 
 /* error page */
-const Err404 = _import('error/404');
-const Err401 = _import('error/401');
+//const Err404 = _import('error/404');
+//const Err401 = _import('error/401');
+const Err404 = resolve => require.ensure([], () => resolve(require('../views/error/404')), 'Err404');
+const Err401 = resolve => require.ensure([], () => resolve(require('../views/error/401')), 'Err401');
 
 /* error log */
-const ErrorLog = _import('errlog/index');
-
+//const ErrorLog = _import('errlog/index');
+const ErrorLog = resolve => require.ensure([], () => resolve(require('../views/errlog/index')), 'ErrorLog');
 
 /* permission */
-const Permission = _import('permission/index');
+//const Permission = _import('permission/index');
+const Permission = resolve => require.ensure([], () => resolve(require('../views/permission/index')), 'Permission');
 
 Vue.use(Router);
 
@@ -152,7 +173,7 @@ export const constantRouterMap = [
     hidden: true,
     children: [{ path: '', name: 'search', component: Search}],
   },
- {
+  {
     path: '/allgroups',
     component: Layout,
     hidden: true,
