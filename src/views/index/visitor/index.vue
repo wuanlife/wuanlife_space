@@ -43,7 +43,6 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
   import { getPosts } from 'api/post';
   import { getGroups } from 'api/group';

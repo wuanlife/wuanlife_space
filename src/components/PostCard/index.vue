@@ -8,7 +8,7 @@
         @click="$router.push({path: '/group/' + post.group.id})">
         {{ post.group.name }}
       </span>
-      <time>{{ post_formatted.create_time_formatted }}</time>
+      <time>{{ post.create_time | formatTime }}</time>
     </header>
     <div class="post-card-content">
       <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
@@ -53,11 +53,6 @@
       ...mapGetters([
         'user',
       ]),
-      post_formatted: function() {
-        let newPost = Object.assign({}, this.post); ;
-        newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-        return newPost;
-      },
     },
     mounted() {
     },

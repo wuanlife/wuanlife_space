@@ -3,58 +3,58 @@
   <div id="post">
     <section>
       <div class="post-container" v-loading="loading">
-        <div v-if="post_formatted" class="post-wrapper">
+        <div v-if="post" class="post-wrapper">
           <header>
-            <img v-bind:src="group.image_url">
-            <span class="author">{{ post_formatted.author.name }}</span>
-            <time>{{ post_formatted.create_time_formatted }}</time>
+            <img :src="group.image_url">
+            <span class="author">{{ post.author.name }}</span>
+            <time>{{ post.create_time | formatTime }}</time>
           </header>
           <article>
-            <h1>{{ post_formatted.title }}</h1>
-            <div class="post-html" v-html="post_formatted.content"></div>
+            <h1>{{ post.title }}</h1>
+            <div class="post-html" v-html="post.content"></div>
           </article>
           <footer>
             <div class="btns">
               <el-button type="primary" 
-                         :class="{'done': post_formatted.approved}"
-                         @click="approve(post_formatted.id)">
-                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post_formatted.approved_num }}
+                         :class="{'done': post.approved}"
+                         @click="approve(post.id)">
+                <icon-svg icon-class="good" class="avatar-icon"></icon-svg>{{ post.approved_num }}
               </el-button>
               <el-button type="primary" 
-                         :class="{'done': post_formatted.collected}"
-                         @click="collect(post_formatted.id)">
-                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post_formatted.collected_num }}
+                         :class="{'done': post.collected}"
+                         @click="collect(post.id)">
+                <icon-svg icon-class="star" class="avatar-icon"></icon-svg>{{ post.collected_num }}
               </el-button>
             </div>
             <div v-if="group" class="opts">
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
-                    @click="settop(post_formatted.id)">
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
+                    @click="settop(post.id)">
                 置顶
               </span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
-                    @click="lock(post_formatted.id)">
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
+                    @click="lock(post.id)">
                 锁定
               </span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
-                    @click="edit(post_formatted.id)">
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
+                    @click="edit(post.id)">
                 编辑
               </span>
-              <span v-if="group.identity === 'creator' || user.userInfo.id === post_formatted.author.id"
-                    @click="del(post_formatted.id)">
+              <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
+                    @click="del(post.id)">
                 删除
               </span>
             </div>
           </footer>
         </div>
-        <div class="review-wrapper" v-if="commentsObj_formatted">
+        <div class="review-wrapper" v-if="commentsObj">
           <header ref="replyHeader">
-            {{ commentsObj_formatted.reply_count }} reviews
+            {{ commentsObj.reply_count }} reviews
           </header>
           <ul v-loading="replyLoading">
-            <li v-for="comment of commentsObj_formatted.reply">
+            <li v-for="comment of commentsObj.reply">
               <header>
                 <h2>{{ comment.user_name }}</h2>
-                <time> {{ parseTime(comment.create_time, 'yyyy-MM-dd HH:mm') }} </time>
+                <time> {{ comment.create_time | formatTime }} </time>
               </header>
               <div class="review-html" v-html="comment.comment">
               </div>
@@ -173,26 +173,6 @@
         'user',
         'access_token',
       ]),
-      post_formatted: function() {
-        if(!this.post) {
-          return null;
-        }
-        let newPost = Object.assign({}, this.post);
-        newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-        return newPost;
-      },
-      commentsObj_formatted: function() {
-        if(!this.commentsObj) {
-          return null;
-        }
-        let newCommentsObj = Object.assign({}, this.commentsObj);
-        newCommentsObj.reply = newCommentsObj.reply.map((comment) => {
-          let newComment = Object.assign({}, comment);
-          newComment.create_time_formatted = parseTime(newComment.create_time, 'yyyy-MM-dd HH:mm')
-          return newComment;
-        })
-        return newCommentsObj;
-      }
     },
     created() {
       this.postid = this.$route.params.id;
