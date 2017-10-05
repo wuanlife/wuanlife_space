@@ -93,18 +93,6 @@
         'user',
         'access_token',
       ]),
-      posts_formatted: function() {
-        if(this.posts.length === 0) {
-          return [];
-        }
-        let newPosts = new Array(this.posts);
-        newPosts = newPosts.map((post) => {
-          let newPost = post;
-          newPost.create_time_formatted = parseTime(newPost.create_time, 'yyyy-MM-dd HH:mm')
-          return newPost;
-        })
-        return newPosts;
-      },
     },
     created() {
     },
