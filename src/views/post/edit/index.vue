@@ -1,10 +1,10 @@
 <template>
-  <div id="post-publish">
+  <div id="post-edit" v-loading="loading">
     <section>
       <header>
-        发表帖子
+        编辑帖子
       </header>
-      <div class="post-publish-container">
+      <div class="post-edit-container">
         <el-form ref="form" :model="form">
           <el-form-item>
             <p>标题</p>
@@ -24,7 +24,7 @@
             </div>
           </el-form-item>
           <el-form-item class="text-right">
-            <el-button class="wuan-button" style="width: 124px; height: 30px" type="primary" @click="onSubmit">创建</el-button>
+            <el-button class="wuan-button" style="width: 124px; height: 30px" type="primary" @click="onSubmit">编辑</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -36,8 +36,9 @@
   // simple markdown
   import MdEditor from 'components/MdEditor';
   import { mapGetters } from 'vuex';
-  import { publishPost } from 'api/post';
+  import { getPost, putPost } from 'api/post';
   import showdown from 'showdown';
+  import toMarkdown from 'to-markdown'
 
   export default {
     name: 'post-pulish',
@@ -50,6 +51,7 @@
           content: '',
           md: '',
         },
+        loading: true,
         content: '## Simplemde',
         html: '',
       }
@@ -62,11 +64,13 @@
       
     },
     created() {
-      if(!this.$route.query.groupid) {
-        this.$router.go(-1);
-        return;
-      }
-      this.groupid = parseInt(this.$route.query.groupid);
+      console.log(this.$route)
+      getPost(this.$route.params.id)
+        .then((res) => {
+          this.form.title = res.title;
+          this.form.md = toMarkdown(res.content);
+          this.loading = false;
+        })
     },
     mounted() {
     },
@@ -77,7 +81,7 @@
       },
       onSubmit() {
         this.form.content = this.markdown2Html(this.form.md);
-        publishPost(this.groupid, {
+        putPost(this.$route.params.id, {
           title: this.form.title,
           content: this.form.content,
         }).then((res) => {
@@ -91,7 +95,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  #post-publish {
+  #post-edit {
     display: flex;
     justify-content: center;
     margin: auto;
@@ -108,7 +112,7 @@
       flex: 0 0 590px;
     }
   }
-  .post-publish-container {
+  .post-edit-container {
     background: #ffffff;
     min-height: 300px;
     padding: 20px 30px;

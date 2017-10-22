@@ -19,6 +19,7 @@ const Index = resolve => require.ensure([], () => resolve(require('../views/inde
 //const PostPublish = _import('post/publish/index');
 const PostDetail = resolve => require.ensure([], () => resolve(require('../views/post/detail/index')), 'PostDetail');
 const PostPublish = resolve => require.ensure([], () => resolve(require('../views/post/publish/index')), 'PostPublish');
+const PostEdit = resolve => require.ensure([], () => resolve(require('../views/post/edit/index')), 'PostEdit')
 
 //const GroupDetail = _import('group/detail/index');
 //const GroupCreate = _import('group/create/index');
@@ -113,8 +114,12 @@ export const constantRouterMap = [
       { 
         path: 'publish', component: PostPublish
       }, 
+      {
+        path: ':id/edit', component: PostEdit
+      },
       { 
-        path: ':id', component: PostDetail
+        path: ':id', 
+        component: PostDetail,
       }
     ],
   },
@@ -186,48 +191,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 });
-
-export const asyncRouterMap = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/index',
-    name: '权限测试',
-    icon: 'quanxian',
-    meta: { role: ['admin'] },
-    noDropdown: true,
-    children: [{ path: 'index', component: Permission, name: '权限测试页', meta: { role: ['admin'] } }]
-  },
-  {
-    path: '/components',
-    component: Layout,
-    redirect: '/components/index',
-    name: '组件',
-    icon: 'zujian',
-    children: [
-      { path: 'index', component: componentsIndex, name: '介绍 ' },
-      { path: 'markdown', component: Markdown, name: 'Markdown' },
-    ]
-  },
-  {
-    path: '/errorpage',
-    component: Layout,
-    redirect: 'noredirect',
-    name: '错误页面',
-    icon: '404',
-    children: [
-      { path: '401', component: Err401, name: '401' },
-      { path: '404', component: Err404, name: '404' }
-    ]
-  },
-  {
-    path: '/errlog',
-    component: Layout,
-    redirect: 'noredirect',
-    name: 'errlog',
-    icon: 'bug',
-    noDropdown: true,
-    children: [{ path: 'log', component: ErrorLog, name: '错误日志' }]
-  },
-  { path: '*', redirect: '/404', hidden: true }
-];

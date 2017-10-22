@@ -58,6 +58,18 @@ export function collectPost(params) {
     data: data,
   });  
 }
+
+export function putPost(id, params) {
+  const data = {
+    title: params.title,
+    content: params.content,
+  };
+  return fetch({
+    url: `/posts/${id}`,
+    method: 'put',
+    data: data,
+  })
+}
 export function deletePost(id) {
   return fetch({
     url: `/posts/${id}`,
@@ -87,6 +99,16 @@ export function replyPost(postid, params) {
     method: 'post',
     data: data,
   });
+}
+export function deleteReply(postid,params) {
+  const data = {
+    floor: params.floor
+  }
+  return fetch({
+    url: `/posts/${postid}/comments`,
+    method: 'delete',
+    data: data,
+  })
 }
 
 // publish post

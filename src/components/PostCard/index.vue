@@ -9,6 +9,8 @@
         {{ post.group.name }}
       </span>
       <time>{{ post.create_time | formatTime }}</time>
+      <post-state v-if="post.sticky" :text="'置顶'" :color="'#5992e4'"></post-state>
+      <post-state v-if="post.lock" :text="'锁定'" :color="'#ccc'"></post-state>
     </header>
     <div class="post-card-content">
       <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
@@ -31,6 +33,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
+  import PostState from 'components/PostState/PostState';
   import { 
     approvePost,
     collectPost,
@@ -38,6 +41,9 @@
 
   export default {
     name: 'post-card',
+    components: {
+      PostState
+    },
     props: {
       post: {
         type: Object,

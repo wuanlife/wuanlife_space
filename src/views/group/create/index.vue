@@ -24,7 +24,7 @@
           <el-form-item label="加入星球方式" class="form-inputc">
             <el-select v-model="loginForm.private" placeholder="加入星球方式" class="join-c">
               <el-option label="允许任何人加入" value="false"></el-option>
-              <el-option label="验证水电费" value="true"></el-option>
+              <el-option label="需要申请加入" value="true"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label-width="100px" class="form-inputc">
