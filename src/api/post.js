@@ -100,6 +100,16 @@ export function replyPost(postid, params) {
     data: data,
   });
 }
+export function deleteReply(postid,params) {
+  const data = {
+    floor: params.floor
+  }
+  return fetch({
+    url: `/posts/${postid}/comments`,
+    method: 'delete',
+    data: data,
+  })
+}
 
 // publish post
 export function publishPost(groupid, params) {

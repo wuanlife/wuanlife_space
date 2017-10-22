@@ -72,7 +72,8 @@
                           @click="replyComment(comment.floor)">回复</button>
                   <span slot="reference">回复</span>
                 </el-popover>
-                <span v-if="group.identity === 'creator' || user.userInfo.id === comment.user_id">删除</span>
+                <span v-if="group.identity === 'creator' || user.userInfo.id === comment.user_id"
+                      @click="deleteComment(comment.floor)">删除</span>
               </footer>
             </li>
 
@@ -137,10 +138,11 @@
     getCommentsByPostId,
     approvePost,
     collectPost,
-    replyPost,
     deletePost,
     lockPost,
     settopPost,
+    replyPost,
+    deleteReply,
   } from 'api/post';
   import { getGroup, joinGroup, quitGroup } from 'api/group';
   import { parseTime } from 'utils/date';
@@ -393,6 +395,12 @@
           },3000)      
         })
       },
+      deleteComment(floor) {
+        deleteReply(this.$route.params.id, {floor: floor})
+          .then((res) => {
+            console.log(res)
+          })
+      }
     }
   }
 </script>
