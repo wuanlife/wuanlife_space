@@ -58,6 +58,18 @@ export function collectPost(params) {
     data: data,
   });  
 }
+
+export function putPost(id, params) {
+  const data = {
+    title: params.title,
+    content: params.content,
+  };
+  return fetch({
+    url: `/posts/${id}`,
+    method: 'put',
+    data: data,
+  })
+}
 export function deletePost(id) {
   return fetch({
     url: `/posts/${id}`,

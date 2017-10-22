@@ -1,5 +1,5 @@
 <template>
-  <div id="post-edit">
+  <div id="post-edit" v-loading="loading">
     <section>
       <header>
         编辑帖子
@@ -24,7 +24,7 @@
             </div>
           </el-form-item>
           <el-form-item class="text-right">
-            <el-button class="wuan-button" style="width: 124px; height: 30px" type="primary" @click="onSubmit">创建</el-button>
+            <el-button class="wuan-button" style="width: 124px; height: 30px" type="primary" @click="onSubmit">编辑</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -36,8 +36,9 @@
   // simple markdown
   import MdEditor from 'components/MdEditor';
   import { mapGetters } from 'vuex';
-  import { publishPost } from 'api/post';
+  import { getPost, putPost } from 'api/post';
   import showdown from 'showdown';
+  import toMarkdown from 'to-markdown'
 
   export default {
     name: 'post-pulish',
@@ -50,6 +51,7 @@
           content: '',
           md: '',
         },
+        loading: true,
         content: '## Simplemde',
         html: '',
       }
@@ -63,6 +65,12 @@
     },
     created() {
       console.log(this.$route)
+      getPost(this.$route.params.id)
+        .then((res) => {
+          this.form.title = res.title;
+          this.form.md = toMarkdown(res.content);
+          this.loading = false;
+        })
     },
     mounted() {
     },
@@ -73,7 +81,7 @@
       },
       onSubmit() {
         this.form.content = this.markdown2Html(this.form.md);
-        publishPost(this.groupid, {
+        putPost(this.$route.params.id, {
           title: this.form.title,
           content: this.form.content,
         }).then((res) => {
