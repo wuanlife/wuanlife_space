@@ -1,10 +1,10 @@
 <template>
-  <div id="post-publish">
+  <div id="post-edit">
     <section>
       <header>
-        发表帖子
+        编辑帖子
       </header>
-      <div class="post-publish-container">
+      <div class="post-edit-container">
         <el-form ref="form" :model="form">
           <el-form-item>
             <p>标题</p>
@@ -62,11 +62,7 @@
       
     },
     created() {
-      if(!this.$route.query.groupid) {
-        this.$router.go(-1);
-        return;
-      }
-      this.groupid = parseInt(this.$route.query.groupid);
+      console.log(this.$route)
     },
     mounted() {
     },
@@ -91,7 +87,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  #post-publish {
+  #post-edit {
     display: flex;
     justify-content: center;
     margin: auto;
@@ -108,7 +104,7 @@
       flex: 0 0 590px;
     }
   }
-  .post-publish-container {
+  .post-edit-container {
     background: #ffffff;
     min-height: 300px;
     padding: 20px 30px;
