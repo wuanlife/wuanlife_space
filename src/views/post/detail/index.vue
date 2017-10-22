@@ -1,5 +1,4 @@
 <template>
-  
   <div id="post">
     <section>
       <div class="post-container" v-loading="loading">
@@ -8,6 +7,8 @@
             <img :src="group.image_url">
             <span class="author">{{ post.author.name }}</span>
             <time>{{ post.create_time | formatTime }}</time>
+            <post-state v-if="post.sticky" :text="'置顶'" :color="'#5992e4'"></post-state>
+            <post-state v-if="post.lock" :text="'锁定'" :color="'#ccc'"></post-state>
           </header>
           <article>
             <h1>{{ post.title }}</h1>
@@ -29,11 +30,11 @@
             <div v-if="group" class="opts">
               <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
                     @click="settop(post.id)">
-                置顶
+                {{post.sticky ? '取消置顶' : '置顶'}}
               </span>
               <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
                     @click="lock(post.id)">
-                锁定
+                {{post.lock ? '解锁' : '锁定'}}
               </span>
               <span v-if="group.identity === 'creator' || user.userInfo.id === post.author.id"
                     @click="edit(post.id)">
@@ -130,6 +131,7 @@
   import {
     parseQueryParams,
   } from 'utils/url'
+  import PostState from 'components/PostState/PostState';
   import { 
     getPost,
     getCommentsByPostId,
@@ -145,6 +147,9 @@
 
   export default {
     name: 'post',
+    components: {
+      PostState
+    },
     data() {
       return {
         postid: null,
@@ -346,7 +351,7 @@
           });
           setTimeout(() => {
             this.$router.go(0)
-          },3000)  
+          },1000)  
         }).catch(err => {
           this.$message({
             message: err.data.error,
@@ -364,7 +369,7 @@
           });
           setTimeout(() => {
             this.$router.go(0)
-          },3000)  
+          },1000)  
         }).catch(err => {
           this.$message({
             message: err.data.error,
