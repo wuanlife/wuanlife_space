@@ -1,0 +1,299 @@
+@import './btn.scss';
+@import './element-ui.scss';
+@import './mixin.scss';
+
+// font part
+/* $font_path: '~/static/fonts/';
+@font-face {
+  font-family: PingFangHK-Medium;
+  src: url($font_path +'PingFang-HK-Medium.ttf');
+  // not support yet
+  font-display: swap;
+}
+@font-face {
+  font-family: PingFangHK-Regular;
+  src: url($font_path +'PingFang-HK-Regular.ttf');
+  // not support yet
+  font-display: swap;
+}
+@font-face {
+  font-family: PingFangHK-Semibold;
+  src: url($font_path +'PingFang-HK-Semibold.ttf');
+  // not support yet
+  font-display: swap;
+} */
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Noto Sans CJK SC,WenQuanYi Micro Hei,Arial,sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.padding-content {
+  padding: 4px 0;
+}
+
+// normalize
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+ul,ol{list-style-type:none;} 
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+//滚动条样式
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+  -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.pr-5 {
+  padding-right: 5px;
+}
+
+.pl-5 {
+  padding-left: 5px;
+}
+
+.block {
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.inlineBlock {
+  display: block;
+}
+
+code {
+  background: #eef1f6;
+  padding: 15px 10px;
+  margin-bottom: 20px;
+  display: block;
+  line-height: 36px;
+  a {
+    color: #337ab7;
+    cursor: pointer;
+    &:hover {
+      color: rgb(32, 160, 255);
+    }
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all .2s ease
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+// simple markdown
+.simplemde-container {
+  display: flex;
+  flex-direction: column;
+  .CodeMirror {
+    flex: 1;
+  }
+}
+
+
+.text-center{
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.svg-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+.input-label {
+  font-size: 14px;
+  color: #48576a;
+  line-height: 1;
+  padding: 11px 5px 11px 0;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+.no-marginLeft {
+  .el-checkbox {
+    margin: 0 20px 15px 0;
+  }
+  .el-checkbox+.el-checkbox {
+    margin-left: 0px;
+  }
+}
+
+.filter-container {
+  padding-bottom: 10px;
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+
+
+//refine vue-multiselect plugin
+.multiselect {
+  line-height: 16px;
+}
+
+.multiselect--active {
+  z-index: 1000 !important;
+}
+
+//refine simplemde
+.simplemde-container{
+  .editor-toolbar.fullscreen,.CodeMirror-fullscreen{
+    z-index: 1003;
+  }
+}
+
+//暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+//github-corner
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out
+}
+
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0)
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg)
+  }
+  40%,
+  80% {
+    transform: rotate(10deg)
+  }
+}
+
+@media (max-width:500px) {
+  .github-corner:hover .octo-arm {
+    animation: none
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+  }
+}
+
+
+/**** Card ****/
+// default Card with default style, you can add style in your page
+.wuan-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  img {
+    margin: 10px 8px 10px 0;
+    width: 40px;
+    height: 40px;
+  }
+  .wuan-card__content {
+    min-width: 0;
+    flex: 1;
+    h2 {
+      margin: 2px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      font-size:14px;
+      color:#5992e4;
+      text-align:left;
+    }
+    p {
+      margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
+      font-size:14px;
+      color:#666666;
+      text-align:left;
+    }    
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
