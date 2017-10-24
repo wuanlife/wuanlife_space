@@ -396,9 +396,20 @@
         })
       },
       deleteComment(floor) {
-        deleteReply(this.$route.params.id, {floor: floor})
+        console.log(floor)
+        deleteReply(this.$route.params.id, floor)
           .then((res) => {
-            console.log(res)
+            this.$notify({
+              title: '成功',
+              message: res.success,
+              type: 'info'
+            });
+            this.commentsObj = null;
+            this.replyLoading = true;
+            getCommentsByPostId(this.$route.params.id).then((res) => {
+              this.commentsObj = res;
+              this.replyLoading = false;
+            })
           })
       }
     }
