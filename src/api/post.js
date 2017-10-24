@@ -100,14 +100,10 @@ export function replyPost(postid, params) {
     data: data,
   });
 }
-export function deleteReply(postid,params) {
-  const data = {
-    floor: params.floor
-  }
+export function deleteReply(postid,floor) {
   return fetch({
-    url: `/posts/${postid}/comments`,
+    url: `/posts/${postid}/comments/${floor}`,
     method: 'delete',
-    data: data,
   })
 }
 

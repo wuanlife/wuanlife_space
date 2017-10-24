@@ -303,6 +303,11 @@
           this.loadReplies(this.pagination.currentPage);
         }).catch(error => {
           this.replyLoading = false;
+          this.$notify({
+            title: '错误',
+            message: error.data.error,
+            type: 'error'
+          });
         })
       },
       replyComment(reply_floor) {
@@ -396,9 +401,21 @@
         })
       },
       deleteComment(floor) {
-        deleteReply(this.$route.params.id, {floor: floor})
+        this.replyLoading = true;
+        deleteReply(this.$route.params.id, floor)
           .then((res) => {
-            console.log(res)
+            this.$notify({
+              title: '成功',
+              message: res.success,
+              type: 'info'
+            });
+            this.commentsObj = null;
+            getCommentsByPostId(this.$route.params.id).then((res) => {
+              this.commentsObj = res;
+              this.replyLoading = false;
+            }).catch((error) => {
+              this.replyLoading = false;
+            })
           })
       }
     }
