@@ -10,7 +10,7 @@
           </div>
         </div>
         <button @click="showMorePlanets" v-if="morePlanetsBtn">更多相关星球</button>
-        <header>相关星球</header>
+        <header>相关帖子</header>
         <div class="relatedPlanetsCardBox" v-loading='loading1'>
           <ul class="index-cards">
             <li class="index-card" v-for="item in relatedPostsData">
