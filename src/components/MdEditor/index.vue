@@ -79,8 +79,8 @@
               var uploader = new UploaderBuilder()
                 .domain({http: "http://upload.qiniu.com", https: "https://up.qbox.me"})
                 .retry(2)//设置重传次数，默认0，不重传
-                .scale([200,0])  //第一个参数是宽度，第二个是高度,[200,0],限定高度，宽度等比缩放.[0,100]限定宽度,高度等比缩放.[200,100]固定长宽
-                .size(1024*1024)
+/*                .scale([200,0])  //第一个参数是宽度，第二个是高度,[200,0],限定高度，宽度等比缩放.[0,100]限定宽度,高度等比缩放.[200,100]固定长宽
+                .size(1024*1024)*/
                 .chunk(true)
                 .auto(true)
                 .multiple(false)
