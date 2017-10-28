@@ -56,9 +56,6 @@
 
   export default {
     name: 'post',
-    components: {
-      PostState
-    },
     data() {
       return {
         postid: null,

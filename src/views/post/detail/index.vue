@@ -191,7 +191,7 @@
           });
           this.loading_newtopic = false;
         })
-
+      
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {

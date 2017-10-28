@@ -160,8 +160,16 @@
     },
     methods: {
       upload(event) {
-        uploader.chooseFile();
-        event.stopPropagation();
+        try {
+          uploader.chooseFile();
+          event.stopPropagation();
+        } catch (error) {
+          this.$message({
+            message: error,
+            type: 'error',
+            duration: 1000,
+          });
+        }
       },
       submitForm(formName){
         this.loginForm.image_url=process.env.QINIU_DOMAIN_URL+urlkey;
@@ -170,27 +178,25 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            return new Promise((resolve, reject) => {
-              createGroup(this.loginForm).then(
+            createGroup(this.loginForm)
+              .then(
                 res => {
                   //转到星球主页
                   this.loading = false;
                   this.$router.push({ path: `/group/${res.id}` });
-                  resolve();
-                }).catch(error => {
+                })
+              .catch(error => {
                 this.$message({
-                  message: error.error,
+                  message: error.data.error,
                   type: 'error',
                   duration: 1000,
                 });
-                reject(error);
               });
-            });
           }else{
             console.log('error submit!!');
             return false;
           }
-        });
+        })
       },
     },
   }
