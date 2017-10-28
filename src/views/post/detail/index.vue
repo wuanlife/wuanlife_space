@@ -47,47 +47,7 @@
             </div>
           </footer>
         </div>
-        <div class="review-wrapper" v-if="commentsObj">
-          <header ref="replyHeader">
-            {{ commentsObj.reply_count }} reviews
-          </header>
-          <ul v-loading="replyLoading">
-            <li v-for="comment of commentsObj.reply">
-              <header>
-                <h2>{{ comment.user_name }}</h2>
-                <time> {{ comment.create_time | formatTime }} </time>
-              </header>
-              <div class="review-html" v-html="comment.comment">
-              </div>
-              <footer v-if="group">
-                <el-popover
-                  ref="reviewPopover"
-                  placement="bottom-start"
-                  width="558"
-                  :disabled="replyPop"
-                  popper-class="reviewPopover"
-                  trigger="click">
-                  <input v-model="replypopInput" placeholder="请输入内容" type="text">
-                  <button :class="{ 'wuan-loading' : replypopLoading }" 
-                          @click="replyComment(comment.floor)">回复</button>
-                  <span slot="reference">回复</span>
-                </el-popover>
-                <span v-if="group.identity === 'creator' || user.userInfo.id === comment.user_id"
-                      @click="deleteComment(comment.floor)">删除</span>
-              </footer>
-            </li>
-
-          </ul>
-          <el-pagination layout="prev, pager, next, jumper"
-                         :page-count="pagination.pageCount"
-                         :current-page="pagination.currentPage"
-                         @current-change="loadReplies">
-          </el-pagination>
-          <footer class="review-reply">
-            <input placeholder="请输入内容" type="text" v-model="replyInput">
-            <button :class="{ 'wuan-loading' : replyLoading }" @click="reply()">回复</button>
-          </footer>
-        </div>
+        <post-reply></post-reply>
       </div>
     </section>
     <aside>
@@ -133,6 +93,7 @@
     parseQueryParams,
   } from 'utils/url'
   import PostState from 'components/PostState/PostState';
+  import PostReply from './PostReply';
   import { 
     getPost,
     getCommentsByPostId,
@@ -145,12 +106,12 @@
     deleteReply,
   } from 'api/post';
   import { getGroup, joinGroup, quitGroup } from 'api/group';
-  import { parseTime } from 'utils/date';
 
   export default {
     name: 'post',
     components: {
-      PostState
+      PostState,
+      PostReply
     },
     data() {
       return {
@@ -230,7 +191,7 @@
           });
           this.loading_newtopic = false;
         })
-
+      
       loadPostAndComments()
         .then(loadGroup)
         .catch((err) => {
@@ -249,9 +210,6 @@
         })
     },
     methods: {
-      parseTime(dateable, format) {
-        return parseTime(dateable, format)
-      },
       loadReplies(page) {
         var self = this;
         this.replyLoading = true;
@@ -543,97 +501,6 @@
               color:#66ccff;
             }
           }
-        }
-      }
-    }
-    .review-wrapper {
-      border:1px solid #dce8f4;
-      border-radius:4px;
-      .el-pagination {
-        padding: 10px;
-        text-align: center;
-      }
-      & > header {
-        padding: 16px;
-        border-bottom: 1px solid #dce8f4;
-
-        text-align:justify;
-        font-weight: bold;
-        font-family:PingFangHK-Medium;
-        font-size:14px;
-        color:#215094;
-      }
-      ul {
-        padding: 0 16px;
-        li {
-          padding: 16px 0 8px 0;
-          border-bottom: 1px solid #dce8f4;
-          header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 6px;
-            h2 {
-              font-family:PingFangHK-Medium;
-              font-size:14px;
-              color:#215094;
-            }
-            time {
-              font-family:PingFangHK-Medium;
-              font-size:14px;
-              color:#8a94a9;
-            }
-          }
-          .review-html {
-            margin-bottom: 6px;
-            word-break: break-all;
-
-            font-size:14px;
-            color:#333333;
-            letter-spacing:0;
-            text-align:justify;
-          }
-          footer {
-            span {
-              margin-right: 28px;
-              cursor: pointer;
-              transition: all 0.3s ease-in-out;
-              font-family:PingFangHK-Medium;
-              font-size:14px;
-              color:#8a94a9;
-              text-align:justify;
-              &:hover {
-                color:#66ccff;
-              }
-            }
-          }
-        }
-      }
-      .review-paging {
-        text-align: center;
-        padding: 18px 0;
-      }
-      footer.review-reply {
-        padding: 16px 0;
-        text-align: center;
-        border-top: 1px solid #dce8f4;
-        input {
-          padding: 0 15px;
-          border:1px solid #97bce2;
-          border-radius:4px;
-          width:450px;
-          height:32px;
-        }
-        button {
-          padding: 7px 16px;
-          background: #97bce1;
-          border: none;
-          border-radius:4px;
-          height:34px;
-
-          font-family:PingFangHK-Medium;
-          font-size:14px;
-          color:#ffffff;
         }
       }
     }
