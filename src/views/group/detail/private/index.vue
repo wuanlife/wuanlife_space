@@ -58,6 +58,12 @@
                      @click="joinGroup">
             加入星球
           </el-button>
+          <el-button v-else-if="group.identity == 'creator'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="toSet(group.id)">
+            星球设置
+          </el-button>
         </footer>
       </div>
       <!-- for aside loading -->
@@ -233,6 +239,9 @@
           this.group.identity = 'member';
         })
       },
+      toSet(val) {
+        this.$router.push({path: '/set', query: { groupid: val}});
+      }
     }
   }
 </script>

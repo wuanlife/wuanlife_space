@@ -25,6 +25,7 @@ const PostEdit = resolve => require.ensure([], () => resolve(require('../views/p
 //const GroupCreate = _import('group/create/index');
 const GroupDetail = resolve => require.ensure([], () => resolve(require('../views/group/detail/index')), 'GroupDetail');
 const GroupCreate = resolve => require.ensure([], () => resolve(require('../views/group/create/index')), 'GroupCreate');
+const GroupSet = resolve => require.ensure([], () => resolve(require('../views/group/toset/index')), 'GroupSet');
 
 //const Inform = _import('inform/index');
 //const InviteCode = _import('invitecode/index');
@@ -128,6 +129,12 @@ export const constantRouterMap = [
     name: 'group',
     component: Layout,
     children: [{ path: 'create', component: GroupCreate }, { path: ':id', component: GroupDetail}],
+  },
+  {
+    path: '/set',
+    name: 'set',
+    component: Layout,
+    children: [{ path: '', component: GroupSet }]
   },
   {
     path: '/inform',
