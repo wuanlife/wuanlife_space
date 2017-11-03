@@ -24,7 +24,7 @@
         <div class="aside-content" v-loading="loadingAside">
           <div v-for="group of discoveryGroups" 
             class="index-aside-card wuan-card clickable"
-            @click="$router.push({path: '/group/' + group.id})"
+            @click="$router.push({path: '/planet/' + group.id, query: { name: group.name }})"
             >
             <img :src="group.image_url">
             <div class="wuan-card__content">
@@ -34,7 +34,7 @@
           </div>
         </div>
         <footer>
-          <span class="clickable" @click="$router.push({path: `/allgroups`})">全部星球</span>
+          <span class="clickable" @click="$router.push({path: `/universe`, query: { name: '全部星球'}})">全部星球</span>
           <span class="clickable">创建星球</span>
         </footer>
       </aside>

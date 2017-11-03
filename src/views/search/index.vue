@@ -5,7 +5,7 @@
         <div class="planetsBox" v-loading='loading' style="width: 600px;">
           <div v-for="item in relatedPlantesData1" class="search-card">
           	<img v-bind:src="item.image_url"/>
-          	<h3 @click="$router.push({ path: `/group/${item.id}` })">{{ item.name }}</h3>
+          	<h3 @click="$router.push({ path: `/planet/${item.id}`, query: { name: item.name }})">{{ item.name }}</h3>
           	<span>{{ item.introduction }}</span>
           </div>
         </div>
@@ -18,11 +18,11 @@
                 <img v-bind:src="item.author.avatar_url">
                 <span class="clickable">{{ item.author.name }}</span>
                 <span>发表于</span>
-                <span class="clickable" @click="$router.push({ path: `/group/${item.group.id}` })">{{ item.group.name }}</span>
+                <span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>
                 <time>{{ item.create_time }}</time>
               </header>
               <div class="index-card-content">
-                <h1 @click="$router.push({path: `/post/${item.id}`})">{{ item.title }}</h1>
+                <h1 @click="$router.push({path: `/topic/${item.id}`, query: { name: item.title }})">{{ item.title }}</h1>
                 <div class="preview-html">
                   {{ item.content }}
                 </div>

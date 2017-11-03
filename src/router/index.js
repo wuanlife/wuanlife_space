@@ -108,8 +108,8 @@ export const constantRouterMap = [
     children: [{ path: '', name: 'login', component: Login }]
   },
   {
-    path: '/post',
-    name: 'post',
+    path: '/topic',
+    name: 'topic',
     component: Layout,
     children: [
       { 
@@ -125,8 +125,8 @@ export const constantRouterMap = [
     ],
   },
   {
-    path: '/group',
-    name: 'group',
+    path: '/planet',
+    name: 'planet',
     component: Layout,
     children: [{ path: 'create', component: GroupCreate }, { path: ':id', component: GroupDetail}],
   },
@@ -186,10 +186,10 @@ export const constantRouterMap = [
     children: [{ path: '', name: 'search', component: Search}],
   },
   {
-    path: '/allgroups',
+    path: '/universe',
     component: Layout,
     hidden: true,
-    children: [{ path: '', name: 'allgroups', component: AllGroups}],
+    children: [{ path: '', name: 'universe', component: AllGroups}],
   },
 ]
 

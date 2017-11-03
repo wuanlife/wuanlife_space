@@ -2,7 +2,7 @@
   <div class="group-private-container">
     <section v-if="(group.identity === 'creator' || group.identity === 'member')">    
       <div v-if="(group.identity === 'creator' || group.identity === 'member')" class="group-publish">
-        <button @click="$router.push({path: '/post/publish/', query: { groupid: group.id }})">
+        <button @click="$router.push({path: '/topic/publish/', query: { groupid: group.id, name: group.name }})">
           <icon-svg icon-class="smallbell"></icon-svg>发表帖子
         </button>
       </div> 
@@ -187,7 +187,7 @@
           this.$router.push({path: '/login/'});
           return;
         }
-        this.$router.push({path: `/post/${postid}`})
+        this.$router.push({path: `/topic/${postid}`})
       },
       approve(postid) {
         if(!this.user.id) {

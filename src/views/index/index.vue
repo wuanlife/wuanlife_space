@@ -22,6 +22,7 @@
       ])
     },
     created() {
+      document.title = '午安网 - 过你想过的生活'
       /*if (this.access_token != null) {*/
       if(this.user.token != ''){
         this.currentRole = 'UserIndex';

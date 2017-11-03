@@ -5,7 +5,7 @@
       <div class="planetsBox" v-loading='loading'>
         <div v-for="item in myGroups" class="allGroups-card">
           <img v-bind:src="item.image_url"/>
-          <h3 @click="$router.push({ path: `/group/${item.id}` })">{{ item.name }}</h3>
+          <h3 @click="$router.push({ path: `/planet/${item.id}`, query: { name: item.name }})">{{ item.name }}</h3>
           <span>{{ item.introduction }}</span>
         </div>
       </div>
@@ -29,6 +29,10 @@
       ...mapGetters([
         'user',
       ]),
+    },
+    created() {
+      let name = this.$route.query.name;
+      document.title = name + ' - 午安网 - 过你想过的生活';
     },
     mounted() {
       if (this.user.userInfo.id) {

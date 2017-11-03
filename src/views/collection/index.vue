@@ -14,7 +14,7 @@
           <ul class="collection-cards">
             <li class="collection-card" v-for="item in collecations">
               <div class="collection-card-content">
-                <h1 @click="$router.push({ path: `/post/${item.id}` })">{{ item.title }}</h1>
+                <h1 @click="$router.push({ path: `/topic/${item.id}`, query: { name: item.title } })">{{ item.title }}</h1>
                 <div class="preview-html">
                   {{ item.content }}
                 </div>

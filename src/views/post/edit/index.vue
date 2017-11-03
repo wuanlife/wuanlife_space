@@ -64,6 +64,8 @@
       
     },
     created() {
+      let name = this.$route.query.name;
+      document.title = name + ' - 午安网 - 过你想过的生活'
       console.log(this.$route)
       getPost(this.$route.params.id)
         .then((res) => {
@@ -85,7 +87,7 @@
           title: this.form.title,
           content: this.form.content,
         }).then((res) => {
-          this.$router.push({path: `/post/${res.id}`});
+          this.$router.push({path: `/topic/${res.id}`, query: { name: res.title}});
         }).catch((error) => {
           console.log(`publish error ${error}`)
         })

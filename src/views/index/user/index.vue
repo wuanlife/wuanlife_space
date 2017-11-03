@@ -39,13 +39,13 @@
         <div class="aside-content">
           <ul class="group-cards">
             <li v-for="group of myGroups" class="group-card">
-              <button @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</button>
+              <button @click="$router.push({path: `/planet/${group.id}`, query: { name: group.name }})">{{ group.name }}</button>
             </li>
           </ul>
         </div>
         <footer>
-          <span class="clickable" @click="$router.push({path: `/allgroups`})">全部星球</span>
-          <span class="clickable" @click="$router.push({path: `/group/create`})">创建星球</span>
+          <span class="clickable" @click="$router.push({path: `/universe`, query: { name: '全部星球'}})">全部星球</span>
+          <span class="clickable" @click="$router.push({path: `/planet/create`})">创建星球</span>
         </footer>
       </aside>
     </div>
