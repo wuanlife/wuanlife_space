@@ -32,7 +32,8 @@
       ])
     },
     created() {
-
+      let name = this.$route.query.name;
+      document.title= name + ' - 午安网 - 过你想过的生活';
     },
     mounted() {
       var self = this;

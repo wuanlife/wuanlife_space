@@ -183,7 +183,7 @@
                 res => {
                   //转到星球主页
                   this.loading = false;
-                  this.$router.push({ path: `/group/${res.id}` });
+                  this.$router.push({ path: `/planet/${res.id}`, query: { name: this.loginForm.name }});
                 })
               .catch(error => {
                 this.$message({

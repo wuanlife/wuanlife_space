@@ -81,7 +81,7 @@
     "node": ">= 8.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserlist": [
+  "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"

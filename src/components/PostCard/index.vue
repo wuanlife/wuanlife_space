@@ -5,7 +5,7 @@
       <span class="clickable">{{ post.author.name }}</span>
       <span>发表于</span>
       <span class="clickable"
-        @click="$router.push({path: '/group/' + post.group.id})">
+        @click="$router.push({path: '/planet/' + post.group.id, query: { name: post.group.name }})">
         {{ post.group.name }}
       </span>
       <time>{{ post.create_time | formatTime }}</time>
@@ -13,7 +13,7 @@
       <post-state v-if="post.lock" :text="'锁定'" :color="'#ccc'"></post-state>
     </header>
     <div class="post-card-content">
-      <h1 @click="$router.push({path: `/post/${post.id}`})">{{ post.title }}</h1>
+      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})">{{ post.title }}</h1>
       <div class="preview-html" v-html="post.content">
       </div>
       <div class="preview-imgs">
@@ -22,7 +22,7 @@
     </div>
     <footer>
       <ul>
-        <li @click="$router.push({path: `/post/${post.id}`})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
         <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
         <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
       </ul>

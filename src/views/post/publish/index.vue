@@ -62,6 +62,8 @@
       
     },
     created() {
+      let name = this.$route.query.name;
+      document.title = name + ' - 午安网 - 过你想过的生活'
       if(!this.$route.query.groupid) {
         this.$router.go(-1);
         return;
@@ -81,7 +83,7 @@
           title: this.form.title,
           content: this.form.content,
         }).then((res) => {
-          this.$router.push({path: `/post/${res.id}`});
+          this.$router.push({path: `/topic/${res.id}`, query: { name: this.form.title }});
         }).catch((error) => {
           console.log(`publish error ${error}`)
         })

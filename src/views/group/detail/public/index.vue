@@ -2,7 +2,7 @@
   <div class="group-public-container">
     <section>    
       <div v-if="group && (group.identity === 'creator' || group.identity === 'member')" class="group-publish">
-        <button @click="$router.push({path: '/post/publish/', query: { groupid: group.id }})">
+        <button @click="$router.push({path: '/topic/publish/', query: { groupid: group.id, name: group.name }})">
           <icon-svg icon-class="smallbell"></icon-svg>发表帖子
         </button>
       </div> 
@@ -45,6 +45,12 @@
                      style="width: 90px; height: 30px"
                      @click="joinGroup">
             加入星球
+          </el-button>
+          <el-button v-else-if="group.identity == 'creator'"
+                     class="func-button" 
+                     style="width: 90px; height: 30px"
+                     @click="toSet(group.id)">
+            星球设置
           </el-button>
         </footer>
       </div>
@@ -136,7 +142,7 @@
           this.$router.push({path: '/login/'});
           return;
         }
-        this.$router.push({path: `/post/${postid}`})
+        this.$router.push({path: `/topic/${postid}`})
       },
       approve(postid) {
         if(!this.user.id) {
@@ -188,6 +194,9 @@
           this.group.identity = 'member';
         })
       },
+      toSet(val) {
+        this.$router.push({path: '/set', query: { groupid: val }});
+      }
     }
   }
 </script>

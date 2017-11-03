@@ -12,7 +12,7 @@
                       <span>{{ item.user.name }}</span>
                       <p><span>回复了主题帖</span><span>{{ item.post.title }}</span></p>
                     </div>
-                    <button @click="$router.push({path: `/post/${item.post.id}`})">查看</button>
+                    <button @click="$router.push({path: `/topic/${item.post.id}`, query: { name: item.post.title }})">查看</button>
                   </div>
                 </li>
               </ul>

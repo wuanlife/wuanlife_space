@@ -56,7 +56,7 @@
         <header>
           <img :src="group.image_url">
           <div class="group-info">
-            <h2 @click="$router.push({path: `/group/${group.id}`})">{{ group.name }}</h2>
+            <h2 @click="$router.push({path: `/planet/${group.id}`, query: { name: group.name}})">{{ group.name }}</h2>
             <span>{{ group.post_num }} 话题　</span>
             <span>{{ group.member_num }} 成员</span>
           </div>
@@ -144,6 +144,8 @@
     },
     created() {
       this.postid = this.$route.params.id;
+      let name = this.$route.query.name;
+      document.title = name + ' - 午安网 - 过你想过的生活'
     },
     mounted() {
       let self = this;
@@ -344,7 +346,7 @@
         })
       },
       edit(id) {
-        this.$router.push({path: `/post/${this.post.id}/edit`})
+        this.$router.push({path: `/topic/${this.post.id}/edit`, query: { name: this.post.title }})
       },
       del(id) {
         deletePost(id).then(res => {
@@ -354,7 +356,7 @@
             type: 'info'
           });
           setTimeout(() => {
-            this.$router.push({path: `/group/${this.group.id}`})
+            this.$router.push({path: `/planet/${this.group.id}`, query: { name: this.group.name }})
           },3000)      
         })
       },

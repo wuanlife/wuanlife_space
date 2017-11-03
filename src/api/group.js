@@ -6,6 +6,26 @@ export function getGroup(id) {
     method: 'get',
   });
 }
+export function setGroup(id, params) {
+  return fetch({
+    url: `/groups/${id}`,
+    method: 'put',
+    data: params
+  });
+}
+export function getGroupMumbers(id, params) {
+  return fetch({
+    url: `/groups/${id}/members`,
+    method: 'get',
+    data: params
+  });
+}
+export function deleteGroupMumbers(id, mumberId) {
+  return fetch({
+    url: `/groups/${id}/members/${mumberId}`,
+    method: 'delete'
+  });
+}
 export function getGroups(offset=0, limit=20) {
   return fetch({
     url: `/groups?offset=${offset}&limit=${limit}`,
