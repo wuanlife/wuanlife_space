@@ -2,6 +2,7 @@
 
 ## 生产环境部署说明
 ### 克隆及编译
+*你需要node版本大于8，推荐使用nvm*
 你可以选择克隆项目到服务器再编译（有可能因为内存原因而编译失败）或者在本地编译后上传到服务器中（推荐）。上传可以使用scp或者filezilla等
 ```
 git clone https://github.com/wuanlife/wuanlife.git
