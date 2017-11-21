@@ -120,7 +120,7 @@ export function publishPost(groupid, params) {
   });
 }
 
-export function searchPosts(name, offset=0, limit=20) {
+export function searchPosts(name, offset, limit) {
   const data = {
     name: name,
     offset: offset,

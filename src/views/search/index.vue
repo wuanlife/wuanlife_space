@@ -32,6 +32,7 @@
               </div>
             </li>
           </ul>
+          <button v-if="relatedPostsData.length > 10 ? true : false" class="load-more" @click="loadMore">加载更多...</button>
         </div>
       </section>
     </div>
@@ -51,7 +52,8 @@
         relatedPostsData: [],
         loading: false,
         loading1: false,
-        morePlanetsBtn: true
+        morePlanetsBtn: true,
+        i: 0
       }
     },
     mounted () {
@@ -86,7 +88,7 @@
         var self = this;
         this.loading1 = true;
         return new Promise((resolve, reject) => {
-          searchPosts(this.$route.query.search).then(res => {
+          searchPosts(this.$route.query.search, 0, 20).then(res => {
             self.relatedPostsData = self.dealTime(res.data);
             self.loading1 = false;
             resolve();
@@ -105,6 +107,16 @@
           arr[i].create_time = arr[i].create_time.slice(0, 10) + ' ' + arr[i].create_time.slice(11, 16)
         }
         return arr
+      },
+      loadMore () {
+        let self = this
+        self.i += 1
+        searchPosts(this.$route.query.search, 20 * self.i, 20).then(res => {
+            self.relatedPostsData = self.relatedPostsData.concat(self.dealTime(res.data));
+            self.loading1 = false;
+          }).catch(error => {
+            self.loading1 = false;
+          });
       }
     }
   }
@@ -277,4 +289,13 @@
   .el-card__body {
     padding: 0;
   }
+.load-more{
+  width: 100%;
+  margin-bottom: 10px;
+  border: 0;
+  height: 30px;
+  line-height: 30px;
+  color: #5677fc;
+  outline: none;
+}
 </style>
