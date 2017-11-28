@@ -59,7 +59,6 @@
     data() {
       return {
         postid: null,
-        post: null,
         pagination: {
           pageCount: 1,
           currentPage: 1,
@@ -178,7 +177,7 @@
       reply(reply_floor) {
         var self = this;
         this.replyLoading = true;
-        replyPost(this.post.id, {comment: this.replyInput}).then(res => {
+        replyPost(this.postid, {comment: this.replyInput}).then(res => {
           this.replyInput = ''
           this.replyLoading = false;
           this.loadReplies(this.pagination.currentPage);
@@ -196,7 +195,7 @@
         this.replyPop = true;
         
         this.replypopLoading = true;
-        replyPost(this.post.id, {comment: this.replypopInput, floor: reply_floor}).then(res => {
+        replyPost(this.postid, {comment: this.replypopInput, floor: reply_floor}).then(res => {
           this.replypopInput = ''
           this.replypopLoading = false;
           this.replyPop = false;
