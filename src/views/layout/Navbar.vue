@@ -79,7 +79,6 @@
   import { mapGetters } from 'vuex';
   import Levelbar from './Levelbar';
   import TabsView from './TabsView';
-  import errLogStore from 'vuex-store/errLog';
 
   export default {
     components: {
@@ -88,7 +87,6 @@
     },
     data() {
       return {
-        log: errLogStore.state.errLog,
         isShowDrop: false,
         searchContent: '',
         dotShow: false,

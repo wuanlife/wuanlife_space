@@ -5,7 +5,7 @@ import App from './App';
 import router from './router';
 import store from 'vuex-store';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-default/index.css';
+import 'element-ui/lib/theme-chalk/index.css'
 // import 'assets/custom-theme/index.css'; // 换肤版本element-ui css
 import NProgress from 'nprogress'; // Progress 进度条
 import 'nprogress/nprogress.css';// Progress 进度条 样式
@@ -54,11 +54,11 @@ Vue.config.productionTip = false;
 if (process.env === 'production') {
   Vue.config.errorHandler = function(err, vm) {
     console.log(err, window.location.href);
-    errLog.pushLog({
-      err,
-      url: window.location.href,
-      vm
-    })
+    // errLog.pushLog({
+    //   err,
+    //   url: window.location.href,
+    //   vm
+    // })
   };
 }
 
