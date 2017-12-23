@@ -142,15 +142,6 @@ code {
   opacity: 0;
 }
 
-// simple markdown
-.simplemde-container {
-  display: flex;
-  flex-direction: column;
-  .CodeMirror {
-    flex: 1;
-  }
-}
-
 
 .text-center{
   text-align: center;
@@ -209,13 +200,6 @@ code {
 
 .multiselect--active {
   z-index: 1000 !important;
-}
-
-//refine simplemde
-.simplemde-container{
-  .editor-toolbar.fullscreen,.CodeMirror-fullscreen{
-    z-index: 1003;
-  }
 }
 
 //暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
