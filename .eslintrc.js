@@ -8,7 +8,10 @@ module.exports = {
         browser: true,
         node: true
     },
-    extends: 'eslint:recommended',
+    extends: [
+        // 'eslint:recommended',
+        'plugin:vue/strongly-recommended',
+    ],
     // required to lint *.vue files
     plugins: [
         'html'

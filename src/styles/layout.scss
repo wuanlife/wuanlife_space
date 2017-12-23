@@ -1,0 +1,47 @@
+.view-container {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    max-width: 900px;
+    min-width: 590px;
+    @media screen and (max-width: 900px) {
+        justify-content: center;
+    }
+    & > section {
+        min-width: 0;
+        flex: 0 0 828px;
+    }
+    & > aside + section {
+        flex: 0 0 714px;
+    }
+    & > aside {
+        flex: 0 0 420px;
+        @media screen and (max-width: 900px) {
+            display: none;
+        }
+        header {
+            h2 {
+                margin: 20px 0;
+                font-weight: normal;
+                font-size: 14px;
+                color: #5677fc;
+            }
+        }
+        .aside-content {
+            .index-aside-card {
+                width: 250px;
+                height: 70px;
+            }
+        }
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px;
+            span {
+                font-size: 14px;
+                color: #5992e4;
+            }
+        }
+    }
+}

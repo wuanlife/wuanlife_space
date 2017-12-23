@@ -79,7 +79,6 @@
   import { mapGetters } from 'vuex';
   import Levelbar from './Levelbar';
   import TabsView from './TabsView';
-  import errLogStore from 'vuex-store/errLog';
 
   export default {
     components: {
@@ -88,7 +87,6 @@
     },
     data() {
       return {
-        log: errLogStore.state.errLog,
         isShowDrop: false,
         searchContent: '',
         dotShow: false,
@@ -116,37 +114,37 @@
           alert("请输入要搜索的内容");
         }
       },
-      toWs() {
-        var self = this;
-        var uidForStorage = JSON.parse(window.localStorage.getItem("user.userInfo")).val.id;
-        if (uidForStorage) {
-          console.log('创建webscokt');
-          var ws = new WebSocket('ws://47.88.58.119:1234');
-        } else{
-          return;
-        }
-        ws.onopen = function () {
-          var mycars = JSON.stringify({"uid": uidForStorage, "token": "jSo0R0NpYcJ6ClYA"});
-          ws.send(mycars);
-          console.log('连接成功');
-          console.log('发送' + mycars);
-        };
-        ws.onmessage = function (e) {
-          console.log('接受服务器的推送');
-          console.log(JSON.parse(e.data));
-          self.dotShow = true;
-        };
-        ws.onclose = function () {
-          console.log('connection close');
-          console.log('连接关闭');
-        };
-      },
+      // toWs() {
+      //   var self = this;
+      //   var uidForStorage = JSON.parse(window.localStorage.getItem("user.userInfo")).val.id;
+      //   if (uidForStorage) {
+      //     console.log('创建webscokt');
+      //     var ws = new WebSocket('ws://47.88.58.119:1234');
+      //   } else{
+      //     return;
+      //   }
+      //   ws.onopen = function () {
+      //     var mycars = JSON.stringify({"uid": uidForStorage, "token": "jSo0R0NpYcJ6ClYA"});
+      //     ws.send(mycars);
+      //     console.log('连接成功');
+      //     console.log('发送' + mycars);
+      //   };
+      //   ws.onmessage = function (e) {
+      //     console.log('接受服务器的推送');
+      //     console.log(JSON.parse(e.data));
+      //     self.dotShow = true;
+      //   };
+      //   ws.onclose = function () {
+      //     console.log('connection close');
+      //     console.log('连接关闭');
+      //   };
+      // },
       clickDot() {
         this.dotShow = false;
       }
     },
     mounted() {
-      this.toWs();
+      //this.toWs();
     },
     
   }

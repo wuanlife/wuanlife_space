@@ -1,23 +1,4 @@
  //覆盖一些element-ui样式
-.block-checkbox {
-  display: block;
-}
-
-.operation-container {
-  .cell {
-    padding: 10px !important;
-  }
-  .el-button {
-    &:nth-child(3) {
-      margin-top: 10px;
-      margin-left: 0px;
-    }
-    &:nth-child(4) {
-      margin-top: 10px;
-    }
-  }
-}
-
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -51,26 +32,6 @@
   }
 }
 
-//暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
-.el-dialog {
-  transform: none;
-  left: 0;
-  position: relative;
-  margin: 0 auto;
-}
-
-
-//文章页textarea修改样式
-.article-textarea {
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
-}
-
 //element ui upload
 .upload-container {
   .el-upload {
@@ -82,50 +43,6 @@
   }
 }
 
-// tab style
-section.app-main {
-  .el-tabs {
-    .el-tabs__header {
-      border: none;
-      .el-tabs__active-bar {
-        display: none;
-      }
-      .el-tabs__item {
-        font-size:18px;
-        color:#999999;
-        margin-right: 22px;
-        padding: 0;
-
-        transition: all .28s ease-in-out;
-        // animation for active
-        &:after {
-          content: '';
-          height: 2px;
-          width: 100%;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          background-clip: content-box;
-          background-color: #5677fc;
-
-          transform: scaleX(0);
-          transition: all .4s ease-in-out;
-        }
-      }
-      .el-tabs__item.is-active {
-        font-size:18px;
-        color:#5677fc;
-        &:after { 
-          transform: scaleX(1);
-        }
-      }
-    }
-    .el-tabs__content {
-      .el-tab-pane {
-      }
-    }
-  }
-}
 
 // header avatar container part
 .el-dropdown-menu.user-dropdown {

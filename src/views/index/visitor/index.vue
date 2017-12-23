@@ -44,7 +44,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
-  import { getPosts } from 'api/post';
+  import { getPosts, getMockTest } from 'api/post';
   import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
 
@@ -72,34 +72,36 @@
       ]),
     },
     mounted() {
-      this.loadPosts()
-        .then()
-        .catch((err) => {
-          console.dir(err);
-          this.$message({
-            message: err.error,
-            type: 'error',
-            duration: 1000,
-          });
-          this.loading = false;
-        })
-      this.loadGroups()
-        .then()
-        .catch((err) => {
-          console.dir(err);
-          this.$message({
-            message: err.error,
-            type: 'error',
-            duration: 1000,
-          });
-          this.loadingAside = false;
-        });  
+      getMockTest().then(res => {
+        console.log(res);
+      })
+      // this.loadPosts()
+      //   .then()
+      //   .catch((err) => {
+      //     console.dir(err);
+      //     this.$message({
+      //       message: err.error,
+      //       type: 'error',
+      //       duration: 1000,
+      //     });
+      //     this.loading = false;
+      //   })
+      // this.loadGroups()
+      //   .then()
+      //   .catch((err) => {
+      //     console.dir(err);
+      //     this.$message({
+      //       message: err.error,
+      //       type: 'error',
+      //       duration: 1000,
+      //     });
+      //     this.loadingAside = false;
+      //   });  
     },
     methods: {
       loadPosts(page) {
         var self = this;
         this.loading = true;
-        console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(true,(page-1)*self.pagination.limit || 0).then(res => {
             console.dir(res);
