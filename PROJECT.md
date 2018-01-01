@@ -81,5 +81,14 @@ import { getMockTest } from 'api/post';
 如果不包含，则没有aside标签。
 > 这里为什么把aside放前面其实是因为css选择器没有前向的选择，只有+选择器去选择兄弟，由于有aside和没有aside的section样式不一样，所以做了个折中，大家编码的时候注意一下aside和section的前后顺序。
 
+## 代码提交流程
+组员代码提交使用pull request提交
+1. 组员先fork我们的wuanlife库
+2. 所有的更改在自己的fork库中完成
+3. 修改完毕后push更改到自己的库中
+4. 提交pull request把代码合并到wuanlife库
+
+参考教程[Git：fork 源仓库、fork 仓库副本和 local 仓库的同步](https://www.jianshu.com/p/29775d91f536)
+
 ## 开发需要注意的东西
 所有对于公共区域文件(styles、utils等)的修改都必须在讨论组里面告知
