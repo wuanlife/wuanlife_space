@@ -9,12 +9,13 @@ module.exports = {
         node: true
     },
     extends: [
-        // 'eslint:recommended',
-        'plugin:vue/strongly-recommended',
+        'eslint:recommended',
+        // 'plugin:vue/strongly-recommended',
     ],
     // required to lint *.vue files
     plugins: [
-        'html'
+        'html',
+        'vue/strongly-recommended'
     ],
     // check if imports actually resolve
     'settings': {
@@ -44,7 +45,7 @@ module.exports = {
         'no-unsafe-negation': 'error',
 
         // enforce valid JSDoc comments
-        'valid-jsdoc': 'off',
+        // 'valid-jsdoc': 'off',
 
         /*
          * Best Practices

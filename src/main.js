@@ -28,8 +28,9 @@ Object.keys(filters).forEach(key => {
 const blackList = ['inform', 'collection'];// 重定向黑名单
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开启Progress
-  if (store.getters.user.token != '') { // 判断是否有token
+  if (false) { // 判断是否有token
     if (to.path === '/login') {
+      console.log('redirect to /');
       next({ path: '/' });
     } else {
       next()
@@ -38,6 +39,7 @@ router.beforeEach((to, from, next) => {
     if (blackList.indexOf(to.name) == -1) { // 不在录重定向黑名单，直接进入
       next()
     } else {
+      console.log('redirect to /login');
       next('/login'); // 否则全部重定向到登录页
       NProgress.done(); // 在hash模式下 改变手动改变hash 重定向回来 不会触发afterEach 暂时hack方案 ps：history模式下无问题，可删除该行！
     }

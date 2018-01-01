@@ -60,5 +60,7 @@ service.interceptors.response.use(
 const mock = new MockAdapter(service);
 
 mockData(mock);
-// mock.restore();
+if(process.env.API_MOCK === undefined || !process.env.API_MOCK) {
+  mock.restore()
+}
 export default service;

@@ -18,66 +18,34 @@ import wuanEditor from "../../common/wuanEditor";
 export default {
   name: "drafts-new",
   components: {
-    wuanEditor: "wuan-editor"
+    "wuan-editor": wuanEditor
   },
   data() {
-    return {
-    };
-  },
-  computed: {
-    ...mapGetters(["user", "access_token"])
+    return {};
   },
   created() {
-    let name = this.$route.query.name;
-    document.title = name + " - 午安网 - 过你想过的生活";
-    if (!this.$route.query.groupid) {
-      this.$router.go(-1);
-      return;
-    }
-    this.groupid = parseInt(this.$route.query.groupid);
   },
   mounted() {},
   methods: {
-    markdown2Html(md) {
-      const converter = new showdown.Converter();
-      return converter.makeHtml(md);
-    },
-    onSubmit() {
-      this.form.content = this.markdown2Html(this.form.md);
-      publishPost(this.groupid, {
-        title: this.form.title,
-        content: this.form.content
-      })
-        .then(res => {
-          this.$router.push({
-            path: `/topic/${res.id}`,
-            query: { name: this.form.title }
-          });
-        })
-        .catch(error => {
-          console.log(`publish error ${error}`);
-        });
-    }
+    onSubmit() {}
   }
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-#post-publish {
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  max-width: 660px;
-  min-width: 590px;
+#drafts-new {
+  width: 1054px;
   section {
+    margin-top: 89px;
+    margin-bottom: 124px;
+    padding: 49px 40px 107px 40px;
+    background: #ffffff;
     header {
-      margin: 15px 0 20px 0;
-      font-family: PingFangHK-Medium;
-      font-size: 18px;
+      margin-bottom: 65px;
+      font-size: 32px;
+      letter-spacing: 0px;
       color: #5677fc;
     }
-    min-width: 0;
-    flex: 0 0 590px;
   }
 }
 .post-publish-container {

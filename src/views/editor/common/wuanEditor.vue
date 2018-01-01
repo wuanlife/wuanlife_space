@@ -1,21 +1,22 @@
 <template>
-  <div class="post-publish-container">
+  <div class="">
     <el-form ref="form" :model="form">
         <el-form-item>
-        <p>标题</p>
-        <el-input v-model="form.title"
-                    placeholder="请输入内容">            
+        <el-input id="title"
+                  v-model="form.title"
+                  placeholder="请输入内容">            
         </el-input>
         </el-form-item>
         <el-form-item>
-        <p>内容</p>
-        <div class="editor-container">
-            <md-editor id='contentEditor' 
-                        ref="contentEditor"
-                        v-model='form.md' 
-                        :height='300'
-                        placeholder='请输入内容'
-                        :zIndex='20'></md-editor>
+        <div id="content" 
+             class="editor-container">
+          <quill-editor v-model="form.content"
+            ref="myQuillEditor"
+            :options="editorOption"
+            @blur="onEditorBlur($event)"
+            @focus="onEditorFocus($event)"
+            @ready="onEditorReady($event)"> 
+          </quill-editor>
         </div>
         </el-form-item>
         <el-form-item class="text-right">
@@ -26,7 +27,6 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
@@ -36,54 +36,35 @@ import { quillEditor } from "vue-quill-editor";
 export default {
   name: "wuan-editor",
   components: {
-    wuanEditor: "wuan-editor"
+    "quill-editor": quillEditor
   },
   data() {
     return {
-      groupid: null,
       form: {
         title: "",
-        content: "",
-        md: ""
+        content: ""
       },
-      content: "## Simplemde",
-      html: ""
+      editorOption: {}
     };
   },
   computed: {
-    ...mapGetters(["user", "access_token"])
-  },
-  created() {
-    let name = this.$route.query.name;
-    document.title = name + " - 午安网 - 过你想过的生活";
-    if (!this.$route.query.groupid) {
-      this.$router.go(-1);
-      return;
+    editor() {
+      return this.$refs.myQuillEditor.quill;
     }
-    this.groupid = parseInt(this.$route.query.groupid);
   },
+  created() {},
   mounted() {},
   methods: {
-    markdown2Html(md) {
-      const converter = new showdown.Converter();
-      return converter.makeHtml(md);
+    onEditorBlur(quill) {
+      console.log("editor blur!", quill);
     },
-    onSubmit() {
-      this.form.content = this.markdown2Html(this.form.md);
-      publishPost(this.groupid, {
-        title: this.form.title,
-        content: this.form.content
-      })
-        .then(res => {
-          this.$router.push({
-            path: `/topic/${res.id}`,
-            query: { name: this.form.title }
-          });
-        })
-        .catch(error => {
-          console.log(`publish error ${error}`);
-        });
-    }
+    onEditorFocus(quill) {
+      console.log("editor focus!", quill);
+    },
+    onEditorReady(quill) {
+      console.log("editor ready!", quill);
+    },
+    onSubmit() {}
   }
 };
 </script>

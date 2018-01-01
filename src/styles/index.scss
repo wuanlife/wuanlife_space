@@ -23,7 +23,9 @@ html {
 *:after {
   box-sizing: inherit;
 }
-
+*:focus {
+  outline: none;
+}
 .no-padding {
   padding: 0px !important;
 }
