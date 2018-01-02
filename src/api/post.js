@@ -8,6 +8,13 @@ export function getMockTest() {
   })
 }
 
+export function getArticles() {
+  return fetch({
+    url: '/articles',
+    method: 'get'
+  })
+}
+
 export function getPosts(latest = true, offset = 0, limit = 20) {
   return fetch({
     url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,
