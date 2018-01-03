@@ -1,0 +1,70 @@
+<template>
+  <div class="my-space view-container">
+      <aside>
+          <user-card
+            :user="user"></user-card>
+      </aside>
+      <section>
+          <h1>最新内容</h1>
+          <ul>
+              <post-card
+                v-for="(date, index) in dates"
+                :key="index"
+                :post.sync="date"></post-card>
+          </ul>
+      </section>
+  </div>
+</template>
+
+<script>
+import PostCard from 'components/PostCard'
+import UserCard from 'components/UserCard'
+import { getMyArticles } from 'api/post'
+export default {
+  name: 'mySpace',
+  components: {
+    PostCard,
+    UserCard
+  },
+  data () {
+    return {
+      dates: [],
+      user: {}
+    }
+  },
+  mounted () {
+    getMyArticles({
+      id: 1,
+      offset: 0,
+      limit: 20
+    }).then(res => {
+      console.log(res)
+      this.dates = res.articles
+      this.user = {
+        name: '淘淘',
+        total: 200,
+        avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+      }
+    })
+  }
+}
+</script>
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.my-space{
+    aside{
+        order: 1;
+    }
+    section{
+        margin-right: 46px;
+        h1{
+            background-color: #ffffff;
+            border-radius: 4px;
+            padding: 17px 18px;
+            margin: 71px 0 12px 0;
+            font-size: 32px;
+            color: #5677fc;
+        }
+    }
+}
+</style>

@@ -15,9 +15,9 @@
     </div>
     <footer>
       <ul>
-        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
-        <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
+        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
+        <li @click="approve(post.id)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
+        <li @click="collect(post.id)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
       </ul>
     </footer>
   </li> 
@@ -210,6 +210,10 @@
           text-align: center;
           color: #666666;
           border-right: 2px solid #dcdcdc;
+          .avatar-icon{
+            margin-right: 20px;
+            font-size: 24px;
+          }
           &:last-child{
             border: 0;
           }
