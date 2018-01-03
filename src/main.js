@@ -10,7 +10,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import NProgress from 'nprogress'; // Progress 进度条
 import 'nprogress/nprogress.css';// Progress 进度条 样式
 import 'normalize.css/normalize.css';// normalize.css 样式格式化
-import 'assets/iconfont/iconfont'; // iconfont 具体图标见https://github.com/PanJiaChen/vue-element-admin/wiki
 import * as filters from './filters'; // 全局vue filter
 import IconSvg from 'components/Icon-svg';// svg 组件
 

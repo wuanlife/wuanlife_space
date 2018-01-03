@@ -3,8 +3,7 @@
     <div class="navbar-container">
       <!-- Logo bar -->
       <div class="logo" @click="$router.push({path: '/'})">
-        <img src="">
-        午安网
+        午安空间
       </div>
       <!-- Search bar -->
       <div class="search-container">
@@ -77,8 +76,8 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import Levelbar from './Levelbar';
-  import TabsView from './TabsView';
+  import Levelbar from '../Levelbar';
+  import TabsView from '../TabsView';
 
   export default {
     components: {
