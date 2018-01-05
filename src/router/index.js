@@ -20,7 +20,7 @@ const InviteCode = resolve => require.ensure([], () => resolve(require('../views
 
 const Collection = resolve => require.ensure([], () => resolve(require('../views/collection/index')), 'Collection');
 
-const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/index')), 'PersonalData');
+const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/new')), 'PersonalData');
 
 const Search = resolve => require.ensure([], () => resolve(require('../views/search/index')), 'Search');
 

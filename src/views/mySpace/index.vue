@@ -1,5 +1,5 @@
 <template>
-  <div class="my-space view-container">
+  <div id="my-space" class="my-space view-container">
       <aside>
           <user-card
             :user="user"></user-card>
@@ -12,6 +12,7 @@
                 :key="index"
                 :post.sync="date"></post-card>
           </ul>
+          <paginatiom></paginatiom>
       </section>
   </div>
 </template>
@@ -19,12 +20,14 @@
 <script>
 import PostCard from 'components/PostCard'
 import UserCard from 'components/UserCard'
+import Paginatiom from 'components/Pagination'
 import { getMyArticles } from 'api/post'
 export default {
   name: 'mySpace',
   components: {
     PostCard,
-    UserCard
+    UserCard,
+    Paginatiom
   },
   data () {
     return {
@@ -51,6 +54,9 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+#my-space{
+  max-width: 1180px;
+}
 .my-space{
     aside{
         order: 1;
