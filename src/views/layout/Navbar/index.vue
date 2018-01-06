@@ -65,7 +65,8 @@ export default {
   background-color: #5677fc;
   .navbar-container {
     display: flex;
-    max-width: 900px;
+    //增加最大宽度
+    max-width: 1100px;
     margin: auto;
     .logo {
       cursor: pointer;

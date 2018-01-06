@@ -1,37 +1,40 @@
 <template>
-<div class="nav-menu">
+<div class="nav-menu">	  
     <el-dropdown menu-align="start" 
                 v-if="user.token != ''" 
                 class="avatar-container" 
                 trigger="click"
                 @visible-change="visibleChange">
+    <span class="write-article">
+	  	<icon-svg icon-class="write" class="avatar-icon"></icon-svg>
+            写文章
+	  </span>
     <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
-        <icon-svg icon-class="peopleCircle" class="avatar-icon"></icon-svg>
-        <span>{{ user.userInfo.name }}</span>
+        <span>{{ user.userInfo.name || '陶陶' }} <icon-svg icon-class="triangle1" class="avatar-icon"></icon-svg></span>
     </div>
-    <el-dropdown-menu class="user-dropdown" slot="dropdown">
+    <el-dropdown-menu class="user-dropdown" slot="dropdown">    
+        <router-link class='inlineBlock' to="/mySpace/">
+        <el-dropdown-item>
+            <icon-svg icon-class="myspace" class="avatar-icon"></icon-svg>
+        我的空间
+        </el-dropdown-item>
+        </router-link>
         <router-link class='inlineBlock' to="/personalData/">
         <el-dropdown-item>
             <icon-svg icon-class="people_2" class="avatar-icon"></icon-svg>
             个人资料
         </el-dropdown-item>
         </router-link>
+        <router-link class='inlineBlock' to="/resetpsw/">
+        <el-dropdown-item>
+            <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
+            密码修改
+        </el-dropdown-item>
+        </router-link>
         <router-link class='inlineBlock' to="/collection/">
         <el-dropdown-item>
             <icon-svg icon-class="starSolid" class="avatar-icon"></icon-svg>
             我的收藏
-        </el-dropdown-item>
-        </router-link>
-        <router-link class='inlineBlock' to="/invitecode/">
-        <el-dropdown-item>
-            <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
-            邀请好友
-        </el-dropdown-item>
-        </router-link>
-        <router-link class='inlineBlock' to="/resetpsw/">
-        <el-dropdown-item>
-            <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
-            修改密码
         </el-dropdown-item>
         </router-link>
         <a @click="logout">
@@ -76,24 +79,38 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+/*添加登录后首页顶部栏菜单样式*/
+.write-article{
+	margin-left: 100px;
+	cursor: pointer;
+}
+
+
+
 .login-container,
 .avatar-container {
     margin-right: 30px;
+    color: white;
 }
 .login-container {
-    font-size: 14px;
-    color: #ffffff;
+    
     span {
     padding: 0 14px;
     &:not(:first-child) {
-        border-left: 1px solid #fff;
+        border-left: 1px solid #fff;     
     }
     }
 }
 .avatar-container {
+	/*设置登陆后顶部菜单排列*/
+	*{
+  	display: inline-block;
+  }
     .avatar-wrapper {
     position: relative;
-    top: 7px;
+    /*菜单顶部对齐*/
+    /*top: 0px;*/
     padding: 8px 14px 15px 14px;
     width: 114px;
     height: 43px;
@@ -103,33 +120,36 @@ export default {
     color: #fff;
     font-size: 14px;
     .avatar-icon {
-        font-size: 18px;
+        font-size: 10px;
         margin-right: 6px;
     }
-    > span {
+    /*> span {
         width: 58px;
         display: inline-block;
+    }*/
     }
-    }
-    .avatar-wrapper.active {
+    /*.avatar-wrapper.active {
     color: #ffffff;
     box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.09);
     border-radius: 2px 2px 0 0;
     background: #0074e9;
     border-bottom: 1px solid #3b52ab;
-    }
+    }*/
 }
 
 // dropdown style
 .user-dropdown {
+	/*下拉框添加蓝色背景*/
+	background-color: #5677fc;
   a {
     font-size: 14px;
-    color: #ffffff;
+    color: #fff;
     li {
+    	color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 16px;
+      padding: 0 16px; 
     }
   }
 }

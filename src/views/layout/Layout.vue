@@ -31,7 +31,7 @@
     height: 100%;
     width: 100%;
     .navbar-wrapper {
-      height: 50px;
+      height: 88px;
     }
     .main-container {
       background-color: #f8f9fa;
