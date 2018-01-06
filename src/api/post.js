@@ -15,6 +15,13 @@ export function getArticles() { // 获取 首页 文章数据
   })
 }
 
+export function getArticle(id) {
+  return fetch({
+    url: `/articles/${id}`,
+    method: 'get'
+  })
+}
+
 export function getMyArticles(params) { // 获取 我的空间 数据
   return fetch({
     url: `/user/${params.id}/articles?offset=${params.offset}&limit=${params.limit}`,
@@ -129,7 +136,7 @@ export function deleteReply(postid, floor) {
 }
 
 // publish post
-export function postPost(params) {
+export function postArticles(params) {
   const data = {
     ...params
   };
