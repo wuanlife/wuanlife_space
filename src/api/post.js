@@ -129,13 +129,12 @@ export function deleteReply(postid, floor) {
 }
 
 // publish post
-export function publishPost(groupid, params) {
+export function postPost(params) {
   const data = {
-    title: params.title,
-    content: params.content
+    ...params
   };
   return fetch({
-    url: `/groups/${groupid}/posts`,
+    url: `/articles`,
     method: 'post',
     data
   });

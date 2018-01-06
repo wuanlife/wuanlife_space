@@ -135,4 +135,7 @@ export default function postRule(mockAdapter) {
     ],
     total: 200
   })
+  .onPost('/articles').reply(200, {
+    id: 410
+  })
 }

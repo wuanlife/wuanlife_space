@@ -31,11 +31,11 @@
     height: 100%;
     width: 100%;
     .navbar-wrapper {
-      height: 50px;
+      z-index: 100;
     }
     .main-container {
       background-color: #f8f9fa;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 88px);
       overflow: auto;
       transition: all .28s ease-out;
     }
