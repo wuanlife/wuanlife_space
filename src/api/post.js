@@ -8,6 +8,20 @@ export function getMockTest() {
   })
 }
 
+export function getArticles() { // 获取 首页 文章数据
+  return fetch({
+    url: '/articles',
+    method: 'get'
+  })
+}
+
+export function getMyArticles(params) { // 获取 我的空间 数据
+  return fetch({
+    url: `/user/${params.id}/articles?offset=${params.offset}&limit=${params.limit}`,
+    method: 'get'
+  })
+}
+
 export function getPosts(latest = true, offset = 0, limit = 20) {
   return fetch({
     url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,
