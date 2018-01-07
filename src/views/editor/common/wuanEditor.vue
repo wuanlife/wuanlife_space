@@ -1,28 +1,22 @@
 <template>
-  <div class="">
-    <el-form ref="form" :model="form">
-        <el-form-item>
-        <el-input id="title"
-                  v-model="form.title"
-                  placeholder="请输入内容">            
-        </el-input>
-        </el-form-item>
-        <el-form-item>
-        <div id="content" 
-             class="editor-container">
-          <quill-editor v-model="form.content"
-            ref="myQuillEditor"
-            :options="editorOption"
-            @blur="onEditorBlur($event)"
-            @focus="onEditorFocus($event)"
-            @ready="onEditorReady($event)"> 
-          </quill-editor>
-        </div>
-        </el-form-item>
-        <el-form-item class="text-right">
-        <el-button class="wuan-button" style="width: 124px; height: 30px" type="primary" @click="onSubmit">创建</el-button>
-        </el-form-item>
-    </el-form>
+  <div id="wuan-editor" 
+        class="editor-container">
+    <quill-editor id="editor" v-model="form.content"
+      ref="myQuillEditor"
+      :options="editorOption"
+      @blur="onEditorBlur($event)"
+      @focus="onEditorFocus($event)"
+      @ready="onEditorReady($event)"> 
+      <div id="toolbar" slot="toolbar">
+        <!-- Add a bold button -->
+        <button class="ql-bold">Bold</button>
+        <button class="ql-italic">Italic</button>
+        <button class="ql-underline">Underline</button>
+        <button class="ql-header" value="1"></button>
+        <button class="ql-header" value="2"></button>
+        <!-- <button id="custom-button" @click="customButtonClick">[ Click me ]</button> -->
+      </div>
+    </quill-editor>
   </div>
 </template>
 
@@ -44,7 +38,12 @@ export default {
         title: "",
         content: ""
       },
-      editorOption: {}
+      editorOption: {
+        placeholder: '说些什么吧...',
+        modules: {
+          toolbar: "#toolbar"
+        }
+      }
     };
   },
   computed: {
@@ -53,7 +52,9 @@ export default {
     }
   },
   created() {},
-  mounted() {},
+  mounted() {
+    // this.$refs.myQuillEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler)
+  },
   methods: {
     onEditorBlur(quill) {
       console.log("editor blur!", quill);
@@ -69,41 +70,24 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-#post-publish {
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  max-width: 660px;
-  min-width: 590px;
-  section {
-    header {
-      margin: 15px 0 20px 0;
-      font-family: PingFangHK-Medium;
-      font-size: 18px;
-      color: #5677fc;
-    }
-    min-width: 0;
-    flex: 0 0 590px;
-  }
-}
-.post-publish-container {
-  background: #ffffff;
-  min-height: 300px;
-  padding: 20px 30px;
-  // label
-  p {
-    font-family: PingFangSC-Regular;
-    font-size: 12px;
-    color: #666666;
-  }
-}
-
+<style rel="stylesheet/scss" lang="scss">
 // editor style
 .editor-container {
-  font-family: PingFangSC-Regular;
   font-size: 16px;
   line-height: 24px;
   color: #999999;
+  .quill-editor {
+    box-shadow: 0px 3px 7px 0px 
+      rgba(99, 99, 99, 0.65);
+    border-radius: 4px;
+    // 工具栏样式
+    #toolbar {
+    }
+    .ql-container {
+      height: 300px;
+      font-size: 24px;
+    }
+
+  }
 }
 </style>

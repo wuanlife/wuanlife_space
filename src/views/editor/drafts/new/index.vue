@@ -4,15 +4,20 @@
       <header>
         写文章
       </header>
-      <wuan-editor>
-
+      <el-input class="title-input"
+                  v-model="form.title"
+                  placeholder="输入标题">            
+      </el-input>
+      <wuan-editor @content-change="onContentChange">
       </wuan-editor>
+      <el-button class="wuan-button submit" type="primary" @click="onSubmit">发表</el-button>
     </section>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { postPost } from 'api/post';
 import wuanEditor from "../../common/wuanEditor";
 
 export default {
@@ -21,13 +26,26 @@ export default {
     "wuan-editor": wuanEditor
   },
   data() {
-    return {};
+    return {
+      form: {
+        title: '',
+        content: '',
+      }
+    };
   },
   created() {
   },
   mounted() {},
   methods: {
-    onSubmit() {}
+    onContentChange(html) {
+      this.content = html;
+    },
+    onSubmit() {
+      postPost(this.form)
+      .then((res) => {
+        console.log(res);
+      })
+    }
   }
 };
 </script>
@@ -48,23 +66,30 @@ export default {
     }
   }
 }
-.post-publish-container {
-  background: #ffffff;
-  min-height: 300px;
-  padding: 20px 30px;
-  // label
-  p {
-    font-family: PingFangSC-Regular;
-    font-size: 12px;
-    color: #666666;
+
+.title-input {
+  margin-bottom: 55px;
+  height: 94px;
+	box-shadow: 0px 3px 7px 0px 
+		rgba(99, 99, 99, 0.35);
+	border-radius: 4px;
+  /deep/ input {
+    height: 100%;
+    text-align: center;
+
+    font-size: 36px;
+    letter-spacing: 0px;
+    color: #757575;
   }
 }
+#wuan-editor {
+  margin-bottom: 42px;
+}
+.submit {
+  float: right;
+  padding: 13px 43px;
 
-// editor style
-.editor-container {
-  font-family: PingFangSC-Regular;
-  font-size: 16px;
-  line-height: 24px;
-  color: #999999;
+	font-size: 24px;
+	color: #ffffff;
 }
 </style>

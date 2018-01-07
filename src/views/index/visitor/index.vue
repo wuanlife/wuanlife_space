@@ -46,7 +46,8 @@
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
-//import { getGroups } from 'api/group';
+
+  import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
   import Pagination from 'components/Pagination'
   export default {
@@ -79,15 +80,12 @@
         console.log(res);
       })
       getArticles().then(res => {
-      	this.posts=res.articles;
+
+        console.log(res)
+        console.log(this.posts)
+        this.posts = res.articles
+        console.log(this.posts)
       })
-      
-      //获取活跃用户数据
-//    getGroups().then(res => {
-//    	this.discoveryGroups=res.activeUsers;
-//    })
-      
-      
       // this.loadPosts()
       //   .then()
       //   .catch((err) => {

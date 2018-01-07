@@ -8,11 +8,25 @@ export function getMockTest() {
   })
 }
 
-export function getArticles(){
-	return fetch({
-		url: '/articles',
-		method: 'get'
-	})
+export function getArticles() { // 获取 首页 文章数据
+  return fetch({
+    url: '/articles',
+    method: 'get'
+  })
+}
+
+export function getArticle(id) {
+  return fetch({
+    url: `/articles/${id}`,
+    method: 'get'
+  })
+}
+
+export function getMyArticles(params) { // 获取 我的空间 数据
+  return fetch({
+    url: `/user/${params.id}/articles?offset=${params.offset}&limit=${params.limit}`,
+    method: 'get'
+  })
 }
 
 export function getPosts(latest = true, offset = 0, limit = 20) {
@@ -122,13 +136,12 @@ export function deleteReply(postid, floor) {
 }
 
 // publish post
-export function publishPost(groupid, params) {
+export function postArticles(params) {
   const data = {
-    title: params.title,
-    content: params.content
+    ...params
   };
   return fetch({
-    url: `/groups/${groupid}/posts`,
+    url: `/articles`,
     method: 'post',
     data
   });
