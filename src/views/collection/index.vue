@@ -1,41 +1,13 @@
 <!-- 
-  TODO:
-    1. Add effect and cursor for <h1> tag
-    2. group can be clicked.
+  我的收藏页面
  -->
 
 <template>
-    <div class="collection-container">
-      <section>     
-        <header>
-            我的收藏
-        </header>
-        <div class="collection-tabcontent" v-loading="loading">
-          <ul class="collection-cards">
-            <li class="collection-card" v-for="item in collecations">
-              <div class="collection-card-content">
-                <h1 @click="$router.push({ path: `/topic/${item.id}`, query: { name: item.title } })">{{ item.title }}</h1>
-                <div class="preview-html">
-                  {{ item.content }}
-                </div>
-                <div class="preview-imgs">
-                  <ul>
-                  	<li v-for="imgs in item.image_url"><img v-bind:src="imgs" /></li>
-                  </ul>
-                </div>
-              </div>
-              <footer>
-                <span class="collection-card-plantname" @click="$router.push({ path: `/group/${item.group.id}` })">{{ item.group.name }}</span>
-                <div>
-                  <span>收藏于</span>
-                  <time>{{ item.create_time }}</time>
-                </div>
-              </footer>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </div>
+  <div id="" class="collection-container">
+    <section>
+      <header>我的收藏</header>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -61,7 +33,7 @@
     },
     methods: {
       getCollectPosts () {
-        var self = this;
+        /*var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
           getCollectPost(self.user.userInfo.id).then(res => {
@@ -75,7 +47,7 @@
             self.loading = false;
             reject(error);
           })
-        })
+        })*/
       },
       dealTime (time) {
         return time.slice(0, 10) + ' ' + time.slice(11, 16);
@@ -89,19 +61,26 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 590px;
-    min-width: 590px;
+    max-width: 714px;
+    min-width: 714px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 590px;
+      flex: 0 0 714px;
       header {
-        margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
-        font-size:18px;
-        color:#5677fc;
+        width: 714px;
+        height: 66px;
+        margin: 88px 0 20px 0;
+        padding-left:17px;
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 32px;
+        font-weight: normal;
+        line-height:66px;
+        color: #5677fc;
+        background-color: #ffffff;
+        border-radius: 4px;
       }
     }
   }
