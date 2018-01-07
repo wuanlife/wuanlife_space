@@ -44,7 +44,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
-  import { getPosts, getMockTest } from 'api/post';
+  import { getPosts, getMockTest, getArticles } from 'api/post';
   import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
 
@@ -74,6 +74,12 @@
     mounted() {
       getMockTest().then(res => {
         console.log(res);
+      })
+      getArticles().then(res => {
+        console.log(res)
+        console.log(this.posts)
+        this.posts = res.articles
+        console.log(this.posts)
       })
       // this.loadPosts()
       //   .then()

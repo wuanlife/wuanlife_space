@@ -20,9 +20,11 @@ const InviteCode = resolve => require.ensure([], () => resolve(require('../views
 
 const Collection = resolve => require.ensure([], () => resolve(require('../views/collection/index')), 'Collection');
 
-const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/index')), 'PersonalData');
+const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/new')), 'PersonalData');
 
 const Search = resolve => require.ensure([], () => resolve(require('../views/search/index')), 'Search');
+
+const MySpace = resolve => require.ensure([], () => resolve(require('../views/mySpace/index')), 'MySpace');
 
 /* error page */
 const Err404 = resolve => require.ensure([], () => resolve(require('../views/error/404')), 'Err404');
@@ -132,6 +134,11 @@ export const constantRouterMap = [
     component: Layout,
     hidden: true,
     children: [{ path: '', name: 'search', component: Search }]
+  },
+  {
+    path: '/myspace',
+    component: Layout,
+    children: [{ path: '', component: MySpace }]
   }
 ]
 
