@@ -1,6 +1,6 @@
 //覆盖el-pagination默认样式
- .el-pager {
-     
+.pagination{
+  .el-pager {
      font-family: MicrosoftYaHei;
      font-size: 16px;
      li {
@@ -8,8 +8,7 @@
 //       width: 20px;
          height: 20px;
          line-height: 17px;
-         margin: 0 5px;
-        
+         margin: 0 5px;       
          //默认值
          border-right: medium;
          border-color: rgba(0,0,0,0);
@@ -23,11 +22,9 @@
              border: none;
          }
      }
- } 
-//覆盖el-dropdown面板中三角形的颜色
-.el-popper[x-placement^=bottom] .popper__arrow::after{
-   border-bottom-color: #5677fc; 
+}  
 }
+ 
 
  //覆盖一些element-ui样式
 .el-upload {

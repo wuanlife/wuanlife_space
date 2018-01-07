@@ -15,7 +15,7 @@
                          :page-count="pagination.pageCount"
                          @current-change="loadPosts">
           </el-pagination>-->
-          <pagination @current-change="loadPosts"></pagination>
+          	<pagination @current-change="loadPosts"></pagination>      
         </div>
       </section>
       <aside>
