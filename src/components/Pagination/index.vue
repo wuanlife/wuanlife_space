@@ -1,5 +1,5 @@
 <template>
-	<div class="pagination">
+	<div class="default-pagination">
 		<div class="center">
 			<span v-if="pagination.currentPage != 1">
 			<span @click="pagination.currentPage--">上一页</span>
@@ -38,7 +38,7 @@
 	}
 </script>
 <style>
-	.pagination {
+	.default-pagination {
 		width: inherit;
 	}
 	
@@ -58,7 +58,7 @@
 		line-height: 20px;
 	}
 	
-	.pagination span {
+	.default-pagination span {
 		cursor: pointer;
 		-moz-user-select: none;
 		-webkit-user-select: none;
