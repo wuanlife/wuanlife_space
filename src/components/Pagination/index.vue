@@ -1,5 +1,5 @@
 <template>
-	<div class="pagination">
+	<div class="default-pagination">
 		<div class="center">
 			<span v-if="pagination.currentPage != 1">
 			<span @click="pagination.currentPage--">上一页</span>
@@ -33,16 +33,19 @@
 					limit: 20,
 				}
 			}
+
 		}
 	}
 </script>
 <style>
-	.pagination {
+	.default-pagination {
 		width: inherit;
 	}
 	
 	.center {
-		width: -webkit-fit-content;
+		/*添加flex使内容超出max-width后不会溢出*/
+		display: flex;
+		max-width: 450px;
 		margin: 0 auto;
 	}
 	
@@ -55,7 +58,7 @@
 		line-height: 20px;
 	}
 	
-	.pagination span {
+	.default-pagination span {
 		cursor: pointer;
 		-moz-user-select: none;
 		-webkit-user-select: none;

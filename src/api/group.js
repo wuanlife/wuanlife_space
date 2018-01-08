@@ -1,10 +1,10 @@
 import fetch from 'utils/fetch';
 
 export function getGroup(id) {
-  return fetch({
+return fetch({
     url: `/groups/${id}`,
     method: 'get',
-  });
+});
 }
 export function setGroup(id, params) {
   return fetch({
@@ -27,10 +27,10 @@ export function deleteGroupMumbers(id, mumberId) {
   });
 }
 export function getGroups(offset=0, limit=20) {
-  return fetch({
+return fetch({
     url: `/groups?offset=${offset}&limit=${limit}`,
     method: 'get',
-  });
+});
 }
 export function getGroupsByUserId(user_id, offset=0, limit=20) {
   return fetch({
