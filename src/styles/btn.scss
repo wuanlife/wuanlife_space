@@ -18,12 +18,90 @@ $panGreen: #30B08F;
   }
 }
 
-button {
-  transition: all 0.3s ease-in-out;
-  &:focus {
-    outline: none;
+
+.blue-btn {
+  @include colorBtn($blue)
+}
+
+.light-blue-btn{
+  @include colorBtn($light-blue)
+}
+
+
+.red-btn {
+  @include colorBtn($red)
+}
+
+.pink-btn {
+  @include colorBtn($pink)
+}
+
+.green-btn {
+  @include colorBtn($green)
+}
+
+
+.tiffany-btn {
+  @include colorBtn($tiffany)
+}
+
+
+.yellow-btn {
+  @include colorBtn($yellow)
+}
+
+.pan-btn {
+  font-size: 14px;
+  color: #fff;
+  padding: 14px 36px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  margin-right: 25px;
+  transition: 600ms ease all;
+  position: relative;
+  display: inline-block;
+  &:hover {
+    background: #fff;
+    &:before, &:after {
+      width: 100%;
+      transition: 600ms ease all;
+    }
+  }
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    transition: 400ms ease all;
+  }
+  &::after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
   }
 }
+
+.custom-button{
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    background: #fff;
+    color: #fff;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: 0;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+}
+
 
 // wuan button
 button.wuan-button {
@@ -32,7 +110,9 @@ button.wuan-button {
   border-radius:2px;
   border: none;
   padding: 7px;
+  transition: all 0.3s ease-in-out;
 
+  font-family:PingFangSC-Regular;
   font-size:12px;
   color:#ffffff;
   &:hover {
@@ -45,7 +125,9 @@ button.func-button {
   border-radius:4px;
   border: none;
   padding: 7px;
+  transition: all 0.3s ease-in-out;
 
+  font-family:PingFangHK-Regular;
   font-size:12px;
   color:#ffffff;
   &:hover {
@@ -58,6 +140,13 @@ button.func-button.disabled {
   pointer-events: none;
 }
 
+
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
 
 button.wuan-loading {
   position: relative;
@@ -72,5 +161,8 @@ button.wuan-loading {
     bottom: -1px;
     border-radius: inherit;
     background-color: hsla(0,0%,100%,.35)
+  }
+  &:after {
+
   }
 }

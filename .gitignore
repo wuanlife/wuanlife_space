@@ -6,7 +6,6 @@ gifs/
 UI/
 UI2/
 npm-debug.log
-package-lock.json
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log

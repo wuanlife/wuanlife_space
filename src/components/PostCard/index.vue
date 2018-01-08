@@ -3,21 +3,28 @@
     <header>
       <img :src="post.author.avatar_url">
       <span class="clickable">{{ post.author.name }}</span>
-      <time>{{ post.create_at | formatTime }}</time>
+      <span>发表于</span>
+      <span class="clickable"
+        @click="$router.push({path: '/planet/' + post.group.id, query: { name: post.group.name }})">
+        {{ post.group.name }}
+      </span>
+      <time>{{ post.create_time | formatTime }}</time>
+      <post-state v-if="post.sticky" :text="'置顶'" :color="'#5992e4'"></post-state>
+      <post-state v-if="post.lock" :text="'锁定'" :color="'#ccc'"></post-state>
     </header>
     <div class="post-card-content">
       <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})">{{ post.title }}</h1>
       <div class="preview-html" v-html="post.content">
       </div>
       <div class="preview-imgs">
-        <img v-for="(img,index) of post.image_urls" :key="index" :src="img">
+        <img v-for="img of post.image_url" :src="img">
       </div>
     </div>
     <footer>
       <ul>
-        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
-        <li @click="collect(post.id)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
+        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}">评论 {{ post.replied_num }}</li>
+        <li @click="approve(post.id)" :class="{'done': post.approved}">点赞 {{ post.approved_num }}</li>
+        <li @click="collect(post.id)" :class="{'done': post.collected}">收藏 {{ post.collected_num }}</li>
       </ul>
     </footer>
   </li> 
@@ -92,20 +99,18 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .post-card {   
-    padding: 38px 26px 0px 26px;
-    width: 714px;  
-    background-color: #ffffff;
-    border-radius: 4px;
+    padding: 10px 16px 12px 16px;   
+    background-color: #ffffff;  
     &:not(:first-child) {
-      margin-top: 20px;
+      margin-top: 8px;
     }
     &:last-child {
-      margin-bottom: 108px;
+      margin-bottom: 20px;
     }
     header {    
       display: flex;    
       align-items: center;    
-      margin-bottom: 27px;
+      margin-bottom: 6px;
       font-size:12px;   
       color:#999999; 
       & > .clickable {
@@ -115,24 +120,18 @@
         }
       }   
       img {
-        width: 50px;    
-        height: 50px;   
+        width: 26px;    
+        height: 26px;   
         border-radius: 100%;    
-        margin-right: 24px;   
+        margin-right: 10px;   
       }
       span {    
-        font-size: 24px;
-        color: #333333;
         &:not(:first-child) {   
           margin-left: 5px;   
         }
       }
       time {    
-        margin-left: 12px;
-        font-size: 18px;
-        color: #999999;
-        flex-grow: 1;
-        text-align: right;
+        margin-left: 12px;    
       }   
     }
     div.post-card-content {
@@ -141,16 +140,11 @@
         display: inline-block;
         position: relative;
         cursor: pointer;
-        margin-bottom: 19px;
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        margin-bottom: 6px;
 
-        color: #333333;
+        color: #2e5897;
         font-family:PingFangHK-Semibold;
-        font-size:24px;
-        height: 25px;
+        font-size:16px;
         // hover animation
         &::after {
           content: '';
@@ -170,53 +164,32 @@
         }
       }
       div.preview-html {
+        margin-bottom: 12px;
         word-break: break-all;
-        font-size:18px;
-        color:#444444;
+
+        font-size:14px;
+        color:#666666;
         letter-spacing:0;
         text-align:justify;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
       }
       div.preview-imgs {
         display: flex;
-        margin-top: 33px;
         img {
           margin-right: 15px;
-          width: 210px;
-          height: 210px;
+          width: 174px;
+          height: 174px;
         }
 
       }
     }
     footer {
-      margin-top: 40px;
-      margin-left: -26px;
-      margin-right: -26px;
-      border-top: 1px solid #dcdcdc;
-      padding: 14px 0;
       ul {
         display: flex;
-        justify-content: space-around;
-        font-size: 20px;
-        height: 30px;
-        align-items: center;
         li {
+
           transition: all 0.2s ease-in-out;
           cursor: pointer;
-          flex-grow: 1;
-          text-align: center;
-          color: #666666;
-          border-right: 2px solid #dcdcdc;
-          .avatar-icon{
-            margin-right: 20px;
-            font-size: 24px;
-          }
-          &:last-child{
-            border: 0;
-          }
+          color: #bcbcbc;
           &:not(:first-child):before{
             content:'\00B7';
             padding:0 8px;

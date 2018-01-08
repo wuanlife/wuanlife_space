@@ -44,7 +44,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
-  import { getPosts, getMockTest, getArticles } from 'api/post';
+  import { getPosts } from 'api/post';
   import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
 
@@ -72,42 +72,34 @@
       ]),
     },
     mounted() {
-      getMockTest().then(res => {
-        console.log(res);
-      })
-      getArticles().then(res => {
-        console.log(res)
-        console.log(this.posts)
-        this.posts = res.articles
-        console.log(this.posts)
-      })
-      // this.loadPosts()
-      //   .then()
-      //   .catch((err) => {
-      //     console.dir(err);
-      //     this.$message({
-      //       message: err.error,
-      //       type: 'error',
-      //       duration: 1000,
-      //     });
-      //     this.loading = false;
-      //   })
-      // this.loadGroups()
-      //   .then()
-      //   .catch((err) => {
-      //     console.dir(err);
-      //     this.$message({
-      //       message: err.error,
-      //       type: 'error',
-      //       duration: 1000,
-      //     });
-      //     this.loadingAside = false;
-      //   });  
+      this.loadPosts()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loading = false;
+        })
+      this.loadGroups()
+        .then()
+        .catch((err) => {
+          console.dir(err);
+          this.$message({
+            message: err.error,
+            type: 'error',
+            duration: 1000,
+          });
+          this.loadingAside = false;
+        });  
     },
     methods: {
       loadPosts(page) {
         var self = this;
         this.loading = true;
+        console.log(`page is ${page}`)
         return new Promise((resolve, reject) => {
           getPosts(true,(page-1)*self.pagination.limit || 0).then(res => {
             console.dir(res);
