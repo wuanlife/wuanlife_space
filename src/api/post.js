@@ -141,7 +141,7 @@ export function postArticles(params) {
     ...params
   };
   return fetch({
-    url: `/articles`,
+    url: '/articles',
     method: 'post',
     data
   });

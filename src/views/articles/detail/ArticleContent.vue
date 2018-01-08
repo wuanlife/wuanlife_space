@@ -68,7 +68,6 @@
       ]),
     },
     created() {
-      
     },
     mounted() {
 
@@ -125,8 +124,9 @@ footer {
     .article-opt {
         cursor: pointer;
         color: #5677fc;
+        transition: all 0.3s ease-in-out;
         &:hover {
-            color: #7888fc;
+            color: #0040b9
         }
     }
 }

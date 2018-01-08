@@ -3,7 +3,7 @@ import fetch from 'utils/fetch';
 export function getUser(id) {
   return fetch({
     url: `/users/${id}`,
-    method: 'get',
+    method: 'get'
   });
 }
 
@@ -12,6 +12,6 @@ export function putUser(id, params) {
   return fetch({
     url: `/users/${id}`,
     method: 'put',
-    data: params,
+    data: params
   });
 }

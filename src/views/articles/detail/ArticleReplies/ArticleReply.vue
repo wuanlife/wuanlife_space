@@ -75,6 +75,10 @@ export default {
             cursor: pointer;
             font-size: 16px;
             color: #5677fc;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                color: #0040b9
+            }
         }
     }
 }

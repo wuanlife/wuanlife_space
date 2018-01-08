@@ -7,15 +7,16 @@
         justify-content: center;
     }
     & > section {
-        margin-left: auto;
         min-width: 0;
         flex: 0 0 828px;
+        margin: 0 auto;
     }
     & > aside {
         margin-right: auto;
         margin-left: 46px;
         order: 2;
         + section {
+            margin-left: auto;
             flex: 0 0 714px;
             order: 1;
         }

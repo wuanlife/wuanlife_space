@@ -5,6 +5,9 @@
   </header>
   <div class="replies-container">
     <article-reply></article-reply>
+    <article-reply></article-reply>
+    <article-reply></article-reply>
+    <article-reply></article-reply>
   </div>
   <div class="reply-pagination">
 
@@ -23,7 +26,6 @@ export default {
     },
     data() {
         return {
-        
         }
     },
     computed: {
@@ -56,6 +58,15 @@ export default {
     border-bottom: 2px solid #c8c8c8;
     font-size: 20px;
     color: #5677fc;
+  }
+}
+.article-reply {
+  &:not(:last-child) {
+    &::after {
+      content: '';
+      width: 80%;
+      height: 1px;
+    }
   }
 }
 </style>
