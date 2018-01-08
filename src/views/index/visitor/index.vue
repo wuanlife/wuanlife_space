@@ -192,7 +192,6 @@
         .index-aside-card {
           width: 250px;
           height: 70px;
-          margin-bottom: 4px;
         }
       }
       /*footer {
