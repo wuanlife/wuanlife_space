@@ -4,18 +4,25 @@
         <header>登录</header>
         <div class="form-content" v-loading="loading">
           <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="100px" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
-            <el-form-item label="邮箱" prop="email" class="form-inputy">
+            
+            <icon-svg icon-class="email" class="youxiang-icon"></icon-svg>
+            <el-form-item label="" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="password" class="form-inputy">
+            
+            <icon-svg icon-class="code" class="mima-icon"></icon-svg>
+            <el-form-item label="" prop="password" class="form-inputy">
               <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
             </el-form-item>
+            
             <el-form-item label-width="100px" class="form-btny">
               <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">登录</el-button>
             </el-form-item>
           </el-form>
-          <a href="#/signup/" id="register">注册账号</a>
-          <a href="#/findpassword/" id="findpassword">找回密码</a>
+
+          <!--<a href="#/signup/" id="register">注册账号</a>
+          <a href="#/findpassword/" id="findpassword">找回密码</a>-->
+          
         </div>
       </section>
     </div>
