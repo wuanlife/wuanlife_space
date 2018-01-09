@@ -1,301 +1,206 @@
+<!-- 
+  搜索结果界面
+ -->
+
 <template>
-    <div class="relatedPlanets-container">
-      <section>
-        <header>相关星球</header>
-        <div class="planetsBox" v-loading='loading' style="width: 600px;">
-          <div v-for="item in relatedPlantesData1" class="search-card">
-          	<img v-bind:src="item.image_url"/>
-          	<h3 @click="$router.push({ path: `/planet/${item.id}`, query: { name: item.name }})">{{ item.name }}</h3>
-          	<span>{{ item.introduction }}</span>
-          </div>
+  <div id="" class="search-container">
+    <section>
+      <header>相关用户</header>
+      <div class="search-user">
+        <div class="search-user-item" v-for="o in 6">
+          <img src="http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100">
+          <span>陶陶我是开放开始</span>
         </div>
-        <button @click="showMorePlanets" v-if="morePlanetsBtn">更多相关星球</button>
-        <header>相关帖子</header>
-        <div class="relatedPlanetsCardBox" v-loading='loading1'>
-          <ul class="index-cards">
-            <li class="index-card" v-for="item in relatedPostsData">
-              <header>
-                <img v-bind:src="item.author.avatar_url">
-                <span class="clickable">{{ item.author.name }}</span>
-                <span>发表于</span>
-                <span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>
-                <time>{{ item.create_time }}</time>
-              </header>
-              <div class="index-card-content">
-                <h1 @click="$router.push({path: `/topic/${item.id}`, query: { name: item.title }})">{{ item.title }}</h1>
-                <div class="preview-html">
-                  {{ item.content }}
-                </div>
-                <div class="preview-imgs">
-                  <img v-bind:src="imglink" v-for="imglink in item.image_url">
-                </div>
-              </div>
-            </li>
-          </ul>
-          <button v-if="relatedPostsData.length > 10 ? true : false" class="load-more" @click="loadMore">加载更多...</button>
-        </div>
-      </section>
-    </div>
+      </div>
+      <header>相关文章</header>
+      <div class="collection-card">
+        <el-card :body-style="{ padding: '0px' }" v-for="o in 2" class="collection-body">
+          <div class="collection-title">卧槽！谁来告诉我我这是眼袋还是卧蚕！我才知道我笑起来那么吓人！</div>
+          <p>昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...
+          昨天拍了个照片.</p>
+          <span class="collection-creator">陶陶欸还贵我就不v</span>
+          <span class="collection-time">收藏于 2015-04-28 13:31</span>
+        </el-card>
+      </div>
+      <div class="collection-page">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="1000"
+          prev-text="上一页"
+          next-text="下一页">
+        </el-pagination>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
-  import { searchGroups } from 'api/group';
-  import { searchPosts } from 'api/post';
-  
+  import { getCollectPost } from 'api/post';
+
   export default {
-    name: 'relatedPlanets-container',
+    name: 'collection-container',
     data() {
       return {
-        relatedPlantesData: [],
-        relatedPlantesData1: [],
-        relatedPostsData: [],
+        collecations: [],
         loading: false,
-        loading1: false,
-        morePlanetsBtn: true,
-        i: 0
       }
-    },
-    mounted () {
-      this.getSearchGroupsData();
-      this.getSearchPostsData();
     },
     computed: {
       ...mapGetters([
         'user',
+        'access_token',
       ])
     },
+    mounted() {
+      this.getCollectPosts();
+    },
     methods: {
-      getSearchGroupsData () {
-        var self = this;
+      getCollectPosts () {
+        /*var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          console.log('search:', this.$route.query.search);
-          searchGroups(this.$route.query.search).then(res => {
-            self.relatedPlantesData = res.data;
-            for(let i = 0,j = 3; i < j; i++){
-              self.relatedPlantesData1[i] = res.data[i];
+          getCollectPost(self.user.userInfo.id).then(res => {
+            for (let i  = 0, j = res.data.length; i < j; i++) {
+              res.data[i].create_time = self.dealTime(res.data[i].create_time);
             }
+            self.collecations = res.data;
             self.loading = false;
             resolve();
-          }).catch(error => {
+          }).catch(reeor => {
             self.loading = false;
             reject(error);
-          });
-        });
+          })
+        })*/
       },
-      getSearchPostsData () {
-        var self = this;
-        this.loading1 = true;
-        return new Promise((resolve, reject) => {
-          searchPosts(this.$route.query.search, 0, 20).then(res => {
-            self.relatedPostsData = self.dealTime(res.data);
-            self.loading1 = false;
-            resolve();
-          }).catch(error => {
-            self.loading1 = false;
-            reject(error);
-          });
-        });
-      },
-      showMorePlanets () {
-        this.morePlanetsBtn = false
-        this.relatedPlantesData1 = this.relatedPlantesData
-      },
-      dealTime (arr) {
-        for (let i = 0, j = arr.length; i < j; i++) {
-          arr[i].create_time = arr[i].create_time.slice(0, 10) + ' ' + arr[i].create_time.slice(11, 16)
-        }
-        return arr
-      },
-      loadMore () {
-        let self = this
-        self.i += 1
-        searchPosts(this.$route.query.search, 20 * self.i, 20).then(res => {
-            self.relatedPostsData = self.relatedPostsData.concat(self.dealTime(res.data));
-            self.loading1 = false;
-          }).catch(error => {
-            self.loading1 = false;
-          });
+      dealTime (time) {
+        return time.slice(0, 10) + ' ' + time.slice(11, 16);
       }
     }
   }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .relatedPlanets-container {
+  .search-container {
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 590px;
-    min-width: 380px;
+    max-width: 714px;
+    min-width: 714px;
+    @media screen and (max-width: 900px) {
+      justify-content: center;
+    }
     section {
-      flex: 1;
-      > header {
-        margin: 19px 0 10px 0;
-        font-family:PingFangHK-Medium;
-        font-size:14px;
-        color:#5677fc;
+      min-width: 0;
+      flex: 0 0 714px;
+      header {
+        width: 714px;
+        height: 66px;
+        margin: 31px 0 36px 0;
+        padding-left:17px;
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 32px;
+        font-weight: normal;
+        line-height:66px;
+        color: #5677fc;
+        background-color: #ffffff;
+        border-radius: 4px;
       }
-      .planetsBox {
-        .search-card{
-          font-size: 10px;
-          background:#ffffff;
-          border-radius:4px;
-          width:190px;
-          height:54px;
-          padding: 12px 10px 12px 44px;
-          box-sizing: border-box;
-          position: relative;
-          margin: 0 10px 10px 0;
-          display: inline-block;
-          > img{
-            width:30px;
-            height:30px;
+      .search-user{
+        display:flex;
+        flex-wrap:wrap;
+        .search-user-item{
+          background-color: #ffffff;
+          border-radius: 4px;
+          width:220px;
+          height:84px;
+          margin:0 10px 40px 0;
+          img{
+            position:relative;
+            top:-24px;
+            width: 90px;
+            height: 90px;
             border-radius:100%;
-            position: absolute;
-            top: 12px;
-            left: 10px;
           }
-          > h3, span{
-            width: 136px;
-            height: 14px;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-          }
-          > h3{
-            color:#5992e4;
-            font-family:PingFangHK-Medium;
-            cursor: pointer;
-          }
-          > span{
-            color:#666666;
-            font-family:PingFangHK-Regular;
+          span{
+            display:inline-block;
+            width:100px;
+            height:84px;
+            line-height:84px;
+            font-family: MicrosoftYaHei;
+            font-size: 26px;
+            font-weight: normal;
+            font-stretch: normal;
+            overflow:hidden;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            color: #333333;
           }
         }
       }
-      > button{
-        background:#1b87f6;
-        border-radius:3px;
-        padding: 6px 14px 5px 14px;
-        border: 0;
-        font-family:PingFangHK-Regular;
-        font-size:12px;
-        color:#ffffff;
-        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.28);
-        margin-top: 4px;
-        margin-bottom: 18px;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
+      .collection-card{
+        .collection-body{
+          margin-bottom:30px;
+        }
+        .collection-title{
+          width: 650px;
+          height: 25px;
+          margin:29px 0 0 28px;
+          overflow:hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          font-family: MicrosoftYaHei-Bold;
+          font-size: 24px;
+          font-weight: normal;
+          color: #333333;
+        }
+        p{
+          width: 653px;
+          height: 81px;
+          margin:19px 0 0 28px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          line-height:26px;
+          font-weight: normal;
+          font-stretch: normal;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          color: #444444;
+        }
+        .collection-creator{
+          display:inline-block;
+          margin:0 0 0 28px;
+          float:left;
+          width: 100px;
+          height: 52px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height:52px;
+          color: #999999;
+          overflow:hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+        }
+        .collection-time{
+          display:inline-block;
+          margin:0 25px 0 0;
+          float:right;
+          height: 52px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height:52px;
+          color: #999999;
+        }
       }
-      .relatedPlanetsCardBox {
-        
+      .collection-page{
+        width:420px;
+        margin:60px auto;
       }
     }
   }
-  // post card style    
-  .index-cards { 
-    .index-card {   
-      padding: 10px 16px 12px 16px;   
-      background-color: #ffffff;  
-      &:not(:first-child) {
-        margin-top: 8px;
-      }
-      &:last-child {
-        margin-bottom: 20px;
-      }
-      header {    
-        display: flex;    
-        align-items: center;    
-        margin-bottom: 6px;
-        font-size:12px;   
-        color:#999999;
-        & > .clickable {
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            color: #5677fc;
-          }
-        }
-        img {
-          width: 26px;    
-          height: 26px;   
-          border-radius: 100%;    
-          margin-right: 10px;   
-        }
-        span {    
-          &:not(:first-child) {   
-            margin-left: 5px;   
-          }
-        }
-        time {    
-          margin-left: 12px;    
-        }   
-      }
-      div.index-card-content {
-        h1 {
-          display: inline-block;
-          position: relative;
-          cursor: pointer;
-          margin-bottom: 6px;
-
-          color: #2e5897;
-          font-family:PingFangHK-Semibold;
-          font-size:16px;
-          // hover animation
-          &::after {
-            content: '';
-            transition: all 0.5s ease-in-out;
-            transform: scaleX(0);
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #2e5897;
-          }
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-            }
-          }
-        }
-        div.preview-html {
-          margin-bottom: 12px;
-          word-break: break-all;
-          font-family: PingFangHK-Medium;
-          font-size:14px;
-          color:#666666;
-          letter-spacing:0;
-          text-align:justify;
-        }
-        div.preview-imgs {
-          display: flex;
-          img {
-            margin-right: 15px;
-            width: 174px;
-            height: 174px;
-          }
-
-        }
-      }
-    }   
-  }
-</style>
-<style type="text/css">
-  .el-card__body {
-    padding: 0;
-  }
-.load-more{
-  width: 100%;
-  margin-bottom: 10px;
-  border: 0;
-  height: 30px;
-  line-height: 30px;
-  color: #5677fc;
-  outline: none;
-}
 </style>

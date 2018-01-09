@@ -1,41 +1,31 @@
 <!-- 
-  TODO:
-    1. Add effect and cursor for <h1> tag
-    2. group can be clicked.
+  我的收藏页面
  -->
 
 <template>
-    <div class="collection-container">
-      <section>     
-        <header>
-            我的收藏
-        </header>
-        <div class="collection-tabcontent" v-loading="loading">
-          <ul class="collection-cards">
-            <li class="collection-card" v-for="item in collecations">
-              <div class="collection-card-content">
-                <h1 @click="$router.push({ path: `/topic/${item.id}`, query: { name: item.title } })">{{ item.title }}</h1>
-                <div class="preview-html">
-                  {{ item.content }}
-                </div>
-                <div class="preview-imgs">
-                  <ul>
-                  	<li v-for="imgs in item.image_url"><img v-bind:src="imgs" /></li>
-                  </ul>
-                </div>
-              </div>
-              <footer>
-                <span class="collection-card-plantname" @click="$router.push({ path: `/group/${item.group.id}` })">{{ item.group.name }}</span>
-                <div>
-                  <span>收藏于</span>
-                  <time>{{ item.create_time }}</time>
-                </div>
-              </footer>
-            </li>
-          </ul>
-        </div>
-      </section>
-    </div>
+  <div id="" class="collection-container">
+    <section>
+      <header>我的收藏</header>
+      <div class="collection-card">
+        <el-card :body-style="{ padding: '0px' }" v-for="o in 2" class="collection-body">
+          <div class="collection-title">卧槽！谁来告诉我我这是眼袋还是卧蚕！我才知道我笑起来那么吓人！</div>
+          <p>昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...
+          昨天拍了个照片.</p>
+          <span class="collection-creator">陶陶欸还贵我就不v</span>
+          <span class="collection-time">收藏于 2015-04-28 13:31</span>
+        </el-card>
+      </div>
+      <div class="collection-page">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="1000"
+          prev-text="上一页"
+          next-text="下一页">
+        </el-pagination>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -61,7 +51,7 @@
     },
     methods: {
       getCollectPosts () {
-        var self = this;
+        /*var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
           getCollectPost(self.user.userInfo.id).then(res => {
@@ -75,7 +65,7 @@
             self.loading = false;
             reject(error);
           })
-        })
+        })*/
       },
       dealTime (time) {
         return time.slice(0, 10) + ' ' + time.slice(11, 16);
@@ -89,115 +79,89 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 590px;
-    min-width: 590px;
+    max-width: 714px;
+    min-width: 714px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 590px;
+      flex: 0 0 714px;
       header {
-        margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
-        font-size:18px;
-        color:#5677fc;
+        width: 714px;
+        height: 66px;
+        margin: 31px 0 20px 0;
+        padding-left:17px;
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 32px;
+        font-weight: normal;
+        line-height:66px;
+        color: #5677fc;
+        background-color: #ffffff;
+        border-radius: 4px;
+      }
+      .collection-card{
+        .collection-body{
+          margin-bottom:30px;
+        }
+        .collection-title{
+          width: 650px;
+          height: 25px;
+          margin:29px 0 0 28px;
+          overflow:hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          font-family: MicrosoftYaHei-Bold;
+          font-size: 24px;
+          font-weight: normal;
+          color: #333333;
+        }
+        p{
+          width: 653px;
+          height: 81px;
+          margin:19px 0 0 28px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          line-height:26px;
+          font-weight: normal;
+          font-stretch: normal;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          color: #444444;
+        }
+        .collection-creator{
+          display:inline-block;
+          margin:0 0 0 28px;
+          float:left;
+          width: 100px;
+          height: 52px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height:52px;
+          color: #999999;
+          overflow:hidden;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+        }
+        .collection-time{
+          display:inline-block;
+          margin:0 25px 0 0;
+          float:right;
+          height: 52px;
+          font-family: MicrosoftYaHei;
+          font-size: 18px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height:52px;
+          color: #999999;
+        }
+      }
+      .collection-page{
+        width:420px;
+        margin:60px auto;
       }
     }
-  }
-  .collection-tabcontent {
-    min-height: 200px;
-    margin-top: 5px;
-  }
-  // post card style    
-  .collection-cards { 
-    .collection-card {   
-      padding: 16px 16px 12px 16px;   
-      background-color: #ffffff;
-      border-radius: 8px;  
-      &:not(:first-child) {
-        margin-top: 8px;
-      }  
-      footer {    
-        display: flex;    
-        align-items: center;
-        font-size:12px;   
-        color:#999999;
-        position: relative;
-        font-family:PingFangHK-Medium;
-        div {
-          position: absolute;
-          right: 0;
-        }
-        span {    
-          cursor: ppointer;
-          &:not(:first-child) {   
-            margin-left: 5px;   
-          }
-        }
-        > .collection-card-plantname{
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            color: #5677fc;
-          }
-        }
-      }
-      div.collection-card-content {
-        margin-bottom: 12px;
-        h1 {
-          margin-bottom: 6px;
-          color: #003585;
-          font-family:PingFangHK-Semibold;
-          font-size:16px;
-          opacity: 0.87;
-          cursor: pointer;
-          display: inline-block;
-          position: relative;
-          &::after {
-            content: '';
-            transition: all 0.5s ease-in-out;
-            transform: scaleX(0);
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #2e5897;
-          }
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-            }
-          }
-        }
-        div.preview-html {
-          margin-bottom: 12px;
-          word-break: break-all;
-          font-size:14px;
-          color:#666666;
-          letter-spacing:0;
-          text-align:justify;
-          font-family:PingFangHK-Medium;
-        }
-        div.preview-imgs {
-          display: flex;
-          ul {
-            li {
-              display: inline-block;
-              box-sizing: border-box;
-              img {
-                width: 174px;
-                height: 174px;
-                margin-right: 15px;
-                background:#d8d8d8;
-                border-radius:4px;
-                align-self: center;
-              }
-            }
-          }
-        }
-      }
-    }   
   }
 </style>
