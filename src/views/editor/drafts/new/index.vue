@@ -10,14 +10,14 @@
       </el-input>
       <wuan-editor @content-change="onContentChange">
       </wuan-editor>
-      <el-button class="wuan-button submit" type="primary" @click="onSubmit">发表</el-button>
+      <el-button class="wuan-button submit" type="primary" @click="onSubmit" :loading="submitLoading">发表</el-button>
     </section>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { postPost } from 'api/post';
+import { postArticles } from 'api/post';
 import wuanEditor from "../../common/wuanEditor";
 
 export default {
@@ -30,7 +30,8 @@ export default {
       form: {
         title: '',
         content: '',
-      }
+      },
+      submitLoading: false,
     };
   },
   created() {
@@ -38,11 +39,13 @@ export default {
   mounted() {},
   methods: {
     onContentChange(html) {
-      this.content = html;
+      this.form.content = html;
     },
     onSubmit() {
-      postPost(this.form)
+      this.submitLoading = true;
+      postArticles(this.form)
       .then((res) => {
+        this.submitLoading = false;
         console.log(res);
       })
     }

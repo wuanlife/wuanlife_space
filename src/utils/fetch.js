@@ -57,10 +57,10 @@ service.interceptors.response.use(
 )
 
 
-const mock = new MockAdapter(service);
+const mock = new MockAdapter(service, { delayResponse: 2000 });
 
 mockData(mock);
-if(process.env.API_MOCK === undefined || !process.env.API_MOCK) {
+if (process.env.API_MOCK === undefined || !process.env.API_MOCK) {
   mock.restore()
 }
 export default service;

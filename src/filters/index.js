@@ -1,4 +1,4 @@
-import {parseTime as parseTimeUtil} from 'utils/date'
+import { parseTime as parseTimeUtil } from 'utils/date'
 
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
@@ -36,7 +36,7 @@ export function parseTime(time, cFormat) {
   return time_str;
 }
 
-export function formatTime(dateable, format='yyyy-MM-dd HH:mm') {
+export function formatTime(dateable, format = 'yyyy-MM-dd HH:mm') {
   const d = new Date(dateable);
   const now = Date.now();
 
