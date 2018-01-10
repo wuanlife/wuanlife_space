@@ -59,7 +59,7 @@ export function getCommentsByPostId(id, offset = 0, limit = 20) {
 
 export function getCollectPost(id, offset = 0, limit = 20) {
   return new fetch({
-    url: `/users/${id}/collections`,
+    url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
   });
 }

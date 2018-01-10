@@ -26,9 +26,7 @@
   import ArticleContent from './ArticleContent.vue';
   import ArticleReplies from './ArticleReplies';
   import ArticleReplyInput from './ArticleReplyInput.vue';
-
-  import { 
-
+  import {
   } from 'api/post';
 
   export default {
@@ -72,12 +70,8 @@
     mounted() {
       let self = this;
       this.loading = true;
-
-
-      
     },
     methods: {
-    
     }
   }
 </script>

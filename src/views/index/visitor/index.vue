@@ -107,7 +107,7 @@
       //       duration: 1000,
       //     });
       //     this.loadingAside = false;
-      //   });  
+      //   });
     },
     methods: {
       loadPosts(page) {

@@ -55,7 +55,7 @@
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
   import { parseQueryParams } from 'utils/url';
-  import { 
+  import {
     getPosts,
     approvePost,
     collectPost,
@@ -194,7 +194,7 @@
             reject(error);
           });
         });
-      },    
+      },
       loadGroups() {
         var self = this;
         this.loadingAside = true;

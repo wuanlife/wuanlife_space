@@ -39,9 +39,6 @@ export default {
     mounted() {
         let self = this;
         this.loading = true;
-
-
-        
     },
     methods: {
 
