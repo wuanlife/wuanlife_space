@@ -4,7 +4,8 @@ import { storeWithExpiration } from 'utils';
 const user = {
   state: {
     // OPTIMIZE: the logic is so shit...
-    token: typeof storeWithExpiration.get('user.token') === 'string' && storeWithExpiration.get('user.token') != '' ? storeWithExpiration.get('user.token') : '',
+//  token: typeof storeWithExpiration.get('user.token') === 'string' && storeWithExpiration.get('user.token') != '' ? storeWithExpiration.get('user.token') : '',
+    token: 'Ivan',
     userInfo: storeWithExpiration.get('user.userInfo') || {},
     setting: '',
     searchText: ''

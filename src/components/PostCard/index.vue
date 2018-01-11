@@ -67,9 +67,9 @@
           id: id,
           userid: self.user.userInfo.id,
         }).then(() => {
-          self.post.collected_num += self.post.collected ? -1 : 1
-          self.post.collected = !self.post.collected
-          self.$emit('on-collected', self.post.id)
+          self.post.collected_num += self.post.collected ? 1 : -1 ;
+          self.post.collected = !self.post.collected;
+          self.$emit('on-collected', self.post.id);
         })
       },
       approve(id) {
