@@ -27,7 +27,7 @@
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
   import PostState from 'components/PostState/PostState';
-  import { 
+  import {
     approvePost,
     collectPost,
   } from 'api/post';
@@ -45,7 +45,6 @@
     },
     data() {
       return {
-        
       }
     },
     computed: {

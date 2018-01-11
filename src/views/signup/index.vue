@@ -2,23 +2,30 @@
   <div class="register-container">
   	<section>
   		<header>注册</header>
-  		<div class="form-content" v-loading="loading">
+  		
+      <div class="form-content" v-loading="loading">
   			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
+            
             <el-form-item label="邮箱" prop="email" class="form-inputy">
               <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
             </el-form-item>
+            
             <el-form-item label="昵称" prop="nickname" class="form-inputy">
               <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称"></el-input>
             </el-form-item>
+            
             <el-form-item label="密码" prop="password" class="form-inputy">
               <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
             </el-form-item>
-            <el-form-item label="邀请码" prop="inviteword" class="form-inputy">
+            
+            <!--<el-form-item label="邀请码" prop="inviteword" class="form-inputy">
               <el-input v-model="loginForm.inviteword" auto-complete="off" placeholder="输入邀请码"></el-input>
-            </el-form-item>
+            </el-form-item>-->
+            
             <el-form-item label-width="100px" class="form-btny">
               <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
             </el-form-item>
+          
           </el-form>
   		</div>
   	</section>
@@ -62,13 +69,13 @@
           callback();
         }
       };
-      var validateWord = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入邀请码'));
-        } else {
-          callback();
-        }
-      };
+      //var validateWord = (rule, value, callback) => {
+      //  if (value === '') {
+      //    callback(new Error('请输入邀请码'));
+      //  } else {
+      //    callback();
+      //  }
+      //};
       return {
         activeName: 'index-myplanet',
         loading: false,
@@ -78,7 +85,7 @@
           email: '',
           nickname: '',
           password: '',
-          inviteword: '',
+        //  inviteword: '',
         },
         loginRules: {
           email: [
@@ -90,9 +97,9 @@
           password: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          inviteword: [
-            { validator: validateWord, trigger: 'blur' }
-          ],
+          //inviteword: [
+          //  { validator: validateWord, trigger: 'blur' }
+          //],
         }
       }
     },

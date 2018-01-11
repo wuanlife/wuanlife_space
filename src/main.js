@@ -18,6 +18,7 @@ Vue.component('icon-svg', IconSvg)
 Vue.use(ElementUI);
 
 // register global utility filters.
+/* eslint import/namespace: ['error', { allowComputed: true }]*/
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 });
@@ -27,7 +28,8 @@ Object.keys(filters).forEach(key => {
 const blackList = ['inform', 'collection-not'];// 重定向黑名单
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开启Progress
-  if (false) { // 判断是否有token
+  const token = false
+  if (token) { // 判断是否有token
     if (to.path === '/login') {
       console.log('redirect to /');
       next({ path: '/' });
@@ -35,7 +37,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if (blackList.indexOf(to.name) == -1) { // 不在录重定向黑名单，直接进入
+    if (blackList.indexOf(to.name) === -1) { // 不在录重定向黑名单，直接进入
       next()
     } else {
       console.log('redirect to /login');
@@ -53,7 +55,7 @@ Vue.config.productionTip = false;
 
 // 生产环境错误日志
 if (process.env === 'production') {
-  Vue.config.errorHandler = function(err, vm) {
+  Vue.config.errorHandler = function(err, /* vm*/) {
     console.log(err, window.location.href);
     // errLog.pushLog({
     //   err,

@@ -3,12 +3,12 @@ import fetch from 'utils/fetch';
 export function login(email, password) {
   const data = {
     mail: email,
-    password: password,
+    password
   };
   return fetch({
     url: '/users/signin',
     method: 'post',
-    data: data,
+    data
   });
 }
 
@@ -17,12 +17,12 @@ export function signup(regObj) {
     name: regObj.nickname,
     mail: regObj.email,
     password: regObj.password,
-    code: regObj.inviteword,
+    code: regObj.inviteword
   };
   return fetch({
     url: '/users',
     method: 'post',
-    data: data,
+    data
   });
 }
 
@@ -31,54 +31,54 @@ export function setinfo(infoObj) {
     name: infoObj.name,
     avatar_url: infoObj.imageUrl,
     sex: infoObj.sex,
-    birthday: infoObj.birthday,
+    birthday: infoObj.birthday
   };
   return fetch({
     url: '/users/:id',
     method: 'put',
-    data: data,
+    data
   });
 }
 
-//重置密码接口
+// 重置密码接口
 export function resetpsw(infoObj) {
   const data = {
-    mail: infoObj.email,
+    mail: infoObj.email
   };
   return fetch({
     url: '/users/resetpsw',
     method: 'post',
-    data: data,
+    data
   });
 }
 
-export function getPostInform(id, type, offset=0, limit=20) {
+export function getPostInform(id, type, offset = 0, limit = 20) {
   return new fetch({
     url: `/users/${id}/messages?offset=${offset}&limit=${limit}&type=${type}`,
-    method: 'get',
+    method: 'get'
   });
 }
 
 export function dealApplyPlanetPost(id, mid, is_apply) {
   const data = {
-    is_apply: is_apply,
+    is_apply
   };
   return new fetch({
     url: `/users/${id}/messages/${mid}`,
     method: 'post',
-    data: data,
+    data
   });
 }
 
 export function getUserInfo(id) {
   return new fetch({
     url: `/users/${id}`,
-    method: 'get',
+    method: 'get'
   });
 }
 
 
-//重置密码接口,发送新密码数据
+// 重置密码接口,发送新密码数据
 export function resetpassword(infoObj) {
   const data = {
     token: infoObj.token,
@@ -87,6 +87,6 @@ export function resetpassword(infoObj) {
   return fetch({
     url: '/users/resetpsw',
     method: 'put',
-    data: data,
+    data
   });
 }

@@ -27,7 +27,7 @@ export default function postRule(mockAdapter) {
         ],
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
-          //添加数据：每月发布文章数量
+          // 添加数据：每月发布文章数量
           monthly_posts_num: 21111,
           name: '淘淘',
           id: 1
@@ -58,7 +58,7 @@ export default function postRule(mockAdapter) {
         ],
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
-          //添加数据：每月发布文章数量
+          // 添加数据：每月发布文章数量
           monthly_posts_num: 22222,
           name: '淘淘',
           id: 1
@@ -104,8 +104,8 @@ export default function postRule(mockAdapter) {
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
 
-          //添加数据：每月发布文章数量
-          monthly_posts_num: 23333,     
+          // 添加数据：每月发布文章数量
+          monthly_posts_num: 23333,
           name: '淘淘',
           id: 1
         }
@@ -135,8 +135,8 @@ export default function postRule(mockAdapter) {
         ],
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
-          //添加数据：每月发布文章数量
-          monthly_posts_num: 23333,  
+          // 添加数据：每月发布文章数量
+          monthly_posts_num: 23333,
           name: '淘淘',
           id: 1
         }

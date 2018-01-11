@@ -50,6 +50,11 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import {
+      approveArticle,
+      collectArticle,
+      deleteArticle,
+  } from 'api/post'
 
   export default {
     name: 'article-content',

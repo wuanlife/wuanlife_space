@@ -3,7 +3,7 @@ export function parseTime(dateable, format) {
   const o = {
     'M+': date.getMonth() + 1, // 月份
     'd+': date.getDate(), // 日
-    'h+': date.getHours() % 12 == 0 ? 12 : date.getHours() % 12, // 小时
+    'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 小时
     'H+': date.getHours(), // 小时
     'm+': date.getMinutes(), // 分
     's+': date.getSeconds(), // 秒
@@ -27,7 +27,7 @@ export function parseTime(dateable, format) {
   }
   for (const k in o) {
     if (new RegExp('(' + k + ')').test(format)) {
-      format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));
+      format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));
     }
   }
   return format;

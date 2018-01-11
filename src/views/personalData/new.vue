@@ -95,7 +95,7 @@ var avatarImgKey = '';
           return false;
         }
       }
-    }) 
+    })
     .listener({
       onTaskSuccess(task){
         //一个任务上传成功后回调
@@ -104,13 +104,10 @@ var avatarImgKey = '';
         document.getElementById("avatar").setAttribute("src",process.env.QINIU_DOMAIN_URL+avatarImgKey);
       },onTaskFail(task) {
         //一个任务在经历重传后依然失败后回调此函数
-        
       },onTaskRetry(task) {
         //开始重传
-        
       },onFinish(tasks){
-          //所有任务结束后回调，注意，结束不等于都成功，该函数会在所有HTTP上传请求响应后回调(包括重传请求)。
-        
+        //所有任务结束后回调，注意，结束不等于都成功，该函数会在所有HTTP上传请求响应后回调(包括重传请求)。
       }
     }).build();
 
