@@ -1,5 +1,5 @@
 <template>
-    <div class="register-container">
+    <div class="register-container view-container">
         <section>
 
             <header>修改密码</header>
