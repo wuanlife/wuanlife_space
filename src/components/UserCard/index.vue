@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  name: 'userCard',
-  data () {
-    return {}
+  name: "userCard",
+  data() {
+    return {};
   },
   props: {
     user: {
@@ -18,23 +18,23 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss"  scoped>
-.user-card{
+.user-card {
   width: 420px;
   height: 366px;
-	background-color: #ffffff;
+  background-color: #ffffff;
   border-radius: 4px;
   text-align: center;
   padding: 55px 10px 93px 10px;
-  margin-top: 71px; 
-  img{
+  margin-top: 71px;
+  img {
     width: 98px;
     height: 98px;
   }
-  h2{
+  h2 {
     font-size: 28px;
     color: #333333;
     margin: 35px 0 28px 0;
@@ -43,7 +43,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  p{
+  p {
     font-size: 22px;
     color: #666666;
   }

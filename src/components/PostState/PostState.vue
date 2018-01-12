@@ -19,7 +19,6 @@
     },
     data() {
       return {
-        
       }
     },
     mounted() {

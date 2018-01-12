@@ -1,4 +1,5 @@
 import fetch from 'utils/fetch';
+import store from 'vuex-store';
 // TODO: add vuex in this file to simplify the params
 
 export function getMockTest() {
@@ -11,6 +12,13 @@ export function getMockTest() {
 export function getArticles() { // 获取 首页 文章数据
   return fetch({
     url: '/articles',
+    method: 'get'
+  })
+}
+
+export function getArticle(id) {
+  return fetch({
+    url: `/articles/${id}`,
     method: 'get'
   })
 }
@@ -51,62 +59,59 @@ export function getCommentsByPostId(id, offset = 0, limit = 20) {
 
 export function getCollectPost(id, offset = 0, limit = 20) {
   return new fetch({
-    url: `/users/${id}/collections`,
+    url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
   });
 }
 
-// params {id: postid, floor: floor}
-export function approvePost(params) {
-  const data = {
-    floor: params.floor || 1
-  };
+// 点赞文章
+export function approveArticle(id) {
   return fetch({
-    url: `/posts/${params.id}/approval`,
+    url: `/articles/${id}/approval`,
     method: 'post',
-    data
-  });
-}
-// put? 后端在逗我吧 /users/:id/collections
-export function collectPost(params) {
-  const data = {
-    floor: params.floor || 1,
-    post_id: params.id
-  };
-  return fetch({
-    url: `/users/${params.userid}/collections`,
-    method: 'put',
-    data
+    data: {}
   });
 }
 
-export function putPost(id, params) {
+// 收藏文章
+export function collectArticle(id) {
+  return fetch({
+    url: `/users/${store.user.id}/collections`,
+    method: 'put',
+    data: {
+      article_id: id
+    }
+  });
+}
+
+// 修改文章
+export function putArticle(params) {
   const data = {
     title: params.title,
     content: params.content
   };
   return fetch({
-    url: `/posts/${id}`,
+    url: `/articles/${id}`,
     method: 'put',
     data
   })
 }
-export function deletePost(id) {
+export function deleteArticle(id) {
   return fetch({
-    url: `/posts/${id}`,
+    url: `/articles/${id}`,
     method: 'delete'
   })
 }
-export function lockPost(id) {
+export function lockArticle(id) {
   return fetch({
-    url: `/posts/${id}/locks`,
-    method: 'put'
+    url: `/articles/${id}/lock`,
+    method: 'post'
   })
 }
-export function settopPost(id) {
+export function settopArticle(id) {
   return fetch({
-    url: `/posts/${id}/tops`,
-    method: 'put'
+    url: `/articles/${id}/tops`,
+    method: 'post'
   })
 }
 // params {id: postid, floor: floor, comment: comment}
@@ -129,13 +134,12 @@ export function deleteReply(postid, floor) {
 }
 
 // publish post
-export function publishPost(groupid, params) {
+export function postArticles(params) {
   const data = {
-    title: params.title,
-    content: params.content
+    ...params
   };
   return fetch({
-    url: `/groups/${groupid}/posts`,
+    url: '/articles',
     method: 'post',
     data
   });

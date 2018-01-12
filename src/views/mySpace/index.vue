@@ -18,59 +18,60 @@
 </template>
 
 <script>
-import PostCard from 'components/PostCard'
-import UserCard from 'components/UserCard'
-import Paginatiom from 'components/Pagination'
-import { getMyArticles } from 'api/post'
+import PostCard from "components/PostCard";
+import UserCard from "components/UserCard";
+import Paginatiom from "components/Pagination";
+import { getMyArticles } from "api/post";
 export default {
-  name: 'mySpace',
+  name: "mySpace",
   components: {
     PostCard,
     UserCard,
     Paginatiom
   },
-  data () {
+  data() {
     return {
       dates: [],
       user: {}
-    }
+    };
   },
-  mounted () {
+  mounted() {
     getMyArticles({
       id: 1,
       offset: 0,
       limit: 20
     }).then(res => {
-      console.log(res)
-      this.dates = res.articles
+      console.log(res);
+      this.dates = res.articles;
       this.user = {
-        name: '淘淘',
+        name: "淘淘",
         total: 200,
-        avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
-      }
-    })
+        avatar_url:
+          "http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100"
+      };
+    });
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-#my-space{
+#my-space {
   max-width: 1180px;
 }
-.my-space{
-    aside{
-        order: 1;
+.my-space {
+  aside {
+    order: 1;
+  }
+  section {
+    margin-right: 46px;
+    h1 {
+      background-color: #ffffff;
+      border-radius: 4px;
+      padding: 17px 18px;
+      margin: 71px 0 12px 0;
+      font-size: 32px;
+      color: #5677fc;
     }
-    section{
-        margin-right: 46px;
-        h1{
-            background-color: #ffffff;
-            border-radius: 4px;
-            padding: 17px 18px;
-            margin: 71px 0 12px 0;
-            font-size: 32px;
-            color: #5677fc;
-        }
-    }
+  }
 }
 </style>

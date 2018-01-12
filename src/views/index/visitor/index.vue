@@ -11,32 +11,33 @@
                        :post.sync="post">  
             </post-card>
           </ul>
-          <el-pagination layout="prev, pager, next, jumper"
+          <!--<el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
                          @current-change="loadPosts">
-          </el-pagination>
+          </el-pagination>-->
+          	<pagination @current-change="loadPosts"></pagination>      
         </div>
       </section>
       <aside>
         <header>
-          <h2>发现星球</h2>
+          活跃用户
         </header>
         <div class="aside-content" v-loading="loadingAside">
-          <div v-for="group of discoveryGroups" 
+          <div v-for="activeuser of posts" 
             class="index-aside-card wuan-card clickable"
-            @click="$router.push({path: '/planet/' + group.id, query: { name: group.name }})"
+            @click="$router.push({path: '/planet/' + activeuser.author.id, query: { name: activeuser.author.name }})"
             >
-            <img :src="group.image_url">
+            <img :src="activeuser.author.avatar_url">
             <div class="wuan-card__content">
-              <h2 class="clickable">{{ group.name }}</h2>
-              <p>{{ group.introduction }}</p>
+              <h2 class="clickable">{{ activeuser.author.name }}</h2>
+              <p>本月发表了{{activeuser.author.monthly_posts_num}}</p>
             </div>
           </div>
         </div>
-        <footer>
+        <!--<footer>
           <span class="clickable" @click="$router.push({path: `/universe`, query: { name: '全部星球'}})">全部星球</span>
           <span class="clickable">创建星球</span>
-        </footer>
+        </footer>-->
       </aside>
     </div>
 </template>
@@ -45,13 +46,15 @@
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
+
   import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
-
+  import Pagination from 'components/Pagination'
   export default {
     name: 'index-visitor',
     components: {
-      PostCard
+      PostCard,
+      Pagination
     },
     data() {
       return {
@@ -72,10 +75,12 @@
       ]),
     },
     mounted() {
+      //获取最新内容数据
       getMockTest().then(res => {
         console.log(res);
       })
       getArticles().then(res => {
+
         console.log(res)
         console.log(this.posts)
         this.posts = res.articles
@@ -102,7 +107,7 @@
       //       duration: 1000,
       //     });
       //     this.loadingAside = false;
-      //   });  
+      //   });
     },
     methods: {
       loadPosts(page) {
@@ -152,38 +157,44 @@
     }
     section {
       min-width: 0;
-      flex: 0 0 590px;
+      flex: 0 0 714px;
       header {
-        margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
-        font-size:18px;
+        margin: 31px 0 12px 0;
+        padding-left: 17px;
+        font-family: MicrosoftYaHei-Bold;
+	    font-size: 32px;
         color:#5677fc;
+        height: 66px;
+        line-height: 66px;
+        background-color: white;
       }
     }
     aside {
+      margin-left: 41px;
       flex: 0 0 250px;
       @media screen and (max-width: 900px) {
         display: none;
       }
       header {
-        h2 {
-          margin: 20px 0;
-
-          font-family:PingFangHK-Medium;
-          font-weight: normal;
-          font-size:14px;
-          color:#5677fc;
-        }
+       
+          margin: 31px 0 12px 0;
+        padding-left: 17px;
+        font-family: MicrosoftYaHei-Bold;
+	    font-size: 32px;
+        color:#5677fc;
+        height: 66px;
+        line-height: 66px;
+        background-color: white;
+        
       }
       .aside-content {
         min-height: 100px;
         .index-aside-card {
           width: 250px;
           height: 70px;
-          margin-bottom: 4px;
         }
       }
-      footer {
+      /*footer {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -193,7 +204,7 @@
           font-size:14px;
           color:#5992e4;
         }
-      }
+      }*/
     }
 
   }

@@ -100,7 +100,7 @@
           case '0':
             this.informType = 'post';
             this.loading = true;
-        	break;
+          break;
           case '1':
             this.informType = 'group';
             this.loading2 = true;

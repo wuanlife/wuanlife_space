@@ -2,19 +2,24 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 900px;
-    min-width: 590px;
+    min-width: 714px;
     @media screen and (max-width: 900px) {
         justify-content: center;
     }
     & > section {
         min-width: 0;
         flex: 0 0 828px;
-    }
-    & > aside + section {
-        flex: 0 0 714px;
+        margin: 0 auto;
     }
     & > aside {
+        margin-right: auto;
+        margin-left: 46px;
+        order: 2;
+        + section {
+            margin-left: auto;
+            flex: 0 0 714px;
+            order: 1;
+        }
         flex: 0 0 420px;
         @media screen and (max-width: 900px) {
             display: none;

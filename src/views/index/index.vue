@@ -25,7 +25,8 @@
       document.title = '午安网 - 过你想过的生活'
       /*if (this.access_token != null) {*/
       if(this.user.token != ''){
-        this.currentRole = 'UserIndex';
+        // 总是使用visitor视图，登录后只不过顶部栏改变了
+        // this.currentRole = 'UserIndex';
       }
     }
   }
