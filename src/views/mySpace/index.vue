@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     let id = this.$route.params.id
-    getUser(id).then(res => {
+    getUser().then(res => {
       console.log('/////')
       console.log(res)
     })
