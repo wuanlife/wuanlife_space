@@ -1,5 +1,5 @@
 <template>
-    <div class="register-container">
+    <div class="register-container view-container">
         <section>
 
             <header>修改密码</header>
@@ -30,7 +30,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex';
-  import { resetpassword } from 'api/auth';
+  import { changepassword } from 'api/auth';
 
   export default {
     name: 'index-visitor',

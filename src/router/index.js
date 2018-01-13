@@ -8,6 +8,8 @@ const Signup = resolve => require.ensure([], () => resolve(require('../views/sig
 const Resetpsw = resolve => require.ensure([], () => resolve(require('../views/resetpsw/index')), 'Resetpsw'); // 重置密码
 const FindPassword = resolve => require.ensure([], () => resolve(require('../views/findpassword/index')), 'FindPassword'); // 找回密码
 
+const Changepsw = resolve => require.ensure([], () => resolve(require('../views/changepsw/index')), 'Changepsw'); // 修改密码
+
 const Index = resolve => require.ensure([], () => resolve(require('../views/index/index')), 'Index');
 
 const ArticleDetail = resolve => require.ensure([], () => resolve(require('../views/articles/detail/index')), 'ArticleDetail');
@@ -128,6 +130,14 @@ export const constantRouterMap = [
     redirect: '/resetpsw/index',
     hidden: true,
     children: [{ path: 'index', component: Resetpsw }]
+  },
+  {
+    path: '/changepsw',
+    name: 'changepsw',
+    component: Layout,
+    redirect: '/changepsw/index',
+    hidden: true,
+    children: [{ path: 'index', component: Changepsw }]
   },
   {
     path: '/search',
