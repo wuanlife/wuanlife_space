@@ -4,18 +4,18 @@
 			<span v-if="pagination.currentPage != 1">
 			<span @click="pagination.currentPage--">上一页</span>
 			</span>
-			
+
 			<span v-else>
 			<span class="disabled">上一页</span>
 			</span>
-			
+
 			<el-pagination layout="pager" :current-page.sync="pagination.currentPage" :page-count="pagination.pageCount">
 			</el-pagination>
-			
+
 			<span v-if="pagination.currentPage != pagination.pageCount">
 			<span @click="pagination.currentPage++">下一页</span>
 			</span>
-			
+
 			<span v-else>
 			<span class="disabled">下一页</span>
 			</span>
@@ -27,19 +27,18 @@
 	export default {
 		data() {
 			return {
-//				pagination: {
-//					pageCount: 245,
-//					currentPage: 1,
-//					limit: 20,
-//				}
+				//				pagination: {
+				//					pageCount: 245,
+				//					currentPage: 1,
+				//					limit: 20,
+				//				}
 			}
-
 		},
 		props: ['pagination'],
 		watch: {
 			//观察对象属性的变化时
-            'pagination.currentPage': function (page) {
-				this.$emit('loadPosts',page)
+			'pagination.currentPage': function(page) {
+				this.$emit('loadPosts', page)
 			}
 		}
 	}
