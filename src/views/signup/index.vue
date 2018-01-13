@@ -1,34 +1,52 @@
 <template>
-  <div class="register-container">
-  	<section>
-  		<header>注册</header>
-  		
+  <div class="register-container view-container">
+    <section>
+      <header>注册</header>
+
       <div class="form-content" v-loading="loading">
-  			<el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
-            
-            <el-form-item label="邮箱" prop="email" class="form-inputy">
-              <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
+        <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
+
+
+          <div class="email-input">
+            <el-form-item prop="email" class="form-inputy">
+
+              <el-input v-model="loginForm.email" placeholder="输入邮箱">
+                <icon-svg icon-class="youxiang" class="youxiang-icon" slot="prefix"></icon-svg>
+              </el-input>
+
             </el-form-item>
-            
-            <el-form-item label="昵称" prop="nickname" class="form-inputy">
-              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称"></el-input>
+          </div>
+
+          <div class="nickname-input">
+            <el-form-item prop="nickname" class="form-inputy">
+
+
+
+              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称">
+                <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon" slot="prefix"></icon-svg>
+              </el-input>
+
             </el-form-item>
-            
-            <el-form-item label="密码" prop="password" class="form-inputy">
-              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
+          </div>
+
+          <div class="psw-input">
+            <el-form-item prop="password" class="form-inputy">
+              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码">
+                <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+              </el-input>
+
             </el-form-item>
-            
-            <!--<el-form-item label="邀请码" prop="inviteword" class="form-inputy">
-              <el-input v-model="loginForm.inviteword" auto-complete="off" placeholder="输入邀请码"></el-input>
-            </el-form-item>-->
-            
-            <el-form-item label-width="100px" class="form-btny">
-              <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
-            </el-form-item>
-          
-          </el-form>
-  		</div>
-  	</section>
+          </div>
+
+          <el-form-item class="form-btny">
+
+            <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
+
+          </el-form-item>
+
+        </el-form>
+      </div>
+    </section>
   </div>
 </template>
 <script>
@@ -69,13 +87,6 @@
           callback();
         }
       };
-      //var validateWord = (rule, value, callback) => {
-      //  if (value === '') {
-      //    callback(new Error('请输入邀请码'));
-      //  } else {
-      //    callback();
-      //  }
-      //};
       return {
         activeName: 'index-myplanet',
         loading: false,
@@ -85,7 +96,6 @@
           email: '',
           nickname: '',
           password: '',
-        //  inviteword: '',
         },
         loginRules: {
           email: [
@@ -97,9 +107,6 @@
           password: [
             { validator: validatePass, trigger: 'blur' }
           ],
-          //inviteword: [
-          //  { validator: validateWord, trigger: 'blur' }
-          //],
         }
       }
     },
@@ -115,18 +122,6 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            this.$store.dispatch('Signup',this.loginForm).then(() => {
-              this.loading = false;
-              this.$router.push({ path: '/' });
-            }).catch(err => {
-              console.dir(err)
-              this.$message({
-                message: err.data.error,
-                type: 'error',
-                duration: 2000,
-              });
-              this.loading = false;
-            });
           }else{
             console.log('error submit!!');
             return false;
@@ -137,28 +132,89 @@
   }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-.register-container{
-	display: flex;
+  .register-container {
+    display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 660px;
+    max-width: 828px;
     min-width: 380px;
+
     section {
       flex: 1;
+
       header {
-        margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
-        font-size:18px;
-        color:#5677fc;
+        text-align: center;
+        margin: 44px auto 0;
+        font-family: MicrosoftYaHei-Bold;
+        font-size: 32px;
+        color: #5677fc;
       }
-      div.form-content {
+      .form-content {
         width: 100%;
-        background:#ffffff;
-        border-radius:4px;
-        width:660px;
-        height:650px;
-        padding-top:40px;
+        background: #ffffff;
+        border-radius: 4px;
+        width: 660px;
+        height: 650px;
+        padding-top: 57px;
+        margin: 0 auto;
+
+
+        .email-input {
+					width: 458px;
+					margin: 0 auto 72px;
+          padding-left: 56px;
+				}
+        .nickname-input {
+          width: 458px;
+          margin: 0 auto 72px;
+          padding-left: 56px;
+        }
+        .psw-input {
+          width: 458px;
+          margin: 0 auto 72px;
+          padding-left: 56px;
+        }
+        
+        .el-form-item {
+          justify-content: center;
+        }
+        .el-input /deep/ input {
+          padding-left: 15px;
+        }
+        .el-input {
+          width: 405px;
+        }
+        .youxiang-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
+        .peopleCircle_white-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
+        .mima-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
+        .form-btny {
+          text-align: center;
+
+          button {
+            width: 458px;
+            /*height: 72px;*/
+            background-color: #5677fc;
+            border-radius: 4px;
+            font-size: 24px;
+            font-family: MicrosoftYaHeiLight;
+          }
+        }
       }
     }
-}
+  }
 </style>
