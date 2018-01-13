@@ -65,13 +65,11 @@ export default {
   background-color: #5677fc;
   .navbar-container {
     display: flex;
-    max-width: 900px;
+    max-width: 1200px;
     margin: auto;
     .logo {
       cursor: pointer;
       margin-right: 38px;
-
-      font-family: FZLTZHK--GBK1-0;
       font-size: 24px;
       color: #ffffff;
       text-align: left;
