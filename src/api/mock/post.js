@@ -183,7 +183,10 @@ export default function postRule(mockAdapter) {
   .onPost('/articles/1/approval').reply(200, {
     success: '点赞成功'
   })
-  .onPut('/users/1').reply(204, {
+  .onPut('/users/1').reply(200, {
     success: '资料修改成功'
+  })
+  .onGet('/qiniu/token').reply(200, {
+    uploadToken: 'VwLnFpbml1LmNvbSBodHRwOlwvXC8xODMuMTMxLjcuMTgiXX0='
   })
 }

@@ -58,10 +58,10 @@
       // collect post
       collect(id) {
         var self = this;
-        // if(this.user.token == '') {
-        //   this.$router.push({path: '/login/'})
-        //   return
-        // }
+        if(this.user.token == '') {
+          this.$router.push({path: '/login/'})
+          return
+        }
         collectArticle(id).then(() => {
           self.post.collected_num += self.post.collected ? -1 : 1
           self.post.collected = !self.post.collected
@@ -70,10 +70,10 @@
       },
       approve(id) {
         var self = this;
-        // if(this.user.token == '') {
-        //   this.$router.push({path: '/login/'})
-        //   return
-        // }
+        if(this.user.token == '') {
+          this.$router.push({path: '/login/'})
+          return
+        }
         approveArticle(id).then(() => {
           self.post.approved_num += self.post.approved ? -1 : 1
           self.post.approved = !self.post.approved

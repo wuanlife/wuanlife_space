@@ -13,7 +13,8 @@
                 :key="index"
                 :post.sync="date"></post-card>
           </ul>
-          <paginatiom></paginatiom>
+          <paginatiom
+            class="pagination"></paginatiom>
       </section>
   </div>
 </template>
@@ -79,6 +80,9 @@ export default {
       margin: 71px 0 12px 0;
       font-size: 32px;
       color: #5677fc;
+    }
+    .pagination{
+      margin-bottom: 148px;
     }
   }
 }

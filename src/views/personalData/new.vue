@@ -174,9 +174,9 @@ export default {
       uploader.chooseFile()
     },
     pushPersonalData: function() {
-      putUser({
+      putUser(1, {
         name: this.name,
-        avatar_url: process.env.QINIU_DOMAIN_URL + avatarImgKey,
+        avatar_url: this.dafaultAvatarUrl,
         sex: this.sex,
         birthday: this.birthday
       }).then(res => {
@@ -192,7 +192,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 #personal-data{
-    min-width: 1152px;
+    width: 1152px;
     margin-top: 127px;
     margin-bottom: 36px;
     background-color: #fff;
