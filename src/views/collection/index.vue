@@ -10,7 +10,7 @@
         <header>
             我的收藏
         </header>
-        <div class="collection-tabcontent" v-loading="loading">
+        <div class="collection-tabcontent">
           <ul class="collection-cards">
             	<collection-card :item.sync='item' v-for="item in collecations"></collection-card>
               <!--<div class="collection-card-content">
@@ -51,30 +51,30 @@
         collecations: [
         //following data is only used for display the layout , please delete this when the data can be dynamicly injected .
         {
-        	id: 1,
-        	title: 'this is a collection title',
-        	content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
-        	image_url: [{url: ''},{url: ''}],
-        	create_time: '2017-08-11',
-        	group: {
-        		name: '陶陶'
-        	}
+          id: 1,
+          title: 'this is a collection title',
+          content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
+          image_url: [{url: ''},{url: ''}],
+          create_time: '2017-08-11',
+          group: {
+            name: '陶陶'
+          }
         },{
-        	id: 1,
-        	title: 'this is a collection title',
-        	content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
-        	image_url: [{url: ''},{url: ''}],
-        	create_time: '2017-08-11',
-        	group: {
-        		name: '陶陶'
-        	}
+          id: 1,
+          title: 'this is a collection title',
+          content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
+          image_url: [{url: ''},{url: ''}],
+          create_time: '2017-08-11',
+          group: {
+            name: '陶陶'
+          }
         }],
         loading: false,
       }
     },
     components: {
-    	CollectionCard,
-    	Pagination
+      CollectionCard,
+      Pagination
     },
     computed: {
       ...mapGetters([
@@ -91,7 +91,7 @@
         this.loading = true;
         return new Promise((resolve, reject) => {
           getCollectPost(self.user.userInfo.id).then(res => {
-          	console.log(res.data);
+            console.log(res.data);
             for (let i  = 0, j = res.data.length; i < j; i++) {
               res.data[i].create_time = self.dealTime(res.data[i].create_time);
             }

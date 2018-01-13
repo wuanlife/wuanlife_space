@@ -27,13 +27,20 @@
 	export default {
 		data() {
 			return {
-				pagination: {
-					pageCount: 245,
-					currentPage: 1,
-					limit: 20,
-				}
+//				pagination: {
+//					pageCount: 245,
+//					currentPage: 1,
+//					limit: 20,
+//				}
 			}
 
+		},
+		props: ['pagination'],
+		watch: {
+			//观察对象属性的变化时
+            'pagination.currentPage': function (page) {
+				this.$emit('loadPosts',page)
+			}
 		}
 	}
 </script>
