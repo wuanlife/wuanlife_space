@@ -234,7 +234,6 @@ export default function postRule(mockAdapter) {
   .onPost('/articles').reply(200, {
     id: 410
   })
-<<<<<<< HEAD
   .onGet('/posts?latest=true&offset=2&limit=20').reply(200, {
     data: [
       {

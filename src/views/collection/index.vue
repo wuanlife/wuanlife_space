@@ -5,7 +5,7 @@
  -->
 
 <template>
-    <div class="collection-container">
+    <div class="collection-container view-container">
       <section>     
         <header>
             我的收藏
