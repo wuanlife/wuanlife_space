@@ -4,7 +4,7 @@
           <h1>个人资料</h1>
       <div class="personal-data-form">
           <div class="form-left">
-              <img src="" id="avatar">
+              <img v-bind:src="dafaultAvatarUrl" id="avatar">
               <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
           </div>
           <div class="form-right">
@@ -52,7 +52,7 @@
               </div>
           </div>
       </div>
-      <button class="save">保存</button>
+      <button class="save" @click="pushPersonalData">保存</button>
       </section>
   </div>
 </template>
@@ -61,6 +61,7 @@
 import DatePicker from 'components/DatePicker'
 import { UploaderBuilder, Uploader } from 'qiniu4js'
 import { getToken } from 'api/qiniu'
+import { putUser } from 'api/user'
 
 var avatarImgKey = '';
   var uploader = new UploaderBuilder()
@@ -125,7 +126,8 @@ export default {
       dayMax: 31,
       leap: false,
       sex: '',
-      name: '淘淘'
+      name: '淘淘',
+      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
     }
   },
   computed: {
@@ -170,8 +172,21 @@ export default {
     },
     changeAvatar: function () {
       uploader.chooseFile()
+    },
+    pushPersonalData: function() {
+      putUser({
+        name: this.name,
+        avatar_url: process.env.QINIU_DOMAIN_URL + avatarImgKey,
+        sex: this.sex,
+        birthday: this.birthday
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
     }
-  }
+  },
+  mounted () {}
 }
 </script>
 
