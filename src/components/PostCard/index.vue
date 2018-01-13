@@ -2,7 +2,7 @@
   <li class="post-card">
     <header>
       <img :src="post.author.avatar_url">
-      <span class="clickable">{{ post.author.name }}</span>
+      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
       <time>{{ post.create_at | formatTime }}</time>
     </header>
     <div class="post-card-content">
@@ -28,8 +28,8 @@
   import { parseTime } from 'utils/date';
   import PostState from 'components/PostState/PostState';
   import {
-    approvePost,
-    collectPost,
+    approveArticle,
+    collectArticle,
   } from 'api/post';
 
   export default {
@@ -62,10 +62,7 @@
           this.$router.push({path: '/login/'})
           return
         }
-        collectPost({
-          id: id,
-          userid: self.user.userInfo.id,
-        }).then(() => {
+        collectArticle(id).then(() => {
           self.post.collected_num += self.post.collected ? -1 : 1
           self.post.collected = !self.post.collected
           self.$emit('on-collected', self.post.id)
@@ -77,13 +74,19 @@
           this.$router.push({path: '/login/'})
           return
         }
-        approvePost({
-          id: id,
-        }).then(() => {
+        approveArticle(id).then(() => {
           self.post.approved_num += self.post.approved ? -1 : 1
           self.post.approved = !self.post.approved
           self.$emit('on-approved', self.post.id)
         })
+      },
+      toSpace(id) {
+        var self = this
+        if(this.user.token == '') {
+          this.$router.push({path: '/login/'})
+          return
+        }
+        this.$router.push({path: '/myspace', query: {id: id}})
       }
     },
   }

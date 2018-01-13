@@ -148,7 +148,10 @@ export const constantRouterMap = [
   {
     path: '/myspace',
     component: Layout,
-    children: [{ path: '', component: MySpace }]
+    children: [
+      { path: '', component: MySpace },
+      { path: ':id', component: MySpace }
+    ]
   }
 ]
 
