@@ -10,9 +10,9 @@
           <div class="email-input">
             <el-form-item prop="email" class="form-inputy">
 
-              <icon-svg icon-class="code" class="mima-icon"></icon-svg>
-
-              <el-input v-model="loginForm.email" placeholder="输入邮箱"></el-input>
+              <el-input v-model="loginForm.email" placeholder="输入邮箱">
+                <icon-svg icon-class="youxiang" class="youxiang-icon" slot="prefix"></icon-svg>
+              </el-input>
 
             </el-form-item>
           </div>
@@ -20,23 +20,24 @@
           <div class="nickname-input">
             <el-form-item prop="nickname" class="form-inputy">
 
-              <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon"></icon-svg>
 
-              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称"></el-input>
+
+              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称">
+                <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon" slot="prefix"></icon-svg>
+              </el-input>
 
             </el-form-item>
           </div>
-          
+
           <div class="psw-input">
             <el-form-item prop="password" class="form-inputy">
-
-              <icon-svg icon-class="code" class="mima-icon"></icon-svg>
-
-              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码"></el-input>
+              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码">
+                <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+              </el-input>
 
             </el-form-item>
           </div>
-          
+
           <el-form-item class="form-btny">
 
             <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
@@ -121,18 +122,6 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
-            this.$store.dispatch('Signup',this.loginForm).then(() => {
-              this.loading = false;
-              this.$router.push({ path: '/' });
-            }).catch(err => {
-              console.dir(err)
-              this.$message({
-                message: err.data.error,
-                type: 'error',
-                duration: 2000,
-              });
-              this.loading = false;
-            });
           }else{
             console.log('error submit!!');
             return false;
@@ -160,7 +149,7 @@
         font-size: 32px;
         color: #5677fc;
       }
-      div.form-content {
+      .form-content {
         width: 100%;
         background: #ffffff;
         border-radius: 4px;
@@ -169,6 +158,50 @@
         padding-top: 57px;
         margin: 0 auto;
 
+
+        .email-input {
+					width: 458px;
+					margin: 0 auto 72px;
+          padding-left: 56px;
+				}
+        .nickname-input {
+          width: 458px;
+          margin: 0 auto 72px;
+          padding-left: 56px;
+        }
+        .psw-input {
+          width: 458px;
+          margin: 0 auto 72px;
+          padding-left: 56px;
+        }
+        
+        .el-form-item {
+          justify-content: center;
+        }
+        .el-input /deep/ input {
+          padding-left: 15px;
+        }
+        .el-input {
+          width: 405px;
+        }
+        .youxiang-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
+        .peopleCircle_white-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
+        .mima-icon {
+          width: 56px;
+          height: 22px;
+          color: #5677fc;
+          margin-left: -56px;
+        }
         .form-btny {
           text-align: center;
 
