@@ -24,8 +24,10 @@ export function getArticle(id) {
 }
 
 export function getMyArticles(params) { // 获取 我的空间 数据
+  const offset = params.offset | 0
+  const limit = params.limit | 20
   return fetch({
-    url: `/user/${params.id}/articles?offset=${params.offset}&limit=${params.limit}`,
+    url: `/user/${params.id}/articles?offset=${offset}&limit=${limit}`,
     method: 'get'
   })
 }

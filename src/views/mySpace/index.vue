@@ -24,7 +24,7 @@ import PostCard from "components/PostCard";
 import UserCard from "components/UserCard";
 import Pagination from "components/Pagination";
 import { getMyArticles } from "api/post";
-import { getUser } from "api/user"
+import { getUserById } from "api/user"
 export default {
   name: "mySpace",
   components: {
@@ -35,12 +35,16 @@ export default {
   data() {
     return {
       dates: [],
-      user: {}
+      user: {
+        name: '',
+        total: 0,
+        avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+      }
     };
   },
   mounted() {
     let id = this.$route.params.id
-    getUser().then(res => {
+    getUserById(id).then(res => {
       console.log('/////')
       console.log(res)
     })
@@ -51,12 +55,13 @@ export default {
     }).then(res => {
       console.log(res);
       this.dates = res.articles;
-      this.user = {
-        name: "淘淘",
-        total: 200,
-        avatar_url:
-          "http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100"
-      };
+      this.user.total = res.total;
+      // this.user = {
+      //   name: "淘淘",
+      //   total: 200,
+      //   avatar_url:
+      //     "http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100"
+      // };
     });
   }
 };
