@@ -62,10 +62,13 @@
           this.$router.push({path: '/login/'})
           return
         }
-        collectArticle(id).then(() => {
-          self.post.collected_num += self.post.collected ? -1 : 1
-          self.post.collected = !self.post.collected
-          self.$emit('on-collected', self.post.id)
+        collectPost({
+          id: id,
+          userid: self.user.userInfo.id,
+        }).then(() => {
+          self.post.collected_num += self.post.collected ? 1 : -1 ;
+          self.post.collected = !self.post.collected;
+          self.$emit('on-collected', self.post.id);
         })
       },
       approve(id) {
