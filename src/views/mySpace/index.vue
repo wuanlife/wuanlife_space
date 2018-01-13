@@ -13,8 +13,8 @@
                 :key="index"
                 :post.sync="date"></post-card>
           </ul>
-          <paginatiom
-            class="pagination"></paginatiom>
+          <pagination
+            class="pagination"></pagination>
       </section>
   </div>
 </template>
@@ -22,7 +22,7 @@
 <script>
 import PostCard from "components/PostCard";
 import UserCard from "components/UserCard";
-import Paginatiom from "components/Pagination";
+import Pagination from "components/Pagination";
 import { getMyArticles } from "api/post";
 import { getUser } from "api/user"
 export default {
@@ -30,7 +30,7 @@ export default {
   components: {
     PostCard,
     UserCard,
-    Paginatiom
+    Pagination
   },
   data() {
     return {
