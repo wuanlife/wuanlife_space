@@ -16,7 +16,7 @@ module.exports = {
     // required to lint *.vue files
     plugins: [
         'html',
-        // 'vue/strongly-recommended'
+        'vue'
     ],
     // check if imports actually resolve
     'settings': {
@@ -28,11 +28,6 @@ module.exports = {
     },
     // add your custom rules here
     'rules': {
-        // don't require .vue extension when importing
-        // 'import/extensions': ['error', 'always', {
-        //     'js': 'never',
-        //     'vue': 'never'
-        // }],
         // allow debugger during development
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         /*
@@ -182,7 +177,7 @@ module.exports = {
         'func-call-spacing': 'error',
 
         // enforce consistent indentation
-        indent: ['error', 2, {SwitchCase: 1}],
+        'indent': ['error', 2, {SwitchCase: 1}],
 
         // enforce the consistent use of either double or single quotes in JSX attributes
         'jsx-quotes': 'error',
@@ -230,7 +225,7 @@ module.exports = {
         'quote-props': ['error', 'as-needed'],
 
         // enforce the consistent use of either backticks, double, or single quotes
-        quotes: ['error', 'single'],
+        'quotes': ['error', 'single'],
 
         // enforce consistent spacing before and after semicolons
         'semi-spacing': 'error',
@@ -241,7 +236,8 @@ module.exports = {
         // enforce consistent spacing before blocks
         'space-before-blocks': 'error',
 
-        'no-console': 'off',
+        // allow console during development
+        'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
 
         // enforce consistent spacing before function definition opening parenthesis
         'space-before-function-paren': ['error', 'never'],
@@ -318,6 +314,14 @@ module.exports = {
         'template-curly-spacing': 'error',
 
         // require or disallow spacing around the * in yield* expressions
-        'yield-star-spacing': 'error'
+        'yield-star-spacing': 'error',
+
+        // Vue
+        'vue/html-indent': ["error", 2, {
+            "attribute": 1,
+            "closeBracket": 1,
+            "alignAttributesVertically": true,
+            "ignores": []
+        }]
     }
 }

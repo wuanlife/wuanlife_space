@@ -2,7 +2,8 @@
   <div id="my-space" class="my-space view-container">
       <aside>
           <user-card
-            :user="user"></user-card>
+            :user="user"
+            class="user-card"></user-card>
       </aside>
       <section>
           <h1>最新内容</h1>
@@ -12,7 +13,8 @@
                 :key="index"
                 :post.sync="date"></post-card>
           </ul>
-          <paginatiom></paginatiom>
+          <pagination
+            class="pagination"></pagination>
       </section>
   </div>
 </template>
@@ -20,14 +22,15 @@
 <script>
 import PostCard from "components/PostCard";
 import UserCard from "components/UserCard";
-import Paginatiom from "components/Pagination";
+import Pagination from "components/Pagination";
 import { getMyArticles } from "api/post";
+import { getUser } from "api/user"
 export default {
   name: "mySpace",
   components: {
     PostCard,
     UserCard,
-    Paginatiom
+    Pagination
   },
   data() {
     return {
@@ -36,8 +39,13 @@ export default {
     };
   },
   mounted() {
+    let id = this.$route.params.id
+    getUser(id).then(res => {
+      console.log('/////')
+      console.log(res)
+    })
     getMyArticles({
-      id: 1,
+      id: id,
       offset: 0,
       limit: 20
     }).then(res => {
@@ -60,10 +68,11 @@ export default {
 }
 .my-space {
   aside {
-    order: 1;
+    .user-card{
+      margin-top: 71px;
+    }
   }
   section {
-    margin-right: 46px;
     h1 {
       background-color: #ffffff;
       border-radius: 4px;
@@ -71,6 +80,9 @@ export default {
       margin: 71px 0 12px 0;
       font-size: 32px;
       color: #5677fc;
+    }
+    .pagination{
+      margin-bottom: 148px;
     }
   }
 }

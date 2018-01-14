@@ -5,15 +5,15 @@
  -->
 
 <template>
-    <div class="collection-container">
+    <div class="collection-container view-container">
       <section>     
         <header>
             我的收藏
         </header>
-        <div class="collection-tabcontent" v-loading="loading">
+        <div class="collection-tabcontent">
           <ul class="collection-cards">
-            <li class="collection-card" v-for="item in collecations">
-              <div class="collection-card-content">
+            	<collection-card :item.sync='item' v-for="item in collecations"></collection-card>
+              <!--<div class="collection-card-content">
                 <h1 @click="$router.push({ path: `/topic/${item.id}`, query: { name: item.title } })">{{ item.title }}</h1>
                 <div class="preview-html">
                   {{ item.content }}
@@ -30,10 +30,10 @@
                   <span>收藏于</span>
                   <time>{{ item.create_time }}</time>
                 </div>
-              </footer>
-            </li>
+              </footer>-->
           </ul>
         </div>
+        <pagination></pagination>
       </section>
     </div>
 </template>
@@ -41,14 +41,40 @@
 <script>
   import { mapGetters } from 'vuex';
   import { getCollectPost } from 'api/post';
-
+  import CollectionCard from 'components/CollectionCard';
+  import Pagination from 'components/Pagination'
+  
   export default {
     name: 'collection-container',
     data() {
       return {
-        collecations: [],
+        collecations: [
+        //following data is only used for display the layout , please delete this when the data can be dynamicly injected .
+        {
+          id: 1,
+          title: 'this is a collection title',
+          content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
+          image_url: [{url: ''},{url: ''}],
+          create_time: '2017-08-11',
+          group: {
+            name: '陶陶'
+          }
+        },{
+          id: 1,
+          title: 'this is a collection title',
+          content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
+          image_url: [{url: ''},{url: ''}],
+          create_time: '2017-08-11',
+          group: {
+            name: '陶陶'
+          }
+        }],
         loading: false,
       }
+    },
+    components: {
+      CollectionCard,
+      Pagination
     },
     computed: {
       ...mapGetters([
@@ -65,6 +91,7 @@
         this.loading = true;
         return new Promise((resolve, reject) => {
           getCollectPost(self.user.userInfo.id).then(res => {
+            console.log(res.data);
             for (let i  = 0, j = res.data.length; i < j; i++) {
               res.data[i].create_time = self.dealTime(res.data[i].create_time);
             }
@@ -87,21 +114,28 @@
 <style rel="stylesheet/scss" lang="scss" scoped>
   .collection-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: auto;
-    max-width: 590px;
+    max-width: 900px;
     min-width: 590px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 590px;
+      flex: 0 0 714px;
+      //pagination底部空间
+        margin-bottom: 20px;
       header {
-        margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
-        font-size:18px;
+        margin: 31px 0 12px 0;
+        font-family:MicrosoftYaHei-Bold;
+        font-size:32px;
         color:#5677fc;
+        background-color: white;
+        height: 66px;
+        line-height: 66px;
+        padding-left: 17px;
+        
       }
     }
   }
@@ -109,95 +143,5 @@
     min-height: 200px;
     margin-top: 5px;
   }
-  // post card style    
-  .collection-cards { 
-    .collection-card {   
-      padding: 16px 16px 12px 16px;   
-      background-color: #ffffff;
-      border-radius: 8px;  
-      &:not(:first-child) {
-        margin-top: 8px;
-      }  
-      footer {    
-        display: flex;    
-        align-items: center;
-        font-size:12px;   
-        color:#999999;
-        position: relative;
-        font-family:PingFangHK-Medium;
-        div {
-          position: absolute;
-          right: 0;
-        }
-        span {    
-          cursor: ppointer;
-          &:not(:first-child) {   
-            margin-left: 5px;   
-          }
-        }
-        > .collection-card-plantname{
-          cursor: pointer;
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            color: #5677fc;
-          }
-        }
-      }
-      div.collection-card-content {
-        margin-bottom: 12px;
-        h1 {
-          margin-bottom: 6px;
-          color: #003585;
-          font-family:PingFangHK-Semibold;
-          font-size:16px;
-          opacity: 0.87;
-          cursor: pointer;
-          display: inline-block;
-          position: relative;
-          &::after {
-            content: '';
-            transition: all 0.5s ease-in-out;
-            transform: scaleX(0);
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #2e5897;
-          }
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-            }
-          }
-        }
-        div.preview-html {
-          margin-bottom: 12px;
-          word-break: break-all;
-          font-size:14px;
-          color:#666666;
-          letter-spacing:0;
-          text-align:justify;
-          font-family:PingFangHK-Medium;
-        }
-        div.preview-imgs {
-          display: flex;
-          ul {
-            li {
-              display: inline-block;
-              box-sizing: border-box;
-              img {
-                width: 174px;
-                height: 174px;
-                margin-right: 15px;
-                background:#d8d8d8;
-                border-radius:4px;
-                align-self: center;
-              }
-            }
-          }
-        }
-      }
-    }   
-  }
+
 </style>

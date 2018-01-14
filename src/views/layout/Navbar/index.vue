@@ -59,20 +59,18 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  height: 88px;
   line-height: 88px;
   border-radius: 0px !important;
   background-color: #5677fc;
   .navbar-container {
     display: flex;
-    max-width: 900px;
+    max-width: 1200px;
+    justify-content: space-around;
     margin: auto;
     .logo {
       cursor: pointer;
       margin-right: 38px;
-
-      font-family: FZLTZHK--GBK1-0;
-      font-size: 24px;
+      font-size: 40px;
       color: #ffffff;
       text-align: left;
     }

@@ -1,52 +1,41 @@
 <template>
 <div class="nav-menu">
+  <div class="user-container" v-if="user.id">
+    <div class="write-container" @click="goPath('/editor/drafts/new')">
+      <icon-svg icon-class="write"></icon-svg>
+      写文章
+    </div>
     <el-dropdown menu-align="start" 
-                v-if="user.token != ''" 
-                class="avatar-container" 
-                trigger="click"
-                @visible-change="visibleChange">
-    <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
-        <icon-svg icon-class="peopleCircle" class="avatar-icon"></icon-svg>
-        <span>{{ user.userInfo.name }}</span>
-    </div>
-    <el-dropdown-menu class="user-dropdown" slot="dropdown">
-        <router-link class='inlineBlock' to="/personalData/">
-        <el-dropdown-item>
-            <icon-svg icon-class="people_2" class="avatar-icon"></icon-svg>
-            个人资料
-        </el-dropdown-item>
-        </router-link>
-        <router-link class='inlineBlock' to="/collection/">
-        <el-dropdown-item>
-            <icon-svg icon-class="starSolid" class="avatar-icon"></icon-svg>
-            我的收藏
-        </el-dropdown-item>
-        </router-link>
-        <router-link class='inlineBlock' to="/invitecode/">
-        <el-dropdown-item>
-            <icon-svg icon-class="inviteFriend_2" class="avatar-icon"></icon-svg>
-            邀请好友
-        </el-dropdown-item>
-        </router-link>
-        <router-link class='inlineBlock' to="/resetpsw/">
-        <el-dropdown-item>
-            <icon-svg icon-class="lock_2" class="avatar-icon"></icon-svg>
-            修改密码
-        </el-dropdown-item>
-        </router-link>
-        <a @click="logout">
-        <el-dropdown-item>
-            <icon-svg icon-class="poweroff" class="avatar-icon"></icon-svg>
-            退出登录
-        </el-dropdown-item>
-        </a>
-    </el-dropdown-menu>
+      class="avatar-container" 
+      trigger="click"
+      @visible-change="visibleChange">
+      <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
+          <span>{{ user.name }}</span>
+      </div>
+      <el-dropdown-menu class="user-dropdown" slot="dropdown">
+          <el-dropdown-item @click.native="goPath('/index')">
+              个人资料
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="goPath('/index')">
+              我的收藏
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="goPath('/index')">
+              邀请好友
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="goPath('/index')">
+              修改密码
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="logout">
+              退出登录
+          </el-dropdown-item>
+      </el-dropdown-menu>
     </el-dropdown>
-    <!-- login bar (if not logined) -->
-    <div v-else class="login-container">
-        <span><router-link to="/login/">登录</router-link></span>
-        <span><router-link to="/signup/">注册</router-link></span>
-    </div>
+  </div>
+  <!-- login bar (if not logined) -->
+  <div v-else class="login-container">
+    <span><router-link to="/login/">登录</router-link></span>
+    <span><router-link to="/signup/">注册</router-link></span>
+  </div>
 </div>
 </template>
 
@@ -62,11 +51,18 @@ export default {
   computed: {
     ...mapGetters(["user"])
   },
+  mounted() {
+  },
+  updated() {
+  },
   methods: {
     logout() {
       this.$store.dispatch("Logout").then(() => {
         location.reload(); // 为了重新实例化vue-router对象 避免bug
       });
+    },
+    goPath(path) {
+      this.$router.push({path: path})
     },
     visibleChange() {
       this.isShowDrop = !this.isShowDrop;
@@ -78,58 +74,70 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .login-container,
 .avatar-container {
-    margin-right: 30px;
+  margin-left: 30px;
 }
 .login-container {
-    font-size: 14px;
-    color: #ffffff;
-    span {
+  font-size: 22px;
+  color: #ffffff;
+  span {
     padding: 0 14px;
     &:not(:first-child) {
         border-left: 1px solid #fff;
     }
-    }
+  }
+}
+.user-container {
+  margin-left: 30px;
+}
+.write-container {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 22px;
+  color: #fff;
 }
 .avatar-container {
-    .avatar-wrapper {
+  display: inline-block;
+  .avatar-wrapper {
     position: relative;
-    top: 7px;
-    padding: 8px 14px 15px 14px;
-    width: 114px;
-    height: 43px;
     cursor: pointer;
-    line-height: 20px;
     transition: all 0.5s ease-in-out;
     color: #fff;
-    font-size: 14px;
+    font-size: 22px;
     .avatar-icon {
-        font-size: 18px;
-        margin-right: 6px;
+      font-size: 22px;
+      margin-right: 6px;
     }
     > span {
-        width: 58px;
-        display: inline-block;
+      padding: 0 20px;
+      display: inline-block;
     }
-    }
-    .avatar-wrapper.active {
+  }
+  .avatar-wrapper.active {
     color: #ffffff;
     box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.09);
     border-radius: 2px 2px 0 0;
-    background: #0074e9;
-    border-bottom: 1px solid #3b52ab;
-    }
+    background: #2953fc;
+  }
 }
 
 // dropdown style
 .user-dropdown {
-  a {
-    font-size: 14px;
+  margin-top: 0;
+  background-color: #5677fc;
+  padding-top: 0;
+  margin-top: 1px;
+	border-radius: 0 0 4px 4px;
+  border: 0;
+  /deep/ .popper__arrow {
+    display: none;
+  }
+  /deep/ .el-dropdown-menu__item {
+    padding: 16px 36px;
+    transition: all 0.3s ease-in-out;
+    font-size: 22px;
     color: #ffffff;
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
+    &:hover {
+      background-color: #2953fc;
     }
   }
 }

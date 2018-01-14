@@ -1,6 +1,13 @@
 import fetch from 'utils/fetch';
+import store from 'vuex-store';
 // get user details
-export function getUser(id) {
+export function getUser() {
+  return fetch({
+    url: `/users/${store.user.id}`,
+    method: 'get'
+  });
+}
+export function getUserById(id) {
   return fetch({
     url: `/users/${id}`,
     method: 'get'
@@ -8,9 +15,9 @@ export function getUser(id) {
 }
 
 // change user details
-export function putUser(id, params) {
+export function putUser(params) {
   return fetch({
-    url: `/users/${id}`,
+    url: `/users/${store.user.id}`,
     method: 'put',
     data: params
   });

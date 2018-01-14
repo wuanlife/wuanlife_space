@@ -29,7 +29,6 @@ export default {
   border-radius: 4px;
   text-align: center;
   padding: 55px 10px 93px 10px;
-  margin-top: 71px;
   img {
     width: 98px;
     height: 98px;
