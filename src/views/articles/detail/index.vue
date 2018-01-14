@@ -1,7 +1,7 @@
 <template>
   <div id="article-detail" class="view-container">
     <aside>
-      <user-card :user="testUser"></user-card>
+      <user-card :user="article ? article.author : {}"></user-card>
     </aside>
     <section>
       <header class="wuan-block">
@@ -18,9 +18,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import {
-    parseQueryParams,
-  } from 'utils/url'
+  import { getArticle } from "api/article";
   import PostState from 'components/PostState/PostState';
   import UserCard from 'components/UserCard';
   import ArticleContent from './ArticleContent.vue';
@@ -39,24 +37,7 @@
     },
     data() {
       return {
-        testUser: {
-          "id": "58",
-          "name": "xiaochao_php",
-          "articles_num":"154",
-          "avatar_url": "http://7xlx4u.com1.z0.glb.clouddn.com/o_1b34pfog9v161kdlkkm1kt41f697.jpg?imageView2/1/w/100/h/100"
-        },
-        article: {
-          "id": "1",
-          "title": "通过接口编辑",
-          "content": "成功",
-          "update_at":"2017-07-20T12:50:30.176Z",
-          "create_at": "2017-07-20T12:50:30.176Z",
-          "lock": true,
-          "approved": false,
-          "approved_num": "0",
-          "collected": true,
-          "collected_num": "1",
-        },
+        article: null
       }
     },
     computed: {
@@ -70,6 +51,9 @@
     mounted() {
       let self = this;
       this.loading = true;
+      getArticle(this.$route.params.id).then(res => {
+        this.article = res;
+      });
     },
     methods: {
     }

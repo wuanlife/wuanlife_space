@@ -49,7 +49,7 @@
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
 
-  import { getGroups } from 'api/group';
+  // import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
   import Pagination from 'components/Pagination'
   export default {
