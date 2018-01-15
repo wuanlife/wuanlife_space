@@ -13,17 +13,17 @@
           <span>{{ user.name }}</span>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
-          <el-dropdown-item @click.native="goPath('/index')">
+          <el-dropdown-item @click.native="goPath('/mySpace')">
+              我的空间
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="goPath('/personalData')">
               个人资料
           </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/index')">
+          <el-dropdown-item @click.native="goPath('/changepsw')">
+              密码修改
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="goPath('/collection')">
               我的收藏
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/index')">
-              邀请好友
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/index')">
-              修改密码
           </el-dropdown-item>
           <el-dropdown-item @click.native="logout">
               退出登录

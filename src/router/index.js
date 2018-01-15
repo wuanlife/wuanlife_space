@@ -5,8 +5,8 @@ const Layout = resolve => require.ensure([], () => resolve(require('../views/lay
 
 const Login = resolve => require.ensure([], () => resolve(require('../views/login/index')), 'Login'); // 登录
 const Signup = resolve => require.ensure([], () => resolve(require('../views/signup/index')), 'Signup'); // 注册
-const Resetpsw = resolve => require.ensure([], () => resolve(require('../views/resetpsw/index')), 'Resetpsw'); // 重置密码
-const FindPassword = resolve => require.ensure([], () => resolve(require('../views/findpassword/index')), 'FindPassword'); // 找回密码
+// const Resetpsw = resolve => require.ensure([], () => resolve(require('../views/resetpsw/index')), 'Resetpsw'); // 重置密码
+// const FindPassword = resolve => require.ensure([], () => resolve(require('../views/findpassword/index')), 'FindPassword'); // 找回密码
 
 const Changepsw = resolve => require.ensure([], () => resolve(require('../views/changepsw/index')), 'Changepsw'); // 修改密码
 
@@ -17,12 +17,11 @@ const ArticleDetail = resolve => require.ensure([], () => resolve(require('../vi
 const EditorNewDraft = resolve => require.ensure([], () => resolve(require('../views/editor/drafts/new')), 'EditorNewDraft');
 const EditorEdit = resolve => require.ensure([], () => resolve(require('../views/editor/edit')), 'EditorEdit')
 
-const Inform = resolve => require.ensure([], () => resolve(require('../views/inform/index')), 'Inform');
-const InviteCode = resolve => require.ensure([], () => resolve(require('../views/invitecode/index')), 'InviteCode');
+// const Inform = resolve => require.ensure([], () => resolve(require('../views/inform/index')), 'Inform');
 
 const Collection = resolve => require.ensure([], () => resolve(require('../views/collection/index')), 'Collection');
 
-const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/new')), 'PersonalData');
+const PersonalData = resolve => require.ensure([], () => resolve(require('../views/personalData/index')), 'PersonalData');
 
 const Search = resolve => require.ensure([], () => resolve(require('../views/search/index')), 'Search');
 
@@ -88,16 +87,11 @@ export const constantRouterMap = [
       // 后续加入drafts
     ]
   },
-  {
-    path: '/inform',
-    component: Layout,
-    children: [{ path: '', name: 'inform', component: Inform }]
-  },
-  {
-    path: '/invitecode',
-    component: Layout,
-    children: [{ path: '', name: 'invitecode', component: InviteCode }]
-  },
+  // {
+  //   path: '/inform',
+  //   component: Layout,
+  //   children: [{ path: '', name: 'inform', component: Inform }]
+  // },
   {
     path: '/collection',
     component: Layout,
@@ -115,22 +109,22 @@ export const constantRouterMap = [
     hidden: true,
     children: [{ path: '', component: PersonalData }]
   },
-  {
-    path: '/findpassword',
-    name: 'findpassword',
-    component: Layout,
-    redirect: '/findpassword/index',
-    hidden: true,
-    children: [{ path: 'index', component: FindPassword }]
-  },
-  {
-    path: '/resetpsw',
-    name: 'resetpsw',
-    component: Layout,
-    redirect: '/resetpsw/index',
-    hidden: true,
-    children: [{ path: 'index', component: Resetpsw }]
-  },
+  // {
+  //   path: '/findpassword',
+  //   name: 'findpassword',
+  //   component: Layout,
+  //   redirect: '/findpassword/index',
+  //   hidden: true,
+  //   children: [{ path: 'index', component: FindPassword }]
+  // },
+  // {
+  //   path: '/resetpsw',
+  //   name: 'resetpsw',
+  //   component: Layout,
+  //   redirect: '/resetpsw/index',
+  //   hidden: true,
+  //   children: [{ path: 'index', component: Resetpsw }]
+  // },
   {
     path: '/changepsw',
     name: 'changepsw',
