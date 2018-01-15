@@ -23,7 +23,7 @@ export default {
       if (this.searchContent !== "") {
         this.$router.push({
           path: "/search",
-          query: { search: searchContent }
+          query: { search: this.searchContent }
         });
       } else {
         alert("请输入要搜索的内容");
@@ -45,6 +45,9 @@ export default {
     padding: 18px 16px;
     font-size: 22px;
     color: #a9baff;
+    &::placeholder {
+      color: #a9baff;
+    }
   }
 }
 </style>

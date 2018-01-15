@@ -25,7 +25,7 @@ Object.keys(filters).forEach(key => {
 
 
 // register global progress.
-const blackList = ['inform', 'collection'];// 重定向黑名单
+const blackList = ['inform', 'collection-not'];// 重定向黑名单
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开启Progress
   const token = false

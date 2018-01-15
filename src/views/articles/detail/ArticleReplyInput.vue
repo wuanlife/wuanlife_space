@@ -1,7 +1,9 @@
 <template>
 <div class="article-reply-input">
-  <textarea placeholder="我的回复..."></textarea>
+  <!-- 也许可以用el-input -->
+  <textarea v-model="replyContent" placeholder="我的回复..."></textarea>
   <el-button class="wuan-button submit"
+             :loading="loading"
              @click="reply">
     回复
   </el-button>
@@ -10,6 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { postReply } from 'api/reply';
 
 export default {
   name: 'article-reply-input',
@@ -17,6 +20,8 @@ export default {
   },
   data() {
     return {
+      replyContent: '',
+      loading: false,
     }
   },
   computed: {
@@ -28,12 +33,15 @@ export default {
 
   },
   mounted() {
-    let self = this;
-    this.loading = true;
   },
   methods: {
     reply() {
-
+      this.loading = true;
+      postReply(this.replyContent).then(res => {
+        this.loading = false;
+      }).catch(e => {
+        this.loading = false;
+      })
     }
   }
 }
@@ -48,17 +56,12 @@ export default {
     padding: 16px;
     border-radius: 4px;
     border: solid 2px #c8c8c8;
-    &::-webkit-input-placeholder {
+    transition: all 0.3s ease-in-out;
+    &:focus {
+      border: solid 2px #5677fc;
+    }
+    &::placeholder {
       color: #757575;
-    }
-    &:-moz-placeholder { /* Firefox 18- */
-      color: #757575;  
-    }
-    &::-moz-placeholder {  /* Firefox 19+ */
-      color: #757575;  
-    }
-    &:-ms-input-placeholder {
-      color: #757575;  
     }
   }
   .submit {
