@@ -1,5 +1,5 @@
 
-export default function postRule(mockAdapter) {
+export default function authRule(mockAdapter) {
   mockAdapter
   .onPost('/users/signin').reply(200, {
     id: '192',

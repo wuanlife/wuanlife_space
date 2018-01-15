@@ -40,7 +40,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { searchGroups } from 'api/group';
+  // import { searchGroups } from 'api/group';
   import { searchPosts } from 'api/post';
   
   export default {

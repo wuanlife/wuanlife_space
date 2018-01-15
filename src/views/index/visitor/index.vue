@@ -15,7 +15,8 @@
                          :page-count="pagination.pageCount"
                          @current-change="loadPosts">
           </el-pagination>-->
-          	<pagination @current-change="loadPosts"></pagination>      
+          	<!--<pagination @click.native="loadPosts(pagination.currentPage)" :pagination.sync="pagination"></pagination>-->
+          	<pagination @loadPosts="loadPosts" :pagination.sync="pagination"></pagination>
         </div>
       </section>
       <aside>
@@ -25,8 +26,9 @@
         <div class="aside-content" v-loading="loadingAside">
           <div v-for="activeuser of posts" 
             class="index-aside-card wuan-card clickable"
-            @click="$router.push({path: '/planet/' + activeuser.author.id, query: { name: activeuser.author.name }})"
+            @click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/'})"
             >
+             <!--+ activeuser.author.id, query: { name: activeuser.author.name }-->
             <img :src="activeuser.author.avatar_url">
             <div class="wuan-card__content">
               <h2 class="clickable">{{ activeuser.author.name }}</h2>
@@ -47,7 +49,7 @@
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
 
-  import { getGroups } from 'api/group';
+  // import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
   import Pagination from 'components/Pagination'
   export default {
@@ -63,9 +65,9 @@
         posts: [],
         discoveryGroups: [],
         pagination: {
-          pageCount: 1,
+          pageCount: 3,
           currentPage: 1,
-          limit: 20,
+          limit: 1,
         }
       }
     },
@@ -79,13 +81,14 @@
       getMockTest().then(res => {
         console.log(res);
       })
-      getArticles().then(res => {
-
-        console.log(res)
-        console.log(this.posts)
-        this.posts = res.articles
-        console.log(this.posts)
-      })
+//    getArticles().then(res => {
+//
+//      console.log(res)
+//      console.log(this.posts)
+//      this.posts = res.articles
+//      console.log(this.posts)
+//    })
+      this.loadPosts(1)
       // this.loadPosts()
       //   .then()
       //   .catch((err) => {
@@ -113,8 +116,9 @@
       loadPosts(page) {
         var self = this;
         this.loading = true;
+        console.log(page);
         return new Promise((resolve, reject) => {
-          getPosts(true,(page-1)*self.pagination.limit || 0).then(res => {
+          getPosts(true,(page)*self.pagination.limit || 0).then(res => {
             console.dir(res);
             self.posts = res.data;
             self.loading = false;

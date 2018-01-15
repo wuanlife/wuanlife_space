@@ -1,8 +1,12 @@
 import postRule from './post'
+import articleRule from './article'
+import replyRule from './reply'
 import authRule from './auth'
+
 // import groupRule from './group'
 export default function mockData(mockAdapter) {
+  replyRule(mockAdapter);
+  articleRule(mockAdapter);
   authRule(mockAdapter);
   postRule(mockAdapter);
-// groupRule(mockAdapter);
 }

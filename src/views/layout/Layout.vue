@@ -35,7 +35,7 @@
     }
     .main-container {
       background-color: #f8f9fa;
-      height: calc(100vh - 88px);
+      height: calc(100vh - 91px);
       overflow: auto;
       transition: all .28s ease-out;
     }

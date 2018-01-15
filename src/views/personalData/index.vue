@@ -1,53 +1,69 @@
-<!-- 
-  TODO: 
-    1. better not to use inline style like '<span style="font-family:PingFangHK.../>' 
-    2. birthday should be implemented
-    3. validator have some bug so I commented them, waitting to be fixed
- -->
-
 <template>
-    <div class="personalData-container">
-      <section>     
-        <header>个人资料</header>
-        <div class="form-content" v-loading="loading">
-          <div class="personalDataUpLoader">
-            <img :src="personalDataForm.avatar_url" class="avatar" id="avatar">
-            <div class="avatar-uploader">
-              <button id="changeAvatar" @click="changeAvatar"><icon-svg icon-class="edit" class="edit-icon"></icon-svg>修改</button>
-            </div>
+  <div id="personal-data" class="personal-data view-container">
+      <section>
+          <h1>个人资料</h1>
+      <div class="personal-data-form">
+          <div class="form-left">
+              <img v-bind:src="dafaultAvatarUrl" id="avatar">
+              <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
           </div>
-          <el-form :model="personalDataForm" :rules="personalDataRules" ref="personalDataForm" class="personalDataForm" :label-position="labelPosition">
-            <el-form-item label="邮箱" prop="email" label-width="66px">
-              <span style="font-family:PingFangHK-Semibold;font-size:16px;color:#666666;text-align:left;width: 210px;display: inline-block;margin-right: 11px;">{{ personalDataForm.mail }}</span>
-              <el-button @click.prevent="checkMail(domain)" style="font-size: 12px;color: #ffffff;background-color: #5677fc;font-family:PingFangSC-Regular;box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);border-radius:2px;width:80px;height:30px;border: none;padding: 0;">验证</el-button>
-            </el-form-item>
-            <el-form-item label="昵称" prop="name" label-width="66px">
-              <el-input v-model="personalDataForm.name" placeholder="陶陶" style="width:208px;"></el-input>
-            </el-form-item>
-            <el-form-item label="性别" prop="sex" label-width="66px">
-              <el-radio-group v-model="personalDataForm.sex">
-                <el-radio label="man">男</el-radio>
-                <el-radio label="woman">女</el-radio>
-                <el-radio label="secret">保密</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="生日" label-width="66px">
-              <el-date-picker :editable="false" class="birthday-input" placeholder="1994年12月30日" :clearable="false" type="date" v-model="personalDataForm.birthday" style="width: 160px;font-size: 16px;font-family:PingFangHK-Semibold;color: #000000;"></el-date-picker>
-            </el-form-item>
-            <el-button type="primary" @click="submitForm('personalDataForm')">保存</el-button>
-          </el-form>
-        </div>
+          <div class="form-right">
+              <div class="form-item">
+                  <span>邮箱</span>
+                  <p>659622323@qq.com</p>
+              </div>
+              <div class="form-item">
+                  <span>昵称</span>
+                  <input type="text" v-model="name">
+              </div>
+              <div class="form-item">
+                  <span>性别</span>
+                  <div class="form-item-sex">
+                    <input type="radio" id="man" value="man" v-model="sex">
+                    <label for="man" :class="[sex === 'man' ? 'label-active' : '']">男</label>
+                    <input type="radio" id="woman" value="woman" v-model="sex">
+                    <label for="woman" :class="[sex === 'woman' ? 'label-active' : '']">女</label>
+                    <input type="radio" id="secrecy" value="secrecy" v-model="sex">
+                    <label for="secrecy" :class="[sex === 'secrecy' ? 'label-active' : '']">不想透露</label>
+                  </div>
+              </div>
+              <div class="form-item">
+                  <span>生日</span>
+                  <div class="form-item-date">
+                      <date-picker
+                        :min="1970"
+                        :max="2018"
+                        :defaultNum="yearNumber"
+                        v-on:pick="year"
+                        class="date-picker"></date-picker>年
+                      <date-picker
+                        :min="1"
+                        :max="12"
+                        :defaultNum="mouthNumber"
+                        v-on:pick="mouth"
+                        class="date-picker"></date-picker>月
+                      <date-picker
+                        :min="dayMin"
+                        :max="dayMax"
+                        :defaultNum="dayNumber"
+                        v-on:pick="day"
+                        class="date-picker"></date-picker>日
+                  </div>
+              </div>
+          </div>
+      </div>
+      <button class="save" @click="pushPersonalData">保存</button>
       </section>
-    </div>
+  </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import { getUser, putUser } from 'api/user';
-  import { UploaderBuilder, Uploader } from 'qiniu4js';
-  import { getToken } from 'api/qiniu';
+import DatePicker from 'components/DatePicker'
+import { UploaderBuilder, Uploader } from 'qiniu4js'
+import { getToken } from 'api/qiniu'
+import { putUser } from 'api/user'
 
-  var avatarImgKey = '';
+var avatarImgKey = '';
   var uploader = new UploaderBuilder()
     .domain({http: "http://upload.qiniu.com", https: "https://up.qbox.me"})
     .retry(2)//设置重传次数，默认0，不重传
@@ -80,7 +96,7 @@
           return false;
         }
       }
-    }) 
+    })
     .listener({
       onTaskSuccess(task){
         //一个任务上传成功后回调
@@ -89,198 +105,229 @@
         document.getElementById("avatar").setAttribute("src",process.env.QINIU_DOMAIN_URL+avatarImgKey);
       },onTaskFail(task) {
         //一个任务在经历重传后依然失败后回调此函数
-        
       },onTaskRetry(task) {
         //开始重传
-        
       },onFinish(tasks){
-          //所有任务结束后回调，注意，结束不等于都成功，该函数会在所有HTTP上传请求响应后回调(包括重传请求)。
-        
+        //所有任务结束后回调，注意，结束不等于都成功，该函数会在所有HTTP上传请求响应后回调(包括重传请求)。
       }
     }).build();
-    
-  export default {
-    name: 'personalData-container',
-    data() {
-      // element-ui validator
-      /*var validateName = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入昵称'));
-        } else if (value.length < 2 || value.length > 15) {
-          callback(new Error('长度在 2 到 15 个字符'));
-        }
-      };
-      var validateSex = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请选择性别'));
-        }
-      };*/
-      return {
-        loading: false,
-        userDetails: null,
 
-        // form part
-        personalDataForm: {
-          birthday: '',
-          sex: '',
-          mail_checked: '',
-          avatar_url: '',
-          mail: '',
-          name: '',
-          code: '',
+export default {
+  name: 'personalData',
+  components: {
+    DatePicker
+  },
+  data () {
+    return {
+      yearNumber: 1970,
+      mouthNumber: 1,
+      dayNumber: 1,
+      dayMin: 1,
+      dayMax: 31,
+      leap: false,
+      sex: '',
+      name: '淘淘',
+      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+    }
+  },
+  computed: {
+    birthday: {
+      get: function () {
+            return new Date(`${this.yearNumber}-${this.mouthNumber}-${this.dayNumber}`)
         },
-        personalDataRules: {
-          /*name: [
-            { validator: validateName, trigger: 'blur' }
-          ],
-          sex: [
-            { validator: validateSex, trigger: 'blur' }
-          ],*/
-        },
-        
-        labelPosition: 'left'
+      set: function (val) {}
+    }
+  },
+  methods: {
+    year: function (val) {
+      this.yearNumber = val
+
+      // 判断闰年
+      let isLeap = this.yearNumber % 4 === 0 && this.yearNumber % 100 !== 0 || this.yearNumber % 400 === 0
+      if (isLeap) {
+        this.leap = true
+      } else {
+        this.leap = false
       }
     },
-    computed: {
-      ...mapGetters([
-        'user',
-      ])
-    },
-    mounted() {
-      this.getUserDetails().then((res) => {
-        console.dir(res)
-      });
-    },
-    methods: {
-      submitForm(formName) {
-        console.log('submit')
-        this.personalDataForm.avatar_url = process.env.QINIU_DOMAIN_URL+avatarImgKey
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.loading = true;
-            putUser(this.user.userInfo.id, {
-              name: this.personalDataForm.name,
-              sex: this.personalDataForm.sex,
-              birthday: this.personalDataForm.birthday,
-              avatar_url: this.personalDataForm.avatar_url,
-            }).then(res => {
-              this.loading = false;
-            })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      getUserDetails () {
-        var self = this;
-        this.loading = true;
-        return new Promise((resolve, reject) => {
-          getUser(self.user.userInfo.id).then(res => {
-            self.personalDataForm = res;
-            self.loading = false;
-            resolve(res);
-          }).catch(error => {
-            self.loading = false;
-            reject(error);
-          });
-        });
-      },
-      changeAvatar () {
-        uploader.chooseFile();
+    mouth: function (val) {
+      this.mouthNumber = val
+
+      // 相应改变每月的天数
+      if (this.mouthNumber === 1 || this.mouthNumber === 3 || this.mouthNumber === 5 || this.mouthNumber === 7 || this.mouthNumber === 8 || this.mouthNumber === 10 || this.mouthNumber === 12) {
+        this.dayMax = 31
+      } else {
+        this.dayMax = 30
+      }
+      if (this.mouthNumber === 2) {
+        if (this.leap === true) {
+          this.dayMax = 29
+        } else {
+          this.dayMax = 28
+        }
       }
     },
-  }
+    day: function (val) {
+      this.dayNumber = val
+    },
+    changeAvatar: function () {
+      uploader.chooseFile()
+    },
+    pushPersonalData: function() {
+      putUser(1, {
+        name: this.name,
+        avatar_url: this.dafaultAvatarUrl,
+        sex: this.sex,
+        birthday: this.birthday
+      }).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+  },
+  mounted () {}
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .personalData-container {
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    max-width: 900px;
-    min-width: 380px;
-    section {
-      flex: 1;
-      header {
-        margin: 15px 0 20px 0;
-
-        font-family:PingFangHK-Medium;
-        font-size:18px;
-        color:#5677fc;
-      }
-      div.form-content {
-        width: 100%;
-        background:#ffffff;
-        border-radius:2px;
-        width:900px;
-        height:657px;
-        margin-left: 12px;
-        padding-top:32px;
-        position: relative;
-        .personalDataUpLoader {
-          width: 119px;
-          max-width: 119px;
-          text-align: center;
-          margin-left: 20px;
-          .avatar {
-            width: 119px;
-            height: 119px;
-            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.28);
-            border-radius: 100%;
-            margin-bottom: 3px;
-          }
-          .avatar-uploader {
+#personal-data{
+    width: 1152px;
+    margin-top: 127px;
+    margin-bottom: 36px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 69px 177px 109px 177px;
+    text-align: center;
+    section{
+        h1{
+            font-size: 32px;
+            color: #5677fc;
+            margin-bottom: 52px;
+        }
+        .personal-data-form{
             display: flex;
-            justify-content: center;
-            button {
-              border: none;
-              padding: 0;
-              background-color: #ffffff;
-              color: #5677fc;
-              font-size: 14px;
-              font-family: PingFangHK-Regular;
-              display: flex;
-              align-items: center;
-              outline: none;
-              .edit-icon {
-                width: 14px;
-                height: 14px;
-                margin-right: 7px;
-              }
+            justify-content: space-between;
+            .form-left{
+                img{
+                    display: block;
+                    height: 155px;
+                    width: 156px;
+                    border-radius: 100%;
+                    background-color: rgb(165, 164, 164);
+                    box-shadow: 0px 4px 5px 0px 
+		rgba(181, 181, 181, 0.75);
+                    margin-bottom: 13px;
+                }
+                button{
+                    border: 0;
+                    padding: 0;
+                    font-size: 18px;
+                    color: #5677fc;
+                    background-color: transparent;
+                    cursor: pointer;
+                    .avatar-icon{
+                        margin-right: 10px;
+                    }
+                }
             }
-          }
+            .form-right{
+                border-left: solid 2px #c9c9c9;
+                padding-left: 45px;
+                .form-item{
+                    display: flex;
+                    min-height: 70px;
+                    align-items: center;
+                    font-size: 28px;
+                    color: #434343;
+                    margin-bottom: 60px;
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    span{
+                        margin-right: 51px;
+                        font-size: 24px;
+                        color: #434343;
+                    }
+                    &>input{
+                        height: 70px;
+                        width: 403px;
+                        color: #434343;
+                        box-shadow: 0px 3px 7px 0px 
+	                	rgba(99, 99, 99, 0.16);
+	                    border-radius: 4px;
+	                    border: solid 2px rgba(171, 171, 171, 0.45);
+                        padding: 0 25px; 
+                    }
+                    &>input:focus{
+                        background-color: rgba(248, 249, 250, 0.4);
+	                    box-shadow: 0px 3px 7px 0px 
+	                	rgba(86, 119, 252, 0.16);
+	                    border-radius: 4px;
+	                    border: solid 2px rgba(0, 64, 185, 0.4);
+                    }
+                    .form-item-sex{
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        width: 403px;
+                        input{
+                            width: 0;
+                            height: 0;
+                        }
+                        label{
+                            width: 103px;
+                            height: 70px;
+                            line-height: 70px;
+                            display: inline-block;
+                            cursor: pointer;
+                            background-color: rgba(248, 249, 250, 0.45);
+	                        box-shadow: 0px 3px 7px 0px 
+                    		rgba(99, 99, 99, 0.16);
+	                        border-radius: 4px;
+                        	border: solid 2px rgba(171, 171, 171, 0.45);
+                            font-size: 28px;
+                            color: #434343;
+                            font-weight: normal;
+                            margin-right: 48px;
+                            &:last-child{
+                                font-size: 22px;
+                                margin-right: 0;
+                            }
+                        }
+                        .label-active{
+                            background-color: rgba(248, 249, 250, 0.4);
+	                        box-shadow: 0px 3px 7px 0px 
+                    		rgba(86, 119, 252, 0.16);
+                        	border: solid 2px rgba(0, 64, 185, 0.4);
+                        }
+                    }
+                    .form-item-date{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        .date-picker{
+                            margin-left: 15px;
+                            z-index: 0;
+                            &:first-child{
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
         }
-        .personalDataForm{
-          font-size: 16px;
-        }
-        .el-form {
-          position: absolute;
-          right: 12px;
-          top: 50px;
-          .el-form-item {
-            width: 683px;
-            height: 80px;
-            border-bottom: 1px solid #c6c7c7;
-            margin: 0;
-            display: flex;
-            align-items: center;
-          }
-          > button{
-            background:#5677fc;
-            box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);
-            border-radius:2px;
-            width:124px;
-            height:30px;
-            border: none;
-            font-family:PingFangSC-Regular;
-            font-size:12px;
-            color:#ffffff;
-            padding: 0;
-            margin-top: 50px;
-          }
-        }
-      }
     }
-  }
+}
+.save{
+    margin-top: 108px;
+    width: 240px;
+	height: 59px;
+	background-color: #5677fc;
+	border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+}
 </style>
