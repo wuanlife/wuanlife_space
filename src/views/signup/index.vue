@@ -1,16 +1,17 @@
 <template>
   <div class="register-container view-container">
     <section>
-      <header>注册</header>
+      
 
       <div class="form-content" v-loading="loading">
+        <header>注册</header>
         <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
 
 
           <div class="email-input">
             <el-form-item prop="email" class="form-inputy">
 
-              <el-input v-model="loginForm.email" placeholder="输入邮箱">
+              <el-input v-model="loginForm.email" placeholder="输入邮箱" clearable>
                 <icon-svg icon-class="youxiang" class="youxiang-icon" slot="prefix"></icon-svg>
               </el-input>
 
@@ -22,7 +23,7 @@
 
 
 
-              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称">
+              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称" clearable>
                 <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon" slot="prefix"></icon-svg>
               </el-input>
 
@@ -31,7 +32,7 @@
 
           <div class="psw-input">
             <el-form-item prop="password" class="form-inputy">
-              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码">
+              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码" clearable>
                 <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
               </el-input>
 
@@ -70,8 +71,8 @@
         var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
         if (value === '') {
           callback(new Error('请输入昵称'));
-        }else if(value.length == 0 || value.length > 18){
-          callback(new Error('请输入1-18位字符作为昵称！'));
+        }else if(value.length < 6 || value.length > 18){
+          callback(new Error('请输入6-18位字符作为昵称！'));
         }else if(!myregName.test(value)){
           callback(new Error('只允许中文、数字、字母和下划线！'));
         } else {
@@ -138,80 +139,128 @@
     margin: auto;
     max-width: 828px;
     min-width: 380px;
-
+    padding-top: 101px;
+    
     section {
       flex: 1;
 
-      header {
-        text-align: center;
-        margin: 44px auto 0;
-        font-family: MicrosoftYaHei-Bold;
-        font-size: 32px;
-        color: #5677fc;
-      }
       .form-content {
         width: 100%;
+        /*background: #C0C0C0;*/
         background: #ffffff;
-        border-radius: 4px;
-        width: 660px;
-        height: 650px;
-        padding-top: 57px;
+        width: 828px;
+        height: 713px;
         margin: 0 auto;
+        justify-content: center;
 
-
-        .email-input {
-					width: 458px;
-					margin: 0 auto 72px;
-          padding-left: 56px;
-				}
-        .nickname-input {
-          width: 458px;
-          margin: 0 auto 72px;
-          padding-left: 56px;
-        }
-        .psw-input {
-          width: 458px;
-          margin: 0 auto 72px;
-          padding-left: 56px;
+        header {
+          margin: 0 auto;
+          padding-top: 44px;
+          font-size: 32px;
+          color: #5677fc;
+          text-align: center;
         }
         
         .el-form-item {
-          justify-content: center;
+					margin-bottom: 0px;
+
+					/deep/ .el-form-item__error {
+						padding-top: 11px;
+						height: 15px;
+						font-size: 14px;
+						color: #e60012;
+					}
+				}
+
+				.el-input {
+					width: 405px;
+
+					/deep/ input {
+						padding-left: 18px;
+						font-size: 28px;
+						height: 71px;
+						color: #434343;
+						background-color: rgba(248, 249, 250, 0.45);
+						box-shadow: -3px 0px 7px 0px  rgba(99, 99, 99, 0.16);
+						border-radius: 4px;
+						border: solid 2px rgba(171, 171, 171, 0.45);
+
+						&:focus {
+							background-color: rgba(248, 249, 250, 0.4);
+							box-shadow: 0px 3px 7px 0px rgba(86, 119, 252, 0.14);
+							border-radius: 4px;
+							border: solid 2px rgba(0, 64, 185, 0.4);
+						}
+
+						&::-webkit-input-placeholder {
+							font-size: 20px;
+							color: #434343;
+							margin-top: 26px;
+						}
+					}
+				}
+
+        .email-input {
+					width: 458px;
+					margin: 0 auto;
+          padding-top: 72px;
+          padding-left: 53px;
+
+          .svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
+				}
+
+        .nickname-input {
+          width: 458px;
+          margin: 0 auto;
+          padding-top: 72px;
+          padding-left: 53px;
+
+          .svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
+          
+          .el-form-item__error {		
+						color: #757575;
+					}
         }
-        .el-input /deep/ input {
-          padding-left: 15px;
+
+        .psw-input {
+          width: 458px;
+          margin: 0 auto;
+          padding-top: 72px;
+          padding-left: 53px;
+
+          .svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
         }
-        .el-input {
-          width: 405px;
-        }
-        .youxiang-icon {
-          width: 56px;
-          height: 22px;
-          color: #5677fc;
-          margin-left: -56px;
-        }
-        .peopleCircle_white-icon {
-          width: 56px;
-          height: 22px;
-          color: #5677fc;
-          margin-left: -56px;
-        }
-        .mima-icon {
-          width: 56px;
-          height: 22px;
-          color: #5677fc;
-          margin-left: -56px;
-        }
+
         .form-btny {
           text-align: center;
+          width: 458px;
+					height: 142px;
+					padding-top: 71px;
+					margin: 0 auto;
 
           button {
+            padding: 0;
             width: 458px;
-            /*height: 72px;*/
+            height: 71px;
             background-color: #5677fc;
             border-radius: 4px;
             font-size: 24px;
-            font-family: MicrosoftYaHeiLight;
+            color: #ffffff;
           }
         }
       }
