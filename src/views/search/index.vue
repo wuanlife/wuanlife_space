@@ -1,64 +1,54 @@
 <template>
     <div class="relatedPlanets-container">
       <section>
-        <header>相关星球</header>
-        <div class="planetsBox" v-loading='loading' style="width: 600px;">
-          <div v-for="item in relatedPlantesData1" class="search-card">
-          	<img v-bind:src="item.image_url"/>
-          	<h3 @click="$router.push({ path: `/planet/${item.id}`, query: { name: item.name }})">{{ item.name }}</h3>
-          	<span>{{ item.introduction }}</span>
-          </div>
+        <header>相关用户</header>
+        <div class="relatedUsersCardBox" v-loading='loading'>
+          <search-user v-for="user in relatedUsers" class="search-card" :user.sync="user">           
+          </search-user>
         </div>
-        <button @click="showMorePlanets" v-if="morePlanetsBtn">更多相关星球</button>
-        <header>相关帖子</header>
-        <div class="relatedPlanetsCardBox" v-loading='loading1'>
+        <header>相关文章</header>
+        <div class="relatedArticlesCardBox" v-loading='loading1'>
           <ul class="index-cards">
-            <li class="index-card" v-for="item in relatedPostsData">
-              <header>
-                <img v-bind:src="item.author.avatar_url">
-                <span class="clickable">{{ item.author.name }}</span>
-                <span>发表于</span>
-                <span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>
-                <time>{{ item.create_time }}</time>
-              </header>
-              <div class="index-card-content">
-                <h1 @click="$router.push({path: `/topic/${item.id}`, query: { name: item.title }})">{{ item.title }}</h1>
-                <div class="preview-html">
-                  {{ item.content }}
-                </div>
-                <div class="preview-imgs">
-                  <img v-bind:src="imglink" v-for="imglink in item.image_url">
-                </div>
-              </div>
-            </li>
+            <search-article v-for="item in relatedArticles" :item.sync="item">
+            </search-article>
           </ul>
-          <button v-if="relatedPostsData.length > 10 ? true : false" class="load-more" @click="loadMore">加载更多...</button>
         </div>
+        <pagination :pagination.sync="pagination"></pagination>
       </section>
     </div>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
-  import { searchGroups } from 'api/group';
-  import { searchPosts } from 'api/post';
-  
+  import { searchArticles,searchUsers } from 'api/post';
+  import SearchArticle from 'components/SearchArticle';
+  import SearchUser from 'components/SearchUser';
+  import Pagination from 'components/Pagination'
   export default {
     name: 'relatedPlanets-container',
     data() {
       return {
         relatedPlantesData: [],
-        relatedPlantesData1: [],
-        relatedPostsData: [],
+        relatedUsers: [],
+        relatedArticles: [],
         loading: false,
         loading1: false,
-        morePlanetsBtn: true,
-        i: 0
+        i: 0,
+        pagination: {
+          pageCount: 245,
+          currentPage: 1,
+          limit: 2,
+        }
       }
     },
+    components: {
+      SearchArticle,
+      SearchUser,
+      Pagination
+    },
     mounted () {
-      this.getSearchGroupsData();
-      this.getSearchPostsData();
+      this.getSearchUsers();
+      this.getSearchArticles(0, 20);
     },
     computed: {
       ...mapGetters([
@@ -66,15 +56,17 @@
       ])
     },
     methods: {
-      getSearchGroupsData () {
+      getSearchUsers () {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          console.log('search:', this.$route.query.search);
-          searchGroups(this.$route.query.search).then(res => {
-            self.relatedPlantesData = res.data;
-            for(let i = 0,j = 3; i < j; i++){
-              self.relatedPlantesData1[i] = res.data[i];
+          searchUsers(this.$route.query.search, 0, 20).then(res => {
+            if(res.users.length < 3){
+              self.relatedUsers = res.users;
+            }else {
+              for(let i = 0,j = 3; i < j; i++){
+                self.relatedUsers[i] = res.users[i];
+              }
             }
             self.loading = false;
             resolve();
@@ -84,12 +76,17 @@
           });
         });
       },
-      getSearchPostsData () {
+      getSearchArticles (offset, limit) {
         var self = this;
         this.loading1 = true;
         return new Promise((resolve, reject) => {
-          searchPosts(this.$route.query.search, 0, 20).then(res => {
-            self.relatedPostsData = self.dealTime(res.data);
+          searchArticles(this.$route.query.search, offset, limit).then(res => {
+            //动态确定页码
+            self.pagination.pageCount = Math.ceil(res.total/ limit);
+            console.log(res.total);
+            console.log(limit);
+            console.log(self.pagination.pageCount);
+            self.relatedArticles = self.dealTime(res.articles);
             self.loading1 = false;
             resolve();
           }).catch(error => {
@@ -104,7 +101,7 @@
       },
       dealTime (arr) {
         for (let i = 0, j = arr.length; i < j; i++) {
-          arr[i].create_time = arr[i].create_time.slice(0, 10) + ' ' + arr[i].create_time.slice(11, 16)
+          arr[i].create_at = arr[i].create_at.slice(0, 10) + ' ' + arr[i].create_at.slice(11, 16)
         }
         return arr
       },
@@ -118,6 +115,12 @@
             self.loading1 = false;
           });
       }
+    },
+    watch: {
+      'pagination.currentPage': function(val) {
+        var offset =  val -1;
+        getSearchArticles (offset);
+      }
     }
   }
 </script>
@@ -127,163 +130,33 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 590px;
+    max-width: 714px;
     min-width: 380px;
     section {
-      flex: 1;
+      /*flex: 1;*/
+     
       > header {
-        margin: 19px 0 10px 0;
+        margin: 31px 0 12px 0;
+        padding-left: 17px;
         font-family:PingFangHK-Medium;
-        font-size:14px;
+        font-size:32px;
         color:#5677fc;
+        height: 66px;
+        line-height: 66px;
+        background-color: white;
       }
-      .planetsBox {
-        .search-card{
-          font-size: 10px;
-          background:#ffffff;
-          border-radius:4px;
-          width:190px;
-          height:54px;
-          padding: 12px 10px 12px 44px;
-          box-sizing: border-box;
-          position: relative;
-          margin: 0 10px 10px 0;
-          display: inline-block;
-          > img{
-            width:30px;
-            height:30px;
-            border-radius:100%;
-            position: absolute;
-            top: 12px;
-            left: 10px;
-          }
-          > h3, span{
-            width: 136px;
-            height: 14px;
-            text-align: left;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-          }
-          > h3{
-            color:#5992e4;
-            font-family:PingFangHK-Medium;
-            cursor: pointer;
-          }
-          > span{
-            color:#666666;
-            font-family:PingFangHK-Regular;
-          }
-        }
+      .relatedUsersCardBox {
+      	display: flex;
+      	justify-content: space-between;
       }
-      > button{
-        background:#1b87f6;
-        border-radius:3px;
-        padding: 6px 14px 5px 14px;
-        border: 0;
-        font-family:PingFangHK-Regular;
-        font-size:12px;
-        color:#ffffff;
-        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.28);
-        margin-top: 4px;
-        margin-bottom: 18px;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .relatedPlanetsCardBox {
-        
+      .relatedArticlesCardBox {
+       
       }
     }
-  }
-  // post card style    
-  .index-cards { 
-    .index-card {   
-      padding: 10px 16px 12px 16px;   
-      background-color: #ffffff;  
-      &:not(:first-child) {
-        margin-top: 8px;
-      }
-      &:last-child {
-        margin-bottom: 20px;
-      }
-      header {    
-        display: flex;    
-        align-items: center;    
-        margin-bottom: 6px;
-        font-size:12px;   
-        color:#999999;
-        & > .clickable {
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            color: #5677fc;
-          }
-        }
-        img {
-          width: 26px;    
-          height: 26px;   
-          border-radius: 100%;    
-          margin-right: 10px;   
-        }
-        span {    
-          &:not(:first-child) {   
-            margin-left: 5px;   
-          }
-        }
-        time {    
-          margin-left: 12px;    
-        }   
-      }
-      div.index-card-content {
-        h1 {
-          display: inline-block;
-          position: relative;
-          cursor: pointer;
-          margin-bottom: 6px;
-
-          color: #2e5897;
-          font-family:PingFangHK-Semibold;
-          font-size:16px;
-          // hover animation
-          &::after {
-            content: '';
-            transition: all 0.5s ease-in-out;
-            transform: scaleX(0);
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #2e5897;
-          }
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-            }
-          }
-        }
-        div.preview-html {
-          margin-bottom: 12px;
-          word-break: break-all;
-          font-family: PingFangHK-Medium;
-          font-size:14px;
-          color:#666666;
-          letter-spacing:0;
-          text-align:justify;
-        }
-        div.preview-imgs {
-          display: flex;
-          img {
-            margin-right: 15px;
-            width: 174px;
-            height: 174px;
-          }
-
-        }
-      }
-    }   
-  }
+  }  
+  /*.index-cards{
+  	margin: auto;
+  }*/
 </style>
 <style type="text/css">
   .el-card__body {
@@ -298,4 +171,5 @@
   color: #5677fc;
   outline: none;
 }
+
 </style>
