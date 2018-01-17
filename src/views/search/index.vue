@@ -24,6 +24,8 @@
   import SearchArticle from 'components/SearchArticle';
   import SearchUser from 'components/SearchUser';
   import Pagination from 'components/Pagination'
+  import { searchPosts } from 'api/post';
+  
   export default {
     name: 'relatedPlanets-container',
     data() {

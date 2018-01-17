@@ -45,6 +45,9 @@ export default {
     padding: 18px 16px;
     font-size: 22px;
     color: #a9baff;
+    &::placeholder {
+      color: #a9baff;
+    }
   }
 }
 </style>

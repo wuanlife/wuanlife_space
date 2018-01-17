@@ -60,7 +60,7 @@
     approvePost,
     collectPost,
   } from 'api/post';
-  import { getGroupsByUserId } from 'api/group';
+  // import { getGroupsByUserId } from 'api/group';
   import PostCard from 'components/PostCard'
 
   export default {

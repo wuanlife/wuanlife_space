@@ -15,7 +15,6 @@
                          :page-count="pagination.pageCount"
                          @current-change="loadPosts">
           </el-pagination>-->
-          	<!--<pagination @click.native="loadPosts(pagination.currentPage)" :pagination.sync="pagination"></pagination>-->          	
         </div>
         <pagination @loadPosts="loadPosts" :pagination.sync="pagination"></pagination>
       </section>
@@ -49,7 +48,7 @@
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
 
-  import { getGroups } from 'api/group';
+  // import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
   import Pagination from 'components/Pagination'
   export default {
@@ -82,7 +81,14 @@
       getMockTest().then(res => {
         console.log(res);
       })
-      this.loadPosts(1);
+//    getArticles().then(res => {
+//
+//      console.log(res)
+//      console.log(this.posts)
+//      this.posts = res.articles
+//      console.log(this.posts)
+//    })
+      this.loadPosts(1)
     },
     methods: {
       loadPosts(page) {

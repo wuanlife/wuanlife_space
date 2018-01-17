@@ -1,5 +1,5 @@
 <template>
-<div class="article-content">
+<div v-if="article" class="article-content">
     <article>
         <h1>
             {{ article.title }}
@@ -46,93 +46,89 @@
         </div>
     </footer>
 </div>
+<div v-else class="article-content" v-loading="true">
+    <article>
+        <h1>
+            加载中...
+        </h1>
+    </article>
+</div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import {
-      approveArticle,
-      collectArticle,
-      deleteArticle,
-  } from 'api/post'
+import { mapGetters } from "vuex";
+import { approveArticle, collectArticle, deleteArticle } from "api/post";
 
-  export default {
-    name: 'article-content',
-    components: {
-
-    },
-    props: ['article'],
-    data() {
-      return {
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'user',
-        'access_token',
-      ]),
-    },
-    created() {
-    },
-    mounted() {
-
-    }
+export default {
+  name: "article-content",
+  components: {},
+  props: ["article"],
+  data() {
+    return {
+    };
+  },
+  computed: {
+    ...mapGetters(["user", "access_token"])
+  },
+  created() {},
+  mounted() {
   }
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 article {
-    h1 {
-        font-size: 28px;
-        color: #434343;
-        margin-bottom: 38px;
+  h1 {
+    font-size: 28px;
+    color: #434343;
+    margin-bottom: 38px;
+  }
+  time {
+    display: block;
+    font-size: 20px;
+    color: #434343;
+    margin-bottom: 47px;
+  }
+  .article-html {
+    margin-bottom: 66px;
+    p {
+      font-size: 20px;
+      color: #434343;
     }
-    time {
-        display: block;
-        font-size: 20px;
-        color: #434343;
-        margin-bottom: 47px;
-    }
-    .article-html {
-        margin-bottom: 66px;
-        p {
-            font-size: 20px;
-            color: #434343;
-        }
-    }
+  }
 }
 footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-    
-    .article-btn {
-        display: inline-block;
-        color: #666666;
-        cursor: pointer;
-        margin-left: 20px;
-        &:not(:last-child) {
-            margin-right: 54px;
-        }
-        .svg-icon {
-            color: #666666;
-            transition: all 0.3s ease-in-out;
-            margin-right: 12px;
-        }
-        &.done {
-            color:#5677fc;
-            .svg-icon {
-                color:#5677fc
-            }
-        }
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+
+  .article-btn {
+    display: inline-block;
+    color: #666666;
+    cursor: pointer;
+    margin-left: 20px;
+    &:not(:last-child) {
+      margin-right: 54px;
     }
-    .article-opt {
-        cursor: pointer;
+    .svg-icon {
+      color: #666666;
+      transition: all 0.3s ease-in-out;
+      margin-right: 12px;
+    }
+    &.done {
+      color: #5677fc;
+      .svg-icon {
         color: #5677fc;
-        transition: all 0.3s ease-in-out;
-        &:hover {
-            color: #0040b9
-        }
+      }
     }
+  }
+  .article-opt {
+    cursor: pointer;
+    color: #5677fc;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      color: #0040b9;
+    }
+  }
 }
 </style>

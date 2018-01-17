@@ -33,6 +33,7 @@ export default function collecRule(mockAdaptor) {
           id: 2,
           name: '李四'
         }
-      }]
+      }],
+      total: 2
     })
 }

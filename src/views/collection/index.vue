@@ -17,7 +17,7 @@
             	></collection-card>             
           </ul>
         </div>
-        <pagination></pagination>
+        <pagination @loadPosts="getCollection" :pagination.sync="pagination"></pagination>
       </section>
     </div>
 </template>
@@ -32,29 +32,13 @@
     name: 'collection-container',
     data() {
       return {
-        collecations: [
-        //following data is only used for display the layout , please delete this when the data can be dynamicly injected .
-//      {
-//        id: 1,
-//        title: 'this is a collection title',
-//        content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
-//        image_url: [{url: ''},{url: ''}],
-//        create_time: '2017-08-11',
-//        group: {
-//          name: '陶陶'
-//        }
-//      },{
-//        id: 1,
-//        title: 'this is a collection title',
-//        content: '昨天拍了个照片也没太注意。。发给朋友看他们说你最近眼袋怎么那么重！ 然而露珠平时好像是没有眼袋的啊！ 百度了一下说卧蚕什么紧贴下睫毛啊细细一条啊但是露珠的好像并不细。。。哭 大...',
-//        image_url: [{url: ''},{url: ''}],
-//        create_time: '2017-08-11',
-//        group: {
-//          name: '陶陶'
-//        }
-//      }
-        ],
+        collecations: [],
         loading: false,
+        pagination: {
+          pageCount: 245,
+          currentPage: 1,
+          limit: 20,
+        }
       }
     },
     components: {
@@ -71,17 +55,19 @@
       this.getCollection();
     },
     methods: {
-      getCollection() {
+      getCollection(page) {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
           console.log(self.user.id);
-          getCollection(self.user.id).then(res => {
+          getCollection(self.user.id, page-1 || 0, self.pagination.limit).then(res => {
             for (let i  = 0, j = res.articles.length; i < j; i++) {
               res.articles[i].create_at = self.dealTime(res.articles[i].create_at);
             }
             self.collecations = res.articles;
             console.log(self.collecations);
+             //动态生成分页页码
+            self.pagination.pageCount=Math.ceil(res.total/self.pagination.limit);
             self.loading = false;
             resolve();
           }).catch(reeor => {
@@ -110,8 +96,6 @@
     section {
       min-width: 0;
       flex: 0 0 714px;
-      //pagination底部空间
-        margin-bottom: 20px;
       header {
         margin: 31px 0 12px 0;
         font-family:MicrosoftYaHei-Bold;

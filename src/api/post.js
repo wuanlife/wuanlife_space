@@ -16,18 +16,20 @@ export function getArticles(latest = true, offset = 0, limit = 20) { // 获取 �
   });
 }
 
-export function getArticle(id) {
-  return fetch({
-    url: `/articles/${id}`,
-    method: 'get'
-  })
-}
 
 export function getMyArticles(params) { // 获取 我的空间 数据
   return fetch({
     url: `/user/${params.id}/articles?offset=${params.offset}&limit=${params.limit}`,
     method: 'get'
   })
+}
+
+export function getPosts(latest = true, offset = 0, limit = 20) {
+  return fetch({
+    url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,
+//  url: `/articles`,
+    method: 'get'
+  });
 }
 
 export function getPostsByGroupId(groupid, offset = 0, limit = 20) {
@@ -108,24 +110,8 @@ export function settopArticle(id) {
     method: 'post'
   })
 }
-// params {id: postid, floor: floor, comment: comment}
-export function replyPost(postid, params) {
-  const data = {
-    floor: params.floor || 1,
-    comment: params.comment
-  };
-  return fetch({
-    url: `/posts/${postid}/comments`,
-    method: 'post',
-    data
-  });
-}
-export function deleteReply(postid, floor) {
-  return fetch({
-    url: `/posts/${postid}/comments/${floor}`,
-    method: 'delete'
-  })
-}
+
+
 
 // publish post
 export function postArticles(params) {

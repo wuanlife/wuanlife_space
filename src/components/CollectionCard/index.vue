@@ -24,7 +24,7 @@
 
 <script>
 	export default{
-//		name: 'collection-card',
+		name: 'collection-card',
 		props: {
 			item: {
 				type: Object,

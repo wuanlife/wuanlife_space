@@ -3,6 +3,7 @@
     justify-content: space-between;
     margin: auto;
     min-width: 714px;
+    max-width: 1280px;
     @media screen and (max-width: 900px) {
         justify-content: center;
     }
