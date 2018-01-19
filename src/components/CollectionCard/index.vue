@@ -15,7 +15,7 @@
 			<span class="collection-card-username" @click="$router.push({ path: `/user/${item.author.name}` })">{{item.author.name}}</span>
 			<div>
 				<span>收藏于</span>
-				<time>{{ item.create_at }}</time>
+				<time>{{ item.create_at | formatTime}}</time>
 			</div>
 		</footer>
 	</li>

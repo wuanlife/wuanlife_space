@@ -16,7 +16,7 @@
                          @current-change="loadPosts">
           </el-pagination>-->
         </div>
-        <pagination @loadPosts="loadPosts" :pagination.sync="pagination"></pagination>
+        <pagination @current-change="loadPosts" :pagination.sync="pagination"></pagination>
       </section>
       <aside>
         <header>
@@ -82,7 +82,6 @@
         console.log(res);
       })
 //    getArticles().then(res => {
-//
 //      console.log(res)
 //      console.log(this.posts)
 //      this.posts = res.articles
@@ -108,8 +107,8 @@
             let pageFinal = parseQueryParams(res.paging.final);
             self.pagination.pageCount = Math.ceil(pageFinal.offset / pageFinal.limit) + 1;
             resolve();
-          }).catch(error => {
-            reject(error);
+          }).catch(err => {
+            console.log(err);
           });
         });
       },

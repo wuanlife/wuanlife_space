@@ -17,7 +17,7 @@
             	></collection-card>             
           </ul>
         </div>
-        <pagination @loadPosts="getCollection" :pagination.sync="pagination"></pagination>
+        <pagination @current-change="getCollection" :pagination.sync="pagination"></pagination>
       </section>
     </div>
 </template>
@@ -52,7 +52,7 @@
       ])
     },
     mounted() {
-      this.getCollection();
+      this.getCollection(1);
     },
     methods: {
       getCollection(page) {
@@ -62,7 +62,7 @@
           console.log(self.user.id);
           getCollection(self.user.id, page-1 || 0, self.pagination.limit).then(res => {
             for (let i  = 0, j = res.articles.length; i < j; i++) {
-              res.articles[i].create_at = self.dealTime(res.articles[i].create_at);
+              res.articles[i].create_at = res.articles[i].create_at;
             }
             self.collecations = res.articles;
             console.log(self.collecations);
@@ -76,9 +76,6 @@
           })
         })
       },
-      dealTime (time) {
-        return time.slice(0, 10) + ' ' + time.slice(11, 16);
-      }
     }
   }
 </script>

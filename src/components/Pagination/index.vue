@@ -9,7 +9,7 @@
 			<span class="disabled">上一页</span>
 			</span>
 
-			<el-pagination layout="pager" :current-page.sync="pagination.currentPage" :page-count="pagination.pageCount">
+			<el-pagination layout="pager" @current-change="pageChange" :current-page.sync="pagination.currentPage" :page-count="pagination.pageCount">
 			</el-pagination>
 
 			<span v-if="pagination.currentPage != pagination.pageCount">
@@ -30,10 +30,16 @@
 			}
 		},
 		props: ['pagination'],
-		watch: {
-			//观察对象属性的变化时
-			'pagination.currentPage': function(page) {
-				this.$emit('loadPosts', page)
+//		watch: {
+//			//观察对象属性的变化时
+//			'pagination.currentPage': function(page) {
+//				console.log(132);
+////				this.$emit('loadPosts', page)
+//			}
+//		}
+		methods: {
+			pageChange(p) {
+				this.$emit('current-change', p)
 			}
 		}
 	}
@@ -63,9 +69,10 @@
 	
 	.default-pagination span {
 		cursor: pointer;
-		-moz-user-select: none;
+		/*-moz-user-select: none;
 		-webkit-user-select: none;
-		-ms-user-select: none;
+		-ms-user-select: none;*/
+		user-select: none;
 	}
 	
 	.disabled {

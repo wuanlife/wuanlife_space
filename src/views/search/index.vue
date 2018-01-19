@@ -1,5 +1,5 @@
 <template>
-    <div class="relatedPlanets-container">
+    <div class="relatedPlanets-container view-container">
       <section>
         <header>相关用户</header>
         <div class="relatedUsersCardBox" v-loading='loading'>
@@ -13,7 +13,7 @@
             </search-article>
           </ul>
         </div>
-        <pagination :pagination.sync="pagination"></pagination>
+        <pagination :pagination.sync="pagination" @current-change="getSearchUsers"></pagination>
       </section>
     </div>
 </template>
@@ -50,7 +50,7 @@
     },
     mounted () {
       this.getSearchUsers();
-      this.getSearchArticles(0, 20);
+      this.getSearchArticles(1);
     },
     computed: {
       ...mapGetters([
@@ -58,11 +58,11 @@
       ])
     },
     methods: {
-      getSearchUsers () {
+      getSearchUsers (page) {
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          searchUsers(this.$route.query.search, 0, 20).then(res => {
+          searchUsers(this.$route.query.search, page - 1 || 0, 20).then(res => {
             if(res.users.length < 3){
               self.relatedUsers = res.users;
             }else {
@@ -78,17 +78,14 @@
           });
         });
       },
-      getSearchArticles (offset, limit) {
+      getSearchArticles (offset) {
         var self = this;
         this.loading1 = true;
         return new Promise((resolve, reject) => {
-          searchArticles(this.$route.query.search, offset, limit).then(res => {
+          searchArticles(this.$route.query.search, (offset - 1) || 0, self.pagination.limit).then(res => {
             //动态确定页码
-            self.pagination.pageCount = Math.ceil(res.total/ limit);
-            console.log(res.total);
-            console.log(limit);
-            console.log(self.pagination.pageCount);
-            self.relatedArticles = self.dealTime(res.articles);
+            self.pagination.pageCount = Math.ceil(res.total/ self.pagination.limit);
+            self.relatedArticles = res.articles;
             self.loading1 = false;
             resolve();
           }).catch(error => {
@@ -100,12 +97,6 @@
       showMorePlanets () {
         this.morePlanetsBtn = false
         this.relatedPlantesData1 = this.relatedPlantesData
-      },
-      dealTime (arr) {
-        for (let i = 0, j = arr.length; i < j; i++) {
-          arr[i].create_at = arr[i].create_at.slice(0, 10) + ' ' + arr[i].create_at.slice(11, 16)
-        }
-        return arr
       },
       loadMore () {
         let self = this
