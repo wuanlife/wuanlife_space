@@ -9,11 +9,11 @@ export function getMockTest() {
   })
 }
 
-export function getArticles() { // 获取 首页 文章数据
+export function getArticles(latest = true, offset = 0, limit = 20) { // 获取 首页 文章数据
   return fetch({
-    url: '/articles',
+    url: `/articles?latest=${latest}&offset=${offset}&limit=${limit}`,
     method: 'get'
-  })
+  });
 }
 
 
@@ -33,6 +33,7 @@ export function getPosts(latest = true, offset = 0, limit = 20) {
     method: 'get'
   });
 }
+
 export function getPostsByGroupId(groupid, offset = 0, limit = 20) {
   return fetch({
     url: `/groups/${groupid}/posts?offset=${offset}&limit=${limit}`,
@@ -47,7 +48,14 @@ export function getPost(id) {
   });
 }
 
-export function getCollectPost(id, offset = 0, limit = 20) {
+export function getCommentsByPostId(id, offset = 0, limit = 20) {
+  return fetch({
+    url: `/posts/${id}/comments?offset=${offset}&limit=${limit}`,
+    method: 'get'
+  });
+}
+
+export function getCollection(id, offset = 0, limit = 20) {
   return new fetch({
     url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
@@ -119,15 +127,28 @@ export function postArticles(params) {
   });
 }
 
-export function searchPosts(name, offset, limit) {
+export function searchArticles(keyword, offset, limit) {
   const data = {
-    name,
+    keyword,
     offset,
     limit
   };
   return fetch({
-    url: '/posts',
+    url: `/articles/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
     method: 'get',
     params: data
+  });
+}
+
+export function searchUsers(keyword, offset, limit) {
+  const data = {
+    keyword,
+    offset,
+    limit
+  };
+  return fetch({
+    method: 'get',
+    url: `/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
+    data
   });
 }

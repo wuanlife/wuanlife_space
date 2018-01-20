@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter'
-import { MessageBox } from 'element-ui';
+import { MessageBox, Notification } from 'element-ui';
 import mockData from 'api/mock';
 import store from '../store';
 // import router from '../router';
@@ -33,9 +33,12 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.dir(error);// for debug
     console.log('err' + error);// for debug
-    if (error.response.status === 401) {
+    if (!error.response) {
+      Notification({
+        message: error.message
+      });
+    } else if (error.response.status === 401) {
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
