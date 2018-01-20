@@ -6,7 +6,7 @@
       <time>{{ post.create_at | formatTime }}</time>
     </header>
     <div class="post-card-content">
-      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})">{{ post.title }}</h1>
+      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :title="post.title">{{ post.title }}</h1>
       <div class="preview-html" v-html="post.content">
       </div>
       <div class="preview-imgs">
@@ -62,7 +62,7 @@
           this.$router.push({path: '/login/'})
           return
         }
-        collectPost({
+        collectArticle({
           id: id,
           userid: self.user.userInfo.id,
         }).then(() => {
