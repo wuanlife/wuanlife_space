@@ -2,7 +2,7 @@
   <div id="my-space" class="my-space view-container">
       <aside>
           <user-card
-            :user="user"
+            :user="users"
             class="user-card"></user-card>
       </aside>
       <section>
@@ -14,7 +14,9 @@
                 :post.sync="date"></post-card>
           </ul>
           <pagination
-            class="pagination"></pagination>
+            class="pagination"
+            @loadPosts="loadPosts"
+            :pagination.sync="pagination"></pagination>
       </section>
   </div>
 </template>
@@ -24,7 +26,8 @@ import PostCard from "components/PostCard";
 import UserCard from "components/UserCard";
 import Pagination from "components/Pagination";
 import { getMyArticles } from "api/post";
-import { getUserById } from "api/user"
+import { getUserById } from "api/user";
+import { mapGetters } from "vuex";
 export default {
   name: "mySpace",
   components: {
@@ -35,34 +38,42 @@ export default {
   data() {
     return {
       dates: [],
-      user: {
+      users: {
         name: '',
         total: 0,
         avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+      },
+      pagination: {
+        pageCount: 0,
+        currentPage: 1,
+        limit: 1
       }
     };
   },
+  computed: {
+    ...mapGetters(["user"])
+  },
   mounted() {
-    let id = this.$route.params.id
-    getUserById(id).then(res => {
-      console.log('/////')
+    getUserById(Number(this.user.id)).then(res => {
       console.log(res)
+      this.users.name = res.name
+      this.users.avatar_url = res.avatar_url
     })
-    getMyArticles({
-      id: id,
-      offset: 0,
-      limit: 20
-    }).then(res => {
-      console.log(res);
-      this.dates = res.articles;
-      this.user.total = res.total;
-      // this.user = {
-      //   name: "淘淘",
-      //   total: 200,
-      //   avatar_url:
-      //     "http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100"
-      // };
-    });
+    this.loadPosts(1)
+  },
+  methods: {
+    loadPosts(page) {
+      const self = this
+      getMyArticles({
+        id: Number(this.user.id),
+        offset: 20 * page,
+        limit: 20
+      }).then(res => {
+        self.dates = res.articles
+        self.users.total = res.total
+        self.pagination.pageCount = (res.total % 20) === 0 ? (res.total % 20) : (res.total % 20) + 1
+      })
+    }
   }
 };
 </script>

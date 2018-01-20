@@ -153,9 +153,7 @@
         white-space: nowrap;
 
         color: #333333;
-        font-family:PingFangHK-Semibold;
         font-size:24px;
-        height: 25px;
         // hover animation
         &::after {
           content: '';
@@ -222,15 +220,15 @@
           &:last-child{
             border: 0;
           }
-          &:not(:first-child):before{
-            content:'\00B7';
-            padding:0 8px;
-          }
+          // &:not(:first-child):before{
+          //   content:'\00B7';
+          //   padding:0 8px;
+          // }
           &:hover {
-            color: #a3b5fd;
+            color: #5677fc;
           }
           &.done {
-            color: #a3b5fd;
+            color: #5677fc;
           }
         }
       }
