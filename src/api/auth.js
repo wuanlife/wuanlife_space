@@ -1,9 +1,9 @@
 import fetch from 'utils/fetch';
 
-export function login(email, password) {
+export function login(params) {
   const data = {
-    mail: email,
-    password
+    mail: params.mail,
+    password: params.password
   };
   return fetch({
     url: '/users/signin',
