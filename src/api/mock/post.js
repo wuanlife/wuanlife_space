@@ -3,8 +3,8 @@ export default function postRule(mockAdapter) {
   mockAdapter.onGet('/test').reply(200, {
     test: 'keke'
   })
-  .onGet('/posts?latest=true&offset=1&limit=20').reply(200, {
-    data: [
+  .onGet('/articles?latest=true&offset=0&limit=20').reply(200, {
+    articles: [
       {
         id: '1',
         title: 'this is the first page',
@@ -27,8 +27,6 @@ export default function postRule(mockAdapter) {
         ],
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
-          // 添加数据：每月发布文章数量
-          monthly_posts_num: 21111,
           name: '淘淘',
           id: 1
         }
@@ -58,8 +56,6 @@ export default function postRule(mockAdapter) {
         ],
         author: {
           avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
-          // 添加数据：每月发布文章数量
-          monthly_posts_num: 22222,
           name: '淘淘',
           id: 1
         }
@@ -69,15 +65,21 @@ export default function postRule(mockAdapter) {
       {
         id: 1,
         name: '淘淘',
+        monthly_articles_num: 123,
         avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
-      },
-      {
-        id: 1,
-        name: '淘淘',
+      }, {
+        id: 2,
+        name: '杰伦',
+        monthly_articles_num: 123,
+        avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+      }, {
+        id: 3,
+        name: '伍佰',
+        monthly_articles_num: 123,
         avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
       }
     ],
-    total: 200
+    total: 2
   })
   .onGet('/posts?latest=true&offset=3&limit=20').reply(200, {
     data: [
@@ -207,7 +209,7 @@ export default function postRule(mockAdapter) {
         }
       }
     ],
-    total: 200
+    total: 2
   })
   .onGet('/posts?latest=true&offset=2&limit=20').reply(200, {
     data: [
