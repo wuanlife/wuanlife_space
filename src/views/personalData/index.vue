@@ -10,7 +10,7 @@
           <div class="form-right">
               <div class="form-item">
                   <span>邮箱</span>
-                  <p>659622323@qq.com</p>
+                  <p>{{ mail }}</p>
               </div>
               <div class="form-item">
                   <span>昵称</span>
@@ -61,7 +61,8 @@
 import DatePicker from 'components/DatePicker'
 import { UploaderBuilder, Uploader } from 'qiniu4js'
 import { getToken } from 'api/qiniu'
-import { putUser } from 'api/user'
+import { putUser, getUserById } from 'api/user'
+import { mapGetters } from "vuex"
 
 var avatarImgKey = '';
   var uploader = new UploaderBuilder()
@@ -126,7 +127,8 @@ export default {
       dayMax: 31,
       leap: false,
       sex: '',
-      name: '淘淘',
+      mail: '',
+      name: '',
       dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
     }
   },
@@ -135,8 +137,14 @@ export default {
       get: function () {
             return new Date(`${this.yearNumber}-${this.mouthNumber}-${this.dayNumber}`)
         },
-      set: function (val) {}
-    }
+      set: function (val) {
+        let time = new Date(val)
+        this.yearNumber = time.getFullYear()
+        this.mouthNumber = time.getMonth() + 1
+        this.dayNumber = time.getDate()
+      }
+    },
+    ...mapGetters(['user'])
   },
   methods: {
     year: function (val) {
@@ -174,7 +182,7 @@ export default {
       uploader.chooseFile()
     },
     pushPersonalData: function() {
-      putUser(1, {
+      putUser({
         name: this.name,
         avatar_url: this.dafaultAvatarUrl,
         sex: this.sex,
@@ -186,7 +194,18 @@ export default {
       })
     }
   },
-  mounted () {}
+  mounted () {
+    getUserById(this.user.id).then(res => {
+      this.mail = res.mail
+      this.sex = res.sex
+      this.name = res.name
+      this.birthday = res.birthday
+      let isDefault = res.avatar_url === 'default_url' ? true : false
+      if (!isDefault) {
+        this.dafaultAvatarUrl = res.avatar_url
+      }
+    })
+  }
 }
 </script>
 

@@ -15,24 +15,23 @@
                          :page-count="pagination.pageCount"
                          @current-change="loadPosts">
           </el-pagination>-->
-          	<!--<pagination @click.native="loadPosts(pagination.currentPage)" :pagination.sync="pagination"></pagination>-->
-          	<pagination @loadPosts="loadPosts" :pagination.sync="pagination"></pagination>
         </div>
+        <pagination @current-change="loadPosts" :pagination.sync="pagination"></pagination>
       </section>
       <aside>
         <header>
           活跃用户
         </header>
         <div class="aside-content" v-loading="loadingAside">
-          <div v-for="activeuser of posts" 
+          <div v-for="activeuser of activeUsers" 
             class="index-aside-card wuan-card clickable"
             @click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/'})"
             >
              <!--+ activeuser.author.id, query: { name: activeuser.author.name }-->
-            <img :src="activeuser.author.avatar_url">
+            <img :src="activeuser.avatar_url">
             <div class="wuan-card__content">
-              <h2 class="clickable">{{ activeuser.author.name }}</h2>
-              <p>本月发表了{{activeuser.author.monthly_posts_num}}</p>
+              <h2 class="clickable">{{ activeuser.name }}</h2>
+              <p>本月发表了{{activeuser.monthly_articles_num}}</p>
             </div>
           </div>
         </div>
@@ -63,11 +62,12 @@
         loading: false,
         loadingAside: false,
         posts: [],
+        activeUsers: [],
         discoveryGroups: [],
         pagination: {
-          pageCount: 3,
+          pageCount: 245,
           currentPage: 1,
-          limit: 1,
+          limit: 20,
         }
       }
     },
@@ -82,35 +82,12 @@
         console.log(res);
       })
 //    getArticles().then(res => {
-//
 //      console.log(res)
 //      console.log(this.posts)
 //      this.posts = res.articles
 //      console.log(this.posts)
 //    })
       this.loadPosts(1)
-      // this.loadPosts()
-      //   .then()
-      //   .catch((err) => {
-      //     console.dir(err);
-      //     this.$message({
-      //       message: err.error,
-      //       type: 'error',
-      //       duration: 1000,
-      //     });
-      //     this.loading = false;
-      //   })
-      // this.loadGroups()
-      //   .then()
-      //   .catch((err) => {
-      //     console.dir(err);
-      //     this.$message({
-      //       message: err.error,
-      //       type: 'error',
-      //       duration: 1000,
-      //     });
-      //     this.loadingAside = false;
-      //   });
     },
     methods: {
       loadPosts(page) {
@@ -118,17 +95,20 @@
         this.loading = true;
         console.log(page);
         return new Promise((resolve, reject) => {
-          getPosts(true,(page)*self.pagination.limit || 0).then(res => {
+          getArticles(true, (page-1) || 0, self.pagination.limit).then(res => {
             console.dir(res);
-            self.posts = res.data;
+            self.posts = res.articles;
+            if(res.au)
+            self.activeUsers = res.au;
+            //动态生成分页页码
+            self.pagination.pageCount=Math.ceil(res.total/self.pagination.limit);
             self.loading = false;
-
             // pagination
             let pageFinal = parseQueryParams(res.paging.final);
-            self.pagination.pageCount = (pageFinal.offset / pageFinal.limit) + 1;
+            self.pagination.pageCount = Math.ceil(pageFinal.offset / pageFinal.limit) + 1;
             resolve();
-          }).catch(error => {
-            reject(error);
+          }).catch(err => {
+            console.log(err);
           });
         });
       },
@@ -198,17 +178,6 @@
           height: 70px;
         }
       }
-      /*footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 20px;
-        span {
-          font-family:PingFangHK-Regular;
-          font-size:14px;
-          color:#5992e4;
-        }
-      }*/
     }
 
   }
@@ -228,105 +197,6 @@
       &:not(:first-child) {
         margin-top: 8px;
       }
-      &:last-child {
-        margin-bottom: 20px;
-      }
-      header {    
-        display: flex;    
-        align-items: center;    
-        margin-bottom: 6px;
-        font-size:12px;   
-        color:#999999; 
-        & > .clickable {
-          transition: all 0.2s ease-in-out;
-          &:hover {
-            color: #5677fc;
-          }
-        }   
-        img {
-          width: 26px;    
-          height: 26px;   
-          border-radius: 100%;    
-          margin-right: 10px;   
-        }
-        span {    
-          &:not(:first-child) {   
-            margin-left: 5px;   
-          }
-        }
-        time {    
-          margin-left: 12px;    
-        }   
-      }
-      div.index-card-content {
-        margin-bottom: 12px;
-        h1 {
-          display: inline-block;
-          position: relative;
-          cursor: pointer;
-          margin-bottom: 6px;
-
-          color: #2e5897;
-          font-family:PingFangHK-Semibold;
-          font-size:16px;
-          // hover animation
-          &::after {
-            content: '';
-            transition: all 0.5s ease-in-out;
-            transform: scaleX(0);
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: #2e5897;
-          }
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-            }
-          }
-        }
-        div.preview-html {
-          margin-bottom: 12px;
-          word-break: break-all;
-
-          font-size:14px;
-          color:#666666;
-          letter-spacing:0;
-          text-align:justify;
-        }
-        div.preview-imgs {
-          display: flex;
-          img {
-            margin-right: 15px;
-            width: 174px;
-            height: 174px;
-          }
-
-        }
-      }
-      footer {
-        ul {
-          display: flex;
-          li {
-
-            transition: all 0.2s ease-in-out;
-            cursor: pointer;
-            color: #bcbcbc;
-            &:not(:first-child):before{
-              content:'\00B7';
-              padding:0 8px;
-            }
-            &:hover {
-              color: #a3b5fd;
-            }
-            &.done {
-              color: #a3b5fd;
-            }
-          }
-        }
-      }  
-    }   
+     }
   }
 </style>
