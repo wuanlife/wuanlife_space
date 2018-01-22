@@ -60,7 +60,7 @@
         this.loading = true;
         return new Promise((resolve, reject) => {
           console.log(self.user.id);
-          getCollection(self.user.id, page-1 || 0, self.pagination.limit).then(res => {
+          getCollection(self.user.id, page - 1 || 0, self.pagination.limit).then(res => {
             for (let i  = 0, j = res.articles.length; i < j; i++) {
               res.articles[i].create_at = res.articles[i].create_at;
             }

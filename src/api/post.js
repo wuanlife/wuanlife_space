@@ -53,7 +53,7 @@ export function getCommentsByPostId(id, offset = 0, limit = 20) {
   });
 }
 
-export function getCollection(id, offset = 0, limit = 20) {
+export function getCollection(id = 1, offset = 0, limit = 20) {
   return new fetch({
     url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
@@ -133,7 +133,7 @@ export function searchArticles(keyword, offset, limit) {
   };
   return fetch({
     url: `/articles/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
-    method: 'get',
+    method: 'post',
     params: data
   });
 }
@@ -145,7 +145,7 @@ export function searchUsers(keyword, offset, limit) {
     limit
   };
   return fetch({
-    method: 'get',
+    method: 'post',
     url: `/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
     data
   });
