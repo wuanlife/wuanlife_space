@@ -1,6 +1,6 @@
 module.exports = {
     NODE_ENV: '"development"',
-    BASE_API: '"//120.24.162.124:80"',
+    BASE_API: '"//52.78.119.221:800/"',
     API_MOCK: false,
     APP_ORIGIN: '"www.baidu.com"',
     // 七牛域名
