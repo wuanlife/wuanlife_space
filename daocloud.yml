@@ -1,0 +1,18 @@
+version: 3
+image: ubuntu:16.04
+stages:
+- test
+- build
+安全构建任务:
+  stage: build
+  job_type: lite_image_build
+  compile:
+    build_dir: /
+    cache: true
+    dockerfile_path: Dockerfile
+  extract:
+  - /var/www/html
+  package:
+    build_dir: /
+    cache: true
+    dockerfile_path: Dockerfile.package

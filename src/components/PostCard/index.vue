@@ -1,12 +1,12 @@
 <template>
   <li class="post-card">
     <header>
-      <img :src="post.author.avatar_url">
+      <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100' : post.author.avatar_url">
       <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
       <time>{{ post.create_at | formatTime }}</time>
     </header>
     <div class="post-card-content">
-      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})">{{ post.title }}</h1>
+      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :title="post.title">{{ post.title }}</h1>
       <div class="preview-html" v-html="post.content">
       </div>
       <div class="preview-imgs">
@@ -62,7 +62,7 @@
           this.$router.push({path: '/login/'})
           return
         }
-        collectPost({
+        collectArticle({
           id: id,
           userid: self.user.userInfo.id,
         }).then(() => {
@@ -153,9 +153,7 @@
         white-space: nowrap;
 
         color: #333333;
-        font-family:PingFangHK-Semibold;
         font-size:24px;
-        height: 25px;
         // hover animation
         &::after {
           content: '';
@@ -222,15 +220,15 @@
           &:last-child{
             border: 0;
           }
-          &:not(:first-child):before{
-            content:'\00B7';
-            padding:0 8px;
-          }
+          // &:not(:first-child):before{
+          //   content:'\00B7';
+          //   padding:0 8px;
+          // }
           &:hover {
-            color: #a3b5fd;
+            color: #5677fc;
           }
           &.done {
-            color: #a3b5fd;
+            color: #5677fc;
           }
         }
       }

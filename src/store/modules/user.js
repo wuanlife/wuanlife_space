@@ -41,16 +41,11 @@ const user = {
       storeWithExpiration.set('user', {});
     },
     // 注册
-    Signup({ commit }, params) {
-      return new Promise((resolve, reject) => {
-        signup(params).then(response => {
-          storeWithExpiration.set('user', response, 86400000);
-          commit('SET_USER', response);
-          resolve(response);
-        }).catch(error => {
-          reject(error);
-        });
-      });
+    async Signup({ commit }, params) {
+      const userWithToken = await signup(params)
+      commit('SET_USER', userWithToken)
+      storeWithExpiration.set('user', userWithToken);
+      return userWithToken
     },
     PutUser({ commit }, params) {
       return new Promise((resolve, reject) => {
