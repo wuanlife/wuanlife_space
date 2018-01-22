@@ -38,15 +38,16 @@ export default {
   },
   mounted() {},
   methods: {
-    onContentChange(html) {
-      this.form.content = html;
+    onContentChange(newContent, oldContent) {
+      this.form.content = newContent;
     },
     onSubmit() {
       this.submitLoading = true;
       postArticles(this.form)
       .then((res) => {
         this.submitLoading = false;
-        console.log(res);
+        const articleId = res.id
+        this.$router.push({path: `/article/${articleId}`})
       })
     }
   }
