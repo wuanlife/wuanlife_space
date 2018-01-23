@@ -26,6 +26,13 @@ export function getMyArticles(params) { // 获取 我的空间 数据
   })
 }
 
+export function getActiveUsers() {
+  return fetch({
+    url: '/users/active',
+    method: 'get'
+  })
+}
+
 export function getPosts(latest = true, offset = 0, limit = 20) {
   return fetch({
     url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,

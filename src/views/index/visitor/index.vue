@@ -6,10 +6,11 @@
         </header>
         <div class="index-tabcontent" v-loading="loading">
           <ul v-if="posts.length > 0" class="index-cards">
-            <post-card v-for="post of posts" 
+            	<post-card v-for="post of posts" 
                        :key="post.id" 
-                       :post.sync="post">  
-            </post-card>
+                       :post.sync="post"
+                       >  
+               </post-card>
           </ul>
           <!--<el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
@@ -46,7 +47,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
-  import { getPosts, getMockTest, getArticles } from 'api/post';
+  import { getPosts, getMockTest, getArticles, getActiveUsers} from 'api/post';
 
   // import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
@@ -65,7 +66,7 @@
         activeUsers: [],
         discoveryGroups: [],
         pagination: {
-          pageCount: 245,
+          pageCount: 1,
           currentPage: 1,
           limit: 20,
         }
@@ -87,7 +88,8 @@
 //      this.posts = res.articles
 //      console.log(this.posts)
 //    })
-      this.loadPosts(1)
+      this.loadPosts(1);
+      this.loadActiveUsers()
     },
     methods: {
       loadPosts(page) {
@@ -95,11 +97,12 @@
         this.loading = true;
         console.log(page);
         return new Promise((resolve, reject) => {
-          getArticles(true, (page-1) || 0, self.pagination.limit).then(res => {
+          getArticles(true, (page-1)*self.pagination.limit || 0, self.pagination.limit).then(res => {
             console.dir(res);
             self.posts = res.articles;
-            if(res.au)
-            self.activeUsers = res.au;
+//          console.log(res.au);
+//          if(res.au)
+//          self.activeUsers = res.au.slice(0,10);
             //动态生成分页页码
             self.pagination.pageCount=Math.ceil(res.total/self.pagination.limit);
             self.loading = false;
@@ -112,19 +115,31 @@
           });
         });
       },
-      loadGroups() {
+      loadActiveUsers() {
         var self = this;
-        this.loadingAside = true;
-        return new Promise((resolve, reject) => {
-          getGroups().then(res => {
-            self.discoveryGroups = res.data;
-            self.loadingAside = false;
+        this.loading = true;
+        return new Promise((res, rej) => {
+          getActiveUsers().then(res => {
+            self.activeUsers = res.au;
             resolve();
-          }).catch(error => {
-            reject(error);
+          }).catch(err => {
+            console.log(err);
           });
         });
       },
+//    loadGroups() {
+//      var self = this;
+//      this.loadingAside = true;
+//      return new Promise((resolve, reject) => {
+//        getGroups().then(res => {
+//          self.discoveryGroups = res.data;
+//          self.loadingAside = false;
+//          resolve();
+//        }).catch(error => {
+//          reject(error);
+//        });
+//      });
+//    },
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <li class="post-card">
+  <li class="post-card" >
     <header>
       <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100' : post.author.avatar_url">
       <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
