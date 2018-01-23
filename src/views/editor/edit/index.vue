@@ -10,7 +10,7 @@
       </el-input>
       <wuan-editor v-if="form" :initialContent="form.content" @content-change="onContentChange">
       </wuan-editor>
-      <el-button class="wuan-button submit" type="primary" @click="onSubmit" :loading="submitLoading">发表</el-button>
+      <el-button class="wuan-button submit" type="primary" @click="onSubmit" :loading="submitLoading">修改</el-button>
     </section>
   </div>
 </template>
@@ -18,7 +18,7 @@
 <script>
 // THINKING: 是否应该把修改和写作合并成一个？
 import { mapGetters } from "vuex";
-import { postArticles } from 'api/post';
+import { putArticle } from 'api/article';
 import wuanEditor from "../common/wuanEditor";
 import { getArticle } from "api/article";
 
@@ -49,7 +49,7 @@ export default {
     },
     onSubmit() {
       this.submitLoading = true;
-      postArticles(this.form)
+      putArticle(this.$route.params.id, this.form)
       .then((res) => {
         this.submitLoading = false;
         const articleId = res.id

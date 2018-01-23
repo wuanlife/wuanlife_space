@@ -17,7 +17,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { postArticles } from 'api/post';
+import { postArticles } from 'api/article';
 import wuanEditor from "../../common/wuanEditor";
 
 export default {
