@@ -12,11 +12,11 @@ export function login(params) {
   });
 }
 
-export function signup(regObj) {
+export function signup(params) {
   const data = {
-    name: regObj.nickname,
-    mail: regObj.email,
-    password: regObj.password
+    name: params.name,
+    mail: params.mail,
+    password: params.password
   };
   return fetch({
     url: '/users',

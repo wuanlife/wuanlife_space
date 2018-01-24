@@ -30,7 +30,7 @@
   import {
     approveArticle,
     collectArticle,
-  } from 'api/post';
+  } from 'api/article';
 
   export default {
     name: 'post-card',
