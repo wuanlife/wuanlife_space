@@ -1,12 +1,12 @@
 <template>
-  <div class="post-tag" :style="{background: color}">
+  <div class="article-state" :style="{background: color}">
     {{ text | undefined }}
   </div>
 </template>
 
 <script>
   export default {
-    name: 'post-tag',
+    name: 'article-state',
     props: {
       color: {
         type: String,
@@ -27,7 +27,7 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .post-tag {
+  .article-state {
     padding: 3px 4px;
     margin-left: 4px;
     color: #fff;

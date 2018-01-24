@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { postReply } from 'api/reply';
+import { postReply, deleteReply } from 'api/reply';
 
 export default {
   name: 'article-reply-input',
@@ -35,13 +35,12 @@ export default {
   mounted() {
   },
   methods: {
-    reply() {
+    async reply() {
       this.loading = true;
-      postReply(this.replyContent).then(res => {
-        this.loading = false;
-      }).catch(e => {
-        this.loading = false;
+      const res = await postReply(this.$route.params.id, {
+        comment: this.replyContent
       })
+      this.loading = false;
     }
   }
 }
