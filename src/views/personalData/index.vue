@@ -4,7 +4,7 @@
           <h1>个人资料</h1>
       <div class="personal-data-form">
           <div class="form-left">
-              <img v-bind:src="dafaultAvatarUrl" id="avatar">
+              <img v-bind:src="dafaultAvatarUrl" id="avatar" ref="avatar">
               <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
           </div>
           <div class="form-right">
@@ -182,9 +182,9 @@ export default {
       uploader.chooseFile()
     },
     pushPersonalData: function() {
-      putUser({
+      putUser(this.user.id, {
         name: this.name,
-        avatar_url: this.dafaultAvatarUrl,
+        avatar_url: this.$refs.avatar.getAttribute('src'),
         sex: this.sex,
         birthday: this.birthday
       }).then(res => {

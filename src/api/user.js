@@ -15,9 +15,9 @@ export function getUserById(id) {
 }
 
 // change user details
-export function putUser(params) {
+export function putUser(id, params) {
   return fetch({
-    url: `/users/${store.user.id}`,
+    url: `/users/${id}`,
     method: 'put',
     data: params
   });
