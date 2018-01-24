@@ -3,8 +3,8 @@
     <article>
         <h1>
             {{ article.title }}
-            <post-state v-if="article.sticky" :text="'置顶'" :color="'#5992e4'"></post-state>
-            <post-state v-if="article.lock" :text="'锁定'" :color="'#ccc'"></post-state>
+            <article-state v-if="article.sticky" :text="'置顶'" :color="'#5992e4'"></article-state>
+            <article-state v-if="article.lock" :text="'锁定'" :color="'#ccc'"></article-state>
         </h1>
         <time>{{ article.create_at | formatTime }}</time>
         <div class="article-html" v-html="article.content"></div>
@@ -57,21 +57,55 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { approveArticle, collectArticle, deleteArticle } from "api/post";
+import ArticleState from 'components/ArticleState';
+import {
+  approveArticle,
+  collectArticle,
+  settopArticle,
+  lockArticle,
+  deleteArticle,
+} from "api/article";
 
 export default {
   name: "article-content",
-  components: {},
+  components: {
+    ArticleState
+  },
   props: ["article"],
   data() {
     return {
     };
   },
   computed: {
-    ...mapGetters(["user", "access_token"])
+    ...mapGetters(["user"])
   },
   created() {},
   mounted() {
+  },
+  methods: {
+    async approve() {
+      const res = await approveArticle(this.$route.params.id)
+      console.log(res);
+    },
+    async collect() {
+      const res = await collectArticle(this.$route.params.id)
+      console.log(res);
+    },
+    async settop() {
+      const res = await settopArticle(this.$route.params.id)
+      console.log(res);
+    },
+    async lock() {
+      const res = await lockArticle(this.$route.params.id)
+      console.log(res);
+    },
+    edit(articleId) {
+      this.$router.push({path: `/editor/article/${articleId}`})
+    },
+    async del() {
+      const res = await deleteArticle(this.$route.params.id)
+      console.log(res);
+    }
   }
 };
 </script>

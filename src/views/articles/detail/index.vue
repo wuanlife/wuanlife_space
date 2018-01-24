@@ -24,9 +24,6 @@
   import ArticleContent from './ArticleContent.vue';
   import ArticleReplies from './ArticleReplies';
   import ArticleReplyInput from './ArticleReplyInput.vue';
-  import {
-  } from 'api/post';
-
   export default {
     name: 'article-detail',
     components: {

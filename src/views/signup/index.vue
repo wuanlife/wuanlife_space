@@ -5,25 +5,25 @@
 
       <div class="form-content" v-loading="loading">
         <header>注册</header>
-        <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
+        <el-form :model="signupForm" :rules="signupRules" ref="signupForm" class="demo-ruleForm" @keyup.enter.native="submitForm('signupForm')">
 
 
-          <div class="email-input">
-            <el-form-item prop="email" class="form-inputy">
+          <div class="mail-input">
+            <el-form-item prop="mail" class="form-inputy">
 
-              <el-input v-model="loginForm.email" placeholder="输入邮箱" clearable>
+              <el-input v-model="signupForm.mail" placeholder="输入邮箱" clearable>
                 <icon-svg icon-class="youxiang" class="youxiang-icon" slot="prefix"></icon-svg>
               </el-input>
 
             </el-form-item>
           </div>
 
-          <div class="nickname-input">
-            <el-form-item prop="nickname" class="form-inputy">
+          <div class="name-input">
+            <el-form-item prop="name" class="form-inputy">
 
 
 
-              <el-input auto-complete="off" v-model="loginForm.nickname" placeholder="输入昵称" clearable>
+              <el-input auto-complete="off" v-model="signupForm.name" placeholder="输入昵称" clearable>
                 <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon" slot="prefix"></icon-svg>
               </el-input>
 
@@ -32,7 +32,7 @@
 
           <div class="psw-input">
             <el-form-item prop="password" class="form-inputy">
-              <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="输入密码" clearable>
+              <el-input type="password" v-model="signupForm.password" auto-complete="off" placeholder="输入密码" clearable>
                 <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
               </el-input>
 
@@ -41,7 +41,7 @@
 
           <el-form-item class="form-btny">
 
-            <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('loginForm')">注册</el-button>
+            <el-button type="primary" :loading="loading" :disabled="loading" @click="submitForm('signupForm')">注册</el-button>
 
           </el-form-item>
 
@@ -54,7 +54,7 @@
   import { mapGetters } from 'vuex';
 
   export default {
-    name: 'index-visitor',
+    name: 'signup',
     data() {
       // element-ui validator
       var validateUser = (rule, value, callback) => {
@@ -89,20 +89,18 @@
         }
       };
       return {
-        activeName: 'index-myplanet',
         loading: false,
-
         // form part
-        loginForm: {
-          email: '',
-          nickname: '',
+        signupForm: {
+          mail: '',
+          name: '',
           password: '',
         },
-        loginRules: {
-          email: [
+        signupRules: {
+          mail: [
             { validator: validateUser, trigger: 'blur' }
           ],
-          nickname: [
+          name: [
             { validator: validateName, trigger: 'blur' }
           ],
           password: [
@@ -123,6 +121,12 @@
         this.$refs[formName].validate((valid) => {
           if(valid){
             this.loading=true;
+            this.$store.dispatch('Signup', {
+							...this.signupForm
+						}).then((user) => {
+							this.loading = false;
+							this.$router.push({ path: '/index' })
+						})
           }else{
             console.log('error submit!!');
             return false;
@@ -200,7 +204,7 @@
 					}
 				}
 
-        .email-input {
+        .mail-input {
 					width: 458px;
 					margin: 0 auto;
           padding-top: 72px;
@@ -214,7 +218,7 @@
 					}
 				}
 
-        .nickname-input {
+        .name-input {
           width: 458px;
           margin: 0 auto;
           padding-top: 72px;
