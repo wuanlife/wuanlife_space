@@ -19,7 +19,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { getArticle } from "api/article";
-  import PostState from 'components/PostState/PostState';
+  //import PostState from 'components/PostState/PostState';
   import UserCard from 'components/UserCard';
   import ArticleContent from './ArticleContent.vue';
   import ArticleReplies from './ArticleReplies';

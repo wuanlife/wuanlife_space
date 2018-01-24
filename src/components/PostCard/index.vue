@@ -26,7 +26,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
-  import PostState from 'components/PostState/PostState';
+  //import PostState from 'components/PostState/PostState';
   import {
     approveArticle,
     collectArticle,
@@ -35,7 +35,7 @@
   export default {
     name: 'post-card',
     components: {
-      PostState
+      //PostState
     },
     props: {
       post: {
@@ -62,11 +62,8 @@
           this.$router.push({path: '/login/'})
           return
         }
-        collectArticle({
-          id: id,
-          userid: self.user.userInfo.id,
-        }).then(() => {
-          self.post.collected_num += self.post.collected ? 1 : -1 ;
+        collectArticle(id).then(() => {
+          self.post.collected_num += self.post.collected ? -1 : 1 ;
           self.post.collected = !self.post.collected;
           self.$emit('on-collected', self.post.id);
         })
