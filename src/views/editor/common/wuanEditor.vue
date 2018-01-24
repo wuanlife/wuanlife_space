@@ -51,9 +51,15 @@ export default {
   components: {
     "quill-editor": quillEditor
   },
+  props: {
+    initialContent: {
+      type: String,
+      required: false,
+    }
+  },
   data() {
     return {
-      content: '',
+      content: this.initialContent || '',
       addRange: [],
       uploadData: {},
       photoUrl: '',

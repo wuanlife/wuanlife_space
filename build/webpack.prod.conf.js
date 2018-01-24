@@ -8,6 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var CompressionPlugin = require('compression-webpack-plugin');
 
 var env = process.env.NODE_ENV === 'production' ? config.build.prodEnv : config.build.sitEnv
 
@@ -37,7 +38,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             compress: {
                 warnings: false
             },
-            sourceMap: true
+            sourceMap: false,
         }),
         // extract css into its own file
         new ExtractTextPlugin({
@@ -68,7 +69,7 @@ var webpackConfig = merge(baseWebpackConfig, {
                 minifyCSS: true,
                 minifyURLs: true
             },
-             path:config.build.staticPath,
+            path:config.build.staticPath,
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             chunksSortMode: 'dependency'
         }),
@@ -102,6 +103,26 @@ var webpackConfig = merge(baseWebpackConfig, {
         ]),
     ]
 })
+/* 开启 gzip 的情况下使用下方的配置 */
+if (config.build.productionGzip) {
+    /* 加载 compression-webpack-plugin 插件 */
+    var CompressionWebpackPlugin = require('compression-webpack-plugin')
+    /* 向webpackconfig.plugins中加入下方的插件 */
+    webpackConfig.plugins.push(
+        /* 使用 compression-webpack-plugin 插件进行压缩 */
+        new CompressionWebpackPlugin({
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: new RegExp(
+            '\\.(' +
+            config.build.productionGzipExtensions.join('|') +
+            ')$'
+        ),
+        threshold: 10240,
+        minRatio: 0.8
+    })
+    )
+}
 if (config.build.bundleAnalyzerReport) {
     var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     webpackConfig.plugins.push(new BundleAnalyzerPlugin())
