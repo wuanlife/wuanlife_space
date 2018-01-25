@@ -26,7 +26,7 @@
 <script>
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
-  //import PostState from 'components/PostState/PostState';
+  // import ArticleState from 'components/ArticleState/ArticleState';
   import { html2Text } from 'filters/index'
   import {
     approveArticle,
@@ -34,9 +34,9 @@
   } from 'api/article';
 
   export default {
-    name: 'post-card',
+    name: 'article-card',
     components: {
-      //PostState
+      // ArticleState
     },
     props: {
       post: {
