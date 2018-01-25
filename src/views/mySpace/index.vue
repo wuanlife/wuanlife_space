@@ -7,7 +7,7 @@
       </aside>
       <section>
           <h1>最新内容</h1>
-          <ul>
+          <ul class="mySpace-content" v-loading="loading">
               <post-card
                 v-for="(date, index) in dates"
                 :key="index"
@@ -47,31 +47,48 @@ export default {
         pageCount: 0,
         currentPage: 1,
         limit: 1
-      }
+      },
+      id: 0,
+      loading: false
     };
   },
   computed: {
     ...mapGetters(["user"])
   },
   mounted() {
-    getUserById(Number(this.user.id)).then(res => {
-      console.log(res)
-      this.users.name = res.name
-      this.users.avatar_url = res.avatar_url
-    })
+    if(this.$route.query.id) {
+      this.id = this.$route.query.id
+      this.users.name = this.$route.query.name
+      this.users.avatar_url = this.$route.query.avatar_url === 'default_url' ? this.users.avatar_url : this.$route.query.avatar_url
+    } else {
+      this.id = this.user.id
+      getUserById(this.id).then(res => {
+        this.users.name = res.name
+        this.users.avatar_url = res.avatar_url === 'default_url' ? this.users.avatar_url : res.avatar_url
+      }).catch(err => {
+        console.log(err)
+      })
+    }
     this.loadPosts(1)
   },
   methods: {
     loadPosts(page) {
       const self = this
+      this.loading = true
       getMyArticles({
-        id: Number(this.user.id),
-        offset: 20 * page,
+        id: self.id,
+        offset: 20 * (page - 1),
         limit: 20
       }).then(res => {
+        res.articles.forEach(element => {
+          element.author = res.author
+        })
         self.dates = res.articles
         self.users.total = res.total
-        self.pagination.pageCount = (res.total % 20) === 0 ? (res.total % 20) : (res.total % 20) + 1
+        self.pagination.pageCount = Math.ceil(res.total / 20)
+        self.loading = false
+      }).catch(err => {
+        console.log(err)
       })
     }
   }
@@ -96,6 +113,9 @@ export default {
       margin: 71px 0 12px 0;
       font-size: 32px;
       color: #5677fc;
+    }
+    :mySpace-content{
+      min-height: 400px;
     }
     .pagination{
       margin-bottom: 148px;

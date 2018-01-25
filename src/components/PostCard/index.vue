@@ -2,11 +2,11 @@
   <li class="post-card">
     <header>
       <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100' : post.author.avatar_url">
-      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
+      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`, query: {id: post.author.id, name: post.author.name, avatar_url: post.author.avatar_url}})">{{ post.author.name }}</span>
       <time>{{ post.create_at | formatTime }}</time>
     </header>
     <div class="post-card-content">
-      <h1 @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :title="post.title">{{ post.title }}</h1>
+      <h1 @click="$router.push({path: `/article/${post.id}`, query: { name: post.title, id: post.id }})" :title="post.title">{{ post.title }}</h1>
       <div class="preview-html" v-html="post.content">
       </div>
       <div class="preview-imgs">
@@ -15,7 +15,7 @@
     </div>
     <footer>
       <ul>
-        <li @click="$router.push({path: `/topic/${post.id}`, query: { name: post.title }})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
+        <li @click="$router.push({path: `/article/${post.id}`, query: { name: post.title, id: post.id }})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
         <li @click="approve(post.id)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
         <li @click="collect(post.id)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
       </ul>

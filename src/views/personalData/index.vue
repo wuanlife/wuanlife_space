@@ -2,14 +2,15 @@
   <div id="personal-data" class="personal-data view-container">
       <section>
           <h1>个人资料</h1>
-      <div class="personal-data-form">
-          <div class="form-left">
+      <div class="personal-data-form" v-loading="loading1">
+          <div class="form-left" v-loading="loading">
               <img v-bind:src="dafaultAvatarUrl" id="avatar" ref="avatar">
               <el-upload
                 :action="UPLOAD_ADDRESS"
                 :before-upload='beforeUpload'
                 :data="uploadData"
                 :on-success='upScuccess'
+                :on-error="upError"
                 ref="upload"
                 style="display:none">
                 <el-button id="img-input" 
@@ -30,9 +31,9 @@
               <div class="form-item">
                   <span>性别</span>
                   <div class="form-item-sex">
-                    <input type="radio" id="man" value="male" v-model="sex">
+                    <input type="radio" id="male" value="male" v-model="sex">
                     <label for="male" :class="[sex === 'male' ? 'label-active' : '']">男</label>
-                    <input type="radio" id="woman" value="famale" v-model="sex">
+                    <input type="radio" id="famale" value="famale" v-model="sex">
                     <label for="famale" :class="[sex === 'famale' ? 'label-active' : '']">女</label>
                     <input type="radio" id="secrecy" value="secrecy" v-model="sex">
                     <label for="secrecy" :class="[sex === 'secrecy' ? 'label-active' : '']">不想透露</label>
@@ -54,7 +55,7 @@
                         v-on:pick="mouth"
                         class="date-picker"></date-picker>月
                       <date-picker
-                        :min="dayMin"
+                        :min="1"
                         :max="dayMax"
                         :defaultNum="dayNumber"
                         v-on:pick="day"
@@ -86,7 +87,6 @@ export default {
       yearNumber: 1970,
       mouthNumber: 1,
       dayNumber: 1,
-      dayMin: 1,
       dayMax: 31,
       leap: false,
       sex: '',
@@ -95,18 +95,20 @@ export default {
       dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
       UPLOAD_ADDRESS: location.protocol === 'http:' ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
       uploadData: {},
+      loading: false,
+      loading1: false
     }
   },
   computed: {
     birthday: {
       get: function () {
-            return new Date(`${this.yearNumber}-${this.mouthNumber}-${this.dayNumber}`)
-        },
+          return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
+      },
       set: function (val) {
         let time = new Date(val)
-        this.yearNumber = time.getFullYear()
-        this.mouthNumber = time.getMonth() + 1
-        this.dayNumber = time.getDate()
+        this.year(time.getFullYear())
+        this.mouth(time.getMonth() + 1)
+        this.day(time.getDate())
       }
     },
     ...mapGetters(['user'])
@@ -144,6 +146,11 @@ export default {
       this.dayNumber = val
     },
     changeAvatar: function () {
+      const self = this
+      this.loading = true
+      setTimeout(function () {
+        self.loading = false
+      }, 5000)
       document.getElementById('img-input').click()
     },
     pushPersonalData: function() {
@@ -176,9 +183,14 @@ export default {
       console.log(e)
       const url = QINIU_DOMAIN + e.key
       this.$refs.avatar.setAttribute('src', url)
+      this.loading = false
+    },
+    upError: function (e, file, fileList) {
+      this.loading = false
     }
   },
   mounted () {
+    this.loading1 = true
     getUser().then(res => {
       this.mail = res.mail
       this.sex = res.sex
@@ -188,6 +200,7 @@ export default {
       if (!isDefault) {
         this.dafaultAvatarUrl = res.avatar_url
       }
+      this.loading1 = false
     })
   }
 }
