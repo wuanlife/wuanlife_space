@@ -7,7 +7,7 @@
     </header>
     <div class="post-card-content">
       <h1 @click="$router.push({path: `/article/${post.id}`, query: { name: post.title, id: post.id }})" :title="post.title">{{ post.title }}</h1>
-      <div class="preview-html" v-html="post.content">
+      <div class="preview-html" v-html="content">
       </div>
       <div class="preview-imgs">
         <img v-for="(img,index) of post.image_urls" :key="index" :src="img">
@@ -27,6 +27,7 @@
   import { mapGetters } from 'vuex';
   import { parseTime } from 'utils/date';
   //import PostState from 'components/PostState/PostState';
+  import { html2Text } from 'filters/index'
   import {
     approveArticle,
     collectArticle,
@@ -51,6 +52,9 @@
       ...mapGetters([
         'user',
       ]),
+      content: function () {
+        return html2Text(this.post.content)
+      }
     },
     mounted() {
     },

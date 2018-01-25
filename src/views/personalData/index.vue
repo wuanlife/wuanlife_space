@@ -33,8 +33,8 @@
                   <div class="form-item-sex">
                     <input type="radio" id="male" value="male" v-model="sex">
                     <label for="male" :class="[sex === 'male' ? 'label-active' : '']">男</label>
-                    <input type="radio" id="famale" value="famale" v-model="sex">
-                    <label for="famale" :class="[sex === 'famale' ? 'label-active' : '']">女</label>
+                    <input type="radio" id="female" value="female" v-model="sex">
+                    <label for="female" :class="[sex === 'female' ? 'label-active' : '']">女</label>
                     <input type="radio" id="secrecy" value="secrecy" v-model="sex">
                     <label for="secrecy" :class="[sex === 'secrecy' ? 'label-active' : '']">不想透露</label>
                   </div>
