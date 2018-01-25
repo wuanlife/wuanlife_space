@@ -36,7 +36,8 @@ service.interceptors.response.use(
     console.log('err' + error);// for debug
     if (!error.response) {
       Notification({
-        message: error.message
+        message: error.message,
+        offset: 100
       });
     } else if (error.response.status === 401) {
       MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
