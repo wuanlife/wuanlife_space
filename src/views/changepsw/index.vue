@@ -1,39 +1,50 @@
 <template>
-    <div class="register-container view-container">
-        <section>
+	<div class="register-container view-container">
+		<section>
+			
+			<div class="form-content" v-loading="loading">
 
-            <header>修改密码</header>
-            <div class="form-content" v-loading="loading">
+				<header>修改密码</header>
 
-                <el-form label-width="100px" :model="loginForm" :rules="loginRules" ref="loginForm" class="demo-ruleForm" @keyup.enter.native="submitForm('loginForm')">
+				<el-form :model="changepswform" :rules="changepswRules" ref="changepswform" class="demo-ruleForm" @keyup.enter.native="submitForm('changepswform')">
 
-                    <!--原密码和新密码之间的转换有点难度-->
-                    <el-form-item label="" prop="password" class="form-inputy">
-                        <el-input type="password" v-model="loginForm.password" placeholder="原密码"></el-input>
-                    </el-form-item>
+					<div class="oldpsw-input">
+						<el-form-item prop="oldpassword" class="form-inputy">
+							<el-input type="password" v-model="changepswform.oldpassword" placeholder="原密码">
+								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+							</el-input>
+						</el-form-item>
+					</div>
 
-                    <el-form-item label="" prop="password" class="form-inputy">
-                        <el-input type="password" v-model="loginForm.password" placeholder="输入密码"></el-input>
-                    </el-form-item>
+					<div class="psw-input">
+						<el-form-item prop="password" class="form-inputy">
+							<el-input type="password" v-model="changepswform.newpassword" placeholder="输入密码">
+								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+							</el-input>
+						</el-form-item>
+					</div>
 
-                    <el-form-item label="" prop="confirmpassword" class="form-inputy">
-                        <el-input type="password" v-model="loginForm.confirmpassword" auto-complete="off" placeholder="请再输入一遍"></el-input>
-                    </el-form-item>
-                    
-                    <el-form-item label-width="100px" class="form-btny">
-                        <el-button type="primary" :loading="loading" @click="submitForm('loginForm')">修改</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </section>
-    </div>
+					<div class="cofpsw-input">
+						<el-form-item prop="confirmpassword" class="form-inputy">
+							<el-input type="password" v-model="changepswform.confirmpassword" auto-complete="off" placeholder="请再输入一遍">
+								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+							</el-input>
+						</el-form-item>
+					</div>
+					<el-form-item class="form-btny">
+						<el-button type="primary" :loading="loading" @click="submitForm('changepswform')">修改</el-button>
+					</el-form-item>
+				</el-form>
+			</div>
+		</section>
+	</div>
 </template>
 <script>
   import { mapGetters } from 'vuex';
-  import { changepassword } from 'api/auth';
+  import { changepassword } from 'api/user';
 
   export default {
-    name: 'index-visitor',
+    name: 'changepsw',
     data() {
       // element-ui validator
       var validatePassword = (rule, value, callback) => {
@@ -50,23 +61,27 @@
           callback(new Error('请输入密码'));
         }else if(value.length < 6 || value.length>20){
           callback(new Error('请填写6-20位密码'));
-        }else if(value!==this.loginForm.password){
+        }else if(value!==this.changepswform.password){
           callback(new Error('请确认新密码一致！'));
         } else {
           callback();
         }
       };
       return {
-        activeName: 'index-myplanet',
+        activeName: 'changepsw',
         loading: false,
 
         // form part
-        loginForm: {
-          password: '',
+        changepswform: {
+          oldpassword: '',
+          password:'',
           confirmpassword: '',
           token: '',
         },
-        loginRules: {
+        changepswRules: {
+          oldpassword: [
+            { validator: validatePassword, trigger: 'blur' }
+          ],
           password: [
             { validator: validatePassword, trigger: 'blur' }
           ],
@@ -86,30 +101,11 @@
     methods: {
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
-          this.loginForm.token=this.$route.query.token;
+          this.changepswform.token=this.$route.query.token;
           if(valid){
             this.loading = true;
-            //resetpassword(this.loginForm);
-            return new Promise((resolve, reject) => {
-              resetpassword(this.loginForm).then(
-                res => {
-                  this.$message({
-                    message: '修改密码成功!',
-                    type: 'success',
-                    duration: 2000,
-                  });
-                  this.$router.push({ path: '/login' });
-                  this.loading = false;
-                }).catch(error => {
-                this.$message({
-                  message: error.data.error,
-                  type: 'error',
-                  duration: 2000,
-                });
-                this.loading = false;
-                reject(error);
-              });
-            });
+            //changepassword(this.changepswform);
+            
           }else{
             console.log('error submit!!');
             return false;
@@ -120,28 +116,123 @@
   }
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
-    .register-container {
-        display: flex;
-        justify-content: space-between;
-        margin: auto;
-        max-width: 660px;
-        min-width: 380px;
-        section {
-            flex: 1;
-            header {
-                margin: 15px 0 20px 0;
-                font-family: PingFangHK-Medium;
-                font-size: 18px;
-                color: #5677fc;
-            }
-            div.form-content {
-                width: 100%;
-                background: #ffffff;
-                border-radius: 4px;
-                width: 660px;
-                height: 400px;
-                padding-top: 40px;
-            }
+	.register-container {
+		display: flex;
+		justify-content: space-between;
+		margin: auto;
+		max-width: 828px;
+		min-width: 380px;
+		padding-top: 102px;
+		section {
+			flex: 1;
+
+			.form-content {
+				width: 100%;
+				background: #ffffff;
+				/*background: #C0C0C0;*/
+				width: 828px;
+				height: 713px;
+				margin: 0 auto;
+				justify-content: center;
+
+				header {
+					margin: 0 auto;
+					padding-top: 42px;
+					font-size: 32px;
+					color: #5677fc;
+					text-align: center;
+				}
+        
+        .el-form-item {
+					margin-bottom: 0px;
+
+					/deep/ .el-form-item__error {
+						padding-top: 11px;
+						height: 15px;
+						font-size: 14px;
+						color: #e60012;
+					}
+				}
+
+				.el-input {
+					width: 405px;
+					/deep/ input {
+						padding-left: 17px;
+						font-size: 28px;
+						height: 74px;
+						color: #434343;
+						background-color: rgba(248, 249, 250, 0.45);
+						box-shadow: -3px 0px 7px 0px rgba(99, 99, 99, 0.16);
+						border-radius: 4px;
+						border: solid 2px rgba(171, 171, 171, 0.45);
+						&:focus {
+							background-color: rgba(248, 249, 250, 0.4);
+							box-shadow: 0px 3px 7px 0px rgba(86, 119, 252, 0.14);
+							border-radius: 4px;
+							border: solid 2px rgba(0, 64, 185, 0.4);
+						}
+						&::-webkit-input-placeholder {
+							font-size: 20px;
+							color: #434343;
+							margin-top: 26px;
+						}
+					}
+				}
+
+				.oldpsw-input {
+					width: 458px;
+					margin: 0 auto;
+					padding-top: 58px;
+					padding-left: 53px;
+					.svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
+				}
+				.psw-input {
+					width: 458px;
+					margin: 0 auto;
+					padding-top: 72px;
+					padding-left: 53px;
+					.svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
+				}
+        .cofpsw-input {
+          width: 458px;
+          margin: 0 auto;
+          padding-top: 72px;
+          padding-left: 53px;
+          .svg-icon {
+						width: 33px;
+						height: 33px;
+						color: #5677fc;
+						margin: 19.5px 0 19.5px -88px;
+					}
         }
-    }
+
+				.form-btny {
+					text-align: center;
+					width: 458px;
+					height: 142px;
+					padding-top: 71px;
+					margin: 0 auto;
+					button {
+						padding: 0;
+						width: 458px;
+						height: 71px;
+						background-color: #5677fc;
+						border-radius: 4px;
+						font-size: 24px;
+						color: #ffffff;
+					}
+				}
+			}
+		}
+	}
 </style>
