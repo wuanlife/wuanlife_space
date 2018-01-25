@@ -101,15 +101,7 @@
     methods: {
       submitForm(formName){
         this.$refs[formName].validate((valid) => {
-          this.changepswform.token=this.$route.query.token;
-          if(valid){
-            this.loading = true;
-            //changepassword(this.changepswform);
-            
-          }else{
-            console.log('error submit!!');
-            return false;
-          }
+
         });
       },
     },
