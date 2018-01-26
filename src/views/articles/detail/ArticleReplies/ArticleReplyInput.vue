@@ -1,7 +1,7 @@
 <template>
 <div class="article-reply-input">
   <!-- 也许可以用el-input -->
-  <textarea v-model="replyContent" placeholder="我的回复..."></textarea>
+  <textarea v-model="replyContent" @keydown.enter="reply" placeholder="我的回复..."></textarea>
   <el-button class="wuan-button submit"
              :loading="loading"
              @click="reply">
@@ -12,6 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { Notification } from 'element-ui';
 import { postReply, deleteReply } from 'api/reply';
 
 export default {
@@ -32,14 +33,32 @@ export default {
   created() {
 
   },
+  updated() {
+    console.log(this);
+  },
   mounted() {
   },
   methods: {
-    async reply() {
+    async reply(e) {
+      e.preventDefault();
+      if(this.replyContent === '') {
+        Notification.info('评论不能为空')
+        return
+      }
       this.loading = true;
-      const res = await postReply(this.$route.params.id, {
-        comment: this.replyContent
-      })
+      try {
+        const res = await postReply(this.$route.params.id, {
+          comment: this.replyContent
+        })
+        this.$emit('reply-success', {
+          user_name: this.user.name,
+          comment: this.replyContent,
+          create_at: (new Date()).toISOString(),
+        })
+        this.replyContent = '';
+      } catch (e) {
+        console.log(e)
+      }
       this.loading = false;
     }
   }

@@ -12,14 +12,16 @@
     <footer>
         <div class="btns">
             <div class="article-btn"
-                 :class="{'done': article.approved}"
+                 v-loading="loading"
+                 :class="{'done': approvedTemp}"
                  @click="approve(article.id)">
-                <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ article.approved_num }}
+                <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ approved_numTemp }}
             </div>
             <div class="article-btn"
-                 :class="{'done': article.collected}"
+                 v-loading="loading"
+                 :class="{'done': collectedTemp}"
                  @click="collect(article.id)">
-                <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ article.collected_num }}
+                <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ collected_numTemp }}
             </div>
         </div>
         <div class="article-opts">
@@ -33,12 +35,12 @@
                   @click="lock(article.id)">
             {{article.lock ? '解锁' : '锁定'}}
             </span>
-            <span v-if="true"
+            <span v-if="user.id === article.author.id"
                   class="article-opt"
                   @click="edit(article.id)">
             编辑
             </span>
-            <span v-if="true"
+            <span v-if="user.id === article.author.id"
                   class="article-opt"
                   @click="del(article.id)">
             删除
@@ -74,6 +76,11 @@ export default {
   props: ["article"],
   data() {
     return {
+      loading: false,
+      collectedTemp: false,
+      collected_numTemp: 0,
+      approvedTemp: false,
+      approved_numTemp: 0,
     };
   },
   computed: {
@@ -81,15 +88,31 @@ export default {
   },
   created() {},
   mounted() {
+    this.collectedTemp = this.article.collected;
+    this.collected_numTemp = this.article.collected_num;
+    this.approvedTemp = this.article.approved;
+    this.approved_numTemp = this.article.approved_num;
   },
   methods: {
     async approve() {
       const res = await approveArticle(this.$route.params.id)
-      console.log(res);
+        if(this.approvedTemp) {
+        this.approvedTemp = !this.approvedTemp;
+        this.approved_numTemp--;
+      } else {
+        this.approvedTemp = !this.approvedTemp;
+        this.approved_numTemp++;
+      }
     },
     async collect() {
       const res = await collectArticle(this.$route.params.id)
-      console.log(res);
+      if(this.collectedTemp) {
+        this.collectedTemp = !this.collectedTemp;
+        this.collected_numTemp--;
+      } else {
+        this.collectedTemp = !this.collectedTemp;
+        this.collected_numTemp++;
+      }
     },
     async settop() {
       const res = await settopArticle(this.$route.params.id)
@@ -141,6 +164,7 @@ footer {
     color: #666666;
     cursor: pointer;
     margin-left: 20px;
+    transition: all 0.3s ease-in-out;
     &:not(:last-child) {
       margin-right: 54px;
     }
@@ -148,6 +172,12 @@ footer {
       color: #666666;
       transition: all 0.3s ease-in-out;
       margin-right: 12px;
+    }
+    &:hover {
+      color: #5677fc;
+      .svg-icon {
+        color: #5677fc;
+      }
     }
     &.done {
       color: #5677fc;
