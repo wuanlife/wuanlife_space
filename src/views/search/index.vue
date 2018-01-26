@@ -26,7 +26,8 @@
 
 <script>
 	import { mapGetters } from 'vuex';
-	import { searchArticles, searchUsers } from 'api/post';
+	import { searchArticles} from 'api/post';
+	import { searchUsers} from 'api/user';
 	import SearchArticle from 'views/search/SearchArticle';
 	import SearchUser from 'views/search/SearchUser';
 	import Pagination from 'components/Pagination'

@@ -14,6 +14,19 @@ export function getUserById(id) {
   });
 }
 
+export function searchUsers(keyword, offset, limit) {
+  const data = {
+    keyword,
+    offset,
+    limit
+  };
+  return fetch({
+    method: 'post',
+    url: `/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
+    data
+  });
+}
+
 // change user details
 export function putUser(params) {
   return fetch({
@@ -21,4 +34,11 @@ export function putUser(params) {
     method: 'put',
     data: params
   });
+}
+
+export function getActiveUsers() {
+  return fetch({
+    url: '/users/active',
+    method: 'get'
+  })
 }

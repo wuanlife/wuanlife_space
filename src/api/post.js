@@ -25,13 +25,6 @@ export function getMyArticles(params) { // 获取 我的空间 数据
   })
 }
 
-export function getActiveUsers() {
-  return fetch({
-    url: '/users/active',
-    method: 'get'
-  })
-}
-
 export function getPosts(latest = true, offset = 0, limit = 20) {
   return fetch({
     url: `/posts?latest=${latest}&offset=${offset}&limit=${limit}`,
@@ -61,7 +54,7 @@ export function getCommentsByPostId(id, offset = 0, limit = 20) {
   });
 }
 
-export function getCollection(id = 1, offset = 0, limit = 20) {
+export function getCollection(id, offset = 0, limit = 20) {
   return new fetch({
     url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
@@ -78,18 +71,5 @@ export function searchArticles(keyword, offset, limit) {
     url: `/articles/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
     method: 'post',
     params: data
-  });
-}
-
-export function searchUsers(keyword, offset, limit) {
-  const data = {
-    keyword,
-    offset,
-    limit
-  };
-  return fetch({
-    method: 'post',
-    url: `/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
-    data
   });
 }
