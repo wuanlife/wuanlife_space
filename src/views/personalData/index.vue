@@ -2,9 +2,21 @@
   <div id="personal-data" class="personal-data view-container">
       <section>
           <h1>个人资料</h1>
-      <div class="personal-data-form">
-          <div class="form-left">
-              <img v-bind:src="dafaultAvatarUrl" id="avatar">
+      <div class="personal-data-form" v-loading="loading1">
+          <div class="form-left" v-loading="loading">
+              <img v-bind:src="dafaultAvatarUrl" id="avatar" ref="avatar">
+              <el-upload
+                :action="UPLOAD_ADDRESS"
+                :before-upload='beforeUpload'
+                :data="uploadData"
+                :on-success='upScuccess'
+                :on-error="upError"
+                ref="upload"
+                style="display:none">
+                <el-button id="img-input" 
+                 size="small" 
+                 type="primary">点击上传</el-button>
+                </el-upload>
               <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
           </div>
           <div class="form-right">
@@ -19,10 +31,10 @@
               <div class="form-item">
                   <span>性别</span>
                   <div class="form-item-sex">
-                    <input type="radio" id="man" value="man" v-model="sex">
-                    <label for="man" :class="[sex === 'man' ? 'label-active' : '']">男</label>
-                    <input type="radio" id="woman" value="woman" v-model="sex">
-                    <label for="woman" :class="[sex === 'woman' ? 'label-active' : '']">女</label>
+                    <input type="radio" id="male" value="male" v-model="sex">
+                    <label for="male" :class="[sex === 'male' ? 'label-active' : '']">男</label>
+                    <input type="radio" id="female" value="female" v-model="sex">
+                    <label for="female" :class="[sex === 'female' ? 'label-active' : '']">女</label>
                     <input type="radio" id="secrecy" value="secrecy" v-model="sex">
                     <label for="secrecy" :class="[sex === 'secrecy' ? 'label-active' : '']">不想透露</label>
                   </div>
@@ -43,7 +55,7 @@
                         v-on:pick="mouth"
                         class="date-picker"></date-picker>月
                       <date-picker
-                        :min="dayMin"
+                        :min="1"
                         :max="dayMax"
                         :defaultNum="dayNumber"
                         v-on:pick="day"
@@ -59,59 +71,11 @@
 
 <script>
 import DatePicker from 'components/DatePicker'
-import { UploaderBuilder, Uploader } from 'qiniu4js'
 import { getToken } from 'api/qiniu'
-import { putUser, getUserById } from 'api/user'
+import { putUser, getUser } from 'api/user'
 import { mapGetters } from "vuex"
 
-var avatarImgKey = '';
-  var uploader = new UploaderBuilder()
-    .domain({http: "http://upload.qiniu.com", https: "https://up.qbox.me"})
-    .retry(2)//设置重传次数，默认0，不重传
-    .compress(0.5)//默认为1,范围0-1
-    .scale([200,0])  //第一个参数是宽度，第二个是高度,[200,0],限定高度，宽度等比缩放.[0,100]限定宽度,高度等比缩放.[200,100]固定长宽
-    .size(1024*1024)
-    .chunk(true)
-    .auto(true)
-    .multiple(false)
-    .accept(['.gif','.png','.jpg'])//过滤文件，默认无，详细配置见http://www.w3schools.com/tags/
-    .tokenShare(true)
-    .tokenFunc(function (setToken,task) {
-      getToken().then(res => {
-        setToken(res.uploadToken);
-      })
-    })
-    //任务拦截器
-    .interceptor({
-        //拦截任务,返回true，任务将会从任务队列中剔除，不会被上传
-      onIntercept: function (task) {
-        return task.file.size > 4 * 1024 * 1024;
-      },
-      //中断任务，返回true，任务队列将会在这里中断，不会执行上传操作。
-      onInterrupt: function (task) {
-        if (this.onIntercept(task)) {
-          alert("请上传小于4m的文件");
-          return true;
-        }
-        else {
-          return false;
-        }
-      }
-    })
-    .listener({
-      onTaskSuccess(task){
-        //一个任务上传成功后回调
-        console.log(task.result.key);//文件的key
-        avatarImgKey=task.result.key;
-        document.getElementById("avatar").setAttribute("src",process.env.QINIU_DOMAIN_URL+avatarImgKey);
-      },onTaskFail(task) {
-        //一个任务在经历重传后依然失败后回调此函数
-      },onTaskRetry(task) {
-        //开始重传
-      },onFinish(tasks){
-        //所有任务结束后回调，注意，结束不等于都成功，该函数会在所有HTTP上传请求响应后回调(包括重传请求)。
-      }
-    }).build();
+const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/';  // 图片服务器域名，展示时用
 
 export default {
   name: 'personalData',
@@ -123,25 +87,28 @@ export default {
       yearNumber: 1970,
       mouthNumber: 1,
       dayNumber: 1,
-      dayMin: 1,
       dayMax: 31,
       leap: false,
       sex: '',
       mail: '',
       name: '',
-      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
+      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
+      UPLOAD_ADDRESS: location.protocol === 'http:' ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
+      uploadData: {},
+      loading: false,
+      loading1: false
     }
   },
   computed: {
     birthday: {
       get: function () {
-            return new Date(`${this.yearNumber}-${this.mouthNumber}-${this.dayNumber}`)
-        },
+          return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
+      },
       set: function (val) {
         let time = new Date(val)
-        this.yearNumber = time.getFullYear()
-        this.mouthNumber = time.getMonth() + 1
-        this.dayNumber = time.getDate()
+        this.year(time.getFullYear())
+        this.mouth(time.getMonth() + 1)
+        this.day(time.getDate())
       }
     },
     ...mapGetters(['user'])
@@ -179,12 +146,17 @@ export default {
       this.dayNumber = val
     },
     changeAvatar: function () {
-      uploader.chooseFile()
+      const self = this
+      this.loading = true
+      setTimeout(function () {
+        self.loading = false
+      }, 5000)
+      document.getElementById('img-input').click()
     },
     pushPersonalData: function() {
       putUser({
         name: this.name,
-        avatar_url: this.dafaultAvatarUrl,
+        avatar_url: this.$refs.avatar.getAttribute('src'),
         sex: this.sex,
         birthday: this.birthday
       }).then(res => {
@@ -192,10 +164,34 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    beforeUpload: function (file) {
+      return this.qnUpload(file)
+    },
+    qnUpload: function (file) {
+      const suffix = file.name.split('.')
+      const ext = suffix.splice(suffix.length - 1, 1)[0]
+      // TODO: 图片格式/大小限制
+      return getToken().then(res => {
+        this.uploadData = {
+          key: `image/${suffix.join('.')}_${new Date().getTime()}.${ext}`,
+          token: res.uploadToken
+        }
+      })
+    },
+    upScuccess: function (e, file, fileList) {
+      console.log(e)
+      const url = QINIU_DOMAIN + e.key
+      this.$refs.avatar.setAttribute('src', url)
+      this.loading = false
+    },
+    upError: function (e, file, fileList) {
+      this.loading = false
     }
   },
   mounted () {
-    getUserById(this.user.id).then(res => {
+    this.loading1 = true
+    getUser().then(res => {
       this.mail = res.mail
       this.sex = res.sex
       this.name = res.name
@@ -204,6 +200,7 @@ export default {
       if (!isDefault) {
         this.dafaultAvatarUrl = res.avatar_url
       }
+      this.loading1 = false
     })
   }
 }
