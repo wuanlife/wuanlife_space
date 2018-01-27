@@ -34,6 +34,13 @@
 </script>
 
 <style lang="scss" type="stylesheet/scss" scoped>
+    .slide-fade-enter {
+    	opacity: 0;
+    	transform: translateX(20px);
+    }
+    .slide-fade-enter-active {
+    	transition: all 3.8s ease;
+    }
 // post card style    
     .collection-card {   
       padding: 16px 16px 12px 16px;   
