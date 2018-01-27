@@ -15,11 +15,20 @@
         	<img src="../../assets/404_images/404_box.png"/>        	
         </div>
         <div class="collection-tabcontent" v-else>
-          <ul class="collection-cards animated fadeInUp">
-            	<collection-card :item.sync='item' 
-              v-for="item in collecations"
-            	></collection-card>
-          </ul>
+          <div class="collection-cards">
+            <transition-group
+              @beforeEnter="beforeEnter"
+              @enter="enter"
+              tag="ul"
+              >
+              <collection-card :item.sync='item'
+                v-for="(item,index) in collecations"
+                :data-index = "index"
+                :key="item.create_at"
+                >
+              </collection-card>
+            </transition-group>      
+          </div>
         </div>
         <pagination @current-change="getCollection" :pagination.sync="pagination"></pagination>
       </section>
@@ -84,6 +93,21 @@
           })
         })
       },
+      beforeEnter(el) {
+        el.style.opacity=0
+        el.style.transition='all 1s ease'
+        el.style.transform='translateY(20px)'
+      },
+      enter(el, done) {
+        var delay=el.dataset.index*500
+        setTimeout(() => {
+          Velocity(
+            el,
+            {opacity: 1,transform: 'translateY(-20px)'},
+            {completed: done}
+            )
+        },delay)
+      }
     }
   }
 </script>

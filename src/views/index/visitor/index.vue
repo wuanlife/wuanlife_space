@@ -17,10 +17,8 @@
       </header>
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-          <transition-group tag="ul" ref="postCard">
-            <post-card :key="post.id" v-for="(post,index) of posts" :post.sync="post" :data-index="index">
+            <post-card v-for="(post,index) of posts" :post.sync="post" :data-index="index">
             </post-card>
-          </transition-group>
         </ul>
         <!--<el-pagination layout="prev, pager, next, jumper"
                          :page-count="pagination.pageCount"
