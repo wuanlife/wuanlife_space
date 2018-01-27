@@ -22,3 +22,15 @@ export function putUser(params) {
     data: params
   });
 }
+
+export function changepsw(params) {
+  const data = {
+    oldpsw: params.oldpsw,
+    password: params.password
+  };
+  return fetch({
+    url: '/users',
+    method: 'put',
+    data
+  });
+}
