@@ -1,4 +1,5 @@
 import fetch from 'utils/fetch';
+import store from 'vuex-store';
 // TODO: add vuex in this file to simplify the params
 
 export function getMockTest() {
@@ -54,9 +55,9 @@ export function getCommentsByPostId(id, offset = 0, limit = 20) {
   });
 }
 
-export function getCollection(id, offset = 0, limit = 20) {
+export function getCollection(offset = 0, limit = 20) {
   return new fetch({
-    url: `/users/${id}/collections?offset=${offset}&limit=${limit}`,
+    url: `/users/${store.state.user.id}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
   });
 }

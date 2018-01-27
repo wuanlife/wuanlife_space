@@ -5,9 +5,6 @@ import App from './App';
 import router from './router';
 import store from 'vuex-store';
 import ElementUI from 'element-ui';
-import './assets/animate.css';
-import './assets/velocity.min.js'
-import './assets/jquery-3.2.1.min.js'
 import 'element-ui/lib/theme-chalk/index.css'
 // import 'assets/custom-theme/index.css'; // 换肤版本element-ui css
 import NProgress from 'nprogress'; // Progress 进度条

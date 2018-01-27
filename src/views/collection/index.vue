@@ -11,7 +11,8 @@
             我的收藏
         </header>
         <div class="empty-container" v-if="empty">
-        	<h2>你还没有任何收藏哦~</h2>
+          <h2>你还没有任何收藏哦~</h2>
+        	<img src="../../assets/404_images/404_box.png"/>        	
         </div>
         <div class="collection-tabcontent" v-else>
           <ul class="collection-cards animated fadeInUp">
@@ -51,7 +52,6 @@
     },
     computed: {
       ...mapGetters([
-        'user',
         'access_token',
       ])
     },
@@ -63,7 +63,8 @@
         var self = this;
         this.loading = true;
         return new Promise((resolve, reject) => {
-          getCollection(self.user.id, (page - 1)*self.pagination.limit || 0, self.pagination.limit).then(res => {
+          getCollection((page - 1)*self.pagination.limit || 0, self.pagination.limit).then(res => {
+            console.log(res);
             if(res.articles.length==0) {
               self.empty = true;
             }else {
@@ -117,8 +118,14 @@
   	color: rgba(0,0,0,0.4);
   	display: flex;
   	justify-content: center;
+  	flex-direction: column;	
   	align-items: center;
   	height: 400px;
+  	/*img {
+  	  width: 200px;
+  	  height: 200px;
+  	  overflow: hidden;
+  	}*/
   }
   .collection-tabcontent {
     min-height: 200px;

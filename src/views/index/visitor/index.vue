@@ -73,7 +73,7 @@
       this.loadActiveUsers()
     },
     updated() {
-      $("header")[0].scrollIntoView();
+      document.getElementsByTagName("header")[0].scrollIntoView();
     },
     methods: {
       loadPosts(page) {
