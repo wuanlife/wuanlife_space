@@ -1,5 +1,16 @@
 <template>
   <div class="index-visitor-container">
+    <aside>
+      <header>
+        活跃用户
+      </header>
+      <div class="aside-content" v-loading="loadingAside">
+        <aside-card v-for="activeUser of activeUsers" 
+          :activeUser="activeUser"
+          >
+        </aside-card>
+      </div>
+    </aside>
     <section>
       <header>
         最新话题
@@ -18,36 +29,24 @@
       </div>
       <pagination @current-change="loadPosts" :pagination.sync="pagination"></pagination>
     </section>
-    <aside>
-      <header>
-        活跃用户
-      </header>
-      <div class="aside-content" v-loading="loadingAside">
-        <div v-for="activeuser of activeUsers" class="index-aside-card wuan-card clickable" @click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/'})">
-          <img :src="activeuser.avatar_url">
-          <div class="wuan-card__content">
-            <h2 class="clickable">{{ activeuser.name }}</h2>
-            <p>本月发表了{{activeuser.monthly_articles_num}}</p>
-          </div>
-        </div>
-      </div>
-    </aside>
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+//import { mapGetters } from 'vuex';
   import { parseQueryParams } from 'utils/url';
   import { getPosts, getMockTest, getArticles } from 'api/post';
   import { getActiveUsers } from 'api/user';
   // import { getGroups } from 'api/group';
   import PostCard from 'components/PostCard'
   import Pagination from 'components/Pagination'
+  import AsideCard from './AsideCard'
   export default {
     name: 'index-visitor',
     components: {
       PostCard,
-      Pagination
+      Pagination,
+      AsideCard
     },
     data() {
       return {
@@ -63,11 +62,11 @@
         }
       }
     },
-    computed: {
-      ...mapGetters([
-        'user',
-      ]),
-    },
+//  computed: {
+//    ...mapGetters([
+//      'user',
+//    ]),
+//  },
     mounted() {
       this.loadPosts(1);
       this.loadActiveUsers()
@@ -120,6 +119,7 @@
     section {
       min-width: 0;
       flex: 0 0 714px;
+      order: 1;
       header {
         margin: 31px 0 12px 0;
         padding-left: 17px;
@@ -134,6 +134,7 @@
     aside {
       margin-left: 41px;
       flex: 0 0 250px;
+      order: 2;
       @media screen and (max-width: 900px) {
         display: none;
       }
@@ -149,10 +150,10 @@
       }
       .aside-content {
         min-height: 100px;
-        .index-aside-card {
+        /*.index-aside-card {
           width: 250px;
           height: 70px;
-        }
+        }*/
       }
     }
   }
