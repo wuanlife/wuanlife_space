@@ -1,5 +1,4 @@
 <template>
-	<transition name="slide-fade">
 	<li class="collection-card">
 		<div class="collection-card-content">
 			<h1 @click="$router.push({ path: `/topic/${item.id}`, query: { name: item.title } })">{{ item.title }}</h1>
@@ -20,7 +19,6 @@
 			</div>
 		</footer>
 	</li>
-	</transition>	
 </template>
 
 <script>
@@ -50,7 +48,7 @@
       border-radius: 8px;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
       &:last-child{
       	margin-bottom: 108px;
       }
