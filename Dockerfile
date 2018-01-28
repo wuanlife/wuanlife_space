@@ -9,6 +9,5 @@ COPY package.json /usr/share/nginx/wuanlife
 RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install
 COPY . /usr/share/nginx/wuanlife
-EXPOSE 80
 
 RUN npm run build:prod
