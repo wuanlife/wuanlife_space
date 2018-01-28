@@ -1,5 +1,5 @@
 <template>
-	<div class="default-pagination" v-show="pagination.pageCount==1 ? false : true">
+	<div class="default-pagination" v-show="(pagination.pageCount==0)||(pagination.pageCount==1) ? false : true">
 		<div class="center">
 			<span v-if="pagination.currentPage != 1">
 			<span @click="pagination.currentPage--">上一页</span>

@@ -1,7 +1,7 @@
 import qs from 'qs'
 import fetch from 'utils/fetch';
 
-export function getRepliesById(articleId, params) {
+export function getRepliesByArticleId(articleId, params) {
   return fetch({
     url: `/articles/${articleId}/comments?${qs.stringify(params)}`,
     method: 'get'

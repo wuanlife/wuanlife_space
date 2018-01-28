@@ -10,7 +10,6 @@
       <div class="wuan-block article-container">
         <article-content :article="article"></article-content>
         <article-replies></article-replies>
-        <article-reply-input></article-reply-input>
       </div>
     </section>
   </div>
@@ -22,14 +21,12 @@
   import UserCard from 'components/UserCard';
   import ArticleContent from './ArticleContent.vue';
   import ArticleReplies from './ArticleReplies';
-  import ArticleReplyInput from './ArticleReplyInput.vue';
   export default {
     name: 'article-detail',
     components: {
       UserCard,
       ArticleContent,
       ArticleReplies,
-      ArticleReplyInput,
     },
     data() {
       return {

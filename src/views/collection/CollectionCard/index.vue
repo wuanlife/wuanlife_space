@@ -19,11 +19,10 @@
 			</div>
 		</footer>
 	</li>
-		
 </template>
 
 <script>
-	export default{
+	export default {
 		name: 'collection-card',
 		props: {
 			item: {
@@ -35,6 +34,13 @@
 </script>
 
 <style lang="scss" type="stylesheet/scss" scoped>
+    .slide-fade-enter {
+    	opacity: 0;
+    	transform: translateX(20px);
+    }
+    .slide-fade-enter-active {
+    	transition: all 3.8s ease;
+    }
 // post card style    
     .collection-card {   
       padding: 16px 16px 12px 16px;   
@@ -42,7 +48,7 @@
       border-radius: 8px;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
       &:last-child{
       	margin-bottom: 108px;
       }
