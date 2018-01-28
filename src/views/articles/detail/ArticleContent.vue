@@ -3,7 +3,6 @@
     <article>
         <h1>
             {{ article.title }}
-            <article-state v-if="article.sticky" :text="'置顶'" :color="'#5992e4'"></article-state>
             <article-state v-if="article.lock" :text="'锁定'" :color="'#ccc'"></article-state>
         </h1>
         <time>{{ article.create_at | formatTime }}</time>
@@ -12,24 +11,19 @@
     <footer>
         <div class="btns">
             <div class="article-btn"
-                 v-loading="loading"
+                 v-loading="approving"
                  :class="{'done': approvedTemp}"
                  @click="approve(article.id)">
                 <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ approved_numTemp }}
             </div>
             <div class="article-btn"
-                 v-loading="loading"
+                 v-loading="collecting"
                  :class="{'done': collectedTemp}"
                  @click="collect(article.id)">
                 <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ collected_numTemp }}
             </div>
         </div>
         <div class="article-opts">
-            <span v-if="true"
-                  class="article-opt"
-                  @click="settop(article.id)">
-            {{article.sticky ? '取消置顶' : '置顶'}}
-            </span>
             <span v-if="true"
                   class="article-opt"
                   @click="lock(article.id)">
@@ -58,12 +52,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import { Notification } from 'element-ui'
 import ArticleState from 'components/ArticleState';
 import {
   approveArticle,
   collectArticle,
-  settopArticle,
   lockArticle,
   deleteArticle,
 } from "api/article";
@@ -76,7 +70,8 @@ export default {
   props: ["article"],
   data() {
     return {
-      loading: false,
+      approving: false,
+      collecting: false,
       collectedTemp: false,
       collected_numTemp: 0,
       approvedTemp: false,
@@ -95,6 +90,7 @@ export default {
   },
   methods: {
     async approve() {
+      this.approving = true
       const res = await approveArticle(this.$route.params.id)
         if(this.approvedTemp) {
         this.approvedTemp = !this.approvedTemp;
@@ -103,8 +99,10 @@ export default {
         this.approvedTemp = !this.approvedTemp;
         this.approved_numTemp++;
       }
+      this.approving = false
     },
     async collect() {
+      this.collecting = true
       const res = await collectArticle(this.$route.params.id)
       if(this.collectedTemp) {
         this.collectedTemp = !this.collectedTemp;
@@ -113,14 +111,12 @@ export default {
         this.collectedTemp = !this.collectedTemp;
         this.collected_numTemp++;
       }
-    },
-    async settop() {
-      const res = await settopArticle(this.$route.params.id)
-      console.log(res);
+      this.collecting = false
     },
     async lock() {
       const res = await lockArticle(this.$route.params.id)
       console.log(res);
+      Notification.info(res)
     },
     edit(articleId) {
       this.$router.push({path: `/editor/article/${articleId}`})
@@ -161,6 +157,7 @@ footer {
 
   .article-btn {
     display: inline-block;
+    position: relative;
     color: #666666;
     cursor: pointer;
     margin-left: 20px;

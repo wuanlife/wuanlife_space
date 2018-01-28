@@ -237,7 +237,7 @@ module.exports = {
         'space-before-blocks': 'error',
 
         // allow console during development
-        'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,
+        'no-console': 'warn',
 
         // enforce consistent spacing before function definition opening parenthesis
         'space-before-function-paren': ['error', 'never'],
