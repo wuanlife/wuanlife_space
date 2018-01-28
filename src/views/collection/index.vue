@@ -40,7 +40,6 @@
   import { getCollection } from 'api/post';
   import CollectionCard from 'views/collection/CollectionCard';
   import Pagination from 'components/Pagination'
-  
   export default {
     name: 'collection-container',
     data() {
