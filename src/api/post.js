@@ -9,9 +9,9 @@ export function getMockTest() {
   })
 }
 
-export function getArticles(latest = true, offset = 0, limit = 20) { // 获取 首页 文章数据
+export function getArticles(offset = 0, limit = 20, order = 'desc') { // 获取 首页 文章数据
   return fetch({
-    url: `/articles?latest=${latest}&offset=${offset}&limit=${limit}`,
+    url: `/articles?offset=${offset}&limit=${limit}&order=${order}`,
     method: 'get'
   });
 }

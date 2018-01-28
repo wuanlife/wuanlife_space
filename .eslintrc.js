@@ -313,6 +313,8 @@ module.exports = {
         // require or disallow spacing around embedded expressions of template strings
         'template-curly-spacing': 'error',
 
+        'no-tabs': 'warn',
+
         // require or disallow spacing around the * in yield* expressions
         'yield-star-spacing': 'error',
 

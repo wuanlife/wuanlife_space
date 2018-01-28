@@ -12,7 +12,7 @@
         </header>
         <div class="empty-container" v-if="empty">
           <h2>你还没有任何收藏哦~</h2>
-        	<img src="../../assets/404_images/404_box.png"/>        	
+        	<img :src="box404"/>        	
         </div>
         <div class="collection-tabcontent" v-else>
           <div class="collection-cards">
@@ -40,6 +40,7 @@
   import { getCollection } from 'api/post';
   import CollectionCard from 'views/collection/CollectionCard';
   import Pagination from 'components/Pagination'
+  import box404 from '@/assets/404_images/404_box.png'
   export default {
     name: 'collection-container',
     data() {
