@@ -7,7 +7,8 @@
   </header>
   <p>{{ reply.comment }}</p>
   <div class="opts clearfix">
-      <span class="opt"
+      <span v-if="reply.user_id === user.id"
+            class="opt"
             :class="{'deleting': deleting}"
             @click="del">
         删除

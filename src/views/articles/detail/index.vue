@@ -1,7 +1,7 @@
 <template>
-  <div id="article-detail" class="view-container">
+  <div v-if="article" id="article-detail" class="view-container">
     <aside>
-      <user-card :user="article ? article.author : {}"></user-card>
+      <user-card :user="article.author"></user-card>
     </aside>
     <section>
       <header class="wuan-block">
@@ -12,6 +12,10 @@
         <article-replies></article-replies>
       </div>
     </section>
+  </div>
+  <!-- 未加载骨架 -->
+  <div v-else id="article-detail" class="view-container">
+
   </div>
 </template>
 
@@ -66,6 +70,7 @@
   }
   .article-container {
     padding: 31px;
+    margin-bottom: 30px;
     .article-content {
       margin-bottom: 50px;
     }
