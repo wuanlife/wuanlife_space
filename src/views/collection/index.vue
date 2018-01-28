@@ -47,6 +47,7 @@
     name: 'collection-container',
     data() {
       return {
+        box404,
         collecations: [],
         loading: false,
         pagination: {
