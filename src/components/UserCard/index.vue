@@ -2,7 +2,7 @@
   <div class="user-card">
       <img :src="user.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100' : user.avatar_url">
       <h2>{{user.name}}</h2>
-      <p>发表了{{user.total}}篇文章</p>
+      <p>发表了{{user.articles_num}}篇文章</p>
   </div>
 </template>
 
