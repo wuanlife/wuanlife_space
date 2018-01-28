@@ -102,7 +102,10 @@ export default {
   computed: {
     birthday: {
       get: function () {
-          return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
+          let day = this.dayNumber < 10 ? '0' + this.dayNumber : this.dayNumber
+          let mouth = this.mouthNumber < 10 ? '0' + this.mouthNumber : this.mouthNumber
+          return `${this.yearNumber}-${mouth}-${day}`
+          // return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
       },
       set: function (val) {
         let time = new Date(val)
