@@ -1,13 +1,14 @@
 FROM node:9.0
-MAINTAINER shudong <shudong.wang>
+MAINTAINER lwyj123 <443474713@qq.com>
 
-RUN mkdir -p /var/www/html
-WORKDIR /var/www/html
+RUN mkdir -p /usr/share/nginx/wuanlife
+WORKDIR /usr/share/nginx/wuanlife
 
-COPY package.json /var/www/html/
+COPY package.json /usr/share/nginx/wuanlife
 # set taobao source package
 RUN npm config set registry https://registry.npm.taobao.org
 RUN npm install
-COPY . /var/www/html
+COPY . /usr/share/nginx/wuanlife
+EXPOSE 80
 
-RUN npm run build
+RUN npm run build:prod
