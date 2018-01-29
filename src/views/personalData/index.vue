@@ -96,7 +96,8 @@ export default {
       UPLOAD_ADDRESS: location.protocol === 'http:' ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
       uploadData: {},
       loading: false,
-      loading1: false
+      loading1: false,
+      default: {}
     }
   },
   computed: {
@@ -157,13 +158,32 @@ export default {
       document.getElementById('img-input').click()
     },
     pushPersonalData: function() {
-      putUser({
-        name: this.name,
-        avatar_url: this.$refs.avatar.getAttribute('src'),
-        sex: this.sex,
-        birthday: this.birthday
-      }).then(res => {
+      var changeUser = {}
+      if (this.default.name !== this.name) {
+        changeUser.name = this.name
+      }
+      if (this.default.sex !== this.sex) {
+        changeUser.sex = this.sex
+      }
+      if (this.default.birthday !== this.birthday) {
+        changeUser.birthday = this.birthday
+      }
+      if (this.default.avatar_url !== this.$refs.avatar.getAttribute('src')) {
+        changeUser.avatar_url = this.$refs.avatar.getAttribute('src')
+      }
+      if (changeUser.name === undefined && changeUser.sex === undefined && changeUser.birthday === undefined && changeUser.avatar_url === undefined) {
+        this.$notify({
+          title: '提醒',
+          message: '请改变个人资料中某一项后，再提交！'
+        })
+        return
+      }
+      putUser(changeUser).then(res => {
         console.log(res)
+        this.$notify({
+          title: '修改成功',
+          message: '修改个人资料成功！'
+        })
       }).catch(err => {
         console.log(err)
       })
@@ -199,6 +219,7 @@ export default {
       this.sex = res.sex
       this.name = res.name
       this.birthday = res.birthday
+      this.default = res
       let isDefault = res.avatar_url === 'default_url' ? true : false
       if (!isDefault) {
         this.dafaultAvatarUrl = res.avatar_url
