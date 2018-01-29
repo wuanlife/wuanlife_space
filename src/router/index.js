@@ -48,11 +48,10 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    redirect: '/index',
     name: '首页',
     hidden: true,
     children: [{
-      path: 'index',
+      path: '/',
       component: Index
     }]
   },
@@ -146,6 +145,10 @@ export const constantRouterMap = [
       { path: '', component: MySpace },
       { path: ':id', component: MySpace }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 
