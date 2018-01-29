@@ -130,7 +130,6 @@
       flex: 0 0 714px;
       header {
         margin: 31px 0 12px 0;
-        font-family:MicrosoftYaHei-Bold;
         font-size:32px;
         color:#5677fc;
         background-color: white;
