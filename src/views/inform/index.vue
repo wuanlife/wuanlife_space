@@ -167,7 +167,6 @@
     display: flex;
     justify-content: space-between;
     margin: auto;
-    font-family:PingFangHK-Regular;
     max-width: 590px;
     min-width: 590px;
     @media screen and (max-width: 900px) {
@@ -211,7 +210,6 @@
           > span {
             color: #000000;
             width: 290px;
-            font-family:PingFangHK-Medium;
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -231,16 +229,13 @@
           }
           p:nth-child(1) {
             color: #5992e4;
-            font-family:PingFangHK-Medium;
           }
           p:nth-child(2) {
             width: 300px;
-            font-family:PingFangHK-Regular;
           }
         }
         button {
           font-size: 12px;
-          font-family:PingFangSC-Regular;
           color: #ffffff;
           background:#5677fc;
           box-shadow:0 2px 4px 0 rgba(0,0,0,0.28);

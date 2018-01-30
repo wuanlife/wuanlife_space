@@ -1,7 +1,7 @@
 <template>
-  <div id="article-detail" class="view-container">
+  <div v-if="article" id="article-detail" class="view-container">
     <aside>
-      <user-card :user="article ? article.author : {}"></user-card>
+      <user-card :user="article.author"></user-card>
     </aside>
     <section>
       <header class="wuan-block">
@@ -10,9 +10,12 @@
       <div class="wuan-block article-container">
         <article-content :article="article"></article-content>
         <article-replies></article-replies>
-        <article-reply-input></article-reply-input>
       </div>
     </section>
+  </div>
+  <!-- 未加载骨架 -->
+  <div v-else id="article-detail" class="view-container">
+
   </div>
 </template>
 
@@ -22,14 +25,12 @@
   import UserCard from 'components/UserCard';
   import ArticleContent from './ArticleContent.vue';
   import ArticleReplies from './ArticleReplies';
-  import ArticleReplyInput from './ArticleReplyInput.vue';
   export default {
     name: 'article-detail',
     components: {
       UserCard,
       ArticleContent,
       ArticleReplies,
-      ArticleReplyInput,
     },
     data() {
       return {
@@ -69,6 +70,7 @@
   }
   .article-container {
     padding: 31px;
+    margin-bottom: 30px;
     .article-content {
       margin-bottom: 50px;
     }

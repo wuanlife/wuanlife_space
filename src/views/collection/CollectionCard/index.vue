@@ -19,11 +19,10 @@
 			</div>
 		</footer>
 	</li>
-		
 </template>
 
 <script>
-	export default{
+	export default {
 		name: 'collection-card',
 		props: {
 			item: {
@@ -35,6 +34,13 @@
 </script>
 
 <style lang="scss" type="stylesheet/scss" scoped>
+    .slide-fade-enter {
+    	opacity: 0;
+    	transform: translateX(20px);
+    }
+    .slide-fade-enter-active {
+    	transition: all 3.8s ease;
+    }
 // post card style    
     .collection-card {   
       padding: 16px 16px 12px 16px;   
@@ -42,7 +48,7 @@
       border-radius: 8px;  
       &:not(:first-child) {
         margin-top: 8px;
-      }  
+      }
       &:last-child{
       	margin-bottom: 108px;
       }
@@ -52,7 +58,6 @@
         font-size:18px;   
         color:#999999;
         position: relative;
-        font-family:PingFangHK-Medium;
         div {
           position: absolute;
           right: 0;
@@ -74,14 +79,8 @@
       div.collection-card-content {
         margin-bottom: 12px;
         h1 {
-        	/*color: #333333;
-        font-family:PingFangHK-Semibold;
-        font-size:24px;
-        height: 25px;*/
-        
           margin-bottom: 6px;
           color: #333333;
-          font-family:PingFangHK-Semibold;
           font-size:24px;
           opacity: 0.87;
           cursor: pointer;
@@ -111,7 +110,6 @@
           color:#444444;
           letter-spacing:0;
           text-align:justify;
-          font-family:PingFangHK-Medium;
         }
         div.preview-imgs {
           display: flex;

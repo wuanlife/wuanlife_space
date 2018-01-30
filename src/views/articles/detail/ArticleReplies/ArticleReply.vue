@@ -1,13 +1,16 @@
 <template>
-<div class="article-reply">
+<div class="article-reply"
+     :class="{'article-reply-new': reply.new}">
   <header>
       <h3>{{reply.user_name}}</h3>
       <time>{{reply.create_at | formatTime}}</time>
   </header>
   <p>{{ reply.comment }}</p>
   <div class="opts clearfix">
-      <span class="opt"
-            @click="deleteReply">
+      <span v-if="reply.user_id === user.id"
+            class="opt"
+            :class="{'deleting': deleting}"
+            @click="del">
         删除
       </span>
   </div>
@@ -16,18 +19,28 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { deleteReply } from 'api/reply'
 import ArticleReply from "./ArticleReply";
 
 export default {
   name: "article-reply",
-  props: [
-    'reply'
-  ],
+  props: {
+    reply: {
+      type: Object,
+      required: true,
+    },
+    new: {
+      type: Boolean,
+      default: false,
+    }
+  },
   components: {
     ArticleReply
   },
   data() {
-    return {};
+    return {
+      deleting: false,
+    };
   },
   computed: {
     ...mapGetters(["user"])
@@ -38,7 +51,18 @@ export default {
     this.loading = true;
 
   },
-  methods: {}
+  methods: {
+    async del() {
+      this.deleting = true;
+      try {
+        const res = await deleteReply(this.$route.params.id, this.reply.floor);
+      } catch (e) {
+        console.log(e)
+      }
+      this.deleting = false;
+
+    }
+  }
 };
 </script>
 
@@ -53,6 +77,9 @@ export default {
       width: 80%;
       height: 1px;
     }
+  }
+  &-new {
+    // background: red;
   }
   header {
     display: flex;
