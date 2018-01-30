@@ -71,6 +71,11 @@ export default {
         offset: 20 * (page - 1),
         limit: 20
       }).then(res => {
+        if (res.author.id === this.user.id) {
+          document.title = '我的空间 - 午安网 - 过你想过的生活'
+        } else {
+          document.title = `${res.author.name}的空间 - 午安网 - 过你想过的生活`
+        }
         res.articles.forEach(element => {
           element.author = res.author
         })
