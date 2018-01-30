@@ -30,6 +30,9 @@ Object.keys(filters).forEach(key => {
 const blackList = ['inform', 'collection-not'];// 重定向黑名单
 router.beforeEach((to, from, next) => {
   NProgress.start(); // 开启Progress
+  if (to.meta.title) { // 如果设置标题，拦截后设置标题
+    document.title = to.meta.title
+  }
   const token = false
   if (token) { // 判断是否有token
     if (to.path === '/login') {
@@ -49,8 +52,11 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach(() => {
+router.afterEach(from => {
   NProgress.done(); // 结束Progress
+  if (from.meta instanceof Function) { // 当标题不确定时，使用此种方法设置 title
+    document.title = from.meta(from)
+  }
 });
 
 Vue.config.productionTip = false;
