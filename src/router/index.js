@@ -53,7 +53,7 @@ export const constantRouterMap = [
     children: [{
       path: '/',
       component: Index,
-      meta: { title: '午安空间' }
+      meta: { title: '午安网 - 过你想过的生活' }
     }]
   },
   {
@@ -68,8 +68,7 @@ export const constantRouterMap = [
     children: [
       {
         path: ':id',
-        component: ArticleDetail,
-        meta: route => route.query.title
+        component: ArticleDetail
       }
     ]
   },
@@ -107,7 +106,6 @@ export const constantRouterMap = [
   },
   {
     path: '/personalData',
-    name: 'personalData',
     component: Layout,
     hidden: true,
     children: [{ path: '', component: PersonalData, meta: { title: '个人资料 - 午安网 - 过你想过的生活' } }]
@@ -140,14 +138,14 @@ export const constantRouterMap = [
     path: '/search',
     component: Layout,
     hidden: true,
-    children: [{ path: '', name: 'search', component: Search, meta: { title: '搜索 - 午安网 - 过你想过的生活' } }]
+    children: [{ path: '', name: 'search', component: Search }]
   },
   {
     path: '/myspace',
     component: Layout,
     children: [
       { path: '', component: MySpace, meta: { title: '我的空间 - 午安网 - 过你想过的生活' } },
-      { path: ':id', component: MySpace, meta: route => route.query.title }
+      { path: ':id', component: MySpace }
     ]
   },
   {

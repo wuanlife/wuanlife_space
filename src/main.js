@@ -52,11 +52,8 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-router.afterEach(from => {
+router.afterEach(() => {
   NProgress.done(); // 结束Progress
-  if (from.meta instanceof Function) { // 当标题不确定时，使用此种方法设置 title
-    document.title = from.meta(from)
-  }
 });
 
 Vue.config.productionTip = false;

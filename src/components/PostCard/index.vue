@@ -2,11 +2,11 @@
   <li class="post-card" >
     <header>
       <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100' : post.author.avatar_url">
-      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`, query: {title: `${post.author.name}的空间 - 午安网 - 过你想过的生活`}})">{{ post.author.name }}</span>
+      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
       <time>{{ post.create_at | formatTime }}</time>
     </header>
     <div class="post-card-content">
-      <h1 @click="$router.push({path: `/article/${post.id}`, query: {title: `${post.title} - 午安网 - 过你想过的生活`}})" :title="post.title">{{ post.title }}</h1>
+      <h1 @click="$router.push({path: `/article/${post.id}`})" :title="post.title">{{ post.title }}</h1>
       <div class="preview-html" v-html="content">
       </div>
       <div class="preview-imgs">
