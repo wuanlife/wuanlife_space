@@ -121,7 +121,6 @@
       header {
         margin: 31px 0 12px 0;
         padding-left: 17px;
-        font-family: MicrosoftYaHei-Bold;
         font-size: 32px;
         color: #5677fc;
         height: 66px;

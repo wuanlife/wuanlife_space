@@ -6,7 +6,7 @@
     margin: auto;
     min-width: 714px;
     max-width: 1280px;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1100px) {
         justify-content: center;
     }
     & > section {
@@ -24,7 +24,7 @@
             order: 1;
         }
         flex: 0 0 420px;
-        @media screen and (max-width: 900px) {
+        @media screen and (max-width: 1100px) {
             display: none;
         }
         header {

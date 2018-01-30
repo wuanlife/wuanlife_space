@@ -58,7 +58,6 @@
         font-size:18px;   
         color:#999999;
         position: relative;
-        font-family:PingFangHK-Medium;
         div {
           position: absolute;
           right: 0;
@@ -80,14 +79,8 @@
       div.collection-card-content {
         margin-bottom: 12px;
         h1 {
-        	/*color: #333333;
-        font-family:PingFangHK-Semibold;
-        font-size:24px;
-        height: 25px;*/
-        
           margin-bottom: 6px;
           color: #333333;
-          font-family:PingFangHK-Semibold;
           font-size:24px;
           opacity: 0.87;
           cursor: pointer;
@@ -117,7 +110,6 @@
           color:#444444;
           letter-spacing:0;
           text-align:justify;
-          font-family:PingFangHK-Medium;
         }
         div.preview-imgs {
           display: flex;
