@@ -168,7 +168,7 @@ export default {
       }
       this.deleting = true;
       const res = await deleteArticle(this.$route.params.id)
-      console.log(res);
+      Notification.info('删除帖子成功')
     }
   }
 };
