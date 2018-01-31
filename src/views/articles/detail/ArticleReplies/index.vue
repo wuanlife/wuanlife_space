@@ -6,6 +6,7 @@
     </header>
     <div class="replies-container">
       <article-reply v-for="reply in replies" 
+                    @delete-success="handleDeleteSuccess"
                     ref='reply'
                     :key="reply.id"
                     :reply="reply">
@@ -38,6 +39,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getRepliesByArticleId } from "api/reply";
+import { Notification } from 'element-ui';
 import ArticleReply from "./ArticleReply";
 import ArticleReplyInput from "./ArticleReplyInput";
 
@@ -88,7 +90,19 @@ export default {
       this.$nextTick( () => {
         this.$refs['reply-header'].scrollIntoView()
       })
-
+    },
+    handleDeleteSuccess(reply) {
+      this.replies = this.replies.filter((item) => {
+        if(item === reply) {
+          return false;
+        }
+        return true;
+      })
+      this.pagination.total--;
+      Notification.info({
+        message: "删除评论成功",
+        offset: 100
+      })
     },
     handleReplySuccess(reply) {
       this.replies.unshift({

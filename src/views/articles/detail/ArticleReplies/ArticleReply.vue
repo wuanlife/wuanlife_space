@@ -1,6 +1,6 @@
 <template>
 <div class="article-reply"
-     :class="{'article-reply-new': reply.new, 'deleted': deleted}">
+     :class="{'article-reply-new': reply.new}">
   <header>
       <h3>{{reply.user_name}}</h3>
       <time>{{reply.create_at | formatTime}}</time>
@@ -60,6 +60,7 @@ export default {
       try {
         const res = await deleteReply(this.$route.params.id, this.reply.floor);
         this.deleted = true;
+        this.$emit('delete-success', this.reply)
       } catch (e) {
         console.log(e)
       }
@@ -84,9 +85,6 @@ export default {
   }
   &-new {
     // background: red;
-  }
-  &.deleted {
-    display: none;
   }
   header {
     display: flex;

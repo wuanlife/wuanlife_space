@@ -95,7 +95,7 @@
 							...this.loginForm
 						}).then((user) => {
 							this.loading = false;
-							this.$router.push({ path: '/index' })
+							this.$router.push({ path: '/' })
 						})
           } else {
             console.log('error submit!!');
