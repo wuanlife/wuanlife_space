@@ -25,9 +25,10 @@
         </div>
         <div class="article-opts">
             <span v-if="true"
+                  v-loading="locking"
                   class="article-opt"
                   @click="lock(article.id)">
-            {{article.lock ? '解锁' : '锁定'}}
+            {{lockedTemp ? '解锁' : '锁定'}}
             </span>
             <span v-if="user.id === article.author.id"
                   class="article-opt"
@@ -59,6 +60,7 @@ import {
   approveArticle,
   collectArticle,
   lockArticle,
+  unlockArticle,
   deleteArticle,
 } from "api/article";
 
@@ -72,10 +74,12 @@ export default {
     return {
       approving: false,
       collecting: false,
-      collectedTemp: false,
-      collected_numTemp: 0,
+      locking: false,
       approvedTemp: false,
       approved_numTemp: 0,
+      collectedTemp: false,
+      collected_numTemp: 0,
+      lockedTemp: false,
     };
   },
   computed: {
@@ -83,10 +87,11 @@ export default {
   },
   created() {},
   mounted() {
-    this.collectedTemp = this.article.collected;
-    this.collected_numTemp = this.article.collected_num;
     this.approvedTemp = this.article.approved;
     this.approved_numTemp = this.article.approved_num;
+    this.collectedTemp = this.article.collected;
+    this.collected_numTemp = this.article.collected_num;
+    this.lockedTemp = this.article.lock;
   },
   methods: {
     async approve() {
@@ -114,9 +119,24 @@ export default {
       this.collecting = false
     },
     async lock() {
-      const res = await lockArticle(this.$route.params.id)
-      console.log(res);
-      Notification.info(res)
+      try {
+        this.locking = true;
+        const res = await lockArticle(this.$route.params.id)
+        Notification.info({
+          message: res,
+          offset: 100
+        })
+      } catch (e) {
+        if(e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 100
+          })
+        } else {
+          console.log(e)
+        }
+      }
+      this.locking = false;
     },
     edit(articleId) {
       this.$router.push({path: `/editor/article/${articleId}`})

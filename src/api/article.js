@@ -46,6 +46,13 @@ export function approveArticle(id) {
     data: {}
   });
 }
+export function unapproveArticle(id) {
+  return fetch({
+    url: `/articles/${id}/approval`,
+    method: 'post',
+    data: {}
+  });  
+}
 
 // 收藏文章
 export function collectArticle(id) {
