@@ -49,9 +49,9 @@ export function approveArticle(id) {
 export function unapproveArticle(id) {
   return fetch({
     url: `/articles/${id}/approval`,
-    method: 'post',
+    method: 'delete',
     data: {}
-  });  
+  });
 }
 
 // 收藏文章
@@ -59,6 +59,15 @@ export function collectArticle(id) {
   return fetch({
     url: `/users/${store.state.user.id}/collections`,
     method: 'put',
+    data: {
+      article_id: id
+    }
+  });
+}
+export function uncollectArticle(id) {
+  return fetch({
+    url: `/users/${store.state.user.id}/collections`,
+    method: 'delete',
     data: {
       article_id: id
     }
@@ -72,11 +81,9 @@ export function lockArticle(id) {
     method: 'post'
   })
 }
-
-// 置顶文章
-export function settopArticle(id) {
+export function unlockArticle(id) {
   return fetch({
-    url: `/articles/${id}/tops`,
-    method: 'post'
+    url: `/articles/${id}/lock`,
+    method: 'delete'
   })
 }

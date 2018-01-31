@@ -58,7 +58,9 @@ import { Notification } from 'element-ui'
 import ArticleState from 'components/ArticleState';
 import {
   approveArticle,
+  unapproveArticle,
   collectArticle,
+  uncollectArticle,
   lockArticle,
   unlockArticle,
   deleteArticle,
@@ -72,9 +74,12 @@ export default {
   props: ["article"],
   data() {
     return {
+      // 请求发送中
       approving: false,
       collecting: false,
       locking: false,
+      deleting: false,
+      // 显示
       approvedTemp: false,
       approved_numTemp: 0,
       collectedTemp: false,
@@ -95,33 +100,49 @@ export default {
   },
   methods: {
     async approve() {
+      if(this.approving) {
+        return;
+      }
       this.approving = true
-      const res = await approveArticle(this.$route.params.id)
         if(this.approvedTemp) {
+        await unapproveArticle(this.$route.params.id)
         this.approvedTemp = !this.approvedTemp;
         this.approved_numTemp--;
       } else {
+        await approveArticle(this.$route.params.id)
         this.approvedTemp = !this.approvedTemp;
         this.approved_numTemp++;
       }
       this.approving = false
     },
     async collect() {
+      if(this.collecting) {
+        return;
+      }
       this.collecting = true
-      const res = await collectArticle(this.$route.params.id)
       if(this.collectedTemp) {
+        await uncollectArticle(this.$route.params.id)
         this.collectedTemp = !this.collectedTemp;
         this.collected_numTemp--;
       } else {
+        await collectArticle(this.$route.params.id)
         this.collectedTemp = !this.collectedTemp;
         this.collected_numTemp++;
       }
       this.collecting = false
     },
     async lock() {
+      if(this.locking) {
+        return;
+      }
+      this.locking = true;
       try {
-        this.locking = true;
-        const res = await lockArticle(this.$route.params.id)
+        let res = null;
+        if(this.lockedTemp) {
+          res = await unlockArticle(this.$route.params.id)
+        } else {
+          res = await lockArticle(this.$route.params.id)
+        }
         Notification.info({
           message: res,
           offset: 100
@@ -142,6 +163,10 @@ export default {
       this.$router.push({path: `/editor/article/${articleId}`})
     },
     async del() {
+      if(this.deleting) {
+        return;
+      }
+      this.deleting = true;
       const res = await deleteArticle(this.$route.params.id)
       console.log(res);
     }
