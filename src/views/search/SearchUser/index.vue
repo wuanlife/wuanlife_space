@@ -42,11 +42,15 @@
 			/*margin: 5px 10px;*/
 			top: -35px;
 			left: 5px;
-			position: absolute;		
+			position: absolute;
 		}
 		h3 {
 			font-size: 20px;
 			margin-right: 7px;
+			max-width: 120px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
 		}
 	}
 </style>
