@@ -235,7 +235,6 @@
         h2 {
           margin: 20px 0;
 
-          font-family:PingFangHK-Medium;
           font-weight: normal;
           font-size:14px;
           color:#5677fc;
@@ -253,7 +252,6 @@
         justify-content: space-between;
         margin: 20px;
         span {
-          font-family:PingFangHK-Regular;
           font-size:14px;
           color:#5992e4;
         }
@@ -316,7 +314,6 @@
           margin-bottom: 6px;
 
           color: #2e5897;
-          font-family:PingFangHK-Semibold;
           font-size:16px;
           // hover animation
           &::after {
@@ -402,7 +399,6 @@
       overflow: hidden;
       white-space: nowrap;
 
-      font-family:PingFangHK-Medium;
       font-size:12px;
       color:#5992e4;
       text-align: center;

@@ -1,14 +1,14 @@
 <template>
 <div class="article-reply"
-     :class="{'article-reply-new': reply.new}">
+     :class="{'article-reply-new': reply.new, 'deleted': deleted}">
   <header>
       <h3>{{reply.user_name}}</h3>
       <time>{{reply.create_at | formatTime}}</time>
   </header>
   <p>{{ reply.comment }}</p>
-  <div class="opts clearfix">
-      <span class="opt"
-            :class="{'deleting': deleting}"
+  <div class="opts clearfix" v-loading="deleting">
+      <span v-if="reply.user_id === user.id"
+            :class="{'opt': true}"
             @click="del">
         删除
       </span>
@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       deleting: false,
+      deleted: false,
     };
   },
   computed: {
@@ -52,9 +53,13 @@ export default {
   },
   methods: {
     async del() {
+      if(this.deleting) {
+        return;
+      }
       this.deleting = true;
       try {
         const res = await deleteReply(this.$route.params.id, this.reply.floor);
+        this.deleted = true;
       } catch (e) {
         console.log(e)
       }
@@ -79,6 +84,9 @@ export default {
   }
   &-new {
     // background: red;
+  }
+  &.deleted {
+    display: none;
   }
   header {
     display: flex;

@@ -3,7 +3,6 @@
     <article>
         <h1>
             {{ article.title }}
-            <article-state v-if="article.sticky" :text="'置顶'" :color="'#5992e4'"></article-state>
             <article-state v-if="article.lock" :text="'锁定'" :color="'#ccc'"></article-state>
         </h1>
         <time>{{ article.create_at | formatTime }}</time>
@@ -12,13 +11,13 @@
     <footer>
         <div class="btns">
             <div class="article-btn"
-                 v-loading="loading"
+                 v-loading="approving"
                  :class="{'done': approvedTemp}"
                  @click="approve(article.id)">
                 <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ approved_numTemp }}
             </div>
             <div class="article-btn"
-                 v-loading="loading"
+                 v-loading="collecting"
                  :class="{'done': collectedTemp}"
                  @click="collect(article.id)">
                 <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ collected_numTemp }}
@@ -26,14 +25,10 @@
         </div>
         <div class="article-opts">
             <span v-if="true"
-                  class="article-opt"
-                  @click="settop(article.id)">
-            {{article.sticky ? '取消置顶' : '置顶'}}
-            </span>
-            <span v-if="true"
+                  v-loading="locking"
                   class="article-opt"
                   @click="lock(article.id)">
-            {{article.lock ? '解锁' : '锁定'}}
+            {{lockedTemp ? '解锁' : '锁定'}}
             </span>
             <span v-if="user.id === article.author.id"
                   class="article-opt"
@@ -58,13 +53,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
+import { Notification } from 'element-ui'
 import ArticleState from 'components/ArticleState';
 import {
   approveArticle,
+  unapproveArticle,
   collectArticle,
-  settopArticle,
+  uncollectArticle,
   lockArticle,
+  unlockArticle,
   deleteArticle,
 } from "api/article";
 
@@ -76,11 +74,17 @@ export default {
   props: ["article"],
   data() {
     return {
-      loading: false,
-      collectedTemp: false,
-      collected_numTemp: 0,
+      // 请求发送中
+      approving: false,
+      collecting: false,
+      locking: false,
+      deleting: false,
+      // 显示
       approvedTemp: false,
       approved_numTemp: 0,
+      collectedTemp: false,
+      collected_numTemp: 0,
+      lockedTemp: false,
     };
   },
   computed: {
@@ -88,44 +92,81 @@ export default {
   },
   created() {},
   mounted() {
-    this.collectedTemp = this.article.collected;
-    this.collected_numTemp = this.article.collected_num;
     this.approvedTemp = this.article.approved;
     this.approved_numTemp = this.article.approved_num;
+    this.collectedTemp = this.article.collected;
+    this.collected_numTemp = this.article.collected_num;
+    this.lockedTemp = this.article.lock;
   },
   methods: {
     async approve() {
-      const res = await approveArticle(this.$route.params.id)
+      if(this.approving) {
+        return;
+      }
+      this.approving = true
         if(this.approvedTemp) {
+        await unapproveArticle(this.$route.params.id)
         this.approvedTemp = !this.approvedTemp;
         this.approved_numTemp--;
       } else {
+        await approveArticle(this.$route.params.id)
         this.approvedTemp = !this.approvedTemp;
         this.approved_numTemp++;
       }
+      this.approving = false
     },
     async collect() {
-      const res = await collectArticle(this.$route.params.id)
+      if(this.collecting) {
+        return;
+      }
+      this.collecting = true
       if(this.collectedTemp) {
+        await uncollectArticle(this.$route.params.id)
         this.collectedTemp = !this.collectedTemp;
         this.collected_numTemp--;
       } else {
+        await collectArticle(this.$route.params.id)
         this.collectedTemp = !this.collectedTemp;
         this.collected_numTemp++;
       }
-    },
-    async settop() {
-      const res = await settopArticle(this.$route.params.id)
-      console.log(res);
+      this.collecting = false
     },
     async lock() {
-      const res = await lockArticle(this.$route.params.id)
-      console.log(res);
+      if(this.locking) {
+        return;
+      }
+      this.locking = true;
+      try {
+        let res = null;
+        if(this.lockedTemp) {
+          res = await unlockArticle(this.$route.params.id)
+        } else {
+          res = await lockArticle(this.$route.params.id)
+        }
+        Notification.info({
+          message: res,
+          offset: 100
+        })
+      } catch (e) {
+        if(e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 100
+          })
+        } else {
+          console.log(e)
+        }
+      }
+      this.locking = false;
     },
     edit(articleId) {
       this.$router.push({path: `/editor/article/${articleId}`})
     },
     async del() {
+      if(this.deleting) {
+        return;
+      }
+      this.deleting = true;
       const res = await deleteArticle(this.$route.params.id)
       console.log(res);
     }
@@ -161,6 +202,7 @@ footer {
 
   .article-btn {
     display: inline-block;
+    position: relative;
     color: #666666;
     cursor: pointer;
     margin-left: 20px;

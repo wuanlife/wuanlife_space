@@ -43,23 +43,23 @@ Vue.use(Router);
 
 export const constantRouterMap = [
   /* { path: '/authredirect', component: authRedirect, hidden: true },*/
-  { path: '/404', component: Err404, hidden: true },
-  { path: '/401', component: Err401, hidden: true },
+  { path: '/404', component: Err404, hidden: true, meta: { title: '404错误 - 午安网 - 过你想过的生活' } },
+  { path: '/401', component: Err401, hidden: true, meta: { title: '401错误 - 午安网 - 过你想过的生活' } },
   {
     path: '/',
     component: Layout,
-    redirect: '/index',
     name: '首页',
     hidden: true,
     children: [{
-      path: 'index',
-      component: Index
+      path: '/',
+      component: Index,
+      meta: { title: '午安网 - 过你想过的生活' }
     }]
   },
   {
     path: '/login',
     component: Layout,
-    children: [{ path: '', name: 'login', component: Login }]
+    children: [{ path: '', name: 'login', component: Login, meta: { title: '登录 - 午安网 - 过你想过的生活' } }]
   },
   {
     path: '/article',
@@ -79,10 +79,12 @@ export const constantRouterMap = [
     children: [
       {
         path: 'article/:id',
-        component: EditorEdit
+        component: EditorEdit,
+        meta: { title: '修改文章 - 午安网 - 过你想过的生活' }
       }, {
         path: 'drafts/new',
-        component: EditorNewDraft
+        component: EditorNewDraft,
+        meta: { title: '写文章 - 午安网 - 过你想过的生活' }
       }
       // 后续加入drafts
     ]
@@ -95,19 +97,18 @@ export const constantRouterMap = [
   {
     path: '/collection',
     component: Layout,
-    children: [{ path: '', name: 'collection', component: Collection }]
+    children: [{ path: '', name: 'collection', component: Collection, meta: { title: '我的收藏 - 午安网 - 过你想过的生活' } }]
   },
   {
     path: '/signup',
     component: Layout,
-    children: [{ path: '', component: Signup }]
+    children: [{ path: '', component: Signup, meta: { title: '注册 - 午安网 - 过你想过的生活' } }]
   },
   {
     path: '/personalData',
-    name: 'personalData',
     component: Layout,
     hidden: true,
-    children: [{ path: '', component: PersonalData }]
+    children: [{ path: '', component: PersonalData, meta: { title: '个人资料 - 午安网 - 过你想过的生活' } }]
   },
   // {
   //   path: '/findpassword',
@@ -131,7 +132,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/changepsw/index',
     hidden: true,
-    children: [{ path: 'index', component: Changepsw }]
+    children: [{ path: 'index', component: Changepsw, meta: { title: '修改密码 - 午安网 - 过你想过的生活' } }]
   },
   {
     path: '/search',
@@ -143,9 +144,13 @@ export const constantRouterMap = [
     path: '/myspace',
     component: Layout,
     children: [
-      { path: '', component: MySpace },
+      { path: '', component: MySpace, meta: { title: '我的空间 - 午安网 - 过你想过的生活' } },
       { path: ':id', component: MySpace }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/404'
   }
 ]
 

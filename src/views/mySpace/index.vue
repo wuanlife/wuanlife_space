@@ -26,7 +26,6 @@ import PostCard from "components/PostCard";
 import UserCard from "components/UserCard";
 import Pagination from "components/Pagination";
 import { getMyArticles } from "api/post";
-import { getUserById } from "api/user";
 import { mapGetters } from "vuex";
 export default {
   name: "mySpace",
@@ -40,7 +39,7 @@ export default {
       dates: [],
       users: {
         name: '',
-        total: 0,
+        articles_num: 0,
         avatar_url: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100'
       },
       pagination: {
@@ -56,18 +55,10 @@ export default {
     ...mapGetters(["user"])
   },
   mounted() {
-    if(this.$route.query.id) {
-      this.id = this.$route.query.id
-      this.users.name = this.$route.query.name
-      this.users.avatar_url = this.$route.query.avatar_url === 'default_url' ? this.users.avatar_url : this.$route.query.avatar_url
+    if(this.$route.params.id) {
+      this.id = this.$route.params.id
     } else {
       this.id = this.user.id
-      getUserById(this.id).then(res => {
-        this.users.name = res.name
-        this.users.avatar_url = res.avatar_url === 'default_url' ? this.users.avatar_url : res.avatar_url
-      }).catch(err => {
-        console.log(err)
-      })
     }
     this.loadPosts(1)
   },
@@ -80,12 +71,19 @@ export default {
         offset: 20 * (page - 1),
         limit: 20
       }).then(res => {
+        if (res.author.id === this.user.id) {
+          document.title = '我的空间 - 午安网 - 过你想过的生活'
+        } else {
+          document.title = `${res.author.name}的空间 - 午安网 - 过你想过的生活`
+        }
         res.articles.forEach(element => {
           element.author = res.author
         })
         self.dates = res.articles
-        self.users.total = res.total
-        self.pagination.pageCount = Math.ceil(res.total / 20)
+        self.users.name = res.author.name
+        self.users.articles_num = res.author.articles_num
+        self.users.avatar_url = res.author.avatar_url
+        self.pagination.pageCount = Math.ceil(res.author.articles_num / 20)
         self.loading = false
       }).catch(err => {
         console.log(err)

@@ -100,7 +100,6 @@
       flex: 1;
       header {
         margin: 15px 0 20px 0;
-        font-family:PingFangHK-Medium;
         font-size:18px;
         color:#5677fc;
       }
