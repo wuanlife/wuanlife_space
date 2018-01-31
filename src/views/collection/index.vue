@@ -40,12 +40,12 @@
   import { getCollection } from 'api/post';
   import CollectionCard from 'views/collection/CollectionCard';
   import Pagination from 'components/Pagination'
-  import Box404 from '@/assets/404_images/Box404.png'
+import Box404 from '@/assets/404_images/Box404.png'
   export default {
     name: 'collection-container',
     data() {
       return {
-        box404,
+        Box404,
         collecations: [],
         loading: false,
         pagination: {
