@@ -148,7 +148,7 @@
         position: relative;
         cursor: pointer;
         margin-bottom: 19px;
-        width: 100%;
+        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
