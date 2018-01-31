@@ -16,8 +16,8 @@
     <footer>
       <ul>
         <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
-        <li @click="collect(post.id)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
+        <li @click="approve(post.id, post.approved)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
+        <li @click="collect(post.id, post.collected)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
       </ul>
     </footer>
   </li> 
@@ -31,6 +31,8 @@
   import {
     approveArticle,
     collectArticle,
+    unapproveArticle,
+    uncollectArticle
   } from 'api/article';
 
   export default {
@@ -60,29 +62,41 @@
     },
     methods: {
       // collect post
-      collect(id) {
+      async collect(id, val) {
         var self = this;
         if(this.user.token == '') {
           this.$router.push({path: '/login/'})
           return
         }
-        collectArticle(id).then(() => {
-          self.post.collected_num += self.post.collected ? -1 : 1 ;
-          self.post.collected = !self.post.collected;
-          self.$emit('on-collected', self.post.id);
-        })
+        if (val) {
+          await uncollectArticle(id).then(() => {
+            self.post.collected_num--
+            self.post.collected = !val
+          })
+        } else{
+          await collectArticle(id).then(() => {
+            self.post.collected_num++
+            self.post.collected = !val
+          })
+        }
       },
-      approve(id) {
+      async approve(id, val) {
         var self = this;
         if(this.user.token == '') {
           this.$router.push({path: '/login/'})
           return
         }
-        approveArticle(id).then(() => {
-          self.post.approved_num += self.post.approved ? -1 : 1
-          self.post.approved = !self.post.approved
-          self.$emit('on-approved', self.post.id)
-        })
+        if (val) {
+          await unapproveArticle(id).then(() => {
+            self.post.approved = !val
+            self.post.approved_num--
+          })
+        } else{
+          await approveArticle(id).then(() => {
+            self.post.approved = !val
+            self.post.approved_num++
+          })
+        }
       },
       toSpace(id) {
         var self = this
