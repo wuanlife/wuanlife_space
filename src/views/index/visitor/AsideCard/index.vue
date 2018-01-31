@@ -37,12 +37,7 @@
           })
         } else {
           this.$router.push({
-            path: `/mySpace/${this.activeUser.id}`,
-            query: {
-              id: this.activeUser.id,
-              name: this.activeUser.name,
-              avatar_url: this.activeUser.avatar_url
-            }
+            path: `/mySpace/${this.activeUser.id}`
           })
         }
       }
