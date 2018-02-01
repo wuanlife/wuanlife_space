@@ -81,6 +81,9 @@ import { getMockTest } from 'api/post';
 如果不包含，则没有aside标签。
 > 这里为什么把aside放前面其实是因为css选择器没有前向的选择，只有+选择器去选择兄弟，由于有aside和没有aside的section样式不一样，所以做了个折中，大家编码的时候注意一下aside和section的前后顺序。
 
+## 关于页面样式的一些规范
+本项目使用.vue单文件开发，并且使用scss预处理器。项目使用sass-resources-loader加载了全局设置文件，开发者直接在vue文件的style标签里面可以直接使用变量
+
 ## 代码提交流程
 组员代码提交使用pull request提交
 1. 组员先fork我们的wuanlife库

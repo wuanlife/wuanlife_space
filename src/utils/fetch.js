@@ -33,7 +33,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error);// for debug
+    // console.log('err' + error);// for debug
     if (!error.response) {
       Notification({
         message: error.message,

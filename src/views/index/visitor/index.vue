@@ -5,7 +5,8 @@
         活跃用户
       </header>
       <div class="aside-content" v-loading="loadingAside">
-        <aside-card v-for="activeUser of activeUsers" 
+        <aside-card v-for="activeUser of activeUsers"
+          :key="`activeUser-${activeUser.id}`"
           :activeUser="activeUser"
           >
         </aside-card>
@@ -17,7 +18,10 @@
       </header>
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-            <post-card v-for="(post,index) of posts" :post.sync="post" :data-index="index">
+            <post-card v-for="(post,index) of posts"
+                       :key="`post-${post.id}`"
+                       :post.sync="post" 
+                       :data-index="index">
             </post-card>
         </ul>
         <!--<el-pagination layout="prev, pager, next, jumper"

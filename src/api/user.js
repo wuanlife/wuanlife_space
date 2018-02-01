@@ -41,13 +41,13 @@ export function getActiveUsers() {
     method: 'get'
   })
 }
-export function changepsw(params) {
+export function changePassword(params) {
   const data = {
-    oldpsw: params.oldpsw,
-    password: params.password
+    old_psd: params.old_psd,
+    new_psd: params.new_psd
   };
   return fetch({
-    url: '/users',
+    url: `/users/${store.state.user.id}/password`,
     method: 'put',
     data
   });

@@ -15,7 +15,6 @@
   </div>
   <!-- 未加载骨架 -->
   <div v-else id="article-detail" class="view-container">
-
   </div>
 </template>
 
