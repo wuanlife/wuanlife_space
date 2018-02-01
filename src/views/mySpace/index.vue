@@ -7,7 +7,7 @@
       </aside>
       <section>
           <h1>最新内容</h1>
-          <ul class="mySpace-content" v-loading="loading">
+          <ul class="mySpace-content" v-loading="loading" ref="card-list">
               <post-card
                 v-for="(date, index) in dates"
                 :key="index"
@@ -15,7 +15,7 @@
           </ul>
           <pagination
             class="pagination"
-            @loadPosts="loadPosts"
+            @current-change="loadPosts"
             :pagination.sync="pagination"></pagination>
       </section>
   </div>
@@ -85,6 +85,7 @@ export default {
         self.users.avatar_url = res.author.avatar_url
         self.pagination.pageCount = Math.ceil(res.author.articles_num / 20)
         self.loading = false
+        self.$refs['card-list'].scrollIntoView()
       }).catch(err => {
         console.log(err)
       })
