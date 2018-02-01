@@ -50,13 +50,13 @@ export default {
         const res = await postReply(this.$route.params.id, {
           comment: this.replyContent
         })
-        this.$emit('reply-success', {
-          user_name: this.user.name,
-          comment: this.replyContent,
-          create_at: (new Date()).toISOString(),
-        })
+        this.$emit('reply-success', res)
         this.replyContent = '';
       } catch (e) {
+        Notification.error({
+          message: e.data.error || "未知错误",
+          offset: 100
+        })
         console.log(e)
       }
       this.loading = false;
