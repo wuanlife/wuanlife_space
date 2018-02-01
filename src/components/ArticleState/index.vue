@@ -28,7 +28,11 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .article-state {
-    padding: 3px 4px;
+    display: inline-block;
+    border-radius: 4px;
+    vertical-align: middle;
+    font-size: 14px;
+    padding: 6px 8px;
     margin-left: 4px;
     color: #fff;
   }

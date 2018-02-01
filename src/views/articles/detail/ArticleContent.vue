@@ -3,7 +3,7 @@
     <article>
         <h1>
             {{ article.title }}
-            <article-state v-if="article.lock" :text="'锁定'" :color="'#ccc'"></article-state>
+            <article-state v-if="lockedTemp" :text="'锁定'" :color="'#ccc'"></article-state>
         </h1>
         <time>{{ article.create_at | formatTime }}</time>
         <div class="article-html" v-html="article.content"></div>
@@ -140,13 +140,16 @@ export default {
         let res = null;
         if(this.lockedTemp) {
           res = await unlockArticle(this.$route.params.id)
+          this.lockedTemp = !this.lockedTemp
         } else {
           res = await lockArticle(this.$route.params.id)
+          this.lockedTemp = !this.lockedTemp
         }
         Notification.info({
-          message: res,
+          message: this.lockedTemp ? "锁定成功" : "解锁成功",
           offset: 100
         })
+
       } catch (e) {
         if(e.data) {
           Notification.error({
@@ -168,7 +171,7 @@ export default {
       }
       this.deleting = true;
       const res = await deleteArticle(this.$route.params.id)
-      console.log(res);
+      Notification.info('删除帖子成功')
     }
   }
 };
@@ -189,7 +192,11 @@ article {
   }
   .article-html {
     margin-bottom: 66px;
-    p {
+    /deep/ img {
+      max-width: 100%;
+    }
+    /deep/ p {
+      word-wrap: break-word;
       font-size: 20px;
       color: #434343;
     }
