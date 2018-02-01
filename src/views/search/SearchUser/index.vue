@@ -6,19 +6,17 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-
-			}
-		},
-		props: {
-			user: {
-				type: Object,
-				required: true
-			}
-		}
-	}
+export default {
+  data() {
+    return {};
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  }
+};
 </script>
 
 <style type="stylesheet/scss" lang="scss" scoped>

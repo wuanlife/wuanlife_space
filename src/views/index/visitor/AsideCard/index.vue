@@ -50,6 +50,7 @@
 
 <style scoped>
   .index-aside-card {
+    /*position: fixed;*/
     width: 250px;
     height: 70px;
   }

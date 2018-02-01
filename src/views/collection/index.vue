@@ -100,7 +100,7 @@ import Box404 from '@/assets/404_images/Box404.png'
         el.style.transform='translateY(20px)'
       },
       enter(el, done) {
-        var delay=el.dataset.index*500
+        var delay=el.dataset.index*300
         setTimeout(() => {
           Velocity(
             el,

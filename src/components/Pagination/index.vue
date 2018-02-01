@@ -24,59 +24,58 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-			}
-		},
-		props: ['pagination'],
-//		watch: {
-//			//观察对象属性的变化时
-//			'pagination.currentPage': function(page) {
-//				console.log(132);
-////				this.$emit('loadPosts', page)
-//			}
-//		}
-		methods: {
-			pageChange(p) {
-				this.$emit('current-change', p)
-			}
-		}
-	}
+export default {
+  data() {
+    return {};
+  },
+  props: ["pagination"],
+  // watch: {
+  //   //观察对象属性的变化时
+  //   'pagination.currentPage': function(page) {
+  //     console.log(132);
+  //     this.$emit('loadPosts', page)
+  //   }
+  // },
+  methods: {
+    pageChange(p) {
+      this.$emit("current-change", p);
+    }
+  }
+};
 </script>
 <style>
-	.default-pagination {
-		width: inherit;
-		text-align: center;
-		margin-bottom: 20px;
-	}
-	
-	.center {
-		/*添加flex使内容超出max-width后不会溢出*/
-		/*display: flex;*/
-		/*max-width: 450px;*/
-		display: inline-block;
-	}
-	
-	.center * {
-		padding: 0;
-		margin: 0;
-		display: inline-block;
-		/*middle和baseline无法搞定时,考虑用line-hight*/
-		/*vertical-align: 80%;*/
-		line-height: 20px;
-	}
-	
-	.default-pagination span {
-		cursor: pointer;
-		/*-moz-user-select: none;
+.default-pagination {
+  width: inherit;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.center {
+  /*添加flex使内容超出max-width后不会溢出*/
+  /*display: flex;*/
+  /*max-width: 450px;*/
+  display: inline-block;
+}
+
+.center * {
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  /*middle和baseline无法搞定时,考虑用line-hight*/
+  /*vertical-align: 80%;*/
+  line-height: 20px;
+}
+
+.default-pagination span {
+  cursor: pointer;
+  /*-moz-user-select: none;
 		-webkit-user-select: none;
 		-ms-user-select: none;*/
-		user-select: none;
-	}
-	
-	.disabled {
-		color: darkgray;
-		cursor: auto;
-	}
+  user-select: none;
+}
+
+.disabled {
+  color: darkgray;
+  cursor: auto;
+}
 </style>

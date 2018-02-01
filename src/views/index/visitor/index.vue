@@ -5,7 +5,8 @@
         活跃用户
       </header>
       <div class="aside-content" v-loading="loadingAside">
-        <aside-card v-for="activeUser of activeUsers" 
+        <aside-card v-for="activeUser of activeUsers"
+          :key="`activeUser-${activeUser.id}`"
           :activeUser="activeUser"
           >
         </aside-card>
@@ -17,7 +18,10 @@
       </header>
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-            <post-card v-for="(post,index) of posts" :post.sync="post" :data-index="index">
+            <post-card v-for="(post,index) of posts"
+                       :key="`post-${post.id}`"
+                       :post.sync="post" 
+                       :data-index="index">
             </post-card>
         </ul>
         <!--<el-pagination layout="prev, pager, next, jumper"
@@ -79,6 +83,7 @@
         return new Promise((resolve, reject) => {
           getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
             self.posts = res.articles;
+            console.log(self.posts);
             //动态生成分页页码
             self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit);
             self.loading = false;
@@ -94,6 +99,7 @@
         return new Promise((res, rej) => {
           getActiveUsers().then(result => {
             self.activeUsers = result.au;
+            console.log(result.au);
             res();
           }).catch(err => {
             console.log(err);

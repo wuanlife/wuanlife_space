@@ -182,7 +182,8 @@ export default {
         console.log(res)
         this.$notify({
           title: '修改成功',
-          message: '修改个人资料成功！'
+          message: '修改个人资料成功！',
+          offset: 100,
         })
       }).catch(err => {
         console.log(err)
