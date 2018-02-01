@@ -35,7 +35,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { Notification } from 'element-ui';
+import { Notification } from "element-ui";
 import { changePassword } from "api/user";
 
 export default {
@@ -89,18 +89,26 @@ export default {
       this.$refs[formName].validate(async valid => {
         if (valid) {
           this.loading = true;
-          const res = await changePassword({
-            old_psd: this.changepswForm.oldPassword,
-            new_psd: this.changepswForm.password,
-          })
-          this.loading = false;
-          Notification.info({
-            message: '密码修改成功, 3秒后跳转到首页',
-            offset: 100,
-          })
-          setTimeout(() => {
-            this.$router.push({path: '/'})
-          }, 3000)
+          try {
+            const res = await changePassword({
+              old_psd: this.changepswForm.oldPassword,
+              new_psd: this.changepswForm.password
+            });
+            Notification.info({
+              message: "密码修改成功, 3秒后跳转到首页",
+              offset: 100
+            });
+            setTimeout(() => {
+              this.$router.push({ path: "/" });
+            }, 3000);
+            this.loading = false;
+          } catch (e) {
+            Notification.error({
+              message: e.data.error,
+              offset: 100
+            });
+            this.loading = false;
+          }
         }
       });
     }

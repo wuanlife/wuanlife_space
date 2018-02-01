@@ -52,6 +52,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { Notification } from "element-ui";
 
 export default {
   name: "signup",
@@ -115,10 +116,15 @@ export default {
           this.$store
             .dispatch("Signup", {
               ...this.signupForm
-            })
-            .then(user => {
+            }).then(user => {
               this.loading = false;
               this.$router.push({ path: "/" });
+            }).catch(err => {
+              Notification.error({
+                message: err.data.error,
+                offset: 100,
+              })
+              this.loading = false;
             });
         } else {
           console.log("error submit!!");

@@ -36,6 +36,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { Notification } from "element-ui";
 
 export default {
   name: "index-visitor",
@@ -99,7 +100,7 @@ export default {
               this.$router.push({ path: "/" });
             }).catch(err => {
               Notification.error({
-                message: err,
+                message: err.data.error,
                 offset: 100,
               })
               this.loading = false;
