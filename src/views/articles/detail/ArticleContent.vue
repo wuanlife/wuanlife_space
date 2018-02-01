@@ -193,9 +193,10 @@ article {
   .article-html {
     margin-bottom: 66px;
     /deep/ img {
-      width: 100%;
+      max-width: 100%;
     }
     /deep/ p {
+      word-wrap: break-word;
       font-size: 20px;
       color: #434343;
     }

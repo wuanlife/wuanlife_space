@@ -49,16 +49,17 @@ module.exports = {
                 //     formatter: require('eslint-friendly-formatter')
                 // }
             },
-            { test: /\.vue$/,
+            {   
+                test: /\.vue$/,
                 loader: 'vue-loader',
                 options: vueLoaderConfig
             },
-            {
-                loader: 'sass-resources-loader',
-                options: {
-                  resources: path.resolve(__dirname, '../src/styles/_variables.scss')
-                }
-            },
+            // {
+            //     loader: 'sass-resources-loader',
+            //     options: {
+            //       resources: path.resolve(__dirname, '../src/styles/_variables.scss')
+            //     }
+            // },
             {
                 test: /\.js$/,
                 loader: 'babel-loader?cacheDirectory',
