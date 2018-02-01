@@ -15,7 +15,7 @@
           </ul>
           <pagination
             class="pagination"
-            @loadPosts="loadPosts"
+            @current-change="loadPosts"
             :pagination.sync="pagination"></pagination>
       </section>
   </div>
