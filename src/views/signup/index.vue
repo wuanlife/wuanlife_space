@@ -1,12 +1,10 @@
 <template>
   <div class="register-container view-container">
     <section>
-      
 
       <div class="form-content" v-loading="loading">
         <header>注册</header>
         <el-form :model="signupForm" :rules="signupRules" ref="signupForm" class="demo-ruleForm" @keyup.enter.native="submitForm('signupForm')">
-
 
           <div class="mail-input">
             <el-form-item prop="mail" class="form-inputy">
@@ -20,8 +18,6 @@
 
           <div class="name-input">
             <el-form-item prop="name" class="form-inputy">
-
-
 
               <el-input auto-complete="off" v-model="signupForm.name" placeholder="输入昵称" clearable>
                 <icon-svg icon-class="peopleCircle_white" class="peopleCircle_white-icon" slot="prefix"></icon-svg>
@@ -51,89 +47,89 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { Notification } from "element-ui";
+import { mapGetters } from 'vuex'
+import { Notification } from 'element-ui'
 
 export default {
-  name: "signup",
-  data() {
+  name: 'signup',
+  data () {
     // element-ui validator
     var validateUser = (rule, value, callback) => {
-      var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
+      var myreg = /^([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|_|.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
+      if (value === '') {
+        callback(new Error('请输入邮箱'))
       } else if (!myreg.test(value)) {
-        callback(new Error("请填写正确的邮箱格式！"));
+        callback(new Error('请填写正确的邮箱格式！'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     var validateName = (rule, value, callback) => {
-      var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5\_]*$/;
-      if (value === "") {
-        callback(new Error("请输入昵称"));
+      var myregName = /^[0-9a-zA-Z\u4E00-\u9FA5_]*$/
+      if (value === '') {
+        callback(new Error('请输入昵称'))
       } else if (value.length < 6 || value.length > 18) {
-        callback(new Error("请输入6-18位字符作为昵称！"));
+        callback(new Error('请输入6-18位字符作为昵称！'))
       } else if (!myregName.test(value)) {
-        callback(new Error("只允许中文、数字、字母和下划线！"));
+        callback(new Error('只允许中文、数字、字母和下划线！'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else if (value.length < 6 || value.length > 20) {
-        callback(new Error("请填写6-20位密码"));
+        callback(new Error('请填写6-20位密码'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loading: false,
       // form part
       signupForm: {
-        mail: "",
-        name: "",
-        password: ""
+        mail: '',
+        name: '',
+        password: ''
       },
       signupRules: {
-        mail: [{ validator: validateUser, trigger: "blur" }],
-        name: [{ validator: validateName, trigger: "blur" }],
-        password: [{ validator: validatePass, trigger: "blur" }]
+        mail: [{ validator: validateUser, trigger: 'blur' }],
+        name: [{ validator: validateName, trigger: 'blur' }],
+        password: [{ validator: validatePass, trigger: 'blur' }]
       }
-    };
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.loading = true;
+          this.loading = true
           this.$store
-            .dispatch("Signup", {
+            .dispatch('Signup', {
               ...this.signupForm
             }).then(user => {
-              this.loading = false;
-              this.$router.push({ path: "/" });
+              this.loading = false
+              this.$router.push({ path: '/' })
             }).catch(err => {
               Notification.error({
                 message: err.data.error,
-                offset: 100,
+                offset: 100
               })
-              this.loading = false;
-            });
+              this.loading = false
+            })
         } else {
-          console.log("error submit!!");
-          return false;
+          console.log('error submit!!')
+          return false
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .register-container {

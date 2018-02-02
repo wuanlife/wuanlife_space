@@ -1,7 +1,7 @@
-import fetch from 'utils/fetch';
-import store from 'vuex-store';
+import fetch from 'utils/fetch'
+import store from 'vuex-store'
 
-export function getArticle(id) {
+export function getArticle (id) {
   return fetch({
     url: `/articles/${id}`,
     method: 'get'
@@ -9,29 +9,29 @@ export function getArticle(id) {
 }
 
 // 新增文章
-export function postArticles(params) {
+export function postArticles (params) {
   const data = {
     ...params
-  };
+  }
   return fetch({
     url: '/articles',
     method: 'post',
     data
-  });
+  })
 }
 
 // 修改文章
-export function putArticle(id, params) {
+export function putArticle (id, params) {
   const data = {
     ...params
-  };
+  }
   return fetch({
     url: `/articles/${id}`,
     method: 'put',
     data
   })
 }
-export function deleteArticle(id) {
+export function deleteArticle (id) {
   return fetch({
     url: `/articles/${id}`,
     method: 'delete'
@@ -39,49 +39,49 @@ export function deleteArticle(id) {
 }
 
 // 点赞文章
-export function approveArticle(id) {
+export function approveArticle (id) {
   return fetch({
     url: `/articles/${id}/approval`,
     method: 'post',
     data: {}
-  });
+  })
 }
-export function unapproveArticle(id) {
+export function unapproveArticle (id) {
   return fetch({
     url: `/articles/${id}/approval`,
     method: 'delete',
     data: {}
-  });
+  })
 }
 
 // 收藏文章
-export function collectArticle(id) {
+export function collectArticle (id) {
   return fetch({
     url: `/users/${store.state.user.id}/collections`,
     method: 'put',
     data: {
       article_id: id
     }
-  });
+  })
 }
-export function uncollectArticle(id) {
+export function uncollectArticle (id) {
   return fetch({
     url: `/users/${store.state.user.id}/collections`,
     method: 'delete',
     data: {
       article_id: id
     }
-  });
+  })
 }
 
 // 锁定文章
-export function lockArticle(id) {
+export function lockArticle (id) {
   return fetch({
     url: `/articles/${id}/lock`,
     method: 'post'
   })
 }
-export function unlockArticle(id) {
+export function unlockArticle (id) {
   return fetch({
     url: `/articles/${id}/lock`,
     method: 'delete'

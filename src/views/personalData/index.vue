@@ -13,8 +13,8 @@
                 :on-error="upError"
                 ref="upload"
                 style="display:none">
-                <el-button id="img-input" 
-                 size="small" 
+                <el-button id="img-input"
+                 size="small"
                  type="primary">点击上传</el-button>
                 </el-upload>
               <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
@@ -73,9 +73,9 @@
 import DatePicker from 'components/DatePicker'
 import { getToken } from 'api/qiniu'
 import { putUser, getUser } from 'api/user'
-import { mapGetters } from "vuex"
+import { mapGetters } from 'vuex'
 
-const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/';  // 图片服务器域名，展示时用
+const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/' // 图片服务器域名，展示时用
 
 export default {
   name: 'personalData',
@@ -103,10 +103,10 @@ export default {
   computed: {
     birthday: {
       get: function () {
-          let day = this.dayNumber < 10 ? '0' + this.dayNumber : this.dayNumber
-          let mouth = this.mouthNumber < 10 ? '0' + this.mouthNumber : this.mouthNumber
-          return `${this.yearNumber}-${mouth}-${day}`
-          // return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
+        let day = this.dayNumber < 10 ? '0' + this.dayNumber : this.dayNumber
+        let mouth = this.mouthNumber < 10 ? '0' + this.mouthNumber : this.mouthNumber
+        return `${this.yearNumber}-${mouth}-${day}`
+        // return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
       },
       set: function (val) {
         let time = new Date(val)
@@ -122,7 +122,7 @@ export default {
       this.yearNumber = val
 
       // 判断闰年
-      let isLeap = this.yearNumber % 4 === 0 && this.yearNumber % 100 !== 0 || this.yearNumber % 400 === 0
+      let isLeap = (this.yearNumber % 4 === 0 && this.yearNumber % 100 !== 0) || this.yearNumber % 400 === 0
       if (isLeap) {
         this.leap = true
       } else {
@@ -157,7 +157,7 @@ export default {
       }, 5000)
       document.getElementById('img-input').click()
     },
-    pushPersonalData: function() {
+    pushPersonalData: function () {
       var changeUser = {}
       if (this.default.name !== this.name) {
         changeUser.name = this.name
@@ -182,7 +182,7 @@ export default {
         this.$notify({
           title: '修改成功',
           message: '修改个人资料成功！',
-          offset: 100,
+          offset: 100
         })
       }).catch(err => {
         this.$notify({
@@ -234,7 +234,7 @@ export default {
       this.name = res.name
       this.birthday = res.birthday
       this.default = res
-      let isDefault = res.avatar_url === 'default_url' ? true : false
+      let isDefault = res.avatar_url === 'default_url'
       if (!isDefault) {
         this.dafaultAvatarUrl = res.avatar_url
       }
@@ -269,8 +269,7 @@ export default {
                     width: 156px;
                     border-radius: 100%;
                     background-color: rgb(165, 164, 164);
-                    box-shadow: 0px 4px 5px 0px 
-		rgba(181, 181, 181, 0.75);
+                    box-shadow: 0px 4px 5px 0px rgba(181, 181, 181, 0.75);
                     margin-bottom: 13px;
                 }
                 button{
@@ -307,18 +306,18 @@ export default {
                         height: 70px;
                         width: 403px;
                         color: #434343;
-                        box-shadow: 0px 3px 7px 0px 
-	                	rgba(99, 99, 99, 0.16);
-	                    border-radius: 4px;
-	                    border: solid 2px rgba(171, 171, 171, 0.45);
-                        padding: 0 25px; 
+                        box-shadow: 0px 3px 7px 0px
+                    rgba(99, 99, 99, 0.16);
+                      border-radius: 4px;
+                      border: solid 2px rgba(171, 171, 171, 0.45);
+                        padding: 0 25px;
                     }
                     &>input:focus{
                         background-color: rgba(248, 249, 250, 0.4);
-	                    box-shadow: 0px 3px 7px 0px 
-	                	rgba(86, 119, 252, 0.16);
-	                    border-radius: 4px;
-	                    border: solid 2px rgba(0, 64, 185, 0.4);
+                      box-shadow: 0px 3px 7px 0px
+                    rgba(86, 119, 252, 0.16);
+                      border-radius: 4px;
+                      border: solid 2px rgba(0, 64, 185, 0.4);
                     }
                     .form-item-sex{
                         display: flex;
@@ -336,10 +335,10 @@ export default {
                             display: inline-block;
                             cursor: pointer;
                             background-color: rgba(248, 249, 250, 0.45);
-	                        box-shadow: 0px 3px 7px 0px 
-                    		rgba(99, 99, 99, 0.16);
-	                        border-radius: 4px;
-                        	border: solid 2px rgba(171, 171, 171, 0.45);
+                          box-shadow: 0px 3px 7px 0px
+                        rgba(99, 99, 99, 0.16);
+                          border-radius: 4px;
+                          border: solid 2px rgba(171, 171, 171, 0.45);
                             font-size: 28px;
                             color: #434343;
                             font-weight: normal;
@@ -351,9 +350,9 @@ export default {
                         }
                         .label-active{
                             background-color: rgba(248, 249, 250, 0.4);
-	                        box-shadow: 0px 3px 7px 0px 
-                    		rgba(86, 119, 252, 0.16);
-                        	border: solid 2px rgba(0, 64, 185, 0.4);
+                          box-shadow: 0px 3px 7px 0px
+                        rgba(86, 119, 252, 0.16);
+                          border: solid 2px rgba(0, 64, 185, 0.4);
                         }
                     }
                     .form-item-date{
@@ -376,9 +375,9 @@ export default {
 .save{
     margin-top: 108px;
     width: 240px;
-	height: 59px;
-	background-color: #5677fc;
-	border-radius: 4px;
+  height: 59px;
+  background-color: #5677fc;
+  border-radius: 4px;
     border: 0;
     cursor: pointer;
     font-size: 24px;

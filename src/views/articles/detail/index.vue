@@ -19,41 +19,40 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import { getArticle } from "api/article";
-  import UserCard from 'components/UserCard';
-  import ArticleContent from './ArticleContent.vue';
-  import ArticleReplies from './ArticleReplies';
-  export default {
-    name: 'article-detail',
-    components: {
-      UserCard,
-      ArticleContent,
-      ArticleReplies,
-    },
-    data() {
-      return {
-        article: null
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'user',
-      ]),
-    },
-    created() {
-
-    },
-    mounted() {
-      let self = this;
-      this.loading = true;
-      getArticle(this.$route.params.id).then(res => {
-        this.article = res;
-      });
-    },
-    methods: {
+import { mapGetters } from 'vuex'
+import { getArticle } from 'api/article'
+import UserCard from 'components/UserCard'
+import ArticleContent from './ArticleContent.vue'
+import ArticleReplies from './ArticleReplies'
+export default {
+  name: 'article-detail',
+  components: {
+    UserCard,
+    ArticleContent,
+    ArticleReplies
+  },
+  data () {
+    return {
+      article: null
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  created () {
+
+  },
+  mounted () {
+    this.loading = true
+    getArticle(this.$route.params.id).then(res => {
+      this.article = res
+    })
+  },
+  methods: {
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

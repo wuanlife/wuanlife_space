@@ -8,9 +8,9 @@
 
 <script>
 export default {
-  name: "userCard",
-  data() {
-    return {};
+  name: 'userCard',
+  data () {
+    return {}
   },
   props: {
     user: {
@@ -18,7 +18,7 @@ export default {
       required: true
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss"  scoped>

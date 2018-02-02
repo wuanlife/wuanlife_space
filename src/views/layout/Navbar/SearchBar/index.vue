@@ -13,24 +13,24 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      searchContent: ""
-    };
+      searchContent: ''
+    }
   },
   methods: {
-    handleGoSearch() {
-      if (this.searchContent !== "") {
+    handleGoSearch () {
+      if (this.searchContent !== '') {
         this.$router.push({
-          path: "/search",
+          path: '/search',
           query: { search: this.searchContent }
-        });
+        })
       } else {
-        alert("请输入要搜索的内容");
+        alert('请输入要搜索的内容')
       }
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -41,9 +41,9 @@ export default {
     flex: 0.7;
   }
   .search /deep/ input {
-    height: 58px;
-    padding: 18px 16px;
-    font-size: 22px;
+    height: 37px;
+    padding: 10px 20px;
+    font-size: 14px;
     color: #a9baff;
     &::placeholder {
       color: #a9baff;

@@ -1,12 +1,12 @@
 import Vue from 'vue'
-import { login, signup } from 'api/auth';
-import { putUser } from 'api/user';
-import { storeWithExpiration } from 'utils';
+import { login, signup } from 'api/auth'
+import { putUser } from 'api/user'
+import { storeWithExpiration } from 'utils'
 
 const loadUser = () => {
   const user = storeWithExpiration.get('user')
   if (user && user.id) {
-    return user;
+    return user
   }
 }
 
@@ -29,22 +29,22 @@ const user = {
 
   actions: {
     // 邮箱登录
-    async Login({ commit }, params) {
+    async Login ({ commit }, params) {
       const userWithToken = await login(params)
       commit('SET_USER', userWithToken)
-      storeWithExpiration.set('user', userWithToken);
+      storeWithExpiration.set('user', userWithToken)
       return userWithToken
     },
     // for later one-use token, Logout should in actions
-    Logout({ commit }) {
-      commit('LOGOUT_USER');
-      storeWithExpiration.set('user', {});
+    Logout ({ commit }) {
+      commit('LOGOUT_USER')
+      storeWithExpiration.set('user', {})
     },
     // 注册
-    async Signup({ commit }, params) {
+    async Signup ({ commit }, params) {
       const userWithToken = await signup(params)
       commit('SET_USER', userWithToken)
-      storeWithExpiration.set('user', userWithToken);
+      storeWithExpiration.set('user', userWithToken)
       return userWithToken
     },
     async PutUser({ commit, state }, params) {
@@ -71,6 +71,6 @@ const user = {
       // });
     }
   }
-};
+}
 
-export default user;
+export default user

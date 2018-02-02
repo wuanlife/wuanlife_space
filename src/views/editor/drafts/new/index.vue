@@ -6,7 +6,7 @@
       </header>
       <el-input class="title-input"
                   v-model="form.title"
-                  placeholder="输入标题">            
+                  placeholder="输入标题">
       </el-input>
       <wuan-editor @content-change="onContentChange">
       </wuan-editor>
@@ -16,42 +16,41 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { postArticles } from 'api/article';
-import wuanEditor from "../../common/wuanEditor";
+import { postArticles } from 'api/article'
+import wuanEditor from '../../common/wuanEditor'
 
 export default {
-  name: "drafts-new",
+  name: 'drafts-new',
   components: {
-    "wuan-editor": wuanEditor
+    'wuan-editor': wuanEditor
   },
-  data() {
+  data () {
     return {
       form: {
         title: '',
-        content: '',
+        content: ''
       },
-      submitLoading: false,
-    };
+      submitLoading: false
+    }
   },
-  created() {
+  created () {
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    onContentChange(newContent, oldContent) {
-      this.form.content = newContent;
+    onContentChange (newContent, oldContent) {
+      this.form.content = newContent
     },
-    onSubmit() {
-      this.submitLoading = true;
+    onSubmit () {
+      this.submitLoading = true
       postArticles(this.form)
-      .then((res) => {
-        this.submitLoading = false;
-        const articleId = res.id
-        this.$router.push({path: `/article/${articleId}`})
-      })
+        .then((res) => {
+          this.submitLoading = false
+          const articleId = res.id
+          this.$router.push({path: `/article/${articleId}`})
+        })
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -74,9 +73,9 @@ export default {
 .title-input {
   margin-bottom: 55px;
   height: 94px;
-	box-shadow: 0px 3px 7px 0px 
-		rgba(99, 99, 99, 0.35);
-	border-radius: 4px;
+  box-shadow: 0px 3px 7px 0px
+    rgba(99, 99, 99, 0.35);
+  border-radius: 4px;
   /deep/ input {
     height: 100%;
     text-align: center;
@@ -93,7 +92,7 @@ export default {
   float: right;
   padding: 13px 43px;
 
-	font-size: 24px;
-	color: #ffffff;
+  font-size: 24px;
+  color: #ffffff;
 }
 </style>
