@@ -20,7 +20,7 @@
         <ul v-if="posts.length > 0" class="index-cards">
             <post-card v-for="(post,index) of posts"
                        :key="`post-${post.id}`"
-                       :post.sync="post" 
+                       :post.sync="post"
                        :data-index="index">
             </post-card>
         </ul>
@@ -35,77 +35,76 @@
 </template>
 
 <script>
-//import { mapGetters } from 'vuex';
-  import { parseQueryParams } from 'utils/url';
-  import { getPosts, getMockTest, getArticles } from 'api/post';
-  import { getActiveUsers } from 'api/user';
-  // import { getGroups } from 'api/group';
-  import PostCard from 'components/PostCard'
-  import Pagination from 'components/Pagination'
-  import AsideCard from './AsideCard'
-  export default {
-    name: 'index-visitor',
-    components: {
-      PostCard,
-      Pagination,
-      AsideCard
-    },
-    data() {
-      return {
-        loading: false,
-        loadingAside: false,
-        posts: [],
-        activeUsers: [],
-        discoveryGroups: [],
-        pagination: {
-          pageCount: 1,
-          currentPage: 1,
-          limit: 20,
-        }
+// import { mapGetters } from 'vuex';
+import { getArticles } from 'api/post'
+import { getActiveUsers } from 'api/user'
+// import { getGroups } from 'api/group';
+import PostCard from 'components/PostCard'
+import Pagination from 'components/Pagination'
+import AsideCard from './AsideCard'
+export default {
+  name: 'index-visitor',
+  components: {
+    PostCard,
+    Pagination,
+    AsideCard
+  },
+  data () {
+    return {
+      loading: false,
+      loadingAside: false,
+      posts: [],
+      activeUsers: [],
+      discoveryGroups: [],
+      pagination: {
+        pageCount: 1,
+        currentPage: 1,
+        limit: 20
       }
+    }
+  },
+  //  computed: {
+  //    ...mapGetters([
+  //      'user',
+  //    ]),
+  //  },
+  mounted () {
+    this.loadPosts(1)
+    this.loadActiveUsers()
+  },
+  updated () {
+    this.$refs.root.scrollIntoView()
+  },
+  methods: {
+    loadPosts (page) {
+      var self = this
+      this.loading = true
+      return new Promise((resolve, reject) => {
+        getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
+          self.posts = res.articles
+          // 动态生成分页页码
+          self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit)
+          self.loading = false
+          resolve()
+        }).catch(err => {
+          console.log(err)
+        })
+      })
     },
-//  computed: {
-//    ...mapGetters([
-//      'user',
-//    ]),
-//  },
-    mounted() {
-      this.loadPosts(1);
-      this.loadActiveUsers()
-    },
-    updated() {
-      this.$refs.root.scrollIntoView();
-    },
-    methods: {
-      loadPosts(page) {
-        var self = this;
-        this.loading = true;
-        return new Promise((resolve, reject) => {
-          getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
-            self.posts = res.articles;
-            //动态生成分页页码
-            self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit);
-            self.loading = false;
-            resolve();
-          }).catch(err => {
-            console.log(err);
-          });
-        });
-      },
-      loadActiveUsers() {
-        var self = this;
-        this.loading = true;
-        return new Promise((res, rej) => {
-          getActiveUsers().then(result => {
-            self.activeUsers = result.au;
-            res();
-          }).catch(err => {
-            console.log(err);
-          });
-        });
-      },
+    loadActiveUsers () {
+      var self = this
+      this.loading = true
+      return new Promise((resolve, reject) => {
+        getActiveUsers().then(result => {
+          self.activeUsers = result.au
+          resolve()
+        }).catch(err => {
+          console.log(err)
+        })
+      })
     }
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -158,7 +157,7 @@
       }
     }
   }
-  
+
   .index-tabcontent {
     min-height: 200px;
     margin-top: 5px;
@@ -167,8 +166,8 @@
       text-align: center;
     }
   }
-  
-  // post card style    
+
+  // post card style
   .index-cards {
     .index-card {
       padding: 10px 16px 12px 16px;

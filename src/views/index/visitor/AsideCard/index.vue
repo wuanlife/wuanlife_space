@@ -10,42 +10,42 @@
 </template>
 
 <script>
-  //不加大括号会出错！
-  import { mapGetters } from 'vuex'
-  import defaultAvatar from '@/assets/wuanlife_256.jpg'
+// 不加大括号会出错！
+import { mapGetters } from 'vuex'
+import defaultAvatar from '@/assets/wuanlife_256.jpg'
 
-  export default {
-    name: 'aside-card',
-    data() {
-      return {
-        defaultAvatar
-      }
-    },
-    props: {
-      activeUser: {
-        type: Object,
-        required: true
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'user',
-      ]),
-    },
-    methods: {
-      goUserSpace() {
-        if(this.user.token == '') {
-          this.$router.push({
-            path: '/login/'
-          })
-        } else {
-          this.$router.push({
-            path: `/mySpace/${this.activeUser.id}`
-          })
-        }
+export default {
+  name: 'aside-card',
+  data () {
+    return {
+      defaultAvatar
+    }
+  },
+  props: {
+    activeUser: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  methods: {
+    goUserSpace () {
+      if (this.user.token === '') {
+        this.$router.push({
+          path: '/login/'
+        })
+      } else {
+        this.$router.push({
+          path: `/mySpace/${this.activeUser.id}`
+        })
       }
     }
   }
+}
 </script>
 
 <style scoped>

@@ -1,29 +1,29 @@
 <template>
-	<li class="index-card">
-		<header>
-			<img v-bind:src="item.author.image">
-			<span class="clickable">{{ item.author.name }}</span>
-			<!--<span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>-->
-			<time>{{ item.create_at | formatTime}}</time>
-		</header>
-		<div class="index-card-content">
-			<h1 @click="$router.push({path: `/topic/${item.id}`, query: { name: item.title }})">{{ item.title }}</h1>
-			<div class="preview-html">
-				{{ item.content }}
-			</div>
-			<div class="preview-imgs">
-				<img v-for="imglink in item.image" 
+  <li class="index-card">
+    <header>
+      <img v-bind:src="item.author.image">
+      <span class="clickable">{{ item.author.name }}</span>
+      <!--<span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>-->
+      <time>{{ item.create_at | formatTime}}</time>
+    </header>
+    <div class="index-card-content">
+      <h1 @click="$router.push({path: `/topic/${item.id}`, query: { name: item.title }})">{{ item.title }}</h1>
+      <div class="preview-html">
+        {{ item.content }}
+      </div>
+      <div class="preview-imgs">
+        <img v-for="imglink in item.image"
              :key="`${item.id}-${imglink}`"
              :src="imglink" >
-			</div>
-		</div>
-	</li>
+      </div>
+    </div>
+  </li>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   props: {
     item: {
@@ -31,7 +31,7 @@ export default {
       required: true
     }
   }
-};
+}
 </script>
 
 <style type="stylesheet/scss" lang="scss" scoped>

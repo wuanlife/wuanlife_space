@@ -1,119 +1,119 @@
 <template>
-	<div class="register-container view-container">
-		<section>
-			<div class="form-content" v-loading="loading">
-				<header>修改密码</header>
-				<el-form :model="changepswForm" :rules="changepswRules" ref="changepswForm" class="demo-ruleForm" @keyup.enter.native="submitForm('changepswForm')">
-					<div class="oldpsw-input">
-						<el-form-item prop="oldPassword" class="form-inputy">
-							<el-input type="password" v-model="changepswForm.oldPassword" placeholder="原密码">
-								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
-							</el-input>
-						</el-form-item>
-					</div>
-					<div class="psw-input">
-						<el-form-item prop="password" class="form-inputy">
-							<el-input type="password" v-model="changepswForm.password" placeholder="输入密码">
-								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
-							</el-input>
-						</el-form-item>
-					</div>
-					<div class="cofpsw-input">
-						<el-form-item prop="confirmPassword" class="form-inputy">
-							<el-input type="password" v-model="changepswForm.confirmPassword" auto-complete="off" placeholder="请再输入一遍">
-								<icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
-							</el-input>
-						</el-form-item>
-					</div>
-					<el-form-item class="form-btny">
-						<el-button type="primary" :loading="loading" @click="submitForm('changepswForm')">修改</el-button>
-					</el-form-item>
-				</el-form>
-			</div>
-		</section>
-	</div>
+  <div class="register-container view-container">
+    <section>
+      <div class="form-content" v-loading="loading">
+        <header>修改密码</header>
+        <el-form :model="changepswForm" :rules="changepswRules" ref="changepswForm" class="demo-ruleForm" @keyup.enter.native="submitForm('changepswForm')">
+          <div class="oldpsw-input">
+            <el-form-item prop="oldPassword" class="form-inputy">
+              <el-input type="password" v-model="changepswForm.oldPassword" placeholder="原密码">
+                <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+              </el-input>
+            </el-form-item>
+          </div>
+          <div class="psw-input">
+            <el-form-item prop="password" class="form-inputy">
+              <el-input type="password" v-model="changepswForm.password" placeholder="输入密码">
+                <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+              </el-input>
+            </el-form-item>
+          </div>
+          <div class="cofpsw-input">
+            <el-form-item prop="confirmPassword" class="form-inputy">
+              <el-input type="password" v-model="changepswForm.confirmPassword" auto-complete="off" placeholder="请再输入一遍">
+                <icon-svg icon-class="mima" class="mima-icon" slot="prefix"></icon-svg>
+              </el-input>
+            </el-form-item>
+          </div>
+          <el-form-item class="form-btny">
+            <el-button type="primary" :loading="loading" @click="submitForm('changepswForm')">修改</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </section>
+  </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { Notification } from "element-ui";
-import { changePassword } from "api/user";
+import { mapGetters } from 'vuex'
+import { Notification } from 'element-ui'
+import { changePassword } from 'api/user'
 
 export default {
-  name: "changepsw",
-  data() {
+  name: 'changepsw',
+  data () {
     // element-ui validator
     var validatePassword = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else if (value.length < 6 || value.length > 20) {
-        callback(new Error("请填写6-20位密码"));
+        callback(new Error('请填写6-20位密码'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     var validateConfirmPassword = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
+      if (value === '') {
+        callback(new Error('请输入密码'))
       } else if (value.length < 6 || value.length > 20) {
-        callback(new Error("请填写6-20位密码"));
+        callback(new Error('请填写6-20位密码'))
       } else if (value !== this.changepswForm.password) {
-        callback(new Error("请确认新密码一致！"));
+        callback(new Error('请确认新密码一致！'))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       loading: false,
 
       // form part
       changepswForm: {
-        oldPassword: "",
-        password: "",
-        confirmPassword: "",
+        oldPassword: '',
+        password: '',
+        confirmPassword: ''
       },
       changepswRules: {
-        oldPassword: [{ validator: validatePassword, trigger: "blur" }],
-        password: [{ validator: validatePassword, trigger: "blur" }],
+        oldPassword: [{ validator: validatePassword, trigger: 'blur' }],
+        password: [{ validator: validatePassword, trigger: 'blur' }],
         confirmPassword: [
-          { validator: validateConfirmPassword, trigger: "blur" }
+          { validator: validateConfirmPassword, trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    submitForm(formName) {
+    submitForm (formName) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          this.loading = true;
+          this.loading = true
           try {
-            const res = await changePassword({
+            await changePassword({
               old_psd: this.changepswForm.oldPassword,
               new_psd: this.changepswForm.password
-            });
+            })
             Notification.info({
-              message: "密码修改成功, 3秒后跳转到首页",
+              message: '密码修改成功, 3秒后跳转到首页',
               offset: 100
-            });
+            })
             setTimeout(() => {
-              this.$router.push({ path: "/" });
-            }, 3000);
-            this.loading = false;
+              this.$router.push({ path: '/' })
+            }, 3000)
+            this.loading = false
           } catch (e) {
             Notification.error({
               message: e.data.error,
               offset: 100
-            });
-            this.loading = false;
+            })
+            this.loading = false
           }
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .register-container {

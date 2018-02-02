@@ -17,58 +17,55 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 import { deleteReply } from 'api/reply'
-import ArticleReply from "./ArticleReply";
+import ArticleReply from './ArticleReply'
 
 export default {
-  name: "article-reply",
+  name: 'article-reply',
   props: {
     reply: {
       type: Object,
-      required: true,
+      required: true
     },
     new: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
   components: {
     ArticleReply
   },
-  data() {
+  data () {
     return {
       deleting: false,
-      deleted: false,
-    };
+      deleted: false
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  created() {},
-  mounted() {
-    let self = this;
-    this.loading = true;
-
+  created () {},
+  mounted () {
+    this.loading = true
   },
   methods: {
-    async del() {
-      if(this.deleting) {
-        return;
+    async del () {
+      if (this.deleting) {
+        return
       }
-      this.deleting = true;
+      this.deleting = true
       try {
-        const res = await deleteReply(this.$route.params.id, this.reply.floor);
-        this.deleted = true;
+        await deleteReply(this.$route.params.id, this.reply.floor)
+        this.deleted = true
         this.$emit('delete-success', this.reply)
       } catch (e) {
         console.log(e)
       }
-      this.deleting = false;
-
+      this.deleting = false
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

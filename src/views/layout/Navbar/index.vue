@@ -14,47 +14,47 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import SearchBar from "./SearchBar"
-import NavMenu from "./NavMenu";
+import { mapGetters } from 'vuex'
+import SearchBar from './SearchBar'
+import NavMenu from './NavMenu'
 
 export default {
   components: {
     'search-bar': SearchBar,
     'nav-menu': NavMenu
   },
-  data() {
+  data () {
     return {
-    };
-  },
-  computed: {
-    ...mapGetters(["user"])
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("Logout").then(() => {
-        location.reload(); // 为了重新实例化vue-router对象 避免bug
-      });
-    },
-    visibleChange() {
-      this.isShowDrop = !this.isShowDrop;
-    },
-    handleIconClick() {
-      if (this.input2 !== "") {
-        this.$store.commit("SET_SEARCHTEXT", this.searchContent);
-        this.$router.push({ path: "/search" });
-      } else {
-        alert("请输入要搜索的内容");
-      }
-    },
-    clickDot() {
-      this.dotShow = false;
     }
   },
-  mounted() {
-    //this.toWs();
+  computed: {
+    ...mapGetters(['user'])
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch('Logout').then(() => {
+        location.reload() // 为了重新实例化vue-router对象 避免bug
+      })
+    },
+    visibleChange () {
+      this.isShowDrop = !this.isShowDrop
+    },
+    handleIconClick () {
+      if (this.input2 !== '') {
+        this.$store.commit('SET_SEARCHTEXT', this.searchContent)
+        this.$router.push({ path: '/search' })
+      } else {
+        alert('请输入要搜索的内容')
+      }
+    },
+    clickDot () {
+      this.dotShow = false
+    }
+  },
+  mounted () {
+    // this.toWs();
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

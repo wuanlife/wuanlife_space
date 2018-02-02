@@ -6,49 +6,49 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {};
-    },
-    props: {
-      user: {
-        type: Object,
-        required: true
-      }
+export default {
+  data () {
+    return {}
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true
     }
-  };
+  }
+}
 </script>
 
 <style type="stylesheet/scss" lang="scss" scoped>
-  .user-card { 
-    width: 220px; 
-    height: 50px; 
-    margin-top: 30px; 
-    background-color: white; 
-    display: flex; 
-    align-items: center; 
-    justify-content: flex-end; 
-    position: relative; 
-    /*justify-content: center;*/ 
-    * { 
-      display: inline-block; 
-      } 
-    img { 
-      width: 70px; 
-      height: 70px; 
-      border-radius: 100%; 
-      /*margin: 5px 10px;*/ 
-      top: -35px; 
-      left: 5px; 
-      position: absolute; 
-    } 
-    h3 { 
-      font-size: 20px; 
-      margin-right: 7px; 
-      max-width: 120px; 
-      text-overflow: ellipsis; 
-      overflow: hidden; 
-      white-space: nowrap; 
-    } 
+.user-card {
+  width: 220px;
+  height: 50px;
+  margin-top: 30px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  /*justify-content: center;*/
+  * {
+    display: inline-block;
   }
+  img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    /*margin: 5px 10px;*/
+    top: -35px;
+    left: 5px;
+    position: absolute;
+  }
+  h3 {
+    font-size: 20px;
+    margin-right: 7px;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
 </style>
