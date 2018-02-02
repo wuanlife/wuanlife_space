@@ -83,7 +83,6 @@
         return new Promise((resolve, reject) => {
           getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
             self.posts = res.articles;
-            console.log(self.posts);
             //动态生成分页页码
             self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit);
             self.loading = false;
@@ -99,7 +98,6 @@
         return new Promise((res, rej) => {
           getActiveUsers().then(result => {
             self.activeUsers = result.au;
-            console.log(result.au);
             res();
           }).catch(err => {
             console.log(err);
