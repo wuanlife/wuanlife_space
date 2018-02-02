@@ -77,12 +77,12 @@ export default {
   margin-left: 30px;
 }
 .login-container {
-  font-size: 22px;
+  font-size: 18px;
   color: #ffffff;
   span {
     padding: 0 14px;
     &:not(:first-child) {
-        border-left: 1px solid #fff;
+      border-left: 1px solid #fff;
     }
   }
 }

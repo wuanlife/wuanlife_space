@@ -41,9 +41,9 @@ export default {
     flex: 0.7;
   }
   .search /deep/ input {
-    height: 58px;
-    padding: 18px 16px;
-    font-size: 22px;
+    height: 37px;
+    padding: 10px 20px;
+    font-size: 14px;
     color: #a9baff;
     &::placeholder {
       color: #a9baff;

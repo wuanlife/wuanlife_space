@@ -23,7 +23,6 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "src/styles/mixin.scss";
 .app-wrapper {
   @include clearfix;
   position: relative;
@@ -34,7 +33,7 @@ export default {
   }
   .main-container {
     background-color: #f8f9fa;
-    height: calc(100vh - 91px);
+    height: calc(100vh - $nav-height);
     overflow: auto;
     transition: all 0.28s ease-out;
   }

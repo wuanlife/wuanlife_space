@@ -59,7 +59,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  line-height: 88px;
+  line-height: $nav-height;
   border-radius: 0px !important;
   background-color: #5677fc;
   .navbar-container {
@@ -70,7 +70,7 @@ export default {
     .logo {
       cursor: pointer;
       margin-right: 38px;
-      font-size: 40px;
+      font-size: 30px;
       color: #ffffff;
       text-align: left;
     }
