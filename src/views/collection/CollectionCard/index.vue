@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<footer>
-			<span class="collection-card-username" @click="$router.push({ path: `/user/${item.author.name}` })">{{item.author.name}}</span>
+			<span class="collection-card-username" @click="$router.push({ path: `/myspace/${item.author.id}` })">{{item.author.name}}</span>
 			<div>
 				<span>收藏于</span>
 				<time>{{ item.create_at | formatTime}}</time>
@@ -132,5 +132,8 @@ export default {
       }
     }
   }
+  .collection-card-username {
+      cursor: pointer;
+    }
 }
 </style>

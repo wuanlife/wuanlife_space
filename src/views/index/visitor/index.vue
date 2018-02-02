@@ -1,5 +1,5 @@
 <template>
-  <div class="index-visitor-container">
+  <div class="index-visitor-container" ref="root">
     <aside>
       <header>
         活跃用户
@@ -74,7 +74,7 @@
       this.loadActiveUsers()
     },
     updated() {
-      document.getElementsByTagName("header")[0].scrollIntoView();
+      this.$refs.root.scrollIntoView();
     },
     methods: {
       loadPosts(page) {

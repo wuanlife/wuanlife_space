@@ -74,7 +74,6 @@ import Box404 from '@/assets/404_images/Box404.png'
         this.loading = true;
         return new Promise((resolve, reject) => {
           getCollection((page - 1)*self.pagination.limit || 0, self.pagination.limit).then(res => {
-            console.log(res);
             if(res.articles.length==0) {
               self.empty = true;
             }else {
@@ -100,7 +99,7 @@ import Box404 from '@/assets/404_images/Box404.png'
         el.style.transform='translateY(20px)'
       },
       enter(el, done) {
-        var delay=el.dataset.index*500
+        var delay=el.dataset.index*300
         setTimeout(() => {
           Velocity(
             el,
