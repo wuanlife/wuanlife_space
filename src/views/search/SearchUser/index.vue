@@ -1,14 +1,14 @@
 <template>
-	<div class="user-card">
-		<img v-bind:src="user.image" />
-		<h3 @click="$router.push({ path: `/planet/${user.id}`, query: { name: user.name }})">{{ user.name }}</h3>
-	</div>
+  <div class="user-card">
+    <img v-bind:src="user.image" />
+    <h3 @click="$router.push({ path: `/planet/${user.id}`, query: { name: user.name }})">{{ user.name }}</h3>
+  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   props: {
     user: {
@@ -16,7 +16,7 @@ export default {
       required: true
     }
   }
-};
+}
 </script>
 
 <style type="stylesheet/scss" lang="scss" scoped>

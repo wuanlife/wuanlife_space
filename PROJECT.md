@@ -83,6 +83,26 @@ import { getMockTest } from 'api/post';
 
 ## 关于页面样式的一些规范
 本项目使用.vue单文件开发，并且使用scss预处理器。项目使用sass-resources-loader加载了全局设置文件，开发者直接在vue文件的style标签里面可以直接使用变量
+```Vue
+<style rel="stylesheet/scss" lang="scss" scoped>
+.app-wrapper {
+  @include clearfix; // 在mixin.scss定义
+  position: relative;
+  height: 100%;
+  width: 100%;
+  .navbar-wrapper {
+    z-index: 100;
+  }
+  .main-container {
+    background-color: #f8f9fa;
+    height: calc(100vh - $nav-height); // 变量在_variables.scss中定义
+    overflow: auto;
+    transition: all 0.28s ease-out;
+  }
+}
+</style>
+```
+配置在build/utils.js中
 
 ## 代码提交流程
 组员代码提交使用pull request提交

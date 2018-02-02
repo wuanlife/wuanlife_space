@@ -1,34 +1,34 @@
 <template>
-	<div class="default-pagination" v-show="(pagination.pageCount==0)||(pagination.pageCount==1) ? false : true">
-		<div class="center">
-			<span v-if="pagination.currentPage != 1">
-			<span @click="pagination.currentPage--">上一页</span>
-			</span>
+  <div class="default-pagination" v-show="(pagination.pageCount==0)||(pagination.pageCount==1) ? false : true">
+    <div class="center">
+      <span v-if="pagination.currentPage != 1">
+      <span @click="pagination.currentPage--">上一页</span>
+      </span>
 
-			<span v-else>
-			<span class="disabled">上一页</span>
-			</span>
+      <span v-else>
+      <span class="disabled">上一页</span>
+      </span>
 
-			<el-pagination layout="pager" @current-change="pageChange" :current-page.sync="pagination.currentPage" :page-count="pagination.pageCount">
-			</el-pagination>
+      <el-pagination layout="pager" @current-change="pageChange" :current-page.sync="pagination.currentPage" :page-count="pagination.pageCount">
+      </el-pagination>
 
-			<span v-if="pagination.currentPage != pagination.pageCount">
-			<span @click="pagination.currentPage++">下一页</span>
-			</span>
+      <span v-if="pagination.currentPage != pagination.pageCount">
+      <span @click="pagination.currentPage++">下一页</span>
+      </span>
 
-			<span v-else>
-			<span class="disabled">下一页</span>
-			</span>
-		</div>
-	</div>
+      <span v-else>
+      <span class="disabled">下一页</span>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["pagination"],
+  props: ['pagination'],
   // watch: {
   //   //观察对象属性的变化时
   //   'pagination.currentPage': function(page) {
@@ -37,11 +37,11 @@ export default {
   //   }
   // },
   methods: {
-    pageChange(p) {
-      this.$emit("current-change", p);
+    pageChange (p) {
+      this.$emit('current-change', p)
     }
   }
-};
+}
 </script>
 <style>
 .default-pagination {
@@ -69,8 +69,8 @@ export default {
 .default-pagination span {
   cursor: pointer;
   /*-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;*/
+    -webkit-user-select: none;
+    -ms-user-select: none;*/
   user-select: none;
 }
 

@@ -1,5 +1,5 @@
 
-export default function searchRule(mockAdaptor) {
+export default function searchRule (mockAdaptor) {
   mockAdaptor
     .onGet('/articles/search?keyword=anything&offset=0&limit=20').reply(200, {
       articles: [

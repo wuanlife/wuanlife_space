@@ -1,39 +1,39 @@
 <template>
-	<li class="collection-card">
-		<div class="collection-card-content">
-			<h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
-			<div class="preview-html">
-				{{ item.content }}
-			</div>
-			<div class="preview-imgs">
-				<ul>
-					<li v-for="(imgs, index) in item.image_url"
+  <li class="collection-card">
+    <div class="collection-card-content">
+      <h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
+      <div class="preview-html">
+        {{ item.content }}
+      </div>
+      <div class="preview-imgs">
+        <ul>
+          <li v-for="(imgs, index) in item.image_url"
               :key="`${item.id}-${index}`">
             <img v-bind:src="imgs" />
           </li>
-				</ul>
-			</div>
-		</div>
-		<footer>
-			<span class="collection-card-username" @click="$router.push({ path: `/user/${item.author.name}` })">{{item.author.name}}</span>
-			<div>
-				<span>收藏于</span>
-				<time>{{ item.create_at | formatTime}}</time>
-			</div>
-		</footer>
-	</li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <span class="collection-card-username" @click="$router.push({ path: `/myspace/${item.author.id}` })">{{item.author.name}}</span>
+      <div>
+        <span>收藏于</span>
+        <time>{{ item.create_at | formatTime}}</time>
+      </div>
+    </footer>
+  </li>
 </template>
 
 <script>
 export default {
-  name: "collection-card",
+  name: 'collection-card',
   props: {
     item: {
       type: Object,
       required: true
     }
   }
-};
+}
 </script>
 
 <style lang="scss" type="stylesheet/scss" scoped>
@@ -132,5 +132,8 @@ export default {
       }
     }
   }
+  .collection-card-username {
+      cursor: pointer;
+    }
 }
 </style>
