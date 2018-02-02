@@ -28,6 +28,6 @@ const store = new Vuex.Store({
   },
   getters,
   plugins: [plugin]
-});
+})
 
 export default store

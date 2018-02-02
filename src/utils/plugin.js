@@ -1,7 +1,7 @@
 import ls from './localStorage'
 import { copy } from './copy'
 
-export const createLSPlugin = function(lsKey, mappings, whiteList = []) {
+export const createLSPlugin = function (lsKey, mappings, whiteList = []) {
   const k = lsKey
   return store => {
     store.subscribe((mutation, state) => {

@@ -1,4 +1,4 @@
-const copy = function(source, keys = []) {
+const copy = function (source, keys = []) {
   if (!source) {
     return source
   }

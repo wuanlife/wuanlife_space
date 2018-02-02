@@ -47,7 +47,7 @@ const user = {
       storeWithExpiration.set('user', userWithToken)
       return userWithToken
     },
-    async PutUser({ commit, state }, params) {
+    async PutUser ({ commit, state }, params) {
       const backMessage = await putUser(params)
       const user = Object.create(null)
       Object.assign(user, state, params)
