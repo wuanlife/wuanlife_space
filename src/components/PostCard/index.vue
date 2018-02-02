@@ -110,22 +110,22 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .post-card {
-    padding: 38px 26px 0px 26px;
-    width: 714px;
+    padding: 24px 17px 0px 17px;
+    width: 448px;
     background-color: #ffffff;
     border-radius: 4px;
     &:not(:first-child) {
-      margin-top: 20px;
+      margin-top: 12px;
     }
     &:last-child {
-      margin-bottom: 108px;
+      margin-bottom: 78px;
     }
     header {
       display: flex;
       align-items: center;
-      margin-bottom: 27px;
+      margin-bottom: 17px;
       font-size:12px;
-      color:#999999;
+      color:#434343;
       & > .clickable {
         transition: all 0.2s ease-in-out;
         &:hover {
@@ -133,13 +133,14 @@ export default {
         }
       }
       img {
-        width: 50px;
-        height: 50px;
+        width: 32px;
+        height: 32px;
         border-radius: 100%;
-        margin-right: 24px;
+        margin-right: 14px;
+        background-color: #aaaaaa;
       }
       span {
-        font-size: 24px;
+        font-size: 15px;
         color: #333333;
         &:not(:first-child) {
           margin-left: 5px;
@@ -147,7 +148,7 @@ export default {
       }
       time {
         margin-left: 12px;
-        font-size: 18px;
+        font-size: 11px;
         color: #999999;
         flex-grow: 1;
         text-align: right;
@@ -159,14 +160,14 @@ export default {
         display: inline-block;
         position: relative;
         cursor: pointer;
-        margin-bottom: 19px;
+        margin-bottom: 11px;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
 
-        color: #333333;
-        font-size:24px;
+        color: #434343;
+        font-size:15px;
         // hover animation
         &::after {
           content: '';
@@ -180,6 +181,7 @@ export default {
           background: #2e5897;
         }
         &:hover {
+          color: #5677fc;
           &::after {
             transform: scaleX(1);
           }
@@ -187,7 +189,7 @@ export default {
       }
       div.preview-html {
         word-break: break-all;
-        font-size:18px;
+        font-size:11px;
         color:#444444;
         letter-spacing:0;
         text-align:justify;
@@ -198,26 +200,27 @@ export default {
       }
       div.preview-imgs {
         display: flex;
-        margin-top: 33px;
+        margin-top: 20px;
         img {
-          margin-right: 15px;
-          width: 210px;
-          height: 210px;
+          margin-right: 9px;
+          width: 132px;
+          height: 132px;
+          background-color: #f8f9fa;
         }
 
       }
     }
     footer {
-      margin-top: 40px;
-      margin-left: -26px;
-      margin-right: -26px;
-      border-top: 1px solid #dcdcdc;
-      padding: 14px 0;
+      margin-top: 24px;
+      margin-left: -17px;
+      margin-right: -17px;
+      border-top: 2px solid #dcdcdc;
+      padding: 10px 0 9px 0;
       ul {
         display: flex;
         justify-content: space-around;
-        font-size: 20px;
-        height: 30px;
+        font-size: 12px;
+        height: 19px;
         align-items: center;
         li {
           transition: all 0.2s ease-in-out;
@@ -227,8 +230,8 @@ export default {
           color: #666666;
           border-right: 2px solid #dcdcdc;
           .avatar-icon{
-            margin-right: 20px;
-            font-size: 24px;
+            margin-right: 13px;
+            font-size: 12px;
           }
           &:last-child{
             border: 0;
