@@ -51,7 +51,6 @@ const user = {
       const backMessage = await putUser(params)
       const user = Object.create(null)
       Object.assign(user, state, params)
-      console.log(user)
       storeWithExpiration.set('user', {
         ...user,
         'Access-Token': loadUser()['Access-Token']
