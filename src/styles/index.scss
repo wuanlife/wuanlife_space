@@ -5,6 +5,7 @@
 @import './mixin.scss';
 
 body {
+  overflow: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
