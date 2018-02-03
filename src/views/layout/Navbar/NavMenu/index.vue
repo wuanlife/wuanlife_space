@@ -74,10 +74,10 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .login-container,
 .avatar-container {
+  font-size: 18px;
   margin-left: 30px;
 }
 .login-container {
-  font-size: 18px;
   color: #ffffff;
   span {
     padding: 0 14px;
@@ -92,7 +92,6 @@ export default {
 .write-container {
   display: inline-block;
   cursor: pointer;
-  font-size: 22px;
   color: #fff;
 }
 .avatar-container {
@@ -102,9 +101,7 @@ export default {
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     color: #fff;
-    font-size: 22px;
     .avatar-icon {
-      font-size: 22px;
       margin-right: 6px;
     }
     > span {
@@ -132,9 +129,10 @@ export default {
     display: none;
   }
   /deep/ .el-dropdown-menu__item {
-    padding: 16px 36px;
+    padding: 10px 24px;
     transition: all 0.3s ease-in-out;
-    font-size: 22px;
+    line-height: normal;
+    font-size: 13px;
     color: #ffffff;
     &:hover {
       background-color: #2953fc;
