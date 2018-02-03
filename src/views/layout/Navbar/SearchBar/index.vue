@@ -7,6 +7,7 @@
             icon="search"
             v-model="searchContent"
             @keyup.enter.native="handleGoSearch">
+            <icon-svg slot="suffix" id="icon-search" icon-class="search" class="el-input__icon"></icon-svg>
         </el-input>
     </div>
 </template>
@@ -37,8 +38,8 @@ export default {
 .search-container {
   flex: 0 0 600px;
   min-width: 300px;
-  @media screen and (max-width: 900px) {
-    flex: 0.7;
+  @media screen and (max-width: 1000px) {
+    flex: 0.8;
   }
   .search /deep/ input {
     height: 37px;
@@ -48,6 +49,11 @@ export default {
     &::placeholder {
       color: #a9baff;
     }
+  }
+  #icon-search {
+    margin-right: 20px;
+    font-size: 18px;
+    color: #a9baff;
   }
 }
 </style>
