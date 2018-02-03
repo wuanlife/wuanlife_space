@@ -68,15 +68,17 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-reply-input {
   textarea {
-    margin-bottom: 13px;
+    font-size: 12px;
+    margin-bottom: 9px;
     width: 100%;
+    height: 96px;
     resize: none;
-    padding: 16px;
+    padding: 13px 10px;
     border-radius: 4px;
     border: solid 2px #c8c8c8;
     transition: all 0.3s ease-in-out;
     &:focus {
-      border: solid 2px #5677fc;
+      border: solid 2px $wl-blue;
     }
     &::placeholder {
       color: #757575;
@@ -84,7 +86,7 @@ export default {
   }
   .submit {
     padding: 9px 29px;
-    font-size: 20px;
+    font-size: 12px;
     color: #ffffff;
   }
 }

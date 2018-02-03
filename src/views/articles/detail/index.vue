@@ -63,11 +63,11 @@ export default {
   & > header {
     padding: 17px;
     margin-bottom: 14px;
-    font-size: 32px;
+    font-size: $title-font-size;
     color: #5677fc;
   }
   .article-container {
-    padding: 31px;
+    padding: 20px;
     margin-bottom: 30px;
     .article-content {
       margin-bottom: 50px;

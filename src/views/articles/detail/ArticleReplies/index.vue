@@ -119,14 +119,14 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-replies {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
   border-radius: 4px;
   border: solid 2px #c8c8c8;
   header {
-    padding: 12px 16px;
+    padding: 10px 8px;
     border-bottom: 2px solid #c8c8c8;
-    font-size: 20px;
-    color: #5677fc;
+    font-size: 12px;
+    color: $wl-blue;
   }
   .reply-pagination {
     display: flex;
