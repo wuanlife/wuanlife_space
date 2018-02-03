@@ -94,21 +94,21 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 #my-space {
-  max-width: 1180px;
+  max-width: 739px;
 }
 .my-space {
   aside {
     .user-card{
-      margin-top: 71px;
+      margin-top: 64px;
     }
   }
   section {
     h1 {
       background-color: #ffffff;
       border-radius: 4px;
-      padding: 17px 18px;
-      margin: 71px 0 12px 0;
-      font-size: 32px;
+      padding: 11px 12px;
+      margin: 64px 0 -6px 0;
+      font-size: 20px;
       color: #5677fc;
     }
     :mySpace-content{

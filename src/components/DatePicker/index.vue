@@ -43,39 +43,39 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .date-picker{
-    max-width: 130px;
+    max-width: 80px;
     text-align: center;
     box-shadow: 0px 3px 7px 0px
     rgba(99, 99, 99, 0.16);
   border: solid 2px rgba(171, 171, 171, 0.45);
     background-color: rgba(248, 249, 250, 0.45);
   border-radius: 4px;
-    padding: 27px 12px 22px 12px;
+    padding: 14px 6px 13px 6px;
     cursor: pointer;
     position: relative;
     span{
-        font-size: 28px;
+        font-size: 17px;
         color: #757575;
     }
     ul{
-        height: 276px;
+        height: 174px;
         width: 100%;
       background-color: #f8f9fa;
       box-shadow: 0px 3px 7px 0px
     rgba(86, 119, 252, 0.4);
       border-radius: 4px;
       border: solid 2px #99b3e3;
-        font-size: 26px;
+        font-size: 16px;
         color: #5677fc;
-        padding: 17px 0 12px 0;
+        padding: 10px 0 10px 0;
         overflow-y: scroll;
         cursor: pointer;
         position: absolute;
-        top: 84px;
+        top: 48px;
         left: 0;
         li{
-            margin-bottom: 10px;
-            padding: 5px 33px 5px 23px;
+            margin-bottom: 5px;
+            padding: 5px 0 5px 0x;
             &:hover{
                 color: white;
                 background-color: #5677fc;
@@ -90,7 +90,7 @@ export default {
     border: solid 2px rgba(0, 64, 185, 0.4);
 }
 .avatar-icon{
-    margin-left: 10px;
+    margin-left: 5px;
     color: #5677fc;
 }
 </style>
