@@ -61,7 +61,7 @@ export default {
 .navbar {
   line-height: $nav-height;
   border-radius: 0px !important;
-  background-color: #5677fc;
+  background-color: $wl-blue;
   .navbar-container {
     display: flex;
     max-width: 1200px;

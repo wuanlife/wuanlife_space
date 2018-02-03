@@ -154,9 +154,9 @@ export default {
 <style rel="stylesheet/scss" lang="scss">
 // editor style
 .editor-container {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
-  color: #999999;
+  color: #444444;
   .quill-editor {
     box-shadow: 0px 3px 7px 0px
       rgba(99, 99, 99, 0.65);
@@ -166,7 +166,7 @@ export default {
     }
     .ql-container {
       height: 300px;
-      font-size: 24px;
+      font-size: 15px;
     }
 
   }
