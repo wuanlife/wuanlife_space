@@ -5,7 +5,7 @@
       {{`${pagination.total} 个回复`}}
     </header>
     <div class="replies-container">
-      <article-reply v-for="reply in replies" 
+      <article-reply v-for="reply in replies"
                     @delete-success="handleDeleteSuccess"
                     ref='reply'
                     :key="reply.id"
@@ -20,7 +20,7 @@
         :page-size="20"
         @current-change="handleCurrentChange"
         :current-page.sync="pagination.current"
-        
+
       >
       </el-pagination>
     </div>
@@ -37,19 +37,19 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { getRepliesByArticleId } from "api/reply";
-import { Notification } from 'element-ui';
-import ArticleReply from "./ArticleReply";
-import ArticleReplyInput from "./ArticleReplyInput";
+import { mapGetters } from 'vuex'
+import { getRepliesByArticleId } from 'api/reply'
+import { Notification } from 'element-ui'
+import ArticleReply from './ArticleReply'
+import ArticleReplyInput from './ArticleReplyInput'
 
 export default {
-  name: "article-replies",
+  name: 'article-replies',
   components: {
     ArticleReply,
     ArticleReplyInput
   },
-  data() {
+  data () {
     return {
       replies: null,
       loading: false,
@@ -58,64 +58,63 @@ export default {
         offset: 0,
         limit: 20,
         total: 0
-      },
-    };
+      }
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  created() {
+  created () {
   },
-  mounted() {
-    const self = this;
+  mounted () {
     const articleId = this.$route.params.id
-    this.loading = true;
+    this.loading = true
     getRepliesByArticleId(articleId, this.pagination).then((res) => {
-      this.loading = false;
-      this.replies = res.reply;
-      this.pagination.total = Number(res.total);
+      this.loading = false
+      this.replies = res.reply
+      this.pagination.total = Number(res.total)
     })
   },
   methods: {
-    async handleCurrentChange(currentPage) {
-      this.loading = true;
+    async handleCurrentChange (currentPage) {
+      this.loading = true
       const res = await getRepliesByArticleId(this.$route.params.id, {
         limit: this.pagination.limit,
         offset: (currentPage - 1) * this.pagination.limit
       })
-      this.loading = false;
-      this.replies = res.reply;
+      this.loading = false
+      this.replies = res.reply
 
       // 翻页后评论第一个处于可见范围内
-      this.$nextTick( () => {
+      this.$nextTick(() => {
         this.$refs['reply-header'].scrollIntoView()
       })
     },
-    handleDeleteSuccess(reply) {
+    handleDeleteSuccess (reply) {
       this.replies = this.replies.filter((item) => {
-        if(item === reply) {
-          return false;
+        if (item === reply) {
+          return false
         }
-        return true;
+        return true
       })
-      this.pagination.total--;
+      this.pagination.total--
       Notification.info({
-        message: "删除评论成功",
+        message: '删除评论成功',
         offset: 100
       })
     },
-    handleReplySuccess(reply) {
+    handleReplySuccess (reply) {
       this.replies.unshift({
         ...reply,
-        new: true,
+        new: true
       })
-      this.pagination.total++;
-      this.$nextTick( () => {
+      this.pagination.total++
+      this.$nextTick(() => {
         this.$refs['reply-header'].scrollIntoView()
       })
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

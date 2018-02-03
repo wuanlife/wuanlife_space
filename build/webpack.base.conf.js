@@ -54,12 +54,6 @@ module.exports = {
                 loader: 'vue-loader',
                 options: vueLoaderConfig
             },
-            // {
-            //     loader: 'sass-resources-loader',
-            //     options: {
-            //       resources: path.resolve(__dirname, '../src/styles/_variables.scss')
-            //     }
-            // },
             {
                 test: /\.js$/,
                 loader: 'babel-loader?cacheDirectory',

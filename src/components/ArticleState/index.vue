@@ -5,25 +5,25 @@
 </template>
 
 <script>
-  export default {
-    name: 'article-state',
-    props: {
-      color: {
-        type: String,
-        required: true,
-      },
-      text: {
-        type: String,
-        required: true,
-      }
+export default {
+  name: 'article-state',
+  props: {
+    color: {
+      type: String,
+      required: true
     },
-    data() {
-      return {
-      }
-    },
-    mounted() {
-    },
+    text: {
+      type: String,
+      required: true
+    }
+  },
+  data () {
+    return {
+    }
+  },
+  mounted () {
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
