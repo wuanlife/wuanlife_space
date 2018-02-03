@@ -178,32 +178,32 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 article {
   h1 {
-    font-size: 28px;
+    font-size: $title-font-size;
     color: #434343;
-    margin-bottom: 38px;
+    margin-bottom: 22px;
   }
   time {
     display: block;
-    font-size: 20px;
+    font-size: 12px;
     color: #434343;
-    margin-bottom: 47px;
+    margin-bottom: 29px;
   }
   .article-html {
-    margin-bottom: 66px;
+    margin-bottom: 40px;
     /deep/ img {
       max-width: 100%;
     }
     /deep/ p {
       word-wrap: break-word;
-      font-size: 20px;
-      color: #434343;
+      font-size: 12px;
+      color: #444444;
     }
   }
 }
 footer {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: 12px;
 
   .article-btn {
     display: inline-block;
@@ -213,7 +213,7 @@ footer {
     margin-left: 20px;
     transition: all 0.3s ease-in-out;
     &:not(:last-child) {
-      margin-right: 54px;
+      margin-right: 60px;
     }
     .svg-icon {
       color: #666666;
@@ -221,24 +221,25 @@ footer {
       margin-right: 12px;
     }
     &:hover {
-      color: #5677fc;
+      color: $wl-blue;
       .svg-icon {
-        color: #5677fc;
+        color: $wl-blue;
       }
     }
     &.done {
-      color: #5677fc;
+      color: $wl-blue;
       .svg-icon {
-        color: #5677fc;
+        color: $wl-blue;
       }
     }
   }
   .article-opt {
+    margin-left: 12px;
     cursor: pointer;
-    color: #5677fc;
+    color: $wl-blue;
     transition: all 0.3s ease-in-out;
     &:hover {
-      color: #0040b9;
+      color: $wl-blue-active;
     }
   }
 }

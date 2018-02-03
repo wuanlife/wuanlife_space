@@ -2,28 +2,26 @@
 
 .view-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin: auto;
-    min-width: 714px;
     max-width: 1280px;
     @media screen and (max-width: 1100px) {
         justify-content: center;
     }
     & > section {
         min-width: 0;
-        flex: 0 0 828px;
+        flex: 0 0 518px;
         margin: 0 auto;
     }
     & > aside {
-        margin-right: auto;
         margin-left: 46px;
         order: 2;
         + section {
-            margin-left: auto;
-            flex: 0 0 714px;
+            flex: 0 0 447px;
             order: 1;
+            margin: initial;
         }
-        flex: 0 0 420px;
+        flex: 0 0 263px;
         @media screen and (max-width: 1100px) {
             display: none;
         }

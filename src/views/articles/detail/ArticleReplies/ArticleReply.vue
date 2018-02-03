@@ -2,7 +2,7 @@
 <div class="article-reply"
      :class="{'article-reply-new': reply.new}">
   <header>
-      <h3>{{reply.user_name}}</h3>
+      <h3 @click="$router.push({path: `/mySpace/${reply.user.id}`})">{{reply.user.name}}</h3>
       <time>{{reply.create_at | formatTime}}</time>
   </header>
   <p>{{ reply.comment }}</p>
@@ -70,8 +70,8 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-reply {
-  margin: 0 17px;
-  padding: 17px 0;
+  margin: 0 5px;
+  padding: 21px 0 7px 0;
   &:not(:last-child) {
     border-bottom: 2px solid #c8c8c8;
     &::after {
@@ -87,31 +87,39 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 50px;
+    margin-bottom: 31px;
     h3 {
       display: inline-block;
-      font-size: 20px;
-      color: #5677fc;
+      font-size: 12px;
+      color: $wl-blue;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      &:hover {
+        color: $wl-blue-hover;
+      }
+      &:active {
+        color: $wl-blue-active;
+      }
     }
     time {
-      font-size: 16px;
+      font-size: 10px;
       color: #434343;
     }
   }
   p {
-    font-size: 20px;
-    margin-bottom: 27px;
+    font-size: 12px;
+    margin-bottom: 16px;
     color: #434343;
   }
   .opts {
     .opt {
       float: right;
       cursor: pointer;
-      font-size: 16px;
-      color: #5677fc;
+      font-size: 10px;
+      color: $wl-blue;
       transition: all 0.3s ease-in-out;
       &:hover {
-        color: #0040b9;
+        color: $wl-blue-hover;
       }
     }
   }
