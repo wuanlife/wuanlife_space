@@ -72,7 +72,7 @@
 <script>
 import DatePicker from 'components/DatePicker'
 import { getToken } from 'api/qiniu'
-import { putUser, getUser } from 'api/user'
+import { getUser } from 'api/user'
 import { mapGetters } from 'vuex'
 
 const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/' // 图片服务器域名，展示时用
@@ -178,16 +178,23 @@ export default {
         })
         return
       }
-      putUser(changeUser).then(res => {
-        console.log(res)
+      this.$store.dispatch('PutUser', changeUser).then(res => {
         this.$notify({
           title: '修改成功',
           message: '修改个人资料成功！',
           offset: 100
         })
-      }).catch(err => {
-        console.log(err)
       })
+      // putUser(changeUser).then(res => {
+      //   console.log(res)
+      //   this.$notify({
+      //     title: '修改成功',
+      //     message: '修改个人资料成功！',
+      //     offset: 100,
+      //   })
+      // }).catch(err => {
+      //   console.log(err)
+      // })
     },
     beforeUpload: function (file) {
       return this.qnUpload(file)
@@ -204,7 +211,6 @@ export default {
       })
     },
     upScuccess: function (e, file, fileList) {
-      console.log(e)
       const url = QINIU_DOMAIN + e.key
       this.$refs.avatar.setAttribute('src', url)
       this.loading = false

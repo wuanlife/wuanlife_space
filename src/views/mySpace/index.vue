@@ -86,8 +86,6 @@ export default {
         self.pagination.pageCount = Math.ceil(res.author.articles_num / 20)
         self.loading = false
         self.$refs['card-list'].scrollIntoView()
-      }).catch(err => {
-        console.log(err)
       })
     }
   }

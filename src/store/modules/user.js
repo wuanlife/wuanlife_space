@@ -47,19 +47,28 @@ const user = {
       storeWithExpiration.set('user', userWithToken)
       return userWithToken
     },
-    PutUser ({ commit }, params) {
-      return new Promise((resolve, reject) => {
-        putUser(params).then(response => {
-          storeWithExpiration.set('user', {
-            ...response,
-            'Access-Token': loadUser()['Access-Token']
-          }, 86400000)
-          commit('SET_USER', response)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    async PutUser ({ commit, state }, params) {
+      const backMessage = await putUser(params)
+      const user = Object.create(null)
+      Object.assign(user, state, params)
+      storeWithExpiration.set('user', {
+        ...user,
+        'Access-Token': loadUser()['Access-Token']
+      }, 86400000)
+      commit('SET_USER', user)
+      return backMessage
+      // return new Promise((resolve, reject) => {
+      //   putUser(params).then(response => {
+      //     storeWithExpiration.set('user', {
+      //       ...response,
+      //       'Access-Token': loadUser()['Access-Token']
+      //     }, 86400000);
+      //     commit('SET_USER', response);
+      //     resolve(response);
+      //   }).catch(error => {
+      //     reject(error);
+      //   });
+      // });
     }
   }
 }
