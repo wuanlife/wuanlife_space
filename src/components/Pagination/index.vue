@@ -63,7 +63,7 @@ export default {
   display: inline-block;
   /*middle和baseline无法搞定时,考虑用line-hight*/
   /*vertical-align: 80%;*/
-  line-height: 20px;
+  line-height: 13px;
 }
 
 .default-pagination span {
@@ -72,6 +72,7 @@ export default {
     -webkit-user-select: none;
     -ms-user-select: none;*/
   user-select: none;
+  font-size: 12px;
 }
 
 .disabled {

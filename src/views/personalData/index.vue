@@ -64,7 +64,7 @@
               </div>
           </div>
       </div>
-      <button class="save" @click="pushPersonalData">保存</button>
+      <button class="wl-btn" @click="pushPersonalData">保存</button>
       </section>
   </div>
 </template>
@@ -364,16 +364,5 @@ export default {
             }
         }
     }
-}
-.save{
-  margin-top: 66px;
-  width: 150px;
-  height: 38px;
-  background-color: #5677fc;
-  border-radius: 4px;
-    border: 0;
-    cursor: pointer;
-    font-size: 15px;
-    color: #fff;
 }
 </style>

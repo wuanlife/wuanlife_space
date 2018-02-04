@@ -10,7 +10,7 @@
       </el-input>
       <wuan-editor @content-change="onContentChange">
       </wuan-editor>
-      <el-button class="wuan-button submit" type="primary" @click="onSubmit" :loading="submitLoading">发表</el-button>
+      <el-button class="wl-btn submit" type="primary" @click="onSubmit" :loading="submitLoading">发表</el-button>
     </section>
   </div>
 </template>
@@ -86,11 +86,11 @@ export default {
 #wuan-editor {
   margin-bottom: 26px;
 }
-.submit {
+/*.submit {
   float: right;
   padding: 13px 43px;
 
   font-size: 24px;
   color: #ffffff;
-}
+}*/
 </style>

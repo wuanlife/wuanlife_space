@@ -1,8 +1,8 @@
 <template>
-  <div class="index-aside-card wuan-card clickable" @click="goUserSpace">
+  <div class="index-aside-card wl-card clickable" @click="goUserSpace">
     <!--@click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/${activeUser.id}'})">-->
     <img :src="activeUser.avatar_url || defaultAvatar">
-    <div class="wuan-card__content">
+    <div class="wl-card content">
       <h2 class="clickable">{{ activeUser.name }}</h2>
       <p>本月发表了 {{activeUser.monthly_articles_num}} 篇</p>
     </div>

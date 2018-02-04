@@ -21,7 +21,7 @@ export default {
 
 <style type="stylesheet/scss" lang="scss" scoped>
 .user-card {
-  width: 220px;
+  width: 139px;
   height: 50px;
   margin-top: 30px;
   background-color: white;
@@ -34,16 +34,16 @@ export default {
     display: inline-block;
   }
   img {
-    width: 70px;
-    height: 70px;
+    width: 57px;
+    height: 57px;
     border-radius: 100%;
     /*margin: 5px 10px;*/
-    top: -35px;
+    top: -28.5px;
     left: 5px;
     position: absolute;
   }
   h3 {
-    font-size: 20px;
+    font-size: 16px;
     margin-right: 7px;
     max-width: 120px;
     text-overflow: ellipsis;

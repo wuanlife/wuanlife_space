@@ -22,7 +22,7 @@
               tag="ul"
               >
               <collection-card :item.sync='item'
-                v-for="(item,index) in collecations"
+                v-for="(item,index) in collections"
                 :data-index = "index"
                 :key="item.create_at"
                 >
@@ -46,7 +46,7 @@ export default {
   data () {
     return {
       Box404,
-      collecations: [],
+      collections: [],
       loading: false,
       pagination: {
         pageCount: 1,
@@ -81,31 +81,26 @@ export default {
             for (let i = 0, j = res.articles.length; i < j; i++) {
               res.articles[i].create_at = res.articles[i].create_at
             }
-            self.collecations = res.articles
-            // 动态生成分页页码
+            self.collections = res.articles
+            // 动态生成分页码
             self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit)
           }
-          self.loading = false
           resolve()
         }).catch(error => {
-          self.loading = false
           reject(error)
         })
       })
     },
     beforeEnter (el) {
       el.style.opacity = 0
-      el.style.transition = 'all 1s ease'
       el.style.transform = 'translateY(20px)'
+      el.style.transition = 'all 1s ease'
     },
-    enter (el, done) {
-      var delay = el.dataset.index * 300
+    enter (el) {
+      var delay = el.dataset.index * 500
       setTimeout(() => {
-        // Velocity(
-        //   el,
-        //   {opacity: 1, transform: 'translateY(-20px)'},
-        //   {completed: done}
-        // )
+        el.style.opacity = 1
+        el.style.transform = 'translateY(-20px)'
       }, delay)
     }
   }
@@ -126,12 +121,12 @@ export default {
       min-width: 0;
       flex: 0 0 714px;
       header {
-        margin: 31px 0 12px 0;
-        font-size:32px;
+        margin: 31px 0 32px 0;
+        font-size:20px;
         color:#5677fc;
         background-color: white;
-        height: 66px;
-        line-height: 66px;
+        height: 42px;
+        line-height: 42px;
         padding-left: 17px;
 
       }
@@ -144,6 +139,9 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 400px;
+      h2 {
+        font-size: 20px;
+      }
     /*img {
       width: 200px;
       height: 200px;
