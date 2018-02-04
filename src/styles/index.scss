@@ -56,17 +56,16 @@ a:hover {
 
 //滚动条样式
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track-piece {
   background-color: transparent;
-  -webkit-border-radius: 6px;
+  -webkit-border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:vertical {
   height: 5px;
   background-color: rgba(125, 125, 125, 0.7);
-  -webkit-border-radius: 6px;
+-webkit-border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:horizontal {
   width: 5px;
