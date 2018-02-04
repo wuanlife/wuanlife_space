@@ -1,39 +1,39 @@
 <template>
-	<li class="collection-card">
-		<div class="collection-card-content">
-			<h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
-			<div class="preview-html">
-				{{ item.content }}
-			</div>
-			<div class="preview-imgs">
-				<ul>
-					<li v-for="(imgs, index) in item.image_url"
+  <li class="collection-card">
+    <div class="collection-card-content">
+      <h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
+      <div class="preview-html">
+        {{ item.content }}
+      </div>
+      <div class="preview-imgs">
+        <ul>
+          <li v-for="(imgs, index) in item.image_url"
               :key="`${item.id}-${index}`">
             <img v-bind:src="imgs" />
           </li>
-				</ul>
-			</div>
-		</div>
-		<footer>
-			<span class="collection-card-username" @click="$router.push({ path: `/myspace/${item.author.id}` })">{{item.author.name}}</span>
-			<div>
-				<span>收藏于</span>
-				<time>{{ item.create_at | formatTime}}</time>
-			</div>
-		</footer>
-	</li>
+        </ul>
+      </div>
+    </div>
+    <footer>
+      <span class="collection-card-username" @click="$router.push({ path: `/myspace/${item.author.id}` })">{{item.author.name}}</span>
+      <div>
+        <span>收藏于</span>
+        <time>{{ item.create_at | formatTime}}</time>
+      </div>
+    </footer>
+  </li>
 </template>
 
 <script>
 export default {
-  name: "collection-card",
+  name: 'collection-card',
   props: {
     item: {
       type: Object,
       required: true
     }
   }
-};
+}
 </script>
 
 <style lang="scss" type="stylesheet/scss" scoped>
@@ -46,6 +46,7 @@ export default {
 }
 // post card style
 .collection-card {
+  margin: 10px 0;
   padding: 16px 16px 12px 16px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -58,7 +59,7 @@ export default {
   footer {
     display: flex;
     align-items: center;
-    font-size: 18px;
+    font-size: 11px;
     color: #999999;
     position: relative;
     div {
@@ -84,7 +85,7 @@ export default {
     h1 {
       margin-bottom: 6px;
       color: #333333;
-      font-size: 24px;
+      font-size: 15px;
       opacity: 0.87;
       cursor: pointer;
       display: inline-block;
@@ -109,27 +110,13 @@ export default {
     div.preview-html {
       margin-bottom: 12px;
       word-break: break-all;
-      font-size: 18px;
+      font-size: 11px;
       color: #444444;
       letter-spacing: 0;
       text-align: justify;
     }
     div.preview-imgs {
       display: flex;
-      ul {
-        li {
-          display: inline-block;
-          box-sizing: border-box;
-          img {
-            width: 210px;
-            height: 210px;
-            margin-right: 15px;
-            /*background:#d8d8d8;*/
-            /*border-radius:4px;*/
-            /*align-self: center;*/
-          }
-        }
-      }
     }
   }
   .collection-card-username {

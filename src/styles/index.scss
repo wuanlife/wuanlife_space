@@ -1,10 +1,12 @@
-@import './_variables.scss';
-@import './btn.scss';
+@import './definition/element/button.scss';
+@import './definition/view/card.scss';
+//@import './btn.scss';
 @import './element-ui.scss';
 @import './layout.scss';
 @import './mixin.scss';
 
 body {
+  overflow: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -120,46 +122,6 @@ code {
     content: " ";
     clear: both;
     height: 0;
-  }
-}
-
-/**** Card ****/
-// default Card with default style, you can add style in your page
-.wuan-card {
-  display: flex;
-  align-items: center;
-  background-color: #fff;
-  padding: 10px;
-  img {
-    margin: 10px 8px 10px 0;
-    width: 40px;
-    height: 40px;
-    //添加圆角
-    border-radius: 20px;
-  }
-  .wuan-card__content {
-    min-width: 0;
-    flex: 1;
-    h2 {
-      margin: 2px 0;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      font-size:14px;
-      color:#5992e4;
-      text-align:left;
-    }
-    p {
-      margin: 0;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      font-size:14px;
-      color:#666666;
-      text-align:left;
-    }    
   }
 }
 
