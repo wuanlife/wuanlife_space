@@ -10,34 +10,33 @@
 </template>
 
 <script>
-  import { Navbar, AppMain } from 'views/layout';
+import { Navbar, AppMain } from 'views/layout'
 
-  export default {
-    name: 'layout',
-    components: {
-      Navbar,
-      AppMain
-    },
-    computed: {
-    }
-  }
+export default {
+  name: 'layout',
+  components: {
+    Navbar,
+    AppMain
+  },
+  computed: {}
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import "src/styles/mixin.scss";
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    .navbar-wrapper {
-      z-index: 100;
-    }
-    .main-container {
-      background-color: #f8f9fa;
-      height: calc(100vh - 91px);
-      overflow: auto;
-      transition: all .28s ease-out;
-    }
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-width: 750px;
+  .navbar-wrapper {
+    z-index: 100;
   }
+  .main-container {
+    background-color: #f8f9fa;
+    height: calc(100vh - #{$nav-height});
+    overflow: auto;
+    transition: all 0.28s ease-out;
+  }
+}
 </style>

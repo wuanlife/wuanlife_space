@@ -3,13 +3,13 @@
 //覆盖el-pagination默认样式
 .default-pagination{
   .el-pager {
-     font-size: 16px;
+     font-size: 11px;
      li {
-         min-width: 22px;
-//       width: 20px;
-         height: 20px;
-         line-height: 17px;
-         margin: 0 5px;       
+         min-width: 15px;
+//       width: 15px;
+         height: 15px;
+         line-height: 15px;
+         margin: 0 4px;       
          //默认值
          border-right: medium;
          border-color: rgba(0,0,0,0);

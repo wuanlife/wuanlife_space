@@ -5,8 +5,8 @@
       <icon-svg icon-class="write"></icon-svg>
       写文章
     </div>
-    <el-dropdown menu-align="start" 
-      class="avatar-container" 
+    <el-dropdown menu-align="start"
+      class="avatar-container"
       trigger="click"
       @visible-change="visibleChange">
       <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
@@ -40,49 +40,49 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
       isShowDrop: false
-    };
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  mounted() {
+  mounted () {
   },
-  updated() {
+  updated () {
   },
   methods: {
-    logout() {
-      this.$store.dispatch("Logout").then(() => {
-        location.reload(); // 为了重新实例化vue-router对象 避免bug
-      });
+    logout () {
+      this.$store.dispatch('Logout').then(() => {
+        location.reload() // 为了重新实例化vue-router对象 避免bug
+      })
     },
-    goPath(path) {
+    goPath (path) {
       this.$router.push({path: path})
     },
-    visibleChange() {
-      this.isShowDrop = !this.isShowDrop;
+    visibleChange () {
+      this.isShowDrop = !this.isShowDrop
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .login-container,
 .avatar-container {
+  font-size: 18px;
   margin-left: 30px;
 }
 .login-container {
-  font-size: 22px;
   color: #ffffff;
   span {
     padding: 0 14px;
     &:not(:first-child) {
-        border-left: 1px solid #fff;
+      border-left: 1px solid #fff;
     }
   }
 }
@@ -92,7 +92,6 @@ export default {
 .write-container {
   display: inline-block;
   cursor: pointer;
-  font-size: 22px;
   color: #fff;
 }
 .avatar-container {
@@ -102,9 +101,7 @@ export default {
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     color: #fff;
-    font-size: 22px;
     .avatar-icon {
-      font-size: 22px;
       margin-right: 6px;
     }
     > span {
@@ -126,15 +123,16 @@ export default {
   background-color: #5677fc;
   padding-top: 0;
   margin-top: 1px;
-	border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
   border: 0;
   /deep/ .popper__arrow {
     display: none;
   }
   /deep/ .el-dropdown-menu__item {
-    padding: 16px 36px;
+    padding: 10px 24px;
     transition: all 0.3s ease-in-out;
-    font-size: 22px;
+    line-height: normal;
+    font-size: 13px;
     color: #ffffff;
     &:hover {
       background-color: #2953fc;

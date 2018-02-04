@@ -22,19 +22,19 @@
 </template>
 
 <script>
-import PostCard from "components/PostCard";
-import UserCard from "components/UserCard";
-import Pagination from "components/Pagination";
-import { getMyArticles } from "api/post";
-import { mapGetters } from "vuex";
+import PostCard from 'components/PostCard'
+import UserCard from 'components/UserCard'
+import Pagination from 'components/Pagination'
+import { getMyArticles } from 'api/post'
+import { mapGetters } from 'vuex'
 export default {
-  name: "mySpace",
+  name: 'mySpace',
   components: {
     PostCard,
     UserCard,
     Pagination
   },
-  data() {
+  data () {
     return {
       dates: [],
       users: {
@@ -49,13 +49,13 @@ export default {
       },
       id: 0,
       loading: false
-    };
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  mounted() {
-    if(this.$route.params.id) {
+  mounted () {
+    if (this.$route.params.id) {
       this.id = this.$route.params.id
     } else {
       this.id = this.user.id
@@ -63,7 +63,7 @@ export default {
     this.loadPosts(1)
   },
   methods: {
-    loadPosts(page) {
+    loadPosts (page) {
       const self = this
       this.loading = true
       getMyArticles({
@@ -86,31 +86,29 @@ export default {
         self.pagination.pageCount = Math.ceil(res.author.articles_num / 20)
         self.loading = false
         self.$refs['card-list'].scrollIntoView()
-      }).catch(err => {
-        console.log(err)
       })
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 #my-space {
-  max-width: 1180px;
+  max-width: 739px;
 }
 .my-space {
   aside {
     .user-card{
-      margin-top: 71px;
+      margin-top: 64px;
     }
   }
   section {
     h1 {
       background-color: #ffffff;
       border-radius: 4px;
-      padding: 17px 18px;
-      margin: 71px 0 12px 0;
-      font-size: 32px;
+      padding: 11px 12px;
+      margin: 64px 0 -6px 0;
+      font-size: 20px;
       color: #5677fc;
     }
     :mySpace-content{

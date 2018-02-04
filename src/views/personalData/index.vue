@@ -13,8 +13,8 @@
                 :on-error="upError"
                 ref="upload"
                 style="display:none">
-                <el-button id="img-input" 
-                 size="small" 
+                <el-button id="img-input"
+                 size="small"
                  type="primary">点击上传</el-button>
                 </el-upload>
               <button @click="changeAvatar"><icon-svg icon-class="modify" class="avatar-icon"></icon-svg>修改</button>
@@ -64,7 +64,7 @@
               </div>
           </div>
       </div>
-      <button class="save" @click="pushPersonalData">保存</button>
+      <button class="wl-btn" @click="pushPersonalData">保存</button>
       </section>
   </div>
 </template>
@@ -72,10 +72,10 @@
 <script>
 import DatePicker from 'components/DatePicker'
 import { getToken } from 'api/qiniu'
-import { putUser, getUser } from 'api/user'
-import { mapGetters } from "vuex"
+import { getUser } from 'api/user'
+import { mapGetters } from 'vuex'
 
-const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/';  // 图片服务器域名，展示时用
+const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/' // 图片服务器域名，展示时用
 
 export default {
   name: 'personalData',
@@ -92,7 +92,7 @@ export default {
       sex: '',
       mail: '',
       name: '',
-      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/100/h/100',
+      dafaultAvatarUrl: 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/97/h/97',
       UPLOAD_ADDRESS: location.protocol === 'http:' ? 'http://upload.qiniu.com' : 'https://up.qbox.me',
       uploadData: {},
       loading: false,
@@ -103,10 +103,10 @@ export default {
   computed: {
     birthday: {
       get: function () {
-          let day = this.dayNumber < 10 ? '0' + this.dayNumber : this.dayNumber
-          let mouth = this.mouthNumber < 10 ? '0' + this.mouthNumber : this.mouthNumber
-          return `${this.yearNumber}-${mouth}-${day}`
-          // return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
+        let day = this.dayNumber < 10 ? '0' + this.dayNumber : this.dayNumber
+        let mouth = this.mouthNumber < 10 ? '0' + this.mouthNumber : this.mouthNumber
+        return `${this.yearNumber}-${mouth}-${day}`
+        // return new Date(Date.UTC(this.yearNumber, this.mouthNumber - 1, this.dayNumber))
       },
       set: function (val) {
         let time = new Date(val)
@@ -122,7 +122,7 @@ export default {
       this.yearNumber = val
 
       // 判断闰年
-      let isLeap = this.yearNumber % 4 === 0 && this.yearNumber % 100 !== 0 || this.yearNumber % 400 === 0
+      let isLeap = (this.yearNumber % 4 === 0 && this.yearNumber % 100 !== 0) || this.yearNumber % 400 === 0
       if (isLeap) {
         this.leap = true
       } else {
@@ -157,7 +157,7 @@ export default {
       }, 5000)
       document.getElementById('img-input').click()
     },
-    pushPersonalData: function() {
+    pushPersonalData: function () {
       var changeUser = {}
       if (this.default.name !== this.name) {
         changeUser.name = this.name
@@ -178,16 +178,23 @@ export default {
         })
         return
       }
-      putUser(changeUser).then(res => {
-        console.log(res)
+      this.$store.dispatch('PutUser', changeUser).then(res => {
         this.$notify({
           title: '修改成功',
           message: '修改个人资料成功！',
-          offset: 100,
+          offset: 100
         })
-      }).catch(err => {
-        console.log(err)
       })
+      // putUser(changeUser).then(res => {
+      //   console.log(res)
+      //   this.$notify({
+      //     title: '修改成功',
+      //     message: '修改个人资料成功！',
+      //     offset: 100,
+      //   })
+      // }).catch(err => {
+      //   console.log(err)
+      // })
     },
     beforeUpload: function (file) {
       return this.qnUpload(file)
@@ -204,7 +211,6 @@ export default {
       })
     },
     upScuccess: function (e, file, fileList) {
-      console.log(e)
       const url = QINIU_DOMAIN + e.key
       this.$refs.avatar.setAttribute('src', url)
       this.loading = false
@@ -221,7 +227,7 @@ export default {
       this.name = res.name
       this.birthday = res.birthday
       this.default = res
-      let isDefault = res.avatar_url === 'default_url' ? true : false
+      let isDefault = res.avatar_url === 'default_url'
       if (!isDefault) {
         this.dafaultAvatarUrl = res.avatar_url
       }
@@ -233,18 +239,18 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 #personal-data{
-    width: 1152px;
-    margin-top: 127px;
+    width: 720px;
+    margin-top: 119px;
     margin-bottom: 36px;
     background-color: #fff;
     border-radius: 4px;
-    padding: 69px 177px 109px 177px;
+    padding: 42px 111px 68px 121px;
     text-align: center;
     section{
         h1{
-            font-size: 32px;
+            font-size: 20px;
             color: #5677fc;
-            margin-bottom: 52px;
+            margin-bottom: 42px;
         }
         .personal-data-form{
             display: flex;
@@ -252,95 +258,94 @@ export default {
             .form-left{
                 img{
                     display: block;
-                    height: 155px;
-                    width: 156px;
+                    height: 97px;
+                    width: 97px;
                     border-radius: 100%;
                     background-color: rgb(165, 164, 164);
-                    box-shadow: 0px 4px 5px 0px 
-		rgba(181, 181, 181, 0.75);
-                    margin-bottom: 13px;
+                    box-shadow: 0px 4px 5px 0px rgba(181, 181, 181, 0.75);
+                    margin-bottom: 7px;
                 }
                 button{
                     border: 0;
                     padding: 0;
-                    font-size: 18px;
+                    font-size: 11px;
                     color: #5677fc;
                     background-color: transparent;
                     cursor: pointer;
                     .avatar-icon{
-                        margin-right: 10px;
+                        margin-right: 6 px;
                     }
                 }
             }
             .form-right{
                 border-left: solid 2px #c9c9c9;
-                padding-left: 45px;
+                padding-left: 26px;
                 .form-item{
                     display: flex;
-                    min-height: 70px;
+                    min-height: 45px;
                     align-items: center;
-                    font-size: 28px;
+                    font-size: 17px;
                     color: #434343;
-                    margin-bottom: 60px;
+                    margin-bottom: 37px;
                     &:last-child{
                         margin-bottom: 0;
                     }
                     span{
-                        margin-right: 51px;
-                        font-size: 24px;
+                        margin-right: 32px;
+                        font-size: 15px;
                         color: #434343;
                     }
                     &>input{
-                        height: 70px;
-                        width: 403px;
+                        height: 45px;
+                        width: 253px;
                         color: #434343;
-                        box-shadow: 0px 3px 7px 0px 
-	                	rgba(99, 99, 99, 0.16);
-	                    border-radius: 4px;
-	                    border: solid 2px rgba(171, 171, 171, 0.45);
-                        padding: 0 25px; 
+                        box-shadow: 0px 3px 7px 0px
+                    rgba(99, 99, 99, 0.16);
+                      border-radius: 4px;
+                      border: solid 2px rgba(171, 171, 171, 0.45);
+                        padding: 0 16px;
                     }
                     &>input:focus{
                         background-color: rgba(248, 249, 250, 0.4);
-	                    box-shadow: 0px 3px 7px 0px 
-	                	rgba(86, 119, 252, 0.16);
-	                    border-radius: 4px;
-	                    border: solid 2px rgba(0, 64, 185, 0.4);
+                      box-shadow: 0px 3px 7px 0px
+                    rgba(86, 119, 252, 0.16);
+                      border-radius: 4px;
+                      border: solid 2px rgba(0, 64, 185, 0.4);
                     }
                     .form-item-sex{
                         display: flex;
                         align-items: center;
                         justify-content: flex-start;
-                        width: 403px;
+                        width: 253px;
                         input{
                             width: 0;
                             height: 0;
                         }
                         label{
-                            width: 103px;
-                            height: 70px;
-                            line-height: 70px;
+                            width: 65px;
+                            height: 44px;
+                            line-height: 44px;
                             display: inline-block;
                             cursor: pointer;
                             background-color: rgba(248, 249, 250, 0.45);
-	                        box-shadow: 0px 3px 7px 0px 
-                    		rgba(99, 99, 99, 0.16);
-	                        border-radius: 4px;
-                        	border: solid 2px rgba(171, 171, 171, 0.45);
-                            font-size: 28px;
+                          box-shadow: 0px 3px 7px 0px
+                        rgba(99, 99, 99, 0.16);
+                          border-radius: 4px;
+                          border: solid 2px rgba(171, 171, 171, 0.45);
+                            font-size: 17px;
                             color: #434343;
                             font-weight: normal;
-                            margin-right: 48px;
+                            margin-right: 29px;
                             &:last-child{
-                                font-size: 22px;
+                                font-size: 13px;
                                 margin-right: 0;
                             }
                         }
                         .label-active{
                             background-color: rgba(248, 249, 250, 0.4);
-	                        box-shadow: 0px 3px 7px 0px 
-                    		rgba(86, 119, 252, 0.16);
-                        	border: solid 2px rgba(0, 64, 185, 0.4);
+                          box-shadow: 0px 3px 7px 0px
+                        rgba(86, 119, 252, 0.16);
+                          border: solid 2px rgba(0, 64, 185, 0.4);
                         }
                     }
                     .form-item-date{
@@ -348,7 +353,7 @@ export default {
                         justify-content: space-between;
                         align-items: center;
                         .date-picker{
-                            margin-left: 15px;
+                            margin-left: 8px;
                             z-index: 0;
                             &:first-child{
                                 margin-left: 0;
@@ -359,16 +364,5 @@ export default {
             }
         }
     }
-}
-.save{
-    margin-top: 108px;
-    width: 240px;
-	height: 59px;
-	background-color: #5677fc;
-	border-radius: 4px;
-    border: 0;
-    cursor: pointer;
-    font-size: 24px;
-    color: #fff;
 }
 </style>

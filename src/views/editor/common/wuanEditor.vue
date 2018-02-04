@@ -1,12 +1,12 @@
 <template>
-  <div id="wuan-editor" 
+  <div id="wuan-editor"
         class="editor-container">
     <quill-editor id="editor" v-model="content"
       ref="wuanEditor"
       :options="editorOption"
       @blur="onEditorBlur($event)"
       @focus="onEditorFocus($event)"
-      @ready="onEditorReady($event)"> 
+      @ready="onEditorReady($event)">
       <div id="toolbar" slot="toolbar">
         <!-- Add a bold button -->
         <button class="ql-bold">Bold</button>
@@ -20,15 +20,15 @@
     </quill-editor>
     <el-upload
       :action="UPLOAD_ADDRESS"
-      :before-upload='beforeUpload' 
-      :data="uploadData" 
-      :on-success='upScuccess' 
-      ref="upload" 
+      :before-upload='beforeUpload'
+      :data="uploadData"
+      :on-success='upScuccess'
+      ref="upload"
       style="display:none"
     >
-      <el-button id="img-input" 
-                 size="small" 
-                 type="primary" 
+      <el-button id="img-input"
+                 size="small"
+                 type="primary"
                  v-loading.fullscreen.lock="fullscreenLoading"
                  element-loading-text="插入中,请稍候">点击上传</el-button>
     </el-upload>
@@ -36,28 +36,28 @@
 </template>
 
 <script>
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
-import { quillEditor } from "vue-quill-editor";
+import { quillEditor } from 'vue-quill-editor'
 import { Quill } from 'utils/constant'
-import { getToken } from "api/qiniu"
+import { getToken } from 'api/qiniu'
 
-const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/';  // 图片服务器域名，展示时用
+const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/' // 图片服务器域名，展示时用
 
 export default {
-  name: "wuan-editor",
+  name: 'wuan-editor',
   components: {
-    "quill-editor": quillEditor
+    'quill-editor': quillEditor
   },
   props: {
     initialContent: {
       type: String,
-      required: false,
+      required: false
     }
   },
-  data() {
+  data () {
     return {
       content: this.initialContent || '',
       addRange: [],
@@ -67,42 +67,41 @@ export default {
       editorOption: {
         placeholder: '说些什么吧...',
         modules: {
-          toolbar: "#toolbar"
+          toolbar: '#toolbar'
         }
       },
       // 上传七牛的actiond地址，http 和 https �不一样
       UPLOAD_ADDRESS: location.protocol === 'http:' ? 'http://upload.qiniu.com' : 'https://up.qbox.me'
-    };
-  },
-  computed: {
-    editor() {
-      return this.$refs.wuanEditor.quill;
     }
   },
-  created() {},
-  mounted() {
+  computed: {
+    editor () {
+      return this.$refs.wuanEditor.quill
+    }
+  },
+  created () {},
+  mounted () {
     this.$refs.wuanEditor.quill.getModule('toolbar').addHandler('image', this.imgHandler)
-
   },
   methods: {
-    onEditorBlur(quill) {
-      console.log("editor blur!", quill);
+    onEditorBlur (quill) {
+      console.log('editor blur!', quill)
     },
-    onEditorFocus(quill) {
-      console.log("editor focus!", quill);
+    onEditorFocus (quill) {
+      console.log('editor focus!', quill)
     },
-    onEditorReady(quill) {
-      console.log("editor ready!", quill);
+    onEditorReady (quill) {
+      console.log('editor ready!', quill)
     },
 
     // 图片上传之前调取的函数
     // 这个钩子还支持 promise
-    beforeUpload(file) {
+    beforeUpload (file) {
       return this.qnUpload(file)
     },
 
     // 图片上传前获得数据token数据
-    qnUpload(file) {
+    qnUpload (file) {
       this.fullscreenLoading = true
       const suffix = file.name.split('.')
       const ext = suffix.splice(suffix.length - 1, 1)[0]
@@ -116,7 +115,7 @@ export default {
     },
 
     // 图片上传成功回调   插入到编辑器中
-    upScuccess(e, file, fileList) {
+    upScuccess (e, file, fileList) {
       console.log(e)
       this.fullscreenLoading = false
       const vm = this
@@ -134,7 +133,7 @@ export default {
       }
       this.$refs['upload'].clearFiles() // 插入成功后清除input的内容
     },
-    imgHandler(state) {
+    imgHandler (state) {
       console.log(state)
       this.addRange = this.$refs.wuanEditor.quill.getSelection()
       if (state) {
@@ -142,24 +141,24 @@ export default {
         fileInput.click() // 加一个触发事件
       }
     },
-    onSubmit() {}
+    onSubmit () {}
   },
   watch: {
     content: function (newContent, oldContent) {
       this.$emit('content-change', newContent, oldContent)
     }
-  },
-};
+  }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
 // editor style
 .editor-container {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 24px;
-  color: #999999;
+  color: #444444;
   .quill-editor {
-    box-shadow: 0px 3px 7px 0px 
+    box-shadow: 0px 3px 7px 0px
       rgba(99, 99, 99, 0.65);
     border-radius: 4px;
     // 工具栏样式
@@ -167,7 +166,7 @@ export default {
     }
     .ql-container {
       height: 300px;
-      font-size: 24px;
+      font-size: 15px;
     }
 
   }

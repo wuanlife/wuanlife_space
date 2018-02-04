@@ -19,41 +19,40 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
-  import { getArticle } from "api/article";
-  import UserCard from 'components/UserCard';
-  import ArticleContent from './ArticleContent.vue';
-  import ArticleReplies from './ArticleReplies';
-  export default {
-    name: 'article-detail',
-    components: {
-      UserCard,
-      ArticleContent,
-      ArticleReplies,
-    },
-    data() {
-      return {
-        article: null
-      }
-    },
-    computed: {
-      ...mapGetters([
-        'user',
-      ]),
-    },
-    created() {
-
-    },
-    mounted() {
-      let self = this;
-      this.loading = true;
-      getArticle(this.$route.params.id).then(res => {
-        this.article = res;
-      });
-    },
-    methods: {
+import { mapGetters } from 'vuex'
+import { getArticle } from 'api/article'
+import UserCard from 'components/UserCard'
+import ArticleContent from './ArticleContent.vue'
+import ArticleReplies from './ArticleReplies'
+export default {
+  name: 'article-detail',
+  components: {
+    UserCard,
+    ArticleContent,
+    ArticleReplies
+  },
+  data () {
+    return {
+      article: null
     }
+  },
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  },
+  created () {
+
+  },
+  mounted () {
+    this.loading = true
+    getArticle(this.$route.params.id).then(res => {
+      this.article = res
+    })
+  },
+  methods: {
   }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -64,11 +63,11 @@
   & > header {
     padding: 17px;
     margin-bottom: 14px;
-    font-size: 32px;
+    font-size: $title-font-size;
     color: #5677fc;
   }
   .article-container {
-    padding: 31px;
+    padding: 20px;
     margin-bottom: 30px;
     .article-content {
       margin-bottom: 50px;

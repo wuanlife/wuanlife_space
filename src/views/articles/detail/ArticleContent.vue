@@ -53,9 +53,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
 import { Notification } from 'element-ui'
-import ArticleState from 'components/ArticleState';
+import ArticleState from 'components/ArticleState'
 import {
   approveArticle,
   unapproveArticle,
@@ -63,16 +63,16 @@ import {
   uncollectArticle,
   lockArticle,
   unlockArticle,
-  deleteArticle,
-} from "api/article";
+  deleteArticle
+} from 'api/article'
 
 export default {
-  name: "article-content",
+  name: 'article-content',
   components: {
     ArticleState
   },
-  props: ["article"],
-  data() {
+  props: ['article'],
+  data () {
     return {
       // 请求发送中
       approving: false,
@@ -84,74 +84,72 @@ export default {
       approved_numTemp: 0,
       collectedTemp: false,
       collected_numTemp: 0,
-      lockedTemp: false,
-    };
+      lockedTemp: false
+    }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(['user'])
   },
-  created() {},
-  mounted() {
-    this.approvedTemp = this.article.approved;
-    this.approved_numTemp = this.article.approved_num;
-    this.collectedTemp = this.article.collected;
-    this.collected_numTemp = this.article.collected_num;
-    this.lockedTemp = this.article.lock;
+  created () {},
+  mounted () {
+    this.approvedTemp = this.article.approved
+    this.approved_numTemp = this.article.approved_num
+    this.collectedTemp = this.article.collected
+    this.collected_numTemp = this.article.collected_num
+    this.lockedTemp = this.article.lock
   },
   methods: {
-    async approve() {
-      if(this.approving) {
-        return;
+    async approve () {
+      if (this.approving) {
+        return
       }
       this.approving = true
-        if(this.approvedTemp) {
+      if (this.approvedTemp) {
         await unapproveArticle(this.$route.params.id)
-        this.approvedTemp = !this.approvedTemp;
-        this.approved_numTemp--;
+        this.approvedTemp = !this.approvedTemp
+        this.approved_numTemp--
       } else {
         await approveArticle(this.$route.params.id)
-        this.approvedTemp = !this.approvedTemp;
-        this.approved_numTemp++;
+        this.approvedTemp = !this.approvedTemp
+        this.approved_numTemp++
       }
       this.approving = false
     },
-    async collect() {
-      if(this.collecting) {
-        return;
+    async collect () {
+      if (this.collecting) {
+        return
       }
       this.collecting = true
-      if(this.collectedTemp) {
+      if (this.collectedTemp) {
         await uncollectArticle(this.$route.params.id)
-        this.collectedTemp = !this.collectedTemp;
-        this.collected_numTemp--;
+        this.collectedTemp = !this.collectedTemp
+        this.collected_numTemp--
       } else {
         await collectArticle(this.$route.params.id)
-        this.collectedTemp = !this.collectedTemp;
-        this.collected_numTemp++;
+        this.collectedTemp = !this.collectedTemp
+        this.collected_numTemp++
       }
       this.collecting = false
     },
-    async lock() {
-      if(this.locking) {
-        return;
+    async lock () {
+      if (this.locking) {
+        return
       }
-      this.locking = true;
+      this.locking = true
       try {
-        let res = null;
-        if(this.lockedTemp) {
-          res = await unlockArticle(this.$route.params.id)
+        if (this.lockedTemp) {
+          await unlockArticle(this.$route.params.id)
           this.lockedTemp = !this.lockedTemp
         } else {
-          res = await lockArticle(this.$route.params.id)
+          await lockArticle(this.$route.params.id)
           this.lockedTemp = !this.lockedTemp
         }
         Notification.info({
-          message: this.lockedTemp ? "锁定成功" : "解锁成功",
+          message: this.lockedTemp ? '锁定成功' : '解锁成功',
           offset: 100
         })
-
       } catch (e) {
-        if(e.data) {
+        if (e.data) {
           Notification.error({
             message: e.data.error,
             offset: 100
@@ -160,52 +158,52 @@ export default {
           console.log(e)
         }
       }
-      this.locking = false;
+      this.locking = false
     },
-    edit(articleId) {
+    edit (articleId) {
       this.$router.push({path: `/editor/article/${articleId}`})
     },
-    async del() {
-      if(this.deleting) {
-        return;
+    async del () {
+      if (this.deleting) {
+        return
       }
-      this.deleting = true;
-      const res = await deleteArticle(this.$route.params.id)
+      this.deleting = true
+      await deleteArticle(this.$route.params.id)
       Notification.info('删除帖子成功')
     }
   }
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 article {
   h1 {
-    font-size: 28px;
+    font-size: $title-font-size;
     color: #434343;
-    margin-bottom: 38px;
+    margin-bottom: 22px;
   }
   time {
     display: block;
-    font-size: 20px;
+    font-size: 12px;
     color: #434343;
-    margin-bottom: 47px;
+    margin-bottom: 29px;
   }
   .article-html {
-    margin-bottom: 66px;
+    margin-bottom: 40px;
     /deep/ img {
       max-width: 100%;
     }
     /deep/ p {
       word-wrap: break-word;
-      font-size: 20px;
-      color: #434343;
+      font-size: 12px;
+      color: #444444;
     }
   }
 }
 footer {
   display: flex;
   justify-content: space-between;
-  font-size: 20px;
+  font-size: 12px;
 
   .article-btn {
     display: inline-block;
@@ -215,7 +213,7 @@ footer {
     margin-left: 20px;
     transition: all 0.3s ease-in-out;
     &:not(:last-child) {
-      margin-right: 54px;
+      margin-right: 60px;
     }
     .svg-icon {
       color: #666666;
@@ -223,24 +221,25 @@ footer {
       margin-right: 12px;
     }
     &:hover {
-      color: #5677fc;
+      color: $wl-blue;
       .svg-icon {
-        color: #5677fc;
+        color: $wl-blue;
       }
     }
     &.done {
-      color: #5677fc;
+      color: $wl-blue;
       .svg-icon {
-        color: #5677fc;
+        color: $wl-blue;
       }
     }
   }
   .article-opt {
+    margin-left: 12px;
     cursor: pointer;
-    color: #5677fc;
+    color: $wl-blue;
     transition: all 0.3s ease-in-out;
     &:hover {
-      color: #0040b9;
+      color: $wl-blue-active;
     }
   }
 }
