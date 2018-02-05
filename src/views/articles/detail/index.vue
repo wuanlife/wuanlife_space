@@ -4,10 +4,10 @@
       <user-card :user="article.author"></user-card>
     </aside>
     <section>
-      <header class="wuan-block">
+      <header class="wl-card">
         文章详情
       </header>
-      <div class="wuan-block article-container">
+      <div class="wl-card article-container">
         <article-content :article="article"></article-content>
         <article-replies></article-replies>
       </div>
@@ -76,9 +76,5 @@ export default {
       margin-bottom:36px;
     }
   }
-}
-.wuan-block {
-  background: #ffffff;
-  border-radius: 4px;
 }
 </style>

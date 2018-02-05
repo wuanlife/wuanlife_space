@@ -1,6 +1,6 @@
 <template>
   <div id="drafts-new" class="view-container">
-    <section>
+    <section class="wl-card">
       <header>
         写文章
       </header>

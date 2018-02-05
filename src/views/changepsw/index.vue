@@ -1,7 +1,7 @@
 <template>
   <div class="register-container view-container">
     <section>
-      <div class="form-content" v-loading="loading">
+      <div class="form-content wl-card" v-loading="loading">
         <header>修改密码</header>
         <el-form :model="changepswForm" :rules="changepswRules" ref="changepswForm" class="demo-ruleForm" @keyup.enter.native="submitForm('changepswForm')">
           <div class="oldpsw-input">
