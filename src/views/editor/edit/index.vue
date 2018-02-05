@@ -1,6 +1,6 @@
 <template>
   <div id="drafts-new" class="view-container">
-    <section v-loading.lock="form === null">
+    <section v-loading.lock="form === null" class="wl-card">
       <header>
         修改文章
       </header>

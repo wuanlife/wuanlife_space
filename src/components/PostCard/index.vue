@@ -1,5 +1,5 @@
 <template>
-  <li class="post-card" >
+  <li class="post-card wl-card" >
     <header>
       <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url">
       <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
@@ -214,7 +214,7 @@ export default {
       margin-top: 24px;
       margin-left: -17px;
       margin-right: -17px;
-      border-top: 2px solid #dcdcdc;
+      border-top: 1px solid #dcdcdc;
       padding: 10px 0 9px 0;
       ul {
         display: flex;

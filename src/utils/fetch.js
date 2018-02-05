@@ -37,7 +37,7 @@ service.interceptors.response.use(
     if (!error.response) {
       Notification({
         message: error.message,
-        offset: 100
+        offset: 60
       })
     } else if (error.response.status === 401) {
       MessageBox.confirm('登录状态过期或未登录，可以取消继续留在该页面，或者重新登录', '确定登出', {

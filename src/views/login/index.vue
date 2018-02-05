@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container view-container">
+  <div class="login-container view-container wl-card">
     <section>
       <header>登录</header>
       <div class="people-circle">
@@ -100,7 +100,7 @@ export default {
             }).catch(err => {
               Notification.error({
                 message: err.data.error,
-                offset: 100
+                offset: 60
               })
               this.loading = false
             })

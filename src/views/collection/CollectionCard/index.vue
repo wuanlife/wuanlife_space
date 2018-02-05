@@ -1,5 +1,5 @@
 <template>
-  <li class="collection-card">
+  <li class="collection-card wl-card">
     <div class="collection-card-content">
       <h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
       <div class="preview-html">

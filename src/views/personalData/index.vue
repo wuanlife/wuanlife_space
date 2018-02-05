@@ -1,5 +1,5 @@
 <template>
-  <div id="personal-data" class="personal-data view-container">
+  <div id="personal-data" class="personal-data view-container wl-card">
       <section>
           <h1>个人资料</h1>
       <div class="personal-data-form" v-loading="loading1">
@@ -182,7 +182,7 @@ export default {
         this.$notify({
           title: '修改成功',
           message: '修改个人资料成功！',
-          offset: 100
+          offset: 60
         })
       })
       // putUser(changeUser).then(res => {
@@ -190,7 +190,7 @@ export default {
       //   this.$notify({
       //     title: '修改成功',
       //     message: '修改个人资料成功！',
-      //     offset: 100,
+      //     offset: 60,
       //   })
       // }).catch(err => {
       //   console.log(err)
@@ -267,7 +267,6 @@ export default {
                 }
                 button{
                     border: 0;
-                    padding: 0;
                     font-size: 11px;
                     color: #5677fc;
                     background-color: transparent;

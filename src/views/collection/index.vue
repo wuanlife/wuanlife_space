@@ -7,10 +7,10 @@
 <template>
     <div class="collection-container view-container">
       <section>
-        <header>
+        <header class="wl-card">
             我的收藏
         </header>
-        <div class="empty-container" v-if="empty">
+        <div class="empty-container wl-card" v-if="empty">
           <h2>你还没有任何收藏哦~</h2>
           <img :src="Box404"/>
         </div>

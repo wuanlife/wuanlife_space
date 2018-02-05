@@ -1,7 +1,7 @@
 <template>
   <li class="index-card">
     <header>
-      <img v-bind:src="item.author.image">
+      <img v-bind:src="item.author.image || defaultAvatar">
       <span class="clickable">{{ item.author.name }}</span>
       <!--<span class="clickable" @click="$router.push({ path: `/planet/${item.group.id}`, query: { name: item.group.name }})">{{ item.group.name }}</span>-->
       <time>{{ item.create_at | formatTime}}</time>
@@ -21,9 +21,12 @@
 </template>
 
 <script>
+import defaultAvatar from '@/assets/wuanlife_256.jpg'
 export default {
   data () {
-    return {}
+    return {
+      defaultAvatar
+    }
   },
   props: {
     item: {
@@ -37,7 +40,6 @@ export default {
 <style type="stylesheet/scss" lang="scss" scoped>
 .index-card {
   padding: 38px 26px 0px 26px;
-  width: 714px;
   background-color: #ffffff;
   border-radius: 4px;
   &:not(:first-child) {
@@ -59,13 +61,13 @@ export default {
       }
     }
     img {
-      width: 50px;
-      height: 50px;
+      width: 32px;
+      height: 32px;
       border-radius: 100%;
       margin-right: 24px;
     }
     span {
-      font-size: 24px;
+      font-size: 15px;
       color: #333333;
       &:not(:first-child) {
         margin-left: 5px;
@@ -73,12 +75,12 @@ export default {
     }
     time {
       margin: 6px 0 0 42px;
-      font-size: 18px;
+      font-size: 11px;
       color: #999999;
-      /*flex-grow: 1;*/
+      flex-grow: 1;
       /*line-height: 20px;
           display: inline-block;*/
-      /*text-align: right;*/
+      text-align: right;
     }
   }
   div.index-card-content {
@@ -91,7 +93,7 @@ export default {
       overflow: hidden;
       color: #333333;
       font-family: PingFangHK-Semibold;
-      font-size: 24px;
+      font-size: 15px;
       white-space: nowrap;
       // hover animation
       &::after {
@@ -115,18 +117,18 @@ export default {
       /*margin-bottom: 12px;*/
       word-break: break-all;
       font-family: PingFangHK-Medium;
-      font-size: 18px;
+      font-size: 11px;
       color: #444444;
       letter-spacing: 0;
       text-align: justify;
     }
     div.preview-imgs {
       display: flex;
-      margin-top: 33px;
+      margin-top: 20px;
       img {
-        margin-right: 15px;
-        width: 210px;
-        height: 210px;
+        margin-right: 9px;
+        width: 132px;
+        height: 132px;
         margin-bottom: 20px;
       }
     }

@@ -146,13 +146,13 @@ export default {
         }
         Notification.info({
           message: this.lockedTemp ? '锁定成功' : '解锁成功',
-          offset: 100
+          offset: 60
         })
       } catch (e) {
         if (e.data) {
           Notification.error({
             message: e.data.error,
-            offset: 100
+            offset: 60
           })
         } else {
           console.log(e)

@@ -1,6 +1,6 @@
 <template>
   <div id="drafts-new" class="view-container">
-    <section>
+    <section class="wl-card">
       <header>
         写文章
       </header>
@@ -18,6 +18,7 @@
 <script>
 import { postArticles } from 'api/article'
 import wuanEditor from '../../common/wuanEditor'
+import { Notification } from 'element-ui'
 
 export default {
   name: 'drafts-new',
@@ -40,14 +41,20 @@ export default {
     onContentChange (newContent, oldContent) {
       this.form.content = newContent
     },
-    onSubmit () {
+    async onSubmit () {
       this.submitLoading = true
-      postArticles(this.form)
-        .then((res) => {
-          this.submitLoading = false
-          const articleId = res.id
-          this.$router.push({path: `/article/${articleId}`})
+      try {
+        const res = await postArticles(this.form)
+        this.submitLoading = false
+        const articleId = res.id
+        this.$router.push({path: `/article/${articleId}`})
+      } catch (e) {
+        this.submitLoading = false
+        Notification.error({
+          message: e.data.error || '未知错误',
+          offset: 60
         })
+      }
     }
   }
 }
@@ -86,11 +93,8 @@ export default {
 #wuan-editor {
   margin-bottom: 26px;
 }
-/*.submit {
+.submit {
   float: right;
-  padding: 13px 43px;
-
-  font-size: 24px;
   color: #ffffff;
-}*/
+}
 </style>

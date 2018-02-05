@@ -100,7 +100,7 @@ export default {
       this.pagination.total--
       Notification.info({
         message: '删除评论成功',
-        offset: 100
+        offset: 60
       })
     },
     handleReplySuccess (reply) {

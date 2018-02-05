@@ -2,7 +2,7 @@
   <div class="register-container view-container">
     <section>
 
-      <div class="form-content" v-loading="loading">
+      <div class="form-content  wl-card" v-loading="loading">
         <header>注册</header>
         <el-form :model="signupForm" :rules="signupRules" ref="signupForm" class="demo-ruleForm" @keyup.enter.native="submitForm('signupForm')">
 
@@ -118,7 +118,7 @@ export default {
             }).catch(err => {
               Notification.error({
                 message: err.data.error,
-                offset: 100
+                offset: 60
               })
               this.loading = false
             })
