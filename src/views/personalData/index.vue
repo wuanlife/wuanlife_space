@@ -64,7 +64,7 @@
               </div>
           </div>
       </div>
-      <button class="save" @click="pushPersonalData">保存</button>
+      <button class="wl-btn" @click="pushPersonalData">保存</button>
       </section>
   </div>
 </template>
@@ -182,7 +182,7 @@ export default {
         this.$notify({
           title: '修改成功',
           message: '修改个人资料成功！',
-          offset: 100
+          offset: 60
         })
       })
       // putUser(changeUser).then(res => {
@@ -190,7 +190,7 @@ export default {
       //   this.$notify({
       //     title: '修改成功',
       //     message: '修改个人资料成功！',
-      //     offset: 100,
+      //     offset: 60,
       //   })
       // }).catch(err => {
       //   console.log(err)
@@ -364,16 +364,5 @@ export default {
             }
         }
     }
-}
-.save{
-  margin-top: 66px;
-  width: 150px;
-  height: 38px;
-  background-color: #5677fc;
-  border-radius: 4px;
-    border: 0;
-    cursor: pointer;
-    font-size: 15px;
-    color: #fff;
 }
 </style>

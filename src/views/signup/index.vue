@@ -118,7 +118,7 @@ export default {
             }).catch(err => {
               Notification.error({
                 message: err.data.error,
-                offset: 100
+                offset: 60
               })
               this.loading = false
             })
@@ -136,9 +136,9 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: auto;
-  max-width: 828px;
+  max-width: 518px;
   min-width: 380px;
-  padding-top: 101px;
+  padding-top: 132px;
 
   section {
     flex: 1;
@@ -147,15 +147,15 @@ export default {
       width: 100%;
       /*background: #C0C0C0;*/
       background: #ffffff;
-      width: 828px;
-      height: 713px;
+      width: 518px;
+      height: 446px;
       margin: 0 auto;
       justify-content: center;
 
       header {
         margin: 0 auto;
-        padding-top: 44px;
-        font-size: 32px;
+        padding-top: 27px;
+        font-size: 20px;
         color: #5677fc;
         text-align: center;
       }
@@ -164,66 +164,66 @@ export default {
         margin-bottom: 0px;
 
         /deep/ .el-form-item__error {
-          padding-top: 11px;
-          height: 15px;
-          font-size: 14px;
+          padding-top: 6px;
+          height: 16px;
+          font-size: 8px;
           color: #e60012;
         }
       }
 
       .el-input {
-        width: 405px;
+        width: 254px;
 
         /deep/ input {
-          padding-left: 18px;
-          font-size: 28px;
-          height: 71px;
+          padding-left: 11px;
+          font-size: 15px;
+          height: 45px;
           color: #434343;
-          background-color: rgba(248, 249, 250, 0.45);
-          box-shadow: -3px 0px 7px 0px rgba(99, 99, 99, 0.16);
+          background-color: rgba(248, 249, 250, 0.4);
+          box-shadow: 0px 3px 7px 0px rgba(99, 99, 99, 0.16);
           border-radius: 4px;
-          border: solid 2px rgba(171, 171, 171, 0.45);
+          border: solid 2px rgba(171, 171, 171, 0.4);
 
           &:focus {
             background-color: rgba(248, 249, 250, 0.4);
-            box-shadow: 0px 3px 7px 0px rgba(86, 119, 252, 0.14);
+            box-shadow: 0px 3px 7px 0px rgba(86, 119, 252, 0.16);
             border-radius: 4px;
             border: solid 2px rgba(0, 64, 185, 0.4);
           }
 
           &::-webkit-input-placeholder {
-            font-size: 20px;
+            font-size: 12px;
             color: #434343;
-            margin-top: 26px;
+            margin-top: 16px;
           }
         }
       }
 
       .mail-input {
-        width: 458px;
+        width: 287px;
         margin: 0 auto;
-        padding-top: 72px;
-        padding-left: 53px;
+        padding-top: 35px;
+        padding-left: 33px;
 
         .svg-icon {
-          width: 33px;
-          height: 33px;
+          width: 25px;
+          height: 21px;
           color: #5677fc;
-          margin: 19.5px 0 19.5px -88px;
+          margin: 16px 0 16px -44px;
         }
       }
 
       .name-input {
-        width: 458px;
+        width: 287px;
         margin: 0 auto;
-        padding-top: 72px;
-        padding-left: 53px;
+        padding-top: 45px;
+        padding-left: 33px;
 
         .svg-icon {
-          width: 33px;
-          height: 33px;
+          width: 25px;
+          height: 21px;
           color: #5677fc;
-          margin: 19.5px 0 19.5px -88px;
+          margin: 16px 0 16px -44px;
         }
 
         .el-form-item__error {
@@ -232,33 +232,33 @@ export default {
       }
 
       .psw-input {
-        width: 458px;
+        width: 287px;
         margin: 0 auto;
-        padding-top: 72px;
-        padding-left: 53px;
+        padding-top: 45px;
+        padding-left: 33px;
 
         .svg-icon {
-          width: 33px;
-          height: 33px;
+          width: 25px;
+          height: 21px;
           color: #5677fc;
-          margin: 19.5px 0 19.5px -88px;
+          margin: 16px 0 16px -44px;
         }
       }
 
       .form-btny {
         text-align: center;
-        width: 458px;
-        height: 142px;
-        padding-top: 71px;
+        width: 288px;
+        height: 45px;
+        padding-top: 44px;
         margin: 0 auto;
 
         button {
           padding: 0;
-          width: 458px;
-          height: 71px;
+          width: 288px;
+          height: 45px;
           background-color: #5677fc;
           border-radius: 4px;
-          font-size: 24px;
+          font-size: 15px;
           color: #ffffff;
         }
       }
