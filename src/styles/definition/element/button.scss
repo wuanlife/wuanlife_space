@@ -34,24 +34,18 @@
     transition: all 0.3s ease-in-out;
 }
 
-
 /*******************************
             States
 *******************************/
-
 
 /*--------------
       Hover
 ---------------*/
 
 .wl-btn:hover {
-//  background-color: aquamarine;
     background-color: $hoverBackgroundColor;
     box-shadow: $hoverBoxShadow;
-//  box-shadow: 1px 1px 1px red;
-//  color: $hoverColor;
 }
-
 
 /*--------------
       Focus
@@ -59,10 +53,8 @@
 
 .wl-btn:focus {
     background-color: $focusBackgroundColor;
-//  color: black;
     box-shadow: $focusBoxShadow;
 }
-
 
 /*--------------
       Down

@@ -62,9 +62,8 @@
 }
 
 //文字溢出隐藏
-@mixin text-ellipsis($width: 100%) {
-  width: $width;
-  word-wrap: normal;
+@mixin text-ellipsis($maxWidth: 100%) {
+  max-width: $maxWidth;
   overflow-x: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
