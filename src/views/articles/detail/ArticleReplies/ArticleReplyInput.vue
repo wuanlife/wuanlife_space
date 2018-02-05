@@ -55,7 +55,7 @@ export default {
       } catch (e) {
         Notification.error({
           message: e.data.error || '未知错误',
-          offset: 100
+          offset: 60
         })
         console.log(e)
       }
