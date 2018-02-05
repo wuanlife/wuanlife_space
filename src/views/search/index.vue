@@ -106,7 +106,7 @@ export default {
           self.pagination.limit
         )
           .then(res => {
-            if (res.users == null) {
+            if (res.articles == null) {
               self.emptyArticle = true
             } else {
               self.emptyArticle = false
