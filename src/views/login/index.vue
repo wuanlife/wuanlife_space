@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container view-container">
+  <div class="login-container view-container wl-card">
     <section>
       <header>登录</header>
       <div class="people-circle">
@@ -121,7 +121,7 @@ export default {
   margin: auto;
   max-width: 518px;
   min-width: 380px;
-  padding-top: 132px;
+  margin-top: 132px;
   section {
     flex: 1;
     header {
