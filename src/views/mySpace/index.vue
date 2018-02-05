@@ -6,7 +6,7 @@
             class="user-card"></user-card>
       </aside>
       <section>
-          <h1>最新内容</h1>
+          <h1 class="wl-card">最新内容</h1>
           <ul class="mySpace-content" v-loading="loading" ref="card-list">
               <post-card
                 v-for="(date, index) in dates"
