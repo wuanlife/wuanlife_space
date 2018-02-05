@@ -112,22 +112,22 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 900px;
+    max-width: 700px;
     min-width: 590px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 714px;
+      flex: 0 0 448px;
       order: 1;
       header {
         margin: 31px 0 12px 0;
         padding-left: 17px;
-        font-size: 32px;
+        font-size: 20px;
         color: #5677fc;
-        height: 66px;
-        line-height: 66px;
+        height: 42px;
+        line-height: 42px;
         background-color: white;
       }
     }
@@ -142,10 +142,10 @@ export default {
         margin: 31px 0 12px 0;
         padding-left: 17px;
         font-family: MicrosoftYaHei-Bold;
-        font-size: 32px;
+        font-size: 20px;
         color: #5677fc;
-        height: 66px;
-        line-height: 66px;
+        height: 42px;
+        line-height: 42px;
         background-color: white;
       }
       .aside-content {

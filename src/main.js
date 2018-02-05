@@ -6,7 +6,6 @@ import App from './App'
 import router from './router'
 import store from 'vuex-store'
 import ElementUI from 'element-ui'
-import './assets/velocity.min.js'
 import './assets/animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
 // import 'assets/custom-theme/index.css'; // 换肤版本element-ui css

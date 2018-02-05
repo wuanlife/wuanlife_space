@@ -100,7 +100,7 @@ export default {
             }).catch(err => {
               Notification.error({
                 message: err.data.error,
-                offset: 100
+                offset: 60
               })
               this.loading = false
             })

@@ -167,10 +167,10 @@ export default {
       margin: 31px 0 12px 0;
       padding-left: 17px;
       font-family: PingFangHK-Medium;
-      font-size: 32px;
+      font-size: 20px;
       color: #5677fc;
-      height: 66px;
-      line-height: 66px;
+      height: 42px;
+      line-height: 42px;
       background-color: white;
     }
     .empty-container {
@@ -179,6 +179,9 @@ export default {
       justify-content: center;
       align-items: center;
       height: 150px;
+      h2 {
+        font-size: 20px;
+      }
     }
     .relatedUsersCardBox {
       display: flex;

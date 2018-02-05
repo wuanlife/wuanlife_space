@@ -1,7 +1,7 @@
 <template>
   <div class="register-container view-container">
     <section>
-      <div class="form-content" v-loading="loading">
+      <div class="form-content wl-card" v-loading="loading">
         <header>修改密码</header>
         <el-form :model="changepswForm" :rules="changepswRules" ref="changepswForm" class="demo-ruleForm" @keyup.enter.native="submitForm('changepswForm')">
           <div class="oldpsw-input">
@@ -96,7 +96,7 @@ export default {
             })
             Notification.info({
               message: '密码修改成功, 3秒后跳转到首页',
-              offset: 100
+              offset: 60
             })
             setTimeout(() => {
               this.$router.push({ path: '/' })
@@ -105,7 +105,7 @@ export default {
           } catch (e) {
             Notification.error({
               message: e.data.error,
-              offset: 100
+              offset: 60
             })
             this.loading = false
           }
