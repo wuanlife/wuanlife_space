@@ -1,5 +1,5 @@
 <template>
-  <div id="personal-data" class="personal-data view-container">
+  <div id="personal-data" class="personal-data view-container wl-card">
       <section>
           <h1>个人资料</h1>
       <div class="personal-data-form" v-loading="loading1">
