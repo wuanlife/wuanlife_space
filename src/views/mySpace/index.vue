@@ -7,7 +7,8 @@
       </aside>
       <section>
           <h1 class="wl-card">最新内容</h1>
-          <ul class="mySpace-content" v-loading="loading" ref="card-list">
+          <ul v-loading="loading" ref="card-list">
+              <div class="loading" v-if="loading || isNull">{{ message }}</div>
               <post-card
                 v-for="(date, index) in dates"
                 :key="index"
@@ -52,7 +53,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    isNull: function () {
+      if (this.dates === []) {
+        // this.message = '还未发表东西，快去发表吧！'
+        return true
+      } else {
+        // this.message = ''
+        return false
+      }
+    },
+    message: function () {
+      if (this.dates === []) {
+        return '还未发表东西，快去发表吧！'
+      } else {
+        return ''
+      }
+    }
   },
   mounted () {
     if (this.$route.params.id) {
@@ -107,12 +124,12 @@ export default {
       background-color: #ffffff;
       border-radius: 4px;
       padding: 11px 12px;
-      margin: 64px 0 -6px 0;
+      margin: 64px 0 6px 0;
       font-size: 20px;
       color: #5677fc;
     }
-    :mySpace-content{
-      min-height: 400px;
+    .loading{
+      min-height: 300px;
     }
     .pagination{
       margin-bottom: 148px;
