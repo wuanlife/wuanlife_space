@@ -13,7 +13,7 @@
         <img v-for="(img,index) of post.image_urls" :key="index" :src="img + '?imageView2/1/w/132/h/132'">
       </div>
     </div>
-    <footer>
+    <footer v-if="footer">
       <ul>
         <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
         <li @click="approve(post.id, post.approved)" :class="{'done': post.approved}" v-loading="loading1"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
@@ -43,6 +43,10 @@ export default {
     post: {
       type: Object,
       required: true
+    },
+    footer: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
