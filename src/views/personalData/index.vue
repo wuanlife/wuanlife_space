@@ -271,7 +271,6 @@ export default {
                 }
                 button{
                     border: 0;
-                    padding: 0;
                     font-size: 11px;
                     color: #5677fc;
                     background-color: transparent;

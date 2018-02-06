@@ -93,11 +93,8 @@ export default {
 #wuan-editor {
   margin-bottom: 26px;
 }
-/*.submit {
+.submit {
   float: right;
-  padding: 13px 43px;
-
-  font-size: 24px;
   color: #ffffff;
-}*/
+}
 </style>
