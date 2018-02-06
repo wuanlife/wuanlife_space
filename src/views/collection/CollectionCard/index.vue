@@ -112,8 +112,11 @@ export default {
       word-break: break-all;
       font-size: 11px;
       color: #444444;
-      letter-spacing: 0;
       text-align: justify;
+      overflow: hidden;
+      -webkit-line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
     }
     div.preview-imgs {
       display: flex;

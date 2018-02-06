@@ -18,10 +18,9 @@
       </header>
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-            <post-card v-for="(post,index) of posts"
+            <post-card v-for="post of posts"
                        :key="`post-${post.id}`"
-                       :post.sync="post"
-                       :data-index="index">
+                       :post.sync="post">
             </post-card>
         </ul>
         <!--<el-pagination layout="prev, pager, next, jumper"
@@ -81,6 +80,7 @@ export default {
       this.loading = true
       return new Promise((resolve, reject) => {
         getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
+          console.log(res)
           self.posts = res.articles
           // 动态生成分页页码
           self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit)
