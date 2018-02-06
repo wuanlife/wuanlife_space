@@ -80,7 +80,6 @@ export default {
       this.loading = true
       return new Promise((resolve, reject) => {
         getArticles((page - 1) * self.pagination.limit || 0, self.pagination.limit).then(res => {
-          console.log(res)
           self.posts = res.articles
           // 动态生成分页页码
           self.pagination.pageCount = Math.ceil(res.total / self.pagination.limit)
