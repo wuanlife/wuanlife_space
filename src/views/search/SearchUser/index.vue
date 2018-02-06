@@ -1,7 +1,7 @@
 <template>
   <div class="user-card">
     <img v-bind:src="user.image || defaultAvatar" />
-    <h3 @click="$router.push({ path: `/planet/${user.id}`, query: { name: user.name }})">{{ user.name }}</h3>
+    <h3 @click="$router.push({ path: `/myspace/${user.id}`})">{{ user.name }}</h3>
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
     margin-right: 5px;
     @include text-ellipsis(80px);
     overflow: hidden;
+    cursor: pointer;
   }
 }
 </style>
