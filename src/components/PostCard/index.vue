@@ -1,5 +1,5 @@
 <template>
-  <li class="post-card wl-card" >
+  <li class="post-card wl-card">
     <header>
       <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url">
       <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
@@ -16,8 +16,8 @@
     <footer>
       <ul>
         <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id, post.approved)" :class="{'done': post.approved}"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
-        <li @click="collect(post.id, post.collected)" :class="{'done': post.collected}"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
+        <li @click="approve(post.id, post.approved)" :class="{'done': post.approved}" v-loading="loading1"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
+        <li @click="collect(post.id, post.collected)" :class="{'done': post.collected}" v-loading="loading2"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
       </ul>
     </footer>
   </li>
@@ -47,6 +47,8 @@ export default {
   },
   data () {
     return {
+      loading2: false,
+      loading1: false
     }
   },
   computed: {
@@ -63,6 +65,7 @@ export default {
     // collect post
     async collect (id, val) {
       var self = this
+      self.loading2 = true
       if (this.user.token === '') {
         this.$router.push({path: '/login/'})
         return
@@ -71,16 +74,19 @@ export default {
         await uncollectArticle(id).then(() => {
           self.post.collected_num--
           self.post.collected = !val
+          self.loading2 = false
         })
       } else {
         await collectArticle(id).then(() => {
           self.post.collected_num++
           self.post.collected = !val
+          self.loading2 = false
         })
       }
     },
     async approve (id, val) {
       var self = this
+      self.loading1 = true
       if (this.user.token === '') {
         this.$router.push({path: '/login/'})
         return
@@ -89,11 +95,13 @@ export default {
         await unapproveArticle(id).then(() => {
           self.post.approved = !val
           self.post.approved_num--
+          self.loading1 = false
         })
       } else {
         await approveArticle(id).then(() => {
           self.post.approved = !val
           self.post.approved_num++
+          self.loading1 = false
         })
       }
     },
@@ -229,6 +237,7 @@ export default {
           text-align: center;
           color: #666666;
           border-right: 2px solid #dcdcdc;
+          position: relative;
           .avatar-icon{
             margin-right: 13px;
             font-size: 12px;

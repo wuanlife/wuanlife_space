@@ -64,7 +64,7 @@
               </div>
           </div>
       </div>
-      <button class="wl-btn" @click="pushPersonalData">保存</button>
+      <button class="wl-btn" @click="pushPersonalData" v-loading="loading2">保存</button>
       </section>
   </div>
 </template>
@@ -97,6 +97,7 @@ export default {
       uploadData: {},
       loading: false,
       loading1: false,
+      loading2: false,
       default: {}
     }
   },
@@ -158,6 +159,7 @@ export default {
       document.getElementById('img-input').click()
     },
     pushPersonalData: function () {
+      this.loading2 = true
       var changeUser = {}
       if (this.default.name !== this.name) {
         changeUser.name = this.name
@@ -176,6 +178,7 @@ export default {
           title: '提醒',
           message: '请改变个人资料中某一项后，再提交！'
         })
+        this.loading2 = false
         return
       }
       this.$store.dispatch('PutUser', changeUser).then(res => {
@@ -184,6 +187,7 @@ export default {
           message: '修改个人资料成功！',
           offset: 60
         })
+        this.loading2 = false
       })
       // putUser(changeUser).then(res => {
       //   console.log(res)

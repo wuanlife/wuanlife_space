@@ -7,7 +7,7 @@
             icon="search"
             v-model="searchContent"
             @keyup.enter.native="handleGoSearch">
-            <icon-svg slot="suffix" id="icon-search" icon-class="search" class="el-input__icon"></icon-svg>
+            <icon-svg @click.native="handleGoSearch" slot="suffix" id="icon-search" icon-class="search" class="el-input__icon"></icon-svg>
         </el-input>
     </div>
 </template>
@@ -51,6 +51,7 @@ export default {
     }
   }
   #icon-search {
+    cursor: pointer;
     margin-right: 20px;
     font-size: 18px;
     color: #a9baff;

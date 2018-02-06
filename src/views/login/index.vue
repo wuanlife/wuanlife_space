@@ -121,7 +121,7 @@ export default {
   margin: auto;
   max-width: 518px;
   min-width: 380px;
-  padding-top: 132px;
+  margin-top: 132px;
   section {
     flex: 1;
     header {
