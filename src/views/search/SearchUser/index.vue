@@ -50,6 +50,7 @@ export default {
     font-size: 11px;
     margin-right: 5px;
     @include text-ellipsis(80px);
+    overflow: hidden;
   }
 }
 </style>

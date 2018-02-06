@@ -18,10 +18,12 @@
       </div>
       <div class="relatedArticlesCardBox" v-loading='loading1' v-else>
         <ul class="index-cards">
-          <search-article v-for="item in relatedArticles"
-                          :key="item.id"
-                          :item.sync="item">
-          </search-article>
+          <post-card v-for="post of relatedArticles"
+            :key="post.id"
+            :post.sync="post"
+            class="post-card"
+            :footer="false">
+          </post-card>
         </ul>
       </div>
       <pagination :pagination.sync="pagination" @current-change="getSearchUsers"></pagination>
@@ -33,10 +35,9 @@
 import { mapGetters } from 'vuex'
 import { searchArticles } from 'api/post'
 import { searchUsers } from 'api/user'
-import SearchArticle from 'views/search/SearchArticle'
 import SearchUser from 'views/search/SearchUser'
 import Pagination from 'components/Pagination'
-
+import PostCard from 'components/PostCard'
 export default {
   name: 'relatedPlanets-container',
   data () {
@@ -57,9 +58,9 @@ export default {
     }
   },
   components: {
-    SearchArticle,
     SearchUser,
-    Pagination
+    Pagination,
+    PostCard
   },
   mounted () {
     this.getSearchUsers()
@@ -186,10 +187,12 @@ export default {
     .relatedUsersCardBox {
       display: flex;
       justify-content: space-between;
-      height: 200px;
       align-items: center;
     }
     .relatedArticlesCardBox {
+      .post-card {
+        width: inherit;
+      }
     }
   }
 }
