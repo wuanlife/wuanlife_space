@@ -18,10 +18,9 @@
       </header>
       <div class="index-tabcontent" v-loading="loading">
         <ul v-if="posts.length > 0" class="index-cards">
-            <post-card v-for="(post,index) of posts"
+            <post-card v-for="post of posts"
                        :key="`post-${post.id}`"
-                       :post.sync="post"
-                       :data-index="index">
+                       :post.sync="post">
             </post-card>
         </ul>
         <!--<el-pagination layout="prev, pager, next, jumper"
