@@ -64,7 +64,7 @@
               </div>
           </div>
       </div>
-      <button class="wl-btn" @click="pushPersonalData" v-loading="loading2">保存</button>
+      <el-button class="wl-btn save" @click="pushPersonalData" :loading="loading2">保存</el-button>
       </section>
   </div>
 </template>
@@ -74,6 +74,7 @@ import DatePicker from 'components/DatePicker'
 import { getToken } from 'api/qiniu'
 import { getUser } from 'api/user'
 import { mapGetters } from 'vuex'
+import { Notification } from 'element-ui'
 
 const QINIU_DOMAIN = '//7xlx4u.com1.z0.glb.clouddn.com/' // 图片服务器域名，展示时用
 
@@ -152,53 +153,63 @@ export default {
     },
     changeAvatar: function () {
       const self = this
+      if (this.loading) {
+        return
+      }
       this.loading = true
       setTimeout(function () {
         self.loading = false
-      }, 5000)
+      }, 10000)
       document.getElementById('img-input').click()
     },
-    pushPersonalData: function () {
+    async pushPersonalData () {
+      if (this.loading2) {
+        return
+      }
       this.loading2 = true
       var changeUser = {}
       if (this.default.name !== this.name) {
         changeUser.name = this.name
+        this.default.name = this.name
       }
       if (this.default.sex !== this.sex) {
         changeUser.sex = this.sex
+        this.default.sex = this.sex
       }
       if (this.default.birthday !== this.birthday) {
         changeUser.birthday = this.birthday
+        this.default.birthday = this.birthday
       }
       if (this.default.avatar_url !== this.$refs.avatar.getAttribute('src')) {
         changeUser.avatar_url = this.$refs.avatar.getAttribute('src')
+        this.default.avatar_url = this.$refs.avatar.getAttribute('src')
       }
       if (changeUser.name === undefined && changeUser.sex === undefined && changeUser.birthday === undefined && changeUser.avatar_url === undefined) {
-        this.$notify({
-          title: '提醒',
-          message: '请改变个人资料中某一项后，再提交！'
-        })
         this.loading2 = false
-        return
-      }
-      this.$store.dispatch('PutUser', changeUser).then(res => {
-        this.$notify({
-          title: '修改成功',
-          message: '修改个人资料成功！',
+        Notification.warning({
+          message: '请改变个人资料中某一项后，再提交！',
           offset: 60
         })
-        this.loading2 = false
-      })
-      // putUser(changeUser).then(res => {
-      //   console.log(res)
-      //   this.$notify({
-      //     title: '修改成功',
-      //     message: '修改个人资料成功！',
-      //     offset: 60,
-      //   })
-      // }).catch(err => {
-      //   console.log(err)
-      // })
+        return
+      }
+      try {
+        this.$store.dispatch('PutUser', changeUser).then(res => {
+          Notification.success({
+            message: '修改个人资料成功！',
+            offset: 60
+          })
+        })
+      } catch (e) {
+        if (e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 60
+          })
+        } else {
+          console.log(e)
+        }
+      }
+      this.loading2 = false
     },
     beforeUpload: function (file) {
       return this.qnUpload(file)
@@ -221,22 +232,36 @@ export default {
     },
     upError: function (e, file, fileList) {
       this.loading = false
+    },
+    async getUserData () {
+      try {
+        await getUser().then(res => {
+          this.mail = res.mail
+          this.sex = res.sex
+          this.name = res.name
+          this.birthday = res.birthday
+          this.default = res
+          let isDefault = res.avatar_url === 'default_url'
+          if (!isDefault) {
+            this.dafaultAvatarUrl = res.avatar_url
+          }
+        })
+      } catch (e) {
+        if (e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 60
+          })
+        } else {
+          console.log(e)
+        }
+      }
+      this.loading1 = false
     }
   },
   mounted () {
     this.loading1 = true
-    getUser().then(res => {
-      this.mail = res.mail
-      this.sex = res.sex
-      this.name = res.name
-      this.birthday = res.birthday
-      this.default = res
-      let isDefault = res.avatar_url === 'default_url'
-      if (!isDefault) {
-        this.dafaultAvatarUrl = res.avatar_url
-      }
-      this.loading1 = false
-    })
+    this.getUserData()
   }
 }
 </script>
@@ -365,6 +390,10 @@ export default {
                     }
                 }
             }
+        }
+        .save{
+            width: 150px;
+            margin-top: 66px;
         }
     }
 }
