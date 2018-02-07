@@ -1,6 +1,6 @@
 <template>
   <div class="user-card">
-    <img v-bind:src="user.image || defaultAvatar" />
+    <img v-bind:src="user.avatar_url || defaultAvatar" />
     <h3 @click="$router.push({ path: `/myspace/${user.id}`})">{{ user.name }}</h3>
   </div>
 </template>

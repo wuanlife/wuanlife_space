@@ -4,8 +4,7 @@
   <textarea v-model="replyContent" @keydown.enter="reply" placeholder="我的回复..."></textarea>
   <el-button class="wl-btn"
              :loading="loading"
-             @click="reply">
-    回复
+             @click="reply">回复
   </el-button>
 </div>
 </template>
