@@ -6,11 +6,7 @@
 
 .wl-btn {
     // font
-    font-weight: normal;
     font-size: 20px;
-    line-height: normal;
-    font-family: inherit;
-    font-style: normal;
     color: #fff;
     cursor: pointer;
     text-align: center;
@@ -18,8 +14,6 @@
     text-decoration: none;
     //box-model
     vertical-align: middle;
-    padding: 5px 40px;
-    margin: 20px 5px;
     display: inline-block;
     min-height: 1em;
     background: $background;
@@ -41,6 +35,7 @@
 ---------------*/
 
 .wl-btn:hover {
+    color: $hoverColor;
     background-color: $hoverBackgroundColor;
     box-shadow: $hoverBoxShadow;
 }
@@ -50,6 +45,7 @@
 ---------------*/
 
 .wl-btn:focus {
+    color: #ffffff;
     background-color: $focusBackgroundColor;
     box-shadow: $focusBoxShadow;
 }

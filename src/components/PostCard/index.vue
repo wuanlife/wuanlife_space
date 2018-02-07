@@ -1,11 +1,11 @@
 <template>
   <li class="post-card wl-card">
-    <header>
-      <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url">
-      <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
-      <time>{{ post.create_at | formatTime }}</time>
-    </header>
     <div class="post-card-content">
+      <header>
+        <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url">
+        <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
+        <time>{{ post.create_at | formatTime }}</time>
+      </header>
       <h1 @click="$router.push({path: `/article/${post.id}`})" :title="post.title">{{ post.title }}</h1>
       <div class="preview-html" v-html="content">
       </div>
@@ -122,7 +122,6 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .post-card {
-    padding: 24px 17px 0px 17px;
     width: 448px;
     background-color: #ffffff;
     border-radius: 4px;
@@ -132,42 +131,42 @@ export default {
     &:last-child {
       margin-bottom: 78px;
     }
-    header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 17px;
-      font-size:12px;
-      color:#434343;
-      & > .clickable {
-        transition: all 0.2s ease-in-out;
-        &:hover {
-          color: #5677fc;
-        }
-      }
-      img {
-        width: 32px;
-        height: 32px;
-        border-radius: 100%;
-        margin-right: 14px;
-        background-color: #aaaaaa;
-      }
-      span {
-        font-size: 15px;
-        color: #333333;
-        &:not(:first-child) {
-          margin-left: 5px;
-        }
-      }
-      time {
-        margin-left: 12px;
-        font-size: 11px;
-        color: #999999;
-        flex-grow: 1;
-        text-align: right;
-      }
-    }
     div.post-card-content {
-      margin-bottom: 12px;
+      padding: 24px 17px;
+      header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 17px;
+        font-size:12px;
+        color:#434343;
+        & > .clickable {
+          transition: all 0.2s ease-in-out;
+          &:hover {
+            color: #5677fc;
+          }
+        }
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 100%;
+          margin-right: 14px;
+          background-color: #aaaaaa;
+        }
+        span {
+          font-size: 15px;
+          color: #333333;
+          &:not(:first-child) {
+            margin-left: 5px;
+          }
+        }
+        time {
+          margin-left: 12px;
+          font-size: 11px;
+          color: #999999;
+          flex-grow: 1;
+          text-align: right;
+        }
+      }
       h1 {
         display: inline-block;
         position: relative;
@@ -223,9 +222,6 @@ export default {
       }
     }
     footer {
-      margin-top: 24px;
-      margin-left: -17px;
-      margin-right: -17px;
       border-top: 1px solid #dcdcdc;
       padding: 10px 0 9px 0;
       ul {

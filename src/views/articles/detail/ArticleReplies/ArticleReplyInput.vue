@@ -2,7 +2,7 @@
 <div class="article-reply-input">
   <!-- 也许可以用el-input -->
   <textarea v-model="replyContent" @keydown.enter="reply" placeholder="我的回复..."></textarea>
-  <el-button class="wuan-button submit"
+  <el-button class="wl-btn"
              :loading="loading"
              @click="reply">
     回复

@@ -1,7 +1,7 @@
 <template>
   <div class="relatedPlanets-container view-container">
     <section>
-      <header>相关用户</header>
+      <header class="wl-card">相关用户</header>
       <div class="empty-container" v-if="emptyUser">
         <h2>没有匹配到任何用户</h2>
       </div>
@@ -12,7 +12,7 @@
                      :user.sync="user">
         </search-user>
       </div>
-      <header>相关文章</header>
+      <header class="wl-card">相关文章</header>
       <div class="empty-container" v-if="emptyArticle">
         <h2>没有匹配到任何文章</h2>
       </div>

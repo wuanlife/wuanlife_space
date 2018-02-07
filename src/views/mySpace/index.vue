@@ -97,6 +97,7 @@ export default {
           element.author = res.author
         })
         self.dates = res.articles
+        self.users.id = res.author.id
         self.users.name = res.author.name
         self.users.articles_num = res.author.articles_num
         self.users.avatar_url = res.author.avatar_url
