@@ -1,10 +1,10 @@
 <template>
   <div class="index-visitor-container" ref="root">
     <aside>
-      <header>
+      <header class="wl-card">
         活跃用户
       </header>
-      <div class="aside-content" v-loading="loadingAside">
+      <div class="aside-content wl-card" v-loading="loadingAside">
         <aside-card v-for="activeUser of activeUsers"
           :key="`activeUser-${activeUser.id}`"
           :activeUser="activeUser"
@@ -13,7 +13,7 @@
       </div>
     </aside>
     <section>
-      <header>
+      <header class="wl-card">
         最新话题
       </header>
       <div class="index-tabcontent" v-loading="loading">

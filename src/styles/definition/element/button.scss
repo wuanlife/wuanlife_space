@@ -4,13 +4,9 @@
             Button
 *******************************/
 
-.wl-btn {
+.wl-btn.el-button {
     // font
-    font-weight: normal;
     font-size: 20px;
-    line-height: normal;
-    font-family: inherit;
-    font-style: normal;
     color: #fff;
     cursor: pointer;
     text-align: center;
@@ -18,8 +14,6 @@
     text-decoration: none;
     //box-model
     vertical-align: middle;
-    padding: 5px 40px;
-    margin: 20px 5px;
     display: inline-block;
     min-height: 1em;
     background: $background;
@@ -40,7 +34,8 @@
       Hover
 ---------------*/
 
-.wl-btn:hover {
+.wl-btn.el-button:hover {
+    color: $hoverColor;
     background-color: $hoverBackgroundColor;
     box-shadow: $hoverBoxShadow;
 }
@@ -49,7 +44,8 @@
       Focus
 ---------------*/
 
-.wl-btn:focus {
+.wl-btn.el-button:focus {
+    color: #ffffff;
     background-color: $focusBackgroundColor;
     box-shadow: $focusBoxShadow;
 }
@@ -58,24 +54,24 @@
       Down
 ---------------*/
 
-.wl-btn:active {
+.wl-btn.el-button:active {
 
 }
 /*--------------
      Active
 ---------------*/
 
-.wl-btn.active.button {
+.wl-btn.el-button.active.button {
 }
-.wl-btn.active:hover {
+.wl-btn.el-button.active:hover {
 }
-.wl-btn.active:active {
+.wl-btn.el-button.active:active {
 }
 
 /*--------------
      Disabled
 ---------------*/
-.wl-btn.disabled {
+.wl-btn.el-button.disabled {
     background-color: $disabledBackgroundColor;
     pointer-events: none;
 }
