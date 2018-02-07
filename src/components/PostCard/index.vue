@@ -2,7 +2,7 @@
   <li class="post-card wl-card">
     <div class="post-card-content">
       <header>
-        <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url">
+        <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url" @click="$router.push({path: `/myspace/${post.author.id}`})">
         <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
         <time>{{ post.create_at | formatTime }}</time>
       </header>
@@ -16,8 +16,8 @@
     <footer v-if="footer">
       <ul>
         <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id, post.approved)" :class="{'done': post.approved}" v-loading="loading1"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ post.approved_num }}</li>
-        <li @click="collect(post.id, post.collected)" :class="{'done': post.collected}" v-loading="loading2"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ post.collected_num }}</li>
+        <li @click="approve(post.id)" :class="{'done': approvedTemp}" v-loading="approving"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ approved_numTemp }}</li>
+        <li @click="collect(post.id)" :class="{'done': collectedTemp}" v-loading="collecting"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ collected_numTemp }}</li>
       </ul>
     </footer>
   </li>
@@ -27,6 +27,7 @@
 import { mapGetters } from 'vuex'
 // import ArticleState from 'components/ArticleState/ArticleState';
 import { html2Text } from 'filters/index'
+import { Notification } from 'element-ui'
 import {
   approveArticle,
   collectArticle,
@@ -51,8 +52,12 @@ export default {
   },
   data () {
     return {
-      loading2: false,
-      loading1: false
+      approving: false,
+      collecting: false,
+      approvedTemp: false,
+      collectedTemp: false,
+      approved_numTemp: 0,
+      collected_numTemp: 0
     }
   },
   computed: {
@@ -64,50 +69,80 @@ export default {
     }
   },
   mounted () {
+    this.approvedTemp = this.post.approved
+    this.collectedTemp = this.post.collected
+    this.approved_numTemp = this.post.approved_num
+    this.collected_numTemp = this.post.collected_num
   },
   methods: {
     // collect post
-    async collect (id, val) {
+    async collect (id) {
       var self = this
-      self.loading2 = true
+      if (self.collecting) {
+        return
+      }
+      self.collecting = true
       if (this.user.token === '') {
         this.$router.push({path: '/login/'})
         return
       }
-      if (val) {
-        await uncollectArticle(id).then(() => {
-          self.post.collected_num--
-          self.post.collected = !val
-          self.loading2 = false
-        })
-      } else {
-        await collectArticle(id).then(() => {
-          self.post.collected_num++
-          self.post.collected = !val
-          self.loading2 = false
-        })
+      try {
+        if (self.collectedTemp) {
+          await uncollectArticle(id).then(() => {
+            self.collected_numTemp--
+            self.collectedTemp = !self.collectedTemp
+          })
+        } else {
+          await collectArticle(id).then(() => {
+            self.collected_numTemp++
+            self.collectedTemp = !self.collectedTemp
+          })
+        }
+      } catch (e) {
+        if (e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 60
+          })
+        } else {
+          console.log(e)
+        }
       }
+      self.collecting = false
     },
-    async approve (id, val) {
+    async approve (id) {
       var self = this
-      self.loading1 = true
+      if (self.approving) {
+        return
+      }
+      self.approving = true
       if (this.user.token === '') {
         this.$router.push({path: '/login/'})
         return
       }
-      if (val) {
-        await unapproveArticle(id).then(() => {
-          self.post.approved = !val
-          self.post.approved_num--
-          self.loading1 = false
-        })
-      } else {
-        await approveArticle(id).then(() => {
-          self.post.approved = !val
-          self.post.approved_num++
-          self.loading1 = false
-        })
+      try {
+        if (self.approvedTemp) {
+          await unapproveArticle(id).then(() => {
+            self.approvedTemp = !self.approvedTemp
+            self.approved_numTemp--
+          })
+        } else {
+          await approveArticle(id).then(() => {
+            self.approvedTemp = !self.approvedTemp
+            self.approved_numTemp++
+          })
+        }
+      } catch (e) {
+        if (e.data) {
+          Notification.error({
+            message: e.data.error,
+            offset: 60
+          })
+        } else {
+          console.log(e)
+        }
       }
+      self.approving = false
     },
     toSpace (id) {
       if (this.user.token === '') {
@@ -151,6 +186,7 @@ export default {
           border-radius: 100%;
           margin-right: 14px;
           background-color: #aaaaaa;
+          cursor: pointer;
         }
         span {
           font-size: 15px;

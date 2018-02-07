@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="article-opts">
-            <span v-if="true"
+            <span v-if="user && user.is_admin"
                   v-loading="locking"
                   class="article-opt"
                   @click="lock(article.id)">
@@ -104,14 +104,18 @@ export default {
         return
       }
       this.approving = true
-      if (this.approvedTemp) {
-        await unapproveArticle(this.$route.params.id)
-        this.approvedTemp = !this.approvedTemp
-        this.approved_numTemp--
-      } else {
-        await approveArticle(this.$route.params.id)
-        this.approvedTemp = !this.approvedTemp
-        this.approved_numTemp++
+      try {
+        if (this.approvedTemp) {
+          await unapproveArticle(this.$route.params.id)
+          this.approvedTemp = !this.approvedTemp
+          this.approved_numTemp--
+        } else {
+          await approveArticle(this.$route.params.id)
+          this.approvedTemp = !this.approvedTemp
+          this.approved_numTemp++
+        }
+      } catch (e) {
+        this.approving = false
       }
       this.approving = false
     },
@@ -120,14 +124,18 @@ export default {
         return
       }
       this.collecting = true
-      if (this.collectedTemp) {
-        await uncollectArticle(this.$route.params.id)
-        this.collectedTemp = !this.collectedTemp
-        this.collected_numTemp--
-      } else {
-        await collectArticle(this.$route.params.id)
-        this.collectedTemp = !this.collectedTemp
-        this.collected_numTemp++
+      try {
+        if (this.collectedTemp) {
+          await uncollectArticle(this.$route.params.id)
+          this.collectedTemp = !this.collectedTemp
+          this.collected_numTemp--
+        } else {
+          await collectArticle(this.$route.params.id)
+          this.collectedTemp = !this.collectedTemp
+          this.collected_numTemp++
+        }
+      } catch (e) {
+        this.collecting = false
       }
       this.collecting = false
     },

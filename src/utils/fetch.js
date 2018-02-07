@@ -1,5 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
+import router from '@/router'
 import { MessageBox, Notification } from 'element-ui'
 import mockData from 'api/mock'
 import store from '../store'
@@ -40,13 +41,13 @@ service.interceptors.response.use(
         offset: 60
       })
     } else if (error.response.status === 401) {
-      MessageBox.confirm('登录状态过期或未登录，可以取消继续留在该页面，或者重新登录', '确定登出', {
+      MessageBox.confirm('未登录或登录状态过期，可以取消继续留在该页面，或者重新登录', '跳转登录界面', {
         confirmButtonText: '重新登录',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         store.dispatch('Logout').then(() => {
-          location.reload()// 为了重新实例化vue-router对象 避免bug
+          router.push({path: '/login'})
         })
       })
       return Promise.reject(error)
