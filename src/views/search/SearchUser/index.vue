@@ -19,14 +19,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  mounted () {
-    this.log()
-  },
-  methods: {
-    log () {
-      console.log(this.user)
-    }
   }
 }
 </script>
