@@ -16,7 +16,7 @@
       <div class="empty-container" v-if="emptyArticle">
         <h2>没有匹配到任何文章</h2>
       </div>
-      <div class="relatedArticlesCardBox" v-loading='loading1' v-else>
+      <div class="relatedArticlesCardBox wl-card" v-loading='loading1' v-else>
         <ul class="index-cards">
           <post-card v-for="post of relatedArticles"
             :key="post.id"

@@ -2,8 +2,7 @@
   <li class="collection-card wl-card">
     <div class="collection-card-content">
       <h1 @click="$router.push({ path: `/article/${item.id}` })">{{ item.title }}</h1>
-      <div class="preview-html">
-        {{ item.content }}
+      <div class="preview-html" v-html="content">
       </div>
       <div class="preview-imgs">
         <ul>
@@ -25,12 +24,18 @@
 </template>
 
 <script>
+import { html2Text } from 'filters/index'
 export default {
   name: 'collection-card',
   props: {
     item: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    content: function () {
+      return html2Text(this.item.content)
     }
   }
 }
