@@ -10,7 +10,7 @@
       </el-input>
       <wuan-editor v-if="form" :initialContent="form.content" @content-change="onContentChange">
       </wuan-editor>
-      <el-button class="wuan-button submit" type="primary" @click="onSubmit" :loading="submitLoading">修改</el-button>
+      <el-button class="wl-btn submit" type="primary" @click="onSubmit" :loading="submitLoading">修改</el-button>
     </section>
   </div>
 </template>
@@ -60,24 +60,23 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 #drafts-new {
-  width: 1054px;
   section {
-    margin-top: 89px;
+    flex: 658px 0 0;
+    margin-top: 120px;
     margin-bottom: 124px;
-    padding: 49px 40px 107px 40px;
+    padding: 30px 28px 68px 28px;
     background: #ffffff;
     header {
-      margin-bottom: 65px;
-      font-size: 32px;
-      letter-spacing: 0px;
-      color: #5677fc;
+      margin-bottom: 38px;
+      font-size: $title-font-size;
+      color: $wl-blue;
     }
   }
 }
 
 .title-input {
-  margin-bottom: 55px;
-  height: 94px;
+  margin-bottom: 34px;
+  height: 60px;
   box-shadow: 0px 3px 7px 0px
     rgba(99, 99, 99, 0.35);
   border-radius: 4px;
@@ -85,19 +84,15 @@ export default {
     height: 100%;
     text-align: center;
 
-    font-size: 36px;
-    letter-spacing: 0px;
-    color: #757575;
+    font-size: 22px;
+    color: #333333;
   }
 }
 #wuan-editor {
-  margin-bottom: 42px;
+  margin-bottom: 26px;
 }
 .submit {
   float: right;
-  padding: 13px 43px;
-
-  font-size: 24px;
   color: #ffffff;
 }
 </style>
