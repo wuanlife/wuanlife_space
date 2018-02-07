@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="article-opts">
-            <span v-if="true"
+            <span v-if="user && user.is_admin"
                   v-loading="locking"
                   class="article-opt"
                   @click="lock(article.id)">
