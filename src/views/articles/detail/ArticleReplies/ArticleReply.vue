@@ -72,6 +72,7 @@ export default {
 .article-reply {
   margin: 0 5px;
   padding: 21px 0 7px 0;
+  word-wrap: break-word;
   &:not(:last-child) {
     border-bottom: 2px solid #c8c8c8;
     &::after {

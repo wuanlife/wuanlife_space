@@ -197,6 +197,7 @@ article {
     margin-bottom: 29px;
   }
   .article-html {
+    word-wrap: break-word;
     margin-bottom: 40px;
     /deep/ img {
       max-width: 100%;

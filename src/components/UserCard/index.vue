@@ -1,6 +1,6 @@
 <template>
   <div class="user-card wl-card">
-      <img :src="user.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/64/h/63' : user.avatar_url">
+      <img :src="user.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/64/h/64' : `${user.avatar_url}?imageView2/1/w/64/h/64`">
       <h2 @click="$router.push({path: `/myspace/${user.id}`})">{{user.name}}</h2>
       <p>发表了{{user.articles_num}}篇文章</p>
   </div>
@@ -31,7 +31,7 @@ export default {
   padding: 34px 10px 58px 10px;
   img {
     width: 64px;
-    height: 63px;
+    height: 64px;
     background-color: #efeff4;
   }
   h2 {

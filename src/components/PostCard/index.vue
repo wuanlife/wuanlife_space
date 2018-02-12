@@ -2,7 +2,8 @@
   <li class="post-card wl-card">
     <div class="post-card-content">
       <header>
-        <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : post.author.avatar_url" @click="$router.push({path: `/myspace/${post.author.id}`})">
+        <img :src="post.author.avatar_url === 'default_url' ? 'http://7xlx4u.com1.z0.glb.clouddn.com/o_1aqt96pink2kvkhj13111r15tr7.jpg?imageView2/1/w/32/h/32' : `${post.author.avatar_url}?imageView2/1/w/32/h/32`"
+             @click="$router.push({path: `/myspace/${post.author.id}`})">
         <span class="clickable" @click="$router.push({path: `/myspace/${post.author.id}`})">{{ post.author.name }}</span>
         <time>{{ post.create_at | formatTime }}</time>
       </header>

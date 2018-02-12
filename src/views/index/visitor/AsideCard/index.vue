@@ -1,7 +1,7 @@
 <template>
   <div class="index-aside-card index-card clickable" @click="goUserSpace">
     <!--@click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/${activeUser.id}'})">-->
-    <img :src="activeUser.avatar_url || defaultAvatar">
+    <img :src="`${activeUser.avatar_url}?imageView2/1/w/40/h/40` || defaultAvatar">
     <div class="index-card content">
       <h2 class="clickable">{{ activeUser.name }}</h2>
       <p>本月发表了 {{activeUser.monthly_articles_num}} 篇</p>
