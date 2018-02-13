@@ -56,7 +56,7 @@ export function formatTime (dateable, format = 'yyyy-MM-dd HH:mm') {
 
 export function html2Text (val) {
   const div = document.createElement('div')
-  div.innerHTML = val
+  div.innerText = val
   return div.textContent || div.innerText
 }
 

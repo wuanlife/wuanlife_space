@@ -178,6 +178,7 @@ export default {
       this.deleting = true
       await deleteArticle(this.$route.params.id)
       Notification.info('删除帖子成功')
+      this.$router.push({path: `/`})
     }
   }
 }

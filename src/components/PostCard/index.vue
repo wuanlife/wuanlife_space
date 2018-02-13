@@ -8,7 +8,7 @@
         <time>{{ post.create_at | formatTime }}</time>
       </header>
       <h1 @click="$router.push({path: `/article/${post.id}`})" :title="post.title">{{ post.title }}</h1>
-      <div class="preview-html" v-html="content">
+      <div class="preview-html" v-text="content">
       </div>
       <div class="preview-imgs">
         <img v-for="(img,index) of post.image_urls" :key="index" :src="img + '?imageView2/1/w/132/h/132'">
