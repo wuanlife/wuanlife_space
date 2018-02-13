@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 import user from './modules/user'
 // import permission from './modules/permission';
 import getters from './getters'
-import { createLSPlugin } from '@/utils/plugin'
+import { createLSPlugin } from 'plugin/vuex-autorestore'
+import createWebSocketPlugin from 'plugin/vuex-websocket'
 import ls from '@/utils/localStorage'
 
 const LS_KEY = 'user' // localStorage key
@@ -20,14 +21,16 @@ if (lsData) {
 
 Vue.use(Vuex)
 
-const plugin = createLSPlugin(LS_KEY, mapping, mWhiteList)
 const store = new Vuex.Store({
   modules: {
     user
     // permission
   },
   getters,
-  plugins: [plugin]
+  plugins: [
+    createLSPlugin(LS_KEY, mapping, mWhiteList),
+    createWebSocketPlugin()
+  ]
 })
 
 export default store
