@@ -2,7 +2,7 @@
   <el-menu class="navbar" mode="horizontal">
     <div class="navbar-container">
       <!-- Logo bar -->
-      <div class="logo" @click="$router.push({path: '/'})">
+      <div class="logo" @click="goIndex">
         午安空间
       </div>
       <!-- Search bar -->
@@ -49,6 +49,14 @@ export default {
     },
     clickDot () {
       this.dotShow = false
+    },
+    goIndex () {
+      console.log(this.$route)
+      if (this.$route.path === '/') {
+        this.$router.go(0)
+      } else {
+        this.$router.push({path: '/'})
+      }
     }
   },
   mounted () {
