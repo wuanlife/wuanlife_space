@@ -1,3 +1,4 @@
+
 export default function createWebSocketPlugin () {
   // 保存当前用户内容，方便监听变化。
   let nowUser = null
