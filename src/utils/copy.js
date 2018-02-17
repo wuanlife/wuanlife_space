@@ -1,4 +1,4 @@
-const copy = function (source, keys = []) {
+export default function (source, keys = []) {
   if (!source) {
     return source
   }
@@ -7,8 +7,4 @@ const copy = function (source, keys = []) {
     d[k] = source[k]
   })
   return d
-}
-
-export {
-  copy
 }

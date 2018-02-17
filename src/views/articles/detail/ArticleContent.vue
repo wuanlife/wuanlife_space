@@ -178,6 +178,7 @@ export default {
       this.deleting = true
       await deleteArticle(this.$route.params.id)
       Notification.info('删除帖子成功')
+      this.$router.push({path: `/`})
     }
   }
 }
@@ -197,6 +198,7 @@ article {
     margin-bottom: 29px;
   }
   .article-html {
+    word-wrap: break-word;
     margin-bottom: 40px;
     /deep/ img {
       max-width: 100%;

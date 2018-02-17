@@ -40,6 +40,8 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
+import { Notification } from 'element-ui'
+
 import { quillEditor } from 'vue-quill-editor'
 import { Quill } from 'utils/constant'
 import { getToken } from 'api/qiniu'
@@ -85,18 +87,32 @@ export default {
   },
   methods: {
     onEditorBlur (quill) {
-      console.log('editor blur!', quill)
+      // console.log('editor blur!', quill)
     },
     onEditorFocus (quill) {
-      console.log('editor focus!', quill)
+      // console.log('editor focus!', quill)
     },
     onEditorReady (quill) {
-      console.log('editor ready!', quill)
+      // console.log('editor ready!', quill)
     },
 
     // 图片上传之前调取的函数
     // 这个钩子还支持 promise
     beforeUpload (file) {
+      if (file.type.indexOf('image') === -1) {
+        Notification.error({
+          message: '只能上传图片文件',
+          offset: 60
+        })
+        return
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        Notification.error({
+          message: '上传图片不能超过20M',
+          offset: 60
+        })
+        return
+      }
       return this.qnUpload(file)
     },
 

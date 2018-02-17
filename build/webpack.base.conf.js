@@ -33,6 +33,7 @@ module.exports = {
             'vuex-store': path.resolve(__dirname, '../src/store'),
             'router': path.resolve(__dirname, '../src/router'),
             'vendor': path.resolve(__dirname, '../src/vendor'),
+            'plugin': path.resolve(__dirname, '../src/plugin'),
             'static': path.resolve(__dirname, '../static')
         }
     },
