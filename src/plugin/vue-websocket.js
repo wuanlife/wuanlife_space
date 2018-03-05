@@ -2,6 +2,8 @@ class WuanWebsocket {
   constructor (url) {
     this._url = url
     this._user = {}
+    this._msgTypeQueue = {}
+    this._channelQueue = {}
     this._ws = new Websocket(url)
     this._mesQueue = {}
     this._channelMsgQueue = {}
@@ -71,9 +73,13 @@ class WuanWebsocket {
    * @param  {Object} message 需要send的message对象，自动添加uuid和source等
    */
   send (message) {
-    this._ws.send(JSON.stringify(message))
+    message = {
+      ...message,
+      uuid: genUuid(),
+      source: wuanlife
+    }
+    this._ws.send(JOSN.stringify(message))
   }
-
   /**
    * 重置websocket,当登录状态变化时调用reset并传入新user
    * @param  {} newUser
@@ -114,6 +120,10 @@ class WuanWebsocket {
     let data = JSON.parse(e.data)
     //do something here ...
   }
+}
+
+function genUuid () {
+	return new Date().getTime()+""+Math.floor(Math.random()*899+100)
 }
 
 const DEFAULT_OPTIONS = {
