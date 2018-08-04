@@ -3,7 +3,7 @@ export default function postRule(mockAdapter) {
   mockAdapter.onGet('/test').reply(200, {
     test: 'keke'
   })
-  .onGet('/articles?latest=true&offset=0&limit=20').reply(200, {
+  .onGet(/\/articles\?offset=\d+&limit=\d+&order=desc/).reply(200, {
     articles: [
       {
         id: '1',

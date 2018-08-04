@@ -1,7 +1,7 @@
 module.exports = {
     NODE_ENV: '"development"',
     BASE_API: '"//52.78.119.221:800/"',
-    API_MOCK: false,
+    API_MOCK: true,
     WEBSOCKET_SERVER: '"ws://localhost:3001"',
     APP_ORIGIN: '"www.baidu.com"',
     // 七牛域名
