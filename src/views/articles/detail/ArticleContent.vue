@@ -188,18 +188,18 @@ export default {
 article {
   h1 {
     font-size: $title-font-size;
-    color: #434343;
+    color: #666666;
     margin-bottom: 22px;
   }
   time {
     display: block;
-    font-size: 12px;
-    color: #434343;
+    font-size: 13px;
+    color: #cccccc;
     margin-bottom: 29px;
   }
   .article-html {
     word-wrap: break-word;
-    margin-bottom: 40px;
+    margin-bottom: 63px;
     /deep/ img {
       max-width: 100%;
     }
@@ -220,10 +220,10 @@ footer {
     position: relative;
     color: #666666;
     cursor: pointer;
-    margin-left: 20px;
+    // margin-left: 20px;
     transition: all 0.3s ease-in-out;
     &:not(:last-child) {
-      margin-right: 60px;
+      margin-right: 50px;
     }
     .svg-icon {
       color: #666666;

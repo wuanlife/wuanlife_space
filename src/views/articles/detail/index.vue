@@ -61,7 +61,7 @@ export default {
 }
 #article-detail > section {
   & > header {
-    padding: 17px;
+    padding: 13px 19px 11px 19px;
     margin-bottom: 14px;
     font-size: $title-font-size;
     color: #5677fc;
