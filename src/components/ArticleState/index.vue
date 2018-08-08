@@ -1,6 +1,6 @@
 <template>
   <div class="article-state" :style="{background: color}">
-    {{ text | undefined }}
+    {{ text }}
   </div>
 </template>
 

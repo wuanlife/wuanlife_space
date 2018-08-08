@@ -119,18 +119,19 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-replies {
-  margin-bottom: 28px;
+  margin-bottom: 31px;
   border-radius: 4px;
-  border: solid 2px #c8c8c8;
+  border: solid 1px #c8c8c8;
   header {
     padding: 10px 8px;
-    border-bottom: 2px solid #c8c8c8;
-    font-size: 12px;
+    border-bottom: 1px solid #c8c8c8;
+    font-size: 13px;
     color: $wl-blue;
   }
   .reply-pagination {
     display: flex;
     justify-content: center;
+    border-top: 1px solid #c8c8c8;
   }
 }
 </style>

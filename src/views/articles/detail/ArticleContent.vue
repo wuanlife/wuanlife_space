@@ -14,13 +14,13 @@
                  v-loading="approving"
                  :class="{'done': approvedTemp}"
                  @click="approve(article.id)">
-                <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ approved_numTemp }}
+                <icon-svg icon-class="zan" class="avatar-icon"></icon-svg>{{ approved_numTemp ? approved_numTemp : null }}
             </div>
             <div class="article-btn"
                  v-loading="collecting"
                  :class="{'done': collectedTemp}"
                  @click="collect(article.id)">
-                <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ collected_numTemp }}
+                <icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>{{ collected_numTemp ? collected_numTemp : null }}
             </div>
         </div>
         <div class="article-opts">
@@ -200,13 +200,15 @@ article {
   .article-html {
     word-wrap: break-word;
     margin-bottom: 63px;
+    font-size: 13px;
+    color: #999999;
     /deep/ img {
       max-width: 100%;
     }
     /deep/ p {
       word-wrap: break-word;
-      font-size: 12px;
-      color: #444444;
+      font-size: 13px;
+      color: #999999;
     }
   }
 }
@@ -233,13 +235,13 @@ footer {
     &:hover {
       color: $wl-blue;
       .svg-icon {
-        color: $wl-blue;
+        color: $wl-blue-hover;
       }
     }
     &.done {
       color: $wl-blue;
       .svg-icon {
-        color: $wl-blue;
+        color: $wl-blue-active;
       }
     }
   }

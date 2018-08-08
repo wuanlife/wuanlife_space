@@ -4,21 +4,25 @@ export default function postRule(mockAdapter) {
     .reply(200, {
       reply: [
         {
-          user_id: '139',
-          comment: '6666666',
-          floor: '2',
+          user: {
+            id: 139,
+            name: '三木31'
+          },
+          comment: '6666666222',
           create_at: '2017-07-28T10:41:25Z',
-          user_name: '三木31'
+          floor: 2
         },
         {
-          user_id: '139',
-          comment: '科科',
-          floor: '3',
-          create_at: '2017-07-28T10:49:25Z',
-          user_name: '梁王'
+          user: {
+            id: 139,
+            name: '三木31'
+          },
+          comment: '6666666111',
+          create_at: '2017-07-28T10:41:25Z',
+          floor: 1
         }
       ],
-      total: '123'
+      total: '2'
     })
     .onPost(/articles\/\d+\/comments/)
     .reply(200, {

@@ -8,10 +8,10 @@ export default function articleRule(mockAdapter) {
       update_at: '2017-07-20T12:50:30.176Z',
       create_at: '2017-07-20T12:50:30.176Z',
       lock: true,
-      approved: true,
-      approved_num: '1',
+      approved: false,
+      approved_num: 0,
       collected: true,
-      collected_num: '4',
+      collected_num: 0,
       author: {
         id: '58',
         name: 'xiaochao_php',

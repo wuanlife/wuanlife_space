@@ -67,10 +67,10 @@ export default {
     color: #5677fc;
   }
   .article-container {
-    padding: 20px;
+    padding: 40px;
     margin-bottom: 30px;
     .article-content {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
     .article-replies {
       margin-bottom:36px;

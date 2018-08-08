@@ -2,7 +2,7 @@
 <div class="article-reply-input">
   <!-- 也许可以用el-input -->
   <textarea v-model="replyContent" @keydown.enter="reply" placeholder="我的回复..."></textarea>
-  <el-button class="wl-btn"
+  <el-button class="wl-btn article-replay-btn"
              :loading="loading"
              @click="reply">回复
   </el-button>
@@ -67,26 +67,35 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-reply-input {
   textarea {
-    font-size: 12px;
-    margin-bottom: 9px;
+    font-size: 13px;
+    margin-bottom: 31px;
     width: 100%;
     height: 96px;
     resize: none;
     padding: 13px 10px;
     border-radius: 4px;
-    border: solid 2px #c8c8c8;
+    border: solid 1px rgba(204, 204, 204, 0.3);
     transition: all 0.3s ease-in-out;
+    background: rgba(204, 204, 204, 0.3);
+    color: #999999;
+    &:hover {
+      background: white;
+    }
     &:focus {
-      border: solid 2px $wl-blue;
+      background: white;
     }
     &::placeholder {
-      color: #757575;
+      color: #999999;
     }
   }
   .submit {
     padding: 9px 29px;
     font-size: 12px;
     color: #ffffff;
+  }
+  .article-replay-btn {
+    font-size: 15px;
+    padding: 8px 32px;
   }
 }
 </style>

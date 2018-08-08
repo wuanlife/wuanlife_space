@@ -70,11 +70,11 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .article-reply {
-  margin: 0 5px;
-  padding: 21px 0 7px 0;
+  margin: 0 8px;
+  padding: 24px 17px 8px 17px;
   word-wrap: break-word;
   &:not(:last-child) {
-    border-bottom: 2px solid #c8c8c8;
+    border-bottom: 1px solid #c8c8c8;
     &::after {
       content: "";
       width: 80%;
@@ -104,13 +104,14 @@ export default {
     }
     time {
       font-size: 10px;
-      color: #434343;
+      color: #cccccc;
+      margin-right: 11px;
     }
   }
   p {
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 16px;
-    color: #434343;
+    color: #999999;
   }
   .opts {
     .opt {
