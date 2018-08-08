@@ -109,10 +109,21 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true
+          // 获取ID-Token
           this.$store
             .dispatch('Signup', {
               ...this.signupForm
-            }).then(user => {
+            }).then(idToken => {
+              // 通过ID-Token获取Access-Token
+              let params = {
+                'scope': 'public_profile',
+                'ID-Token': idToken
+              }
+              this.$store
+                .dispatch('AccessToken', {
+                  ...params
+                })
+            }).then((result) => {
               this.loading = false
               this.$router.push({ path: '/' })
             }).catch(err => {

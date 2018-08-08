@@ -88,18 +88,42 @@ export default {
   },
   methods: {
     submitForm (formName) {
+      // 如果已经登录
+      if (this.user.id) {
+        Notification.error({
+          message: '已经登录，请先退出',
+          offset: 60
+        })
+      }
+
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.loading = true
+          // 登录并且获取ID-Token
+          console.log('valid')
           this.$store
             .dispatch('Login', {
               ...this.loginForm
-            }).then(user => {
+            }).then(idToken => {
+              console.log('idToken')
+              let params = {
+                'scope': 'public_profile',
+                'ID-Token': idToken
+              }
+              // 获取Access-Token
+              this.$store
+                .dispatch('AccessToken', {
+                  ...params
+                })
+            }).then((result) => {
+              console.log(result)
               this.loading = false
               this.$router.push({ path: '/' })
-            }).catch(err => {
+            })
+            .catch(err => {
+              console.log('error')
               Notification.error({
-                message: err.data.error,
+                message: err,
                 offset: 60
               })
               this.loading = false
