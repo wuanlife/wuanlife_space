@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { login, signup } from 'api/auth'
+import { login, signup, getAccessToken } from 'api/auth'
 import { putUser } from 'api/user'
 // import { storeWithExpiration } from 'utils'
 
@@ -28,22 +28,37 @@ const user = {
   actions: {
     // 邮箱登录
     async Login ({ commit }, params) {
-      const userWithToken = await login(params)
-      commit('SET_USER', userWithToken)
+      // return ID-Token
+      const idToken = await login(params)
+      const user = JSON.parse(atob(idToken.split('.')[1]))
+      commit('SET_USER', {
+        idToken,
+        ...user
+      })
       // storeWithExpiration.set('user', userWithToken)
-      return userWithToken
+      return idToken
     },
     // for later one-use token, Logout should in actions
     Logout ({ commit }) {
       commit('CLEAR_USER')
       // storeWithExpiration.set('user', {})
     },
+    // get Access-Token
+    async AccessToken ({ commit }, params) {
+      const accToken = await getAccessToken(params)
+      commit('SET_USER', accToken)
+      return accToken
+    },
     // 注册
     async Signup ({ commit }, params) {
-      const userWithToken = await signup(params)
-      commit('SET_USER', userWithToken)
+      const idToken = await signup(params)
+      const user = JSON.parse(atob(idToken.split('.')[1]))
+      commit('SET_USER', {
+        idToken,
+        ...user
+      })
       // storeWithExpiration.set('user', userWithToken)
-      return userWithToken
+      return idToken
     },
     async PutUser ({ commit, state }, params) {
       const backMessage = await putUser(params)
