@@ -9,12 +9,12 @@
       @ready="onEditorReady($event)">
       <div id="toolbar" slot="toolbar">
         <!-- Add a bold button -->
-        <button class="ql-bold">Bold</button>
-        <button class="ql-italic">Italic</button>
-        <button class="ql-underline">Underline</button>
-        <button class="ql-header" value="1"></button>
-        <button class="ql-header" value="2"></button>
-        <button class="ql-image">Image</button>
+        <button class="ql-bold toolbar-item toolbar-item-radius">Bold</button>
+        <button class="ql-italic toolbar-item">Italic</button>
+        <button class="ql-underline toolbar-item toolbar-item-margin">Underline</button>
+        <button class="ql-header toolbar-item-two toolbar-item-radius" value="1"></button>
+        <button class="ql-header toolbar-item-two toolbar-item-margin" value="2"></button>
+        <button class="ql-image toolbar-item-there">Image</button>
         <!-- <button id="custom-button" @click="customButtonClick">[ Click me ]</button> -->
       </div>
     </quill-editor>
@@ -67,7 +67,7 @@ export default {
       photoUrl: '',
       fullscreenLoading: false,
       editorOption: {
-        placeholder: '说些什么吧...',
+        placeholder: '输入内容',
         modules: {
           toolbar: '#toolbar'
         }
@@ -174,15 +174,40 @@ export default {
   line-height: 24px;
   color: #444444;
   .quill-editor {
-    box-shadow: 0px 3px 7px 0px
-      rgba(99, 99, 99, 0.65);
     border-radius: 4px;
+    border: solid 1px rgba(204, 204, 204, 0.3);
+    background-color: rgba(204, 204, 204, 0.3);
     // 工具栏样式
     #toolbar {
+      border: none;
+      padding: 5px;
+      .toolbar-item {
+        background-color: #ffffff;
+      }
+      .toolbar-item-two {
+        background-color: #ffffff;
+      }
+      .toolbar-item-there {
+        background-color: #ffffff;
+        border-radius: 4px;
+      }
+      .toolbar-item-margin {
+        margin-right: 8px;
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+      .toolbar-item-radius {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
     }
     .ql-container {
       height: 300px;
       font-size: 15px;
+      padding: 5px;
+      border: none;
+      color: #999;
+      background-color: #ffffff;
     }
 
   }
