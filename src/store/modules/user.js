@@ -29,10 +29,11 @@ const user = {
     // 邮箱登录
     async Login ({ commit }, params) {
       // return ID-Token
-      const idToken = await login(params)
+      const tokenData = await login(params)
+      const idToken = tokenData['ID-Token']
       const user = JSON.parse(atob(idToken.split('.')[1]))
       commit('SET_USER', {
-        idToken,
+        tokenData,
         ...user
       })
       // storeWithExpiration.set('user', userWithToken)
@@ -46,8 +47,9 @@ const user = {
     // get Access-Token
     async AccessToken ({ commit }, params) {
       const accToken = await getAccessToken(params)
+      const accessToken = accToken['Access-Token']
       commit('SET_USER', accToken)
-      return accToken
+      return accessToken
     },
     // 注册
     async Signup ({ commit }, params) {
