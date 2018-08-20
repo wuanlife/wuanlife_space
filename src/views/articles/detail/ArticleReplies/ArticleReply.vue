@@ -6,8 +6,9 @@
       <time>{{reply.create_at | formatTime}}</time>
   </header>
   <p>{{ reply.comment }}</p>
-  <div class="opts clearfix" v-loading="deleting">
+  <div class="opts clearfix">
       <span v-if="reply.user.id === user.id"
+            v-loading="deleting"
             :class="{'opt': true}"
             @click="del">
         删除
@@ -96,7 +97,7 @@ export default {
       cursor: pointer;
       transition: all 0.3s ease-in-out;
       &:hover {
-        color: $wl-blue-hover;
+        color: #99ccff;
       }
       &:active {
         color: $wl-blue-active;
@@ -121,7 +122,7 @@ export default {
       color: $wl-blue;
       transition: all 0.3s ease-in-out;
       &:hover {
-        color: $wl-blue-hover;
+        color: #99ccff;
       }
     }
   }

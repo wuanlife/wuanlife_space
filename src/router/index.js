@@ -145,7 +145,7 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       { path: '', component: MySpace, meta: { title: '我的空间 - 午安网 - 过你想过的生活' } },
-      { path: ':id', component: MySpace }
+      { path: ':id', component: MySpace, meta: { title: '午安网 - 过你想过的生活' } }
     ]
   },
   {

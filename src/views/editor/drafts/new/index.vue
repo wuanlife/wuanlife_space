@@ -102,6 +102,7 @@ export default {
   height: 32px;
   line-height: 0;
   width: 93px;
+  padding: 0;
 }
 #drafts-new .drafts-new-content {
   background: transparent;

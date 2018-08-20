@@ -5,7 +5,7 @@ export default function postRule(mockAdapter) {
       reply: [
         {
           user: {
-            id: 139,
+            id: '192',
             name: '三木31'
           },
           comment: '6666666222',

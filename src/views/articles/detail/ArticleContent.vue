@@ -246,12 +246,12 @@ footer {
     }
   }
   .article-opt {
-    margin-left: 12px;
+    margin-left: 40px;
     cursor: pointer;
     color: $wl-blue;
     transition: all 0.3s ease-in-out;
     &:hover {
-      color: $wl-blue-active;
+      color: #99ccff;
     }
   }
 }
