@@ -48,7 +48,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    name: '首页',
+    // name: '首页',
     hidden: true,
     children: [{
       path: '/',
