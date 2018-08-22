@@ -14,6 +14,7 @@ const user = {
   state: {},
   mutations: {
     SET_USER: (state, userInfo) => {
+      console.log('setUser')
       for (const key in userInfo) {
         Vue.set(state, key, userInfo[key])
       }
@@ -29,11 +30,15 @@ const user = {
     // 邮箱登录
     async Login ({ commit }, params) {
       // return ID-Token
+      console.log('action->login')
       const tokenData = await login(params)
+      console.log('tokenData:' + [...tokenData])
       const idToken = tokenData['ID-Token']
+      // console.log('idToken')
       const user = JSON.parse(atob(idToken.split('.')[1]))
+      console.log('action->login->atob')
       commit('SET_USER', {
-        tokenData,
+        ...tokenData,
         ...user
       })
       // storeWithExpiration.set('user', userWithToken)
@@ -53,7 +58,7 @@ const user = {
     },
     // 注册
     async Signup ({ commit }, params) {
-      const idToken = await signup(params)
+      const idToken = await signup(params)['ID-Token']
       const user = JSON.parse(atob(idToken.split('.')[1]))
       commit('SET_USER', {
         idToken,

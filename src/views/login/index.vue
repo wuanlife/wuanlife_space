@@ -35,7 +35,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { login, getAccessToken } from 'api/auth'
 import { Notification } from 'element-ui'
+
+// import fetch from 'utils/fetch'
 
 export default {
   name: 'index-visitor',
@@ -101,24 +104,33 @@ export default {
           this.loading = true
           // 登录并且获取ID-Token
           console.log('valid')
-          this.$store
-            .dispatch('Login', {
-              ...this.loginForm
-            }).then(idToken => {
-              console.log('idToken')
-              let params = {
-                'scope': 'public_profile',
-                'ID-Token': idToken
-              }
-              // 获取Access-Token
-              this.$store
-                .dispatch('AccessToken', {
-                  ...params
-                })
-            }).then((result) => {
+          const { clientId, returnTo } = this.$route.query
+          login({
+            ...this.loginForm,
+            // set client_id default: 'wuan'
+            client_id: clientId || 'wuan'
+          }).then(data => {
+            console.log('idToken:', data['ID-Token'])
+            // set idToken to cookies
+            this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
+            // let params = {
+            //   'scope': 'public_profile'
+            // }
+            // 获取Access-Token
+            this.$store.commit('SET_USER', {
+              ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
+            })
+          }).then(data => {
+            getAccessToken({'scope': 'public_profile'})
+          })
+            .then((result) => {
               console.log(result)
+              // result为何null
+              // set accessToken to cookies
+              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 8)
+              console.log('accToken', result)
               this.loading = false
-              this.$router.push({ path: '/' })
+              this.$router.push({ path: returnTo || '/personal/profile' })
             })
             .catch(err => {
               console.log('error')
