@@ -15,7 +15,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   let cookies = document.cookie.split(';')
-  console.log('fetch', cookies)
+
   // find idToken in cookies
   let idToken = null
   if (cookies.find((item) => item.indexOf('wuan-id-token') !== -1)) {
@@ -29,16 +29,14 @@ service.interceptors.request.use(config => {
 
   if (idToken) {
     config.headers['ID-Token'] = idToken
-    console.log(idToken)
   }
 
   if (accessToken) {
     config.headers['Access-Token'] = accessToken
   }
-  console.log('config')
+
   return config
 }, error => {
-  console.log('interceptor->error')
   Promise.reject(error)
 })
 

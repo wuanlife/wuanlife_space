@@ -7,7 +7,6 @@ export function login (params) {
     password: params.password,
     client_id: params.client_id
   }
-  console.log('auth->login')
   return fetch({
     url: '/api/users/login',
     method: 'post',
@@ -16,11 +15,10 @@ export function login (params) {
 }
 
 // get Access-Token
-export function getAccessToken (params) {
+export function getAccessToken (params = {scope: 'public_profile'}) {
   const data = {
-    'scope': params.scope
+    scope: params.scope
   }
-  console.log('auth->getAccessToken')
   return fetch({
     url: '/api/auth',
     method: 'post',

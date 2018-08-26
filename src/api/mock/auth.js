@@ -16,6 +16,9 @@ export default function authRule(mockAdapter) {
   .onPost('/api/users/login').reply(200, {
     'ID-Token': 'bababababa.eyJpZCI6IjE5MiIsIm5hbWUiOiIxMTEiLCJtYWlsIjoiNDQzNDc0NzEzQHFxLmNvbSJ9.dadadadada'
   })
+  .onPost('/api/users/register').reply(200, {
+    'ID-Token': 'bababababa.eyJpZCI6IjE5MiIsIm5hbWUiOiIxMTEiLCJtYWlsIjoiNDQzNDc0NzEzQHFxLmNvbSJ9.dadadadada'
+  })
   .onPost('/api/auth').reply(200, {
     'Access-Token': 'dsjkvbeivleavmkmvksdnboifejvmsks'
   })

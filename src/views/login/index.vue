@@ -63,7 +63,7 @@ export default {
 
       // form part
       loginForm: {
-        mail: '',
+        email: '',
         password: ''
       },
       loginRules: {
@@ -103,37 +103,25 @@ export default {
         if (valid) {
           this.loading = true
           // 登录并且获取ID-Token
-          console.log('valid')
-          const { clientId, returnTo } = this.$route.query
+          const { clientId } = this.$route.query
           login({
             ...this.loginForm,
             // set client_id default: 'wuan'
             client_id: clientId || 'wuan'
           }).then(data => {
-            console.log('idToken:', data['ID-Token'])
             // set idToken to cookies
             this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
-            // let params = {
-            //   'scope': 'public_profile'
-            // }
             // 获取Access-Token
             this.$store.commit('SET_USER', {
               ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
             })
-          }).then(data => {
-            getAccessToken({'scope': 'public_profile'})
-          })
+          }).then(getAccessToken)
             .then((result) => {
-              console.log(result)
-              // result为何null
-              // set accessToken to cookies
-              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 8)
-              console.log('accToken', result)
+              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 7)
               this.loading = false
-              this.$router.push({ path: returnTo || '/personal/profile' })
+              this.$router.push('/')
             })
             .catch(err => {
-              console.log('error')
               Notification.error({
                 message: err,
                 offset: 60
