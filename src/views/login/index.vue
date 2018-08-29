@@ -35,7 +35,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { login, getAccessToken } from 'api/auth'
 import { Notification } from 'element-ui'
+
+// import fetch from 'utils/fetch'
 
 export default {
   name: 'index-visitor',
@@ -60,7 +63,7 @@ export default {
 
       // form part
       loginForm: {
-        mail: '',
+        email: '',
         password: ''
       },
       loginRules: {
@@ -100,28 +103,25 @@ export default {
         if (valid) {
           this.loading = true
           // 登录并且获取ID-Token
-          console.log('valid')
-          this.$store
-            .dispatch('Login', {
-              ...this.loginForm
-            }).then(idToken => {
-              console.log('idToken')
-              let params = {
-                'scope': 'public_profile',
-                'ID-Token': idToken
-              }
-              // 获取Access-Token
-              this.$store
-                .dispatch('AccessToken', {
-                  ...params
-                })
-            }).then((result) => {
-              console.log(result)
+          const { clientId } = this.$route.query
+          login({
+            ...this.loginForm,
+            // set client_id default: 'wuan'
+            client_id: clientId || 'wuan'
+          }).then(data => {
+            // set idToken to cookies
+            this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
+            // 获取Access-Token
+            this.$store.commit('SET_USER', {
+              ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
+            })
+          }).then(getAccessToken)
+            .then((result) => {
+              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 7)
               this.loading = false
-              this.$router.push({ path: '/' })
+              this.$router.push('/')
             })
             .catch(err => {
-              console.log('error')
               Notification.error({
                 message: err,
                 offset: 60

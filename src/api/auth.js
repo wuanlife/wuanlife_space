@@ -5,7 +5,7 @@ export function login (params) {
   const data = {
     mail: params.mail,
     password: params.password,
-    client_id: '123'
+    client_id: params.client_id
   }
   return fetch({
     url: '/api/users/login',
@@ -15,16 +15,14 @@ export function login (params) {
 }
 
 // get Access-Token
-export function getAccessToken (params) {
+export function getAccessToken (params = {scope: 'public_profile'}) {
   const data = {
-    'scope': params.scope
+    scope: params.scope
   }
-
   return fetch({
     url: '/api/auth',
     method: 'post',
-    data,
-    header: { 'ID-Token': params['ID-Token'] }
+    data
   })
 }
 
@@ -32,9 +30,7 @@ export function getAccessToken (params) {
 export function loginOrNot (params) {
   return fetch({
     url: '/api/auth',
-    method: 'get',
-    headers: { 'Access-Token': params['Access-Token'],
-      'ID-Token': params['ID-Token'] }
+    method: 'get'
   })
 }
 
@@ -43,7 +39,7 @@ export function signup (params) {
     name: params.name,
     mail: params.mail,
     password: params.password,
-    client_id: '123'
+    client_id: 'wuan'
   }
   return fetch({
     url: '/api/users/register',

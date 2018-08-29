@@ -18,7 +18,10 @@ export default {
     Navbar,
     AppMain
   },
-  computed: {}
+  computed: {},
+  mounted () {
+    this.$store.commit('CLEAR_USER')
+  }
 }
 </script>
 
