@@ -111,7 +111,8 @@ export default {
           }).then(data => {
             // set idToken to cookies
             this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
-            // 获取Access-Token
+            console.log('login->SET_USER')
+
             this.$store.commit('SET_USER', {
               ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
             })
@@ -123,7 +124,7 @@ export default {
             })
             .catch(err => {
               Notification.error({
-                message: err,
+                message: err.data.error,
                 offset: 60
               })
               this.loading = false

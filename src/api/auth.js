@@ -1,14 +1,16 @@
 import fetch from 'utils/fetch'
 
+const BASE_URL = 'http://dev-oidc.wuanla.tk/api'
+
 // login and get ID-Token
 export function login (params) {
   const data = {
-    mail: params.mail,
+    email: params.mail,
     password: params.password,
     client_id: params.client_id
   }
   return fetch({
-    url: '/api/users/login',
+    url: BASE_URL + '/users/login', // del /api
     method: 'post',
     data
   })
@@ -20,7 +22,7 @@ export function getAccessToken (params = {scope: 'public_profile'}) {
     scope: params.scope
   }
   return fetch({
-    url: '/api/auth',
+    url: BASE_URL + '/auth', // del /api
     method: 'post',
     data
   })
@@ -29,7 +31,7 @@ export function getAccessToken (params = {scope: 'public_profile'}) {
 // 验证Token完整性
 export function loginOrNot (params) {
   return fetch({
-    url: '/api/auth',
+    url: BASE_URL + '/auth', // del /api
     method: 'get'
   })
 }
@@ -37,12 +39,12 @@ export function loginOrNot (params) {
 export function signup (params) {
   const data = {
     name: params.name,
-    mail: params.mail,
+    email: params.mail,
     password: params.password,
     client_id: 'wuan'
   }
   return fetch({
-    url: '/api/users/register',
+    url: BASE_URL + '/users/register', // del /api
     method: 'post',
     data
   })
