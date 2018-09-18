@@ -1,15 +1,16 @@
 import fetch from 'utils/fetch'
 import store from 'vuex-store'
 // get user details
+const baseUrl = 'http://dev-oidc.wuanla.tk/api'
 export function getUser () {
   return fetch({
-    url: `/users/${store.state.user.id}`,
+    url: `${baseUrl}/users/${store.state.user.uid}`,
     method: 'get'
   })
 }
 export function getUserById (id) {
   return fetch({
-    url: `/users/${id}`,
+    url: `${baseUrl}/users/${id}`,
     method: 'get'
   })
 }
@@ -22,7 +23,7 @@ export function searchUsers (keyword, offset, limit) {
   }
   return fetch({
     method: 'post',
-    url: `/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
+    url: `${baseUrl}/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
     data
   })
 }
@@ -30,14 +31,14 @@ export function searchUsers (keyword, offset, limit) {
 // change user details
 export function putUser (params) {
   return fetch({
-    url: `/users/${store.state.user.id}`,
+    url: `${baseUrl}/users/${store.state.user.uid}`,
     method: 'put',
     data: params
   })
 }
 export function getActiveUsers () {
   return fetch({
-    url: '/users/active',
+    url: `${baseUrl}/users/active`,
     method: 'get'
   })
 }
@@ -47,7 +48,7 @@ export function changePassword (params) {
     new_psd: params.new_psd
   }
   return fetch({
-    url: `/users/${store.state.user.id}/password`,
+    url: `${baseUrl}/users/${store.state.user.uid}/password`,
     method: 'put',
     data
   })

@@ -120,6 +120,7 @@ export default {
       this.approving = false
     },
     async collect () {
+      console.log(this.$store.state)
       if (this.collecting) {
         return
       }
