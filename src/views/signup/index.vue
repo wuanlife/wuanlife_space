@@ -131,7 +131,7 @@ export default {
               this.$router.push('/')
             }).catch(err => {
               Notification.error({
-                message: err,
+                message: err.data.error,
                 offset: 60
               })
               this.loading = false
