@@ -111,7 +111,8 @@ export default {
           }).then(data => {
             // set idToken to cookies
             this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
-            // 获取Access-Token
+            console.log('login->SET_USER')
+
             this.$store.commit('SET_USER', {
               ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
             })

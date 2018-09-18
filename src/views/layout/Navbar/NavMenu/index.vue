@@ -1,6 +1,6 @@
 <template>
 <div class="nav-menu">
-  <div class="user-container" v-if="user.id">
+  <div class="user-container" v-if="user.uid">
     <div class="write-container" @click="goPath('/editor/drafts/new')">
       <icon-svg icon-class="write"></icon-svg>
       写文章
@@ -10,7 +10,7 @@
       trigger="click"
       @visible-change="visibleChange">
       <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
-          <span>{{ user.name }}</span>
+          <span>{{ user.uname }}</span>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
           <el-dropdown-item @click.native="goPath('/mySpace')">
