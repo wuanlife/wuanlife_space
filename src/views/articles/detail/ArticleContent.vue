@@ -35,7 +35,7 @@
                   @click="edit(article.id)">
             编辑
             </span>
-            <span v-if="user.id === article.author.id"
+            <span v-if="user.uid === article.author.id"
                   class="article-opt"
                   @click="del(article.id)">
             删除

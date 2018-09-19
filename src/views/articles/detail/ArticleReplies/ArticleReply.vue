@@ -3,7 +3,7 @@
      :class="{'article-reply-new': reply.new}">
   <header>
       <h3 @click="$router.push({path: `/mySpace/${reply.user.id}`})">{{reply.user.name}}</h3>
-      <time>{{reply.create_at | formatTime}}</time>
+      <time>{{reply.create_at.date | formatTime}}</time>
   </header>
   <p>{{ reply.comment }}</p>
   <div class="opts clearfix">
