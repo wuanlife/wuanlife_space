@@ -161,6 +161,7 @@ export default {
   },
   watch: {
     content: function (newContent, oldContent) {
+      console.log(newContent, oldContent)
       this.$emit('content-change', newContent, oldContent)
     }
   }

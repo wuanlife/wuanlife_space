@@ -75,7 +75,7 @@ export default {
     if (this.$route.params.id) {
       this.id = this.$route.params.id
     } else {
-      this.id = this.user.id
+      this.id = this.user.uid
     }
     this.loadPosts(1)
   },
@@ -88,7 +88,7 @@ export default {
         offset: 20 * (page - 1),
         limit: 20
       }).then(res => {
-        if (res.author.id === this.user.id) {
+        if (res.author.id === this.user.uid) {
           document.title = '我的空间 - 午安网 - 过你想过的生活'
         } else {
           document.title = `${res.author.name}的空间 - 午安网 - 过你想过的生活`
