@@ -20,7 +20,7 @@ export default {
   },
   computed: {},
   mounted () {
-    this.$store.commit('CLEAR_USER')
+    // this.$store.commit('CLEAR_USER')
   }
 }
 </script>

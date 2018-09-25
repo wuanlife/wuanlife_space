@@ -17,10 +17,7 @@
               我的空间
           </el-dropdown-item>
           <el-dropdown-item @click.native="goPath('/personalData')">
-              个人资料
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/changepsw')">
-              密码修改
+              个人中心
           </el-dropdown-item>
           <el-dropdown-item @click.native="goPath('/collection')">
               我的收藏

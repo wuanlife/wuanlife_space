@@ -10,7 +10,7 @@ import ls from '@/utils/localStorage'
 const LS_KEY = 'user' // localStorage key
 const lsData = ls.getItem(LS_KEY) // 获取本地数据
 const mapping = {
-  user: ['uid', 'uname', 'email', 'Access-Token'] // 需要保存的键名
+  user: ['uid', 'uname', 'email', 'Access-Token', 'ID-Token'] // 需要保存的键名
 }
 const mWhiteList = [] // mutation 白名单
 

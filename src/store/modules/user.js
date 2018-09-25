@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import { login, signup, getAccessToken } from 'api/auth'
 import { putUser } from 'api/user'
+import ls from 'utils/localStorage'
+
 // import { storeWithExpiration } from 'utils'
 
 // const loadUser = () => {
@@ -20,6 +22,7 @@ const user = {
       }
     },
     CLEAR_USER: state => {
+      console.log('clearUser')
       for (const key in state) {
         state[key] = null
       }
@@ -47,6 +50,7 @@ const user = {
     // for later one-use token, Logout should in actions
     Logout ({ commit }) {
       commit('CLEAR_USER')
+      ls.setItem('user', null)
       // storeWithExpiration.set('user', {})
     },
     // get Access-Token
