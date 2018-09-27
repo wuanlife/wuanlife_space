@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { login, getAccessToken } from 'api/auth'
 import { Notification } from 'element-ui'
 
@@ -85,11 +85,14 @@ export default {
   mounted () {
     // TODO: 支持redirect
     // 已登录则跳转到首页
-    if (this.user.id) {
-      this.$router.push({ path: '/index' })
+    if (this.user.uid) {
+      this.$router.push({ path: '/' })
     }
   },
   methods: {
+    ...mapMutations({
+      SET_USER: 'setUser'
+    }),
     submitForm (formName) {
       // 如果已经登录
       if (this.user.id) {
@@ -114,6 +117,7 @@ export default {
             console.log('login->SET_USER')
 
             this.$store.commit('SET_USER', {
+              ...data,
               ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
             })
           }).then(getAccessToken)
@@ -121,6 +125,9 @@ export default {
               this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 7)
               this.loading = false
               this.$router.push('/')
+              this.$store.commit('SET_USER', {
+                ...result
+              })
             })
             .catch(err => {
               Notification.error({

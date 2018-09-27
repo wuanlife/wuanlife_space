@@ -36,6 +36,7 @@ router.beforeEach((to, from, next) => {
     // 如果设置标题，拦截后设置标题
     document.title = to.meta.title
   }
+
   const token = false
   if (token) {
     // 判断是否有token
@@ -55,7 +56,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((next) => {
   NProgress.done() // 结束Progress
 })
 
