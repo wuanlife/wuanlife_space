@@ -8,7 +8,7 @@
         <time>{{ post.create_at | formatTime }}</time>
       </header>
       <h1 @click="$router.push({path: `/article/${post.id}`})" :title="post.title">{{ post.title }}</h1>
-      <div class="preview-html" v-html="content">
+      <div class="preview-html" v-html="post.content_digest">
       </div>
       <div class="preview-imgs">
         <img v-for="(img,index) of post.image_urls" :key="index" :src="img + '?imageView2/1/w/132/h/132'">
@@ -16,9 +16,9 @@
     </div>
     <footer v-if="footer">
       <ul>
-        <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num }}</li>
-        <li @click="approve(post.id)" :class="{'done': approvedTemp}" v-loading="approving"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ approved_numTemp }}</li>
-        <li @click="collect(post.id)" :class="{'done': collectedTemp}" v-loading="collecting"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ collected_numTemp }}</li>
+        <li @click="$router.push({path: `/article/${post.id}`})" :class="{'done': post.replied}"><icon-svg icon-class="pinglun" class="avatar-icon"></icon-svg>评论 {{ post.replied_num == 0 ? "" : post.replied_num }}</li>
+        <li @click="approve(post.id)" :class="{'done': approvedTemp}" v-loading="approving"><icon-svg icon-class="zan" class="avatar-icon"></icon-svg>点赞 {{ approved_numTemp == 0 ? "" : approved_numTemp }}</li>
+        <li @click="collect(post.id)" :class="{'done': collectedTemp}" v-loading="collecting"><icon-svg icon-class="shoucang" class="avatar-icon"></icon-svg>收藏 {{ collected_numTemp == 0 ? "" : collected_numTemp }}</li>
       </ul>
     </footer>
   </li>

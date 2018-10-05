@@ -3,7 +3,7 @@
     <div class="search-container">
         <el-input
             class="search"
-            placeholder="过你想过的生活..."
+            placeholder="搜索用户或内容"
             icon="search"
             v-model="searchContent"
             @keyup.enter.native="handleGoSearch">
