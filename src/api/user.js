@@ -2,6 +2,7 @@ import fetch from 'utils/fetch'
 import store from 'vuex-store'
 // get user details
 const baseUrl = 'http://dev-oidc.wuanla.tk/api'
+const spaceUrl = 'http://dev-space-api.wuanla.tk/api'
 export function getUser () {
   return fetch({
     url: `${baseUrl}/users/${store.state.user.uid}`,
@@ -37,8 +38,9 @@ export function putUser (params) {
   })
 }
 export function getActiveUsers () {
+  // http://dev-space-api.wuanla.tk/api/users/active
   return fetch({
-    url: `${baseUrl}/users/active`,
+    url: `${spaceUrl}/users/active`,
     method: 'get'
   })
 }

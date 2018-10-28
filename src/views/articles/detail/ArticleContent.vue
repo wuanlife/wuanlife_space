@@ -199,6 +199,7 @@ article {
     margin-bottom: 29px;
   }
   .article-html {
+    line-height: 1.3;
     word-wrap: break-word;
     margin-bottom: 63px;
     font-size: 13px;

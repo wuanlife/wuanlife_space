@@ -244,6 +244,7 @@ export default {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
+        line-height: 1.3;
         overflow: hidden;
       }
       div.preview-imgs {
