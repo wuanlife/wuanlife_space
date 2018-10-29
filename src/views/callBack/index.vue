@@ -15,6 +15,7 @@ export default {
     const user = JSON.parse(atob(idToken.split('.')[1]))
     // this.$cookie.set(`wuan-id-token`, idToken, 7)
     // this.$cookie.set(`wuan-access-token`, accessToken, 7)
+    console.log(user)
     storage.setItem('user', {
       accessToken,
       idToken,

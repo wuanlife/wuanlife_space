@@ -10,6 +10,7 @@ export default {
     }
   },
   setItem (key, val) {
+    console.log(key, val)
     ls.setItem(key, JSON.stringify(val))
   },
   clear () {

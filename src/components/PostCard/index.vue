@@ -158,7 +158,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .post-card {
-    width: 448px;
+    // width: 448px;
     background-color: #ffffff;
     border-radius: 4px;
     &:not(:first-child) {
