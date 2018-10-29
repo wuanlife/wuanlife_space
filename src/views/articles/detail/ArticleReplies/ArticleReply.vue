@@ -3,9 +3,9 @@
      :class="{'article-reply-new': reply.new}">
   <header>
       <h3 @click="$router.push({path: `/mySpace/${reply.user.id}`})">{{reply.user.name}}</h3>
-      <time>{{reply.create_at.date | formatTime}}</time>
+      <time>{{reply.create_at | formatTime}}</time>
   </header>
-  <p>{{ reply.comment }}</p>
+  <p>{{ reply.comment.content }}</p>
   <div class="opts clearfix">
       <span v-if="reply.user.id === user.id"
             v-loading="deleting"
