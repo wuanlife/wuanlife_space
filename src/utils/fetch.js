@@ -17,18 +17,20 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-  let cookies = document.cookie.split(';')
-
+  // let cookies = document.cookie.split(';')
   // find idToken in cookies
   let idToken = null
-  if (cookies.find((item) => item.indexOf('wuan-id-token') !== -1)) {
-    idToken = cookies.find((item) => item.indexOf('wuan-id-token') !== -1).split('=')[1]
-  }
+  idToken = store.state.user.idToken
+  // if (cookies.find((item) => item.indexOf('wuan-id-token') !== -1)) {
+  //   idToken = cookies.find((item) => item.indexOf('wuan-id-token') !== -1).split('=')[1]
+  //   console.log(idToken)
+  // }
   // find accessToken in cookies
   let accessToken = null
-  if (cookies.find((item) => item.indexOf('wuan-access-token') !== -1)) {
-    accessToken = cookies.find((item) => item.indexOf('wuan-access-token') !== -1).split('=')[1]
-  }
+  accessToken = store.state.user.accessToken
+  // if (cookies.find((item) => item.indexOf('wuan-access-token') !== -1)) {
+  //   accessToken = cookies.find((item) => item.indexOf('wuan-access-token') !== -1).split('=')[1]
+  // }
 
   if (idToken) {
     config.headers['ID-Token'] = idToken
