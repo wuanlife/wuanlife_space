@@ -2,7 +2,7 @@
   <div class="default-pagination" v-show="(pagination.pageCount==0)||(pagination.pageCount==1) ? false : true">
     <div class="center">
       <span v-if="pagination.currentPage != 1">
-      <span @click="pagination.currentPage--">上一页</span>
+      <span @click="previousPage">上一页</span>
       </span>
 
       <span v-else>
@@ -13,7 +13,7 @@
       </el-pagination>
 
       <span v-if="pagination.currentPage != pagination.pageCount">
-      <span @click="pagination.currentPage++">下一页</span>
+      <span @click="nextPage">下一页</span>
       </span>
 
       <span v-else>
@@ -39,6 +39,14 @@ export default {
   methods: {
     pageChange (p) {
       this.$emit('current-change', p)
+    },
+    nextPage () {
+      this.pagination.currentPage++
+      this.$emit('nextPage')
+    },
+    previousPage () {
+      this.pagination.currentPage--
+      this.$emit('previousPage')
     }
   }
 }

@@ -83,8 +83,12 @@ export default {
         return
       }
       self.collecting = true
-      if (this.user.token === '') {
-        this.$router.push({path: '/login/'})
+      if (!self.user.accessToken || !self.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        self.collecting = false
         return
       }
       try {
@@ -117,8 +121,12 @@ export default {
         return
       }
       self.approving = true
-      if (this.user.token === '') {
-        this.$router.push({path: '/login/'})
+      if (!self.user.accessToken || !self.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        self.approving = false
         return
       }
       try {

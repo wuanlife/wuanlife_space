@@ -51,7 +51,7 @@ export default {
 <style lang="scss" scoped>
   .index-aside-card {
     /*position: fixed;*/
-    width: 250px;
+    width: 262px;
     height: 70px;
   }
   .index-card {

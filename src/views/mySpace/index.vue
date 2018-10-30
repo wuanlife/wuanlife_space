@@ -17,7 +17,9 @@
           <pagination
             class="pagination"
             @current-change="loadPosts"
-            :pagination.sync="pagination"></pagination>
+            :pagination.sync="pagination"
+            @nextPage="nextPage"
+            @previousPage="previousPage"></pagination>
       </section>
   </div>
 </template>
@@ -105,6 +107,12 @@ export default {
         self.loading = false
         self.$refs['card-list'].scrollIntoView()
       })
+    },
+    nextPage () {
+      this.loadPosts(this.pagination.currentPage)
+    },
+    previousPage () {
+      this.loadPosts(this.pagination.currentPage)
     }
   }
 }

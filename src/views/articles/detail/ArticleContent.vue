@@ -104,6 +104,14 @@ export default {
         return
       }
       this.approving = true
+      if (!this.user.accessToken || !this.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        this.approving = false
+        return
+      }
       try {
         if (this.approvedTemp) {
           await unapproveArticle(this.$route.params.id)
@@ -120,11 +128,18 @@ export default {
       this.approving = false
     },
     async collect () {
-      console.log(this.$store.state)
       if (this.collecting) {
         return
       }
       this.collecting = true
+      if (!this.user.accessToken || !this.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        this.collecting = false
+        return
+      }
       try {
         if (this.collectedTemp) {
           await uncollectArticle(this.$route.params.id)
