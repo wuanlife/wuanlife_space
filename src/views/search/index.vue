@@ -26,7 +26,7 @@
           </post-card>
         </ul>
       </div>
-      <pagination :pagination.sync="pagination" @current-change="getSearchUsers"></pagination>
+      <pagination :pagination.sync="pagination" @current-change="getSearchUsers" @nextPage="nextPage" @previousPage="previousPage"></pagination>
     </section>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
       pagination: {
         pageCount: 1,
         currentPage: 1,
-        limit: 2
+        limit: 3
       },
       emptyUser: false,
       emptyArticle: false
@@ -63,7 +63,7 @@ export default {
     PostCard
   },
   mounted () {
-    this.getSearchUsers()
+    this.getSearchUsers(1)
     this.getSearchArticles(1)
   },
   computed: {
@@ -74,19 +74,20 @@ export default {
       var self = this
       this.loading = true
       return new Promise((resolve, reject) => {
-        searchUsers(this.$route.query.search, page - 1 || 0, 20)
+        searchUsers(this.$route.query.search, page - 1 || 0, self.pagination.limit)
           .then(res => {
             if (res.users.length === 0) {
               self.emptyUser = true
             } else {
               self.emptyUser = false
-              if (res.users.length < 3) {
-                self.relatedUsers = res.users
-              } else {
-                for (let i = 0, j = 3; i < j; i++) {
-                  self.relatedUsers[i] = res.users[i]
-                }
+              // 动态确定页码
+              let a = Math.ceil(
+                res.total / self.pagination.limit
+              )
+              if (a > self.pagination.pageCount) {
+                self.pagination.pageCount = a
               }
+              self.relatedUsers = res.users
             }
             self.loading = false
             resolve()
@@ -112,9 +113,12 @@ export default {
             } else {
               self.emptyArticle = false
               // 动态确定页码
-              self.pagination.pageCount = Math.ceil(
+              let a = Math.ceil(
                 res.total / self.pagination.limit
               )
+              if (a > self.pagination.pageCount) {
+                self.pagination.pageCount = a
+              }
               self.relatedArticles = res.articles
             }
             self.loading1 = false
@@ -144,6 +148,16 @@ export default {
           console.log(error)
           self.loading1 = false
         })
+    },
+    query (page) {
+      this.getSearchUsers(page)
+      this.getSearchArticles(page)
+    },
+    nextPage () {
+      this.query(this.pagination.currentPage)
+    },
+    previousPage () {
+      this.query(this.pagination.currentPage)
     }
   },
   watch: {
@@ -160,15 +174,16 @@ export default {
   display: flex;
   justify-content: space-between;
   margin: auto;
-  max-width: 714px;
+  max-width: 680px;
   min-width: 380px;
   section {
-    /*flex: 1;*/
+    flex: 1;
     > header {
       margin: 31px 0 12px 0;
       padding-left: 17px;
       font-family: PingFangHK-Medium;
-      font-size: 20px;
+      font-size: 18px;
+      font-weight: bold;
       color: #5677fc;
       height: 42px;
       line-height: 42px;
@@ -190,11 +205,15 @@ export default {
       align-items: center;
     }
     .relatedArticlesCardBox {
+      background: transparent;
       .post-card {
         width: inherit;
       }
     }
   }
+}
+.index-cards > li.post-card {
+  margin-top: 32px;
 }
 </style>
 <style type="text/css">

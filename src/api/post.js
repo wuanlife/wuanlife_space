@@ -62,14 +62,14 @@ export function getCollection (offset = 0, limit = 20) {
 }
 
 export function searchArticles (keyword, offset, limit) {
-  const data = {
-    keyword,
-    offset,
-    limit
-  }
+  // const data = {
+  //   keyword,
+  //   offset,
+  //   limit
+  // }
   return fetch({
     url: `/articles/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
-    method: 'post',
-    params: data
+    method: 'post'
+    // params: data
   })
 }
