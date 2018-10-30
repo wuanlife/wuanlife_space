@@ -111,14 +111,15 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 700px;
+    max-width: 75%;
     min-width: 590px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 448px;
+      //flex: 0 0 448px;
+      flex: 1 1 70%;
       order: 1;
       header {
         margin: 31px 0 12px 0;
