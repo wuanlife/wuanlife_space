@@ -41,6 +41,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Storage from '../../../../utils/localStorage.js'
+import { getUserById } from '../../../../api/user.js'
 export default {
   data () {
     return {
@@ -51,14 +52,22 @@ export default {
     ...mapGetters(['user'])
   },
   mounted () {
+    if (this.user.uid) {
+      getUserById(this.user.uid).then(res => {
+        const { mail, name } = res
+        this.$store.commit('SET_USER', {
+          email: mail,
+          uname: name
+        })
+      })
+    }
     // const user = Storage.getItem('user')
     // if (user && user.accessToken && user.idToken) {
     //   this.$cookie.set(`wuan-id-token`, user.idToken, 7)
     //   this.$cookie.set(`wuan-access-token`, user.accessToken, 7)
     // }
   },
-  updated () {
-  },
+  updated () {},
   methods: {
     logout () {
       Storage.clear()

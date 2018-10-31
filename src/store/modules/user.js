@@ -11,7 +11,7 @@ import ls from 'utils/localStorage'
 //     return user
 //   }
 // }
-
+const LS_KEY = 'user'
 const user = {
   state: {},
   mutations: {
@@ -20,6 +20,11 @@ const user = {
       for (const key in userInfo) {
         Vue.set(state, key, userInfo[key])
       }
+      const lsData = ls.getItem(LS_KEY)
+      ls.setItem(LS_KEY, {
+        ...lsData,
+        ...userInfo
+      })
     },
     CLEAR_USER: state => {
       console.log('clearUser')
