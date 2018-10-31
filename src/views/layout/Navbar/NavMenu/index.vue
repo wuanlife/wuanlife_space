@@ -16,7 +16,7 @@
           <el-dropdown-item @click.native="goPath('/mySpace')">
               我的空间
           </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/personalData')">
+          <el-dropdown-item @click.native="toMyPage">
               个人中心
           </el-dropdown-item>
           <el-dropdown-item @click.native="goPath('/collection')">
@@ -76,6 +76,9 @@ export default {
     },
     gotoAuth () {
       window.location = `${process.env.SSO_SITE}/authorize?client_id=wuan&redirect_uri=${window.location.origin + '/callback'}&response_type=code&state=maye&nonce=random `
+    },
+    toMyPage () {
+      window.location = `${process.env.SSO_SITE}`
     }
   }
 }

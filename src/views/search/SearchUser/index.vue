@@ -59,6 +59,12 @@ export default {
     flex: 1;
     text-align: center;
     color: #666;
+    &:hover {
+      color: #99ccff;
+    }
+    &:focus {
+      color: #6666ff;
+    }
   }
 }
 </style>

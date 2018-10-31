@@ -107,6 +107,7 @@ export default {
         background: #2e5897;
       }
       &:hover {
+        color: #5677fc;
         &::after {
           transform: scaleX(1);
         }
