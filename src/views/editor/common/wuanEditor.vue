@@ -125,7 +125,7 @@ export default {
       return getToken().then(res => {
         this.uploadData = {
           key: `image/${suffix.join('.')}_${new Date().getTime()}.${ext}`,
-          token: res.uploadToken
+          token: res['upload-token']
         }
       })
     },
