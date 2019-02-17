@@ -1,17 +1,17 @@
 import fetch from 'utils/fetch'
 import store from 'vuex-store'
 // get user details
-const baseUrl = 'http://dev-oidc.wuanla.tk/api'
-const spaceUrl = 'http://dev-space-api.wuanla.tk/api'
+// const baseUrl = 'http://dev-oidc.wuanla.tk/api'
+// const spaceUrl = 'http://dev-space-api.wuanla.tk/api'
 export function getUser () {
   return fetch({
-    url: `${baseUrl}/users/${store.state.user.uid}`,
+    url: `${process.env.SSO_SITE}/api/users/${store.state.user.uid}`,
     method: 'get'
   })
 }
 export function getUserById (id) {
   return fetch({
-    url: `${baseUrl}/users/${id}`,
+    url: `${process.env.SSO_SITE}/api/users/${id}`,
     method: 'get'
   })
 }
@@ -24,7 +24,7 @@ export function searchUsers (keyword, offset, limit) {
   }
   return fetch({
     method: 'post',
-    url: `${baseUrl}/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
+    url: `${process.env.SSO_SITE}/api/users/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
     data
   })
 }
@@ -32,7 +32,7 @@ export function searchUsers (keyword, offset, limit) {
 // change user details
 export function putUser (params) {
   return fetch({
-    url: `${baseUrl}/users/${store.state.user.uid}`,
+    url: `${process.env.SSO_SITE}/api/users/${store.state.user.uid}`,
     method: 'put',
     data: params
   })
@@ -40,7 +40,7 @@ export function putUser (params) {
 export function getActiveUsers () {
   // http://dev-space-api.wuanla.tk/api/users/active
   return fetch({
-    url: `${spaceUrl}/users/active`,
+    url: `${process.env.BASE_API}/api/users/active`,
     method: 'get'
   })
 }
@@ -50,7 +50,7 @@ export function changePassword (params) {
     new_psd: params.new_psd
   }
   return fetch({
-    url: `${baseUrl}/users/${store.state.user.uid}/password`,
+    url: `${process.env.SSO_SITE}/api/users/${store.state.user.uid}/password`,
     method: 'put',
     data
   })
