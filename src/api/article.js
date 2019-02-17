@@ -57,7 +57,7 @@ export function unapproveArticle (id) {
 // 收藏文章
 export function collectArticle (id) {
   return fetch({
-    url: `/users/${store.state.user.id}/collections`,
+    url: `/users/${store.state.user.uid}/collections`,
     method: 'put',
     data: {
       article_id: id
@@ -66,7 +66,7 @@ export function collectArticle (id) {
 }
 export function uncollectArticle (id) {
   return fetch({
-    url: `/users/${store.state.user.id}/collections`,
+    url: `/users/${store.state.user.uid}/collections`,
     method: 'delete',
     data: {
       article_id: id

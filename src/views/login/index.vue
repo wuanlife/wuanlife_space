@@ -34,8 +34,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
+import { login, getAccessToken } from 'api/auth'
 import { Notification } from 'element-ui'
+
+// import fetch from 'utils/fetch'
 
 export default {
   name: 'index-visitor',
@@ -60,7 +63,7 @@ export default {
 
       // form part
       loginForm: {
-        mail: '',
+        email: '',
         password: ''
       },
       loginRules: {
@@ -82,11 +85,14 @@ export default {
   mounted () {
     // TODO: 支持redirect
     // 已登录则跳转到首页
-    if (this.user.id) {
-      this.$router.push({ path: '/index' })
+    if (this.user.uid) {
+      this.$router.push({ path: '/' })
     }
   },
   methods: {
+    ...mapMutations({
+      SET_USER: 'setUser'
+    }),
     submitForm (formName) {
       // 如果已经登录
       if (this.user.id) {
@@ -100,30 +106,32 @@ export default {
         if (valid) {
           this.loading = true
           // 登录并且获取ID-Token
-          console.log('valid')
-          this.$store
-            .dispatch('Login', {
-              ...this.loginForm
-            }).then(idToken => {
-              console.log('idToken')
-              let params = {
-                'scope': 'public_profile',
-                'ID-Token': idToken
-              }
-              // 获取Access-Token
-              this.$store
-                .dispatch('AccessToken', {
-                  ...params
-                })
-            }).then((result) => {
-              console.log(result)
+          const { clientId } = this.$route.query
+          login({
+            ...this.loginForm,
+            // set client_id default: 'wuan'
+            client_id: clientId || 'wuan'
+          }).then(data => {
+            // set idToken to cookies
+            this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
+            console.log('login->SET_USER')
+
+            this.$store.commit('SET_USER', {
+              ...data,
+              ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
+            })
+          }).then(getAccessToken)
+            .then((result) => {
+              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 7)
               this.loading = false
-              this.$router.push({ path: '/' })
+              this.$router.push('/')
+              this.$store.commit('SET_USER', {
+                ...result
+              })
             })
             .catch(err => {
-              console.log('error')
               Notification.error({
-                message: err,
+                message: err.data.error,
                 offset: 60
               })
               this.loading = false

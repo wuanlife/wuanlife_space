@@ -9,15 +9,37 @@ import store from '../store'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 5000 // 请求超时时间
+  // timeout: 5000, // 请求超时时间
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 // request拦截器
 service.interceptors.request.use(config => {
-  // Do something before request is sent
-  if (store.getters.user['Access-Token']) {
-    config.headers['Access-Token'] = store.getters.user['Access-Token']
+  // let cookies = document.cookie.split(';')
+  // find idToken in cookies
+  let idToken = null
+  idToken = store.state.user.idToken
+  // if (cookies.find((item) => item.indexOf('wuan-id-token') !== -1)) {
+  //   idToken = cookies.find((item) => item.indexOf('wuan-id-token') !== -1).split('=')[1]
+  //   console.log(idToken)
+  // }
+  // find accessToken in cookies
+  let accessToken = null
+  accessToken = store.state.user.accessToken
+  // if (cookies.find((item) => item.indexOf('wuan-access-token') !== -1)) {
+  //   accessToken = cookies.find((item) => item.indexOf('wuan-access-token') !== -1).split('=')[1]
+  // }
+
+  if (idToken) {
+    config.headers['ID-Token'] = idToken
   }
+
+  if (accessToken) {
+    config.headers['Access-Token'] = accessToken
+  }
+
   return config
 }, error => {
   Promise.reject(error)

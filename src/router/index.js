@@ -27,6 +27,8 @@ const Search = resolve => require.ensure([], () => resolve(require('../views/sea
 
 const MySpace = resolve => require.ensure([], () => resolve(require('../views/mySpace/index')), 'MySpace')
 
+const CallBack = resolve => require.ensure([], () => resolve(require('../views/callBack/index')), 'CallBack')
+
 /* error page */
 const Err404 = resolve => require.ensure([], () => resolve(require('../views/error/404')), 'Err404')
 const Err401 = resolve => require.ensure([], () => resolve(require('../views/error/401')), 'Err401')
@@ -48,7 +50,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: Layout,
-    name: '首页',
+    // name: '首页',
     hidden: true,
     children: [{
       path: '/',
@@ -145,8 +147,12 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       { path: '', component: MySpace, meta: { title: '我的空间 - 午安网 - 过你想过的生活' } },
-      { path: ':id', component: MySpace }
+      { path: ':id', component: MySpace, meta: { title: '午安网 - 过你想过的生活' } }
     ]
+  },
+  {
+    path: '/callback',
+    component: CallBack
   },
   {
     path: '*',

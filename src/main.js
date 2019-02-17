@@ -4,7 +4,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from 'vuex-store'
+import store from './store'
 import ElementUI from 'element-ui'
 import './assets/animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -14,10 +14,13 @@ import 'nprogress/nprogress.css' // Progress 进度条 样式
 import 'normalize.css/normalize.css' // normalize.css 样式格式化
 import * as filters from './filters' // 全局vue filter
 import IconSvg from 'components/Icon-svg' // svg 组件
+import VueCookie from './plugin/vue-cookie'
 
 // register globally
 Vue.component('icon-svg', IconSvg)
 Vue.use(ElementUI)
+
+Vue.use(VueCookie)
 
 // register global utility filters.
 /* eslint import/namespace: ['error', { allowComputed: true }] */
@@ -33,6 +36,7 @@ router.beforeEach((to, from, next) => {
     // 如果设置标题，拦截后设置标题
     document.title = to.meta.title
   }
+
   const token = false
   if (token) {
     // 判断是否有token
@@ -52,7 +56,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
+router.afterEach((next) => {
   NProgress.done() // 结束Progress
 })
 

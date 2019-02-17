@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import { login, signup, getAccessToken } from 'api/auth'
 import { putUser } from 'api/user'
+import ls from 'utils/localStorage'
+
 // import { storeWithExpiration } from 'utils'
 
 // const loadUser = () => {
@@ -9,16 +11,23 @@ import { putUser } from 'api/user'
 //     return user
 //   }
 // }
-
+const LS_KEY = 'user'
 const user = {
   state: {},
   mutations: {
     SET_USER: (state, userInfo) => {
+      console.log('setUser')
       for (const key in userInfo) {
         Vue.set(state, key, userInfo[key])
       }
+      const lsData = ls.getItem(LS_KEY)
+      ls.setItem(LS_KEY, {
+        ...lsData,
+        ...userInfo
+      })
     },
     CLEAR_USER: state => {
+      console.log('clearUser')
       for (const key in state) {
         state[key] = null
       }
@@ -29,10 +38,15 @@ const user = {
     // 邮箱登录
     async Login ({ commit }, params) {
       // return ID-Token
-      const idToken = await login(params)
+      console.log('action->login')
+      const tokenData = await login(params)
+      console.log('tokenData:' + [...tokenData])
+      const idToken = tokenData['ID-Token']
+      // console.log('idToken')
       const user = JSON.parse(atob(idToken.split('.')[1]))
+      console.log('action->login->atob')
       commit('SET_USER', {
-        idToken,
+        ...tokenData,
         ...user
       })
       // storeWithExpiration.set('user', userWithToken)
@@ -41,17 +55,19 @@ const user = {
     // for later one-use token, Logout should in actions
     Logout ({ commit }) {
       commit('CLEAR_USER')
+      ls.setItem('user', null)
       // storeWithExpiration.set('user', {})
     },
     // get Access-Token
     async AccessToken ({ commit }, params) {
       const accToken = await getAccessToken(params)
+      const accessToken = accToken['Access-Token']
       commit('SET_USER', accToken)
-      return accToken
+      return accessToken
     },
     // 注册
     async Signup ({ commit }, params) {
-      const idToken = await signup(params)
+      const idToken = await signup(params)['ID-Token']
       const user = JSON.parse(atob(idToken.split('.')[1]))
       commit('SET_USER', {
         idToken,

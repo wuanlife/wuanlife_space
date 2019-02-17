@@ -1,7 +1,9 @@
 <template>
   <div class="index-aside-card index-card clickable" @click="goUserSpace">
     <!--@click="user.token=='' ? $router.push({path: '/login/'}) : $router.push({path: '/mySpace/${activeUser.id}'})">-->
-    <img :src="`${activeUser.avatar_url}?imageView2/1/w/40/h/40` || defaultAvatar">
+    <div class="img-box">
+      <img :src="`${activeUser.avatar_url}?imageView2/1/w/40/h/40` || defaultAvatar">
+    </div>
     <div class="index-card content">
       <h2 class="clickable">{{ activeUser.name }}</h2>
       <p>本月发表了 {{activeUser.monthly_articles_num}} 篇</p>
@@ -51,33 +53,46 @@ export default {
 <style lang="scss" scoped>
   .index-aside-card {
     /*position: fixed;*/
-    width: 250px;
+    width: 262px;
     height: 70px;
+    box-sizing: border-box;
+    padding: 10px 12px 10px 23px;
   }
   .index-card {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     background-color: #fff;
-    padding: 10px;
-    img {
-      margin: 10px 8px 10px 0;
-      width: 40px;
-      height: 40px;
-      //添加圆角
-      border-radius: 20px;
+    .img-box {
+      display: flex;
+      align-items: flex-end;
+      img {
+        // margin: 10px 8px 10px 0;
+        margin-right: 18px;
+        width: 38px;
+        height: 38px;
+        //添加圆角
+        border-radius: 100%;
+      }
     }
     .content {
       min-width: 0;
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      align-items: flex-start;//行内浮动
+      justify-content: space-around;
+      align-items: flex-start;
+      border-bottom: 1px solid #ccc;
       h2 {
         margin: 2px 0;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
         font-size:14px;
-        color:#5992e4;
+        color:#666;
         text-align:left;
+        &:hover {
+          color: #99ccff;
+        }
       }
       p {
         display: block;
@@ -85,8 +100,8 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        font-size:14px;
-        color:#666666;
+        font-size:12px;
+        color:#999;
         text-align:left;
       }
     }

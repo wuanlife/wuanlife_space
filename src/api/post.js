@@ -56,20 +56,20 @@ export function getCommentsByPostId (id, offset = 0, limit = 20) {
 
 export function getCollection (offset = 0, limit = 20) {
   return fetch({
-    url: `/users/${store.state.user.id}/collections?offset=${offset}&limit=${limit}`,
+    url: `/users/${store.state.user.uid}/collections?offset=${offset}&limit=${limit}`,
     method: 'get'
   })
 }
 
 export function searchArticles (keyword, offset, limit) {
-  const data = {
-    keyword,
-    offset,
-    limit
-  }
+  // const data = {
+  //   keyword,
+  //   offset,
+  //   limit
+  // }
   return fetch({
     url: `/articles/search?keyword=${keyword}&offset=${offset}&limit=${limit}`,
-    method: 'post',
-    params: data
+    method: 'post'
+    // params: data
   })
 }

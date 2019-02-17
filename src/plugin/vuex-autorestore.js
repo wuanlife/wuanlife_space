@@ -12,7 +12,9 @@ export const createLSPlugin = function (lsKey, mappings, whiteList = []) {
             cd.val = copy(state[k], mappings[k])
           }
         })
-        ls.setItem(k, cd)
+        if (cd.val.uid !== null) {
+          ls.setItem(k, cd)
+        }
       }
     })
   }

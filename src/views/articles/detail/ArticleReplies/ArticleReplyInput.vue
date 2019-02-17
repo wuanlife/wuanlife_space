@@ -45,6 +45,14 @@ export default {
         return
       }
       this.loading = true
+      if (!this.user.accessToken || !this.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        this.loading = false
+        return
+      }
       try {
         const res = await postReply(this.$route.params.id, {
           comment: this.replyContent

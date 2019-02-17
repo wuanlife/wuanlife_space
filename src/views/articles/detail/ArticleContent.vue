@@ -35,7 +35,7 @@
                   @click="edit(article.id)">
             编辑
             </span>
-            <span v-if="user.id === article.author.id"
+            <span v-if="user.uid === article.author.id"
                   class="article-opt"
                   @click="del(article.id)">
             删除
@@ -104,6 +104,14 @@ export default {
         return
       }
       this.approving = true
+      if (!this.user.accessToken || !this.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        this.approving = false
+        return
+      }
       try {
         if (this.approvedTemp) {
           await unapproveArticle(this.$route.params.id)
@@ -124,6 +132,14 @@ export default {
         return
       }
       this.collecting = true
+      if (!this.user.accessToken || !this.user.idToken) {
+        Notification.warning({
+          message: '操作前请先登录！',
+          offset: 60
+        })
+        this.collecting = false
+        return
+      }
       try {
         if (this.collectedTemp) {
           await uncollectArticle(this.$route.params.id)
@@ -198,6 +214,7 @@ article {
     margin-bottom: 29px;
   }
   .article-html {
+    line-height: 1.3;
     word-wrap: break-word;
     margin-bottom: 63px;
     font-size: 13px;
@@ -246,12 +263,12 @@ footer {
     }
   }
   .article-opt {
-    margin-left: 12px;
+    margin-left: 40px;
     cursor: pointer;
     color: $wl-blue;
     transition: all 0.3s ease-in-out;
     &:hover {
-      color: $wl-blue-active;
+      color: #99ccff;
     }
   }
 }

@@ -48,6 +48,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import { signup, getAccessToken } from 'api/auth'
 import { Notification } from 'element-ui'
 
 export default {
@@ -89,7 +90,7 @@ export default {
       loading: false,
       // form part
       signupForm: {
-        mail: '',
+        email: '',
         name: '',
         password: ''
       },
@@ -110,22 +111,24 @@ export default {
         if (valid) {
           this.loading = true
           // 获取ID-Token
-          this.$store
-            .dispatch('Signup', {
-              ...this.signupForm
-            }).then(idToken => {
-              // 通过ID-Token获取Access-Token
-              let params = {
-                'scope': 'public_profile',
-                'ID-Token': idToken
-              }
-              this.$store
-                .dispatch('AccessToken', {
-                  ...params
-                })
-            }).then((result) => {
+          const { clientId } = this.$route.query
+          signup({
+            ...this.signupForm,
+            // set client_id default: 'wuan'
+            client_id: clientId || 'wuan'
+          }).then(data => {
+            // set idToken to cookies
+            this.$cookie.set(`${clientId || 'wuan'}-id-token`, data['ID-Token'], 7)
+            // 获取Access-Token
+            this.$store.commit('SET_USER', {
+              ...JSON.parse(atob(data['ID-Token'].split('.')[1]))
+            })
+          })
+            .then(getAccessToken)
+            .then((result) => {
+              this.$cookie.set(`${clientId || 'wuan'}-access-token`, result['Access-Token'], 7)
               this.loading = false
-              this.$router.push({ path: '/' })
+              this.$router.push('/')
             }).catch(err => {
               Notification.error({
                 message: err.data.error,

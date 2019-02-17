@@ -28,7 +28,7 @@
                          @current-change="loadPosts">
           </el-pagination>-->
       </div>
-      <pagination @current-change="loadPosts" :pagination.sync="pagination"></pagination>
+      <pagination @current-change="loadPosts" :pagination.sync="pagination" @nextPage="nextPage" @previousPage="previousPage"></pagination>
     </section>
   </div>
 </template>
@@ -90,6 +90,12 @@ export default {
         })
       })
     },
+    nextPage () { // 下一页
+      this.loadPosts(this.pagination.currentPage)
+    },
+    previousPage () { // 上一页
+      this.loadPosts(this.pagination.currentPage)
+    },
     loadActiveUsers () {
       var self = this
       this.loading = true
@@ -111,14 +117,15 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: auto;
-    max-width: 700px;
+    max-width: 1000px;
     min-width: 590px;
     @media screen and (max-width: 900px) {
       justify-content: center;
     }
     section {
       min-width: 0;
-      flex: 0 0 448px;
+      //flex: 0 0 448px;
+      flex: 1 1 640px;
       order: 1;
       header {
         margin: 31px 0 12px 0;
@@ -131,8 +138,8 @@ export default {
       }
     }
     aside {
-      margin-left: 41px;
-      flex: 0 0 250px;
+      margin-left: 56px;
+      flex: 0 0 262px;
       order: 2;
       @media screen and (max-width: 900px) {
         display: none;

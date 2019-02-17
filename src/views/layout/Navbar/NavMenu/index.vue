@@ -1,6 +1,6 @@
 <template>
 <div class="nav-menu">
-  <div class="user-container" v-if="user.id">
+  <div class="user-container" v-if="user.uid">
     <div class="write-container" @click="goPath('/editor/drafts/new')">
       <icon-svg icon-class="write"></icon-svg>
       写文章
@@ -10,17 +10,14 @@
       trigger="click"
       @visible-change="visibleChange">
       <div class="avatar-wrapper" :class="{'active' : isShowDrop}">
-          <span>{{ user.name }}</span>
+          <span>{{ user.uname }}</span>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
           <el-dropdown-item @click.native="goPath('/mySpace')">
               我的空间
           </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/personalData')">
-              个人资料
-          </el-dropdown-item>
-          <el-dropdown-item @click.native="goPath('/changepsw')">
-              密码修改
+          <el-dropdown-item @click.native="toMyPage">
+              个人中心
           </el-dropdown-item>
           <el-dropdown-item @click.native="goPath('/collection')">
               我的收藏
@@ -33,15 +30,18 @@
   </div>
   <!-- login bar (if not logined) -->
   <div v-else class="login-container">
-    <span><router-link to="/login/">登录</router-link></span>
-    <span><router-link to="/signup/">注册</router-link></span>
+    <!-- <span><router-link to="/login/">登录</router-link></span>
+    <span><router-link to="/signup/">注册</router-link></span> -->
+    <span @click="gotoAuth">登录</span>
+    <span @click="gotoAuth">注册</span>
   </div>
 </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-
+import Storage from '../../../../utils/localStorage.js'
+import { getUserById } from '../../../../api/user.js'
 export default {
   data () {
     return {
@@ -52,11 +52,27 @@ export default {
     ...mapGetters(['user'])
   },
   mounted () {
+    if (this.user.uid) {
+      getUserById(this.user.uid).then(res => {
+        const { mail, name } = res
+        this.$store.commit('SET_USER', {
+          email: mail,
+          uname: name
+        })
+      })
+    }
+    // const user = Storage.getItem('user')
+    // if (user && user.accessToken && user.idToken) {
+    //   this.$cookie.set(`wuan-id-token`, user.idToken, 7)
+    //   this.$cookie.set(`wuan-access-token`, user.accessToken, 7)
+    // }
   },
-  updated () {
-  },
+  updated () {},
   methods: {
     logout () {
+      Storage.clear()
+      this.$cookie.delete('wuan-id-token')
+      this.$cookie.delete('wuan-access-token')
       this.$store.dispatch('Logout').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
@@ -66,6 +82,12 @@ export default {
     },
     visibleChange () {
       this.isShowDrop = !this.isShowDrop
+    },
+    gotoAuth () {
+      window.location = `${process.env.SSO_SITE}/authorize?client_id=wuan&redirect_uri=${window.location.origin + '/callback'}&response_type=code&state=maye&nonce=random `
+    },
+    toMyPage () {
+      window.location = `${process.env.SSO_SITE}`
     }
   }
 }
@@ -81,6 +103,7 @@ export default {
   color: #ffffff;
   span {
     padding: 0 14px;
+    cursor: pointer;
     &:not(:first-child) {
       border-left: 1px solid #fff;
     }

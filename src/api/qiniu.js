@@ -2,7 +2,7 @@ import fetch from 'utils/fetch'
 
 export function getToken () {
   return fetch({
-    url: '/qiniu/token',
+    url: `${process.env.SSO_SITE}/api/qiniu/token`,
     method: 'get'
   })
 }
