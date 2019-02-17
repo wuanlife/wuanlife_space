@@ -1,6 +1,6 @@
 module.exports = {
     NODE_ENV: '"production"',
-    BASE_API: '"http://dev-space-api.wuanla.tk"',
+    BASE_API: '"http://dev-space-api.wuanla.tk/api/"',
     SSO_SITE: '"http://dev-oidc.wuanla.tk"',
     APP_ORIGIN: '"http://wuanlife.com"',
     // 七牛域名

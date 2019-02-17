@@ -3,14 +3,14 @@ import fetch from 'utils/fetch'
 
 export function getRepliesByArticleId (articleId, params) {
   return fetch({
-    url: `/api/articles/${articleId}/comments?${qs.stringify(params)}`,
+    url: `/articles/${articleId}/comments?${qs.stringify(params)}`,
     method: 'get'
   })
 }
 
 export function deleteReply (articleId, floor) {
   return fetch({
-    url: `/api/articles/${articleId}/comments/${floor}`,
+    url: `/articles/${articleId}/comments/${floor}`,
     method: 'delete'
   })
 }
@@ -18,7 +18,7 @@ export function deleteReply (articleId, floor) {
 // params {id: postid, floor: floor, comment: comment}
 export function postReply (articleId, params) {
   return fetch({
-    url: `/api/articles/${articleId}/comments`,
+    url: `/articles/${articleId}/comments`,
     method: 'post',
     data: params
   })

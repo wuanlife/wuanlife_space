@@ -40,7 +40,7 @@ export function putUser (params) {
 export function getActiveUsers () {
   // http://dev-space-api.wuanla.tk/api/users/active
   return fetch({
-    url: `${process.env.BASE_API}/api/users/active`,
+    url: `/users/active`,
     method: 'get'
   })
 }
