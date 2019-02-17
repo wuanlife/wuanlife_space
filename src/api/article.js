@@ -3,7 +3,7 @@ import store from 'vuex-store'
 
 export function getArticle (id) {
   return fetch({
-    url: `/articles/${id}`,
+    url: `/api/articles/${id}`,
     method: 'get'
   })
 }
@@ -14,7 +14,7 @@ export function postArticles (params) {
     ...params
   }
   return fetch({
-    url: '/articles',
+    url: '/api/articles',
     method: 'post',
     data
   })
@@ -26,14 +26,14 @@ export function putArticle (id, params) {
     ...params
   }
   return fetch({
-    url: `/articles/${id}`,
+    url: `/api/articles/${id}`,
     method: 'put',
     data
   })
 }
 export function deleteArticle (id) {
   return fetch({
-    url: `/articles/${id}`,
+    url: `/api/articles/${id}`,
     method: 'delete'
   })
 }
@@ -41,14 +41,14 @@ export function deleteArticle (id) {
 // 点赞文章
 export function approveArticle (id) {
   return fetch({
-    url: `/articles/${id}/approval`,
+    url: `/api/articles/${id}/approval`,
     method: 'post',
     data: {}
   })
 }
 export function unapproveArticle (id) {
   return fetch({
-    url: `/articles/${id}/approval`,
+    url: `/api/articles/${id}/approval`,
     method: 'delete',
     data: {}
   })
@@ -57,7 +57,7 @@ export function unapproveArticle (id) {
 // 收藏文章
 export function collectArticle (id) {
   return fetch({
-    url: `/users/${store.state.user.uid}/collections`,
+    url: `/api/users/${store.state.user.uid}/collections`,
     method: 'put',
     data: {
       article_id: id
@@ -66,7 +66,7 @@ export function collectArticle (id) {
 }
 export function uncollectArticle (id) {
   return fetch({
-    url: `/users/${store.state.user.uid}/collections`,
+    url: `/api/users/${store.state.user.uid}/collections`,
     method: 'delete',
     data: {
       article_id: id
@@ -77,13 +77,13 @@ export function uncollectArticle (id) {
 // 锁定文章
 export function lockArticle (id) {
   return fetch({
-    url: `/articles/${id}/lock`,
+    url: `/api/articles/${id}/lock`,
     method: 'post'
   })
 }
 export function unlockArticle (id) {
   return fetch({
-    url: `/articles/${id}/lock`,
+    url: `/api/articles/${id}/lock`,
     method: 'delete'
   })
 }
