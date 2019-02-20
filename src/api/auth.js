@@ -1,6 +1,6 @@
 import fetch from 'utils/fetch'
 
-const BASE_URL = 'http://dev-oidc.wuanla.tk/api'
+// const BASE_URL = 'http://dev-oidc.wuanla.tk/api'
 
 // login and get ID-Token
 export function login (params) {
@@ -10,7 +10,7 @@ export function login (params) {
     client_id: params.client_id
   }
   return fetch({
-    url: BASE_URL + '/users/login', // del /api
+    url: `${process.env.SSO_SITE}/api/users/login`, // del /api
     method: 'post',
     data
   })
@@ -22,7 +22,7 @@ export function getAccessToken (params = {scope: 'public_profile'}) {
     scope: params.scope
   }
   return fetch({
-    url: BASE_URL + '/auth', // del /api
+    url: `${process.env.SSO_SITE}/api/auth`, // del /api
     method: 'post',
     data
   })
@@ -31,7 +31,7 @@ export function getAccessToken (params = {scope: 'public_profile'}) {
 // 验证Token完整性
 export function loginOrNot (params) {
   return fetch({
-    url: BASE_URL + '/auth', // del /api
+    url: `${process.env.SSO_SITE}/api/auth`, // del /api
     method: 'get'
   })
 }
@@ -44,7 +44,7 @@ export function signup (params) {
     client_id: 'wuan'
   }
   return fetch({
-    url: BASE_URL + '/users/register', // del /api
+    url: `${process.env.SSO_SITE}/api/users/register`, // del /api
     method: 'post',
     data
   })
