@@ -6,7 +6,7 @@ WORKDIR /usr/share/nginx/wuanlife
 
 COPY package.json /usr/share/nginx/wuanlife
 # set taobao source package
-RUN npm config set registry https://registry.npm.taobao.org
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install
 COPY . /usr/share/nginx/wuanlife
 
